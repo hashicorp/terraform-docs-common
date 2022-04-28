@@ -31,7 +31,7 @@ fi
 cd "$PREVIEW_DIR"
 
 # Run the terraform-website content-repo start script
-PREVIEW_FROM_REPO=terraform \
+PREVIEW_FROM_REPO=terraform-docs-common \
 NAV_DATA_DIRNAME=../data \
 CONTENT_DIRNAME=../docs \
 IS_CONTENT_PREVIEW=true \
