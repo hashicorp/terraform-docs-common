@@ -1,0 +1,25 @@
+*.dll
+*.exe
+.DS_Store
+bin/
+modules-dev/
+/pkg/
+website/.vagrant
+website/.bundle
+website/build
+website/node_modules
+.vagrant/
+*.backup
+*.bak
+*~
+.*.swp
+.idea
+*.iml
+*.test
+*.iml
+
+website/vendor
+vendor/
+
+# Coverage
+coverage.txt
