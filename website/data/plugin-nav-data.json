@@ -1,0 +1,39 @@
+[
+  { "heading": "Plugin Development" },
+  { "title": "Overview", "path": "" },
+  {
+    "title": "How Terraform Works With Plugins",
+    "path": "how-terraform-works"
+  },
+  {
+    "title": "Provider Design Principles",
+    "path": "hashicorp-provider-design-principles"
+  },
+  {
+    "title": "Which SDK should I use?",
+    "path": "which-sdk"
+  },
+  {
+    "title": "Publishing to the Registry",
+    "href": "/registry/providers/publishing"
+  },
+  {
+    "title": "Terraform Integration Program",
+    "href": "/docs/partnerships"
+  },
+  {
+    "title": "Community Forum",
+    "href": "https://discuss.hashicorp.com/c/terraform-providers/tf-plugin-sdk/43"
+  },
+  {
+    "title": "Debugging",
+    "path": "debugging"
+  },
+  {
+    "heading": "Plugin SDKs and Libraries"
+  },
+  { "title": "SDKv2", "href": "sdkv2/sdkv2-intro" },
+  { "title": "Framework", "href": "framework" },
+  { "title": "Logging", "href": "log/managing" },
+  { "title": "Combining and Translating", "href": "mux" }
+]
