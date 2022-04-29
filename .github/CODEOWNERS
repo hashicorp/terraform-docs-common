@@ -1,0 +1,4 @@
+# Plugin Development
+
+/website/docs/plugin/ @hashicorp/terraform-devex
+/website/data/plugin-nav-data.json @hashicorp/terraform-devex
