@@ -33,9 +33,11 @@ website/build-local:
 	@docker build https://github.com/hashicorp/terraform-website.git\#$(BRANCH) \
 		-t $(DOCKER_IMAGE_LOCAL)
 
-# disallow any parallelism (-j) for Make. This is necessary since some
-# commands during the build process create temporary files that collide
-# under parallel conditions.
-.NOTPARALLEL:
+# Updates various markdown blocks 
+# <!-- BEGIN: [...] -->
+# <!-- END: [...] -->
+gen/readme:
+	@echo "==> Generating README.md"
+	@npx -p @hashicorp/platform-cli next-hashicorp markdown-blocks ./README.md
 
-.PHONY: website website/local website/build-local
+.PHONY: website website/local website/build-local gen/readme
