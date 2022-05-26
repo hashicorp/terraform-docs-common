@@ -53,9 +53,6 @@ through the [Vault transit secret engine](https://www.vaultproject.io/docs/secre
 which uses the default transit encryption cipher (AES-GCM with a 256-bit AES key
 and a 96-bit nonce), and stored alongside the object. This pattern is called envelope encryption.
 
-Encryption key material is generated via the Vault transit secret engine's
-[datakey generation](https://www.vaultproject.io/api-docs/secret/transit#generate-data-key),
-using bit material from the kernel's cryptographically secure pseudo-random
-number generator (CSPRNG) as the `context` value. Because blob storage encryption
-generates a unique key for each object, and relies on envelope encryption,
-the encryption key material itself for any given object is not rotated.
+The Vault transit secret engine's
+[datakey generation](https://www.vaultproject.io/api-docs/secret/transit#generate-data-key) creates the encryption key material using bit material from the kernel's cryptographically secure pseudo-random
+number generator (CSPRNG) as the `context` value. Blob storage encryption generates a unique key for each object and relies on envelope encryption, so Vault does not rotate the encryption key material for individual objects.
