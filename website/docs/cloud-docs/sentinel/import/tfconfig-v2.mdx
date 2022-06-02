@@ -52,6 +52,7 @@ tfconfig/v2
 │   └── (indexed by [module_address:]provider[.alias])
 │       ├── provider_config_key (string)
 │       ├── name (string)
+│       ├── full_name (string)
 │       ├── alias (string)
 │       ├── module_address (string)
 │       ├── config (block expression representation)
@@ -294,6 +295,7 @@ The fields in this collection are as follows:
 
 * `provider_config_key` - The opaque configuration key, used as the index key.
 * `name` - The name of the provider, ie: `aws`.
+* `full_name` - The fully-qualified name of the provider, ie: `registry.terraform.io/hashicorp/aws`.
 * `alias` - The alias of the provider, ie: `east`. Empty for a default provider.
 * `module_address` - The address of the module this provider appears in.
 * `config` - A [block expression
