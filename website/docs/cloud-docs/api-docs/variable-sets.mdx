@@ -452,7 +452,7 @@ Terraform Cloud does not allow different global variable sets to contain conflic
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
-| [200][] | [JSON API document][]     | Successfully updated variabel for variable set                        |
+| [200][] | [JSON API document][]     | Successfully updated variable for variable set                        |
 | [404][] | [JSON API error object][] | Variable set not found, or user unauthorized to perform action        |
 | [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
 
@@ -631,10 +631,10 @@ Accepts a list of workspaces to remove the variable set from.
 
 Properties without a default value are required.
 
-| Key path      | Type   | Default | Description                                        |
-| ------------- | ------ | ------- | -------------------------------------------------- |
-| `data[].type` | string |         | Must be `"workspaces"`                             |
-| `data[].id`   | string |         | The id of the workspace to add the variable set to |
+| Key path      | Type   | Default | Description                                             |
+| ------------- | ------ | ------- | ------------------------------------------------------- |
+| `data[].type` | string |         | Must be `"workspaces"`                                  |
+| `data[].id`   | string |         | The id of the workspace to delete the variable set from |
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
