@@ -17,7 +17,7 @@ Workspaces organize infrastructure into meaningful groups. Create new workspaces
 
 ## Permissions
 
-To create a workspace, you must be a member of a team with [manage workspaces permissions](/cloud-docs/users-teams-organizations/permissions#manage-workspaces).
+You must be a member of a team with [manage workspaces permissions](/cloud-docs/users-teams-organizations/permissions#manage-workspaces) to create a workspace.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -44,7 +44,7 @@ The workspace creation process varies depending on the workflow you choose (e.g.
 1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to our [workspace naming recommendations](/cloud-docs/workspaces/naming).
 1. Add an optional **Description** that will appear at the top of the workspace in the Terraform Cloud UI.
 
-1. (Version control only) Open **Advanced options** to optionally configure the following additional settings:
+1. (Version control only) Open **Advanced options** to optionally configure the following settings:
    - [Terraform Working Directory][workdir]
    - [Automatic Run Triggering][trigger]
    - [VCS branch][branch]
@@ -76,4 +76,4 @@ If you have already configured all Terraform variables, we recommend [manually s
 
 If you connected a VCS repository to the workspace, Terraform Cloud automatically registers a webhook with your VCS provider. A workspace with no runs will not accept new runs from a VCS webhook, so you must [manually start at least one run](/cloud-docs/run/ui#manually-starting-runs).
 
-After you have manually started a run, Terraform Cloud will automatically queue a plan for the workspace when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/cloud-docs/vcs/#webhooks) for more details.
+After you manually start a run, Terraform Cloud automatically queues a plan when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/cloud-docs/vcs/#webhooks) for more details.
