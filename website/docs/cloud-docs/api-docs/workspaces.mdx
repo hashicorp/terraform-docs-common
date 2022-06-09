@@ -2,39 +2,39 @@
 page_title: Workspaces - API Docs - Terraform Cloud and Terraform Enterprise
 ---
 
-[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+[200]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
-[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+[201]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
 
-[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
+[202]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
 
-[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
+[204]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
 
-[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+[400]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
 
-[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+[401]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
 
-[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[403]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
 
-[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+[404]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
-[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+[409]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
 
-[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
+[412]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
 
-[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+[422]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 
-[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+[429]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
 
-[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+[500]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
 
-[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+[504]  https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]  /cloud-docs/api-docs#json-api-documents
 
-[JSON API error object]: https://jsonapi.org/format/#error-objects
+[JSON API error object]  https://jsonapi.org/format/#error-objects
 
-[speculative plans]: /cloud-docs/run/#speculative-plans
+[speculative plans]  /cloud-docs/run/#speculative-plans
 
 # Workspaces API
 
@@ -42,7 +42,7 @@ Workspaces represent running infrastructure managed by Terraform.
 
 Viewing a workspace (individually or in a list) requires permission to read runs. Changing settings and force-unlocking require admin access to the workspace. Locking and unlocking a workspace requires permission to lock and unlock the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers
+[permissions-citation]  #intentionally-unused---keep-for-maintainers
 
 ## Create a Workspace
 
@@ -63,7 +63,7 @@ Properties without a default value are required.
 By supplying the necessary attributes under a `vcs-repository` object, you can create a workspace that is configured against a VCS Repository.
 
 | Key path                                      | Type    | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| --------------------------------------------- | ------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------------------------------------|---------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.type`                                   | string  |           | Must be `"workspaces"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `data.attributes.name`                        | string  |           | The name of the workspace, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                                                                                                                                                                                                                    |
 | `data.attributes.agent-pool-id`               | string  | (nothing) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                                                                                                                   |
@@ -71,7 +71,7 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.auto-apply`                  | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                                                                |
 | `data.attributes.description`                 | string  | (nothing) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `data.attributes.execution-mode`              | string  | `remote`  | Which [execution mode](/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                                                                                                                                          |
-| `data.attributes.file-triggers-enabled`       | boolean | `true`    | Whether to filter runs based on the changed files in a VCS push. If enabled, the `working-directory` and `trigger-prefixes` describe a set of paths which must contain changes for a VCS push to trigger a run. If disabled, any push will trigger a run.                                                                                                                                                                                                                                                       |
+| `data.attributes.file-triggers-enabled`       | boolean | `true`    | Whether to filter runs based on the changed files in a VCS push. If enabled it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe a set of triggers upon which a run will be triggered. If disabled, any push will trigger a run.                                                                                                                                                                                                                         |
 | `data.attributes.global-remote-state`         | boolean | `false`   | Whether the workspace should allow all workspaces in the organization to [access its state data](/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. **Note:** Terraform Enterprise admins can choose the default value for new workspaces if this attribute is omitted. |
 | `data.attributes.operations`                  | boolean | `true`    | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified.                                                                                                                                                                                                                                                                                   |
 | `data.attributes.queue-all-runs`              | boolean | `false`   | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued.                                                                                                                                                                                                                                                                                                                             |
@@ -80,6 +80,7 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.speculative-enabled`         | boolean | true      | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents Terraform Cloud from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.                                                                                                                                                                                    |
 | `data.attributes.terraform-version`           | string  | (special) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version.                                                                                                                                   |
 | `data.attributes.trigger-prefixes`            | array   | `[]`      | List of repository-root-relative paths which should be tracked for changes, in addition to the working directory.                                                                                                                                                                                                                                                                                                                                                                                               |
+| `data.attributes.trigger-patterns`            | array   | `[]`      | List of repository-root-relative glob patterns which describe files tracked for changes.                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `data.attributes.vcs-repo`                    | object  | (nothing) | Settings for the workspace's VCS repository. If omitted, the workspace is created without a VCS repo. If included, you must specify at least the `oauth-token-id` and `identifier` keys below.                                                                                                                                                                                                                                                                                                                  |
 | `data.attributes.vcs-repo.oauth-token-id`     | string  |           | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                                                                                                              |
 | `data.attributes.vcs-repo.branch`             | string  | (nothing) | The repository branch that Terraform will execute from. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `master`) .                                                                                                                                                                                                                                                                                                                                          |
@@ -145,6 +146,31 @@ A run will be triggered in this workspace when changes are detected in any of th
         "branch": ""
       },
       "updated-at": "2017-11-29T19:18:09.976Z"
+    },
+    "type": "workspaces"
+  }
+}
+```
+
+A run will be triggered in this workspace when changes are detected:
+- in any folder tree which has the leaf folder named `networking` and the change was made in a file with the extension `tf`
+- in any file changed in the folder `/base`, no subfolders are included
+- in any file changed in the folder `/submodule` and all its subfolders
+
+```json
+{
+  "data": {
+    "attributes": {
+      "name": "workspace-4",
+      "resource-count": 0,
+      "terraform_version": "1.2.2",
+      "trigger-patterns": ["/**/networking/*.tf", "/base/*", "/submodule/**/*"],
+      "vcs-repo": {
+        "identifier": "skierkowski/terraform-test-proj-monorepo",
+        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
+        "branch": ""
+      },
+      "updated-at": "2022-06-09T19:18:09.976Z"
     },
     "type": "workspaces"
   }
@@ -427,7 +453,7 @@ These PATCH endpoints require a JSON object with the following properties as a r
 Properties without a default value are required.
 
 | Key path                                      | Type           | Default          | Description                                                                                                                                                                                                                                                                                                                                                                                 |
-| --------------------------------------------- | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------------------------------------|----------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.type`                                   | string         |                  | Must be `"workspaces"`.                                                                                                                                                                                                                                                                                                                                                                     |
 | `data.attributes.name`                        | string         | (previous value) | A new name for the workspace, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization. **Warning:** Changing a workspace's name changes its URL in the API and UI.                                                                                                                                                 |
 | `data.attributes.agent-pool-id`               | string         | (previous value) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                               |
@@ -435,13 +461,14 @@ Properties without a default value are required.
 | `data.attributes.auto-apply`                  | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                            |
 | `data.attributes.description`                 | string         | (previous value) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                            |
 | `data.attributes.execution-mode`              | string         | (previous value) | Which [execution mode](/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                      |
-| `data.attributes.file-triggers-enabled`       | boolean        | (previous value) | Whether to filter runs based on the changed files in a VCS push. If enabled, the `working-directory` and `trigger-prefixes` describe a set of paths which must contain changes for a VCS push to trigger a run. If disabled, any push will trigger a run.                                                                                                                                   |
+| `data.attributes.file-triggers-enabled`       | boolean        | (previous value) | Whether to filter runs based on the changed files in a VCS push. If enabled it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe a set of triggers upon which a run will be triggered. If disabled, any push will trigger a run.                                                                                                     |
 | `data.attributes.global-remote-state`         | boolean        | (previous value) | Whether the workspace should allow all workspaces in the organization to [access its state data](/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. |
 | `data.attributes.operations`                  | boolean        | (previous value) | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified.                                                                                                                                                               |
 | `data.attributes.queue-all-runs`              | boolean        | (previous value) | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued.                                                                                                                                                                                                         |
 | `data.attributes.speculative-enabled`         | boolean        | (previous value) | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents Terraform Cloud from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.                                                                |
 | `data.attributes.terraform-version`           | string         | (previous value) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint.                                                                                                   |
 | `data.attributes.trigger-prefixes`            | array          | (previous value) | List of repository-root-relative paths which should be tracked for changes, in addition to the working directory.                                                                                                                                                                                                                                                                           |
+| `data.attributes.trigger-patterns`            | array          | (previous value) | List of repository-root-relative glob patterns which describe files tracked for changes.                                                                                                                                                                                                                                                                                                    |
 | `data.attributes.vcs-repo`                    | object or null | (previous value) | To delete a workspace's existing VCS repo, specify `null` instead of an object. To modify a workspace's existing VCS repo, include whichever of the keys below you wish to modify. To add a new VCS repo to a workspace that didn't previously have one, include at least the `oauth-token-id` and `identifier` keys.                                                                       |
 | `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                          |
 | `data.attributes.vcs-repo.branch`             | string         | (previous value) | The repository branch that Terraform will execute from.                                                                                                                                                                                                                                                                                                                                     |
@@ -958,7 +985,7 @@ $ curl \
              "id": "apool-QxGd2tRjympfMvQc",
              "type": "agent-pools"
            }
-         },
+         }
       },
       "current-configuration-version": {
         "data": {
@@ -2117,7 +2144,7 @@ This endpoint updates the workspace's remote state consumers to be _exactly_ the
 
 This endpoint can only be used by teams with permission to manage workspaces for the entire organization — only those who can _view_ the entire list of consumers can _replace_ the entire list. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Teams with admin permissions on specific workspaces can still modify remote state consumers for those workspaces, but must use the add (POST) and remove (DELETE) endpoints listed below instead of this PATCH endpoint.
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers
+[permissions-citation]  #intentionally-unused---keep-for-maintainers
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
