@@ -1,0 +1,259 @@
+---
+page_title: Run Task Stages and Results - API Docs - Terraform Cloud and Terraform Enterprise
+---
+
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[JSON API document]: /cloud-docs/api-docs#json-api-documents
+
+[JSON API error object]: https://jsonapi.org/format/#error-objects
+
+# Run Task Stages API
+
+Each run passes through several [stages](/cloud-docs/run/states) of action, and Terraform Cloud shows the progress through those stages as run states.
+Run task stages are actioned as the run processes the different stages, namely;
+
+- [Post-Plan Stage](/cloud-docs/run/states#3-the-post-plan-stage) which executes [run tasks](/cloud-docs/workspaces/settings/run-tasks) after the plan is complete.
+
+-> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+
+## Attributes
+
+### Task Stage States
+
+The task stage state is found in `data.attributes.status`, and you can reference the following list of possible states.
+
+| State         | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| `pending`     | The initial status of a task stage once it has been created. |
+| `running`     | The task stage is running.                                   |
+| `passed`      | All of the results in the task stage passed.                 |
+| `failed`      | One more results in the task stage failed.                   |
+| `errored`     | The task stage has errored. This is a final state.           |
+| `canceled`    | The task stage has been canceled.                            |
+| `unreachable` | The task stage could not be executed.                        |
+
+### Task Result States
+
+The task result state is found in `data.attributes.status`, and you can reference the following list of possible states.
+
+| State         | Description                                                   |
+|---------------|---------------------------------------------------------------|
+| `pending`     | The initial status of a task result once it has been created. |
+| `running`     | The task result is running.                                   |
+| `passed`      | All of the results in the task result passed.                 |
+| `failed`      | One more results in the task result failed.                   |
+| `errored`     | The task result has errored. This is a final state.           |
+| `canceled`    | The task result has been canceled.                            |
+| `unreachable` | The task result could not be executed.                        |
+
+## List Task Stages in a Run
+
+`GET /runs/:run_id/task-stages`
+
+| Parameter | Description                         |
+|-----------|-------------------------------------|
+| `run_id`  | The run ID to list task stages for. |
+
+| Status  | Response                                                | Reason                          |
+|---------|---------------------------------------------------------|---------------------------------|
+| [200][] | Array of [JSON API document][]s (`type: "task-stages"`) | Successfully listed task-stages |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter      | Description                                                          |
+|----------------|----------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.   |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 runs per page. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/runs/run-XdgtChJuuUwLoSmw/task-stages
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "id": "ts-rL5ZsuwfjqfPJcdi",
+      "type": "task-stages",
+      "attributes": {
+        "status": "passed",
+        "stage": "post_plan",
+        "status-timestamps": {
+          "passed-at": "2022-06-08T20:32:12+08:00",
+          "running-at": "2022-06-08T20:32:11+08:00"
+        },
+        "created-at": "2022-06-08T12:31:56.94Z",
+        "updated-at": "2022-06-08T12:32:12.315Z"
+      },
+      "relationships": {
+        "run": {
+          "data": {
+            "id": "run-XdgtChJuuUwLoSmw",
+            "type": "runs"
+          }
+        },
+        "task-results": {
+          "data": [
+            {
+              "id": "taskrs-EmnmsEDL1jgd1GTP",
+              "type": "task-results"
+            }
+          ]
+        }
+      },
+      "links": {
+        "self": "/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi"
+      }
+    }
+  ]
+}
+```
+
+## Show a Task Stage
+
+`GET /task-stages/:task_stage_id`
+
+| Parameter        | Description               |
+|------------------|---------------------------|
+| `:task_stage_id` | The task stage ID to get. |
+
+This endpoint is used for showing details of a specific task stage.
+
+| Status  | Response                                      | Reason                                      |
+|---------|-----------------------------------------------|---------------------------------------------|
+| [200][] | [JSON API document][] (`type: "task-stages"`) | Success                                     |
+| [404][] | [JSON API error object][]                     | Task stage not found or user not authorized |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "ts-rL5ZsuwfjqfPJcdi",
+    "type": "task-stages",
+    "attributes": {
+      "status": "passed",
+      "stage": "post_plan",
+      "status-timestamps": {
+        "passed-at": "2022-06-08T20:32:12+08:00",
+        "running-at": "2022-06-08T20:32:11+08:00"
+      },
+      "created-at": "2022-06-08T12:31:56.94Z",
+      "updated-at": "2022-06-08T12:32:12.315Z"
+    },
+    "relationships": {
+      "run": {
+        "data": {
+          "id": "run-XdgtChJuuUwLoSmw",
+          "type": "runs"
+        }
+      },
+      "task-results": {
+        "data": [
+          {
+            "id": "taskrs-EmnmsEDL1jgd1GTP",
+            "type": "task-results"
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi"
+    }
+  }
+}
+```
+
+## Show a Task Result
+
+`GET /task-results/:task_result_id`
+
+| Parameter         | Description                |
+|-------------------|----------------------------|
+| `:task_result_id` | The task result ID to get. |
+
+This endpoint is used for showing details of a specific task result.
+
+| Status  | Response                                       | Reason                                       |
+|---------|------------------------------------------------|----------------------------------------------|
+| [200][] | [JSON API document][] (`type: "task-results"`) | Success                                      |
+| [404][] | [JSON API error object][]                      | Task result not found or user not authorized |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/task-results/taskrs-EmnmsEDL1jgd1GZz
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "taskrs-EmnmsEDL1jgd1GZz",
+    "type": "task-results",
+    "attributes": {
+      "message": "No issues found.\nSeverity threshold is set to low.",
+      "status": "passed",
+      "status-timestamps": {
+        "passed-at": "2022-06-08T20:32:12+08:00",
+        "running-at": "2022-06-08T20:32:11+08:00"
+      },
+      "url": "https://external.service/project/task-123abc",
+      "created-at": "2022-06-08T12:31:56.954Z",
+      "updated-at": "2022-06-08T12:32:12.27Z",
+      "task-id": "task-b6MaHZmGopHDtqhn",
+      "task-name": "example-task",
+      "task-url": "https://external.service/task-123abc",
+      "stage": "post_plan",
+      "is-speculative": false,
+      "workspace-task-id": "wstask-258juqenQeWb3DZz",
+      "workspace-task-enforcement-level": "mandatory"
+    },
+    "relationships": {
+      "task-stage": {
+        "data": {
+          "id": "ts-rL5ZsuwfjqfPJczZ",
+          "type": "task-stages"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/task-results/taskrs-EmnmsEDL1jgd1GZz"
+    }
+  }
+}
+```
+
+## Available Related Resources
+
+### Task Stage
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+
+- `run` - Additional information about the associated run.
+- `run.workspace` - Additional information about the associated workspace.
+- `task-results` - Additional information about the results for a task-stage.
