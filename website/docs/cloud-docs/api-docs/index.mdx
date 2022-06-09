@@ -47,6 +47,8 @@ See the navigation sidebar for the list of available endpoints.
 
 HashiCorp provides a [stability policy](/cloud-docs/api-docs/stability-policy) for the Terraform Cloud API, ensuring backwards compatibility for stable endpoints.
 
+See the [changelog](/cloud-docs/api-docs/changelog) for a list of api changes.
+
 ## Authentication
 
 All requests must be authenticated with a bearer token. Use the HTTP header `Authorization` with the value `Bearer <token>`. If the token is absent or invalid, Terraform Cloud responds with [HTTP status 401][401] and a [JSON API error object][]. The 401 status code is reserved for problems with the authentication token; forbidden requests with a valid token result in a 404.
