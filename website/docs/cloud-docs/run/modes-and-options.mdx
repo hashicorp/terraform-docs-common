@@ -58,7 +58,7 @@ A no-operation (empty) apply enables Terraform Cloud to apply a run from a plan 
 
 ## Plan Only/Speculative Plan
 
-This option creates a [speculative plan](/cloud-docs/run#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it. You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer terraform version without changing the workspace settings.
+This option creates a [speculative plan](/cloud-docs/run#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it. You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
 
 - **API:** Set the `plan-only` field to `true` and specify an available terraform version using the `terraform-version` field.
 - **UI:** Open the workspace's **Actions** menu, select **Start new plan**, and then choose **Plan only** as the run type.
