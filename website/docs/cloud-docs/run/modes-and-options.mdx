@@ -15,7 +15,7 @@ Terraform Cloud runs support many of the same modes and options available in the
 
 - **CLI:** Use `terraform plan -destroy` or `terraform destroy`
 - **API:** Use the `is-destroy` option.
-- **UI:** Use a workspace's "Destruction and Deletion" settings page.
+- **UI:** Use a workspace's **Destruction and Deletion** settings page.
 
 ## Refresh-Only Mode
 
@@ -54,11 +54,11 @@ A no-operation (empty) apply enables Terraform Cloud to apply a run from a plan 
 ~> **Warning:** Terraform Cloud cannot guarantee that a plan in this mode will produce no changes. We recommend checking the plan for drift before proceeding to the apply stage.
 
 - **API:** Set the `allow-empty-apply` field to `true`.
-- **UI:** Use the "Start new plan" action from a workspace's "Actions" menu, then select the "Allow empty apply" option in the new plan dialog.
+- **UI:** Open the workspace's **Actions** menu, select **Start new plan**, and then choose **Allow empty apply** as the run type.
 
 ## Plan Only/Speculative Plan
 
-The Plan Only option creates a plan that Terraform cannot apply. Plan Only runs are also known as [Speculative plans](/cloud-docs/run#speculative-plans). They show a set of possible changes and check them against Sentinel policies, but those changes cannot be applied. You can use it to test a specific Terraform version that may differ from the workspace version. This lets you check whether your configuration is compatible with a newer terraform version without changing the workspace settings.
+This option creates a [speculative plan](/cloud-docs/run#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it. You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
 
 - **API:** Set the `plan-only` field to `true` and specify an available terraform version using the `terraform-version` field.
 - **UI:** Open the workspace's **Actions** menu, select **Start new plan**, and then choose **Plan only** as the run type.
