@@ -47,12 +47,12 @@ Go to the workspace's notifications settings and press the "Add Notification" bu
 - **Email Recipients** Only available for emails. Select the users from the workspace's organization to notify.
 
 - **Triggers:** Whether to notify this destination for all events, or only for selected events. The following specific events are available:
-  - **Created**: When a run is created and enters the **Pending** state.
-  - **Planning**: When a run acquires the lock and starts to execute.
+  - **Created**: The run is created, and is queued.
+  - **Planning**: The run acquires the lock and starts to execute.
   - **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
-  - **Applying**: When a run begins the apply stage, after a plan is confirmed or auto-applied.
-  - **Completed**: When a run has completed successfully.
-  - **Errored**: When a run has terminated early due to error or cancellation.
+  - **Applying**: The run begins the apply stage, after a plan is confirmed or auto-applied.
+  - **Completed**: The run has completed successfully.
+  - **Errored**: The run has terminated early due to error or cancellation.
 
 When finished, click the "Create configuration" button.
 
