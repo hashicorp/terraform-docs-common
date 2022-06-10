@@ -33,30 +33,26 @@ To start receiving notifications for a workspace's runs:
 1. Create a new notification configuration.
 1. After saving the configuration, enable it.
 
-Go to the workspace's notifications settings and press the "Add Notification" button. This loads a form for creating a new notification configuration:
+Go to the workspace's notifications settings and press the "Add Notification" button. This loads a form for creating a new notification configuration. Fill in the following fields to configure your notifications:
 
-![Screenshot: a generic notification configuration page](/img/docs/notifications-all-types.png)
+- **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
 
-Fill in the following fields to configure your notifications:
+- **Name:** A display name to use for this notification configuration.
 
-* **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, or an Email. Choose which type you want from the drop-down. Payload contents are [documented below][inpage-payload].
+- **Webhook URL** Only available for generic, Slack, and Microsoft Teams webhooks. The destination URL for the webhook payload. This URL must accept HTTP or HTTPS `POST` requests and should be able to do something useful with the chosen payload type.
+  - For Slack notifications, refer to Slack's documentation on [how to create an incoming webhook](https://api.slack.com/messaging/webhooks#create_a_webhook).
+  - For Microsoft Teams notifications, refer to Microsoft's documentation on [how to create an incoming webhook](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
+- **Token** Optional; only available for generic webhooks. An arbitrary secret string that Terraform Cloud will use to sign its notification webhooks. Refer to [Notification Authenticity][inpage-hmac] for details. This setting is encrypted for storage, so you cannot view it after saving.
 
-* **Name:** An arbitrary display name to use for this notification configuration.
+- **Email Recipients** Only available for emails. Select the users from the workspace's organization to notify.
 
-* **Webhook URL** _(only available for generic and slack webhooks):_ The destination URL to send the webhook payload to. This URL must accept HTTP or HTTPS `POST` requests, and should be able to do something useful with the chosen payload type.
-  * If you are sending notifications to Slack, see Slack's documentation on [how to create an incoming webhook](https://api.slack.com/messaging/webhooks#create_a_webhook).
-
-* **Token** _(optional; only available for generic webhooks):_ An arbitrary secret string, which Terraform Cloud will use to sign its notification webhooks. ([See "Notification Authenticity" below][inpage-hmac].) This setting is encrypted for storage, and cannot be viewed after it is saved.
-
-* **Email Recipients** _(only available for emails):_ Select the users from the workspace's organization to notify.
-
-* **Triggers:** Whether to notify this destination for all events, or only for selected events. The following specific events are available:
-  * **Created**: When a run is created and enters the "Pending" state.
-  * **Planning**: When a run acquires the lock and starts to execute.
-  * **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
-  * **Applying**: When a run begins the apply stage, after a plan is confirmed or auto-applied.
-  * **Completed**: When a run has completed on a happy path and can't go any further.
-  * **Errored**: When a run has terminated early due to error or cancellation.
+- **Triggers:** Whether to notify this destination for all events, or only for selected events. The following specific events are available:
+  - **Created**: The run is created, and is queued.
+  - **Planning**: The run acquires the lock and starts to execute.
+  - **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
+  - **Applying**: The run begins the apply stage, after a plan is confirmed or auto-applied.
+  - **Completed**: The run has completed successfully.
+  - **Errored**: The run has terminated early due to error or cancellation.
 
 When finished, click the "Create configuration" button.
 
@@ -78,30 +74,38 @@ For both successful and unsuccessful verifications, you can click on the "Last R
 
 ## Notification Payloads
 
-[inpage-payload]: #notification-payloads
-
 ### Slack
 
 Notifications to Slack will contain the following information:
 
-![Screenshot: a workspace's access settings page](/img/docs/notifications-slack-sample.png)
+- The run's workspace (as a link)
+- The Terraform Cloud username and avatar of the person that created the run
+- The run ID (as a link)
+- The reason the run was queued (usually a commit message or a custom message)
+- The time the run was created
+- The event that triggered the notification and the time that event occurred
 
-* The run's workspace (as a link)
-* The Terraform Cloud username and avatar of the person that created the run
-* The run ID (as a link)
-* The reason the run was queued (usually a commit message or a custom message)
-* The time the run was created
-* The event that triggered the notification, and the time it occurred
+### Microsoft Teams
+
+Notifications to Microsoft Teams contain the following information:
+
+- The run's workspace (as a link)
+- The Terraform Cloud username and avatar of the person that created the run
+- The run ID
+- A link to view the run
+- The reason the run was queued (usually a commit message or a custom message)
+- The time the run was created
+- The event that triggered the notification and the time that event occurred 
+
+-> **Note:** Microsoft Teams notifications are available in Terraform Enterprise v202206-1 and later.
 
 ### Email
 
 Email notifications will contain the following information:
 
-![Screenshot: a workspace's access settings page](/img/docs/notifications-email-sample.png)
-
-* The run's workspace (as a link)
-* The run ID (as a link)
-* The event that triggered the notification, and if the run needs to be acted upon or not
+- The run's workspace (as a link)
+- The run ID (as a link)
+- The event that triggered the notification, and if the run needs to be acted upon or not
 
 ### Generic
 
@@ -111,9 +115,9 @@ A generic notification will contain information about a run and its state at the
 
 Some of the values in the payload can be used to retrieve additional information through the API, such as:
 
-* The [run ID](/cloud-docs/api-docs/run#get-run-details)
-* The [workspace ID](/cloud-docs/api-docs/workspaces#list-workspaces)
-* The [organization name](/cloud-docs/api-docs/organizations#show-an-organization)
+- The [run ID](/cloud-docs/api-docs/run#get-run-details)
+- The [workspace ID](/cloud-docs/api-docs/workspaces#list-workspaces)
+- The [organization name](/cloud-docs/api-docs/organizations#show-an-organization)
 
 ## Notification Authenticity
 
