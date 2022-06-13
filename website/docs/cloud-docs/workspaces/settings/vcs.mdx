@@ -48,15 +48,18 @@ See also:
 
 ## Automatic Run Triggering
 
--> **Note:** This setting only affects workspaces that specify a Terraform working directory. Without a working directory, the entire repository is considered relevant and any change will trigger a run. [The working directory setting](/cloud-docs/workspaces/settings#terraform-working-directory) can be found on the "General" settings page.
-
-For workspaces that specify a Terraform working directory, Terraform Cloud assumes that only some content in the repository is relevant to the workspace. Only changes that affect the relevant content will trigger a run. This behavior also applies to [speculative plans](/cloud-docs/run/#speculative-plans) on pull requests — Terraform Cloud won't queue plans for changes that aren't considered relevant.
+For workspaces that have "Only trigger runs when files in specified paths change" selected", Terraform Cloud assumes that only some content in the repository is relevant to the workspace. Only changes that affect the relevant content will trigger a run. This behavior also applies to [speculative plans](/cloud-docs/run/#speculative-plans) on pull requests — Terraform Cloud won't queue plans for changes that aren't considered relevant.
 
 By default, only the designated working directory is considered relevant.
 
-You can adjust this behavior in two ways:
+You can adjust this behavior in few ways:
 
-- **Add more trigger directories.** Terraform Cloud will queue runs for changes in any of the specified trigger directories (including the working directory).
+- **Specify trigger patterns.** Terraform Cloud will queue runs for every file that matches provided glob patterns.
+
+  For example, if you specify `/submodule/**/*.tf`, Terraform cloud will trigger runs for all the files changed nested below the `submodule` directory which end up with the `.tf` extension.
+  You could specify even more complex patterns such as `/**/networking/**/*` which will match all the files changed which have `networking` folder in the path, e.g. `/submodule/service-1/networking/private/main.tf`.
+  To learn more about glob patterns check [TODO: create glob patterns page]
+- **Specify trigger prefixes.** Terraform Cloud will queue runs for changes in any of the specified trigger directories matching the provided prefixes (including the working directory).
 
   For example, if you use a top-level `modules` directory to share Terraform code across multiple configurations, changes to the shared modules are relevant to every workspace that uses that repo. You can add `modules` as a trigger directory for each workspace to make sure they notice any changes to shared code.
 - **Mark the entire repository as relevant.** If you set the "Automatic Run Triggering" setting to "Always Trigger Runs," Terraform Cloud will assume that anything in the repository might affect the workspace's configuration, and will queue runs for any change.
