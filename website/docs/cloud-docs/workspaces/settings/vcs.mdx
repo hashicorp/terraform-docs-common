@@ -50,8 +50,6 @@ See also:
 
 For workspaces that have "Only trigger runs when files in specified paths change" selected", Terraform Cloud assumes that only some content in the repository is relevant to the workspace. Only changes that affect the relevant content will trigger a run. This behavior also applies to [speculative plans](/cloud-docs/run/#speculative-plans) on pull requests — Terraform Cloud won't queue plans for changes that aren't considered relevant.
 
-By default, only the designated working directory is considered relevant.
-
 You can adjust this behavior in few ways:
 
 - **Specify trigger patterns.** Terraform Cloud will queue runs for every file that matches provided glob patterns.
