@@ -61,7 +61,7 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 
 The notification is an HTTP POST request with a detailed payload describing the run. The payload depends on the type of notification configured.
 
-For Slack notifications, the payload conforms to the Slack webhook API, and will result in a message posted with informational attachments. (For an example, see [the Slack section of the notifications docs](/cloud-docs/workspaces/settings/notifications#slack).) For Generic notifications, the payload has several fields:
+For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API, and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams)  for examples. For generic notifications, the payload has several fields:
 
 | Name                             | Type   | Description                                                                                                                                                                                                                                    |
 | -------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -168,12 +168,12 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 | Key path                           | Type           | Default | Description                                                                                                                                                                              |
 | ---------------------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `data.type`                        | string         |         | Must be `"notification-configuration"`.                                                                                                                                                  |
-| `data.attributes.destination-type` | string         |         | Type of notification payload to send. Valid values are `"generic"`, `"email"` or `"slack"`.                                                                                              |
+| `data.attributes.destination-type` | string         |         | Type of notification payload to send. Valid values are `"generic"`, `"email"`, `"slack"` or `"microsoft-teams"`.                                                                                              |
 | `data.attributes.enabled`          | bool           | `false` | Disabled configurations will not send any notifications.                                                                                                                                 |
 | `data.attributes.name`             | string         |         | Human-readable name for the configuration.                                                                                                                                               |
 | `data.attributes.token`            | string or null | `null`  | Optional write-only secure token, which can be used at the receiving server to verify request authenticity. See [Notification Authenticity][notification-authenticity] for more details. |
 | `data.attributes.triggers`         | array          | `[]`    | Array of triggers for which this configuration will send notifications. See [Notification Triggers][notification-triggers] for more details and a list of allowed values.                |
-| `data.attributes.url`              | string         |         | HTTP or HTTPS URL to which notification requests will be made, only for configurations with `"destination_type:"` `"slack"` or `"generic"`                                               |
+| `data.attributes.url`              | string         |         | HTTP or HTTPS URL to which notification requests will be made, only for configurations with `"destination_type:"` `"slack"`, `"microsoft-teams"` or `"generic"`                                               |
 | `data.relationships.users`         | array          |         | Array of users part of the organization, only for configurations with `"destination_type:"` `"email"`                                                                                    |
 
 [notification-authenticity]: #notification-authenticity
@@ -610,7 +610,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 | `data.attributes.name`     | string | (previous value) | User-readable name for the configuration.                                                                                                                                                |
 | `data.attributes.token`    | string | (previous value) | Optional write-only secure token, which can be used at the receiving server to verify request authenticity. See [Notification Authenticity][notification-authenticity] for more details. |
 | `data.attributes.triggers` | array  | (previous value) | Array of triggers for sending notifications. See [Notification Triggers][notification-triggers] for more details.                                                                        |
-| `data.attributes.url`      | string | (previous value) | HTTP or HTTPS URL to which notification requests will be made, only for configurations with  `"destination_type:"` `"slack"` or `"generic"`                                              |
+| `data.attributes.url`      | string | (previous value) | HTTP or HTTPS URL to which notification requests will be made, only for configurations with  `"destination_type:"` `"slack"`, `"microsoft-teams"` or `"generic"`                                              |
 | `data.relationships.users` | array  |                  | Array of users part of the organization, only for configurations with `"destination_type:"` `"email"`                                                                                    |
 
 [notification-authenticity]: #notification-authenticity

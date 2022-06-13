@@ -7,6 +7,9 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-06-09
+* Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a search parameter `q`, so that agent pools can be searched by `name`. This is available in Terraform Enterprise v202207-1 and later.
+
 ### 2022-05-11
 
 * Updated Run Tasks permission to the following endpoints:
@@ -26,7 +29,9 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-04-29
 
-Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks-integration.mdx) to specify the allowed `status` attribute values.
+* Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks-integration) to specify the allowed `status` attribute values.
+* Updated [Organization Memberships](/cloud-docs/api-docs/organization-memberships#query-parameters) to add new `filter[email]` query parameter.
+* Updated [Teams](/cloud-docs/api-docs/teams#query-parameters) to add new `filter[names]` query parameter.
 
 ### 2022-04-04
 
