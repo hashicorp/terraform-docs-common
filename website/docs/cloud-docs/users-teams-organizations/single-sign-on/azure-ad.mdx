@@ -79,15 +79,22 @@ To edit your Azure SSO configuration settings:
 To configure team management in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit step 2, "User Attributes & Claims."
-   We recommend naming it "MemberOf", leaving the namespace blank, and potentially sourcing `user.assignedroles` as an easy starting point.
+1. Edit step 2, "User Attributes & Claims."  
+2. Add a new group claim.
+3. In the "Group Claims" side window, select the "Security Groups" radio button.  
+   For "Source Attribute", select `sAMAccountName` to have group names passed in the SAML or select "Group ID" to pass thru the UUIDs for the group.  See **Note** below for more information on UUID's.  
+   Check the box for "Customize the name of the group claim" and in the "Name (required)" field put "MemberOf" and leave namespace blank.
 
 -> **Note:** When Azure AD is configured to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your Terraform Cloud teams to match these Azure Group UUIDs.
 
 If you plan to make use of SAML to set usernames in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit step 2, "User Attributes & Claims."
+1. Edit step 2, "User Attributes & Claims."  
    We recommend naming the claim "Username", leaving the namespace blank, and sourcing something like `user.displayname` or `user.mailnickname`.
 
 If you namespaced any of your claims, note that the attribute name passed by Microsoft Azure AD will follow the form `<claim_namespace/claim_name>`. Consider this when setting Team and Username attribute names.
+
+## Troubleshooting the SAML assertion
+Use this guide to verify and validate the claims being sent in the SAML response. 
+https://support.hashicorp.com/hc/en-us/articles/1500005371682-Capturing-a-SAML-Assertion
