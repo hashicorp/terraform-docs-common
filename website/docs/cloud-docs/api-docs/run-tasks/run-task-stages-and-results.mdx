@@ -254,8 +254,11 @@ curl \
 ## Available Related Resources
 
 ### Task Stage
+
 The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
 
-- `run` - Additional information about the associated run.
-- `run.workspace` - Additional information about the associated workspace.
-- `task-results` - Additional information about the results for a task-stage.
+| Resource        | Description                                                |
+|-----------------|------------------------------------------------------------|
+| `run`           | Additional information about the associated run.           |
+| `run.workspace` | Additional information about the associated workspace.     |
+| `task-results`  | Additional information about the results for a task-stage. |
