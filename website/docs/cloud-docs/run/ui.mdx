@@ -27,7 +27,7 @@ The Terraform code for a normal run always comes from version control, and is al
 
 In a workspace linked to a VCS repository, runs start automatically when you merge or commit changes to version control.
 
-A workspace is linked to one branch of a VCS repository and ignores changes to other branches. Workspaces can also ignore some changes within their branch. If a Terraform working directory is configured, Terraform Cloud assumes that only some of the content in the repository is relevant to Terraform, and ignores changes outside of that content. You can also specify which files and directories within your repository trigger runs. Refer to [Automatic Run Triggering](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for details.
+A workspace is linked to one branch of a VCS repository and ignores changes to other branches. You can specify which files and directories within your repository trigger runs. Refer to [Automatic Run Triggering](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for details.
 
 -> **Note:** A workspace with no runs will not accept new runs via VCS webhook. At least one run must be manually queued to confirm that the workspace is ready for further runs.
 
