@@ -12,10 +12,11 @@ Refer to [Terraform Configurations in Terraform Cloud Workspaces](/cloud-docs/wo
 
 You can use the [Update a Workspace endpoint](/cloud-docs/api-docs/workspaces#update-a-workspace) in the Workspaces API to change one or more VCS settings. We also recommend using this endpoint to automate changing VCS connections for many workspaces at once. For example, when you move a VCS server or remove a deprecated API version.
 
-## VCS Settings
+## Version Control Settings
 
 To change a workspace's VCS settings:
-1. Go to the workspace and click **Settings > Version Control**. The **VCS Settings** page appears.
+
+1. Go to the workspace and click **Settings > Version Control**. The **Version Control** page appears.
 1. Choose the desired settings and click **Update VCS settings**.
 
 You can update the following types of VCS settings for the workspace.
@@ -30,6 +31,21 @@ You can take one of the following actions:
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+### Terraform Working Directory
+
+Specify the directory where Terraform will execute runs. This defaults to the root directory in your repository, but you may want to specify a root directory if you have directories for multiple different Terraform configurations within the same repository. For example, if you had one `staging` directory and one `production` directory.
+
+A working directory is required when you use [trigger prefixes](#automatic-run-triggering).
+
+### Apply Method
+
+Choose a workflow for Terraform runs.
+
+- **Auto apply:** Terraform will apply changes from successful plans without prompting for approval. A push to the default branch of your repository will trigger a plan and apply cycle. You may want to do this in non-interactive environments, like continuous deployment workflows.
+
+  !> **Warning:** If you choose auto apply, make sure that no one can change your infrstructure outside of your automated build pipeline. This reduces the risk of congfiguration drift and unexpected changes.
+
+- **Manual apply:** Terraform will ask for approval before applying changes from a successful plan. A push to the default branch of your repository will trigger a plan, and then Terraform will wait for confirmation.
 
 ### Automatic Run Triggering
 
@@ -44,23 +60,25 @@ This option instructs Terraform to begin a run when changes are pushed to any fi
 This option instructs Terraform to begin new runs only for changes that affected specified files and directories. This behavior also applies to [speculative plans](/cloud-docs/run/#speculative-plans) on pull requests.
 
 You can use trigger patterns and trigger prefixes in the **Add path** field to specify groups of files and directories.
-- **Trigger Patterns:** (Recommended) Use glob patterns to specify the files that should trigger a new run. For example, `/submodule/**/*.tf`, specifies all files with the `.tf` extension that are nested below the `submodule` directory. You can also use more complex patterns like `/**/networking/**/*`, which specifies all files in the `networking` folder at this level of the file path (e.g., `/submodule/service-1/networking/private/main.tf`). Refer to [TODO: create glob patterns page](link) for details.
+- **Trigger Patterns:** (Recommended) Use glob patterns to specify the files that should trigger a new run. For example, `/submodule/**/*.tf`, specifies all files with the `.tf` extension that are nested below the `submodule` directory. You can also use more complex patterns like `/**/networking/**/*`, which specifies all files in the `networking` folder at this level of the file path (e.g., `/submodule/service-1/networking/private/main.tf`). Refer to [Glob Patterns for Automatic Run Triggering](#glob-patterns-for-automatic-run-triggering) for details.
 - ** Trigger Prefixes:** Terraform Cloud will queue runs for changes in any of the specified trigger directories matching the provided prefixes (including the working directory). For example, if you use a top-level `modules` directory to share Terraform code across multiple configurations, changes to the shared modules are relevant to every workspace that uses that repo. You can add `modules` as a trigger directory for each workspace to make sure they notice any changes to shared code.
 
 -> **Note:** Terraform Cloud triggers runs on all attached workspaces if it does not receive a list of changed files or if that list is too large to process. When this happens, Terraform Cloud may show several runs with completed plans that do not result in infrastructure changes.
-
-### Terraform Working Directory
-
-TODO: Does this only apply when you are in local execution mode? I'm unsure when you would want to set this. Can we give users some context Did we take this out --> I don't see it in the demo video.
-
-### Automatic Speculative Plans
-
-Whether to perform [speculative plans on pull requests](/cloud-docs/run/ui#speculative-plans-on-pull-requests) to the connected repository, to assist in reviewing proposed changes. Automatic speculative plans are enabled by default, but you can disable them for any workspace.
 
 ### VCS Branch
 
 This designates which branch of the repository Terraform Cloud should use in the workspace. If left blank, Terraform Cloud uses the repository's default branch.
 
+### Automatic Speculative Plans
+
+Whether to perform [speculative plans on pull requests](/cloud-docs/run/ui#speculative-plans-on-pull-requests) to the connected repository, to assist in reviewing proposed changes. Automatic speculative plans are enabled by default, but you can disable them for any workspace.
+
+### Include Submodules on Clone
+
 Select **Include submodules on clone** to recursively clone all of the repository's Git submodules when Terraform Cloud feteches a configuration.
 
 -> **Note:** The [SSH key for cloning Git submodules](/cloud-docs/vcs/#ssh-keys) is set in the VCS provider settings for the organization, and is not related to the workspace's SSH key for Terraform modules.
+
+## Glob Patterns for Automatic Run Triggering
+
+TBD Add content.
