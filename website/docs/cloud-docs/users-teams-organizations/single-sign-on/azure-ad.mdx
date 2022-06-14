@@ -82,7 +82,7 @@ To configure team management in your Microsoft Azure AD application:
 1. Edit step 2, "User Attributes & Claims."  
 2. Add a new group claim.
 3. In the "Group Claims" side window, select the "Security Groups" radio button.  
-   For "Source Attribute", select "sAMAccountName" to have group names passed in the SAML or select "Group ID" to pass thru the UUIDs for the group.  See **Note** below.
+   For "Source Attribute", select `sAMAccountName` to have group names passed in the SAML or select "Group ID" to pass thru the UUIDs for the group.  See **Note** below for more information on UUID's.  
    Check the box for "Customize the name of hte group claim" and in the "Name (required)" field put "MemberOf" and leave namespace blank.
 
 -> **Note:** When Azure AD is configured to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your Terraform Cloud teams to match these Azure Group UUIDs.
