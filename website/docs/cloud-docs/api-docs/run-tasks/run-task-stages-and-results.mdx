@@ -12,44 +12,43 @@ page_title: Run Task Stages and Results - API Docs - Terraform Cloud and Terrafo
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Run Task Stages API
-
-Each run passes through several [stages](/cloud-docs/run/states) of action, and Terraform Cloud shows the progress through those stages as run states.
-Run task stages are actioned as the run processes the different stages, namely;
-
-- [Post-Plan Stage](/cloud-docs/run/states#3-the-post-plan-stage) which executes [run tasks](/cloud-docs/workspaces/settings/run-tasks) after the plan is complete.
+# Run Task Stages and Results API
 
 -> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
+Terraform Cloud triggers [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the [Post-Plan Stage](/cloud-docs/run/states#3-the-post-plan-stage) of a Terraform run, which occurs after Terraform completes the plan. As run tasks progress, Terraform Cloud uses run task stages to report their status. Each stage status produces a results object that contains details about the run task's operations. These run task results determine whether the run task passes or fails.
+
+This page lists the endpoints you can use to retrieve run task stages and the results from those stages. Refer to the [Run Tasks API](https://www.terraform.io/cloud-docs/api-docs/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](https://www.terraform.io/cloud-docs/api-docs/run-tasks-integration) for endpoints necessary to build custom run tasks for the Terraform Cloud ecosystem.
+
 ## Attributes
 
-### Task Stage States
+### Run Task Stage Status
 
-The task stage state is found in `data.attributes.status`, and you can reference the following list of possible states.
+The run task stage status is found in `data.attributes.status`, and you can reference the following list of possible values.
 
-| State         | Description                                                  |
-|---------------|--------------------------------------------------------------|
-| `pending`     | The initial status of a task stage once it has been created. |
-| `running`     | The task stage is running.                                   |
-| `passed`      | All of the results in the task stage passed.                 |
-| `failed`      | One more results in the task stage failed.                   |
-| `errored`     | The task stage has errored. This is a final state.           |
-| `canceled`    | The task stage has been canceled.                            |
-| `unreachable` | The task stage could not be executed.                        |
+| Status        | Description                                                                      |
+|---------------|----------------------------------------------------------------------------------|
+| `pending`     | The initial status of a run task stage after creation.                           |
+| `running`     | The run task stage is executing one or more tasks, which have not yet completed. |
+| `passed`      | All of the run task results in the stage passed.                                 |
+| `failed`      | One more results in the run task stage failed.                                   |
+| `errored`     | The run task stage has errored.                                                  |
+| `canceled`    | The run task stage has been canceled.                                            |
+| `unreachable` | The run task stage could not be executed.                                        |
 
-### Task Result States
+### Run Task Result Status
 
-The task result state is found in `data.attributes.status`, and you can reference the following list of possible states.
+The run task result status is found in `data.attributes.status`, and you can reference the following list of possible values.
 
-| State         | Description                                                   |
-|---------------|---------------------------------------------------------------|
-| `pending`     | The initial status of a task result once it has been created. |
-| `running`     | The task result is running.                                   |
-| `passed`      | All of the results in the task result passed.                 |
-| `failed`      | One more results in the task result failed.                   |
-| `errored`     | The task result has errored. This is a final state.           |
-| `canceled`    | The task result has been canceled.                            |
-| `unreachable` | The task result could not be executed.                        |
+| Status        | Description                                                           |
+|---------------|-----------------------------------------------------------------------|
+| `pending`     | The initial status of a run task result after creation.               |
+| `running`     | The associated run task is begun execution and has not yet completed. |
+| `passed`      | The associated run task executed and returned a passing result.       |
+| `failed`      | The associated run task executed and returned a failed result.        |
+| `errored`     | The associated run task has errored during execution.                 |
+| `canceled`    | The associated run task execution has been canceled.                  |
+| `unreachable` | The associated run task could not be executed.                        |
 
 ## List Task Stages in a Run
 
@@ -129,7 +128,7 @@ curl \
 
 | Parameter        | Description               |
 |------------------|---------------------------|
-| `:task_stage_id` | The task stage ID to get. |
+| `:task_stage_id` | The run task stage ID to get. |
 
 This endpoint is used for showing details of a specific task stage.
 
@@ -187,15 +186,15 @@ curl \
 }
 ```
 
-## Show a Task Result
+## Show a Run Task Result
 
 `GET /task-results/:task_result_id`
 
 | Parameter         | Description                |
 |-------------------|----------------------------|
-| `:task_result_id` | The task result ID to get. |
+| `:task_result_id` | The run task result ID to get. |
 
-This endpoint is used for showing details of a specific task result.
+This endpoint shows the details for a specific run task result.
 
 | Status  | Response                                       | Reason                                       |
 |---------|------------------------------------------------|----------------------------------------------|
