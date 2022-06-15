@@ -74,7 +74,34 @@ The run state is found in `data.attributes.status`, and you can reference the fo
 | `discarded`            | The run has been discarded. This is a final state.                                                                                                                                                                                                                                                                                                                                                                                 |
 | `errored`              | The run has errored. This is a final state.                                                                                                                                                                                                                                                                                                                                                                                        |
 | `canceled`             | The run has been canceled.                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `force_canceled`       | A workspace admin forcefully canceled the run.                                                                                                                                                                                                                                                                                                                                      |
+| `force_canceled`       | A workspace admin forcefully canceled the run.
+
+
+### Run Operations
+
+*Applicable for runs list query parameters*
+
+The run operation specifies the mode in which the terraform executed, and you can reference the following list of possible operation modes.
+
+| Operation               | Description                                                                                                                |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `plan_only`             |  Indicates the run completed without an apply phase. Most commonly known as an speculative run.                            |
+| `plan_and_apply`        |  Indicates the run completed with both plan and apply phases.                                                              |
+| `refresh_only`          |  Specifies the run was instructed to execute a plan in which updates state.                                                |
+| `destroy`               |  Specifies the run destroyed all objects, regardless of configuration changes                                              |
+| `empty_apply`           |  Specifies the run performed an apply with no changes to resources. Most commonly used to upgrade terrafor state versions. |
+
+
+### Run Sources
+
+*Applicable for runs list query parameters*
+
+| Source                      | Description                                                                                     |
+|-----------------------------|-------------------------------------------------------------------------------------------------|
+| `tfe-ui`                    |  Indicates a run was queued from Terraform Cloud UI                                             |
+| `tfe-api`                   |  Indicates a run was queued from Terraform Cloud API                                            |
+| `tfe-configuration-version` |  Indicates a run was queued from a Configuration Version, triggered from a VCS provider.        |
+
 
 ## Create a Run
 
@@ -303,10 +330,16 @@ curl \
 
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter      | Description                                                          |
-|----------------|----------------------------------------------------------------------|
-| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.   |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 runs per page. |
+| Parameter           | Description                                                                            |
+|---------------------|----------------------------------------------------------------------------------------|
+| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                     |
+| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                   |
+| `filter[operation]` | **Optional.** Options are listed [above](/cloud-docs/api-docs/run#run-operations)   |
+| `filter[status]`    | **Optional.** Options are listed [above](/cloud-docs/api-docs/run#run-states)       |
+| `filter[source]`    | **Optional.** Options are listed [above](/cloud-docs/api-docs/run#run-states)       |
+| `search[name]`      | **Optional.** Searches runs that matches the supplied username                         |
+| `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha                       |
+
 
 ### Sample Request
 
