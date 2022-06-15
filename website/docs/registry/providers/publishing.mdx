@@ -47,7 +47,7 @@ The Terraform Registry supports a JSON configuration file in each release that p
 }
 ```
 
-This file is conventionally named `terraform-registry-manifest.json` at the root of the provider repository and will be renamed in the release assets.
+This file is conventionally named `terraform-registry-manifest.json` at the root of the provider repository and will be renamed in the release assets. The file must contain valid JSON syntax, such as no trailing commas in lists or objects.
 
 It supports the following fields:
 
@@ -61,7 +61,7 @@ It supports the following fields:
 
 ### Creating a GitHub Release
 
-Publishing a provider requires at least one version be available on GitHub Releases. The tag must be a valid [Semantic Version](https://semver.org/) preceded with a `v` (for example, `v1.2.3`).
+Publishing a provider requires at least one version be available on GitHub Releases. The tag must be a valid [Semantic Version](https://semver.org/) preceded with a `v` (for example, `v1.2.3`). There must not be a branch name with the same name as the tag.
 
 Terraform CLI and the Terraform Registry follow the Semantic Versioning specification when detecting a valid version, sorting versions, solving version constraints, and choosing the latest version. Prerelease versions are supported (available if explicitly defined but not chosen automatically) with a hyphen (-) delimiter, such as `v1.2.3-pre`.
 
@@ -84,6 +84,7 @@ To use GitHub Actions to publish new provider releases to the Terraform Registry
 - `GPG_PRIVATE_KEY` - Your ASCII-armored GPG private key. You can export this with `gpg --armor --export-secret-keys [key ID or email]`.
 - `PASSPHRASE` - The passphrase for your GPG private key.
 
+1. Ensure there is not a branch name with the new valid version tag name (e.g. `v1.2.3`).
 1. Push a new valid version tag (e.g. `v1.2.3`) to test that the GitHub Actions releaser is working.
 
 Once a release is created, you can move on to [Publishing to the Registry](#publishing-to-the-registry).
@@ -96,6 +97,7 @@ GoReleaser is a tool for building Go projects for multiple platforms, creating a
 1. Copy the [.goreleaser.yml file](https://github.com/hashicorp/terraform-provider-scaffolding/blob/main/.goreleaser.yml) from the [hashicorp/terraform-provider-scaffolding](https://github.com/hashicorp/terraform-provider-scaffolding) repository.
 1. Cache the password for your GPG private key with `gpg --armor --detach-sign` (see note below).
 1. Set your `GITHUB_TOKEN` to a [Personal Access Token](https://github.com/settings/tokens/new?scopes=public_repo) that has the **public_repo** scope.
+1. Ensure there is not a branch name with the expected version tag name (e.g. `v1.2.3`).
 1. Tag your version with `git tag v1.2.3` and push your tags to GitHub.
 1. Build, sign, and upload your release with `goreleaser release --rm-dist`.
 
