@@ -112,10 +112,6 @@ Marking a variable as “sensitive” will prevent it from being displayed in th
 
 The logs from a Terraform plan or apply operation are visible to any user with at least “read” level access in the associated workspace. While Terraform tries to avoid writing sensitive information to logs, redactions are best-effort. This feature should not be treated as a security boundary, but instead as a mechanism to mitigate accidental exposure. Additionally, Terraform Cloud is unable to protect against malicious users who attempt to use Terraform logs to exfiltrate sensitive data.
 
-### Cross-Workspace Data Access via Cloud Agents
-
-[Terraform Cloud Agents](/cloud-docs/agents) should be regarded as a global resource within an organization. Once enabled, any workspace will be able to target any agent pool. A malicious actor can create a workspace that exfiltrates the agent’s API token, accesses private resources from the perspective of the agent, or modifies the agent’s environment. It’s important to consider these risks when using cloud agents.
-
 ## Recommendations for Securely Using Terraform Cloud
 
 ### Enforce Strong Authentication
@@ -145,6 +141,10 @@ Workspaces may be configured to [enable or disable speculative plans for pull re
 ### Restrict Access to Workspace State
 
 Workspaces may be configured to share their state with other workspaces within the organization or globally with the entire organization via the [remote state setting](/cloud-docs/workspaces/state#accessing-state-from-other-workspaces). Because workspace state may contain sensitive information, we recommend that you follow the principle of least privilege and only enable state access between workspaces that specifically need information from each other.
+
+### Use Separate Agent Pools for Sensitive Workspaces
+
+Terraform Cloud Agents can be shared across all workspaces within an organzation, or scoped to specific workspaces. We recommend creating seperate agent pools for sensitive workspaces, to prevent malicious cross-workspace data access via agents.
 
 ### Treat Archivist URLs as Secrets
 
