@@ -70,14 +70,15 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required unless otherwise specified.
 
-| Key path                   | Type   | Default | Description                                                       |
-| -------------------------- | ------ | ------- | ----------------------------------------------------------------- |
-| `data.type`                | string |         | Must be `"tasks"`.                                                |
-| `data.attributes.name`     | string |         | The name of the task. Can include letters, numbers, `-`, and `_`. |
-| `data.attributes.url`      | string |         | URL to send a run task payload.                                   |
-| `data.attributes.category` | string |         | Must be `"task"`.                                                 |
-| `data.attributes.hmac-key` | string |         | (Optional) HMAC key to verify run task.                           |
-| `data.attributes.enabled`  | bool   | true    | (Optional) Whether the task will be run.                          |
+| Key path                      | Type   | Default | Description                                                                              |
+|-------------------------------|--------|---------|------------------------------------------------------------------------------------------|
+| `data.type`                   | string |         | Must be `"tasks"`.                                                                       |
+| `data.attributes.name`        | string |         | The name of the task. Can include letters, numbers, `-`, and `_`.                        |
+| `data.attributes.url`         | string |         | URL to send a run task payload.                                                          |
+| `data.attributes.description` | string |         | The description of the task. Can include spaces, letters, numbers and special characters |
+| `data.attributes.category`    | string |         | Must be `"task"`.                                                                        |
+| `data.attributes.hmac-key`    | string |         | (Optional) HMAC key to verify run task.                                                  |
+| `data.attributes.enabled`     | bool   | true    | (Optional) Whether the task will be run.                                                 |
 
 ### Sample Payload
 
@@ -88,6 +89,7 @@ Properties without a default value are required unless otherwise specified.
       "attributes": {
         "name": "example",
         "url": "http://example.com",
+        "description": "Some description example",
         "hmac_key": "secret",
         "enabled": "true",
         "category": "task"
@@ -118,6 +120,7 @@ curl \
         "category": "task",
         "name": "my-run-task",
         "url": "http://example.com",
+        "description": "Simple description",
         "enabled": "true",
         "hmac-key": null,
       },
@@ -182,6 +185,7 @@ curl \
                 "category": "task",
                 "name": "my-task",
                 "url": "http://example.com",
+                "description": "Simple description",
                 "enabled": "true",
                 "hmac-key": null,
             },
@@ -258,6 +262,7 @@ curl --request GET \
         "category": "task",
         "name": "my-task",
         "url": "http://example.com",
+        "description": "Simple description",
         "enabled": "true",
         "hmac-key": null,
       },
@@ -352,6 +357,7 @@ curl \
         "category": "task",
         "name": "new-example",
         "url": "http://new-example.com",
+        "description": "Simple description",
         "enabled": "false",
         "hmac-key": null,
       },
