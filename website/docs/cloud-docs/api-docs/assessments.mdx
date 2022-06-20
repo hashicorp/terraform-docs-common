@@ -1,0 +1,94 @@
+---
+page_title: Assessments - API Docs - Terraform Cloud
+---
+
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+
+[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+
+# Assessment Results API
+
+An Assessment Result is the record of an instance of continuous validation such as Drift Detection.
+
+## Show assessment result
+
+`GET api/v2/assessment-results/:assessment_result_id`
+
+| Parameter               | Description              |
+| ----------------------- | ------------------------ |
+| `:assessment_result_id` | The assessment result ID |
+
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/assessment-results/asmtres-cHh5777xm
+```
+
+### Sample Response
+
+```json
+{
+  "id": "asmtres-UG5rE9L1373hMYMA",
+  "type": "assessment-results",
+  "data": {
+    "attributes": {
+      "drifted": true,
+      "succeeded": true,
+      "error-msg": null,
+      "created-at": "2022-07-02T22:29:58+00:00",
+      "log-read-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6OFA1eEdlSFVHRSs4YUcwaW83a1dRRDA0U2E3T3FiWk1HM2NyQlNtcS9JS1hHN3dmTXJmaFhEYTlHdTF1ZlgxZ2wzVC9kVTlNcjRPOEJkK050VFI3U3dvS2ZuaUhFSGpVenJVUFYzSFVZQ1VZYno3T3UyYjdDRVRPRE5pbWJDVTIrNllQTENyTndYd1Y0ak1DL1dPVlN1VlNxKzYzbWlIcnJPa2dRRkJZZGtFeTNiaU84YlZ4QWs2QzlLY3VJb3lmWlIrajF4a1hYZTlsWnFYemRkL2pNOG9Zc0ZDakdVMCtURUE3dDNMODRsRnY4cWl1dUN5dUVuUzdnZzFwL3BNeHlwbXNXZWRrUDhXdzhGNnF4c3dqaXlZS29oL3FKakI5dm9uYU5ZKzAybnloREdnQ3J2Rk5WMlBJemZQTg"
+    },
+    "links": {
+      "self": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/"
+      "json-output": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/json-output"
+      "json-schema": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/json-schema"
+    }
+  }
+}
+```
+
+## Retrieve the JSON output from the assessment execution
+
+`GET api/v2/assessment-results/:assessment_result_id/json-output`
+
+Returns the JSON plan output associated with the assessment result
+
+`GET api/v2/assessment-results/:assessment_result_id/json-schema`
+
+Returns the JSON [provider schema](https://www.terraform.io/cli/commands/providers/schema) associated with the assessment result
+
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) that has admin level access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+### Sample Requests
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/assessment-results/asmtres-cHh5777xm/json-output
+```
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/assessment-results/asmtres-cHh5777xm/json-schema
+```
