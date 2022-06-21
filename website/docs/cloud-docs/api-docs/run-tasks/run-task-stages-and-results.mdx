@@ -18,15 +18,14 @@ page_title: Run Task Stages and Results - API Docs - Terraform Cloud and Terrafo
 
 -> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-Run Task Stages and Run Task Results are used within Terraform Cloud to track the execution of [run tasks](/cloud-docs/workspaces/settings/run-tasks) during a [run][].
+Terraform Cloud uses run task stages and run task results to track [run task](/cloud-docs/workspaces/settings/run-tasks) execution.
 
-This page lists the endpoints you can use to retrieve run task stages and the results from those stages. Refer to the [Run Tasks API](/cloud-docs/api-docs/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](/cloud-docs/api-docs/run-tasks-integration) for endpoints necessary to build custom run tasks for the Terraform Cloud ecosystem.
+When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that will trigger run tasks. Currently, you can only configure run tasks during the [Post-Plan Stage](/cloud-docs/run/states#3-the-post-plan-stage), so Terraform Cloud produces one `post-plan` run task stage for each run.
 
-### Detailed Description
+Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, Terraform Cloud creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
 
-When a [run][] is created, the [associated run tasks](/cloud-docs/workspaces/settings/run-tasks#associating-run-tasks-with-a-workspace) in the workspace are read, and a run task stage is created for each unique [stage](/cloud-docs/run/states). Currently only the [Post-Plan Stage](/cloud-docs/run/states#3-the-post-plan-stage) may have tasks, but this may change in the future. Each run task stage then creates a run task result for each task in that stage. For example;
+This page lists the endpoints to retrieve run task stages and run task results. Refer to the [Run Tasks API](/cloud-docs/api-docs/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](/cloud-docs/api-docs/run-tasks-integration) for endpoints to build custom run tasks for the Terraform Cloud ecosystem.
 
-A workspace has two associated tasks called `alpha` and `beta`, and both are in the `post-plan` stage. When a run is created, it will create one run task stage called `post-plan`, and the `post-plan` run task stage will have two run task results; one result for the `alpha` task and the other result for the `beta` task.
 
 ## Attributes
 
@@ -58,7 +57,7 @@ The run task result status is found in `data.attributes.status`, and you can ref
 | `canceled`    | The associated run task execution has been canceled.                  |
 | `unreachable` | The associated run task could not be executed.                        |
 
-## List Task Stages in a Run
+## List the Run Task Stages in a Run
 
 `GET /runs/:run_id/task-stages`
 
@@ -130,7 +129,7 @@ curl \
 }
 ```
 
-## Show a Task Stage
+## Show a Run Task Stage
 
 `GET /task-stages/:task_stage_id`
 
@@ -138,7 +137,7 @@ curl \
 |------------------|---------------------------|
 | `:task_stage_id` | The run task stage ID to get. |
 
-This endpoint is used for showing details of a specific task stage.
+This endpoint shows details of a specific task stage.
 
 | Status  | Response                                      | Reason                                      |
 |---------|-----------------------------------------------|---------------------------------------------|
