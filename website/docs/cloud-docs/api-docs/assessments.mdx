@@ -52,12 +52,12 @@ $ curl \
       "succeeded": true,
       "error-msg": null,
       "created-at": "2022-07-02T22:29:58+00:00",
-      "log-read-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6OFA1eEdlSFVHRSs4YUcwaW83a1dRRDA0U2E3T3FiWk1HM2NyQlNtcS9JS1hHN3dmTXJmaFhEYTlHdTF1ZlgxZ2wzVC9kVTlNcjRPOEJkK050VFI3U3dvS2ZuaUhFSGpVenJVUFYzSFVZQ1VZYno3T3UyYjdDRVRPRE5pbWJDVTIrNllQTENyTndYd1Y0ak1DL1dPVlN1VlNxKzYzbWlIcnJPa2dRRkJZZGtFeTNiaU84YlZ4QWs2QzlLY3VJb3lmWlIrajF4a1hYZTlsWnFYemRkL2pNOG9Zc0ZDakdVMCtURUE3dDNMODRsRnY4cWl1dUN5dUVuUzdnZzFwL3BNeHlwbXNXZWRrUDhXdzhGNnF4c3dqaXlZS29oL3FKakI5dm9uYU5ZKzAybnloREdnQ3J2Rk5WMlBJemZQTg"
     },
     "links": {
       "self": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/"
       "json-output": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/json-output"
       "json-schema": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/json-schema"
+      "log-output": "/api/v2/assessment-results/asmtres-UG5rE9L1373hMYMA/log-output"
     }
   }
 }
@@ -72,6 +72,10 @@ Returns the JSON plan output associated with the assessment result
 `GET api/v2/assessment-results/:assessment_result_id/json-schema`
 
 Returns the JSON [provider schema](https://www.terraform.io/cli/commands/providers/schema) associated with the assessment result
+
+`GET api/v2/assessment-results/assessment_result_id/log-output`
+
+Returns Terraform JSON log output
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) that has admin level access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -91,4 +95,11 @@ $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/assessment-results/asmtres-cHh5777xm/json-schema
+```
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/assessment-results/asmtres-cHh5777xm/log-output
 ```
