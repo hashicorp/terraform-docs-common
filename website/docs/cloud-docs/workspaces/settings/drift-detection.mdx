@@ -35,11 +35,11 @@ Drift detection runs in the background and does not affect your concurrency limi
 
 ## Workspace Drift Status
 
-After you enable drift detection, the workspace displays a drift status. A workspace can have one of the following drift statuses:
+After you enable drift detection, the workspace displays one of the following drift statuses:
 
 - **Pending:** Terraform Cloud is performing a drift detection assessment for the workspace or there are no prior drift detection results. For example, a workspace will show this status when you enable drift detection during an active run.
 - **Drifted:** Terraform Cloud has found that one or more real-world infrastructure resources do not match the workspace’s state file.
--  **Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace and will retry in 24 hours.
+-  **Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace and will retry in 24 hours from the failed assessment.
 - **Checked:** Terraform Cloud successfully completed the drift detection assessment for this workspace and found no drift.
 
 The workspace’s **Drift** tab contains details about the last drift detection assessment. If the workspace has drifted, Terraform Cloud shows how the real-world infrastructure has changed from the latest version of the workspace’s state file.
@@ -47,7 +47,7 @@ The workspace’s **Drift** tab contains details about the last drift detection 
 
 ## Correcting Drift
 
-When Terraform Cloud finds drift in a workspace, you can use one of the following approaches to correct that drift:
+You can use one of the following approaches to correct workspace drift:
 
 - **Overwrite Drift:** Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
-- **Update Terraform state and configuration to match drift:** Queue a [refresh-only plan](/cloud-docs/run/modes-and-options#refresh-only-mode) to update your Terraform state to match your real-world infrastructure. You can also modify your Terraform configuration to include any new or changed resources. Refer to our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial for a detailed example.
+- **Update Terraform state and configuration to match drift:** Queue a [refresh-only plan](/cloud-docs/run/modes-and-options#refresh-only-mode) to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply, reintroducing drift into the workspace. Refer to our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial for a detailed example.
