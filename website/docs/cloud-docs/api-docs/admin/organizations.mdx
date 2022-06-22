@@ -101,7 +101,8 @@ curl \
         "terraform-worker-sudo-enabled": false,
         "notification-email": "my-organization@example.com",
         "global-module-sharing": false,
-        "sso-enabled": false
+        "sso-enabled": false,
+        "workspace-limit": null
       },
       "relationships": {
         "owners": {
@@ -200,7 +201,8 @@ curl \
       "terraform-worker-sudo-enabled": false,
       "notification-email": "my-organization@example.com",
       "global-module-sharing": false,
-      "sso-enabled": false
+      "sso-enabled": false,
+      "workspace-limit": null
     },
     "relationships": {
       "owners": {
@@ -248,14 +250,15 @@ curl \
 
 This PATCH endpoint requires a JSON object with the following properties as a request payload. Note that the Admin Organizations API may offer a different set of attributes than the [Organizations API](/cloud-docs/api-docs/organizations#request-body-1).
 
-| Key path                                               | Type    | Default | Description                                                                                                                                                                                                                                              |
-| ------------------------------------------------------ | ------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                                            | string  |         | Must be `"organizations"`                                                                                                                                                                                                                                |
-| `data.attributes.access-beta-tools`                    | boolean | false   | Whether or not workspaces in the organization can be configured to use beta versions of Terraform.                                                                                                                                                       |
-| `data.attributes.global-module-sharing`                | boolean | false   | If true, modules in the organization's private module repository will be available to all other organizations in this TFE instance. Enabling this will disable any previously configured [module consumers](#list-module-consumers-for-an-organization). |
-| `data.attributes.is-disabled`                          | boolean | false   | Disabling the organization will remove all permissions and no longer be accessible to users.                                                                                                                                                             |
-| `data.attributes.terraform-build-worker-apply-timeout` | string  | 24h     | Maximum run time for Terraform applies for this organization. Will use the configured global defaults if left unset. Specify a duration with a decimal number and a unit suffix.                                                                         |
-| `data.attributes.terraform-build-worker-plan-timeout`  | string  | 2h      | Maximum run time for Terraform plans for this organization. Will use the configured global defaults if left unset. Specify a duration with a decimal number and a unit suffix.                                                                           |
+| Key path                                               | Type    | Default | Description                                                                                                                                                                                                                                                                                         |
+| ------------------------------------------------------ | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                                            | string  |         | Must be `"organizations"`                                                                                                                                                                                                                                                                           |
+| `data.attributes.access-beta-tools`                    | boolean | false   | Whether or not workspaces in the organization can be configured to use beta Terraform versions.                                                                                                                                                                                                  |
+| `data.attributes.global-module-sharing`                | boolean | false   | If true, modules in the organization's private module repository will be available to all other organizations in this TFE instance. Enabling this will disable any previously configured [module consumers](#list-module-consumers-for-an-organization).                                            |
+| `data.attributes.is-disabled`                          | boolean | false   | Removes all permissions from the organization and makes it inaccessible to users.                                                                                                                                                                                                        |
+| `data.attributes.terraform-build-worker-apply-timeout` | string  | 24h     | Maximum run time for Terraform applies for this organization. Will use the configured global defaults if left unset. Specify a duration with a decimal number and a unit suffix.                                                                                                                    |
+| `data.attributes.terraform-build-worker-plan-timeout`  | string  | 2h      | Maximum run time for Terraform plans for this organization. Will use the configured global defaults if left unset. Specify a duration with a decimal number and a unit suffix.                                                                                                                      |
+| `data.attributes.workspace-limit`                      | integer |         | Maximum number of workspaces for this organization. If this number is set to a value lower than the number of workspaces the organization has, it will prevent additional workspaces from being created, but existing workspaces will not be affected. If set to 0, this limit will have no effect. |
 
 ### Sample Payload
 
@@ -298,7 +301,8 @@ curl \
       "terraform-worker-sudo-enabled": false,
       "notification-email": "my-organization@example.com",
       "global-module-sharing": true,
-      "sso-enabled": false
+      "sso-enabled": false,
+      "workspace-limit": null
     },
     "relationships": {
       "owners": {
@@ -404,7 +408,8 @@ curl \
         "terraform-worker-sudo-enabled": false,
         "notification-email": "my-organization@example.com",
         "global-module-sharing": false,
-        "sso-enabled": false
+        "sso-enabled": false,
+        "workspace-limit": null
       },
       "relationships": {
         "module-consumers": {
