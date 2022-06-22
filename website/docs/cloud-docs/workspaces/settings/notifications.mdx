@@ -24,7 +24,7 @@ A notification configuration specifies a destination URL, a payload type, and th
 1. Click **Create a Notification**. The **Create a Notification** form appears.
 1. Configure your notifications:
 
-   - **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
+   - **Destination:** Terraform Cloud can deliver either a generic payload, or a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
 
    - **Name:** A display name to use for this notification configuration.
 
@@ -35,10 +35,10 @@ A notification configuration specifies a destination URL, a payload type, and th
 
    - **Email Recipients** Only available for emails. Select the users from the workspace's organization to notify.
 
-   - **Workspace Events:** You can notify this destination for all events or only for specific events. The following events are available.
-       - **Drift**: Every time Terraform Cloud detects configuration drift. Only if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) has been enabled for the workspace.
-       - **Drift Check Fail**: Every time a drift detection check fails. Only if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) has been enabled for the workspace.
-   - **Run Events:** You can notify this destination for all events or only for specific events. The following events are available.
+   - **Workspace Events:** You can notify this destination for all events or only for specific events. The following events are available:
+       - **Drift**: Terraform Cloud detected configuration drift. Only available if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.
+       - **Drift Check Fail**:  A drift detection check failed. Only available if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.
+   - **Run Events:** You can notify this destination for all events or only for specific events. The following events are available:
        - **Created**: When a run is created and enters the "Pending" state.
        - **Planning**: When a run acquires the lock and starts to execute.
        - **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
