@@ -2,9 +2,9 @@
 page_title: Notifications - Workspaces - Terraform Cloud and Terraform Enterprise
 ---
 
-# Run Notifications
+# Notifications
 
-Terraform Cloud can use webhooks to notify external systems about the progress of runs. Each workspace has its own notification settings, and can notify up to 20 destinations.
+Terraform Cloud can use webhooks to notify external systems about [drift detection](/cloud-docs/workspaces/settings/drift-detection) and the progress of runs in a workspace. Each workspace has its own notification settings, and can notify up to 20 destinations.
 
 Configuring notifications requires admin access to the workspace. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
 
@@ -20,8 +20,9 @@ To add, edit, or delete notifications for a workspace, go to the workspace and c
 
 A notification configuration specifies a destination URL, a payload type, and the specific run events that should generate a notification. To create a notification configuration:
 
-1. Go to the workspace's notifications settings and click **Create a Notification**. The **Create a Notification** form appears.
-1. Complete the following fields to configure your notifications:
+1. Click **Settings > Notifications**. The **Notifications** page appears.
+1. Click **Create a Notification**. The **Create a Notification** form appears.
+1. Configure your notifications:
 
    - **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
 
