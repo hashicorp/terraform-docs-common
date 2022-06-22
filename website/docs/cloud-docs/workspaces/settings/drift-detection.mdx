@@ -34,7 +34,7 @@ Drift detection never interrupts or interferes with runs. Terraform Cloud trigge
 
 You can start a new run during a drift detection assessment, but it will cancel the current assessment. Terraform Cloud will run the next assessment in 24 hours.
 
-Drift detection runs in the background and does not affect your concurrency limit. Terraform Cloud also monitors and controls drift detection concurrency, so it will not cause issues for large-scale deployments with thousands of workspaces. However, Terraform Cloud performs drift detection assessments in batches, so drift detection may take longer to complete when you enable it in a large number of workspaces.
+If drift detection is enabled on multiple workspaces, assessments may run concurrently. This does not affect your concurrency limit. Terraform Cloud also monitors and controls drift detection concurrency, so it will not cause issues for large-scale deployments with thousands of workspaces. However, Terraform Cloud performs drift detection assessments in batches, so drift detection may take longer to complete when you enable it in a large number of workspaces.
 
 ## Workspace Drift Status
 
