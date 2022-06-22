@@ -1,0 +1,53 @@
+---
+page_title: Drift Detection - Workspaces - Terraform Cloud and Terraform Enterprise
+description: >-
+  Enable automatic jobs to check whether your real-world infrastructure matches your Terraform state file.
+---
+
+# Drift Detection
+
+-> **Note:** Drift detection is in beta. Please [provide feedback](https://forms.gle/BwjgvrKQcLbgqK3f7) about how we can improve. Drift detection is available in the paid **Business** tier. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+
+For Terraform, drift means that your real-world infrastructure no longer matches your Terraform state file. Drift can occur when other members of your organization make changes to your infrastructure outside of the official Terraform workflow. For example, a colleague modified resource configuration directly in the cloud provider console during a production incident.
+
+> **Hands On:** Try our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial on HashiCorp Learn to practice detecting and fixing differences between your state file and real infrastructure.
+
+When you enable drift detection in a workspace, Terraform Cloud automatically runs a drift detection assessment for that workspace every 24 hours. This involves checking the current state of your real-world infrastructure against the latest version of the workspace’s state file. This lets you monitor drift in your infrastructure without building a custom solution.
+
+## Requirements
+
+Workspaces must must have the following settings to enable drift detection:
+Terraform version 0.15.4+
+[Remote execution mode](/cloud-docs/workspaces/settings#execution-mode) for Terraform runs
+
+## Enable Drift Detection
+
+All workspaces in an organization that meet the [requirements](#requirements) can opt into drift detection. To enable drift detection within a workspace:
+1. Go to the workspace and click **Settings > General**.
+1. Select **Enable** under **Drift Detection**.
+1. Click **Save settings**.
+
+Terraform Cloud starts drift detection immediately if there no active Terraform runs in the workspace. If you enable drift detection during a speculative plan, Terraform Cloud will start drift detection soon after completion. If you enable drift detection during other types of runs, Terraform Cloud will start the first automatic drift detection job in about 24 hours.
+
+Drift detection never interrupts or interferes with runs. Terraform Cloud begins drift detection assessments when at least 24 hours have passed since the last assessment and the workspace does not have a run in progress. You can also start new runs during a drift detection assessment. Starting a new run cancels the current assessment, and Terraform Cloud automatically starts the next one in 24 hours.
+
+Drift detection runs in the background and does not affect your concurrency limit. Terraform Cloud also monitors and controls drift detection concurrency, so it will not cause issues for large-scale deployments with thousands of workspaces. However, drift detection for organizations with a large number of workspaces may take longer to complete.
+
+## Workspace Drift Status
+
+After you enable drift detection, the workspace displays a drift status. A workspace can have one of the following drift statuses:
+
+- **Pending:** Terraform Cloud is performing a drift detection assessment for the workspace or there are no prior drift detection results. For example, a workspace will show this status when you enable drift detection during an active run.
+- **Drift:** Terraform Cloud has found that one or more real-world infrastructure resources do not match the workspace’s state file.
+-  **Drift Check Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace. Terraform will retry in 24 hours.
+- **Checked:** Terraform Cloud successfully completed the drift detection assessment for this workspace and found no drift.
+
+The workspace’s **Drift** tab contains details about the last drift detection assessment. If the workspace has drifted, Terraform Cloud displays a log file showing how the real-world infrastructure has changed from the latest version of the workspace’s state file.
+
+
+## Correcting Drift
+
+When Terraform Cloud finds drift in a workspace, you can use one of the following approaches to correct that drift:
+
+- **Overwrite Drift:** Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
+- **Update Terraform configuration and state to match drift:** Queue a [refresh-only plan](/cloud-docs/run/modes-and-options#refresh-only-mode) to update your terraform state to match your real-world infrastructure. You can also modify your Terraform configuration to include any new or changed resources. Refer to our Manage Resource Drift tutorial for a detailed scenario.
