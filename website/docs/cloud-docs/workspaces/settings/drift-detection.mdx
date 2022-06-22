@@ -28,6 +28,8 @@ To enable drift detection within a workspace:
 1. Select **Enable** under **Drift Detection**.
 1. Click **Save settings**.
 
+### Drift Detection Assessment Scheduling
+
 If there are no active Terraform runs in the workspace, Terraform Cloud starts a drift detection assessment as soon as you enable the feature. If you enable drift detection during a speculative plan, Terraform Cloud will start drift detection soon after that plan's completion. If you enable drift detection during other types of runs, Terraform Cloud will start the first assessment in about 24 hours.
 
 Drift detection never interrupts or interferes with runs. Terraform Cloud triggers a drift detection assessment if at least 24 hours have passed since the last assessment and there are no active runs in the workspace.
