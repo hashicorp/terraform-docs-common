@@ -16,7 +16,7 @@ Drift detection is a workspace-level setting. When enabled, Terraform Cloud will
 
 ## Requirements
 
-Drift detection requires the following settings on your workspace: 
+Drift detection requires the following settings on your workspace:
 - Terraform version 0.15.4+
 - [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](/cloud-docs/agents#configuring-workspaces-to-use-the-agent) for Terraform runs
 
@@ -30,7 +30,7 @@ To enable drift detection within a workspace:
 
 If there are no active Terraform runs in the workspace, Terraform Cloud starts a drift detection assessment right after you enable the feature. If you enable drift detection during a speculative plan, Terraform Cloud will start drift detection soon after that plan's completion. If you enable drift detection during other types of runs, Terraform Cloud will start the first assessment in about 24 hours.
 
-Drift detection never interrupts or interferes with runs. Terraform Cloud triggers a drift detection assessment if at least 24 hours have passed since the last assessment and there are no active runs in the workspace. 
+Drift detection never interrupts or interferes with runs. Terraform Cloud triggers a drift detection assessment if at least 24 hours have passed since the last assessment and there are no active runs in the workspace.
 
 You can start a new run during a drift detection assessment, but it will cancel the current assessment. Terraform Cloud will run the next assessment in 24 hours.
 
@@ -40,7 +40,7 @@ Drift detection runs in the background and does not affect your concurrency limi
 
 After you enable drift detection, the workspace displays one of the following drift statuses:
 
-- **Pending:** Terraform Cloud is performing a drift detection assessment for the workspace or there are no prior drift detection results. For example, a workspace will show this status when you enable drift detection during an active run.
+- **Pending:** Terraform Cloud is performing a drift detection assessment for the workspace or there are no prior drift detection results. For example, a workspace will show this status for 24 hours when you enable drift detection during an active run.
 - **Drifted:** Terraform Cloud has found that one or more real-world infrastructure resources do not match the workspace’s state file.
 -  **Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace and will retry 24 hours after the failed assessment.
 - **Checked:** Terraform Cloud successfully completed the assessment and did not detect drift.
