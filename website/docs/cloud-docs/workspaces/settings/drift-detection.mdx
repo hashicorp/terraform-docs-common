@@ -10,7 +10,7 @@ description: >-
 
 For Terraform, drift means that your real-world infrastructure no longer matches your Terraform state file. Drift can occur when other members of your organization make changes to your infrastructure outside of the official Terraform workflow. For example, a colleague may modify resource configuration directly in the cloud provider console during a production incident.
 
-> **Hands On:** Try our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial on HashiCorp Learn to practice detecting and fixing differences between your state file and real infrastructure.
+> **Hands On:** Try our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial on HashiCorp Learn to review how to detect and resolve drift.
 
 When you enable drift detection in a workspace, Terraform Cloud automatically runs a drift detection assessment for that workspace every 24 hours. This involves checking the current state of your real-world infrastructure against the latest version of the workspace’s state file. This lets you monitor drift in your infrastructure without building a custom solution.
 
