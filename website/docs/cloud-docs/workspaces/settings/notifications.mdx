@@ -4,62 +4,48 @@ page_title: Notifications - Workspaces - Terraform Cloud and Terraform Enterpris
 
 # Run Notifications
 
-Terraform Cloud can use webhooks to notify external systems about the progress of runs.
+Terraform Cloud can use webhooks to notify external systems about the progress of runs. Each workspace has its own notification settings, and can notify up to 20 destinations.
 
-Each workspace has its own notification settings, and can notify up to 20 destinations.
-
-Configuring notifications requires admin access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Configuring notifications requires admin access to the workspace. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
--> **API:** See the [Notification Configuration APIs](/cloud-docs/api-docs/notification-configurations).
+-> **API:** Refer to [Notification Configuration APIs](/cloud-docs/api-docs/notification-configurations).
 
 ## Viewing and Managing Notification Settings
 
-To add, edit, or delete notifications for a workspace, navigate to the desired workspace and choose "Notifications" from the "Settings" menu:
-
-![Screenshot: a workspace's settings drop-down menu](/img/docs/notifications-workspace-settings.png)
-
-This takes you to the notifications settings, which shows any existing notification configurations and includes a button for creating new ones.
-
-![Screenshot: a workspace's notification settings](/img/docs/notifications-index.png)
+To add, edit, or delete notifications for a workspace, go to the workspace and Click **Settings > Notifications**. The **Notifications** page appears, showing existing notification configurations.
 
 ## Creating a Notification Configuration
 
-A notification configuration specifies a destination URL, a payload type, and the specific run events you want notifications for.
+A notification configuration specifies a destination URL, a payload type, and the specific run events that should generate a notification. To create a notification configuration:
 
-To start receiving notifications for a workspace's runs:
+1. Go to the workspace's notifications settings and click **Create a Notification**. The **Create a Notification** form appears.
+1. Complete the following fields to configure your notifications:
 
-1. Create a new notification configuration.
-1. After saving the configuration, enable it.
+   - **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
 
-Go to the workspace's notifications settings and press the "Add Notification" button. This loads a form for creating a new notification configuration. Fill in the following fields to configure your notifications:
+   - **Name:** A display name to use for this notification configuration.
 
-- **Destination:** Terraform Cloud can deliver either a generic payload, a payload formatted specifically for Slack, Microsoft Teams, or an Email. Choose which type you want from the drop-down. Refer to [Notification Payloads](#notification-payloads) for details.
+   - **Webhook URL** Only available for generic, Slack, and Microsoft Teams webhooks. The destination URL for the webhook payload. This URL must accept HTTP or HTTPS `POST` requests and should be able to do something useful with the chosen payload type.
+     - For Slack notifications, refer to Slack's documentation on [how to create an incoming webhook](https://api.slack.com/messaging/webhooks#create_a_webhook).
+     - For Microsoft Teams notifications, refer to Microsoft's documentation on [how to create an incoming webhook](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
+   - **Token** (Optional) Only available for generic webhooks. An arbitrary secret string that Terraform Cloud will use to sign its notification webhooks. Refer to [Notification Authenticity][inpage-hmac] for details. This setting is encrypted for storage, so you cannot view it after saving.
 
-- **Name:** A display name to use for this notification configuration.
+   - **Email Recipients** Only available for emails. Select the users from the workspace's organization to notify.
 
-- **Webhook URL** Only available for generic, Slack, and Microsoft Teams webhooks. The destination URL for the webhook payload. This URL must accept HTTP or HTTPS `POST` requests and should be able to do something useful with the chosen payload type.
-  - For Slack notifications, refer to Slack's documentation on [how to create an incoming webhook](https://api.slack.com/messaging/webhooks#create_a_webhook).
-  - For Microsoft Teams notifications, refer to Microsoft's documentation on [how to create an incoming webhook](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
-- **Token** Optional; only available for generic webhooks. An arbitrary secret string that Terraform Cloud will use to sign its notification webhooks. Refer to [Notification Authenticity][inpage-hmac] for details. This setting is encrypted for storage, so you cannot view it after saving.
+   - **Workspace Events:** Whether to notify this destination for all events, or only for selected events. The following specific events are available.
+       - **Drift**: Every time Terraform Cloud detects configuration drift. Only if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) has been enabled for the workspace.
+       - **Drift Check Fail**: Every time a drift detection check fails. Only if [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) has been enabled for the workspace.
+   - **Run Events:** Whether to notify this destination for all events, or only for selected events. The following specific events are available.
+       - **Created**: When a run is created and enters the "Pending" state.
+       - **Planning**: When a run acquires the lock and starts to execute.
+       - **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
+       - **Applying**: When a run begins the apply stage, after a plan is confirmed or auto-applied.
+       - **Completed**: When a run has completed on a happy path and can't go any further.
+       - **Errored**: When a run has terminated early due to error or cancellation.
 
-- **Email Recipients** Only available for emails. Select the users from the workspace's organization to notify.
-
-- **Triggers:** Whether to notify this destination for all events, or only for selected events. The following specific events are available:
-  - **Triggers:** Whether to notify this destination for all events, or only for selected events. The following specific events are available:
-    - **Applying**: When a run begins the apply stage, after a plan is confirmed or auto-applied.
-    - **Created**: When a run is created and enters the "Pending" state.
-    - **Completed**: When a run has completed on a happy path and can't go any further.
-    - **Drift**: If [drift detection](/cloud-docs/workspaces/settings/drift-detection) has been enabled, every time Terraform Cloud detects configuration drift.
-    - **Drift Check Fail**: If drift detection has been enabled, every time a drift detection check fails.
-    - **Errored**: When a run has terminated early due to error or cancellation.
-    - **Needs Attention**: Human decision required. When a plan has changes and is not auto-applied, or requires a policy override.
-    - **Planning**: When a run acquires the lock and starts to execute.
-
-When finished, click the **Create configuration** button.
-
-For enabling and verifying configurations; refer to the next section for details.
+1. Click **Create a notification**.
 
 ## Enabling and Verifying a Configuration
 
@@ -67,11 +53,7 @@ To enable or disable a configuration, toggle the enable/disable switch on its de
 
 For a verification to be successful, the destination must respond with a `2xx` HTTP code.
 
-![Screenshot: a successful notification verification](/img/docs/notifications-success.png)
-
 If verification fails, an error message will be displayed (with the HTTP status code and error text, if any), and the configuration will remain disabled.
-
-![Screenshot: a failed notification verification](/img/docs/notifications-error.png)
 
 For both successful and unsuccessful verifications, you can click on the "Last Response" box to view more information about the verification results. You can also send additional test messages with the "Send a Test" link.
 
