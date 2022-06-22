@@ -38,8 +38,8 @@ Drift detection runs in the background and does not affect your concurrency limi
 After you enable drift detection, the workspace displays a drift status. A workspace can have one of the following drift statuses:
 
 - **Pending:** Terraform Cloud is performing a drift detection assessment for the workspace or there are no prior drift detection results. For example, a workspace will show this status when you enable drift detection during an active run.
-- **Drift:** Terraform Cloud has found that one or more real-world infrastructure resources do not match the workspace’s state file.
--  **Drift Check Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace and will retry in 24 hours.
+- **Drifted:** Terraform Cloud has found that one or more real-world infrastructure resources do not match the workspace’s state file.
+-  **Failed:** Terraform Cloud could not successfully complete the drift detection assessment for this workspace and will retry in 24 hours.
 - **Checked:** Terraform Cloud successfully completed the drift detection assessment for this workspace and found no drift.
 
 The workspace’s **Drift** tab contains details about the last drift detection assessment. If the workspace has drifted, Terraform Cloud displays a log file showing how the real-world infrastructure has changed from the latest version of the workspace’s state file.
