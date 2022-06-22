@@ -50,5 +50,5 @@ The workspace’s **Drift** tab contains details about the last drift detection 
 
 You can use one of the following approaches to correct workspace drift:
 
-- **Overwrite Drift:** Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
+- **Overwrite drift:** Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
 - **Update Terraform state and configuration to match drift:** Queue a [refresh-only plan](/cloud-docs/run/modes-and-options#refresh-only-mode) to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply, reintroducing drift into the workspace. Refer to our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial for a detailed example.
