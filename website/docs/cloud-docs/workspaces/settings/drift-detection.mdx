@@ -30,7 +30,9 @@ To enable drift detection within a workspace:
 
 Terraform Cloud starts drift detection immediately if there no active Terraform runs in the workspace. If you enable drift detection during a speculative plan, Terraform Cloud will start drift detection soon after completion. If you enable drift detection during other types of runs, Terraform Cloud will start drift detection in about 24 hours.
 
-Drift detection never interrupts or interferes with runs. Terraform Cloud begins drift detection assessments when at least 24 hours have passed since the last assessment and the workspace does not have a run in progress. You can also start new runs during a drift detection assessment. Starting a new run cancels the current assessment, and Terraform Cloud automatically starts the next one in 24 hours.
+Drift detection never interrupts or interferes with runs. Terraform Cloud triggers a drift detection assessment if at least 24 hours have passed since the last assessment and there are no active runs in the workspace. 
+
+You can start a new run during a drift detection assessment, but it will cancel the current assessment. Terraform Cloud will run the next assessment in 24 hours.
 
 Drift detection runs in the background and does not affect your concurrency limit. Terraform Cloud also monitors and controls drift detection concurrency, so it will not cause issues for large-scale deployments with thousands of workspaces. However, drift detection for organizations with a large number of workspaces may take longer to complete.
 
