@@ -67,15 +67,15 @@ $ curl \
 
 `GET api/v2/assessment-results/:assessment_result_id/json-output`
 
-Returns the JSON plan output associated with the assessment result
+This endpoint returns the JSON plan output associated with the assessment result.
 
 `GET api/v2/assessment-results/:assessment_result_id/json-schema`
 
-Returns the JSON [provider schema](https://www.terraform.io/cli/commands/providers/schema) associated with the assessment result
+This endpoint returns the JSON [provider schema](https://www.terraform.io/cli/commands/providers/schema) associated with the assessment result.
 
 `GET api/v2/assessment-results/assessment_result_id/log-output`
 
-Returns Terraform JSON log output
+This endpoint returns Terraform JSON log output.
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) that has admin level access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 

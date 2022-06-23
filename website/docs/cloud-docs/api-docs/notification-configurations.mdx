@@ -38,7 +38,7 @@ page_title: >-
 
 # Notification Configurations API
 
-Terraform Cloud can be configured to send notifications for run state transitions and workspace events. The configuration allows you to specify a destination URL, request type, and what events will trigger the notification. Each workspace can have up to 20 notification configurations, and they apply to all runs for that workspace.
+Terraform Cloud can send notifications for run state transitions and workspace events. You can specify a destination URL, request type, and what events will trigger the notification. Each workspace can have up to 20 notification configurations, and they apply to all runs for that workspace.
 
 Interacting with notification configurations requires admin access to the relevant workspace. ([More about permissions](/cloud-docs/users-teams-organizations/permissions).)
 
@@ -56,7 +56,7 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Applying           | `"run:applying"`        | When a run begins the apply stage, after a plan is confirmed or auto-applied.                            |
 | Completed          | `"run:completed"`       | When the run has completed on a happy path and can't go any further.                                     |
 | Errored            | `"run:errored"`         | When the run has terminated early due to error or cancellation.                                          |
-| Drifted            | `"assessment:drifted"`  | When an assessment of the workspace has found drift                                                      |
+| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                                     |
 | Drift Check Failed | `"assessment:failed`"   | When an assessment of the workspace has failed for some reason                                           |
 
 ## Notification Payload
