@@ -65,6 +65,9 @@ $ curl \
 
 ## Retrieve the JSON output from the assessment execution
 
+The following endpoints retrieve files documenting the plan, schema, and logged runtime associated with the specificied assessment result.
+The reponses do not adhrere to JSON API spec and are intended to provide complete context for the assessment result's otherwise summary level of information.
+
 `GET api/v2/assessment-results/:assessment_result_id/json-output`
 
 This endpoint returns the JSON plan output associated with the assessment result.
