@@ -187,6 +187,7 @@
           { "title": "Overview", "path": "workspaces/settings" },
           { "title": "VCS Connections", "path": "workspaces/settings/vcs" },
           { "title": "Access", "path": "workspaces/settings/access" },
+          { "title": "Drift Detection", "path": "workspaces/settings/drift-detection" },
           {
             "title": "Notifications",
             "path": "workspaces/settings/notifications"

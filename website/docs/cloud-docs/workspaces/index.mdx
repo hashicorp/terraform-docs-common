@@ -77,6 +77,8 @@ For example, the code that manages your production environment's infrastructure 
 
 Much like splitting monolithic applications into smaller microservices, this enables teams to make changes in parallel. In addition, it makes it easier to re-use configurations to manage other environments of infrastructure ("app1-dev," etc.).
 
+In Terraform Enterprise, administrators can use [Admin Settings](/cloud-docs/api-docs/admin/settings) to set the maximum number of workspaces for any single organization. You can also set a workspaces limit with the [tfe-terraform-provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization#workspace_limit).
+
 ## Creating Workspaces
 
 You can create workspaces through the [Terraform Cloud UI](/cloud-docs/workspaces/creating), the [Workspaces API](/cloud-docs/api-docs/workspaces), or the [Terraform Cloud CLI integration](/cli/cloud).

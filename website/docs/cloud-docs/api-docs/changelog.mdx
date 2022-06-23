@@ -13,8 +13,13 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 * Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
 [Notification Configurations](/cloud-docs/api-docs/notification-configurations#notification-triggers) to account for assessments
 
+### 2022-06-21
+* Updated [Admin Organizations](/cloud-docs/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
+
 ### 2022-06-09
 * Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a search parameter `q`, so that agent pools can be searched by `name`. This is available in Terraform Enterprise v202207-1 and later.
+* Fixed [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add missing `search[tags]` query parameter.
+* Updated [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add new `search[exclude_tags]` query parameter. This is available in Terraform Enterprise v202207-1 and later.
 
 ### 2022-05-11
 
