@@ -57,7 +57,7 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Completed          | `"run:completed"`       | A run has completed successfully.                                     |
 | Errored            | `"run:errored"`         | A run has terminated early due to error or cancellation.                                          |
 | Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                                     |
-| Drift Check Failed | `"assessment:failed`"   | When an assessment of the workspace has failed for some reason                                           |
+| Drift Check Failed | `"assessment:failed`"   | A drift detection assessment failed. This is only available if [drift detection](https://www.terraform.io/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                          |
 
 ## Notification Payload
 
