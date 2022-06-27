@@ -7,12 +7,18 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-06-21
+* Updated [Admin Organizations](/cloud-docs/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
+
 ### 2022-06-17
 * Updated [Creating a Run Task](/cloud-docs/workspaces/settings/run-tasks#creating-a-run-task) section to include the new description information for the run task to be configured.
 * Update [Run Tasks](/cloud-docs/api-docs/run-tasks.mdx) to include the new description attribute.
 
 ### 2022-06-09
+
 * Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a search parameter `q`, so that agent pools can be searched by `name`. This is available in Terraform Enterprise v202207-1 and later.
+* Fixed [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add missing `search[tags]` query parameter.
+* Updated [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add new `search[exclude_tags]` query parameter. This is available in Terraform Enterprise v202207-1 and later.
 
 ### 2022-05-11
 
@@ -33,13 +39,13 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-04-29
 
-* Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks-integration) to specify the allowed `status` attribute values.
+* Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) to specify the allowed `status` attribute values.
 * Updated [Organization Memberships](/cloud-docs/api-docs/organization-memberships#query-parameters) to add new `filter[email]` query parameter.
 * Updated [Teams](/cloud-docs/api-docs/teams#query-parameters) to add new `filter[names]` query parameter.
 
 ### 2022-04-04
 
-* Added the [Run Tasks Integration](/cloud-docs/api-docs/run-tasks-integration) endpoint.
+* Added the [Run Tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) endpoint.
 
 ### 2022-03-14
 
@@ -54,7 +60,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-02-25
 
-* Updated [Workspace Run Tasks](/cloud-docs/api-docs/run-tasks#show-a-run-task) to add new `enabled`attribute.
+* Updated [Workspace Run Tasks](/cloud-docs/api-docs/run-tasks/run-tasks#show-a-run-task) to add new `enabled`attribute.
 
 ### 2022-02-28
 
@@ -89,7 +95,11 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ### 2021-11-18
 
 * Introduced the [Registry Providers](/cloud-docs/api-docs/providers) endpoint to manage public providers for a
-  private registry. These endpoints will be available in the folowing TFE Release: `v202112-1`
+  private registry. These endpoints will be available in the following TFE Release: `v202112-1`
+
+### 2021-09-12
+
+* Added [Run Tasks Stages and Results](/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) endpoint.
 
 ### 2021-08-18
 
@@ -118,6 +128,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 * [State versions](/cloud-docs/api-docs/state-versions): Fixed the ID format for the workspace relationship of a state version. Previously, the reported ID was unusable due to a bug.
 * [Workspaces](/cloud-docs/api-docs/workspaces): Added `locked_by` as an includable related resource.
+* Added [Run Tasks](/cloud-docs/api-docs/run-tasks/run-tasks) API endpoint.
 
 ### 2021-06-8
 
