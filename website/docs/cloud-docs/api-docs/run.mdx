@@ -76,7 +76,32 @@ The run state is found in `data.attributes.status`, and you can reference the fo
 | `discarded`            | The run has been discarded. This is a final state.                                                                                                                                                                                                                                                                                                                                                                                 |
 | `errored`              | The run has errored. This is a final state.                                                                                                                                                                                                                                                                                                                                                                                        |
 | `canceled`             | The run has been canceled.                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `force_canceled`       | A workspace admin forcefully canceled the run.                                                                                                                                                                                                                                                                                                                                      |
+| `force_canceled`       | A workspace admin forcefully canceled the run.
+
+
+### Run Operations
+
+The run operation specifies the Terraform execution mode. You can reference the following list of possible operation modes and use them as [runs list](/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+
+| Operation               | Description                                                                                                                                                                 |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `plan_only`             |  Indicates the run completed without an apply phase. This is also called a [speculative plan](/cloud-docs/run/modes-and-options#plan-only-speculative-plan).                |
+| `plan_and_apply`        |  Indicates the run completed with both plan and apply phases.                                                                                                               |
+| `refresh_only`          |  Specifies the run was instructed to execute a plan in which updates state.                                                                                                 |
+| `destroy`               |  Specifies the run destroyed all objects, regardless of configuration changes.                                                                                              |
+| `empty_apply`           |  Specifies the run performed an apply with no changes to resources. Most commonly used to [upgrade terraform state versions](/cloud-docs/workspaces/state#upgrading-state). |
+
+
+### Run Sources
+
+You can use the following sources as [runs list](/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+
+| Source                        | Description                                                                                      |
+|-------------------------------|--------------------------------------------------------------------------------------------------|
+| `tfe-ui`                      |  Indicates a run was queued from Terraform Cloud UI.                                             |
+| `tfe-api`                     |  Indicates a run was queued from Terraform Cloud API.                                            |
+| `tfe-configuration-version`   |  Indicates a run was queued from a Configuration Version, triggered from a VCS provider.         |
+
 
 ## Create a Run
 
@@ -305,10 +330,16 @@ curl \
 
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter      | Description                                                          |
-|----------------|----------------------------------------------------------------------|
-| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.   |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 runs per page. |
+| Parameter           | Description                                                                                      |
+|---------------------|--------------------------------------------------------------------------------------------------|
+| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                               |
+| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                             |
+| `filter[operation]` | **Optional.** Options are listed in [Run Operations](/cloud-docs/api-docs/run#run-operations).   |
+| `filter[status]`    | **Optional.** Options are listed in [Run States](/cloud-docs/api-docs/run#run-states).           |
+| `filter[source]`    | **Optional.** Options are listed in [Run Sources](/cloud-docs/api-docs/run#run-sources).         |
+| `search[name]`      | **Optional.** Searches runs that matches the supplied username.                                  |
+| `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                |
+
 
 ### Sample Request
 
