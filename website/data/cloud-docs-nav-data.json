@@ -82,10 +82,13 @@
         ]
       },
       { "title": "Runs", "path": "api-docs/run" },
-      { "title": "Run Tasks", "path": "api-docs/run-tasks" },
       {
-        "title": "Run Tasks Integration",
-        "path": "api-docs/run-tasks-integration"
+        "title": "Run Tasks",
+        "routes": [
+          { "title": "Run Tasks", "path": "api-docs/run-tasks/run-tasks" },
+          { "title": "Stages and Results", "path": "api-docs/run-tasks/run-task-stages-and-results" },
+          { "title": "Custom Integration", "path": "api-docs/run-tasks/run-tasks-integration" }
+        ]
       },
       { "title": "Run Triggers", "path": "api-docs/run-triggers" },
       { "title": "SSH Keys", "path": "api-docs/ssh-keys" },
@@ -186,6 +189,7 @@
           { "title": "Overview", "path": "workspaces/settings" },
           { "title": "VCS Connections", "path": "workspaces/settings/vcs" },
           { "title": "Access", "path": "workspaces/settings/access" },
+          { "title": "Drift Detection", "path": "workspaces/settings/drift-detection" },
           {
             "title": "Notifications",
             "path": "workspaces/settings/notifications"
