@@ -1,5 +1,7 @@
 ---
 page_title: Assessments - API Docs - Terraform Cloud
+description: >-
+  Assessment results contain information about continuous validation in Terraform Cloud, like drift detection. 
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -20,9 +22,9 @@ page_title: Assessments - API Docs - Terraform Cloud
 
 # Assessment Results API
 
-An Assessment Result is the record of an instance of continuous validation such as [Drift Detection](/cloud-docs/workspaces/settings/drift-detection).
+An Assessment Result is the record of an instance of continuous validation, like [Drift Detection](/cloud-docs/workspaces/settings/drift-detection).
 
-## Show assessment result
+## Show Assessment Result
 
 `GET api/v2/assessment-results/:assessment_result_id`
 
@@ -65,8 +67,7 @@ $ curl \
 
 ## Retrieve the JSON output from the assessment execution
 
-The following endpoints retrieve files documenting the plan, schema, and logged runtime associated with the specificied assessment result.
-The reponses do not adhrere to JSON API spec and are intended to provide complete context for the assessment result's otherwise summary level of information.
+The following endpoints retrieve files documenting the plan, schema, and logged runtime associated with the specified assessment result. They provide complete context for an assessment result. The responses do not adhere to JSON API spec. 
 
 `GET api/v2/assessment-results/:assessment_result_id/json-output`
 
