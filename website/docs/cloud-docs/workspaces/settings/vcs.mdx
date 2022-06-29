@@ -81,4 +81,17 @@ Select **Include submodules on clone** to recursively clone all of the repositor
 
 ## Glob Patterns for Automatic Run Triggering
 
-TBD Add content.
+We support `glob` patterns to describe a set of triggers if `trigger patterns` option is selected.
+
+Supported wildcards:
+`*`  Matches zero or more characters.
+`?`  Matches one or more characters.
+`**` Matches directories recursively.
+
+Examples:
+/**/* matches every file in every directory
+/module/**/* matches all files in any directory below the `module` directory
+/**/networking/* matches every file that is inside any `networking` directory
+/**/networking/**/* matches every file that has `networking` directory on its path
+/**/*.tf matches every file in any directory that has the `.tf` extension
+/submodule/*.??? matches every file inside `submodule` directory which has three characters long extension.
