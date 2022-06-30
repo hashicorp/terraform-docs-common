@@ -7,6 +7,12 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-6-23
+
+* Added the [Assessments](/cloud-docs/api-docs/assessments).
+* Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
+[Notification Configurations](/cloud-docs/api-docs/notification-configurations#notification-triggers) to account for assessments.
+
 ### 2022-06-21
 * Updated [Admin Organizations](/cloud-docs/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
 * Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a filter parameter `filter[allowed_workspaces][name]` so that agent pools can be filtered by name of an associated workspace. The given workspace must be allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/docs/cloud-docs/agents#scoping-agent-pools-to-specific-workspaces).
