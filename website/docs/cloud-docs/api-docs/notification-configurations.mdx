@@ -61,15 +61,17 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 
 ## Notification Payload
 
-The notification is an HTTP POST request with a detailed payload whose content depends on the type of notification configured.
+The notification is an HTTP POST request with a detailed payload. The content depends on the type of notification.
 
-For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API, and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams)  for examples. For generic notifications, the payload varies based on the type of notification:
+For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams)  for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
 
 ### Run Notification Payload
 
+Run events include detailed information about a specific run, including the time it began and the associated workspace and organization. Generic notifications for run events contain the following information:
+
 | Name                             | Type   | Description                                                                                                                                                                                                                                    |
 | -------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `payload_version`                | number | Currently always "1".                                                                                                                                                                                                                          |
+| `payload_version`                | number | Always "1".                                                                                                                                                                                                                                    |
 | `notification_configuration_id`  | string | ID of the configuration which defined this notification.                                                                                                                                                                                       |
 | `run_url`                        | string | URL used to access the run UI page.                                                                                                                                                                                                            |
 | `run_id`                         | string | ID of the run which triggered this notification.                                                                                                                                                                                               |
@@ -114,28 +116,30 @@ For Slack and Microsoft Teams notifications, the payload conforms to the respect
 
 ### Workspace Notification Payload
 
+Workspace events include detailed information about workspace-level validation events like [drift detection](/cloud-docs/workspaces/settings/drift-detection) if it is enabled for the workspace. Much of the information provides details about the associated [assessment result](/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
+
 | Name                                         | Type   | Description                                                               |
 | -------------------------------------------- | ------ | ------------------------------------------------------------------------- |
-| `payload_version`                            | number | Currently always "2".                                                     |
+| `payload_version`                            | number | Always "2".                                                     |
 | `notification_configuration_id`              | string | ID of the configuration which defined this notification.                  |
 | `notification_configuration_url`             | string | URL of the Notification Configuration.                                    |
 | `trigger_scope`                              | string | "assessment" for workspace notifications.                                 |
 | `trigger`                                    | string | Value of the trigger which caused the notification to be sent.            |
 | `message`                                    | string | Human-readable reason for the notification.                               |
 | `details`                                    | object | Object containing details specific to the notification.                   |
-| `details.new_assessment_result`              | object | The most recent Assessment Result which triggered the notification.       |
-| `details.new_assessment_result.id`           | string | ID of the Assessment Result.                                              |
-| `details.new_assessment_result.url`          | string | URL of the Assessment Result.                                             |
-| `details.new_assessment_result.succeeded`    | bool   | Whether or not Assessment succeeded.                                      |
-| `details.new_assessment_result.drifted`      | bool   | Whether or not Assessment detected drift.                                 |
-| `details.new_assessment_result.created_at`   | string | Timestamp of the Assessment Result                                        |
-| `details.prior_assessment_result`            | object | The Assessment Result prior to the one which triggered the notification.  |
-| `details.prior_assessment_result.id`         | string | ID of the Assessment Result.                                              |
-| `details.prior_assessment_result.url`        | string | URL of the Assessment Result.                                             |
-| `details.prior_assessment_result.succeeded`  | bool   | Whether or not Assessment succeeded.                                      |
-| `details.prior_assessment_result.drifted`    | bool   | Whether or not Assessment detected drift.                                 |
-| `details.prior_assessment_result.created_at` | string | Timestamp of the Assessment Result.                                       |
-| `details.workspace_id`                       | string | ID of the workspace.                                                      |
+| `details.new_assessment_result`              | object | The most recent assessment result which triggered the notification.       |
+| `details.new_assessment_result.id`           | string | ID of the assessment result.                                              |
+| `details.new_assessment_result.url`          | string | URL of the assessment result.                                             |
+| `details.new_assessment_result.succeeded`    | bool   | Whether or not assessment succeeded.                                      |
+| `details.new_assessment_result.drifted`      | bool   | Whether or not assessment detected drift.                                 |
+| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result                                        |
+| `details.prior_assessment_result`            | object | The assessment result prior to the one which triggered the notification.  |
+| `details.prior_assessment_result.id`         | string | ID of the assessment result.                                              |
+| `details.prior_assessment_result.url`        | string | URL of the assessment result.                                             |
+| `details.prior_assessment_result.succeeded`  | bool   | Whether or not assessment succeeded.                                      |
+| `details.prior_assessment_result.drifted`    | bool   | Whether or not assessment detected drift.                                 |
+| `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                       |
+| `details.workspace_id`                       | string | ID of the workspace that generated the notification.                      |
 | `details.workspace_name`                     | string | Human-readable name of the workspace.                                     |
 | `details.organization_name`                  | string | Human-readable name of the organization.                                  |
 
