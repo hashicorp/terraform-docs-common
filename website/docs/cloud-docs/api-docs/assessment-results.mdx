@@ -22,7 +22,7 @@ description: >-
 
 # Assessment Results API
 
-An Assessment Result is the record of an instance of continuous validation, like [Drift Detection](/cloud-docs/workspaces/settings/drift-detection).
+An Assessment Result is the record of an instance of continuous validation, like [drift detection](/cloud-docs/workspaces/settings/drift-detection).
 
 ## Show Assessment Result
 
@@ -75,11 +75,11 @@ You cannot access these endpoints with [organization tokens](/cloud-docs/users-t
 
 ### JSON Plan
 
-The following  endpoint returns the JSON plan output associated with the assessment result.
+The following endpoint returns the JSON plan output associated with the assessment result.
 
 `GET api/v2/assessment-results/:assessment_result_id/json-output`
 
-#### Sample Requests
+#### Sample Request
 
 ```shell
 $ curl \
@@ -94,7 +94,7 @@ The following endpoint returns the JSON [provider schema](https://www.terraform.
 
 `GET api/v2/assessment-results/:assessment_result_id/json-schema`
 
-#### Sample Requests
+#### Sample Request
 
 ```shell
 $ curl \
@@ -109,7 +109,7 @@ The following endpoint returns Terraform JSON log output.
 
 `GET api/v2/assessment-results/assessment_result_id/log-output`
 
-#### Sample Requests
+#### Sample Request
 
 ```shell
 $ curl \
