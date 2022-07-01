@@ -127,7 +127,7 @@ _With a VCS repository_
 }
 ```
 
-_For a monorepo_
+_For a monorepo using trigger prefixes_
 
 A run will be triggered in this workspace when changes are detected in any of the specified directories: `/networking`, `/modules`, or `/vendor`.
 
@@ -151,6 +151,8 @@ A run will be triggered in this workspace when changes are detected in any of th
   }
 }
 ```
+
+_For a monorepo using trigger patterns_
 
 A run will be triggered in this workspace when Terraform Cloud detects any of the following changes:
 - A file with the extension `tf` in any directory structure in which the last folder is named `networking` (e.g., `root/networking` and `root/module/networking`)
