@@ -108,7 +108,7 @@ Sentinel aims to prevent well-intentioned operators from writing configurations 
 
 Marking a variable as “sensitive” will prevent it from being displayed in the UI, but will not prevent it from being read by Terraform during plan or apply operations. Similarly, customized workspace permissions allow you to restrict access to workspace state via the UI and API, but will not prevent it from being read during Terraform operations.
 
-### Redaction of sensitive variables in Terraform logs
+### Redaction of Sensitive Variables in Terraform Logs
 
 The logs from a Terraform plan or apply operation are visible to any user with at least “read” level access in the associated workspace. While Terraform tries to avoid writing sensitive information to logs, redactions are best-effort. This feature should not be treated as a security boundary, but instead as a mechanism to mitigate accidental exposure. Additionally, Terraform Cloud is unable to protect against malicious users who attempt to use Terraform logs to exfiltrate sensitive data.
 
@@ -144,7 +144,7 @@ Workspaces may be configured to share their state with other workspaces within t
 
 ### Use Separate Agent Pools for Sensitive Workspaces
 
-[Terraform Cloud Agents](/cloud-docs/agents) can be shared across all workspaces within an organzation or [scoped to specific workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). If agent pools are shared among multiple workspaces, a malicious actor in one of those workspaces could exfiltrate the agent’s API token, access private resources from the perspective of the agent, or modify the agent’s environment. For this reason, we creating seperate agent pools for sensitive workspaces and using the agent scoping setting to restrict which workspaces can target each agent pool.
+[Terraform Cloud Agents](/cloud-docs/agents) can be shared across all workspaces within an organization or [scoped to specific workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). If agent pools are shared among multiple workspaces, a malicious actor in one of those workspaces could exfiltrate the agent’s API token, access private resources from the perspective of the agent, or modify the agent’s environment, potentially impacting other workspaces. For this reason, we creating separate agent pools for sensitive workspaces and using the agent scoping setting to restrict which workspaces can target each agent pool.
 
 ### Treat Archivist URLs as Secrets
 
