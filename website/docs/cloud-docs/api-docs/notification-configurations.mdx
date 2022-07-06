@@ -63,7 +63,7 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 
 The notification is an HTTP POST request with a detailed payload. The content depends on the type of notification.
 
-For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams)  for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
+For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams) for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
 
 ### Run Notification Payload
 
@@ -118,30 +118,30 @@ Run events include detailed information about a specific run, including the time
 
 Workspace events include detailed information about workspace-level validation events like [drift detection](/cloud-docs/workspaces/settings/drift-detection) if it is enabled for the workspace. Much of the information provides details about the associated [assessment result](/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
 
-| Name                                         | Type   | Description                                                               |
-| -------------------------------------------- | ------ | ------------------------------------------------------------------------- |
-| `payload_version`                            | number | Always "2".                                                               |
-| `notification_configuration_id`              | string | The ID of the configuration associated with this notification.            |
-| `notification_configuration_url`             | string | URL to get the notification configuration from the Terraform Cloud API.   |
-| `trigger_scope`                              | string | Always "assessment" for workspace notifications.                          |
-| `trigger`                                    | string | Value of the trigger which caused the notification to be sent.            |
-| `message`                                    | string | Human-readable reason for the notification.                               |
-| `details`                                    | object | Object containing details specific to the notification.                   |
-| `details.new_assessment_result`              | object | The most recent assessment result which triggered the notification.       |
-| `details.new_assessment_result.id`           | string | ID of the assessment result.                                              |
-| `details.new_assessment_result.url`          | string | URL to get the assessment result from the Terraform Cloud API.            |
-| `details.new_assessment_result.succeeded`    | bool   | Whether or not assessment succeeded.                                      |
-| `details.new_assessment_result.drifted`      | bool   | Whether or not assessment detected drift.                                 |
-| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result                                        |
-| `details.prior_assessment_result`            | object | The assessment result prior to the one which triggered the notification.  |
-| `details.prior_assessment_result.id`         | string | ID of the assessment result.                                              |
-| `details.prior_assessment_result.url`        | string | URL to get the assessment result from the Terraform Cloud API.            |
-| `details.prior_assessment_result.succeeded`  | bool   | Whether or not assessment succeeded.                                      |
-| `details.prior_assessment_result.drifted`    | bool   | Whether or not assessment detected drift.                                 |
-| `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                       |
-| `details.workspace_id`                       | string | ID of the workspace that generated the notification.                      |
-| `details.workspace_name`                     | string | Human-readable name of the workspace.                                     |
-| `details.organization_name`                  | string | Human-readable name of the organization.                                  |
+| Name                                         | Type   | Description                                                                          |
+| -------------------------------------------- | ------ | ------------------------------------------------------------------------------------ |
+| `payload_version`                            | number | Always "2".                                                                          |
+| `notification_configuration_id`              | string | The ID of the configuration associated with this notification.                       |
+| `notification_configuration_url`             | string | URL to get the notification configuration from the Terraform Cloud API.              |
+| `trigger_scope`                              | string | Always "assessment" for workspace notifications.                                     |
+| `trigger`                                    | string | Value of the trigger that caused the notification to be sent.                        |
+| `message`                                    | string | Human-readable reason for the notification.                                          |
+| `details`                                    | object | Object containing details specific to the notification.                              |
+| `details.new_assessment_result`              | object | The most recent assessment result. This result triggered the notification.           |
+| `details.new_assessment_result.id`           | string | ID of the assessment result.                                                         |
+| `details.new_assessment_result.url`          | string | URL to get the assessment result from the Terraform Cloud API.                       |
+| `details.new_assessment_result.succeeded`    | bool   | Whether or not assessment succeeded.                                                 |
+| `details.new_assessment_result.drifted`      | bool   | Whether or not assessment detected drift.                                            |
+| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result                                                   |
+| `details.prior_assessment_result`            | object | The assessment result immediately prior to the one that triggered the notification.  |
+| `details.prior_assessment_result.id`         | string | ID of the assessment result.                                                         |
+| `details.prior_assessment_result.url`        | string | URL to get the assessment result from the Terraform Cloud API.                       |
+| `details.prior_assessment_result.succeeded`  | bool   | Whether or not assessment succeeded.                                                 |
+| `details.prior_assessment_result.drifted`    | bool   | Whether or not assessment detected drift.                                            |
+| `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                                  |
+| `details.workspace_id`                       | string | ID of the workspace that generated the notification.                                 |
+| `details.workspace_name`                     | string | Human-readable name of the workspace.                                                |
+| `details.organization_name`                  | string | Human-readable name of the organization.                                             |
 
 #### Sample Payload
 
