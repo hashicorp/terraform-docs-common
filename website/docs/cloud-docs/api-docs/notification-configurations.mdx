@@ -61,16 +61,18 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 
 ## Notification Payload
 
--> **Note:** Drift detection events do not support webhooks notifications.
+The notification is an HTTP POST request with a detailed payload. The content depends on the type of notification.
 
-The notification is an HTTP POST request with a detailed payload describing the run. The payload depends on the type of notification configured.
+For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams) for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
 
-For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API, and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams)  for examples. For generic notifications, the payload has several fields:
+### Run Notification Payload
+
+Run events include detailed information about a specific run, including the time it began and the associated workspace and organization. Generic notifications for run events contain the following information:
 
 | Name                             | Type   | Description                                                                                                                                                                                                                                    |
 | -------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `payload_version`                | number | Currently always "1".                                                                                                                                                                                                                          |
-| `notification_configuration_id`  | string | ID of the configuration which defined this notification.                                                                                                                                                                                       |
+| `payload_version`                | number | Always "1".                                                                                                                                                                                                                                    |
+| `notification_configuration_id`  | string | The ID of the configuration associated with this notification.                                                                                                                                                                                 |
 | `run_url`                        | string | URL used to access the run UI page.                                                                                                                                                                                                            |
 | `run_id`                         | string | ID of the run which triggered this notification.                                                                                                                                                                                               |
 | `run_message`                    | string | The reason the run was queued.                                                                                                                                                                                                                 |
@@ -86,7 +88,7 @@ For Slack and Microsoft Teams notifications, the payload conforms to the respect
 | `notifications[].run_updated_at` | string | Timestamp of the run's update.                                                                                                                                                                                                                 |
 | `notifications[].run_updated_by` | string | Username of the user who caused the run to update.                                                                                                                                                                                             |
 
-### Sample Payload
+#### Sample Payload
 
 ```json
 {
@@ -109,6 +111,67 @@ For Slack and Microsoft Teams notifications, the payload conforms to the respect
       "run_updated_by": "sample-user"
     }
   ]
+}
+```
+
+### Workspace Notification Payload
+
+Workspace events include detailed information about workspace-level validation events like [drift detection](/cloud-docs/workspaces/settings/drift-detection) if it is enabled for the workspace. Much of the information provides details about the associated [assessment result](/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
+
+| Name                                         | Type   | Description                                                                          |
+| -------------------------------------------- | ------ | ------------------------------------------------------------------------------------ |
+| `payload_version`                            | number | Always "2".                                                                          |
+| `notification_configuration_id`              | string | The ID of the configuration associated with this notification.                       |
+| `notification_configuration_url`             | string | URL to get the notification configuration from the Terraform Cloud API.              |
+| `trigger_scope`                              | string | Always "assessment" for workspace notifications.                                     |
+| `trigger`                                    | string | Value of the trigger that caused the notification to be sent.                        |
+| `message`                                    | string | Human-readable reason for the notification.                                          |
+| `details`                                    | object | Object containing details specific to the notification.                              |
+| `details.new_assessment_result`              | object | The most recent assessment result. This result triggered the notification.           |
+| `details.new_assessment_result.id`           | string | ID of the assessment result.                                                         |
+| `details.new_assessment_result.url`          | string | URL to get the assessment result from the Terraform Cloud API.                       |
+| `details.new_assessment_result.succeeded`    | bool   | Whether or not assessment succeeded.                                                 |
+| `details.new_assessment_result.drifted`      | bool   | Whether or not assessment detected drift.                                            |
+| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result                                                   |
+| `details.prior_assessment_result`            | object | The assessment result immediately prior to the one that triggered the notification.  |
+| `details.prior_assessment_result.id`         | string | ID of the assessment result.                                                         |
+| `details.prior_assessment_result.url`        | string | URL to get the assessment result from the Terraform Cloud API.                       |
+| `details.prior_assessment_result.succeeded`  | bool   | Whether or not assessment succeeded.                                                 |
+| `details.prior_assessment_result.drifted`    | bool   | Whether or not assessment detected drift.                                            |
+| `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                                  |
+| `details.workspace_id`                       | string | ID of the workspace that generated the notification.                                 |
+| `details.workspace_name`                     | string | Human-readable name of the workspace.                                                |
+| `details.organization_name`                  | string | Human-readable name of the organization.                                             |
+
+#### Sample Payload
+
+```json
+{
+  "payload_version": "2",
+  "notification_configuration_id": "nc-SZ3V3cLFxK6sqLKn",
+  "notification_configuration_url": "https://app.terraform.io/api/v2/notification-configurations/nc-SZ3V3cLFxK6sqLKn",
+  "trigger_scope": "assessment",
+  "trigger": "assessment:drifted",
+  "message": "Drift Detected",
+  "details": {
+    "new_assessment_result": {
+      "id": "asmtres-vRVQxpqq64EA9V5a",
+      "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-vRVQxpqq64EA9V5a",
+      "succeeded": true,
+      "drifted": true,
+      "created_at": "2022-06-09T05:23:10Z"
+    },
+    "prior_assessment_result": {
+      "id": "asmtres-A6zEbpGArqP74fdL",
+      "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-A6zEbpGArqP74fdL",
+      "succeeded": true,
+      "drifted": true,
+      "created_at": "2022-06-09T05:22:51Z"
+    },
+    "workspace_id": "ws-XdeUVMWShTesDMME",
+    "workspace_name": "my-workspace",
+    "organization_name": "acme-org"
+  }
 }
 ```
 
