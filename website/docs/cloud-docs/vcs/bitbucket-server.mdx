@@ -91,7 +91,9 @@ Leave the page open in a browser tab, and remain logged in as an admin user.
 
    ![Bitbucket Server screenshot: The application links page](/img/docs/bitbucket-server-application-links.png)
 
-1. Enter Terraform Cloud's URL in the text field (`https://app.terraform.io`, or the hostname of your Terraform Enterprise instance) and click the "Create new link" button.
+1. In application links, select Create link.
+2. Select Atlassian product as the link type. This option also works for external applications. This is the original application links mechanism – Atlassian has left it under this option so users can still use their OAuth 1.0 integrations.
+3. Enter Terraform Cloud's URL in the text field (https://app.terraform.io, or the hostname of your Terraform Enterprise instance).
 
    ~> **Note:** If you're connecting multiple Terraform Cloud organizations to the same Bitbucket Server instance, you can only use Terraform Cloud's main URL once. For subsequent organizations, you can enter the organization URL instead. Organization URLs look like `https://app.terraform.io/app/<ORG NAME>` or `https://<TFE HOSTNAME>/app/<ORG NAME>` — it's the page Terraform Cloud's "Workspaces" button takes you to.
 
