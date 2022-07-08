@@ -242,6 +242,14 @@ Fetch details about the specified variable set.
 | ------------ | ------------------- |
 | `:varset_id` | The variable set ID |
 
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter           | Description         |
+| ------------        | ------------------- |
+| include             | **Optional**. Allows inclusion of related data. Currently supports `vars` to see all variables in a variable set. |
+
 ### Sample Request
 
 ```shell
@@ -257,36 +265,36 @@ curl \
 ```json
 {
   "data": {
-    "id": "varset-kjkN545LH2Sfercv"
-    "type": "varsets",
-    "attributes": {
-      "name": "MyVarset",
-      "description": "Full of vars and such for mass reuse",
-      "global": false
-    },
-    "relationships": {
-      "workspaces": {
-        "data": [
-          {
-            "id": "ws-z6YvbWEYoE168kpq",
-            "type": "workspaces"
-          }
-        ]
+      "id": "varset-fx2wP5purw37wbFz",
+      "type": "varsets",
+      "attributes": {
+          "name": "MyVarset",
+          "description": "Full of Terraform input variables (aka vars) and environment variables for reuse.",
+          "global": true,
+          "updated-at": "2022-07-08T18:38:17.380Z",
+          "var-count": 2,
+          "workspace-count": 0
       },
-      "vars": {
-        "data": [
-          {
-            "id": "var-Nh0doz0hzj9hrm34qq"
-            "type": "vars",
-            "attributes": {
-              "key": "c2e4612d993c18e42ef30405ea7d0e9ae",
-              "value": "8676328808c5bf56ac5c8c0def3b7071",
-              "category": "terraform"
-            }
+      "relationships": {
+          "organization": {
+              "data": {
+                  "id": "hashicorp",
+                  "type": "organizations"
+              }
+          },
+          "vars": {
+              "data": [
+                  {
+                      "id": "var-kFW8M9gJ1pBYobSx",
+                      "type": "vars"
+                  },
+                  {
+                      "id": "var-XmEvinZu9nMxUoNt",
+                      "type": "vars"
+                  }
+              ]
           }
-        ]
       }
-    }
   }
 }
 ```
