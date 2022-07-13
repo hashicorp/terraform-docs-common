@@ -242,13 +242,6 @@ Fetch details about the specified variable set.
 | ------------ | ------------------- |
 | `:varset_id` | The variable set ID |
 
-### Query Parameters
-
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
-
-| Parameter           | Description         |
-| ------------        | ------------------- |
-| include             | **Optional**. Allows inclusion of related data. Currently supports `vars` to see all variables in a variable set. |
 
 ### Sample Request
 
@@ -708,3 +701,12 @@ curl \
 [json api document]: /cloud-docs/api-docs#json-api-documents
 
 [json api error object]: https://jsonapi.org/format/#error-objects
+
+
+## Available Related Resources
+
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+
+| Resource Name        | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| `vars`               | Show each variable in a variable set and all of their attributes including  `id`, `key`, `value`, `sensitive`, `category`, `hcl`, `created_at`,  `description` |
