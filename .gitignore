@@ -23,3 +23,5 @@ vendor/
 
 # Coverage
 coverage.txt
+
+.vscode/
