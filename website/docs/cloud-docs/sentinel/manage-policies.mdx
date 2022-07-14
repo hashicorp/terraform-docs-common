@@ -182,7 +182,7 @@ To manage policy sets, go to the "Policy Sets" section on the organization setti
 
 ![policy-sets-navigate](/img/docs/policy-sets-navigate.png)
 
-Policy sets enforced on all workspaces are marked "All workspaces" in this list; other policy sets show how many workspaces they are enforced on. You may also notice policy sets with an informational tag that reads "Policies managed individually", which indicates that the policy set is not versioned and uses policy relationships (deprecated). These policy sets will need to be [migrated](#migrating-individually-managed-policies-to-versioned-policy-sets) in the future.
+Policy sets enforced on all workspaces are marked "All workspaces" in this list; other policy sets show how many workspaces they are enforced on. You may also notice policy sets with an informational tag that reads "Policies managed individually", which indicates that the policy set is not versioned and uses policy relationships. These policy sets may be [migrated](#migrating-individually-managed-policies-to-versioned-policy-sets) in the future, if required.
 
 To create a new policy set, click the "Create a new policy set" button; to edit an existing set, click its entry in the list. Click the "Create policy set" or "Update policy set" button when finished.
 
@@ -201,7 +201,7 @@ When creating or editing a policy set, the following fields are available:
 
 ## Migrating individually managed policies to versioned policy sets
 
-Individually managed policies were a proof-of-concept feature in Terraform Cloud which allowed editing policy code directly in the UI and combining these policies into policy sets. This workflow is deprecated and is being replaced by versioned policy sets, which are managed as an immutable, atomic, and versioned unit, using VCS or directly uploading entire policy sets through the API.
+Individually managed policies allows for editing policy code directly in the UI and combining these policies into policy sets. This workflow is a good entry into policy as code, and when you are ready to scale beyond individually managed policies, we recommend versioned policy sets, which are managed as an immutable, atomic, and versioned unit, using VCS or directly uploading entire policy sets through the API.
 
 If you already have policy sets defined which reference individually managed policies directly, you can quickly and easily migrate them to versioned policy sets.
 
