@@ -1,0 +1,40 @@
+---
+page_title: Terraform Registry - Using Registry Policies
+description: >-
+  How to use Sentinel policies from the Terraform Registry.
+---
+
+# Using Policies from the Terraform Registry
+
+Collections of Sentinel policies are shared in the Terraform Registry as policy libraries. Users can browse and search for libraries that contain policies relevant to their use-cases, then use the policies they find in [Terraform Cloud](https://www.terraform.io/cloud-docs) or the [Sentinel CLI](https://docs.hashicorp.com/sentinel/commands).
+
+The Terraform Registry acts as a [remote source](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies that you include in a standard [Sentinel configuration file](https://docs.hashicorp.com/sentinel/configuration).
+
+## Finding Policies in the Terraform Registry
+
+Terraform Registry users can [browse policy libraries](https://registry.terraform.io/browse/policies) that have been published to the registry, or [search for them using key words](https://registry.terraform.io/search/policies).
+
+Each policy library has a details page where you can browse the documentation provided for each policy that it contains. Start by clicking the "Choose Policies" button.
+
+![policy library details](/img/docs/policy-library-details.png)
+
+On the left, you'll see a box containing usage instructions that is currently empty, and below it, a list of all the policies that are available from this policy library. Click on the name of any policy library to see its documentation.
+
+![selecting policies](/img/docs/policy-selection.png)
+
+Check the boxes for every policy that you would like to use. As you do so, you will see HCL code being populated in the usage instructions box. Once you have selected all the policies that you wish to use, copy the HCL code from the box using the "Copy Code Snippet" button. You will use this code to apply the policies to your Terraform Cloud workspaces, or in the Sentinel CLI.
+
+## Using Policies in Terraform Cloud
+
+Policy sets are groups of policies that can be enforced on Terraform Cloud workspaces. You can create a policy set with the usage instructions you've collected from one or more policy libraries. The recommended approach to creating a policy set for policies you've found in the Terraform Registry is as follows:
+
+1. [Find one or more policy libraries in the Registry](#finding-policies-in-the-terraform-registry) containing policies you wish to enforce on your Terraform Cloud workspaces. Collect the usage instructions for all policies you wish to enforce in a single `sentinel.hcl` file.
+
+    -> You may wish to make adjustments to the `enforcement_level` in the HCL code snippets that you copy from the Terraform Registry. By default, the [enforcement level](https://www.terraform.io/cloud-docs/sentinel/manage-policies#enforcement-levels) in Registry policy snippets is always set to `advisory`.
+
+2. Store this file in a private VCS repository of your choosing.
+3. [Follow these instructions](https://www.terraform.io/cloud-docs/sentinel/manage-policies#managing-policy-sets) to create a new policy set in Terraform Cloud from your VCS repository, and apply it to one or more of your workspaces.
+
+## Using Policies in the Sentinel CLI
+
+The Terraform Registry provides you with [Sentinel configuration](https://docs.hashicorp.com/sentinel/configuration) HCL code that you can use directly with the Sentinel CLI.

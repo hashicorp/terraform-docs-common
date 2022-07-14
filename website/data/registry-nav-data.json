@@ -34,6 +34,23 @@
       { "title": "Verified Modules", "path": "modules/verified" }
     ]
   },
+  {
+    "title": "Policy Libraries",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "policy-libraries"
+      },
+      {
+        "title": "Publishing Policy Libraries",
+        "path": "policy-libraries/publishing"
+      },
+      {
+        "title": "Using Policies From Libraries",
+        "path": "policy-libraries/using-policies"
+      }
+    ]
+  },
   { "title": "Private Registries", "path": "private" },
   { "title": "Registry API", "path": "api-docs" }
 ]
