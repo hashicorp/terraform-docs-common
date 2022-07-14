@@ -83,7 +83,7 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.ingress-submodules` | boolean        | `false` | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `data.attributes.policies-path`               | string         | `null`  | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present.                                                                                                                                                                                                                                       |
 | `data.relationships.workspaces.data[]`        | array\[object] | `[]`    | A list of resource identifier objects that defines which workspaces the new set will be attached to. These objects must contain `id` and `type` properties, and the `type` property must be `workspaces` (e.g. `{ "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }`). Obtain workspace IDs from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. Individual workspaces cannot be attached to the policy set when `data.attributes.global` is `true`. |
-| `data.relationships.policies.data[]`          | array\[object] | `[]`    | **DEPRECATED.** A list of resource identifier objects that defines which policies will be members of the new set. These objects must contain `id` and `type` properties, and the `type` property must be `policies` (e.g. `{ "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }`). **Important:** This deprecated option will be removed in the future in favor of VCS policy sets.                                                                                                                                                                |
+| `data.relationships.policies.data[]`          | array\[object] | `[]`    | A list of resource identifier objects that defines which policies will be members of the new set. These objects must contain `id` and `type` properties, and the `type` property must be `policies` (e.g. `{ "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }`).                                                                                                                                                                |
 
 ### Sample Payload
 
@@ -114,7 +114,7 @@ Properties without a default value are required.
 }
 ```
 
-### Sample payload with individual policy relationships (deprecated)
+### Sample payload with individual policy relationships
 
 ```json
 {
@@ -192,7 +192,7 @@ curl \
 }
 ```
 
-### Sample response with individual policy relationships (deprecated)
+### Sample response with individual policy relationships
 
 ```json
 {
@@ -306,7 +306,7 @@ curl \
 }
 ```
 
-### Sample response with individual policy relationships (deprecated)
+### Sample response with individual policy relationships
 
 ```json
 {
@@ -453,7 +453,7 @@ curl --request GET \
 }
 ```
 
-### Sample response with individual policy relationships (deprecated)
+### Sample response with individual policy relationships
 
 ```json
 {
