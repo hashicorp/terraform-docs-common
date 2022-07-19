@@ -30,10 +30,10 @@ Policy sets are groups of policies that can be enforced on Terraform Cloud works
 
 1. [Find one or more policy libraries in the Registry](#finding-policies-in-the-terraform-registry) containing policies you wish to enforce on your Terraform Cloud workspaces. Collect the usage instructions for all policies you wish to enforce in a single `sentinel.hcl` file.
 
-    -> You may wish to make adjustments to the `enforcement_level` in the HCL code snippets that you copy from the Terraform Registry. By default, the [enforcement level](https://www.terraform.io/cloud-docs/sentinel/manage-policies#enforcement-levels) in Registry policy snippets is always set to `advisory`.
+    -> You may wish to make adjustments to the `enforcement_level` in the HCL code snippets that you copy from the Terraform Registry. By default, the [enforcement level](/cloud-docs/sentinel/manage-policies#enforcement-levels) in Registry policy snippets is always set to `advisory`.
 
 2. Store this file in a private VCS repository of your choosing.
-3. [Follow these instructions](https://www.terraform.io/cloud-docs/sentinel/manage-policies#managing-policy-sets) to create a new policy set in Terraform Cloud from your VCS repository, and apply it to one or more of your workspaces.
+3. [Follow these instructions](/cloud-docs/sentinel/manage-policies#managing-policy-sets) to create a new policy set in Terraform Cloud from your VCS repository, and apply it to one or more of your workspaces.
 
 ## Using Policies in the Sentinel CLI
 

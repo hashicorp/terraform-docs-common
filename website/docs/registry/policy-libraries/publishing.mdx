@@ -8,7 +8,7 @@ description: >-
 
 A policy library is a collection of [Sentinel policies](https://docs.hashicorp.com/sentinel/writing) and [policy modules](https://docs.hashicorp.com/sentinel/extending/modules) that anyone can share through the Terraform Registry.
 
-Policy libraries are built and maintained on GitHub. Once a policy library has been published, you can release a new version of the policies by pushing a properly formatted Git tag.
+Policy libraries are built and maintained on GitHub. Once a policy library has been published, you can release a new version of the policies by pushing a properly formatted Git tag, as described below.
 
 ## Requirements for a Policy Library
 
@@ -18,17 +18,18 @@ Policy libraries are built and maintained on GitHub. Once a policy library has b
 
 - **Repository description**: The repository's description is displayed in search and browse pages of the Registry. This should be a short, one sentence description of purpose of the policy library.
 
-- **sentinel.hcl file**: The GitHub repository must include a `sentinel.hcl` file at its root level. This file outlines the names and file locations for policies and policy modules that are included in the policy library. This is a [Sentinel configuration file](https://docs.hashicorp.com/sentinel/configuration), and it uses the same syntax that a Sentinel author is already familiar with. There are two caveats:
-  1. [Remote sources](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies and policy modules are not allowed.
-  2. The `enforcement_level` for a policy does not need to be included.
+- **sentinel.hcl file**: The GitHub repository must include a `sentinel.hcl` file at its root level. This file outlines the names and file locations for policies and policy modules that are included in the policy library. Any policy files in the repository that are not listed in this file will be ignored.
+
+    This is a [Sentinel configuration file](https://docs.hashicorp.com/sentinel/configuration), and it uses the same syntax that a Sentinel author is already familiar with. There are two caveats:
+
+    1. [Remote sources](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies and policy modules are not allowed.
+    2. The `enforcement_level` for a policy does not need to be included and is ignored by the Registry.
 
 - **`x.y.z` tags for releases**: The registry uses tags to identify versions of policy libraries. Release tag names must be a [semantic version](http://semver.org/), which can optionally be prefixed with a `v`. For example, `v1.0.4` and `0.9.2` are both acceptable. To publish a policy library initially, at least one acceptable tag must be present. Tags that don't match these conventions are ignored.
 
 ## Documenting a Policy Library
 
 The Terraform Registry displays documentation for policy libraries, based on Markdown documents that you can choose to include in your GitHub repository.
-
--> In order to test how Markdown documents will render in the Terraform Registry, you can use the [Terraform Registry Doc Preview Tool](https://registry.terraform.io/tools/doc-preview).
 
 ### Directory Structure
 
@@ -56,7 +57,13 @@ From the top-right navigation bar of the [Terraform Registry](https://registry.t
 
 You must choose a category for your policy library. Categories are general  themes that can help users find policies that are relevant to their use-case. Choose the category that most closely matches the types of infrastructure to which your policies can be applied.
 
-You may optionally associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 20 publicly-available providers, in order to indicate to users which types of Terraform resources the policies in your library are applicable to.
+You may optionally associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 10 publicly-available providers, in order to indicate to users which types of Terraform resources the policies in your library are applicable to.
+
+### Best-practices
+
+**Group your policies into libraries by category.** Users looking for useful policies in the Registry often have a particular category in mind, like networking rules, or storage security. Try to design your policy libraries so that they target a single, specific category.
+
+**Publish new versions, don't edit old versions.** If you have already published a version of your policy library and recognize a mistake or something you would like to change, create a new version of the library. If you instead edit the files in the old version of the library, any users who have been depending on those policies will not be able to use them until they review your changes and update their Sentinel configuration files.
 
 #### Webhooks
 
