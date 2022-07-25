@@ -1,39 +1,45 @@
 ---
 page_title: Terraform Registry - Publishing Policy Libraries
 description: >-
-  How to publish Policy Libraries to the Terraform Registry.
+  Policy libraries are collections of Sentinel policies. Learn the requirements to publish a policy library to the Terraform Registry.
 ---
 
 # Publishing Policy Libraries
 
-A policy library is a collection of [Sentinel policies](https://docs.hashicorp.com/sentinel/writing) and [policy modules](https://docs.hashicorp.com/sentinel/extending/modules) that anyone can share through the Terraform Registry.
+A policy library is a collection of [Sentinel policies](https://docs.hashicorp.com/sentinel/writing) and [policy modules](https://docs.hashicorp.com/sentinel/extending/modules) on the Terraform Registry. Sentinel is an embedded policy-as-code framework that lets you make detailed, logic-based policy decisions.
 
-Policy libraries are built and maintained on GitHub. Once a policy library has been published, you can release a new version of the policies by pushing a properly formatted Git tag, as described below.
+You can build and maintain policy libraries on GitHub and then publish them to the Terraform Registry. This page explains how to format and publish policy libraries as well as how to release new versions.
 
-## Requirements for a Policy Library
+## Requirements
 
-- **Public GitHub repository**: The files defining Sentinel policies and policy modules must be stored in a public GitHub repository.
+Review the following before publishing a new policy library or policy library version.
 
-- **Repository name**: GitHub repositories containing Policy Libraries must be named according to the convention `policy-library-<NAME>`, where the `<NAME>` segment provides a name for your policy library.
+### GitHub Repository
 
-- **Repository description**: The repository's description is displayed in search and browse pages of the Registry. This should be a short, one sentence description of purpose of the policy library.
+The Github repository for your policy library must adhere to the following conventions:
+- The repository must be public.
+- The repository name must follow the convention `policy-library-<NAME>`, where the `<NAME>` segment provides a name for your policy library.
+- The repository description should contain a short sentence describing the purpose of the policy library. The Terraform Registry displays this description in search results and on the policy library's details page.
+### Sentinel File
 
-- **sentinel.hcl file**: The GitHub repository must include a `sentinel.hcl` file at its root level. This file outlines the names and file locations for policies and policy modules that are included in the policy library. Any policy files in the repository that are not listed in this file will be ignored.
+The GitHub repository must include a `sentinel.hcl` file at its root level that contains the names and file locations for the policies and policy modules included in the policy library. The Terraform Registry ignores any policy files in the repository that are not listed in the file.
 
-    This is a [Sentinel configuration file](https://docs.hashicorp.com/sentinel/configuration), and it uses the same syntax that a Sentinel author is already familiar with. There are two caveats:
+The `sentinel.hcl` file must follow the [Sentinel CLI Configuration File Syntax](https://docs.hashicorp.com/sentinel/configuration) with two deviations:
 
-    1. [Remote sources](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies and policy modules are not allowed.
-    2. The `enforcement_level` for a policy does not need to be included and is ignored by the Registry.
+-  [Remote sources](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies and policy modules are not allowed.
+- The `enforcement_level` for a policy is not required. The Terraform Registry ignores this information if included. 
 
-- **`x.y.z` tags for releases**: The registry uses tags to identify versions of policy libraries. Release tag names must be a [semantic version](http://semver.org/), which can optionally be prefixed with a `v`. For example, `v1.0.4` and `0.9.2` are both acceptable. To publish a policy library initially, at least one acceptable tag must be present. Tags that don't match these conventions are ignored.
+### Release Tags
+
+The Terraform Registry uses tags to identify versions of policy libraries. Release tag names must be a [semantic version](http://semver.org/), which can optionally be prefixed with a `v`. For example, `v1.0.4` and `0.9.2` are both acceptable. To publish a new policy library, at least one acceptable tag must be present. The Terraform Registry ignores tags that do not match these conventions.
 
 ## Documenting a Policy Library
 
-The Terraform Registry displays documentation for policy libraries, based on Markdown documents that you can choose to include in your GitHub repository.
+The Terraform Registry displays documentation for policy libraries from Markdown files in your GitHub repository.
 
 ### Directory Structure
 
-Markdown documents should be in the following locations within the repository. Any Markdown files that are not in these locations will be ignored.
+Markdown documents should be in the following locations within the repository. The Terraform Registry ignores Markdown files stored elsewhere.
 
 | Location | Filename | Description |
 | --- | --- | --- |
@@ -45,36 +51,34 @@ The `<policy name>` and `<module name>` in the Markdown filenames must match the
 
 ## Publishing to the Registry
 
-### Signing in
+Before you publish review the policy library categories on the Terraform Registry. We recommend designing your policy libraries to target a specific category, like networking rules or storage security. This helps the community find useful policies more easily.
 
-Before publishing a policy library, you must first [sign in to the Terraform Registry with a GitHub account](/registry#user-account).
+To publish a policy library to the Terraform Registry:
 
--> If you are publishing a policy library from a repository owned by a GitHub organization that you are a member of, you should verify that the Terraform Registry OAuth app has been granted access to the organization. Go to your [GitHub Settings](https://github.com/settings/applications) and select the Terraform Registry Application under "Authorized OAuth Apps" to confirm.
+1. Ensure that your policy library meets the [requirements](#requirements).
+1. If a GitHub organization owns the repository, verify that the Terraform Registry OAuth app has access to the organization. Go to your [GitHub Settings](https://github.com/settings/applications) and select the Terraform Registry Application under **Authorized OAuth Apps** to confirm.
+1. [Sign in to the Terraform Registry](/registry#user-account) with a GitHub account.
+1. Select **[Publish > Policy Library](https://registry.terraform.io/publish/policy)**. 
+1. Select the repository you would like to publish. 
+1. Choose a category for your policy library that most closely matches the types of infrastructure relevant to your policies. Categories are general themes that can help users find policies that are relevant to their use case. 
+1. (Optional) Associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 10 publicly-available providers to indicate which types of Terraform resources are relevant to your policies.
+1. Click **Publish Policy Library**. 
 
-### Publishing your Policy Library
+The policy library is now publicly available on the Terraform Registry.
 
-From the top-right navigation bar of the [Terraform Registry](https://registry.terraform.io), select [Publish > Policy](https://registry.terraform.io/publish/policy) to begin the publishing process. Follow the prompts to select the repository you would like to publish.
+-> **Note:** All content published to the Terraform Registry is subject to HashiCorp's terms of use. You can review these terms at <https://registry.terraform.io/terms>.
 
-You must choose a category for your policy library. Categories are general  themes that can help users find policies that are relevant to their use-case. Choose the category that most closely matches the types of infrastructure to which your policies can be applied.
 
-You may optionally associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 10 publicly-available providers, in order to indicate to users which types of Terraform resources the policies in your library are applicable to.
 
-### Best-practices
+## Releasing Policy Library Versions
 
-**Group your policies into libraries by category.** Users looking for useful policies in the Registry often have a particular category in mind, like networking rules, or storage security. Try to design your policy libraries so that they target a single, specific category.
+When you publish a policy library, the Terraform Registry creates a webhook in your GitHub repository that is subscribed to the `push` event. The webhook informs the Terraform Registry when you create new [release tags](#release-tags) in the repository and the Terraform Registry automatically updates to include the new policy library version.
 
-**Publish new versions, don't edit old versions.** If you have already published a version of your policy library and recognize a mistake or something you would like to change, create a new version of the library. If you instead edit the files in the old version of the library, any users who have been depending on those policies will not be able to use them until they review your changes and update their Sentinel configuration files.
+To repair a broken or missing webhook connection, go to your policy library on the Terraform Registry and select **Manage Policy Library > Resync Library**. After a few seconds, the Terraform Registry adds a new webhook to your GitHub repository.
 
-#### Webhooks
+We recommend publishing new versions to fix bugs instead of editing old versions of your policy library. When you edit the files in the old version of the library, users who have been depending on those policies cannot use them until they review your changes and update their Sentinel configuration files.
 
-Publishing a policy library will create a webhook in your GitHub repository subscribed to the `push` event. When you create new tagged versions of your repository, the webhook will inform the Terraform Registry, which will then be updated to include the new version of your policy library.
 
-If the webhook is missing or not working, you can repair the connection through the Terraform Registry website. From your policy library's index page, select "Manage Policy Library > Resync Library". After a few seconds, a working webhook should be added to your GitHub repository.
+## Support
 
-#### Terms of Use
-
-Anything published to the Terraform Registry is subject to our terms of use. A copy of the terms are available for viewing at <https://registry.terraform.io/terms>
-
-### Support
-
-If you experience issues publishing your provider to the Terraform Registry, please contact us at <terraform-registry@hashicorp.com>.
+Contact us at <terraform-registry@hashicorp.com> for help publishing your policy library to the Terraform Registry.
