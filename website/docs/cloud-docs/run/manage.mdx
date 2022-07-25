@@ -7,36 +7,25 @@ description: >-
 
 # Viewing and Managing Runs
 
-Each workspace in Terraform Cloud includes a list of its current, pending, and historical runs. You can view information about these runs in the UI, and sometimes interact with them.
+Each workspace in Terraform Cloud includes a list of its current, pending, and historical runs. You can view and interact with these runs in the UI. You can also lock workspaces to temporarily prevent new runs.
 
-Additionally, you can lock workspaces to temporarily prevent new runs.
+## API
 
--> **API:** See the [Runs API](/cloud-docs/api-docs/run) and [lock a Workspace endpoint](/cloud-docs/api-docs/workspaces#lock-a-workspace).
+Refer to the [Runs API](/cloud-docs/api-docs/run) and [lock a Workspace endpoint](/cloud-docs/api-docs/workspaces#lock-a-workspace).
 
 ## Navigating Runs
 
-Each workspace has two ways to view and navigate runs:
-
-- A "Runs" link, which goes to the full list of runs.
-- A "Current Run" link, which goes to the most recent active run. (This might not be the most recently initiated run, since runs in the "pending" state remain inactive until the current run is completed.)
-
-![runs list](/img/docs/runs-list.png)
-
-From the list of runs, you can click to view or interact with an individual run.
+Go to the **Runs** tab in the workspace to review a list of all Terrform runs associated with the workspace.
 
 ### The Run Page
 
-An individual run page shows the progress and outcomes of each stage of the run.
-
-![a run page](/img/docs/runs-run-page.png)
-
-Most importantly, it shows:
+Click a run to go to its details page. The details page contains the following information:
 
 - The current status of the run.
 - The code commit associated with the run.
 - How the run was initiated, when, and which user initiated it (if applicable).
 - A timeline of events related to the run.
-- The output from both the `terraform plan` and `terraform apply` commands, if applicable. You can hide or reveal these as needed; they default to visible if the command is currently running, and hidden if the command has finished.
+- The output from both the `terraform plan` and `terraform apply` commands, if applicable. This output defaults to visible if the command is currently running, and hidden if the command has finished.
 
 ## Interacting with Runs
 
