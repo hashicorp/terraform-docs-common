@@ -1,7 +1,7 @@
 ---
 page_title: Viewing and Managing Runs - Runs - Terraform Cloud and Terraform Enterprise
 description: >-
-  Workspaces list current, pending, and historical runs. Learn to view run
+  Workspaces list current, pending, and historical runs. View run
   information and lock workspaces to prevent new runs.
 ---
 
@@ -29,7 +29,9 @@ Click a run to go to its details page. The details page contains the following i
 
 ## Interacting with Runs
 
-In workspaces where you have permission to apply runs, run pages include controls for interacting with the run at the bottom of the page. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Depending on the state of the run, the following buttons might be available:
+In workspaces where you have permission to apply runs, run pages include controls for interacting with the run at the bottom of the page. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
+
+The following options are available, depending on the state of the run:
 
 | Button              | Available when:                                                                                                                                                                                                                    |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,7 +49,7 @@ If a plan needs confirmation (with [manual apply](/cloud-docs/workspaces/setting
 
 ### Canceling Runs
 
-If a run is currently planning or applying, users with permission to apply runs for the workspace can cancel the run before it finishes, using the "Cancel Run" button on the run's page. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+If a run is currently planning or applying, users with permission to apply runs for the workspace can cancel the run before it finishes, using the **Cancel Run** button on the run's page. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -55,18 +57,20 @@ Canceling a run is roughly equivalent to hitting ctrl+c during a Terraform plan 
 
 In rare cases, a cancelled run can fail to end gracefully, and will continue to lock the workspace without accomplishing anything useful. These stuck runs can be **force-canceled,** which immediately terminates the running Terraform process and unlocks the workspace.
 
-Since force-canceling can have dangerous side-effects (including loss of state and orphaned resources), it requires admin access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Additionally, the "Force Cancel Run" button only appears after the normal cancel button has been used and a cool-off period has elapsed, to ensure Terraform Cloud has a chance to terminate the run safely.
+Since force-canceling can have dangerous side-effects (including loss of state and orphaned resources), it requires admin access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Additionally, the **Force Cancel Run** button only appears after the normal cancel button has been used and a cool-off period has elapsed, to ensure Terraform Cloud has a chance to terminate the run safely.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Locking Workspaces (Preventing Runs)
 
-If you need to temporarily stop runs from being queued, you can lock the workspace.
+You can lock the workspace to temporarily stop runs from being queued. Locking a workspace requires permission to lock and unlock the workspace. Refer to ([Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
 
-A lock prevents Terraform Cloud from performing any plans or applies in the workspace. This includes automatic runs due to new commits in the VCS repository, manual runs queued via the UI, runs started on the command line with `terraform plan` and `terraform apply`, and runs created with the API. New runs remain in the "Pending" state until the workspace is unlocked.
+A lock prevents Terraform Cloud from performing any plans or applies in the workspace. This includes automatic runs due to new commits in the VCS repository, manual runs queued via the UI, runs started on the command line with `terraform plan` and `terraform apply`, and runs created with the API. New runs remain in the **Pending** state until the workspace is unlocked.
 
-The current lock status is shown in the workspace header, near the "Actions" menu.
+Terraform Cloud shows the lock status in the workspace's header, next to the **Actions** menu.
 
-You can find the lock button in the "Actions" menu in a workspace's header, or in [the workspace settings page](/cloud-docs/workspaces/settings). Locking a workspace requires permission to lock and unlock the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+To lock or unlock a workspace, do one of the following:
+- Open the **Actions** menu and select **Lock workspace** or **Unlock workspace**.
+- Go to **Settings > Locking**.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
