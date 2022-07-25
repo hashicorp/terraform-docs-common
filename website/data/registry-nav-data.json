@@ -38,10 +38,6 @@
     "title": "Policy Libraries",
     "routes": [
       {
-        "title": "Overview",
-        "path": "policy-libraries"
-      },
-      {
         "title": "Publishing Policy Libraries",
         "path": "policy-libraries/publishing"
       },
