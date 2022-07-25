@@ -123,7 +123,9 @@ Major versions of the protocol delineate Terraform CLI and Terraform Plugin comp
 
 Protocol version 6 is compatible with Terraform CLI version 1.0 and later. Protocol version 6 includes all version 5 functionality for providers, plus:
 
-* **Nested Attributes**: You can define `SchemaAttribute` with the `NestedType` field. This enables complex schemas using [argument syntax](/language/syntax/configuration#arguments) instead of [block syntax](/language/syntax/configuration#blocks) and is preferred going forward.
+* **Nested Attributes**: Define `SchemaAttribute` with the `NestedType` field.
+    * Enable practitioners to use easier [argument syntax](/language/syntax/configuration#arguments) instead of [block syntax](/language/syntax/configuration#blocks).
+    * Configure value sensitivity on individual nested attributes, rather than an entire read-only (`Computed` only) attribute.
 
 Implementations include:
 
