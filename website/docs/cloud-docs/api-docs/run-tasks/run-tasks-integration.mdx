@@ -46,7 +46,7 @@ All request payloads contain the following properties.
 | ------------------------------- | ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `payload_version`               | integer | `1`                      | Schema version of the payload. Only `1` is supported.                                                       |
 | `access_token`                  | string  |                          | Bearer token to use when calling back to Terraform Cloud.                                                   |
-| `stage`                         | string  | `pre_plan`, `post_plan`, `pre_apply` | The [stage](/cloud-docs/run/states) the task was triggered at.                                              |
+| `stage`                         | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/cloud-docs/run/states) when Terraform Cloud triggers the run task.  The `stage` property is in beta.                                            |
 | `is_speculative`                | bool    |                          | Whether the task is part of a [speculative run](/cloud-docs/run#speculative-plans).                         |
 | `task_result_id`                | string  |                          | ID of task result within Terraform Cloud.                                                                   |
 | `task_result_enforcement_level` | string  | `mandatory`, `advisory`  | Enforcement level for this task.                                                                            |
@@ -74,7 +74,7 @@ Requests with `stage` set to `pre_plan` contain the following additional propert
 | Key path                             | Type   | Values | Description                                                                                                                                                                                      |
 |--------------------------------------|--------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `configuration_version_id`           | string |        | The ID of the [configuration version](/cloud-docs/api-docs/configuration-versions) for the run.                                                                                                      |
-| `configuration_version_download_url` | string |        | The URL to [download the configuration version](cloud-docs/api-docs/configuration-versions#download-configuration-files). This is `null` if the configuration version cannot be downloaded. |
+| `configuration_version_download_url` | string |        | The URL to [download the configuration version](cloud-docs/api-docs/configuration-versions#download-configuration-files). This is `null` if the configuration version is not available to download. |
 | `workspace_working_directory`        | string |        | The working directory specified in the run's [workspace settings](/cloud-docs/workspaces/settings#terraform-working-directory).                                                                                                     |
 
 #### Post-Plan Properties
