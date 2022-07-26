@@ -39,20 +39,18 @@ _Leaving this stage:_
 
 The pre-plan phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the plan. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
-All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans). 
-
+All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans).
 
 _States in this stage:_
 
 - **Pre-plan running:** Terraform Cloud is waiting for a response from the configured external system(s).
- 
- External systems must respond initially with a `200 OK` acknowledging the request is in progress. After that, they have 10 minutes to return a status of `passed`, `running`, or `failed`. If the timeout expires, Terraform Cloud assumes that the run tasks is in the `failed` status.
+  - External systems must respond initially with a `200 OK` acknowledging the request is in progress. After that, they have 10 minutes to return a status of `passed`, `running`, or `failed`. If the timeout expires, Terraform Cloud assumes that the run tasks is in the `failed` status.
 
 _Leaving this stage:_
 
 - If any mandatory tasks failed, the run skips to completion (**Plan Errored** state).
 - If any advisory tasks failed, the run proceeds to the **Planning** state, with a visible warning regarding the failed task.
-- If a combination of mandatory and advisory tasks are configured for a single run, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails. 
+- If a combination of mandatory and advisory tasks are configured for a single run, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
 ## 4. The Plan Stage
