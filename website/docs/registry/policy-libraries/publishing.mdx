@@ -48,18 +48,20 @@ Markdown documents should be in the following locations within the repository. T
 | `docs/policies/` | `<policy name>.md` | Description of a single policy. |
 | `docs/modules/` | `<module name>.md` | Description of a single policy module. |
 
+### File Names
+
 The `<policy name>` and `<module name>` in the Markdown filenames must match the names of `policy` and `module` blocks in the library's `sentinel.hcl` file.
 
 ## Publishing to the Registry
 
-Before you publish, [review the policy library categories on the Terraform Registry](https://registry.terraform.io/browse/policies). Categories are general themes that can help users find policies that are relevant to their use case. We recommend designing your policy libraries to target a specific category, like networking rules or storage security. This helps the community find useful policies more easily.
+Before you publish, review the [policy library categories on the Terraform Registry](https://registry.terraform.io/browse/policies). Categories are general themes that can help users find policies that are relevant to their use case. We recommend designing your policy libraries to target a specific category, like networking rules or storage security. This helps the community find useful policies more easily.
 
 To publish a policy library to the Terraform Registry:
 
 1. Ensure that your policy library's repository meets the [requirements](#requirements).
 1. If a GitHub organization owns the repository, verify that the Terraform Registry OAuth app has access to the organization. Go to your [GitHub Settings](https://github.com/settings/applications) and select the Terraform Registry Application under **Authorized OAuth Apps** to confirm.
 1. [Sign in to the Terraform Registry](/registry#user-account) with a GitHub account.
-1. Select **[Publish > Policy Library](https://registry.terraform.io/publish/policy)**.
+1. Select **Publish > Policy Library**.
 1. Select the repository you would like to publish.
 1. Choose the category for your policy library that most closely matches the types of infrastructure relevant to your policies.
 1. (Optional) Associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 3 publicly-available providers to indicate which types of Terraform resources are relevant to your policies.
