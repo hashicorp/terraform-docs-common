@@ -53,7 +53,7 @@ If a run is currently planning or applying, users with [permission to apply runs
 
 Canceling a run is roughly equivalent to typing ctrl+c during a Terraform plan or apply on the CLI. The running Terraform process is sent an INT signal, which instructs Terraform to end its work, update state for any resources that have already been changed, and wrap up in the safest way possible.
 
-In rare cases, a cancelled run can fail to end, continuing to lock the workspace. You can forcefully cancel these runs, which immediately terminates the running Terraform process and unlocks the workspace.
+In rare cases, a canceled run can fail to end, continuing to lock the workspace. You can forcefully cancel these runs, which immediately terminates the running Terraform process and unlocks the workspace.
 
 Force-canceling requires admin access to the workspace because it can have dangerous side-effects, including loss of state and orphaned resources. Additionally, the **Force Cancel Run** button only appears after you click **Cancel Run** and Terraform Cloud has had time to terminate the run safely.
 
