@@ -21,6 +21,8 @@ Before Terraform is executed, the worker VM's shell environment is populated wit
 
 Changes made to the worker during a run are not persisted to subsequent runs, since the VM is destroyed after the run is completed. Notably, this requires some additional care when installing additional software with a `local-exec` provisioner; see [Installing Additional Tools](/cloud-docs/run/install-software#installing-additional-tools) for more details.
 
+> **Hands-on:** Try the [Upgrade Terraform Version in Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-versions) tutorial on HashiCorp Learn.
+
 ## Network Access to VCS and Infrastructure Providers
 
 In order to perform Terraform runs, Terraform Cloud needs network access to all of the resources being managed by Terraform.
