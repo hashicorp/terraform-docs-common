@@ -7,7 +7,13 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
-### 2022-6-23
+### 2022-07-26
+
+* Updated the [Run status list](/cloud-docs/api-docs/run#run-states) with `fetching`, `queuing`, `pre_plan_running` and `pre_plan_completed`
+* Update [Run Tasks](/cloud-docs/api-docs/run-tasks.mdx) to include the new `stages` attribute when attaching or updating workspace tasks.
+* Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) to specify the different request payloads for different stages.
+
+### 2022-06-23
 
 * Added the [Assessments](/cloud-docs/api-docs/assessments).
 * Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
@@ -21,7 +27,6 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
   * [Show an Agent Pool](/cloud-docs/api-docs/agents/#show-an-agent-pool)
   * [Create an Agent Pool](/cloud-docs/api-docs/agents/#create-an-agent-pool)
   * [Update an Agent Pool](/cloud-docs/api-docs/agents/#update-an-agent-pool)
-
 
 ### 2022-06-17
 * Updated [Creating a Run Task](/cloud-docs/workspaces/settings/run-tasks#creating-a-run-task) section to include the new description information for the run task to be configured.
