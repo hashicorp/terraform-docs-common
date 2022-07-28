@@ -1,5 +1,5 @@
 [
-  { "heading": "Terraform Cloud and Enterprise" },
+  { "heading": "Terraform Cloud" },
   { "title": "Overview", "path": "" },
   { "title": "Plans and Features", "path": "overview" },
   {
@@ -506,6 +506,6 @@
     "href": "/cloud-docs/agents"
   },
   { "divider": true },
-  { "title": "Terraform Enterprise Admin", "href": "/enterprise" },
+  { "title": "Terraform Enterprise", "href": "/enterprise" },
   { "divider": true }
 ]
