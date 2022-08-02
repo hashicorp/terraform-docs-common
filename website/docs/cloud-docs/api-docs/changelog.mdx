@@ -7,8 +7,26 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-07-26
+
+* Updated the [Run status list](/cloud-docs/api-docs/run#run-states) with `fetching`, `queuing`, `pre_plan_running` and `pre_plan_completed`
+* Update [Run Tasks](/cloud-docs/api-docs/run-tasks.mdx) to include the new `stages` attribute when attaching or updating workspace tasks.
+* Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) to specify the different request payloads for different stages.
+
+### 2022-06-23
+
+* Added the [Assessments](/cloud-docs/api-docs/assessments).
+* Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
+[Notification Configurations](/cloud-docs/api-docs/notification-configurations#notification-triggers) to account for assessments.
+* Added new query parameter(s) to [List Runs endpoint](/cloud-docs/api-docs/run#list-runs-in-a-workspace).
+
 ### 2022-06-21
 * Updated [Admin Organizations](/cloud-docs/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
+* Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a filter parameter `filter[allowed_workspaces][name]` so that agent pools can be filtered by name of an associated workspace. The given workspace must be allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).
+* Added new `organization-scoped` attribute and `allowed-workspaces` relationship to the request/response body of the below endpoints. This is available in Terraform Enterprise v202207-1 and later.
+  * [Show an Agent Pool](/cloud-docs/api-docs/agents/#show-an-agent-pool)
+  * [Create an Agent Pool](/cloud-docs/api-docs/agents/#create-an-agent-pool)
+  * [Update an Agent Pool](/cloud-docs/api-docs/agents/#update-an-agent-pool)
 
 ### 2022-06-17
 * Updated [Creating a Run Task](/cloud-docs/workspaces/settings/run-tasks#creating-a-run-task) section to include the new description information for the run task to be configured.

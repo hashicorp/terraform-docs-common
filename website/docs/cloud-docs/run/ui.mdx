@@ -25,9 +25,9 @@ The Terraform code for a normal run always comes from version control, and is al
 
 ## Automatically Starting Runs
 
-In a workspace linked to a VCS repo, runs start automatically when you merge or commit changes to version control.
+In a workspace linked to a VCS repository, runs start automatically when you merge or commit changes to version control.
 
-A workspace is linked to one branch of its repository, and ignores changes to other branches. Workspaces can also ignore some changes within their branch: if a Terraform working directory is configured, Terraform Cloud assumes that only some of the content in the repository is relevant to Terraform, and ignores changes outside of that content. (This behavior can be configured; for details, see [Settings: Automatic Run Triggering](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering).)
+A workspace is linked to one branch of a VCS repository and ignores changes to other branches. You can specify which files and directories within your repository trigger runs. Refer to [Automatic Run Triggering](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for details.
 
 -> **Note:** A workspace with no runs will not accept new runs via VCS webhook. At least one run must be manually queued to confirm that the workspace is ready for further runs.
 
@@ -39,7 +39,7 @@ Manually starting a run requires permission to queue plans for the workspace. ([
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-If the workspace has a plan that is still in the [plan stage](/cloud-docs/run/states#2-the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the "Current Run" page and click "Run this plan now". Be aware that this will terminate the current plan and unlock the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan is known not to have all the desired changes.
+If the workspace has a plan that is still in the [plan stage](/cloud-docs/run/states#4-the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the "Current Run" page and click "Run this plan now". Be aware that this will terminate the current plan and unlock the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan is known not to have all the desired changes.
 
 ## Confirming or Discarding Plans
 
