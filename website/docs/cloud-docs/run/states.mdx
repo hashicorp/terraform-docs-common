@@ -39,6 +39,8 @@ _Leaving this stage:_
 
 The pre-plan phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the plan. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
+-> **Note:** Pre-plan run tasks are in beta.
+
 All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans).
 
 _States in this stage:_
