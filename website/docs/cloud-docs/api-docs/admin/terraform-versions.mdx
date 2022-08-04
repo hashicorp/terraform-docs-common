@@ -36,9 +36,7 @@ page_title: Terraform Versions - Admin - API Docs - Terraform Enterprise
 
 # Admin Terraform Versions API
 
--> **Terraform Enterprise feature:** The admin API is exclusive to Terraform Enterprise, and can only be used by the admins and operators who install and maintain their organization's Terraform Enterprise instance.
-
--> These API endpoints are available in Terraform Enterprise as of version 201807-1.
+-> **Terraform Enterprise Only:** The admin API is exclusive to Terraform Enterprise, and can only be used by the admins and operators who install and maintain their organization's Terraform Enterprise instance.
 
 The Terraform Versions Admin API lets site administrators manage which versions of Terraform are available to the Terraform Cloud users within their enterprise.
 
@@ -59,8 +57,8 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 
 | Parameter         | Description                                                                                                                                                                                                                 |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `filter[version]`         | **Optional.** A query string. This will find an exact Terraform version matching the version queried. This option takes precedence over search queries. This option is available in Terraform Enterprise v202201-2 or later.|
-| `search[version]` | **Optional.** A search query string. This will search for Terraform versions matching the version number queried. This option is available in Terraform Enterprise v202201-2 or later.                                      |
+| `filter[version]`         | **Optional.** A query string. This will find an exact Terraform version matching the version queried. This option takes precedence over search queries. |
+| `search[version]` | **Optional.** A search query string. This will search for Terraform versions matching the version number queried.                                      |
 | `page[number]`    | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                          |
 | `page[size]`      | **Optional.** If omitted, the endpoint will return 20 Terraform versions per page.                                                                                                                                          |
 
