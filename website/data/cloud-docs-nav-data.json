@@ -124,39 +124,6 @@
         "path": "api-docs/variable-sets"
       },
       {
-        "title": "Admin",
-        "hidden": true,
-        "routes": [
-          { "title": "Overview", "path": "api-docs/admin", "hidden": true },
-          {
-            "title": "Module Sharing",
-            "path": "api-docs/admin/module-sharing",
-            "hidden": true
-          },
-          {
-            "title": "Organizations",
-            "path": "api-docs/admin/organizations",
-            "hidden": true
-          },
-          { "title": "Runs", "path": "api-docs/admin/runs", "hidden": true },
-          {
-            "title": "Settings",
-            "path": "api-docs/admin/settings",
-            "hidden": true
-          },
-          {
-            "title": "Terraform Versions",
-            "path": "api-docs/admin/terraform-versions",
-            "hidden": true
-          },
-          { "title": "Users", "path": "api-docs/admin/users", "hidden": true },
-            "title": "Workspaces",
-            "path": "api-docs/admin/workspaces",
-            "hidden": true
-          }
-        ]
-      },
-      {
         "title": "Changelog",
         "path": "api-docs/changelog"
       },
