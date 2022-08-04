@@ -43,7 +43,7 @@ page_title: State Versions - API Docs - Terraform Cloud
 `POST /workspaces/:workspace_id/state-versions`
 
 | Parameter       | Description                                                                                                                                                                                                       |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `:workspace_id` | The workspace ID to create the new state version in. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 Creates a state version and sets it as the current state version for the given workspace. The workspace must be locked by the user creating a state version. The workspace may be locked [with the API](/cloud-docs/api-docs/workspaces#lock-a-workspace) or [with the UI](/cloud-docs/workspaces/settings#locking). This is most useful for migrating existing state from open source Terraform into a new Terraform Cloud workspace.
@@ -59,7 +59,7 @@ Creating state versions requires permission to read and write state versions for
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason                                                            |
-| ------- | ------------------------- | ----------------------------------------------------------------- |
+|---------|---------------------------|-------------------------------------------------------------------|
 | [201][] | [JSON API document][]     | Successfully created a state version.                             |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action.      |
 | [409][] | [JSON API error object][] | Conflict; check the error object for more information.            |
@@ -72,14 +72,15 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                         | Type    | Default   | Description                                                                                                                                                                                               |
-| -------------------------------- | ------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                      | string  |           | Must be `"state-versions"`.                                                                                                                                                                               |
-| `data.attributes.serial`         | integer |           | The serial of the state version. Must match the serial value extracted from the raw state file.                                                                                                           |
-| `data.attributes.md5`            | string  |           | An MD5 hash of the raw state version                                                                                                                                                                      |
-| `data.attributes.lineage`        | string  | (nothing) | **Optional** Lineage of the state version. Should match the lineage extracted from the raw state file. Early versions of terraform did not have the concept of lineage, so this is an optional attribute. |
-| `data.attributes.state`          | string  |           | Base64 encoded raw state file                                                                                                                                                                             |
-| `data.relationships.run.data.id` | string  | (nothing) | **Optional** The ID of the run to associate with the state version.                                                                                                                                       |
+| Key path                             | Type    | Default   | Description                                                                                                                                                                                                                 |
+|--------------------------------------|---------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                          | string  |           | Must be `"state-versions"`.                                                                                                                                                                                                 |
+| `data.attributes.serial`             | integer |           | The serial of the state version. Must match the serial value extracted from the raw state file.                                                                                                                             |
+| `data.attributes.md5`                | string  |           | An MD5 hash of the raw state version                                                                                                                                                                                        |
+| `data.attributes.lineage`            | string  | (nothing) | **Optional** Lineage of the state version. Should match the lineage extracted from the raw state file. Early versions of terraform did not have the concept of lineage, so this is an optional attribute.                   |
+| `data.attributes.state`              | string  |           | Base64 encoded raw state file                                                                                                                                                                                               |
+| `data.attributes.json-state-outputs` | string  | (nothing) | **Optional** Base64 encoded output values as represented by `terraform show -json` (the contents of the values/outputs key). If omitted, Terraform Cloud will populate the workspace outputs from state after a short time. |
+| `data.relationships.run.data.id`     | string  | (nothing) | **Optional** The ID of the run to associate with the state version.                                                                                                                                                         |
 
 ### Sample Payload
 
@@ -91,7 +92,8 @@ Properties without a default value are required.
       "serial": 1,
       "md5": "d41d8cd98f00b204e9800998ecf8427e",
       "lineage": "871d1b4a-e579-fb7c-ffdb-f0c858a647a7",
-      "state": "..."
+      "state": "...",
+      "json-state-outputs": "..."
     },
     "relationships": {
       "run": {
@@ -152,7 +154,7 @@ Listing state versions requires permission to read state versions for the worksp
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                    | Description                                                                    |
-| ---------------------------- | ------------------------------------------------------------------------------ |
+|------------------------------|--------------------------------------------------------------------------------|
 | `filter[workspace][name]`    | **Required** The name of one workspace to list versions for.                   |
 | `filter[organization][name]` | **Required** The name of the organization that owns the desired workspace.     |
 | `page[number]`               | **Optional.** If omitted, the endpoint will return the first page.             |
@@ -361,7 +363,7 @@ curl \
 `GET /workspaces/:workspace_id/current-state-version`
 
 | Parameter       | Description                                                                                                                                                                                                                          |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `:workspace_id` | The ID for the workspace whose current state version you want to fetch. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 Fetches the current state version for the given workspace. This state version
@@ -372,7 +374,7 @@ Viewing state versions requires permission to read state versions for the worksp
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 | Status  | Response                  | Reason                                                                                                        |
-| ------- | ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
 | [200][] | [JSON API document][]     | Successfully returned current state version for the given workspace.                                          |
 | [404][] | [JSON API error object][] | Workspace not found, workspace does not have a current state version, or user unauthorized to perform action. |
 
@@ -491,11 +493,11 @@ Viewing state versions requires permission to read state versions for the worksp
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 | Parameter           | Description                          |
-| ------------------- | ------------------------------------ |
+|---------------------|--------------------------------------|
 | `:state_version_id` | The ID of the desired state version. |
 
 | Status  | Response                  | Reason                                                                                                        |
-| ------- | ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
 | [200][] | [JSON API document][]     | Successfully returned current state version for the given workspace.                                          |
 | [404][] | [JSON API error object][] | Workspace not found, workspace does not have a current state version, or user unauthorized to perform action. |
 
