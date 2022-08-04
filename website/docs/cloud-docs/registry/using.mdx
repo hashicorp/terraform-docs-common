@@ -13,7 +13,7 @@ All users in an organization can view the Terraform Cloud private registry and u
 - **Location:** You must use Terraform Cloud's web UI to search for providers, modules, and usage examples.
 - **Provider and Module block `source` argument:** Private providers and modules use a [different format](/cloud-docs/registry/using#using-private-providers-and-modules-in-configurations).
 - **Terraform version:** Terraform Cloud workspaces using version 0.11 and higher can automatically access your private modules during Terraform runs, and workspaces using version 0.13 and higher can also automatically access private providers.
-- **Authentication:** If you run Terraform on the command line, you must [authenticate](/cloud-docs/registry/using#authentication) to Terraform Cloud or your Terraform Enterprise instance to use providers and modules in your organization’s private registry.
+- **Authentication:** If you run Terraform on the command line, you must [authenticate](/cloud-docs/registry/using#authentication) to Terraform Cloud or your instance to use providers and modules in your organization’s private registry.
 
 ## Finding Providers and Modules
 
@@ -106,7 +106,7 @@ module "vpc" {
 
 ~> **Important:** The generic hostname only works within a Terraform Enterprise instance.
 
-To test configurations on a developer workstation without the remote backend configured, you must replace the generic hostname with a literal hostname in all module sources and then change them back before committing to VCS. We are working on making this workflow smoother, but we currently only recommend `localterraform.com` for large organizations that use multiple Terraform Enterprise instances.
+To test configurations on a developer workstation without the remote backend configured, you must replace the generic hostname with a literal hostname in all module sources and then change them back before committing to VCS. We are working on making this workflow smoother, but we only recommend `localterraform.com` for large organizations that use multiple Terraform Enterprise instances.
 
 ### Provider and Module Availability
 
@@ -114,7 +114,7 @@ A workspace can only use private providers and modules from its own organization
 
 - **Terraform Cloud:** [Add providers and modules to the registry](/cloud-docs/registry/publish#sharing-modules-across-organizations) for each organization that requires access.
 
-- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Note that in Terraform Enterprise v202012-1 or higher, workspaces can also use private modules from organizations that are sharing modules with the workspace's organization. Private providers are not available in Terraform Enterprise.
+- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization. 
 
 ## Running Configurations with Private Providers and Modules
 
@@ -127,7 +127,7 @@ Terraform version 0.11 or later is required to use private modules in Terraform 
 
 To authenticate with Terraform Cloud, you can use either a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or a [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). The type of token you choose may grant different permissions.
 
-- **User Token**: Allows you to access providers and modules from any organization in which you are a member. You are a member of an organization if you belong to any team in that organization. In Terraform Enterprise v202012-1 or higher, you can also access modules from any organization that is sharing modules with any of your organizations.
+- **User Token**: Allows you to access providers and modules from any organization in which you are a member. You are a member of an organization if you belong to any team in that organization. You can also access modules from any organization that is sharing modules with any of your organizations.
 
  -> **Note:** When SAML SSO is enabled, there is a [session timeout for user API tokens](/enterprise/user-management/saml/login#api-token-expiration), requiring you to periodically re-authenticate through the web UI. Expired tokens produce a _401 Unauthorized_ error. A SAML SSO account with [IsServiceAccount](/enterprise/user-management/saml/attributes#isserviceaccount) is treated as a service account and will not have the session timeout.
 
