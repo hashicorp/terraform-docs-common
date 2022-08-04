@@ -56,8 +56,8 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Applying           | `"run:applying"`        | A run enters the [Apply stage](/cloud-docs/run/states#8-the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
 | Completed          | `"run:completed"`       | A run has completed successfully.                                     |
 | Errored            | `"run:errored"`         | A run has terminated early due to error or cancellation.                                          |
-| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                                     |
-| Drift Check Failed | `"assessment:failed`"   | A drift detection assessment failed. This is only available if [drift detection](https://www.terraform.io/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                          |
+| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This is only available if drift detection is enabled for the workspace.  Not available in Terraform Enterprise.                                                   |
+| Drift Check Failed | `"assessment:failed`"   | A drift detection assessment failed. This is only available if drift detection is enabled for the workspace.   Not available in Terraform Enterprise.                                       |
 
 ## Notification Payload
 
@@ -113,6 +113,8 @@ Run events include detailed information about a specific run, including the time
   ]
 }
 ```
+
+<!-- BEGIN: TFC:only name:drift-detection -->
 
 ### Workspace Notification Payload
 
@@ -174,6 +176,9 @@ Workspace events include detailed information about workspace-level validation e
   }
 }
 ```
+
+<!-- END:   TFC:only name:drift-detection -->
+
 
 ## Notification Authenticity
 
