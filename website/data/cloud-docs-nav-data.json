@@ -504,8 +504,5 @@
   {
     "title": "Terraform Cloud Agents",
     "href": "/cloud-docs/agents"
-  },
-  { "divider": true },
-  { "title": "Terraform Enterprise", "href": "/enterprise" },
-  { "divider": true }
+  }
 ]
