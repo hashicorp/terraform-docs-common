@@ -368,8 +368,6 @@ This endpoint notifies Terraform Cloud to discard the uploaded `.tar.gz` file as
 
 Terraform Cloud automatically archives configuration versions created through VCS when associated runs are complete and then re-fetches the files for subsequent runs.
 
--> **Note:** This endpoint is available in Terraform Enterprise v202203-1 or later.
-
 | Status  | Response                  | Reason(s)                                                                                                                                     |
 | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | [202][] | none                      | Successfully initiated the archive process.                                                                                                   |
@@ -405,8 +403,6 @@ curl \
 | `run_id`                    | The ID of the run whose configuration version should be downloaded. |
 
 These endpoints generate a temporary URL to the location of the configuration version in a `.tar.gz` archive, and then redirect to that link. If using a client that can follow redirects, you can use these endpoints to save the `.tar.gz` archive locally without needing to save the temporary URL. These endpoints will return an error if attempting to download a configuration version that is not in an `uploaded` [state](#configuration-version-states).
-
--> **Note:** These endpoints are available in Terraform Enterprise v202203-1 or later.
 
 | Status  | Response                  | Reason                                                                                                                      |
 |---------|---------------------------|-----------------------------------------------------------------------------------------------------------------------------|
