@@ -4,7 +4,7 @@ page_title: Notifications - Workspaces - Terraform Cloud and Terraform Enterpris
 
 # Notifications
 
-Terraform Cloud can use webhooks to notify external systems about [drift detection](/cloud-docs/workspaces/settings/drift-detection) and run progress. Each workspace has its own notification settings and can notify up to 20 destinations.
+Terraform Cloud can use webhooks to notify external systems about run progress and other events. Each workspace has its own notification settings and can notify up to 20 destinations.
 
 Configuring notifications requires admin access to the workspace. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
 
@@ -33,9 +33,14 @@ A notification configuration specifies a destination URL, a payload type, and th
 
    - **Email Recipients** This is only available for emails. Select users that should receive notifications.
 
-   - **Workspace Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-       - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.
-       - **Drift Check Fail**: A drift detection assessment failed. This notification is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.
+       <!-- BEGIN: TFC:only name:drift-detection -->
+
+    -   **Workspace Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
+        -   **Drift**: Terraform Cloud detected configuration drift. This notification is only available if [drift detection](/enterprise/workspaces/settings/drift-detection) is enabled for the workspace.
+        -   **Drift Check Fail**: A drift detection assessment failed. This notification is only available if [drift detection](/enterprise/workspaces/settings/drift-detection) is enabled for the workspace.
+
+     <!-- END:   TFC:only name:drift-detection -->
+    
    - **Run Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
        - **Created**: A run is created and enters the [Pending stage](/cloud-docs/run/states#1-the-pending-stage).
        - **Planning**: A run acquires the lock and starts to execute.
