@@ -90,7 +90,11 @@ The following entitlements are available:
 - `self-serve-billing` — Allows an organization to pay via credit card using the in-app billing UI.
 - `state-storage` — Allows an organization to store state versions in its workspaces, which enables local Terraform runs with Terraform Cloud. Affects the [state versions][] endpoints.
 - `sentinel` — Allows an organization to use [Sentinel][]. Affects the [policies][], [policy sets][], and [policy checks][] endpoints.
-- `sso` — Allows an organization to manage and authenticate users via [single sign on][].
+-   `sso` — Allows an organization to manage and authenticate users via single sign on.
+    <!-- BEGIN: TFC:only -->
+    For Terraform Cloud, refer to [SSO](/cloud-docs/users-teams-organizations/single-sign-on).
+    <!-- END: TFC:only -->
+    For Terraform Enterprise, refer to [SAML SSO](/enterprise/saml/configuration).
 - `teams` — Allows an organization to manage access to its workspaces with [teams](/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
 - `user-limit` — An integer value representing the maximum number of users allowed for the organization. If blank, there is no limit.
 - `vcs-integrations` — Allows an organization to [connect with a VCS provider][vcs integrations] and link VCS repositories to workspaces. Affects the [OAuth Clients][o-clients], and [OAuth Tokens][o-tokens] endpoints, and determines whether the `data.attributes.vcs-repo` property can be set for [workspaces][].
