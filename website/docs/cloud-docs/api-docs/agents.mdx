@@ -409,7 +409,7 @@ Properties without a default value are required.
 | `data.attributes.name`                            | string |         | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                    |
 | `data.attributes.organization-scoped`             | bool   | true    | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
 | `data.relationships.allowed-workspaces.data.type` | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
-| `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that is allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).  |
+| `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).  |
 
 ### Sample Payload
 
