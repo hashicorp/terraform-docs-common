@@ -476,5 +476,6 @@
   {
     "title": "Terraform Cloud Agents",
     "href": "/cloud-docs/agents"
-  }
+  },
+  { "divider": true }
 ]
