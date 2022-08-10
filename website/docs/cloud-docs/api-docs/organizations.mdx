@@ -1,5 +1,5 @@
 ---
-page_title: Organizations - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Organizations - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -743,7 +743,7 @@ curl \
 
 ## Show Module Producers
 
-~> **Note:** This endpoint is available in Terraform Enterprise v202103-1 or later. It is not available on Terraform Cloud.
+~> **Note:** This endpoint is not available on Terraform Cloud.
 
 This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/enterprise/admin/application/module-sharing).
 
@@ -826,7 +826,7 @@ The following relationships may be present in various responses.
 
 | Resource Name         | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `module-producers`    | Other organizations that are configured to share modules with the organization. Terraform Enterprise v202103-1 or later only. |
+| `module-producers`    | Other organizations configured to share modules with the organization. |
 | `oauth-tokens`        | OAuth tokens associated with VCS configurations for the organization.                                                         |
 | `authentication-token`| The API token for an organization.                                                                                            |
 | `entitlement-set`     | The entitlement set that determines which Terraform Cloud features the organization can use.                                  |

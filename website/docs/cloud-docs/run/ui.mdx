@@ -1,5 +1,5 @@
 ---
-page_title: UI/VCS-driven Runs - Runs - Terraform Cloud and Terraform Enterprise
+page_title: UI/VCS-driven Runs - Runs - Terraform Cloud
 description: >-
   Workspaces are associated with a VCS repository branch, and Terraform Cloud
   automatically queues runs when new commits are merged.
@@ -81,7 +81,7 @@ Whenever a pull request is _created or updated,_ Terraform Cloud checks whether 
 
   To avoid executing malicious code or exposing sensitive information, Terraform Cloud doesn't run speculative plans for pull requests that originate from forks of a repository.
 
-  -> **Note:** On Terraform Enterprise versions v202005-1 or later, administrators can choose to allow speculative plans on pull requests that originate from forks. To learn more about this setting, refer to the [general settings documentation](/enterprise/admin/application/general#allow-speculative-plans-on-pull-requests-from-forks)
+  -> **Note:** On Terraform Enterprise, administrators can choose to allow speculative plans on pull requests that originate from forks. To learn more about this setting, refer to the [general settings documentation](/enterprise/admin/application/general#allow-speculative-plans-on-pull-requests-from-forks)
 
 - Pull requests can only trigger runs in workspaces where automatic speculative plans are allowed. You can [disable automatic speculative plans](/cloud-docs/workspaces/settings/vcs#automatic-speculative-plans) in a workspace's VCS settings.
 
