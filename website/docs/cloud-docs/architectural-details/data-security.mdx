@@ -55,4 +55,4 @@ and a 96-bit nonce), and stored alongside the object. This pattern is called env
 
 The Vault transit secret engine's
 [datakey generation](https://www.vaultproject.io/api-docs/secret/transit#generate-data-key) creates the encryption key material using bit material from the kernel's cryptographically secure pseudo-random
-number generator (CSPRNG) as the `context` value. Blob storage encryption generates a unique key for each object and relies on envelope encryption, so Vault does not rotate the encryption key material for individual objects. The key encryption keys within the envelope encryption scheme are rotated automatically by Terraform Cloud every 365 days. These keys are not automatically rotated within TFE.
+number generator (CSPRNG) as the `context` value. Blob storage encryption generates a unique key for each object and relies on envelope encryption, so Vault does not rotate the encryption key material for individual objects. The root encryption keys within the envelope encryption scheme are rotated automatically by Terraform Cloud every 365 days. These keys are not automatically rotated within TFE.
