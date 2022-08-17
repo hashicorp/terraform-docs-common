@@ -22,10 +22,11 @@ Terraform runs managed by Terraform Cloud are called _remote operations._ Remote
 ### Disabling Remote Operations
 
 [execution_mode]: /cloud-docs/workspaces/settings#execution-mode
+[terraform_cloud_for_business_tier]: https://cloud.hashicorp.com/docs/hcp/admin/billing/flex-billing#terraform-cloud-business-tier
 
 Many of Terraform Cloud's features rely on remote execution and are not available when using local operations. This includes features like Sentinel policy enforcement, cost estimation, and notifications.
 
-You can disable remote operations for any workspace by changing its [Execution Mode][execution_mode] to **Local**. This causes the workspace to act only as a remote backend for Terraform state, with all execution occurring on your own workstations or continuous integration workers.
+You can disable remote operations for any workspace by changing its [Execution Mode][execution_mode] to **Local**. This change causes the workspace to act only as a remote backend for Terraform state, with all execution occurring on your own workstations or continuous integration workers. Consequently, any [Apply][terraform_cloud_for_business_tier] that is run in Local Execution mode does not count towards any Flex meters or Service Entitlements.
 
 ### Protecting Private Environments
 
