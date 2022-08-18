@@ -43,6 +43,103 @@ These endpoints are only relevant to private providers. When you [publish a priv
 
 You need [owners team](/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete GPG keys in a private registry.
 
+## List GPG Keys
+
+`GET /api/registry/:registry_name/v2/gpg-keys`
+
+### Parameters
+
+| Parameter        | Description        |
+|------------------|--------------------|
+| `:registry_name` | Must be `private`. |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter           | Description                                                                                                          |
+|---------------------|----------------------------------------------------------------------------------------------------------------------|
+| `filter[namespace]` | **Required.** A comma-seperated list of one or more namespaces. These must be authorized TFC/TFE organization names. |
+| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                   |
+| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 GPG keys per page.                                             |
+
+Gets a list of GPG keys belonging to the specified namespaces.
+
+| Status  | Response                                   | Reason                                                    |
+|---------|--------------------------------------------|-----------------------------------------------------------|
+| [200][] | [JSON API document][] (`type: "gpg-keys"`) | Successfully fetched GPG keys                             |
+| [400][] | [JSON API error object][]                  | Error - missing namespaces in request                     |
+| [403][] | [JSON API error object][]                  | Forbidden - no authorized namespaces specified in request |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  "https://app.terraform.io/api/registry/private/v2/gpg-keys?filter%5Bnamespace%5D=my-organization,my-other-organization"
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "type": "gpg-keys",
+      "id": "1",
+      "attributes": {
+        "ascii-armor": "-----BEGIN PGP PUBLIC KEY BLOCK-----...",
+        "created-at": "2022-02-08T19:15:47Z",
+        "key-id": "C4E5E6C66C79C778",
+        "namespace": "my-other-organization",
+        "source": "",
+        "source-url": null,
+        "trust-signature": "",
+        "updated-at": "2022-02-08T19:15:47Z"
+      },
+      "links": {
+        "self": "/v2/gpg-keys/1"
+      }
+    },
+    {
+      "type": "gpg-keys",
+      "id": "140",
+      "attributes": {
+        "ascii-armor": "-----BEGIN PGP PUBLIC KEY BLOCK-----...",
+        "created-at": "2022-04-28T21:32:11Z",
+        "key-id": "C4E5E6C66C79C778",
+        "namespace": "my-organization",
+        "source": "",
+        "source-url": null,
+        "trust-signature": "",
+        "updated-at": "2022-04-28T21:32:11Z"
+      },
+      "links": {
+        "self": "/v2/gpg-keys/140"
+      }
+    }
+  ],
+  "links": {
+    "first": "/v2/gpg-keys?filter%5Bnamespace%5D=my-organization%2Cmy-other-organization&page%5Bnumber%5D=1&page%5Bsize%5D=15",
+    "last": "/v2/gpg-keys?filter%5Bnamespace%5D=my-organization%2Cmy-other-organization&page%5Bnumber%5D=1&page%5Bsize%5D=15",
+    "next": null,
+    "prev": null
+  },
+  "meta": {
+    "pagination": {
+      "page-size": 15,
+      "current-page": 1,
+      "next-page": null,
+      "prev-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
+```
+
 ## Add a GPG Key
 
 `POST /api/registry/:registry_name/v2/gpg-keys`
