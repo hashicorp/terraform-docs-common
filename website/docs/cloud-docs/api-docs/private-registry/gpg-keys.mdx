@@ -235,8 +235,7 @@ Gets the content of a GPG key.
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| [201][] | [JSON API document][] (`type: "gpg-keys"`)                 | Successfully uppdates a GPG key                                |
-| [422][] | [JSON API error object][]                                  | Malformed request body (missing attributes, wrong types, etc.) |
+| [200][] | [JSON API document][] (`type: "gpg-keys"`)                 | Successfully fetched GPG key                                   |
 | [403][] | [JSON API error object][]                                  | Forbidden - not available for public providers                 |
 | [404][] | [JSON API error object][]                                  | GPG key not found or user not authorized                       |
 
@@ -247,7 +246,6 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request GET \
-  --data @payload.json \
   https://app.terraform.io/api/registry/private/v2/gpg-keys/hashicorp/32966F3FB5AC1129
 ```
 
@@ -289,7 +287,7 @@ Updates the specified GPG key. Only the `namespace` attribute can be updated, an
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| [201][] | [JSON API document][] (`type: "gpg-keys"`)                 | Successfully uppdates a GPG key                                |
+| [201][] | [JSON API document][] (`type: "gpg-keys"`)                 | Successfully updates a GPG key                                 |
 | [422][] | [JSON API error object][]                                  | Malformed request body (missing attributes, wrong types, etc.) |
 | [403][] | [JSON API error object][]                                  | Forbidden - not available for public providers                 |
 | [404][] | [JSON API error object][]                                  | GPG key not found or user not authorized                       |
