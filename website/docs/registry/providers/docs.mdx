@@ -48,7 +48,7 @@ Provider documentation should be a directory of Markdown documents in the provid
 | `docs/resources/`    | `<resource>.md`    | Information for a Resource. Filename should not include a `<PROVIDER NAME>_` prefix. |
 | `docs/data-sources/` | `<data_source>.md` | Information on a provider data source.                                               |
 
--> **Note:** In order to support provider docs which have already been formatted for publishing to [terraform.io][terraform-io-providers], the Terraform Registry also supports docs in a `website/docs/` legacy directory with file extensions of `.html.markdown` or `.html.md`.
+-> **Note:** In order to support provider docs which have already been formatted for publishing to [the website][terraform-io-providers], the Terraform Registry also supports docs in a `website/docs/` legacy directory with file extensions of `.html.markdown` or `.html.md`.
 
 ### Headers
 
@@ -250,11 +250,11 @@ Guides without a subcategory are always rendered before guides with subcategorie
 
 ## Migrating Legacy Providers Docs
 
-For most provider docs already published to [terraform.io][terraform-io-providers], no changes are required to publish them to the Terraform Registry.
+For most provider docs already published to [the website][terraform-io-providers], no changes are required to publish them to the Terraform Registry.
 
 ~> **Important:** The only exceptions are providers which organize resources, data sources, or guides into subcategories. See the [Subcategories](#subcategories) section above for more information.
 
-If you want to publish docs on the Terraform Registry that are not currently published to terraform.io, take the following steps to migrate to the newer format:
+If you want to publish docs on the Terraform Registry that are not currently published to the website, take the following steps to migrate to the newer format:
 
 1. Move the `website/docs/` folder to `docs/`
 1. Expand the folder names to match the Terraform Registry's expected format:
