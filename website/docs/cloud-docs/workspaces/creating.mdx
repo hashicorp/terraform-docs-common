@@ -7,7 +7,7 @@ description: >-
 
 # Creating Workspaces
 
-> **Hands-on:** Try the [Get Started - Terraform Cloud](https://learn.hashicorp.com/collections/terraform/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) collection on HashiCorp Learn.
+> **Hands-on:** Try the [Get Started - Terraform Cloud](https://learn.hashicorp.com/collections/terraform/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
 
 Workspaces organize infrastructure into meaningful groups. Create new workspaces when you need to manage a new collection of infrastructure resources. You can use the following methods to create workspaces:
 
@@ -56,11 +56,11 @@ For CLI and API-driven workspaces, the workspace overview page appears. For vers
 
 ### Configure Terraform Variables (Version Control Only)
 
-After you create a new workspace from a version control repository, Terraform Cloud scans its configuration files for [Terraform variables](/cloud-docs/workspaces/variables#terraform-variables) and displays any that do not have a default value and are not defined in an existing global [variable set](/cloud-docs/api-docs/variable-sets). Terraform cannot perform successful runs in the workspace until you set values for these variables. 
+After you create a new workspace from a version control repository, Terraform Cloud scans its configuration files for [Terraform variables](/cloud-docs/workspaces/variables#terraform-variables) and displays any that do not have a default value and are not defined in an existing global [variable set](/cloud-docs/api-docs/variable-sets). Terraform cannot perform successful runs in the workspace until you set values for these variables.
 
 Choose one of the following actions:
 
-- To skip this step, click **Go to workspace overview**. You can [load these variables from files](/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. Terraform Cloud will not automatically scan your configuration again; you can only add variables from within the workspace individually. 
+- To skip this step, click **Go to workspace overview**. You can [load these variables from files](/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. Terraform Cloud will not automatically scan your configuration again; you can only add variables from within the workspace individually.
 - To configure variables, enter a value for each variable on the page. You may want to leave a variable empty if you know you will provide it through another source, like an `auto.tfvars` file. Click **Save variables** to add these variables to the workspace.
 
 ## After Creating a Workspace

@@ -40,7 +40,7 @@ Use the **Submodules** menu to navigate to the detail pages for any nested modul
 
 ## Using Public Providers and Modules in Configurations
 
-> **Hands-on:** Try the [Use Modules from the Registry](https://learn.hashicorp.com/tutorials/terraform/module-use?in=terraform/modules) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Use Modules from the Registry](https://learn.hashicorp.com/tutorials/terraform/module-use?in=terraform/modules) tutorial.
 
 The syntax for public providers in a private registry is the same as for providers that you use directly from the public Terraform Registry. The syntax for the [provider block](/language/providers/configuration#provider-configuration-1) `source` argument is `<NAMESPACE>/<PROVIDER_NAME>`.
 
@@ -111,7 +111,7 @@ A workspace can only use private providers and modules from its own organization
 
 - **Terraform Cloud:** [Add providers and modules to the registry](/cloud-docs/registry/publish#sharing-modules-across-organizations) for each organization that requires access.
 
-- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization. 
+- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization.
 
 ## Running Configurations with Private Providers and Modules
 
