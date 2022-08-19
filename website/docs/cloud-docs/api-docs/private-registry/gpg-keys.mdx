@@ -55,13 +55,13 @@ You need [owners team](/cloud-docs/users-teams-organizations/permissions#organiz
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
 | Parameter           | Description                                                                                                          |
 |---------------------|----------------------------------------------------------------------------------------------------------------------|
-| `filter[namespace]` | **Required.** A comma-seperated list of one or more namespaces. These must be authorized TFC/TFE organization names. |
-| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                   |
-| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 GPG keys per page.                                             |
+| `filter[namespace]` | **Required.** A comma-separated list of one or more namespaces. The namespaces must be authorized TFC/TFE organization names. |
+| `page[number]`      | **Optional.** If omitted, the endpoint returns the first page.                                                   |
+| `page[size]`        | **Optional.** If omitted, the endpoint returns 20 GPG keys per page.                                             |
 
 Gets a list of GPG keys belonging to the specified namespaces.
 
