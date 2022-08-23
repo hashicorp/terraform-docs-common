@@ -330,15 +330,16 @@ curl \
 
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter           | Description                                                                                      |
-|---------------------|--------------------------------------------------------------------------------------------------|
-| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                               |
-| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                             |
-| `filter[operation]` | **Optional.** Options are listed in [Run Operations](/cloud-docs/api-docs/run#run-operations).   |
-| `filter[status]`    | **Optional.** Options are listed in [Run States](/cloud-docs/api-docs/run#run-states).           |
-| `filter[source]`    | **Optional.** Options are listed in [Run Sources](/cloud-docs/api-docs/run#run-sources).         |
-| `search[user]`      | **Optional.** Searches runs that matches the supplied username.                                  |
-| `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                |
+| Parameter           | Description                                                                                                |
+|---------------------|------------------------------------------------------------------------------------------------------------|
+| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                         |
+| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                                       |
+| `filter[operation]` | **Optional.** Options are listed in [Run Operations](/cloud-docs/api-docs/run#run-operations).             |
+| `filter[status]`    | **Optional.** Options are listed in [Run States](/cloud-docs/api-docs/run#run-states).                     |
+| `filter[source]`    | **Optional.** Options are listed in [Run Sources](/cloud-docs/api-docs/run#run-sources).                   |
+| `search[user]`      | **Optional.** Searches runs that matches the supplied VCS username.                                        |
+| `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                          |
+| `search[basic]`     | **Optional.** Searches runs that matches the supplied VCS username, commit sha, run_id, and run message.   |
 
 ### Sample Request
 
