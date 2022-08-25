@@ -18,7 +18,9 @@ The first time you use SSO to log in to an organization, Terraform Cloud links t
 When Terraform Cloud does not recognize the email address associated with your identity provider, it asks if you want to create a new user account with that email address. You can choose one of the following actions:
 
 - **Create a new account:** Terraform Cloud automatically links your SSO identity to this new account after creation.
-- **Link to an existing account:**  Click **Link SSO identity to a different account** and sign in with a Terraform Cloud account. Terraform Cloud automatically links your SSO identity to this account when you log in.
+- **Link to an existing account:** Click **Link SSO identity to a different account** and sign in with one of the following account types.
+  - **Linked HashiCorp Cloud Platform (HCP) account**: Click **Continue with HCP account** and use your HCP credentials to sign in to Terraform Cloud. Terraform Cloud automatically links your SSO identity to that HCP-linked account. Refer to [Linked HCP and Terraform Cloud Accounts](/cloud-docs/users-teams-organizations/users#linked-hcp-and-terraform-cloud-accounts) for more details.
+  - **Terraform Cloud account**: Sign in with your Terraform Cloud username and password. Terraform Cloud automatically links your SSO identity to that account.
 
 ![Link SSO identity to a different account on login screen](/img/docs/sso-identity-link-existing-account.png)
 
