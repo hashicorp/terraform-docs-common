@@ -41,6 +41,8 @@ tfc_only: true
 
 [CIDR Notation]: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation
 
+[run task requests]: /cloud-docs/api-docs/run-tasks/run-tasks-integration#run-task-request
+
 # IP Ranges API
 
 IP Ranges provides a list of Terraform Cloud's IP ranges. For more information about Terraform Cloud's IP ranges, view our documentation about [Terraform Cloud IP Ranges](/cloud-docs/architectural-details/ip-ranges).
@@ -50,7 +52,7 @@ IP Ranges provides a list of Terraform Cloud's IP ranges. For more information a
 | Name            | Type  | Description                                                                                      |
 | --------------- | ----- | ------------------------------------------------------------------------------------------------ |
 | `api`           | array | List of IP ranges in [CIDR notation] used for connections from user site to Terraform Cloud APIs |
-| `notifications` | array | List of IP ranges in [CIDR notation] used for notifications                                      |
+| `notifications` | array | List of IP ranges in [CIDR notation] used for notifications and outbound [run task requests]     |
 | `sentinel`      | array | List of IP ranges in [CIDR notation] used for outbound requests from Sentinel policies           |
 | `vcs`           | array | List of IP ranges in [CIDR notation] used for connecting to VCS providers                        |
 
