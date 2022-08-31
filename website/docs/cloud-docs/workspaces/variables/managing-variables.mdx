@@ -146,8 +146,6 @@ You can overwrite variables defined in variable sets within a workspace. For exa
 
 To overwrite a variable from a variable set, [create a new workspace-specific variable](#workspace-specific-variables) of the same type with the same key. Terraform Cloud marks any variables that you overwrite with a yellow **OVERWRITTEN** flag. When you click the overwritten variable, Terraform Cloud highlights the variable it will use during runs.
 
-![The Terraform Cloud UI indicates which variables are overwritten](/img/docs/ui-overwritten-variables.png)
-
 Variables within a variable set can also automatically overwrite variables with the same key in other variable sets applied to the same workspace. Though variable sets are created for the organization, these overwrites occur within each workspace. Refer to [variable precedence](/cloud-docs/workspaces/variables#precedence) for more details.
 
 ## Variable Values and Format
