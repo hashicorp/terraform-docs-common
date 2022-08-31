@@ -24,16 +24,16 @@ Configuring a new VCS provider requires permission to [manage VCS settings](/clo
 Before you begin, enable `Third-party application access via OAuth` in Azure DevOps Services settings.
 
 1. Log in to [Azure DevOps Services](https://dev.azure.com/).
-1. Click **Organization settings** in the bottom of the sidebar.
-1. Click **Policies** in the sidebar under **Security**.
+1. Click **Organization settings**.
+1. Click **Policies** under **Security**.
 1. Enable the **Third-party application access via OAuth** setting.
 
    ![Azure DevOps Services Screenshot: Polcies Third-party application access via Oauth](/img/docs/azure-devops-services-oauth-policies.png)
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 
-1. Log in to Terraform Cloud and navigate to the organization where you want to add a VCS connection.
-1. Click **Settings** in the menu bar and then click **Providers** under **Version control** in the sidebar.
+1. Make sure you are currently in your organization.
+1. Click **Settings** and then click **Providers** under **Version control**.
 1. Click **Add VCS a Provider**. The Add a VCS Provider page appears.
 1. Open the **Azure DevOps** menu and then select **Azure DevOps Services**. The **Set up provider** page appears.
 
@@ -47,11 +47,11 @@ Leave this page open in a browser tab. You will copy values from this page into 
 
 1. Go into your preferred organization.
 
-1. Click your user icon in the top right, and then click the **ellipses (...) ** and select **User settings**.
+1. Click your user icon and then click the **ellipses (...) ** and select **User settings**.
 
 1. From the User settings menu, click **Profile**. Your profile page appears.
 
-1. In the left sidebar, click **Authorizations**. The Authorized OAuth Apps page appears.
+1. Click **Authorizations**. The Authorized OAuth Apps page appears.
 
 1. Click the link to register a new app. A form appears asking for your company and application information.
 
@@ -74,7 +74,7 @@ Leave this page open in a browser tab. You will copy values from this page into 
 
 1. After creating the application, the next page displays its details. Leave this page open in a browser tab. In the next step, you will copy and paste the unique **App ID** and **Client Secret** from this page.
 
-   If you accidentally close this details page and need to find it later, you can reach it from the **Applications and Services** links at the bottom left of your profile.
+   If you accidentally close this details page and need to find it later, you can reach it from the **Applications and Services** links in your profile.
 
 ## Step 3: On Terraform Cloud, Set up Your Provider
 
