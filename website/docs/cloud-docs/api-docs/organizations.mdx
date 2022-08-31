@@ -55,9 +55,9 @@ Currently, this endpoint returns a full, unpaginated list of organizations (with
 
 | Parameter      | Description                                                                   |
 | -------------- | ----------------------------------------------------------------------------- |
-| `q`            | **Optional.** A search query string. Organizations are searchable by name and notification email. This takes precedence over the attribute specific searches `q[email]` or `q[name]`. |
-| `q[email]`     | **Optional.** A search query string. This will search organizations by notification email. If used with `q[name]`, it will return organizations that match both queries. |
-| `q[name]`      | **Optional.** A search query string. This will search organizations by name. If used with `q[email]`, it will return organizations that match both queries. |
+| `q`            | **Optional.** A search query string. Organizations are searchable by name and notification email. This query takes precedence over the attribute specific searches `q[email]` or `q[name]`. |
+| `q[email]`     | **Optional.** A search query string. This query searches organizations by notification email. If used with `q[name]`, it returns organizations that match both queries. |
+| `q[name]`      | **Optional.** A search query string. This query searches organizations by name. If used with `q[email]`, it returns organizations that match both queries. |
 | `page[number]` | **Optional.** Defaults to the first page, if omitted when `page[size]` is provided. |
 | `page[size]`   | **Optional.** Defaults to 20 organizations per page, if omitted when `page[number]` is provided. |
 
