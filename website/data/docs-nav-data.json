@@ -11,6 +11,10 @@
   { "title": "Develop Plugins", "href": "/plugin" },
   { "title": "Publish to the Registry", "href": "/registry" },
   { "divider": true },
+    {
+    "title": "Integration Program",
+    "path": "partnerships"
+    },
   { "title": "Terraform Tools", "path": "terraform-tools" },
   { "title": "Glossary", "path": "glossary" }
 ]
