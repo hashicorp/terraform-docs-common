@@ -441,13 +441,13 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                            | Type   | Default       | Description                                                                                           |
-|-------------------------------------|--------|---------------|-------------------------------------------------------------------------------------------------------|
-| `data.type`                         | string |               | Must be `"workspace-tasks"`.                                                                          |
-| `data.attributes.enforcement-level` | string |               | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                   |
-| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"` or `"post_plan"`. |
-| `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                               |
-| `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                    |
+| Key path                            | Type   | Default       | Description                                                                                                        |
+|-------------------------------------|--------|---------------|--------------------------------------------------------------------------------------------------------------------|
+| `data.type`                         | string |               | Must be `"workspace-tasks"`.                                                                                       |
+| `data.attributes.enforcement-level` | string |               | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                |
+| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, or `"pre_apply"`. |
+| `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
+| `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
 
 -> **Note:** The `data.attributes.stage` key is in beta
 
