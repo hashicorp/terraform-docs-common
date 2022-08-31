@@ -46,16 +46,11 @@ Leave the page open in a browser tab, and remain logged in as an admin user.
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 
-1. Open Terraform Cloud in your browser and navigate to the "VCS Provider" settings for your organization. Click the "Add VCS Provider" button.
+1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
 
-   If you just created your organization, you might already be on this page. Otherwise:
+1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
-   1. Make sure you are currently in your organization.
-   1. Click the "Settings" link (or within the ☰ menu)
-   1. On the next page, click "Providers".
-   1. Click the "Add VCS Provider" button.
-
-1. The next page has several steps to guide you through adding a new VCS provider. Select "Bitbucket" then select "Bitbucket Server" from the dropdown.
+1. Select **Bitbucket** and then select **Bitbucket Server** from the menu. The page moves to the next step.
 
 1. (Optional) Enter a **Name** for this VCS connection.
 
@@ -72,14 +67,9 @@ Leave the page open in a browser tab, and remain logged in as an admin user.
 
    ~> **Important:** If Bitbucket Server isn't accessible on the standard ports (for example, if it's using its default ports of 7990 or 8443 and is not behind a reverse proxy), make sure to specify the port in the URL. If you omit the port in the URL, Terraform Cloud uses the standard port for the protocol (80 for HTTP, 443 for HTTPS).
 
-   ![Terraform Cloud screenshot: text fields for adding a Bitbucket Server VCS provider](/img/docs/bitbucket-server-tfe-add-url-fields.png)
-
 1. Click "Continue" to view the generated **Consumer Key** and **Public Key** you can use to create a new Application Link in BitBucket Server. Leave this page open so you can copy and paste these values in Step 2.
 
     To use keys from an existing Application Link, toggle "Use Custom Keys" and enter them into the page.
-
-
-   ![Terraform Cloud screenshot: Consumer key and public key](/img/docs/bitbucket-server-tfe-generated-consumer-and-public-key.png)
 
 ## Step 2: On Bitbucket Server, Create a New Application Link
 
@@ -149,8 +139,6 @@ This SSH key **must have an empty passphrase.** Terraform Cloud cannot use SSH k
 ## Step 5: On Terraform Cloud, Request Access and Add an SSH Private Key
 
 1. Click the "Add a private SSH key" link. A large text field will appear. Paste the text of the **SSH private key** you created in step 3, and click the "Add SSH Key" button.
-
-   ![Terraform Cloud screenshot: Pasting an SSH private key](/img/docs/bitbucket-server-tfe-add-private-key.png)
 
 ## Finished
 

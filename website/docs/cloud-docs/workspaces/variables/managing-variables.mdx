@@ -44,19 +44,15 @@ To view and manage a workspace's variables, go to the workspace and click the **
 
 The **Variables** page appears, showing all workspace-specific variables and variable sets applied to the workspace. This is where you can add, edit, and delete workspace-specific variables. You can also apply and remove variable sets from the workspace.
 
-![Screenshot: The variables page for a workspace](/img/docs/vars.png)
-
 ### Add a Variable
 
 To add a variable:
 
 1. Go to the workspace **Variables** page and click **+ Add variable** in the **Workspace Variables** section.
 
-1. Choose a variable category (Terraform or environment), optionally mark the variable as [sensitive](#sensitive-values), and enter a variable key, value, and optional description. Check the **HCL** checkbox to enter a value in HashiCorp Configuration Language.
+1. Choose a variable category (Terraform or environment), optionally mark the variable as [sensitive](#sensitive-values), and enter a variable key, value, and optional description. If the variable is a Terraform variable, you can check the **HCL** checkbox to enter a value in HashiCorp Configuration Language. You can only use HCL for Terraform variables, but not for environment variables.
 
    Refer to [variable values and format](#variable-values-and-format) for variable limits, allowable values, and formatting.
-
-   ![Screenshot: A variable being edited](/img/docs/vars-edit.png)
 
 1. Click **Save variable**. The variable now appears in the list of the workspace's variables and Terraform Cloud will apply it to runs.
 
@@ -92,16 +88,11 @@ To view variable sets for your organization, click **Settings**, then click **Va
 
 The **Variable sets** page appears, listing all of the organization's variable sets. Click on a variable set to open it and review details about its variables and scoping.
 
-![Screenshot: The variable sets page in the Terraform Cloud UI](/img/docs/var-sets-page.png)
-
 ### Create Variable Sets
-
 
 To create a variable set:
 
 1. Go to the **Variable Sets** page for your organization and click **Create variable set**. The **Create a new variable set** page appears.
-
-   ![The create a new Variable set page in the Terraform Cloud UI](/img/docs/create-var-set.png)
 
 1. Choose a descriptive **Name** for the variable set. You can use any combination of numbers, letters, and characters.
 
@@ -123,7 +114,7 @@ To create a variable set:
 
 To edit or remove a variable set:
 
-1. Click **Settings**, then click **Variable Sets**. The **Variable sets** page appears.
+1. Go to the organiation's settings and then click **Variable Sets**. The **Variable sets** page appears.
 1. Click the variable set you want to edit. That specific variable set page appears, where you can change the variable set settings. Refer to [create variable sets](#create-variable-sets) for details.
 
 ### Delete Variable Sets

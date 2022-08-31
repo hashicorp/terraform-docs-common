@@ -23,18 +23,11 @@ The rest of this page explains the Bitbucket Cloud-specific versions of these st
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 
-1. Open Terraform Cloud in your browser and navigate to the "VCS Providers" settings for your organization. Click the "Add VCS Provider" button.
+1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
 
-   If you just created your organization, you might already be on this page. Otherwise:
+1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
-   1. Make sure you are currently in your organization.
-   1. Click the "Settings" link (or within the ☰ menu)
-   1. On the next page, click "VCS Providers".
-   1. Click the "Add VCS Provider" button.
-
-1. The "Add VCS Provider" page is divided into multiple steps to guide you through adding a new VCS provider.
-
-   For the first step, select "Bitbucket" then select "Bitbucket Cloud" from the dropdown. The page will move to the next step.
+1. Select **Bitbucket** and then select **Bitbucket Cloud** from the menu. The page moves to the next step.
 
 Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring Terraform Cloud.
 
@@ -89,8 +82,6 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. Enter the **Key** and **Secret** from the previous step, as well as an optional **Name** for this VCS connection.
 
-   ![Terraform Cloud screenshot: add client fields](/img/docs/bitbucket-cloud-tfe-add-client-fields.png)
-
 1. Click "Connect and continue." This takes you to a page on Bitbucket Cloud asking whether you want to authorize the app.
 
 1. Click the blue "Grant access" button to proceed.
@@ -119,8 +110,6 @@ Most organizations will not need to add an SSH private key. However, if the orga
 1. While logged into the Bitbucket Cloud account you want Terraform Cloud to act as, navigate to the SSH Keys settings page, add a new SSH key, and paste the value of the SSH public key you just created.
 
 1. In Terraform Cloud's "Add VCS Provider" page, paste the text of the **SSH private key** you just created, and click the "Add SSH Key" button.
-
-   ![Terraform Cloud screenshot: the ssh key screen](/img/docs/bitbucket-cloud-ssh-key.png)
 
 ## Finished
 

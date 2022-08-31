@@ -24,8 +24,6 @@ Changing settings requires admin access to the relevant workspace. ([More about 
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-![Screenshot: a workspace page's "Settings" menu](/img/docs/settings-tabs.png)
-
 -> **API:** See the [Update a Workspace endpoint](/cloud-docs/api-docs/workspaces#update-a-workspace) (`PATCH /organizations/:organization_name/workspaces/:name`).
 
 ## General
@@ -125,6 +123,13 @@ Which other workspaces within the organization can access the state of the works
 By default, new workspaces in Terraform Cloud do not allow other workspaces to access their state. We recommend that you follow the principle of least privilege and only enable state access between workspaces that specifically need information from each other.
 
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
+
+### Drift Detection
+-> Note: Note: Drift detection is in beta and is available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+
+When you enable drift detection, Terraform Cloud automatically runs a drift detection assessment for this workspace every 24 hours. The assessment checks the actual settings of your infrastructure against those tracked in your workspace's state file.
+
+Refer to [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) for details.
 
 ### User Interface
 
