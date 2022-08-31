@@ -7,9 +7,9 @@
   { "title": "Terraform Enterprise", "href": "/enterprise" },
   { "title": "CDK for Terraform", "href": "/cdktf" },
   { "divider": true },
-  { "title": "Use Providers", "href": "/language/providers" },
-  { "title": "Develop Plugins", "href": "/plugin" },
-  { "title": "Publish to the Registry", "href": "/registry" },
+  { "title": "Provider Use", "href": "/language/providers" },
+  { "title": "Plugin Development", "href": "/plugin" },
+  { "title": "Registry Publishing", "href": "/registry" },
   { "divider": true },
     {
     "title": "Integration Program",
