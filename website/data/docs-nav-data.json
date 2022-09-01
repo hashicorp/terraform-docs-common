@@ -2,7 +2,7 @@
   { "title": "Intro to Terraform", "href": "/intro" },
   { "divider": true },
   { "title": "Configuration Language", "href": "/language" },
-  { "title": "CLI", "href": "/cli" },
+  { "title": "Terraform CLI", "href": "/cli" },
   { "title": "Terraform Cloud", "href": "/cloud-docs" },
   { "title": "Terraform Enterprise", "href": "/enterprise" },
   { "title": "CDK for Terraform", "href": "/cdktf" },
