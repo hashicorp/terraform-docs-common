@@ -136,7 +136,27 @@ _Leaving this stage:_
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## 8. The Apply Stage
+## 8. The Pre-Apply Stage
+
+The pre-apply phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
+
+-> **Note:** Pre-apply run tasks are in beta.
+
+Only confirmed runs can enter this phase.
+
+_States in this stage:_
+
+- **Pre-apply running:** Terraform Cloud is waiting for a response from the configured external system(s).
+  - External systems must respond initially with a `200 OK` acknowledging the request is in progress. After that, they have 10 minutes to return a status of `passed`, `running`, or `failed`. If the timeout expires, Terraform Cloud assumes that the run tasks is in the `failed` status.
+
+_Leaving this stage:_
+
+- If any mandatory tasks failed, the run skips to completion.
+- If any advisory tasks failed, the run proceeds to the **Applying** state, with a visible warning regarding the failed task.
+- If a single run has a combination of mandatory and advisory tasks, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
+- If a user canceled the run, the run ends in the **Canceled** state.
+
+## 9. The Apply Stage
 
 _States in this stage:_
 
@@ -148,11 +168,11 @@ After applying, the run proceeds automatically to completion.
 
 - If the apply succeeded, the run ends in the **Applied** state.
 - If the apply failed, the run ends in the **Apply Errored** state.
-- If a user canceled the apply by pressing the "Cancel Run" button, the run ends in the **Canceled** state.
+- If a user canceled the apply by pressing **Cancel Run**, the run ends in the **Canceled** state.
 
-## 9. Completion
+## 10. Completion
 
-A run is considered completed if it finishes applying, if any part of the run fails, if there's nothing to do, or if a user chooses not to continue. Once a run is completed, the next run in the queue can enter the plan stage.
+A run is complete if it finishes applying, if any part of the run fails, if there is nothing to do, or if a user chooses not to continue. Once a run completes, the next run in the queue can enter the plan stage.
 
 _States in this stage:_
 
