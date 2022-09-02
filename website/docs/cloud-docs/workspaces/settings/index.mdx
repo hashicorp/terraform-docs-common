@@ -124,13 +124,6 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
 
-### Drift Detection
--> Note: Note: Drift detection is in beta and is available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
-
-When you enable drift detection, Terraform Cloud automatically runs a drift detection assessment for this workspace every 24 hours. The assessment checks the actual settings of your infrastructure against those tracked in your workspace's state file.
-
-Refer to [Drift Detection](/cloud-docs/workspaces/settings/drift-detection) for details.
-
 ### User Interface
 
 Select the user experience for displaying plan and apply details.
