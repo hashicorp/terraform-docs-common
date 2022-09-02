@@ -22,10 +22,6 @@
     "href": "/docs/partnerships"
   },
   {
-    "title": "Community Forum",
-    "href": "https://discuss.hashicorp.com/c/terraform-providers/tf-plugin-sdk/43"
-  },
-  {
     "title": "Debugging",
     "path": "debugging"
   },
