@@ -1,5 +1,5 @@
 ---
-page_title: Run Task Stages and Results - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Run Task Stages and Results - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -20,9 +20,9 @@ page_title: Run Task Stages and Results - API Docs - Terraform Cloud and Terrafo
 
 Terraform Cloud uses run task stages and run task results to track [run task](/cloud-docs/workspaces/settings/run-tasks) execution.
 
-When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that will trigger run tasks. You can configure run tasks during the [Pre-Plan Stage](/cloud-docs/run/states#3-the-pre-plan-stage) and [Post-Plan Stage](/cloud-docs/run/states#5-the-post-plan-stage).
+When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that will trigger run tasks. You can configure run tasks during the [Pre-Plan Stage](/cloud-docs/run/states#3-the-pre-plan-stage), [Post-Plan Stage](/cloud-docs/run/states#5-the-post-plan-stage) and [Pre-Apply Stage](/cloud-docs/run/states#8-the-pre-apply-stage).
 
--> **Note:** Pre-plan run tasks are in beta.
+-> **Note:** Pre-plan and pre-apply run tasks are in beta.
 
 Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, Terraform Cloud creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
 

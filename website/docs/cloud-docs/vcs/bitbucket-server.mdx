@@ -1,7 +1,5 @@
 ---
-page_title: >-
-  Bitbucket Server and Data Center - VCS Providers - Terraform Cloud and
-  Terraform Enterprise
+page_title: Bitbucket Server and Data Center - VCS Providers - Terraform Cloud
 ---
 
 # Configuring Bitbucket Server/Data Center Access
@@ -91,9 +89,11 @@ Leave the page open in a browser tab, and remain logged in as an admin user.
 
    ![Bitbucket Server screenshot: The application links page](/img/docs/bitbucket-server-application-links.png)
 
-1. Enter Terraform Cloud's URL in the text field (`https://app.terraform.io`, or the hostname of your Terraform Enterprise instance) and click the "Create new link" button.
+1. Select **Create link** in application links.
+2. Select **Atlassian product** as the link type. This option also works for external applications and lets you continue to use OAuth 1.0 integrations.
+3. Enter Terraform Cloud's URL in the text field (https://app.terraform.io or the hostname of your Terraform Enterprise instance).
 
-   ~> **Note:** If you're connecting multiple Terraform Cloud organizations to the same Bitbucket Server instance, you can only use Terraform Cloud's main URL once. For subsequent organizations, you can enter the organization URL instead. Organization URLs look like `https://app.terraform.io/app/<ORG NAME>` or `https://<TFE HOSTNAME>/app/<ORG NAME>` — it's the page Terraform Cloud's "Workspaces" button takes you to.
+   ~> **Note:** If you connect multiple Terraform Cloud organizations to the same Bitbucket Server instance, you can only use Terraform Cloud's main URL once. For subsequent organizations, you can enter the organization URL instead. Organization URLs are the pages you go to using Terraform Cloud's **Workspaces** button and look like `https://app.terraform.io/app/<ORG NAME>` or `https://<TFE HOSTNAME>/app/<ORG NAME>`.
 
 1. In the "Configure application URL" dialog, confirm that you wish to use the URL exactly as you entered it. If you used Terraform Cloud's main URL, click "Continue;" if you used an organization URL, click the "Use this URL" checkbox and then click "Continue."
 

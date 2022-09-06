@@ -1,7 +1,5 @@
 ---
-page_title: >-
-  Notification Configurations - API Docs - Terraform Cloud and Terraform
-  Enterprise
+page_title: Notification Configurations - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -52,12 +50,12 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
 | Created            | `"run:created"`         | A run is created and enters the [Pending stage](/cloud-docs/run/states#1-the-pending-stage)                                                    |
 | Planning           | `"run:planning"`        | A run acquires the lock and starts to execute.                                                      |
-| Needs Attention    | `"run:needs_attention"` | A plan has changes and Terraform requires user input to continue. This may include approving the plan or a [policy override](/cloud-docs/run/states#7-the-policy-check-stage). |
-| Applying           | `"run:applying"`        | A run enters the [Apply stage](/cloud-docs/run/states#8-the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
-| Completed          | `"run:completed"`       | A run has completed successfully.                                     |
-| Errored            | `"run:errored"`         | A run has terminated early due to error or cancellation.                                          |
-| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This is only available if [drift detection](/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                                     |
-| Drift Check Failed | `"assessment:failed`"   | A drift detection assessment failed. This is only available if [drift detection](https://www.terraform.io/cloud-docs/workspaces/settings/drift-detection) is enabled for the workspace.                                          |
+| Needs Attention    | `"run:needs_attention"` | A plan has changes and Terraform requires user input to continue. This input may include approving the plan or a [policy override](/cloud-docs/run/states#7-the-policy-check-stage). |
+| Applying           | `"run:applying"`        | A run enters the [Apply stage](/cloud-docs/run/states#9-the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
+| Completed          | `"run:completed"`       | A run completes successfully.                                     |
+| Errored            | `"run:errored"`         | A run terminates early due to error or cancellation.                                          |
+| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.  Not available in Terraform Enterprise.                                                   |
+| Drift Check Failed | `"assessment:failed`"   | A drift detection assessment failed. This option is only available if you enable drift detection for the workspace.  Not available in Terraform Enterprise.                                       |
 
 ## Notification Payload
 
@@ -113,6 +111,8 @@ Run events include detailed information about a specific run, including the time
   ]
 }
 ```
+
+<!-- BEGIN: TFC:only name:drift-detection -->
 
 ### Workspace Notification Payload
 
@@ -174,6 +174,9 @@ Workspace events include detailed information about workspace-level validation e
   }
 }
 ```
+
+<!-- END:   TFC:only name:drift-detection -->
+
 
 ## Notification Authenticity
 

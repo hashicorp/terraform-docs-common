@@ -1,5 +1,5 @@
 [
-  { "heading": "Terraform Cloud and Enterprise" },
+  { "heading": "Terraform Cloud" },
   { "title": "Overview", "path": "" },
   { "title": "Plans and Features", "path": "overview" },
   {
@@ -122,34 +122,6 @@
       {
         "title": "Variable Sets",
         "path": "api-docs/variable-sets"
-      },
-      {
-        "title": "Admin",
-        "routes": [
-          { "title": "Overview", "path": "api-docs/admin" },
-          {
-            "title": "Module Sharing",
-            "path": "api-docs/admin/module-sharing"
-          },
-          {
-            "title": "Organizations",
-            "path": "api-docs/admin/organizations"
-          },
-          { "title": "Runs", "path": "api-docs/admin/runs" },
-          {
-            "title": "Settings",
-            "path": "api-docs/admin/settings"
-          },
-          {
-            "title": "Terraform Versions",
-            "path": "api-docs/admin/terraform-versions"
-          },
-          { "title": "Users", "path": "api-docs/admin/users" },
-          {
-            "title": "Workspaces",
-            "path": "api-docs/admin/workspaces"
-          }
-        ]
       },
       {
         "title": "Changelog",
@@ -505,7 +477,5 @@
     "title": "Terraform Cloud Agents",
     "href": "/cloud-docs/agents"
   },
-  { "divider": true },
-  { "title": "Terraform Enterprise Admin", "href": "/enterprise" },
   { "divider": true }
 ]
