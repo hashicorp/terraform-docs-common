@@ -78,11 +78,11 @@ The tag format can be chosen between the following options:
 -> **Note:** When using the [hashicorp/tfe provider](https://registry.terraform.io/providers/hashicorp/tfe). Regular expressions often include a backslash character `\` that serve as an escape sequence within terraform. Replace individual backlashes `\` with two backlashes `\\`. Read more about Terraform [escape sequences](https://www.terraform.io/language/expressions/strings#escape-sequences).
 
 
-| Tag Format                    |   Unescaped Value (API/UI)   |  Escaped Value (TFE Provider/Terraform)   |
-|-------------------------------|------------------------------|-------------------------------------------|
-| **Semantic Versioning**       |    `^\d+.\d+.\d+$`           |     `^\\d+.\\d+.\\d+$`                    |
-| **Version contains a prefix** |    `\d+.\d+.\d+$`            |     `\\d+.\\d+.\\d+$`                     |
-| **Version contains a suffix** |    `^\d+.\d+.\d+`            |     `^\\d+.\\d+.\\d+`                     |
+| Tag Format                    | Unescaped Value (API/UI)  | Escaped Value (TFE Provider/Terraform)  |
+|-------------------------------|---------------------------|-----------------------------------------|
+| **Semantic Versioning**       | `^\d+.\d+.\d+$`           | `^\\d+.\\d+.\\d+$`                      |
+| **Version contains a prefix** | `\d+.\d+.\d+$`            | `\\d+.\\d+.\\d+$`                       |
+| **Version contains a suffix** | `^\d+.\d+.\d+`            | `^\\d+.\\d+.\\d+`                       |
 
 ### VCS Branch
 
