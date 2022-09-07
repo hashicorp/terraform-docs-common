@@ -71,12 +71,21 @@ This option instructs Terraform to begin new runs only for changes that have a s
 
 The tag format can be chosen between the following options:
 - **Semantic Versioning:** It matches tags in the popular [SemVer format](https://semver.org/). (e.g. 0.4.2)
-  - `^\\d+.\\d+.\\d+$`
+  - Regex expression: `^\d+.\d+.\d+$`
 - **Version contains a prefix:** It matches tags which have an additional prefix before the [SemVer format](https://semver.org/). (e.g. version-0.4.2)
-  - `\\d+.\\d+.\\d+$`
+  - Regex expression: `\d+.\d+.\d+$`
 - **Version contains a suffix:** It matches tags which have an additional suffix after the [SemVer format](https://semver.org/). (e.g. 0.4.2-alpha)
-  - `^\\d+.\\d+.\\d+`
+  - Regex expression: `^\d+.\d+.\d+`
 - **Custom Regular Expression:** You can define your own regex to be matched against tags.
+
+ -> **Note:** When using the [hashicorp/tfe provider](https://registry.terraform.io/providers/hashicorp/tfe). Regular expressions often include a backslash character `\` that serve as an escape sequence within terraform. Replace individual backlashes `\` with two backlashes `\\`. Read more about Terraform [escape sequences](https://www.terraform.io/language/expressions/strings#escape-sequences).
+
+
+| Format               |      API/UI            |   TFE Provider/Terraform    |
+|----------------------|------------------------|-----------------------------|
+| Semantic Versioning  |    `^\d+.\d+.\d+$`     |     `^\\d+.\\d+.\\d+$`      |
+| Prefix Versioning    |    `\d+.\d+.\d+$`      |     `\\d+.\\d+.\\d+$`       |
+| Suffix Versioning    |    `^\d+.\d+.\d+`      |     `^\\d+.\\d+.\\d+`       |
 
 ### VCS Branch
 
