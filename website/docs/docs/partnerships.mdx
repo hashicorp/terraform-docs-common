@@ -156,7 +156,7 @@ Vendors who choose not to support their provider and prefer to make it a communi
 
 ## Terraform Cloud Integrations
 
-Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. It allows users to add and execute these tasks during the pre-plan (public beta) and post-plan stages of the Terraform run. Run tasks are executed by sending an API payload to the external system. This payload contains a collection of run-related information and a callback URL which the external system can use to send updates back to Terraform Cloud.
+Run tasks allow Terraform Cloud to execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can add and execute these tasks during the pre-plan (public beta) and post-plan run stages. To execute a run task, Terraform Cloud sends an API payload to the external system. This payload contains a collection of run-related information and a callback URL that the external system can use to send updates back to Terraform Cloud.
 
 The external system can then use this run information and respond back to Terraform Cloud with a passed or failed status. Terraform Cloud uses this status response to determine if a run should proceed, based on the task's enforcement settings within a workspace.
 
