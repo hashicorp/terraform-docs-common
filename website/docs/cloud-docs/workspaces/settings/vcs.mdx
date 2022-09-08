@@ -73,7 +73,7 @@ The tag format can be chosen between the following options:
 - **Semantic Versioning:** It matches tags in the popular [SemVer format](https://semver.org/). (e.g. 0.4.2)
 - **Version contains a prefix:** It matches tags which have an additional prefix before the [SemVer format](https://semver.org/). (e.g. version-0.4.2)
 - **Version contains a suffix:** It matches tags which have an additional suffix after the [SemVer format](https://semver.org/). (e.g. 0.4.2-alpha)
-- **Custom Regular Expression:** You can define your own regex to be matched against tags.
+- **Custom Regular Expression:** You can define your own regex for Terraform Cloud to match against tags.
 
 You must include an additional `\` to escape the regex pattern when you manage your workspace with the [hashicorp/tfe provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace#tags_regex) and trigger runs through matching git tags. Refer to [Terraform escape sequences](https://www.terraform.io/language/expressions/strings#escape-sequences) for more details.
 
