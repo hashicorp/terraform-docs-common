@@ -122,6 +122,17 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
 
+<!-- BEGIN: TFC:only name:health-assessments -->
+### Health Assessments
+
+~> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+
+When you enable health assessments, Terraform Cloud automatically runs an assessment for the workspace every 24 hours. The assessment checks the actual settings of your infrastructure against those tracked in your workspace's state file. Presently, this entails checking for resource drift (ie. drift detection).
+
+Refer to [Health Assessments](/cloud-docs/workspaces/settings/health-assessments) for details.
+
+<!-- END: TFC:only name:health-assessments -->
+
 ### User Interface
 
 Select the user experience for displaying plan and apply details.

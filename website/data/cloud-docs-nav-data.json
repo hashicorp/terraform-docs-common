@@ -163,7 +163,6 @@
           { "title": "VCS Connections", "path": "workspaces/settings/vcs" },
           { "title": "Access", "path": "workspaces/settings/access" },
           { "title": "Health Assessments", "path": "workspaces/settings/health-assessments" },
-          { "title": "Drift Detection", "path": "workspaces/settings/drift-detection", "hidden": true },
           {
             "title": "Notifications",
             "path": "workspaces/settings/notifications"
