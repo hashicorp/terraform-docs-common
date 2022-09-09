@@ -26,7 +26,7 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 | [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents] |
 | [`/configuration`][configuration]         | [terraform] |
 | [`/docs`][docs]                           | [terraform] |
-| [`/enterprise`][enterprise]               | [terraform-website] |
+| [`/enterprise`][enterprise]               | Internal repository |
 | [`/guides`][guides]                       | [terraform] |
 | [`/internals`][internals]                 | [terraform] |
 | [`/intro`][intro]                         | [terraform] |
@@ -322,4 +322,4 @@ In markdown, images should be referenced by their absolute path, starting with `
 
 ## Redirects
 
-For now, redirects will need to be handled here: https://github.com/hashicorp/terraform-website/blob/master/redirects.next.js
+Handle all redirects in this file in the `terraform-website` repository: https://github.com/hashicorp/terraform-website/blob/master/redirects.next.js
