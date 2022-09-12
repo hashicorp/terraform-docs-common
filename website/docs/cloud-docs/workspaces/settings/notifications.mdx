@@ -32,13 +32,13 @@ A notification configuration specifies a destination URL, a payload type, and th
 - **Token** (Optional) This notification is only available for generic webhooks. A token is an arbitrary secret string that Terraform Cloud will use to sign its notification webhooks. Refer to [Notification Authenticity][inpage-hmac] for details. You cannot view the token after you save the notification configuration.
 - **Email Recipients** This notification is only available for emails. Select users that should receive notifications.
 
-<!-- BEGIN: TFC:only name:drift-detection -->
+<!-- BEGIN: TFC:only name:health-assessments -->
 
 - **Workspace Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if [drift detection](/enterprise/workspaces/settings/drift-detection) is enabled for the workspace.
-  - **Drift Check Fail**: A drift detection assessment failed. This notification is only available if [drift detection](/enterprise/workspaces/settings/drift-detection) is enabled for the workspace.
+  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if [health assessments](/enterprise/workspaces/settings/health-assessments) are enabled for the workspace.
+  - **Health Assessment Fail**: A health assessment failed. This notification is only available if [health assessments](/enterprise/workspaces/settings/health-assessments) are enabled for the workspace.
 
-<!-- END:   TFC:only name:drift-detection -->
+<!-- END:   TFC:only name:health-assessments -->
 
 - **Run Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
   - **Created**: A run begins and enters the [Pending stage](/enterprise/run/states#1-the-pending-stage).

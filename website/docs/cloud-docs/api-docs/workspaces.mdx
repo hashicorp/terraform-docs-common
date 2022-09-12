@@ -88,7 +88,7 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.vcs-repo.identifier`         | string  |           | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.                                                                                                                                                                                                                                                                                                      |
 | `data.attributes.vcs-repo.tags-regex`         | string  | (nothing) | A regular expression used to match Git tags. Terraform Cloud triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                                                                                                                                                                                                                                                                                                                      |
 | `data.attributes.working-directory`           | string  | (nothing) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                                                                                                                   |
-| `data.attributes.drift_detection`             | boolean | `false` | Whether or not Terraform Cloud performs drift detection assessments for the workspace. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
+| `data.attributes.assessments-enabled`         | boolean | `false` | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
 
 ### Sample Payload
 
@@ -241,6 +241,8 @@ $ curl \
 
 _Without a VCS repository_
 
+**Note:** The `assessments-enabled` property is only acceppted by or returned from Terraform Cloud.
+
 ```json
 {
   "data": {
@@ -298,7 +300,7 @@ _Without a VCS repository_
       "vcs-repo-identifier": null,
       "working-directory": null,
       "workspace-kpis-runs-count": null,
-      "drift-detection": false
+      "assessments-enabled": false
     },
     "id": "ws-6jrRyVDv1J8zQMB5",
     "links": {
@@ -350,6 +352,8 @@ _Without a VCS repository_
 ```
 
 _With a VCS repository_
+
+**Note:** The `assessments-enabled` property is only acceppted by or returned from Terraform Cloud.
 
 ```json
 {
@@ -416,7 +420,7 @@ _With a VCS repository_
       "vcs-repo-identifier": "example/terraform-test-proj",
       "working-directory": "",
       "workspace-kpis-runs-count": null,
-      "drift-detection": false
+      "assessments-enabled": false
     },
     "id": "ws-KTuq99JSzgmDSvYj",
     "links": {
@@ -514,7 +518,7 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.identifier`         | string         | (previous value) | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.                                                                                                                                                                                  |
 | `data.attributes.vcs-repo.tags-regex`         | string         | (previous value) | A regular expression used to match Git tags. Terraform Cloud triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                                                                                                                                                                                                  |
 | `data.attributes.working-directory`           | string         | (previous value) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                               |
-| `data.attributes.drift_detection`             | boolean | `false` | Whether or not Terraform Cloud performs drift detection assessments for the workspace. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
+| `data.attributes.assessments-enabled`         | boolean | `false` | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
 
 ### Sample Payload
 
