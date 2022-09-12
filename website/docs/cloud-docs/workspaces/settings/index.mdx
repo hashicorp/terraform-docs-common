@@ -19,6 +19,7 @@ Workspace settings are separated into several pages, which are listed in the dro
 - "Team Access," for managing workspace permissions.
 - "Version Control", for managing the workspace's VCS integration.
 - "Destruction and Deletion", for removing a workspace and the infrastructure it manages.
+- "Health", for enforcing health assessments across eligible workspaces.
 
 Changing settings requires admin access to the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -123,7 +124,7 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
 
 <!-- BEGIN: TFC:only name:health-assessments -->
-### Health Assessments
+### Health
 
 ~> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
 
