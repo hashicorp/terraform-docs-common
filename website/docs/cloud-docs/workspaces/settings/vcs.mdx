@@ -70,13 +70,18 @@ You can use trigger patterns and trigger prefixes in the **Add path** field to s
 This option instructs Terraform to begin new runs only for changes that have a specific tag format.
 
 The tag format can be chosen between the following options:
-- **Semantic Versioning:** It matches tags in the popular [SemVer format](https://semver.org/). (e.g. 0.4.2)
-  - `^\\d+.\\d+.\\d+$`
-- **Version contains a prefix:** It matches tags which have an additional prefix before the [SemVer format](https://semver.org/). (e.g. version-0.4.2)
-  - `\\d+.\\d+.\\d+$`
-- **Version contains a suffix:** It matches tags which have an additional suffix after the [SemVer format](https://semver.org/). (e.g. 0.4.2-alpha)
-  - `^\\d+.\\d+.\\d+`
-- **Custom Regular Expression:** You can define your own regex to be matched against tags.
+- **Semantic Versioning:** It matches tags in the popular [SemVer format](https://semver.org/). For example, `0.4.2`.
+- **Version contains a prefix:** It matches tags which have an additional prefix before the [SemVer format](https://semver.org/). For example, `version-0.4.2`.
+- **Version contains a suffix:** It matches tags which have an additional suffix after the [SemVer format](https://semver.org/). For example `0.4.2-alpha`.
+- **Custom Regular Expression:** You can define your own regex for Terraform Cloud to match against tags.
+
+You must include an additional `\` to escape the regex pattern when you manage your workspace with the [hashicorp/tfe provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace#tags_regex) and trigger runs through matching git tags. Refer to [Terraform escape sequences](https://www.terraform.io/language/expressions/strings#escape-sequences) for more details.
+
+| Tag Format                    | Regex Pattern             | Regex Pattern (Escaped)  |
+|-------------------------------|---------------------------|--------------------------|
+| **Semantic Versioning**       | `^\d+.\d+.\d+$`           | `^\\d+.\\d+.\\d+$`       |
+| **Version contains a prefix** | `\d+.\d+.\d+$`            | `\\d+.\\d+.\\d+$`        |
+| **Version contains a suffix** | `^\d+.\d+.\d+`            | `^\\d+.\\d+.\\d+`        |
 
 ### VCS Branch
 
@@ -88,7 +93,7 @@ Whether to perform [speculative plans on pull requests](/cloud-docs/run/ui#specu
 
 ### Include Submodules on Clone
 
-Select **Include submodules on clone** to recursively clone all of the repository's Git submodules when Terraform Cloud feteches a configuration.
+Select **Include submodules on clone** to recursively clone all of the repository's Git submodules when Terraform Cloud fetches a configuration.
 
 -> **Note:** The [SSH key for cloning Git submodules](/cloud-docs/vcs/#ssh-keys) is set in the VCS provider settings for the organization and is not related to the workspace's SSH key for Terraform modules.
 

@@ -118,6 +118,16 @@ Variable sets let you reuse the same variables across multiple workspaces in the
 
 Refer to the [variables overview](/cloud-docs/workspaces/variables) documentation for details about variable types, scope, and precedence. Refer to [managing variables](/cloud-docs/workspaces/variables/managing-variables) for details about how to create and manage variable sets.
 
+<!-- BEGIN: TFC:only name:health-assessments -->
+#### Health
+
+-> **Note:** Health Assessments are available in the [Terraform Cloud **Business** tier](https://www.hashicorp.com/products/terraform/pricing). 
+
+Health assessment describes the regular, automatic inspection of a workspace to surface resource lifecycle concerns. Drift detection is a type of health assessment.
+
+You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Enforcing health assessments overrides workspace settings but does not change them. Refer to [Health Assessments](/cloud-docs/workspaces/settings/health-assessments) in the workspaces documentation for more details.
+<!-- END: TFC:only name:health-assessments -->
+
 ### Integrations
 
 #### Cost Estimation
