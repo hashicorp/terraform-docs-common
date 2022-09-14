@@ -9,7 +9,7 @@ description: >-
 
 Terraform Cloud workspaces can be reconfigured after creation.
 
-Workspace settings are separated into several pages, which are listed in the drop-down "Settings" menu in each workspace's header. The following groups of settings are available:
+Workspace settings are separated into several pages, which are listed in the workspace's "Settings" menu. The following groups of settings are available:
 
 - "General", for basic configuration.
 - "Locking", for temporarily preventing new plans and applies.
@@ -24,8 +24,6 @@ Workspace settings are separated into several pages, which are listed in the dro
 Changing settings requires admin access to the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
-
-![Screenshot: a workspace page's "Settings" menu](/img/docs/settings-tabs.png)
 
 -> **API:** See the [Update a Workspace endpoint](/cloud-docs/api-docs/workspaces#update-a-workspace) (`PATCH /organizations/:organization_name/workspaces/:name`).
 
@@ -46,6 +44,10 @@ Click the icon beside the ID to copy it to the clipboard.
 The display name of the workspace.
 
 ~> **Important:** Since some API calls refer to a workspace by its name, changing the name can sometimes break existing integrations.
+
+### Description (Optional)
+
+Enter a brief description of the workspace's purpose or types of infrastructure.
 
 ### Execution Mode
 
@@ -68,7 +70,7 @@ To minimize the number runs that error when changing your workspace's execution 
 1. Enable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply), if you had it enabled before changing your execution mode.
 1. [Unlock](/cloud-docs/workspaces/settings#locking) your workspace.
 
-### Auto Apply and Manual Apply
+### Apply Method
 
 Whether or not Terraform Cloud should automatically apply a successful Terraform plan. If you choose manual apply, an operator must confirm a successful plan and choose to apply it.
 
@@ -160,7 +162,7 @@ Users with permission to lock and unlock a workspace can't unlock a workspace wh
 
 Locks are managed with a single "Lock/Unlock/Force unlock `<WORKSPACE NAME>`" button. Terraform Cloud asks for confirmation when unlocking.
 
-You can also use the "Actions" menu in a workspace's header to manage the workspace's lock.
+You can also manage the workspace's lock from the **Actions** menu.
 
 ## Notifications
 
