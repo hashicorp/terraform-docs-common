@@ -7,6 +7,12 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-09-21
+* Updated the [Policies API](/cloud-docs/api-docs/policies.mdx) with support for OPA policies`
+* Update [Policy Sets](/cloud-docs/api-docs/policy-sets.mdx) with support for OPA policy sets.
+* Updated [Policy Checks](/cloud-docs/api-docs/policy-checks.mdx) to add support for listing policy evaluations and policy set outcomes.
+* Update [Run Tasks Stage](/cloud-docs/api-docs/run-task-stages-and-results.mdx) to include the new `policy_evaluations` attribute in the output.
+
 ### 2022-07-26
 
 * Updated the [Run status list](/cloud-docs/api-docs/run#run-states) with `fetching`, `queuing`, `pre_plan_running` and `pre_plan_completed`
@@ -136,7 +142,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
     * added `POST /workspaces/:workspace_id/relationships/tags`
     * added `DELETE /workspaces/:workspace_id/relationships/tags`
   * Added [Organization Tags](/cloud-docs/api-docs/organization-tags).
-  * Added `tags` attribute to [`tfrun`](/cloud-docs/sentinel/import/tfrun)
+  * Added `tags` attribute to [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun)
 
 ### 2021-07-19
 

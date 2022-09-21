@@ -36,7 +36,7 @@ page_title: Policy Checks - API Docs - Terraform Cloud
 
 # Policy Checks API
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Sentinel and OPA policies are paid features, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
 ## List Policy Checks
 
@@ -250,3 +250,150 @@ The GET endpoints above can optionally return related resources, if requested wi
 | ------------------ | -------------------------------------- |
 | `run`              | The run this policy check belongs to.  |
 | `run.workspace`    | The associated workspace of the run.   |
+
+
+## List Policy Evaluations in the task stage
+
+`GET /task-stages/:task_stage_id/policy-evaluations`
+
+| Parameter                   | Description                                 |
+| --------------------------- | ------------------------------------------- |
+| `:task_stage_id`            | The task stage ID to get.                   |
+
+This endpoint allows you to list policy evaluations that are part of the task stage.
+
+| Status  | Response                                      | Reason                                              |
+| ------- | --------------------------------------------- | --------------------------------------------------- |
+| [200][] | [JSON API document][]                         | Success                                             |
+| [404][] | [JSON API error object][]                     | Task stage not found                                |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
+| `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi/policy-evaluations
+```
+
+### Sample Response
+
+```json
+{
+   "data":[
+      {
+         "id":"poleval-8Jj9Hfoz892D9WMX",
+         "type":"policy-evaluations",
+         "attributes":{
+            "status":"passed",
+            "policy-kind":"opa",
+            "status-timestamps":{
+               "passed-at":"2022-09-16T01:40:30+00:00",
+               "queued-at":"2022-09-16T01:40:04+00:00",
+               "running-at":"2022-09-16T01:40:08+00:00"
+            },
+            "created-at":"2022-09-16T01:39:07.782Z",
+            "updated-at":"2022-09-16T01:40:30.010Z"
+         },
+         "relationships":{
+            "policy-attachable":{
+               "data":{
+                  "id":"ts-yxskot8Gz5yHa38W",
+                  "type":"task-stages"
+               }
+            },
+            "policy-set-outcomes":{
+               "links":{
+                  "related":"/api/v2/policy-evaluations/poleval-8Jj9Hfoz892D9WMX/policy-set-outcomes"
+               }
+            }
+         },
+         "links":{
+            "self":"/api/v2/policy-evaluations/poleval-8Jj9Hfoz892D9WMX"
+         }
+      }
+   ]
+}
+```
+
+
+## List the Policy Outcomes of the Policy Evaluation
+
+`GET /policy-evaluations/:policy_evaluation_id/policy-set-outcomes`
+
+| Parameter                   | Description                                                |
+| --------------------------- | ---------------------------------------------------------- |
+| `:policy_evaluation_id`     | The ID of the policy evaluation the outcome belongs to get |
+
+This endpoint allows you to list policy set outcomes that are part of the policy evaluation.
+
+| Status  | Response                                      | Reason                                                  |
+| ------- | --------------------------------------------- | ------------------------------------------------------- |
+| [200][] | [JSON API document][]                         | Success                                                 |
+| [404][] | [JSON API error object][]                     | Policy evaluation not found                             |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
+| `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/policy-evaluations/pol-o7tAtsCxnGhPHCfv/policy-set-outcomes
+```
+
+### Sample Response
+
+```json
+{
+   "data":[
+      {
+         "id":"psout-cu8E9a97LBepZZXd",
+         "type":"policy-set-outcomes",
+         "attributes":{
+            "result":null,
+            "outcomes":[
+               {
+                  "enforcement_level":"advisory",
+                  "query":"data.terraform.main.main",
+                  "status":"failed",
+                  "policy_name":"policyVCS",
+                  "description":""
+               }
+            ],
+            "error":"",
+            "overridable":true,
+            "policy-set-name":"opa-policies-vcs",
+            "policy-set-description":null
+         },
+         "relationships":{
+            "policy-evaluation":{
+               "data":{
+                  "id":"poleval-8Jj9Hfoz892D9WMX",
+                  "type":"policy-evaluations"
+               }
+            }
+         }
+      }
+   ]
+}
+```
