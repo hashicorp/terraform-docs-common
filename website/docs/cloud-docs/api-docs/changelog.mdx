@@ -7,9 +7,9 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
-### TBD
+### 2022-09-21
 
-* Update [State Versions](/cloud-docs/api-docs/state-versions#create) with optional `json-state-outputs` and `json-state` attributes, which are optional base-64 encoded external JSON representations of the terraform state. The read-only `hosted-json-state-download-url` attribute links to this version of the state file when available.
+* Update [State Versions](/cloud-docs/api-docs/state-versions#create) with optional `json-state-outputs` and `json-state` attributes, which are base-64 encoded external JSON representations of the terraform state. The read-only `hosted-json-state-download-url` attribute links to this version of the state file when available.
 * Update [State Version Outputs](/cloud-docs/api-docs/state-version-outputs) with a `detailed-type` attribute, which refines the output with the precise Terraform type.
 
 ### 2022-07-26
