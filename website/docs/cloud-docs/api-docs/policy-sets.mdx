@@ -126,6 +126,7 @@ Properties without a default value are required.
     "attributes": {
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+      "kind": "sentinel",
       "global": false
     },
     "relationships": {
@@ -165,6 +166,7 @@ curl \
     "attributes": {
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+      "kind": "sentinel",
       "global": false,
       "workspace-count": 1,
       "policies-path": "/policy-sets/foo",
@@ -205,6 +207,7 @@ curl \
     "attributes": {
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+      "kind": "sentinel",
       "global": false,
       "policy-count": 1,
       "workspace-count": 1,
@@ -279,6 +282,7 @@ curl \
       "attributes": {
         "name": "production",
         "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+        "kind": "sentinel",
         "global": false,
         "workspace-count": 1,
         "policies-path": "/policy-sets/foo",
@@ -321,6 +325,7 @@ curl \
       "attributes": {
         "name": "production",
         "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+        "kind": "sentinel",
         "global": false,
         "policy-count": 1,
         "workspace-count": 1,
@@ -387,6 +392,7 @@ curl --request GET \
     "attributes": {
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+      "kind": "sentinel",
       "global": false,
       "policy-count": 0,
       "workspace-count": 1,
@@ -467,6 +473,7 @@ curl --request GET \
     "attributes": {
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
+      "kind": "sentinel",
       "global": false,
       "policy-count": 1,
       "workspace-count": 1,
@@ -568,6 +575,7 @@ curl \
       "name": "a-global-set",
       "description": "**WARNING:** Any policies added to this set will be checked in _all_ workspaces!",
       "global": true,
+      "kind": "sentinel",
       "policy-count": 1,
       "workspace-count": 4,
       "versioned": false,
