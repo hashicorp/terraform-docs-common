@@ -36,7 +36,7 @@ page_title: Policy Checks - API Docs - Terraform Cloud
 
 # Policy Checks API
 
--> **Note:** Sentinel and OPA policies are paid features, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud **Team & Governance** tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta.
 
 ## List Policy Checks
 
@@ -251,8 +251,9 @@ The GET endpoints above can optionally return related resources, if requested wi
 | `run`              | The run this policy check belongs to.  |
 | `run.workspace`    | The associated workspace of the run.   |
 
+<!-- BEGIN: TFC:only name:opa-policies -->
 
-## List Policy Evaluations in the task stage
+## List Policy Evaluations in the Task Stage
 
 `GET /task-stages/:task_stage_id/policy-evaluations`
 
@@ -260,7 +261,7 @@ The GET endpoints above can optionally return related resources, if requested wi
 | --------------------------- | ------------------------------------------- |
 | `:task_stage_id`            | The task stage ID to get.                   |
 
-This endpoint allows you to list policy evaluations that are part of the task stage.
+This endpoint allows you to list policy evaluations that are part of the [task stage](cloud-docs/run/states).
 
 | Status  | Response                                      | Reason                                              |
 | ------- | --------------------------------------------- | --------------------------------------------------- |
@@ -269,12 +270,12 @@ This endpoint allows you to list policy evaluations that are part of the task st
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
-| Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
-| `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
+| Parameter                          | Description                                                                  |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| `page[number]`                     | **Optional.** If omitted, the endpoint returns the first page.               |
+| `page[size]`                       | **Optional.** If omitted, the endpoint returns 20 agent pools per page.      |
 
 ### Sample Request
 
@@ -344,12 +345,12 @@ This endpoint allows you to list policy set outcomes that are part of the policy
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
-| Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
-| `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
+| Parameter                          | Description                                                             |
+|----------------------------------- | ----------------------------------------------------------------------- |
+| `page[number]`                     | **Optional.** If omitted, the endpoint returns the first page.          |
+| `page[size]`                       | **Optional.** If omitted, the endpoint returns 20 agent pools per page. |
 
 ### Sample Request
 
@@ -397,3 +398,4 @@ curl \
    ]
 }
 ```
+<!-- END: TFC:only name:opa-policies -->
