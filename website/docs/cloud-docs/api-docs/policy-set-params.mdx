@@ -36,11 +36,11 @@ page_title: Policy Set Parameters - API Docs - Terraform Cloud
 
 # Policy Set Parameters API
 
--> **Note:** Sentinel and OPA policies available in the [Terraform Cloud **Team & Governance** tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta.
+-> **Note:** Sentinel and OPA policies available in the [Terraform Cloud **Team & Governance** tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-Policy Set Parameters allow the ability for policies to receive parameters for use within the policy.
+Policy Set Parameters let you inject parameters into an existing policy. This set of APIs covers create, update, list and delete operations on parameters.
 
-This set of APIs covers create, update, list and delete operations on parameters.
+Sentinel allows a policy authors to supply parameters to help facilitate policy reuse and ensure sensitive values do not need to be hard-coded in a policy.
 
 ## Create a Parameter
 

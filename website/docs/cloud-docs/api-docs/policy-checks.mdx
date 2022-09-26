@@ -36,7 +36,7 @@ page_title: Policy Checks - API Docs - Terraform Cloud
 
 # Policy Checks API
 
--> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud **Team & Governance** tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta.
+-> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud **Team & Governance** tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are also not available in Terraform Enterprise.
 
 ## List Policy Checks
 
@@ -255,6 +255,8 @@ The GET endpoints above can optionally return related resources, if requested wi
 
 ## List Policy Evaluations in the Task Stage
 
+This endpoint is only available for OPA policies.
+
 `GET /task-stages/:task_stage_id/policy-evaluations`
 
 | Parameter                   | Description                                 |
@@ -329,6 +331,8 @@ curl \
 
 
 ## List the Policy Outcomes of the Policy Evaluation
+
+This endpoint is only available for OPA policies.
 
 `GET /policy-evaluations/:policy_evaluation_id/policy-set-outcomes`
 

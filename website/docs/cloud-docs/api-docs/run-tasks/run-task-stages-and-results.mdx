@@ -34,16 +34,16 @@ This page lists the endpoints to retrieve run task stages and run task results. 
 
 The run task stage status is found in `data.attributes.status`, and you can reference the following list of possible values.
 
-| Status              | Description                                                                                                         |
-|-------------------- |-------------------------------------------------------------------------------------------------------------------- |
-| `pending`           | The initial status of a run task stage after creation.                                                              |
-| `running`           | The run task stage is executing one or more tasks, which have not yet completed.                                    |
-| `passed`            | All of the run task results in the stage passed.                                                                    |
-| `failed`            | One more results in the run task stage failed.                                                                      |
-| `awaiting_override` | The task stage is waiting for user input. Once overridden, the run returns to the `running` state.                  |
-| `errored`           | The run task stage has errored.                                                                                     |
-| `canceled`          | The run task stage has been canceled.                                                                               |
-| `unreachable`       | The run task stage could not be executed.                                                                           |
+| Status              | Description                                                                                                                                |
+|-------------------- |------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pending`           | The initial status of a run task stage after creation.                                                                                     |
+| `running`           | The run task stage is executing one or more tasks, which have not yet completed.                                                           |
+| `passed`            | All of the run task results in the stage passed.                                                                                           |
+| `failed`            | One more results in the run task stage failed.                                                                                             |
+| `awaiting_override` | The task stage is waiting for user input. Once a user manually overrides the failed policy checks, the run returns to the `running` state. |
+| `errored`           | The run task stage has errored.                                                                                                            |
+| `canceled`          | The run task stage has been canceled.                                                                                                      |
+| `unreachable`       | The run task stage could not be executed.                                                                                                  |
 
 ### Run Task Result Status
 
