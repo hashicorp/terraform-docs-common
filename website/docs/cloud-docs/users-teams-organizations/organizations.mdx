@@ -67,6 +67,10 @@ Review the organization name and contact email. Organization owners can also cha
 
 !> **Warning:** Deleting or renaming an organization can be very disruptive. We strongly recommend against deleting or renaming organizations with active members.
 
+Organization owners can also control whether [workspace administrators](/cloud-docs/users-teams-organizations/permissions#workspace-admins) may delete workspaces which are currently managing resources. Deleteing a workspace with [resources under management](/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) will result in any infrastructure provisioned by that workspace being left unmanaged by Terraform.
+
+##### Renaming an Organization
+
 To rename an organization that manages infrastructure:
 
 1. Alert all members of the organization about the name change.

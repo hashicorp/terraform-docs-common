@@ -129,7 +129,7 @@ _With a VCS repository_
   }
 }
 ```
-_Using Git Tags
+_Using Git Tags_
 
 Terraform Cloud triggers a run when you push a Git tag that matches the regular expression (SemVer): `1.2.3`, `22.33.44`, etc.
 
@@ -281,7 +281,8 @@ _Without a VCS repository_
         "can-unlock": true,
         "can-update": true,
         "can-update-variable": true,
-        "can-read-assessment-result": true
+        "can-read-assessment-result": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -391,7 +392,8 @@ _With a VCS repository_
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -592,7 +594,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -743,7 +746,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -857,7 +861,8 @@ $ curl \
           "can-read-variable": true,
           "can-unlock": true,
           "can-update": true,
-          "can-update-variable": true
+          "can-update-variable": true,
+          "can-force-delete" : true
         },
         "plan-duration-average": null,
         "policy-check-failures": null,
@@ -1003,7 +1008,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": 20000,
       "policy-check-failures": null,
@@ -1097,9 +1103,42 @@ $ curl \
 }
 ```
 
-## Delete a workspace
+## Safe Delete a workspace
 
-A workspace can be deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+Safe deleting a workspace will first check if the workspace has resources under management, and if not it will delete the workspace.
+
+It is considered "unsafe" to delete workspaces with resources under management, as deleting a workspace on Terraform Cloud will leave all infrastructure managed by the workspace orphaned from Terraform.
+
+A workspace can be safe deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+
+`POST /workspaces/:workspace_id/actions/safe-delete`
+
+| Parameter       | Description                       |
+| --------------- | --------------------------------- |
+| `:workspace_id` | The ID of the workspace to delete |
+
+`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete` 
+
+| Parameter            | Description                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| `:organization_name` | The name of the organization the workspace belongs to.                                      |
+| `:name`              | The name of the workspace to delete, which can only include letters, numbers, `-`, and `_`. |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
+| [409][] | [JSON API error object][] | Workspace is not safe to delete                                       |
+
+## Force Delete a workspace
+
+Force deleting a workspace removes it without checking whether the workspace currently has [resources under management](/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management). This ignores all of the safety checks present in a [safe delete](#safe-delete-a-workspace).
+
+By default workspaces may only be force deleted by an organization owner. If the [Teams can delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general) organization setting is enabled, workspace admins may also force delete.
+
+!> **Warning:** Use caution when force deleting a workspace. Any infrastructure managed by the workspace will no longer be managed by Terraform. It is recommended that you apply a [Destroy Run](/cloud-docs/run/modes-and-options#destroy-mode) before deleting a workspace.
+
+A workspace can be force deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
 
 `DELETE /workspaces/:workspace_id`
 
@@ -1113,6 +1152,12 @@ A workspace can be deleted via two endpoints, which behave identically. One refe
 | -------------------- | ------------------------------------------------------------------------------------------- |
 | `:organization_name` | The name of the organization the workspace belongs to.                                      |
 | `:name`              | The name of the workspace to delete, which can only include letters, numbers, `-`, and `_`. |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [403][] | [JSON API error object][] | Not authorized to perform a force delete on the workspace             |
+| [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
 
 ### Sample Request
 
@@ -1207,7 +1252,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1377,7 +1423,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1538,7 +1585,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1718,7 +1766,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1907,7 +1956,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -2077,7 +2127,8 @@ $ curl \
           "can-read-variable": true,
           "can-unlock": true,
           "can-update": true,
-          "can-update-variable": true
+          "can-update-variable": true,
+          "can-force-delete" : true
         },
         "plan-duration-average": null,
         "policy-check-failures": null,
