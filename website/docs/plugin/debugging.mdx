@@ -57,8 +57,31 @@ when a bug is reliably reproducible. This level of analysis enables developers t
 ask arbitrary questions and step through provider executions, allowing them to
 explore what is happening in the provider during runtime.
 
--> **Note**: Debugger-based debugging only works with Terraform versions
-0.12.26 and higher.
+### Debugging Prerequisites
+
+To enable debugging, you must ensure:
+
+* Terraform is version 0.12.26 or later.
+* Terraform configurations are compatible with the provider code being debugged.
+* Terraform configurations do not contain multiple provider aliases with different provider configurations.
+
+### Debugging Caveats
+
+It is important to start a provider in debug mode only when you intend
+to debug it, as its behavior will change in minor ways from normal operation of
+providers. The main differences are:
+
+* Terraform will not start the provider process; it must be run manually.
+* The provider will no longer be restarted once per walk of the Terraform
+  graph; instead the same provider process will be reused until the command is
+  completed.
+
+~> **Important:** You may need to disable compiler optimization and
+[inlining](https://en.wikipedia.org/wiki/Inline_expansion)
+to have the debugger work efficiently with the provider binary.
+To do so, build the provider binary with the necessary
+[Go compiler flags (gcflags)](https://golang.org/cmd/compile/):
+`go build -gcflags="all=-N -l"`
 
 ### Enabling Debugging In A Provider
 
@@ -75,24 +98,6 @@ If the provider is using [combining and translating functionality](/plugin/mux),
 * [tf5to6server](/plugin/mux/translating-protocol-version-5-to-6#code-implementation): A package to translate protocol version 5 providers into protocol version 6.
 * [tf6muxserver](/plugin/mux/combining-protocol-version-6-providers#code-implementation): A package to combine multiple protocol version 6 providers.
 * [tf6to5server](/plugin/mux/translating-protocol-version-6-to-5#code-implementation): A package to translate protocol version 6 providers into protocol version 5.
-
-It is important to start a provider in debug mode only when you intend
-to debug it, as its behavior will change in minor ways from normal operation of
-providers. The main differences are:
-
-* Terraform will not start the provider process; it must be run manually.
-* The provider's constraints will no longer be checked as part of `terraform
-  init`.
-* The provider will no longer be restarted once per walk of the Terraform
-  graph; instead the same provider process will be reused until the command is
-  completed.
-
-~> **Important:** You may need to disable compiler optimization and
-[inlining](https://en.wikipedia.org/wiki/Inline_expansion)
-to have the debugger work efficiently with the provider binary.
-To do so, build the provider binary with the necessary
-[Go compiler flags (gcflags)](https://golang.org/cmd/compile/):
-`go build -gcflags="all=-N -l"`
 
 ### Starting A Provider In Debug Mode
 
