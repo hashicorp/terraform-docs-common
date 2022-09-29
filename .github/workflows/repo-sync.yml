@@ -1,0 +1,42 @@
+# File: .github/workflows/repo-sync.yml
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # every 15th minute (00:00, 00:15, 00:30, 00:45, etc.)
+  workflow_dispatch:
+
+jobs:
+  repo-sync:
+    # disallow scheduled runs for public repo
+    if: ${{ !(github.event_name == 'schedule' && github.repository == 'hashicorp/terraform-docs-common') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: repo-sync
+        uses: repo-sync/github-sync@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+        with:
+          source_repo: ${{ secrets.SOURCE_REPO }} # https://${access_token}@github.com/github/the-other-repo.git
+          source_branch: main
+          destination_branch: repo-sync
+          github_token: ${{ secrets.PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+        with:
+          source_branch: repo-sync
+          destination_branch: main
+          pr_title: "repo sync"
+          pr_body: |
+            This is an automated pull request to sync changes between the public and private repos.
+            This pull request should be **merged** (not squashed) to preserve continuity across repos.
+            Please take care when merging
+          pr_label: automated-reposync-pr
+          github_token: ${{ secrets.PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+          # This will exit 0 if there's no difference between `repo-sync`
+          # and `main`. And if so, no PR will be created.
+          pr_allow_empty: false
