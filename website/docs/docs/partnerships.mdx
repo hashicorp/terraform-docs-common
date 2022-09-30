@@ -7,39 +7,31 @@ description: >-
 
 # Terraform Integration Program
 
-The Terraform Integration Program facilitates prospect partners in creating and publishing Terraform integrations that have been verified by HashiCorp.
-
-## Terraform Editions
-
-Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc. Terraform can manage both existing service providers and custom in-house solutions.
-
-HashiCorp offers three editions of Terraform: Open Source, Terraform Cloud, and Terraform Enterprise.
-
-- [Terraform Open Source](/) provides a consistent CLI workflow to manage hundreds of cloud services. Terraform codifies cloud APIs into declarative configuration files.
-- [Terraform Cloud (TFC)](/cloud) is a free to use, self-service SaaS platform that extends the capabilities of the open source Terraform CLI. It adds automation and collaboration features, and performs Terraform functionality remotely, making it ideal for collaborative and production environments. Terraform Cloud is available as a hosted service at https://app.terraform.io. Small teams can sign up for free to connect Terraform to version control, share variables, run Terraform in a stable remote environment, and securely store remote state. Paid tiers allow you to add more than five users, create teams with different levels of permissions, enforce policies before creating infrastructure, and collaborate more effectively.
-- [Terraform Enterprise (TFE)](/enterprise) is our self-hosted distribution of Terraform Cloud with advanced security and compliance features. It offers enterprises a private instance that includes the advanced features available in Terraform Cloud.
+The Terraform Integration Program facilitates prospect partners in creating and publishing Terraform integrations validated by HashiCorp.
 
 ## Types of Terraform Integrations
 
-The Terraform ecosystem is designed to enable users to apply Terraform across different use cases and environments. The Terraform Integration Program currently supports both workflow and integration partners (details below). Some partners can be both, depending on their use cases.
+The Terraform ecosystem enables users to apply Terraform across different use cases and environments. The Terraform Integration Program currently supports both workflow and integration partners. Some partners can be both, depending on their use cases.
 
-- **Workflow Partners** build integrations for Terraform Cloud and/or Terraform Enterprise. Typically, these partners are seeking to enable customers to use their existing platform within a Terraform Run.
+- **Workflow Partners** build integrations for Terraform Cloud, Terraform Enterprise, or both. Typically, these partners seek to enable customers to use their existing platform within a Terraform Run.
 
-- **Infrastructure Partners** empower customers to leverage Terraform to manage resources exposed by their platform APIs. These are accessible to users of all Terraform editions.
+- **Infrastructure Partners** build Terraform providers (plugins) to empower customers and users to leverage Terraform to manage resources exposed by their platform APIs. These providers are accessible to users of all Terraform editions.
 
 Our Workflow Partners typically have the following use cases:
 
-- **Code Scanning:** These partners provide tooling to review infrastructure as code configurations to prevent errors or security issues.
-- **Cost Estimation:** These partners drive cost estimation of new deployment based on historical deployments.
-- **Monitoring:** These partners provide performance visibility.
-- **Zero Trust Security:** These partners help users create configurations to verify connections prior to providing access to an organization’s systems.
-- **Audit:** These partners focus on maintaining code formatting, preventing security threats, and performing additional code analysis.
-- **ITSM (Information Technology Service Management):** These partners focus on implementation, deployment, and delivery of IT workflows.
-- **SSO (Single Sign On):** These partners focus on authentication for end users to securely sign on.
-- **CI/CD:** These partners focus on continuous integration and continuous delivery/deployment.
-- **VCS:** These partners focus on tracking and managing software code changes.
+- **Code Scanning:** Partners that provide tooling to review IaC configurations to prevent errors or security issues.
+- **Cost Management:** Partners that analyze the impact of new infrastructure to cost and apply cost governance.
+- **Observability/Monitoring:** Partners focused on providing visibility of performance or automatically detect infrastructure changes and ensure optimal observability in place.
+- **Security:** Partners that detect Terraform configuration errors that do not align with security and compliance policies.
+- **Audit:** Partners that help manage multi-cloud infrastructure resources to discover, prevent service disruptions, improve governance, and increase efficiency.
+- No code/low code: Partners focused on implementing, deployment and delivery of IT, Supply Chain, Operations Management, Business Management and other workflows
+- **SSO (Single Sign On):** Partners focused on authentication for end users to securely sign on.
+- **CI/CD:** Partners focused on continuous integration and continuous delivery/deployment.
+- **VCS:** Partners focused on tracking and managing software code changes.
 
 Most workflow partners create [run tasks](/cloud-docs/integrations/run-tasks) that let them integrate their services directly into the Terraform workflow. [Run tasks](/cloud-docs/integrations/run-tasks) let Terraform Cloud execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can configure run tasks to execute during the post-plan and the pre-plan (public beta) run stages. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
+
+Most workflow partners create run tasks that let them integrate their services directly into the Terraform workflow. Most workflow partners integrate with the Terraform workflow itself. Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. This integration offers much more extensibility to Terraform Cloud customers, enabling them to integrate your services into the Terraform Cloud workflow. This feature allows users to add and execute these tasks during the post-plan and the new pre-plan and pre-apply stages. Eventually, we will open the third phase of this workflow to Terraform Cloud users, the post-apply stage. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
 
 ![Integration program diagram](/img/docs/terraform-integration-program-diagram.png)
 
@@ -152,17 +144,19 @@ Building and publishing a new provider to the Terraform Registry is just the fir
 
 HashiCorp Terraform has an extremely wide community of users and contributors, and we encourage the community to report issues and help resolve them. However, we expect that all partner provider publishers continue maintaining the provider and that they address user-reported issues in a timely manner. This includes resolving all critical issues within 48 hours and all other issues within 5 business days. HashiCorp reserves the right to remove partner status from any integration that does not meet our maintenance requirements.
 
-Vendors who choose not to support their provider and prefer to make it a community-supported provider will no longer be listed as Partner.
+If a vendor chooses not to support their provider, the provider's tag may change to Community, rather than Partner.
+
+-> Terraform modules published by Partner: We now have the ability to tag partner published modules in the Terraform Registry. If you have a module that you want to receive the “Partner” tag, please contact technologypartners@hashicorp.com
 
 ## Terraform Cloud Integrations
 
-Run tasks allow Terraform Cloud to execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can add and execute these tasks during the pre-plan (public beta) and post-plan run stages. To execute a run task, Terraform Cloud sends an API payload to the external system. This payload contains a collection of run-related information and a callback URL that the external system can use to send updates back to Terraform Cloud.
+Run tasks allow Terraform Cloud to execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can add and execute these tasks during the pre-plan (public beta), pre-apply (public beta) and post-plan run stages. To execute a run task, Terraform Cloud sends an API payload to the external system. This payload contains a collection of run-related information and a callback URL that the external system can use to send updates back to Terraform Cloud.
 
 The external system can then use this run information and respond back to Terraform Cloud with a passed or failed status. Terraform Cloud uses this status response to determine if a run should proceed, based on the task's enforcement settings within a workspace.
 
-Partners who successfully complete the Terraform Cloud integration checklist obtain a Terraform Cloud badge. This signifies HashiCorp has verified the integration and the partner is a member of the HashiCorp Technology Partner Program.
+Partners who successfully complete the Terraform Cloud integration checklist obtain a Terraform Cloud badge. This badge signifies HashiCorp validated the integration under ideal conditions and the partner is a member of the HashiCorp Technology Partner Program.
 
-- Note: As of September 2022, pre-plan run tasks are available only as a public beta feature, are subject to change, and not all customers will see this functionality in their Terraform Cloud organization. This feature is enabled by default for our business tier customers of Terraform Cloud. If you have a customer that is interested in run tasks and are not a current Terraform Cloud for Business customer, please ask them to [sign up for the public beta](https://docs.google.com/forms/d/e/1FAIpQLSf3JJIkU05bKWov2wXa9c-QV524WNaHuGIk7xjHnwl5ceGw2A/viewform).
+- Note: As of September 2022, pre-plan and pre-apply run tasks are available only as a public beta feature, are subject to change, and not all customers see this functionality in their Terraform Cloud organization. This feature's enablement is the default for our Terraform Cloud Business tier customers. If you have a customer who wants to run tasks and are not a current Terraform Cloud Business tier customer, please ask them to [sign up for the public beta](https://docs.google.com/forms/d/e/1FAIpQLSf3JJIkU05bKWov2wXa9c-QV524WNaHuGIk7xjHnwl5ceGw2A/viewform).
 
 <ImageConfig height={200} width={200} hideBorder>
 
@@ -187,13 +181,19 @@ The Terraform Cloud Integration program has the following five steps.
 
 For partners who are new to working with Hashicorp, we recommend [signing up for our Technology Partner Program](https://www.hashicorp.com/go/tech-partner). To understand more about the program, check out our “[Become a Partner](https://www.hashicorp.com/partners/become-a-partner)” page.
 
-### 2. Develop & Test
+### 2. Develop and Test
 
-Partners should build an integration using the [Run task APIs in Terraform Cloud](/cloud-docs/api-docs/run-tasks). For example, [Snyk](https://docs.snyk.io/features/integrations/ci-cd-integrations/integrating-snyk-with-terraform-cloud) created a run task to automatically detect misconfigurations in the Terraform plan. To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available).
+Partners should build an integration using the [run tasks APIs in Terraform Cloud](/cloud-docs/api-docs/run-tasks). To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available). For a more hands-on experience with run tasks follow the [HCP Packer run tasks learn guide here](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task?in=terraform/cloud).
 
--> **Note:** Pre-plan run tasks are only available as a public beta. [Updated September 1, 2022]
+For the run tasks API documentation [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
 
-![RunTask Diagram](/img/docs/runtask-diagram.png)
+![RunTask Diagram](/img/docs/post-plan-runtask-diagram.png)
+
+-> **Note:** Pre-plan and pre-apply run tasks are only available as a public beta. [Updated September 1, 2022]
+
+To better understand how pre-plan run task enhances the Terraform workflow, refer to the diagram of pre-plan tasks. For additional API resources, [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results).
+
+![RunTask Diagram](/img/docs/pre-plan-runtask-diagram.png)
 
 ### 3. Review
 
@@ -224,3 +224,5 @@ Terraform Enterprise integrations are workflow integrations that are validated a
 -> Contact us at [technologypartners@hashicorp.com](mailto:technologypartners@hashicorp.com) with any questions or feedback.
 
 After successfully building a Run Tasks integration with Terraform Cloud, partners should contact their Alliance Manager to validate the integration against Terraform Enterprise. Many customers deploy Terraform Enterprise in a private cloud or air-gapped environment, so partners must ensure that their product can communicate bi-directionally with Terraform Enterprise inside these types of networks.
+
+Upon successfully building Run Tasks integration with Terraform Cloud partners can contact their Alliance Manager to validate it against Terraform Enterprise. Customers commonly deploy Terraform Enterprise in a private cloud or in an air-gapped environment, in which case partners need to ensure that their product can communicate bi-directionally with TFE inside the customer’s network.
