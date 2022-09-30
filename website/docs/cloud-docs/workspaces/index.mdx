@@ -38,6 +38,7 @@ For workspaces with remote operations enabled (the default), Terraform Cloud per
 
 Refer to [Terraform Runs and Remote Operations](/cloud-docs/run) for more details.
 
+
 ## Terraform Cloud vs. Terraform CLI Workspaces
 
 Both Terraform Cloud and Terraform CLI have features called workspaces, but they function differently.
@@ -49,8 +50,6 @@ Both Terraform Cloud and Terraform CLI have features called workspaces, but they
 ## Listing and Filtering Workspaces
 
 Click **Workspaces** in the top navigation bar. Terraform Cloud shows a list of all workspaces in the current organization.
-
-![Screenshot: the list of workspaces](/img/docs/index-list.png)
 
 This list only includes workspaces where the current user account has permission to read runs. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -82,3 +81,15 @@ In Terraform Enterprise, administrators can use [Admin Settings](/cloud-docs/api
 ## Creating Workspaces
 
 You can create workspaces through the [Terraform Cloud UI](/cloud-docs/workspaces/creating), the [Workspaces API](/cloud-docs/api-docs/workspaces), or the [Terraform Cloud CLI integration](/cli/cloud).
+
+## Workspace Health
+
+-> **Note:** Health Assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing), and continuous validation is in beta.
+
+Terraform Cloud can perform regular, automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
+
+- Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file.
+- Continuous validation checks whether custom conditions in the workspace’s configuration continue to pass after Terraform has provisioned the infrastructure.
+
+You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/cloud-docs/workspaces/health) in the workspaces documentation for more details.
+<!-- END: TFC:only name:health-assessments -->
