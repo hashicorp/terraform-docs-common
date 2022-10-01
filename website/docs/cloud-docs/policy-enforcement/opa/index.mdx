@@ -5,7 +5,7 @@ tfc_only: true
 
 ---
 
-# Defining Policies for Open Policy Agent
+# Defining OPA Policies
 
 -> **Note:** Policies are available in the Terraform Cloud [Terraform Cloud  Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA Policies are not available in Terraform Enterprise.
 
@@ -13,7 +13,7 @@ Policies are rules that Terraform Cloud enforces on runs within a workspace. You
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
 
-## Writing OPA Policies
+## Writing Rego Policies
 
 You can write Rego policies to check for any number of conditions. Common use cases include checking whether infrastructure configuration adheres to security standards or your organization’s best practices. For example, you may want to write a policy to check whether Terraform plans to deploy production infrastructure to the correct region.
 
