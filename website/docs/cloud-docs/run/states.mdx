@@ -11,7 +11,7 @@ Each run passes through several stages of action (pending, plan, cost estimation
 
 In the list of workspaces on Terraform Cloud's main page, each workspace shows the state of the run it's currently processing. (Or, if no run is in progress, the state of the most recent completed run.)
 
-## 1. The Pending Stage
+## The Pending Stage
 
 _States in this stage:_
 
@@ -22,7 +22,7 @@ _Leaving this stage:_
 - If the user discards the run before it starts, the run does not continue (**Discarded** state).
 - If the run is first in the queue, it proceeds automatically to the plan stage (**Planning** state).
 
-## 2. The Fetching Stage
+## The Fetching Stage
 
 Terraform Cloud may need to fetch the configuration from VCS prior to starting the plan. Terraform Cloud automatically archives configuration versions created through VCS when all runs are complete and then re-fetches the files for subsequent runs.
 
@@ -35,7 +35,7 @@ _Leaving this stage:_
 - If Terraform Cloud encounters an error when fetching the configuration from VCS, the run does not continue (**Plan Errored** state).
 - If Terraform successfully fetches the configuration, the run moves to the next stage.
 
-## 3. The Pre-Plan Stage
+## The Pre-Plan Stage
 
 The pre-plan phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the plan. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
@@ -55,7 +55,7 @@ _Leaving this stage:_
 - If a combination of mandatory and advisory tasks are configured for a single run, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
-## 4. The Plan Stage
+## The Plan Stage
 
 A run goes through different steps during the plan stage depending on whether or not Terraform Cloud needs to fetch the configuration from VCS. Terraform Cloud automatically archives configuration versions created through VCS when all runs are complete and then re-fetches the files for subsequent runs.
 
@@ -77,7 +77,7 @@ _Leaving this stage:_
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## 5. The Post-Plan Stage
+## The Post-Plan Stage
 
 The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/cloud-docs/workspaces/settings/run-tasks) enabled
 for the workspace. All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans). During this phase, Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
@@ -96,7 +96,10 @@ _Leaving this stage:_
 - If a combination of mandatory and advisory tasks are configured for a single run, Terraform will take the most restrictive action. This means that if there are two advisory tasks that succeed and one mandatory task that failed, the run will fail. If one mandatory task succeeds and two advisory tasks fail, the run will succeed with a warning.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
-## 6. The Policy Check Stage
+<!-- BEGIN: TFC:only name:opa-policies -->
+## The OPA Policy Check Stage
+
+-> **Note:** OPA policies are in beta.
 
 This stage only occurs if [Open Policy Agent (OPA) policies](/cloud-docs/policy-enforcement/opa) are enabled and runs after a successful `terraform plan` and before Cost Estimation. In this stage, Terraform Cloud checks whether the plan adheres to the policies in the OPA policy sets for the workspace.
 
@@ -108,14 +111,16 @@ _States in this stage:_
 _Leaving this stage:_
 
 If any mandatory policies failed, the run pauses in the **Policy Override** state. The run completes one of the following workflows:
-- The run stops and enters the **Discarded** state when a user with [permission to apply runs](/cloud-docs/users-teams-organizations/permissions) discards the run.
+- The run stops and enters the **Discarded** state when a user with [permission to apply runs](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions#manage-policy-overrides) discards the run.
 - The run proceeds to the **Policy Checked** state when a user with  [permission to manage policy overrides](/cloud-docs/users-teams-organizations/permissions) overrides the failed policy. The **Policy Checked** state means that no mandatory policies failed or that a user performed a manual override.
 
 Once the run reaches the **Policy Checked** state, the run completes one of the following workflows:
 - The run proceeds to the **Apply** stage if Terraform can automatically apply the plan. An auto-apply requires that the **Auto apply** setting is enabled on the workspace.
 - If Terraform cannot automatically apply the plan, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. If the user approves the apply, the run proceeds to the **Apply** stage. If the user rejects the apply, the run stops and enters the **Discarded** state.
 
-## 7. The Cost Estimation Stage
+<!-- END: TFC:only name:opa-policies -->
+
+## The Cost Estimation Stage
 
 This stage only occurs if cost estimation is enabled. After a successful `terraform plan`, Terraform Cloud uses plan data to estimate costs for each resource found in the plan.
 
@@ -129,11 +134,9 @@ _Leaving this stage:_
 - If cost estimation succeeded or errors, the run moves to the next stage.
 - If there are no policy checks or applies, the run does not continue (**Planned and Finished** state).
 
-## 8. The Policy Check Stage
+## The Sentinel Policy Check Stage
 
-This stage only occurs if [Sentinel policies][] are enabled. After a successful `terraform plan`, Terraform Cloud checks whether the plan obeys policy to determine whether it can be applied.
-
-[Sentinel policies]: /cloud-docs/sentinel
+This stage only occurs if [Sentinel policies](/cloud-docs/policy-enforcement/sentinel) are enabled. After a successful `terraform plan`, Terraform Cloud checks whether the plan obeys policy to determine whether it can be applied.
 
 _States in this stage:_
 
@@ -155,7 +158,7 @@ _Leaving this stage:_
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## 9. The Pre-Apply Stage
+## The Pre-Apply Stage
 
 The pre-apply phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
@@ -175,7 +178,7 @@ _Leaving this stage:_
 - If a single run has a combination of mandatory and advisory tasks, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
-## 10. The Apply Stage
+## The Apply Stage
 
 _States in this stage:_
 
@@ -189,7 +192,7 @@ After applying, the run proceeds automatically to completion.
 - If the apply failed, the run ends in the **Apply Errored** state.
 - If a user canceled the apply by pressing **Cancel Run**, the run ends in the **Canceled** state.
 
-## 11. Completion
+## Completion
 
 A run is complete if it finishes applying, if any part of the run fails, if there is nothing to do, or if a user chooses not to continue. Once a run completes, the next run in the queue can enter the plan stage.
 
