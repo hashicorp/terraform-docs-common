@@ -327,27 +327,31 @@
         "title": "Sentinel Policies",
         "routes": [
           { "title": "Defining Policies",
-            "path": "/policy-enforcement/sentinel" },
-            {
-              "title": "Imports",
-              "routes": [
-                { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
-                {
-                  "title": "tfconfig/v2",
-                  "path": "policy-enforcement/sentinel/import/tfconfig-v2"
-                },
-                { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
-                {
-                  "title": "tfplan/v2",
-                  "path": "policy-enforcement/sentinel/import/tfplan-v2"
-                },
-                { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
-                {
-                  "title": "tfstate/v2",
-                  "path": "policy-enforcement/sentinel/import/tfstate-v2"
-                },
-                { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
-              ]
+            "path": "policy-enforcement/sentinel"
+          },
+          { "title": "VCS Policy Sets",
+            "path": "policy-enforcement/sentinel/vcs" 
+          },
+          {
+            "title": "Imports",
+            "routes": [
+              { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
+              {
+                "title": "tfconfig/v2",
+                "path": "policy-enforcement/sentinel/import/tfconfig-v2"
+              },
+              { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
+              {
+                "title": "tfplan/v2",
+                "path": "policy-enforcement/sentinel/import/tfplan-v2"
+              },
+              { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
+              {
+                "title": "tfstate/v2",
+                "path": "policy-enforcement/sentinel/import/tfstate-v2"
+              },
+              { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
+            ]
           },
           {
             "title": "Mocking Terraform Sentinel Data",
@@ -367,10 +371,10 @@
         "title": "OPA Policies",
         "routes": [
           { "title": "Defining Policies",
-            "path": "/policy-enforcement/opa"
+            "path": "policy-enforcement/opa"
           },
           { "title": "VCS Policy Sets",
-            "path": "/policy-enforcement/opa/vcs"
+            "path": "policy-enforcement/opa/vcs"
           }
         ]
       },
