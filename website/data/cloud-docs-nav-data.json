@@ -329,9 +329,6 @@
           { "title": "Defining Policies",
             "path": "policy-enforcement/sentinel"
           },
-          { "title": "VCS Policy Sets",
-            "path": "policy-enforcement/sentinel/vcs" 
-          },
           {
             "title": "Imports",
             "routes": [
@@ -352,6 +349,9 @@
               },
               { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
             ]
+          },
+          { "title": "VCS Policy Sets",
+            "path": "policy-enforcement/sentinel/vcs"
           },
           {
             "title": "Mocking Terraform Sentinel Data",
