@@ -1,57 +1,33 @@
 ---
-page_title: Sentinel - Terraform Cloud
+page_title: Policy Enforcement - Terraform Cloud
 description: >-
-  Sentinel is a policy-as-code framework that enables logic-based policy
-  decisions. Learn how you can use Sentinel with Terraform Cloud.
+ Policies are rules that Terraform Cloud enforces on Terraform runs. Use Sentinel and OPA with Terraform Cloud to validate plans before Terraform provisions infrastructure.
 ---
 
-# Sentinel Overview
+# Policy Enforcement
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-> **Hands-on:** Try the [Enforce Policy with Sentinel](https://learn.hashicorp.com/collections/terraform/policy?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices before Terraform provisions the infrastructure.
 
-[Sentinel](https://www.hashicorp.com/sentinel) is an embedded policy-as-code
-framework integrated with the HashiCorp Enterprise products. It enables
-fine-grained, logic-based policy decisions, and can be extended to use
-information from external sources.
+> **Hands-on:** Try the [Enforce Policy with Sentinel](https://learn.hashicorp.com/collections/terraform/policy) and [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorials.
 
-To learn how to use Sentinel and begin writing policies with the Sentinel
-language, see [the Sentinel
-documentation](https://docs.hashicorp.com/sentinel/writing).
+## Defining Policies
 
-You can also use the
-[`tfe_sentinel_policy`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/sentinel_policy) resource
-from the [Terraform Enterprise provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) to upload a
-policy using Terraform itself.
+Terraform Cloud integrates with two policy-as-code frameworks that let you define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA). Depending on the settings, policies can act as advisory warnings or firm requirements that prevent Terraform from provisioning infrastructure.
 
-## Sentinel in Terraform Cloud
+- For Sentinel, you define policies with the [Sentinel policy language](https://docs.hashicorp.com/sentinel/concepts/language) and use imports to parse the Terraform plan, state, and configuration. Refer to [Defining Policies for Sentinel](/cloud-docs/policy-enforcement/sentinel) for details.
+- For OPA, you define policies with the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/). Refer to [Defining Policies for OPA](cloud-docs/policy-enforcement/opa) for details.
 
-~> Sentinel now supports native VCS integration and direct policy set uploads.
-See [Managing policies for organizations](/cloud-docs/sentinel/manage-policies) for details
-or to read about the [migration utility](/cloud-docs/sentinel/manage-policies#migration-utility).
+## Managing Policy Sets
 
-Using Sentinel with Terraform Cloud involves:
+You group policies into policy sets and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set. You can create policy sets by directly adding policies and policy sets in the Terraform Cloud UI, by connecting Terraform Cloud to your version control system, or by adding them through the Terraform Cloud API.
+Policy sets must only contain policies written in the same policy framework (Sentinel or OPA), but you can add both Sentinel and OPA policy sets to each workspace.
 
-- [Defining the policies](/cloud-docs/sentinel/import) - Policies are defined using the
-  [policy language](https://docs.hashicorp.com/sentinel/concepts/language) with
-  imports for parsing the Terraform plan, state and configuration.
-- [Managing policies for organizations](/cloud-docs/sentinel/manage-policies) -
-  Users with permission to manage policies can add policies to their organization by configuring VCS
-  integration or uploading policy sets through the API. They also define which
-  workspaces the policy sets are checked against during runs.
-  ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
-- [Enforcing policy checks on runs](/cloud-docs/sentinel/enforce) - Policies are checked when
-  a run is performed, after the `terraform plan` but before it can be confirmed
-  or the `terraform apply` is executed.
-- [Mocking Sentinel Terraform data](/cloud-docs/sentinel/mock) - Terraform Cloud provides the
-  ability to generate mock data for any run within a workspace. This data can be
-  used with the [Sentinel CLI](https://docs.hashicorp.com/sentinel/commands) to
-  test policies before deployment.
+Refer to [Managing Policies]( /cloud-docs/policy-enforcement/manage-policy-sets) for details.
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers
+## Managing Policy Results
 
-### Standard Imports
+The Terraform Cloud UI displays policy results for each policy set you apply to the workspace. Depending on their [enforcement level](cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), failed policies can prevent a run from continuing. You can override failed policy checks with the right permissions.
 
-The Terraform integration for HashiCorp Sentinel implements all of the
-available [standard imports](https://docs.hashicorp.com/sentinel/imports).
+Refer to [Policy Results](cloud-docs/policy-enforcement/policy-results) for details.
