@@ -57,7 +57,7 @@ To add an individually managed policy:
 1. Click **Create a new policy**.
 1. Choose the **Policy integration** framework you want to use. You can only create a policy set from policies written using the same framework. You cannot change the framework type after you create the policy.
 1. Complete the following fields to define the policy:
-   - **Policy Name:** Add a name containing letters, numbers, `-`, and `_`. Terraform Cloud displays this name in the UI. The name must be unique to your organization.
+   - **Policy Name:** Add a name containing letters, numbers, `-`, and `_`. Terraform Cloud displays this name in the UI. The name must be unique within your organization.
    - **Description:** Describe the policy’s purpose. The description supports Markdown rendering, and Terraform Cloud displays this text in the UI.
    - **Enforcement mode:** Choose whether this policy can stop Terraform runs and whether users can override it. Refer to [policy enforcement levels](#policy-enforcement-levels) for more details.
    - **(OPA Only) OPA Query:** Write a query to identify a specific policy rule within your rego code. Terraform Cloud uses this query to determine the result of the policy. The query is typically a combination of the policy package name and rule name. For example,  `terraform.deny`. The result of this query must be an array. The policy passes when the array is empty.
