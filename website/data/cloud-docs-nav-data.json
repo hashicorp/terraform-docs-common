@@ -327,7 +327,7 @@
         "path": "no-code-provisioning/provisioning" 
       },
     ]
-  }
+  },
   {
     "title": "Migrating to Terraform Cloud",
     "path": "migrate"
