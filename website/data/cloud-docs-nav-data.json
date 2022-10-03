@@ -350,7 +350,7 @@
               { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
             ]
           },
-          { "title": "VCS Policy Sets",
+          { "title": "Policy Set VCS Repositories",
             "path": "policy-enforcement/sentinel/vcs"
           },
           {
@@ -373,7 +373,7 @@
           { "title": "Defining Policies",
             "path": "policy-enforcement/opa"
           },
-          { "title": "VCS Policy Sets",
+          { "title": "Policy Set VCS Repositories",
             "path": "policy-enforcement/opa/vcs"
           }
         ]
