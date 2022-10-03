@@ -64,7 +64,7 @@ Use the [Retrieve JSON Execution Plan endpoint](/cloud-docs/api-docs/plans#retri
 
 ### Example Policies
 
-The following example policy parses the planned changes for a Terraform run and checks whether they include security group updates to allow public ingress traffic from all CIDRs (`0.0.0.0/0`).
+The following example policy parses Terraform plan and checks whether it includes security group updates to allow public ingress traffic from all CIDRs (`0.0.0.0/0`).
 
 The OPA query for this example policy is `data.terraform.policies.public_ingress.deny`.
 
@@ -82,6 +82,7 @@ deny[msg] {
 ```
 
 The following example policy ensures that databases are no larger than 128 GB.
+
 The OPA query for this policy is `data.terraform.policies.fws.database.fws_db_001.rule`.
 
 ```rego
@@ -125,7 +126,9 @@ rule[msg] {
 
 ## Testing Policies
 
-You can write tests for your policies by mocking the input data the policies use during Terraform runs. Below is an example of a policy that checks whether a workspace has provider tags.
+You can write tests for your policies by mocking the input data the policies use during Terraform runs.
+
+The following example policy called `policy1` checks whether a workspace has provider tags.
 
 ```rego
 package terraform.policies.policy1
@@ -242,7 +245,7 @@ The following example shows mock JSON input data from Terraform that you could u
 }
 ```
 
-The following test validates the policy that checks whether a workspace has provider tags. The test checks for valid as well as any missing tags in the workspace. You can run this test with the `opa test` CLI command. Refer to [Policy Testing with OPA](https://www.openpolicyagent.org/docs/latest/policy-testing/) for more details.
+The following test validates `policy1`. The test checks for valid tags and missing tags in the workspace. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
 
 
 ```rego
@@ -307,16 +310,16 @@ The following table contains the attributes for the `run` namespace.
 
 | Properties Name |  Type  | Description |
 |---------| ----------| ----------|
-|  `id`   | String | Specifies the ID that is associated with the current Terraform run. |
-|  `created_at` | String | Specifies the time Terraform created the run. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
-|  `message` |  String | Specifies the message that is associated with the Terraform run. The default value is _"Queued manually via the Terraform Enterprise API"_. |
-|  `commit_sha` |  String |  Specifies the checksum hash (SHA) that identifies the commit. |
-|  `is_destroy` |  Boolean | Specifies if the plan is a destroy plan, which will destroy all provisioned resources. |
-|  `refresh` Boolean |  Specifies whether the state was refreshed prior to the plan. |
-|   `refresh_only` |  Boolean | Specifies whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
-|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing). | Provides the targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if no resource targets are specified. |
-|  `speculative` | Boolean | Specifies whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only. |
-|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | Provides the targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if no resource targets are specified. |
+|  `id`   | String | The ID associated with the current Terraform run |
+|  `created_at` | String | The time Terraform created the run. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
+|  `message` |  String | The message associated with the Terraform run. The default value is "Queued manually via the Terraform Enterprise API". |
+|  `commit_sha` |  String |  The checksum hash (SHA) that identifies the commit |
+|  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
+|  `refresh` | Boolean |  Whether the state was refreshed prior to the plan |
+|   `refresh_only` |  Boolean | Whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
+|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if no resource targets are specified. |
+|  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only |
+|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if no resource targets are specified. |
 |   `variables` |  A string-keyed map of values. | Provides the variables configured within the run and the [sensitivity](/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of each variable value. Each variable name maps to a `category` string denoting whether it is an input variable or an environment variable and a `sensitive` boolean.   |
 
 #### Organization Namespace
@@ -329,14 +332,14 @@ The following table contains the properties for the `workspace` namespace.
 
 | Property Name |  Type  | Description |
 |---------- | ------------ | -----------|
-| `id` | String | Specifies the ID that is associated with the Terraform workspace. |
-|  `name` |  String | The name of the workspace, which can only include letters, numbers, `-`, and `_`. |
-|  `created_at` | String | Specifies the time that the workspace was created. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
-|  `description` | String | Contains the description for the workspace. This value can be `null`. |
-|  `auto_apply` | Boolean | Contains the workspace's [auto-apply](/cloud-docs/workspaces/settings#apply-method) setting. |
-|  `tags` | Array of strings. | Contains the list of tag names for the workspace. |
-|  `working_directory` |  String | Contains the configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
-|  `vcs_repo` |  A string-keyed map of values. | Contains data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation ](/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
+| `id` | String | The ID associated with the Terraform workspace |
+|  `name` |  String | The name of the workspace, which can only include letters, numbers, `-`, and `_` |
+|  `created_at` | String | The time that the workspace was created. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
+|  `description` | String | The description for the workspace. This value can be `null`. |
+|  `auto_apply` | Boolean | The workspace's [auto-apply](/cloud-docs/workspaces/settings#apply-method) setting |
+|  `tags` | Array of strings | The list of tag names for the workspace |
+|  `working_directory` |  String | The configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
+|  `vcs_repo` |  A string-keyed map of values | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation ](/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
 
 #### Cost Estimate Namespace
 
@@ -344,8 +347,8 @@ The following table contains the properties for the `cost_estimate` namespace. T
 
 | Property Name |  Type  | Description |
 |------ | --------- | ----------- |
-|  `prior_monthly_cost` | String | Contains the monthly cost estimate at the beginning of a plan. This value contains a positive decimal and can be `"0.0"`. |
-| `proposed_monthly_cost` | String | Contains the monthly cost estimate if Terraform applies the plan. This value contains a positive decimal and can be `"0.0"`. |
-|  `delta_monthly_cost` |  String | Contains the difference between the prior and proposed monthly cost estimates. This value may contain a positive or negative decimal and can be `"0.0"`. |
+|  `prior_monthly_cost` | String | The monthly cost estimate at the beginning of a plan. This value contains a positive decimal and can be `"0.0"`. |
+| `proposed_monthly_cost` | String | The monthly cost estimate if Terraform applies the plan. This value contains a positive decimal and can be `"0.0"`. |
+|  `delta_monthly_cost` |  String | The difference between the prior and proposed monthly cost estimates. This value may contain a positive or negative decimal and can be `"0.0"`. |
 
 -> **Note:** Cost estimates are not available for Terraform 0.11.
