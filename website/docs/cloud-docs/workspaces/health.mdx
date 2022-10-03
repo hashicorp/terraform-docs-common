@@ -94,7 +94,7 @@ You can use one of the following approaches to correct workspace drift:
 
 -> **Note:** Continuous validation is in beta.
 
-The Terraform configuration language provides `precondition` and `postcondition` blocks to create custom rules for resources, data sources, and outputs. This validates your configuration before Terraform provisions the infrastructure.
+The Terraform configuration language provides `precondition` and `postcondition` blocks to create custom rules for resources, data sources, and outputs. These rules validate your configuration before Terraform provisions the infrastructure.
 
 Continuous validation lets Terraform Cloud regularly check whether the preconditions and postconditions in a workspace’s configuration continue to pass, validating the real-world infrastructure. For example, you can write a `postcondition` to check whether an API gateway certificate is valid. Continuous validation alerts you when the condition fails, so you can update the certificate and avoid errors the next time you want to update your infrastructure.
 
