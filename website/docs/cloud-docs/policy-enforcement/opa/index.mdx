@@ -9,7 +9,7 @@ tfc_only: true
 
 -> **Note:** Policies are available in the Terraform Cloud [Terraform Cloud  Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA Policies are not available in Terraform Enterprise.
 
-Policies are rules that Terraform Cloud enforces on runs within a workspace. You use the [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/) policy language to write policies for the Open Policy Agent (OPA) framework.
+Policies are rules that Terraform Cloud enforces on runs within a workspace. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. Then you can create one or more [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) to add to Terraform Cloud workspaces.
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
 
@@ -257,7 +257,7 @@ test_workspace_tags_missing {
 
 ## Terraform Run Data
 
-Each [Terraform run](/docs/glossary#run) outputs data describing the run settings, the associated workspace, and cost estimation (if enabled). You can create mock JSON run data to [test your OPA policies](#testing-OPA-policies).
+Each [Terraform run](/docs/glossary#run) outputs data describing the run settings, the associated workspace, and cost estimation (if enabled). You can create mock JSON run data to [test your OPA policies](#testing-opa-policies).
 
 ### Schema
 

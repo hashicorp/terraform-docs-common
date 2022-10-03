@@ -7,17 +7,16 @@ description: >-
 
 # Defining Sentinel Policies
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Sentinel policies are available in the [Terraform Cloud Team & Governance tier](https://www.hashicorp.com/products/terraform/pricing).
 
-You define Sentinel policies using the [Sentinel policy language](https://docs.hashicorp.com/sentinel/language). Then you can [add policies directly in the Terraform Cloud UI](/cloud-docs/policy-enforcement/manage-policy-sets), connect Terraform Cloud to a [VCS policy set](/cloud-docs/policy-enforcement/sentinel/vcs), or use the `tfe` provider's [`tfe_sentinel_policy` resource](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/sentinel_policy) to upload policies using Terraform.
+You use the [Sentinel policy language](https://docs.hashicorp.com/sentinel/language) to define Sentinel policies. Then you can create one or more [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) to add to Terraform Cloud workspaces.
 
 > **Hands-on:** Try the [Enforce Policy with Sentinel](https://learn.hashicorp.com/collections/terraform/policy?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
 
-This page helps you start writing Sentinel policies for Terraform. We also recommend reviewing the [Sentinel Policy Language](https://docs.hashicorp.com/sentinel/language) documentation.
 
 ## Sentinel Imports
 
-A policy can include imports that enable a policy to access reusable libraries, external data and functions. Refer to [imports](https://docs.hashicorp.com/sentinel/concepts/imports) in the Sentinel documentation for more details.
+A policy can include imports that enable a policy to access reusable libraries, external data, and functions. Refer to [imports](https://docs.hashicorp.com/sentinel/concepts/imports) in the Sentinel documentation for more details.
 
 Terraform Cloud provides four imports to define policy rules for the plan, configuration, state, and run associated with a policy check.
 
