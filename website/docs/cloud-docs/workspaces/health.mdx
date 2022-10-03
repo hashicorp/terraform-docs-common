@@ -54,7 +54,7 @@ The timing of the first health assessment in the workspace depends on whether yo
 
 After the first health assessment, Terraform Cloud starts a new health assessment if at least 24 hours have passed since the last assessment and there are no active runs in the workspace.
 
-A health assessment never interrupts or interferes with runs. You can start a new run during a health assessment, and Terraform Cloud cancels the current assessment. Terraform Cloud runs the next assessment in 24 hours.
+A health assessment never interrupts or interferes with runs. If you start a new run during a health assessment, Terraform Cloud cancels the current assessment and runs the next assessment in 24 hours.
 
 Terraform Cloud pauses health assessments if the latest run ended in an errored state. This behavior occurs for all run types, including plan-only runs and speculative plans. Once the workspace completes a successful run, Terraform Cloud restarts health assessments after 24 hours.
 
