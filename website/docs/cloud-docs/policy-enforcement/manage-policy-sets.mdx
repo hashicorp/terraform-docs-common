@@ -21,7 +21,7 @@ To view and manage policies and policy sets, you must have [manage policy permis
 
 You can use the following workflows to manage policies and policy sets for your Terraform Cloud organization:
 - **Individually Managed:** Add policies directly in the Terraform Cloud UI, and Terraform Cloud stores your policy code. This workflow is ideal for initial experimentation with policy enforcement, but we do not recommend it for organizations with large numbers of policies.
-- **Version Control:**  Connect Terraform Cloud to a version control repository containing a policy set. When you push changes to policy files in the repository, Terraform Cloud automatically fetches the updated policy set.
+- **Version Control:**  Connect Terraform Cloud to a version control repository containing a policy set. When you push changes to the repository, Terraform Cloud automatically uses the updated policy set.
 - **Automated:** Push versions of policy sets to Terraform Cloud with the [Terraform Cloud Policy Sets API](/cloud-docs/api-docs/policy-sets#create-a-policy-set-version). For Sentinel only, you can also use the  `tfe` provider [`tfe_policy_set`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) resource. This workflow is ideal for automated Continuous Integration and Deployment (CI/CD) pipelines.
 
 
@@ -99,7 +99,7 @@ To view and manage policy sets, go to the **Policy Sets** section of your organi
 
 The way you set up and configure a new policy set depends on your workflow and where you store policies.
 - For [managed policies](#managed-policies), you use the UI to create a policy set and add managed policies.
-- For policy sets in a version control system, you use the UI to create a policy set connected to that repository. Terraform Cloud automatically refreshes the policy set when you change relevant files in that repository. Version control policy sets have specific organization and formatting requirements. Refer to [Sentinel TBD](link) and [OPA Policies](/cloud-docs/policy-enforcement/opa) for details.
+- For policy sets in a version control system, you use the UI to create a policy set connected to that repository. Terraform Cloud automatically refreshes the policy set when you change relevant files in that repository. Version control policy sets have specific organization and formatting requirements. Refer to [Sentinel VCS Repositories](/cloud-docs/policy-enforcement/sentinel/vcs) and [OPA VCS Repositories](/cloud-docs/policy-enforcement/sentinel/vcs) for details.
 
 For automated workflows like continuous deployment, you can use the UI to create an empty policy set and then use the [Policy Sets API](/cloud-docs/api-docs/policy-sets) to add policies. You can also use the API or the [`tfe` provider (Sentinel Only)](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) to add an entire, packaged policy set.
 
