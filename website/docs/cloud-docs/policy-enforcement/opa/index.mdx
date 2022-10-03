@@ -294,10 +294,6 @@ run
 │   ├── tags (array of strings)
 │   ├── working_directory (string)
 │   └── vcs_repo (map of keys)
-└── cost_estimate
-   ├── prior_monthly_cost (string)
-   ├── proposed_monthly_cost (string)
-   └── delta_monthly_cost (string)
 ```
 
 ### Properties
@@ -340,15 +336,3 @@ The following table contains the properties for the `workspace` namespace.
 |  `tags` | Array of strings | The list of tag names for the workspace |
 |  `working_directory` |  String | The configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
 |  `vcs_repo` |  A string-keyed map of values | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation ](/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
-
-#### Cost Estimate Namespace
-
-The following table contains the properties for the `cost_estimate` namespace. This namespace is only present if a cost estimate is available. Cost estimation is disabled for runs using [resource targeting](/cli/commands/plan#resource-targeting), which may cause unexpected failures.
-
-| Property Name |  Type  | Description |
-|------ | --------- | ----------- |
-|  `prior_monthly_cost` | String | The monthly cost estimate at the beginning of a plan. This value contains a positive decimal and can be `"0.0"`. |
-| `proposed_monthly_cost` | String | The monthly cost estimate if Terraform applies the plan. This value contains a positive decimal and can be `"0.0"`. |
-|  `delta_monthly_cost` |  String | The difference between the prior and proposed monthly cost estimates. This value may contain a positive or negative decimal and can be `"0.0"`. |
-
--> **Note:** Cost estimates are not available for Terraform 0.11.
