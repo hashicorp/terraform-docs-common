@@ -13,7 +13,7 @@ Policies are rules that Terraform Cloud enforces on runs within a workspace. You
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
 
-## Writing Rego Policies
+## Defining Policies
 
 You can write Rego policies to check for any number of conditions. Common use cases include checking whether infrastructure configuration adheres to security standards or your organization’s best practices. For example, you may want to write a policy to check whether Terraform plans to deploy production infrastructure to the correct region.
 
@@ -119,7 +119,7 @@ rule[msg] {
 }
 ```
 
-## Testing OPA Policies
+## Testing Policies
 
 You can write tests for your policies by mocking the input data the policies use during Terraform runs. Below is an example of a policy that checks whether a workspace has provider tags.
 
@@ -257,7 +257,7 @@ test_workspace_tags_missing {
 
 ## Terraform Run Data
 
-Each [Terraform run](/docs/glossary#run) outputs data describing the run settings, the associated workspace, and cost estimation (if enabled). You can create mock JSON run data to [test your OPA policies](#testing-opa-policies).
+Each [Terraform run](/docs/glossary#run) outputs data describing the run settings, the associated workspace, and cost estimation (if enabled). You can create mock JSON run data to [test OPA policies](#testing-policies).
 
 ### Schema
 
