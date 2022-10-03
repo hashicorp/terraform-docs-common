@@ -316,6 +316,19 @@
     ]
   },
   {
+    "title": "No-Code Provisioning",
+    "routes": [
+      { 
+        "title": "Preparing No-Code Ready Modules",
+        "path": "no-code-provisioning/module-design" 
+      },
+      { 
+        "title": "Provisioning No-Code Infrastructure",
+        "path": "no-code-provisioning/provisioning" 
+      },
+    ]
+  }
+  {
     "title": "Migrating to Terraform Cloud",
     "path": "migrate"
   },
