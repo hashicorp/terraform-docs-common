@@ -20,7 +20,7 @@ An OPA policy set repository contains a HashiCorp Configuration Language (HCL) c
 ## Configuration File
 
 The root directory of your policy set repository must contain a configuration file named either `policies.hcl` or `policies.json`. Policy enforcement supports both HCL and the JSON variant of HCL syntax.
-The configuration file contains one or more  `policy` blocks that define each policy in the policy set. Unlike Sentinel, OPA policies do not need to be separated out into separate files. You use an OPA query to identify each policy rule.
+The configuration file contains one or more  `policy` blocks that define each policy in the policy set. Unlike Sentinel, OPA policies do not need to be separated into separate files. You use an [OPA query](/cloud-docs/policy-enforcement/opa#opa-query) to identify each policy rule.
 
 The following example uses a query to define a policy named `policy1`. This query may evaluate across multiple files, or a single file.
 
@@ -30,7 +30,7 @@ policy "policy1" {
 }
 ```
 
-Optionally, you can also provide a `description` and an `enforcement_level` property. If you do not specify an enforcement level, Terraform Cloud uses `advisory`, meaning policy failures produce warnings but do not block Terraform runs. Refer to [Policy Enforcement Levels](/cloud-docs/policy-enforcement/manage-policy-sets#opa) for more details.
+Optionally, you can also provide a `description` and an `enforcement_level` property. If you do not specify an enforcement level, Terraform Cloud uses `advisory`, meaning policy failures produce warnings but do not block Terraform runs. Refer to [Policy Enforcement Levels](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels) for more details.
 
 ```hcl
 policy "policy1" {
