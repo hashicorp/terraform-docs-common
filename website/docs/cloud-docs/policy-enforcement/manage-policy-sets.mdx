@@ -8,7 +8,7 @@ description: >-
 
 -> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices before Terraform provisions the infrastructure. You can write policies using either the [Sentinel](/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/cloud-docs/policy-enforcement/opa) policy-as-code frameworks.
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can define policies using either the [Sentinel](/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/cloud-docs/policy-enforcement/opa) policy-as-code frameworks.
 
 You group individual policies into policy sets and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set. Depending on the [enforcement level](#policy-enforcement-levels), failed policies can stop the run.
 
@@ -62,7 +62,7 @@ To add an individually managed policy:
    - **Enforcement mode:** Choose whether this policy can stop Terraform runs and whether users can override it. Refer to [policy enforcement levels](#policy-enforcement-levels) for more details.
    - **(OPA Only) OPA Query:** Write a query to identify a specific policy rule within your rego code. Terraform Cloud uses this query to determine the result of the policy. The query is typically a combination of the policy package name and rule name. For example,  `terraform.deny`. The result of this query must be an array. The policy passes when the array is empty.
    - **Policy code**: Paste the code for the policy: either Sentinel code or Rego code for OPA policies. The UI provides syntax highlighting for the policy language.
-   - **Policy sets:** Optionally select one or more existing managed policy sets where you want to add the new policy. You can only select policy sets compatible with the chosen policy set framework. If there are no policy sets available, you can [create a new one](#create-policy-sets).
+   - **(Optional) Policy sets:** Select one or more existing managed policy sets where you want to add the new policy. You can only select policy sets compatible with the chosen policy set framework. If there are no policy sets available, you can [create a new one](#create-policy-sets).
 
 The policy is now available in the Terraform Cloud UI for you to edit and add to one or more policy sets.
 
@@ -71,15 +71,13 @@ The policy is now available in the Terraform Cloud UI for you to edit and add to
 To edit a managed policy:
 - Go to **Policies** in your organization’s settings.
 - Click the policy you want to edit to go to its details page.
-- Edit the policy's fields and then click **Update policy*
-
-
+- Edit the policy's fields and then click **Update policy**.
 
 ### Delete Managed Policies
 
-~> **Warning:** You can not restore policies after deletion. You must manually re-add them to Terraform Cloud. You may want to save the policy code in a separate location before you delete the policy.
+~> **Warning:** Deleting a policy that applies to an active run causes that run’s policy evaluation stage to error. We recommend warning other members of your organization before you delete widely used policies.
 
-Deleting a policy set that applies to an active run causes that run’s policy evaluation stage to error. We recommend warning other members of your organization before you delete widely used policy sets.
+You can not restore policies after deletion. You must manually re-add them to Terraform Cloud. You may want to save the policy code in a separate location before you delete the policy.
 
 To delete a managed policy:
 - Go to **Policies** in your organization’s settings.
@@ -93,15 +91,14 @@ The policy is removed from Terraform Cloud and from any associated policy sets.
 
 You group policies into policy sets. Then you can assign those policy sets to workspaces.
 
-To view and manage policy sets, go to the **Policy Sets** section of your organization’s settings. This page contains all of the policy sets available in the organization, including those added through the API and those connected to VCS repositories.
-
-### Create Policy Sets
+To view and manage policy sets, go to the **Policy Sets** section of your organization’s settings. This page contains all of the policy sets available in the organization, including those added through the API.
 
 The way you set up and configure a new policy set depends on your workflow and where you store policies.
 - For [managed policies](#managed-policies), you use the UI to create a policy set and add managed policies.
 - For policy sets in a version control system, you use the UI to create a policy set connected to that repository. Terraform Cloud automatically refreshes the policy set when you change relevant files in that repository. Version control policy sets have specific organization and formatting requirements. Refer to [Sentinel VCS Repositories](/cloud-docs/policy-enforcement/sentinel/vcs) and [OPA VCS Repositories](/cloud-docs/policy-enforcement/sentinel/vcs) for details.
+- For automated workflows like continuous deployment, you can use the UI to create an empty policy set and then use the [Policy Sets API](/cloud-docs/api-docs/policy-sets) to add policies. You can also use the API or the [`tfe` provider (Sentinel Only)](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) to add an entire, packaged policy set.
 
-For automated workflows like continuous deployment, you can use the UI to create an empty policy set and then use the [Policy Sets API](/cloud-docs/api-docs/policy-sets) to add policies. You can also use the API or the [`tfe` provider (Sentinel Only)](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) to add an entire, packaged policy set.
+### Create Policy Sets
 
 To add a policy set in the Terraform Cloud UI:
 1. Go to the **Policy Sets** section of your organization’s settings.
@@ -115,10 +112,10 @@ To add a policy set in the Terraform Cloud UI:
    - **Name:** Add a name containing letters, numbers, `-`, and `_`. Terraform Cloud displays this name in the UI. The name must be unique to your organization.
    - **Description:** Describe the policy set’s purpose. The description supports Markdown rendering, and Terraform Cloud displays this text in the UI.
    - **Scope of policies:** Choose whether Terraform Cloud should automatically enforce the policy set on all workspaces, or only on a specific subset.
-   - **(Optional) Workspaces**: A **Workspaces** section appears on the bottom of the form when you scope the policy set to selected workspaces. Select one or more workspaces where Terraform Cloud should apply the policy set.
-   - **(OPA Only) This policy set can be overridden in the event of `mandatory` failures**:  Choose whether users with override policy permissions can let Terraform apply plans that have [mandatory policy](#policy-enforcement-level) failures.
+   - **(Optional) Workspaces**: A **Workspaces** section appears on the bottom of the form when you scope the policy set to selected workspaces. Select workspaces where Terraform Cloud should apply the policy set.
+   - **(OPA Only) This policy set can be overridden in the event of `mandatory` failures**:  Choose whether users with override policy permissions can let Terraform apply plans that have [mandatory policy](#policy-enforcement-levels) failures.
    - **(VCS Only) VCS Branch**: Specify the branch within your VCS repository where Terraform Cloud should import new versions of policies. If you do not set this field, Terraform Cloud uses the default branch of the VCS repository you selected.
-   - **(VCS Only) Policies Path**: Specify the sub-directory in your VCS repository containing the policy set files. This lets you maintain multiple policy sets within a single repository. Set this field to the directory path that contains the `sentinel.hcl` (Sentinel) or `policies.hcl` (OPA) configuration file for the policy set. You can start the path with `/`, but this is optional. Relative paths are assumed to originate from the root of the repository. If you do not set this field, Terraform Cloud uses the repository root directory.
+   - **(VCS Only) Policies Path**: Specify the sub-directory in your VCS repository containing the policy set files. This lets you maintain multiple policy sets within a single repository. Set this field to the directory path that contains the `sentinel.hcl` (Sentinel) or `policies.hcl` (OPA) configuration file for the policy set. You can start the path with `/`, but this is optional. Terraform Cloud assumes that relative paths originate from the root of the repository. If you do not set this field, Terraform Cloud uses the repository root directory.
    - **(Managed Policies Only) Policies**: Select managed policies to add to the policy set. You can only add policies written with the policy framework you selected for the policy set.
 
 ### Edit Policy Sets
@@ -130,21 +127,21 @@ To edit policy sets in the Terraform Cloud UI:
 
 ### Delete Policy Sets
 
-~> **Warning:** You can not restore policy sets after deletion. You must manually re-add them to Terraform Cloud.
+~> **Warning:** Deleting a policy set that applies to an active run causes that run’s policy evaluation stage to error. We recommend warning other members of your organization before you delete widely used policy sets.
 
-Deleting a policy set that applies to an active run causes that run’s policy evaluation stage to error. We recommend warning other members of your organization before you delete widely used policy sets.
+You can not restore policy sets after deletion. You must manually re-add them to Terraform Cloud.
 
 To delete a policy set in the Terraform Cloud UI:
 1. Go to **Policy Sets** in your organization’s settings.
 1. Click the policy set you want to delete to go to its details page.
 1. Click **Delete policy** and then click **Yes, delete policy set** to confirm.
 
-The policy set is removed from the UI and Terraform Cloud no longer applies it to any workspaces. For managed policy sets, all of the individual policies are still available in Terraform Cloud. You must delete each policy individually to remove them from your organization.
+The policy set is removed from the UI and Terraform Cloud no longer applies it to any workspaces. For managed policy sets, all of the individual policies are still available in Terraform Cloud. You must delete each policy individually to remove it from your organization.
 
 
 ### Sentinel Parameters
 
-[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value can be parsed as JSON, it will be sent to Sentinel as the corresponding type (string, boolean, integer, map or list). If it fails JSON validation, it will be sent as a string.
+[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value can be parsed as JSON, Terraform Cloud sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, Terraform Cloud sends it as a string.
 
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
 
