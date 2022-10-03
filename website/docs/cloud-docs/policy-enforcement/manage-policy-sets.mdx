@@ -144,8 +144,10 @@ The policy set is removed from the UI and Terraform Cloud no longer applies it t
 
 ### Sentinel Parameters
 
-You can add [Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) to existing policy sets that you added through the `tfe` provider, API, or a connected VCS repository. Parameters are not available for managed policy sets.
-
-Parameters are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value can be parsed as JSON, it will be sent to Sentinel as the corresponding type (string, boolean, integer, map or list). If it fails JSON validation, it will be sent as a string.
+[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value can be parsed as JSON, it will be sent to Sentinel as the corresponding type (string, boolean, integer, map or list). If it fails JSON validation, it will be sent as a string.
 
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
+
+You can only set parameters for existing policy sets that you added through the `tfe` provider, API, or a connected VCS repository. Parameters are not available for managed policy sets.
+
+
