@@ -6,19 +6,19 @@ description: >-
 
 # Sentinel VCS Policy Sets
 
--> **Note:** Policies  are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing)
+-> **Note:** Policies  are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
 
-To enable policy enforcement, you must group Sentinel policies into policy sets and apply those policy sets to one or more workspaces.
+To enable policy enforcement, you must group Sentinel policies into policy sets. You can then apply those policy sets to one or more workspaces.
 
-One way to create policy sets is by connecting Terraform Cloud to a version control repository containing Sentinel policies. When you push changes to the repository, Terraform Cloud automatically uses the updated policy set. Refer to [Managing Policy Sets](/cloud-docs/policy-enforcement/manage-policy-sets) for more details.
+One way to create policy sets is by connecting Terraform Cloud to a version control repository. When you push changes to the repository, Terraform Cloud automatically uses the updated policy set. Refer to [Managing Policy Sets](/cloud-docs/policy-enforcement/manage-policy-sets) for more details.
 
-A Sentinel policy set repository contains policy files, module files, and a Sentinel [configuration file](#configuration-file). 
+A Sentinel policy set repository contains a Sentinel configuration file, policy files, and module files.
 
 ## Configuration File
 
 Your repository must contain a configuration file named `sentinel.hcl` that defines the following features of the policy set:
 
-- Each policy included in the set. The policy name must match the names of individual [policy code files](#policy-code-files) exactly. Terraform Cloud ignores policy files in the repository that are not listed in the configuration file. For each policy, the configuration file must designate the policy’s [enforcement level](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-level) and [source](#policy-source).
+- Each policy included in the set. The policy name must match the names of individual [policy code files](#policy-code-files) exactly. Terraform Cloud ignores policy files in the repository that are not listed in the configuration file. For each policy, the configuration file must designate the policy’s [enforcement level](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels) and [source](#policy-source).
 - [Terraform modules](#modules) that policies in the set need to access.
 
 The following example shows a portion of a `sentinel.hcl` configuration file that defines a policy named `terraform-maintenance-windows`. The policy has a `hard-mandatory` enforcement level, meaning that it can block Terraform runs when it fails and users cannot override it.
@@ -30,7 +30,7 @@ policy "terraform-maintenance-windows" {
 }
 ```
 
-To configure a module, add a `module` entry to your `sentinel.hcl` file: The following example adds a module called `timezone`.
+To configure a module, add a `module` entry to your `sentinel.hcl` file. The following example adds a module called `timezone`.
 
 ```hcl
 module "timezone" {
@@ -46,7 +46,7 @@ Define each Sentinel policy in a separate file within your repository. All local
 
 ### Policy Source
 
-A policy's `source` field can point to a file within the policy repository, or a remote source, such as a policy from HashiCorp's [foundational policies library](https://github.com/hashicorp/terraform-foundational-policies-library). Only HTTP and HTTPS remote sources are supported.
+A policy's `source` field can either reference a file within the policy repository, it can reference a remote source. For example, the configuration could reference a policy from HashiCorp's [foundational policies library](https://github.com/hashicorp/terraform-foundational-policies-library). Sentinel only supports HTTP and HTTPS remote sources.
 
 To specify a local source, prefix the `source` with a `./`, or `../`. The following example shows how to reference a local source policy called `terraform-maintenance-windows.sentinel`.
 
@@ -57,7 +57,7 @@ policy "terraform-maintenance-windows" {
 }
 ```
 
-To specify a remote source, supply the URL as the `source`. The following is taken as an example from the foundational policies library:
+To specify a remote source, supply the URL as the `source`. The following example references a policy from HashiCorp's foundational policies library.
 
 ```hcl
 policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
@@ -66,7 +66,7 @@ policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
 }
 ```
 
-For GitHub, you must use the URL of the raw content of the policy. Using other types causes Terraform Cloud to error when checking the policy. For example, do not use `https://github.com/hashicorp/terraform-foundational-policies-library/master/cis/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel`.
+For GitHub, you must use the URL of the raw policy content. Other URL types cause Terraform Cloud to error when checking the policy. For example, do not use `https://github.com/hashicorp/terraform-foundational-policies-library/master/cis/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel`.
 
 To access the raw URL, open the Sentinel file in your Github repository, right-click **Raw** on the top right of the page, and save the link address.
 
@@ -76,7 +76,7 @@ The following example policy uses the `time` and `tfrun` imports and a custom  `
 
 1. Load the time when the Terraform run occurred
 1. Convert the loaded time with the correct offset using the [Timezone API](https://timezoneapi.io/)
-1. Verify that the provisioning operation is only going to occur on an agreed upon day
+1. Verify that the provisioning operation occures only on a specific day
 
 The example policy also uses a [rule expression](https://docs.hashicorp.com/sentinel/language/spec#rule-expressions) with the `when` predicate. If the value of `tfrun.workspace.auto_apply` is false, the rule is not evaluated and returns true.
 
@@ -103,17 +103,17 @@ main = rule {
 }
 ```
 
-For a more robust or flexible policy, you can expand the enforcement logic to also restrict provisioning to occur out of hours using the [time.hour](https://docs.hashicorp.com/sentinel/imports/time#time-hour) function.
+To expand the policy, you could use the [time.hour](https://docs.hashicorp.com/sentinel/imports/time#time-hour) function to also restrict provisioning to specific times of day.
 
 ## Modules
 
-Terraform Cloud supports Sentinel's modules feature. This lets you write reusable policy code that you can import and use within several policies at once.
+Terraform Cloud supports [Sentinel modules](https://docs.hashicorp.com/sentinel/extending/modules). Modules let you write reusable policy code that you can import and use within several policies at once.
 
-You can store modules locally or retrieve them from a remote HTTP or HTTPS source, similar to policies.
+You can store modules locally or retrieve them from a remote HTTP or HTTPS source.
 
--> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](https://docs.hashicorp.com/sentinel/extending/modules) to learn to use modules within Sentinel. The configuration examples in the runtime documentation pertain to the Sentinel CLI and not Terraform Cloud.
+-> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](https://docs.hashicorp.com/sentinel/extending/modules) to learn to use modules within Sentinel. However, the configuration examples in the runtime documentation are relevant to the Sentinel CLI and not Terraform Cloud.
 
-The following example module loads the code at `./modules/timezone.sentinel` relative to the policy set working directory and makes it available to other modules using the statement `import "timezone"`.
+The following example module loads the code at `./modules/timezone.sentinel` relative to the policy set working directory. Other modules can access this code with the statement `import "timezone"`.
 
 ```python
 import "http"
