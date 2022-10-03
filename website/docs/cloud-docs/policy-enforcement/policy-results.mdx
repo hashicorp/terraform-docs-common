@@ -7,13 +7,13 @@ description: Learn when Terraform Cloud performs policy checks, what happens whe
 
 -> **Note:** Policies are available in the Terraform Cloud [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-When you add policy sets to a workspace, Terraform Cloud enforces those policy sets on every Terraform run. Terraform Cloud displays the results of policy checks in the UI for each run. Depending on each policy’s [enforcement level](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), policy failures can also stop the run and prevent Terraform from provisioning the infrastructure.
+When you add [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) to a workspace, Terraform Cloud enforces those policy sets on every Terraform run. Terraform Cloud displays the results of policy checks in the UI for each run. Depending on each policy’s [enforcement level](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), policy failures can also stop the run and prevent Terraform from provisioning infrastructure.
 
 ## Policy Evaluation Run Stages
 
-Terraform Cloud evaluates Sentinel and OPA policy sets separately and at different points in the run.
-- Sentinel policy evaluations occur after Terraform completes the plan and after both run tasks and cost estimation. This lets you write Sentinel policies to restrict costs based on the data in the cost estimates. If the plan fails, Terraform Cloud does not evaluate policies.
-- OPA policy evaluations occur after Terraform completes the plan and after any [run tasks](/cloud-docs/workspaces/settings/run-tasks). Unlike Sentinel policies, Terraform Cloud evaluates OPA policies immediately before cost estimation.
+Terraform Cloud only evaluates policies for successful plans. Terraform Cloud evaluates Sentinel and OPA policy sets separately and at different points in the run.
+- Sentinel policy evaluations occur after Terraform completes the plan and after both [run tasks](/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](/cloud-dodcs/cost-estimation). This lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
+- OPA policy evaluations occur after Terraform completes the plan and after any run tasks. Unlike Sentinel policies, Terraform Cloud evaluates OPA policies immediately before cost estimation.
 
 Refer to [Run States and Stages](/cloud-docs/run/states) for more details.
 
@@ -36,17 +36,20 @@ You need [manage policy overrides](/cloud-docs/users-teams-organizations/permiss
 Sentinel and OPA have different policy enforcement levels that determine when you need to override failed policies to allow a run to continue.
 To override failed policies, go to the run details page and click **Override and Continue** at the bottom.
 
+For Sentinel only, you can also override `soft-mandatory` policies with the Terraform CLI. Run the `terraform apply` command and then enter `override` when prompted.
+
 ### Sentinel
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
-You cannot override `hard-mandatory` policies, and all of these policies must pass for the run to continue.
 
 You can override `soft-mandatory` policies to allow the run to continue. Overriding failed policies on a run does not affect policy evaluations on future runs in that workspace.
 
-In addition to clicking **Override and Continue** in the UI, you can override `soft-mandatory` policies with the Terraform CLI. Run `terraform apply` command and then enter `override` when prompted.
+You cannot override `hard-mandatory` policies, and all of these policies must pass for the run to continue.
+
 
 ### OPA
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
+
 You can override `mandatory` policies to allow the run to continue.
 
