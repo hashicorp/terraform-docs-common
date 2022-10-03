@@ -137,9 +137,9 @@ Workspace events include detailed information about workspace-level validation e
 | `details.new_assessment_result.checks_errored`        | number | The number of resources, data sources, and outputs that had a condition error.             |
 | `details.new_assessment_result.checks_unknown`        | number | The number of resources, data sources, and outputs that had conditions left unevaluated.   |
 | `details.new_assessment_result.drifted`      | bool   | Whether assessment detected drift.                                                   |
-| `details.new_assessment_result.resources_drifted`     | number| The number of resources drifted.                                             |
-| `details.new_assessment_result.resources_undrifted`   | number| The number of resources not drifted.                                         |
-| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result.                                                  |
+| `details.new_assessment_result.resources_drifted`     | number| The number of resources whose configuration does not match from the workspace's state file.                                             |
+| `details.new_assessment_result.resources_undrifted`   | number| The number of real resources whose configuration matches the workspace's state file.                                         |
+| `details.new_assessment_result.created_at`   | string | Timestamp for when Terraform Cloud created the assessment result.                                                  |
 | `details.prior_assessment_result`            | object | The assessment result immediately prior to the one that triggered the notification.  |
 | `details.prior_assessment_result.id`         | string | ID of the assessment result.                                                         |
 | `details.prior_assessment_result.url`        | string | URL to get the assessment result from the Terraform Cloud API.                       |
@@ -150,8 +150,8 @@ Workspace events include detailed information about workspace-level validation e
 | `details.prior_assessment_result.checks_errored`        | number | The number of resources, data sources, and outputs that had a condition error.           |
 | `details.prior_assessment_result.checks_unknown`        | number | The number of resources, data sources, and outputs that had conditions left unevaluated. |
 | `details.prior_assessment_result.drifted`    | bool   | Whether assessment detected drift.                                                   |
-| `details.prior_assessment_result.resources_drifted`     | number| The number of resources drifted.                                           |
-| `details.prior_assessment_result.resources_undrifted`   | number| The number of resources not drifted.                                       |
+| `details.prior_assessment_result.resources_drifted`     | number| The number of resources whose configuration does not match the workspace's state file.                                           |
+| `details.prior_assessment_result.resources_undrifted`   | number| The number of resources whose configuration matches the workspace's state file.                                       |
 | `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                                  |
 | `details.workspace_id`                       | string | ID of the workspace that generated the notification.                                 |
 | `details.workspace_name`                     | string | Human-readable name of the workspace.                                                |
