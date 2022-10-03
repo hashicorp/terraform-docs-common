@@ -91,7 +91,7 @@ The policy is removed from Terraform Cloud and from any associated policy sets.
 
 ## Policy Sets
 
-You must create policy sets containing one or more policies and then you can assign those policy sets to workspaces.
+You group policies into policy sets. Then you can assign those policy sets to workspaces.
 
 To view and manage policy sets, go to the **Policy Sets** section of your organization’s settings. This page contains all of the policy sets available in the organization, including those added through the API and those connected to VCS repositories.
 
@@ -108,10 +108,10 @@ To add a policy set in the Terraform Cloud UI:
 1. Click **Connect a new policy set**.
 1. Choose your workflow.
    - For managed policies, click **create a policy set with individually managed policies**. Terraform Cloud shows a form to create a policy set and add individually managed policies.
-   - For version controlled policies, choose a version control provider and then select the repository with your policy set. Terraform Cloud shows a form to create a policy set connected to that repository.
+   - For version control policies, choose a version control provider and then select the repository with your policy set. Terraform Cloud shows a form to create a policy set connected to that repository.
    - For automated workflows, click **No VCS Connection**. Terraform Cloud shows a form to create an empty policy set. You can use the API to add policies to this empty policy set later.
 1. Configure the policy set settings:
-   - **Policy Integration:**  Choose the policy framework for the policies you want to add. You can only add policies written using the selected framework. You cannot change the framework type after creation.
+   - **Policy Integration:**  Choose the policy framework for the policies you want to add. You can only create a policy set from policies written using the same framework. You cannot change the framework type after creation.
    - **Name:** Add a name containing letters, numbers, `-`, and `_`. Terraform Cloud displays this name in the UI. The name must be unique to your organization.
    - **Description:** Describe the policy set’s purpose. The description supports Markdown rendering, and Terraform Cloud displays this text in the UI.
    - **Scope of policies:** Choose whether Terraform Cloud should automatically enforce the policy set on all workspaces, or only on a specific subset.
@@ -149,5 +149,3 @@ The policy set is removed from the UI and Terraform Cloud no longer applies it t
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
 
 You can only set parameters for existing policy sets that you added through the `tfe` provider, API, or a connected VCS repository. Parameters are not available for managed policy sets.
-
-
