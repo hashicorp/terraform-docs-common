@@ -23,7 +23,11 @@ Refer to [How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0
 
 ### OPA Query
 
-You must write a query that will be run against the supplied rego file. This query may evaluate across multiple files, or a single file. The result of these queries must return an array, which Terraform Cloud uses to determine whether the policy has passed or failed. If the array is empty, Terraform Cloud reports that the policy has passed.
+You must write a query to identify a specific policy rule within your Rego code. The query may evaluate code from multiple Rego files.
+
+The result of each query must return an array, which Terraform Cloud uses to determine whether the policy has passed or failed. If the array is empty, Terraform Cloud reports that the policy has passed.
+
+The query is typically a combination of the policy package name and rule name. For example, `terraform.deny`.
 
 ### OPA Input
 
