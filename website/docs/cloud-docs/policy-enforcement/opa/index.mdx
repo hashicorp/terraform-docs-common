@@ -9,15 +9,15 @@ tfc_only: true
 
 -> **Note:** Policies are available in the Terraform Cloud [Terraform Cloud  Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA Policies are not available in Terraform Enterprise.
 
-Policies are rules that Terraform Cloud enforces on runs within a workspace. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
+Policies are rules that Terraform Cloud enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
 
 ## Defining Policies
 
-You can write Rego policies to check for any number of conditions. Common use cases include checking whether infrastructure configuration adheres to security standards or your organization’s best practices. For example, you may want to write a policy to check whether Terraform plans to deploy production infrastructure to the correct region.
+You can write Rego policies to check for any number of conditions. Common use cases include checking whether infrastructure configuration adheres to security standards or best practices. For example, you may want to write a policy to check whether Terraform plans to deploy production infrastructure to the correct region.
 
-You can also use policies to enforce standards around your organization’s workflows. For example, you could write a policy to prevent new infrastructure deployments on Fridays, reducing the risk of production incidents outside of your team’s working hours.
+You can also use policies to enforce standards for your organization’s workflows. For example, you could write a policy to prevent new infrastructure deployments on Fridays, reducing the risk of production incidents outside of your team’s working hours.
 
 Refer to [How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0.13.5/how-do-i-write-policies/) in the Rego documentation for more details. We also recommend using the [Rego Policy Playground](https://play.openpolicyagent.org/) to iterate on new policies.
 

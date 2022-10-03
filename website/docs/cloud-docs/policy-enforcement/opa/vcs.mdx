@@ -12,9 +12,9 @@ To enable policy enforcement, you must group OPA policies into policy sets and a
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
 
-One way to create policy sets is by connecting Terraform Cloud to a version control repository containing Rego policies. When you push changes to policy files in the repository, Terraform Cloud automatically fetches the updated policy set. Refer to [Managing Policy Sets](/cloud-docs/policy-enforcement/manage-policy-sets) for more details.
+One way to create policy sets is by connecting Terraform Cloud to a version control repository. When you push changes to the repository, Terraform Cloud automatically uses the updated policy set. Refer to [Managing Policy Sets](/cloud-docs/policy-enforcement/manage-policy-sets) for more details.
 
-An OPA policy set repository contains [policy files](#policy-code-files) and an HashiCorp Configuration Language (HCL) [configuration file](#configuration-file) that defines the policy set.
+An OPA policy set repository contains a HashiCorp Configuration Language (HCL) configuration file and policy files.
 
 
 ## Configuration File
