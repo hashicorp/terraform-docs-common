@@ -123,7 +123,7 @@ resource "aws_instance" "hashiapp" {
 }
 ```
 
-[Vault](https://www.vaultproject.io/) lets you secure, store, and tightly control access to tokens, passwords, certificates, encryption keys, and other sensitive data. The following example postcondition fails when a Vault certificate has expired.
+[Vault](https://www.vaultproject.io/) lets you secure, store, and tightly control access to tokens, passwords, certificates, encryption keys, and other sensitive data. The following example postcondition fails when a Vault certificate expires.
 
 ```hcl
 resource "vault_pki_secret_backend_cert" "app" {
