@@ -6,7 +6,7 @@ CLONE_DIR=website-preview
 # Get the git branch of the commit that triggered the deploy preview
 # - https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables
 # This will power remote image assets in local and deploy previews
-CURRENT_GIT_BRANCH=$VERCEL_GIT_COMMIT_REF
+CURRENT_GIT_BRANCH=$(git branch --show-current)
 
 # This is where content files live, relative to the website-preview dir
 # - override the default of "../content"
@@ -14,29 +14,32 @@ LOCAL_CONTENT_DIR=../docs
 
 echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
 
-from_cache=false
+should_pull=true
 
-if [ -d "$PREVIEW_DIR" ]; then
-    echo "$PREVIEW_DIR found"
-    CLONE_DIR="$PREVIEW_DIR-tmp"
-    from_cache=true
+# Clone the dev-portal project, if needed
+if [ ! -d "$PREVIEW_DIR" ]; then
+    echo "⏳ Cloning the $REPO_TO_CLONE repo, this might take a while..."
+    git clone --depth=1 https://github.com/hashicorp/$REPO_TO_CLONE.git "$PREVIEW_DIR"
+    should_pull=false
 fi
 
-# Clone the terraform-website project, if needed
-echo "⏳ Cloning the terraform-website repo, this might take a while..."
-git clone --depth=1 https://github.com/hashicorp/$REPO_TO_CLONE.git "$CLONE_DIR"
-
-if [ "$from_cache" = true ]; then
-    echo "Setting up $PREVIEW_DIR"
-    cp -R "./$CLONE_DIR/." "./$PREVIEW_DIR"
-fi
+# # use local dev-portal repo
+# if [ ! -d "$PREVIEW_DIR" ]; then
+#     echo "⏳ Copying the $REPO_TO_CLONE repo, this might take a while..."
+#     cp -R "/Users/kevin/repos/dev-portal" "./$PREVIEW_DIR"
+# fi
 
 # cd into the preview directory project
 cd "$PREVIEW_DIR"
 
-# Run the terraform-website content-repo start script
+# If the directory already existed, pull to ensure the clone is fresh
+if [ "$should_pull" = true ]; then
+    git pull origin main
+fi
+
+# # Run the dev-portal content-repo start script
 PREVIEW_FROM_REPO=terraform-docs-common \
 IS_CONTENT_PREVIEW=true \
 LOCAL_CONTENT_DIR=$LOCAL_CONTENT_DIR \
 CURRENT_GIT_BRANCH=$CURRENT_GIT_BRANCH \
-npm run build:deploy-preview
+npm run start:local-preview

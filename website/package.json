@@ -2,6 +2,7 @@
   "name": "terraform-plugin-docs-preview",
   "private": "true",
   "scripts": {
+    "start": "./scripts/website-start.sh",
     "build": "./scripts/website-build.sh"
   },
   "devDependencies": {
