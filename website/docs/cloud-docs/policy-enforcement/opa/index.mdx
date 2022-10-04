@@ -64,7 +64,7 @@ Use the [Retrieve JSON Execution Plan endpoint](/cloud-docs/api-docs/plans#retri
 
 ### Example Policies
 
-The following example policy parses Terraform plan and checks whether it includes security group updates to allow public ingress traffic from all CIDRs (`0.0.0.0/0`).
+The following example policy parses a Terraform plan and checks whether it includes security group updates that allow ingress traffic from all CIDRs (`0.0.0.0/0`).
 
 The OPA query for this example policy is `data.terraform.policies.public_ingress.deny`.
 
