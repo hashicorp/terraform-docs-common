@@ -31,7 +31,7 @@ Organization administrators must determine how no-code workspaces access credent
 
 When module consumers follow the no-code workflow, Terraform Cloud automatically creates a new workspace for the resources and attempts to provision them. New workspaces must be able to access credentials for all providers defined within the module. 
 
-To grant new no-code workspace provider credentials, you can: 
+You can grant new no-code workspace provider credentials using one of the following methods:
 
 * Create a [global variable set](https://learn.hashicorp.com/tutorials/terraform/cloud-create-variable-set?in=terraform/cloud-get-started). This action automatically grants newly-created workspaces access to the required provider credentials. 
 * Expose provider credentials as sensitive outputs in another workspace. You must add additional configuration to the module to access these values through [remote state data sources](/language/state/remote-state-data) and then reference them in provider configuration. This approach allows for more scoped access than a global variable set. 
