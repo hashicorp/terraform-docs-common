@@ -42,9 +42,11 @@ page_title: Policy Sets - API Docs - Terraform Cloud
 
 Policy sets let you group related policies by attributes like environment or region. You can then apply each policy set to one or more workspaces. For these workspaces, Terraform Cloud checks every Terraform plan against each policy in the set.
 
-You can create new policies with the [Policies API](/cloud-docs/api-docs/policies) and then manually add them to a policy set. You can also create a versioned policy set that you add to Terraform Cloud with the [Policy Set Versions API](#create-a-policy-set-version) or that Terraform Cloud retrieves from a version control system.
+This API provides endpoints to create, read, update, and delete policy sets in a Terraform Cloud organization. To view and manage individual policies, use the [Policies API](/cloud-docs/api-docs/policies). 
 
-This page documents the API endpoints to create, read, update, and delete policy sets in an organization. To view and manage policies, use the [Policies API](/cloud-docs/api-docs/policies).
+Many of these endpoints let you create policy sets from a designated repository in a Version Control System (VCS). For more information about how to configure a policy set VCS repository, refer to [Sentinel Policy Set VCS Repositories](/cloud-docs/policy-enforcement/sentinel/vcs) and [OPA Policy Set VCS Repositories](/cloud-docs/policy-enforcement/opa/vcs). 
+
+Instead of connecting Terraform Cloud to a VCS repository, you can use the the [Policy Set Versions endpoint](#create-a-policy-set-version) to create an entire policy set from a `tar.gz` file. 
 
 Interacting with policy sets requires permission to manage policies. ([More about permissions](/cloud-docs/users-teams-organizations/permissions).)
 
