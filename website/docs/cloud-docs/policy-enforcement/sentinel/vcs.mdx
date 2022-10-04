@@ -46,7 +46,7 @@ Define each Sentinel policy in a separate file within your repository. All local
 
 ### Policy Source
 
-A policy's `source` field can either reference a file within the policy repository, it can reference a remote source. For example, the configuration could reference a policy from HashiCorp's [foundational policies library](https://github.com/hashicorp/terraform-foundational-policies-library). Sentinel only supports HTTP and HTTPS remote sources.
+A policy's `source` field can either reference a file within the policy repository, or it can reference a remote source. For example, the configuration could reference a policy from HashiCorp's [foundational policies library](https://github.com/hashicorp/terraform-foundational-policies-library). Sentinel only supports HTTP and HTTPS remote sources.
 
 To specify a local source, prefix the `source` with a `./`, or `../`. The following example shows how to reference a local source policy called `terraform-maintenance-windows.sentinel`.
 
