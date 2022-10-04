@@ -115,7 +115,7 @@ Deletion is permanent, but there are ways to restore deleted modules and module 
 
 ## Sharing Modules Across Organizations
 
-Terraform Cloud does not typically allow one organization's workspaces to use private modules from a different organization. This inhibition is because Terraform Cloud gives Terraform temporary credentials to access modules that are only valid for that workspace's organization. Although it is possible to mix modules from multiple organizations when you run Terraform on the command line, we strongly recommend against it.
+Terraform Cloud does not typically allow one organization's workspaces to use private modules from a different organization. This restriction is because Terraform Cloud gives Terraform temporary credentials to access modules that are only valid for that workspace's organization. Although it is possible to mix modules from multiple organizations when you run Terraform on the command line, we strongly recommend against it.
 
 Instead, you can share modules across organizations by sharing the underlying VCS repository. Grant each organization access to the module's repository, and then add the module to each organization's registry. When you push tags to publish new module versions, both organizations update accordingly.
 
