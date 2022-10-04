@@ -115,7 +115,7 @@ Terraform Cloud supports [Sentinel modules](https://docs.hashicorp.com/sentinel/
 
 You can store modules locally or retrieve them from a remote HTTP or HTTPS source.
 
--> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](https://docs.hashicorp.com/sentinel/extending/modules) to learn to use modules within Sentinel. However, the configuration examples in the runtime documentation are relevant to the Sentinel CLI and not Terraform Cloud.
+-> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](https://docs.hashicorp.com/sentinel/extending/modules) to learn how to use modules within Sentinel. However, the configuration examples in the runtime documentation are relevant to the Sentinel CLI and not Terraform Cloud.
 
 The following example module loads the code at `./modules/timezone.sentinel` relative to the policy set working directory. Other modules can access this code with the statement `import "timezone"`.
 
