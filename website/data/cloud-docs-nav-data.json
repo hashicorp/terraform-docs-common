@@ -319,7 +319,7 @@
     "title": "No-Code Provisioning",
     "routes": [
       { 
-        "title": "Preparing No-Code Ready Modules",
+        "title": "Designing No-Code Ready Modules",
         "path": "no-code-provisioning/module-design" 
       },
       { 
