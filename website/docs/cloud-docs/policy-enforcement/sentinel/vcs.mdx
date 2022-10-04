@@ -80,7 +80,7 @@ The following example policy uses the `time` and `tfrun` imports and a custom `t
 
 1. Load the time when the Terraform run occurred
 1. Convert the loaded time with the correct offset using the [Timezone API](https://timezoneapi.io/)
-1. Verify that the provisioning operation occures only on a specific day
+1. Verify that the provisioning operation occurs only on a specific day
 
 The example policy also uses a [rule expression](https://docs.hashicorp.com/sentinel/language/spec#rule-expressions) with the `when` predicate. If the value of `tfrun.workspace.auto_apply` is false, the rule is not evaluated and returns true.
 
