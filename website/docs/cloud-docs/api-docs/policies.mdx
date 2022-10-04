@@ -42,7 +42,7 @@ Policies are rules that Terraform Cloud enforces on Terraform runs. You can use 
 
 You group policies into [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
 
-This page documents the API endpoints to create, read, update, and delete individual policies in an organization. To manage policy sets, use the [Policy Sets API](/cloud-docs/api-docs/policy-sets). To manage the policy check results, use the [Runs API](/cloud-docs/api-docs/run).
+This page documents the API endpoints to create, read, update, and delete policies in an organization. To manage policy sets, use the [Policy Sets API](/cloud-docs/api-docs/policy-sets). To manage the policy results, use the [Runs API](/cloud-docs/api-docs/run).
 
 -> **Note**: We no longer recommend using these endpoints to manage Sentinel policies in Terraform Cloud. For Sentinel, we recommend creating policy sets with the [Policy Sets API](/cloud-docs/api-docs/policy-sets). This approach lets you integrate with version control systems and upload policy set data and configuration together.
 
