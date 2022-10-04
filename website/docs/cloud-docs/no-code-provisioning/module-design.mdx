@@ -7,15 +7,13 @@ description: No-code ready modules let users deploy a module's resources without
 
 -> **Note:** No-code ready modules are in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
 
-No-code provisioning builds on the advantages of using Terraform modules, which let you define collections of infrastructure resources that satisfy your organizational standards and help downstream users deploy those resources easily. No-code ready modules further simplify this workflow by letting users deploy the module's resources without writing any Terraform configuration. 
+Terraform [modules](/language/modules) let you define standardized collections of infrastructure resources that downstream users can more easily deploy. No-code ready modules build on these advantages by letting users deploy a module's resources without writing any Terraform configuration. This practice is called no-code provisioning. 
 
-No-code provisioning allows module developers to abstract away the complexities of their organization's infrastructure, enabling a safe self-service workflow. This workflow lets developers provision approved collections of resources themselves without needing to invest time in learning Terraform or infrastructure best practices.
-
-You can enable no-code provisioning on any module once it is in your Terraform Cloud [private registry](/cloud-docs/registry) or enable the workflow on private modules as you publish them to your registry. Module users can then [provision no-code infrastructure](/cloud-docs/no-code-provisioning/provisioning), set the module's input variables, and deploy its resources.
+No-code provisioning enables a self-service workflow that lets users provision approved collections of resources without learning Terraform or infrastructure best practices. You can enable no-code provisioning for any public or private module in your [private registry](/cloud-docs/registry). Users can then [provision no-code infrastructure](/cloud-docs/no-code-provisioning/provisioning), set the module's input variables, and deploy its resources.
 
 -> **Hands On:** Try the [Create and Use No-Code Ready Modules tutorial](https://learn.hashicorp.com/tutorials/terraform/no-code-provisioning).
 
-You should follow the same best practices for developing a no-code ready module as for a standard module. However, there are a few additional considerations and requirements for enabling no-code provisioning.
+The same best practices apply to both standard and no-code ready module design. However, no-code modules have additional requirements and considerations. 
 
 ## Requirements
 
