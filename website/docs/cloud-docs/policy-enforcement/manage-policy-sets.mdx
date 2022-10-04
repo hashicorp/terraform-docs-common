@@ -60,7 +60,7 @@ To add an individually managed policy:
    - **Policy Name:** Add a name containing letters, numbers, `-`, and `_`. Terraform Cloud displays this name in the UI. The name must be unique within your organization.
    - **Description:** Describe the policy’s purpose. The description supports Markdown rendering, and Terraform Cloud displays this text in the UI.
    - **Enforcement mode:** Choose whether this policy can stop Terraform runs and whether users can override it. Refer to [policy enforcement levels](#policy-enforcement-levels) for more details.
-   - **(OPA Only) OPA Query:** Write a query to identify a specific policy rule within your rego code. Terraform Cloud uses this query to determine the result of the policy. The query is typically a combination of the policy package name and rule name. For example,  `terraform.deny`. The result of this query must be an array. The policy passes when the array is empty.
+   - **(OPA Only) Query:** Write a query to identify a specific policy rule within your rego code. Terraform Cloud uses this query to determine the result of the policy. The query is typically a combination of the policy package name and rule name. For example,  `terraform.deny`. The result of this query must be an array. The policy passes when the array is empty.
    - **Policy code**: Paste the code for the policy: either Sentinel code or Rego code for OPA policies. The UI provides syntax highlighting for the policy language.
    - **(Optional) Policy sets:** Select one or more existing managed policy sets where you want to add the new policy. You can only select policy sets compatible with the chosen policy set framework. If there are no policy sets available, you can [create a new one](#create-policy-sets).
 
