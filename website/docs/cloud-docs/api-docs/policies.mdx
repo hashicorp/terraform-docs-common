@@ -40,7 +40,7 @@ page_title: Policies - API Docs - Terraform Cloud
 
 [Policy Enforcement](/cloud-docs/policy-enforcement) lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces.
 
-You configure policy enforcement on an organization level by adding policies, organizing policies into larger [policy sets](/cloud-docs/policy-enforcement/manage-policies#policies-and-policy-sets), and applying those policy sets to one or more workspaces. Within the specified workspaces, Terraform Cloud checks each Terraform plan against the the policy set and displays the results in the UI.
+You group policies into [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
 
 This page documents the API endpoints to create, read, update, and delete individual policies in an organization. To manage policy sets, use the [Policy Sets API](/cloud-docs/api-docs/policy-sets). To manage the policy check results, use the [Runs API](/cloud-docs/api-docs/run).
 
