@@ -18,8 +18,8 @@ The same best practices apply to both standard and no-code ready module design. 
 ## Requirements
 
 A no-code ready module must meet the following requirements:
-* Root Module Structure: The module must follow [standard module structure](/language/modules/develop/structure) and define its resources in the root directory of the repository. This structure allows the registry to inspect the module and generate documentation, track resource usage, and parse submodules and examples.
-* Provider Configuration: A no-code ready module must declare the required provider(s) directly in the module. This configuration differs from the recommendations for [modules used in written configuration](/language/modules/develop/providers#legacy-shared-modules-with-provider-configurations).
+- **Root Module Structure:** The module must follow [standard module structure](/language/modules/develop/structure) and define its resources in the root directory of the repository. This structure allows the public and private registries to generate documentation, track resource usage, and parse submodules and examples.
+- **Provider Configuration:** A no-code ready module must declare the required provider(s) directly in the module. This configuration differs from the recommendations for [modules used in written configuration](/language/modules/develop/providers#legacy-shared-modules-with-provider-configurations).
 
 In addition to these module configuration requirements, the auto-apply no-code provisioning workflow requires automatic access to provider credentials. A new no-code workspace must be able to access credentials, either through a [global variable set](/cloud-docs/workspaces/variables/managing-variables#variable-sets) or through [remote state data sources](/language/state/remote-state-data) that pull provider credentials from another workspace.  
 
