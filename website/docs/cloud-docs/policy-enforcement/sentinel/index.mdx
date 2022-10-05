@@ -20,7 +20,7 @@ A policy can include imports that enable a policy to access reusable libraries, 
 
 Terraform Cloud provides four imports to define policy rules for the plan, configuration, state, and run associated with a policy check.
 
-- [tfplan](/cloud-docs/policy-enforcement/sentinel/import/tfplan) - Access a Terraform plan, which is the file created as a result of the [`terraform plan` command](/cli/commands/plan).	The plan represents the changes that Terraform must make to reach the desired infrastructure state described in the configuration.
+- [tfplan](/cloud-docs/policy-enforcement/sentinel/import/tfplan) - Access a Terraform plan, which is the file created as a result of the [`terraform plan` command](/cli/commands/plan). The plan represents the changes that Terraform must make to reach the desired infrastructure state described in the configuration.
 - [tfconfig](/cloud-docs/policy-enforcement/sentinel/import/tfconfig) - Access a Terraform configuration. The configuration is the set of `.tf` files that describe the desired infrastructure state.
 - [tfstate](/cloud-docs/policy-enforcement/sentinel/import/tfstate) - Access the Terraform [state](/language/state). Terraform uses state to map real-world resources to your configuration.
 - [tfrun](/cloud-docs/policy-enforcement/sentinel/import/tfrun) - Access data associated with a [run in Terraform Cloud](/cloud-docs/run/remote-operations). For example, you could retrieve the run's workspace.
