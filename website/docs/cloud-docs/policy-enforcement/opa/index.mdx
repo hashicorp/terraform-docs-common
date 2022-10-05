@@ -311,7 +311,7 @@ The following table contains the attributes for the `run` namespace.
 |  `message` |  String | The message associated with the Terraform run. The default value is "Queued manually via the Terraform Enterprise API". |
 |  `commit_sha` |  String |  The checksum hash (SHA) that identifies the commit |
 |  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
-|  `refresh` | Boolean |  Whether the state was refreshed prior to the plan |
+|  `refresh` | Boolean |  Whether the state refreshed prior to the plan |
 |   `refresh_only` |  Boolean | Whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
 |  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if no resource targets are specified. |
 |  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only |
