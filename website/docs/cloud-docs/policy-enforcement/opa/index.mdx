@@ -27,7 +27,7 @@ You must write a query to identify a specific policy rule within your Rego code.
 
 The result of each query must return an array, which Terraform Cloud uses to determine whether the policy has passed or failed. If the array is empty, Terraform Cloud reports that the policy has passed.
 
-The query is typically a combination of the policy package name and rule name. For example, `data.terraform.deny`.
+The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`. 
 
 ### OPA Input
 
