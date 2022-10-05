@@ -2,6 +2,8 @@
 REPO_TO_CLONE=dev-portal
 # Set the subdirectory name for the terraform-website app
 PREVIEW_DIR=website-preview
+# Only Developer is supported for Terraform
+PREVIEW_MODE=developer
 CLONE_DIR=website-preview
 # Get the git branch of the commit that triggered the deploy preview
 # - https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables
@@ -39,6 +41,7 @@ cd "$PREVIEW_DIR"
 # Run the terraform-website content-repo start script
 PREVIEW_FROM_REPO=terraform-docs-common \
 IS_CONTENT_PREVIEW=true \
+PREVIEW_MODE=$PREVIEW_MODE \
 REPO=$PRODUCT \
 LOCAL_CONTENT_DIR=$LOCAL_CONTENT_DIR \
 CURRENT_GIT_BRANCH=$CURRENT_GIT_BRANCH \
