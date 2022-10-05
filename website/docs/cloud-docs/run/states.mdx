@@ -160,7 +160,7 @@ _Leaving this stage:_
 
 ## The Pre-Apply Stage
 
-The pre-apply phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
+The pre-apply phase only occurs if the workspace has [run tasks](/cloud-docs/workspaces/settings/run-tasks) configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
 -> **Note:** Pre-apply run tasks are in beta.
 
