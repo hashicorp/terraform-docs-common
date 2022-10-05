@@ -17,11 +17,11 @@ The no-code provisioning workflow is best for quickly deploying relatively stati
 
 To use no-code provisioning, you need permissions to [manage workspaces](/cloud-docs/users-teams-organizations/permissions#manage-workspaces).
 
-## Provider credentials
+## Provider Credentials
 
 Terraform automatically starts a new run to provision no-code infrastructure upon workspace creation. No-code modules contain provider blocks in their configuration, but still require provider credentials for successful deployment. Organization administrators determine [how new workspaces access provider credentials](/cloud-docs/no-code-provisioning/module-design#provider-credentials), which may require specific module design.
 
-## Creating a workspace and deploying resources
+## Creating a Workspace and Deploying Resources
 
 The no-code provisioning workflow creates a new Terraform Cloud workspace to deploy and manage the no-code ready module's resources. Terraform Cloud automatically starts a run to provision the module's resources in the new workspace. Depending on the workspace's settings, Terraform either automatically applies the plan or prompts you for approval to provision the infrastructure.
 
@@ -47,7 +47,7 @@ To launch the no-code workflow:
 
 1. Click **Create workspace**. Terraform Cloud creates a new workspace and starts a run. Depending on the apply method, it automatically applies your infrastructure or prompts you for approval to create the no-code module's resources.
 
-## Operations in existing workspaces
+## Operations in No-Code Workspaces
 
 No-code workspaces have a limited feature set because you cannot access the resource configuration. However, you can edit workspace variables and settings, including notifications, permissions, and run triggers to connect the workspace to one or more source workspaces. They can also trigger new runs to pick up changes to variables, or queue destroy runs.
 
