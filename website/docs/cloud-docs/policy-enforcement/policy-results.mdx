@@ -37,7 +37,7 @@ Sentinel and OPA have different policy enforcement levels that determine when yo
 To override failed policies, go to the run details page and click **Override and Continue** at the bottom.
 
 For Sentinel only, you can also override `soft-mandatory` policies with the Terraform CLI. Run the `terraform apply` command and then enter `override` when prompted.
-
+-> **Note:** Terraform Cloud does not allow policy overrides for [no-operation plans containing no infrastructure changes](/cloud-docs/run/modes-and-options#allow-empty-apply), unless you choose the **Allow empty apply** option when starting the run. 
 ### Sentinel
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
