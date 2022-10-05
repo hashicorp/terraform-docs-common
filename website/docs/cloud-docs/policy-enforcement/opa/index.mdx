@@ -313,9 +313,9 @@ The following table contains the attributes for the `run` namespace.
 |  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
 |  `refresh` | Boolean |  Whether the state refreshed prior to the plan |
 |   `refresh_only` |  Boolean | Whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
-|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if no resource targets are specified. |
+|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
 |  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only |
-|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if no resource targets are specified. |
+|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
 |   `variables` |  A string-keyed map of values. | Provides the variables configured within the run and the [sensitivity](/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of each variable value. Each variable name maps to a `category` string denoting whether it is an input variable or an environment variable and a `sensitive` boolean.   |
 
 #### Organization Namespace
