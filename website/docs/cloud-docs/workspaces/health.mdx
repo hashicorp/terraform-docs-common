@@ -142,7 +142,7 @@ resource "vault_pki_secret_backend_cert" "app" {
 
 ### View Continuous Validation Checks
 
-To view the continuous validation results from the latest health assessment, go to the workspace and click **Health > Continuous Validation**.
+To view the continuous validation results from the latest health assessment, go to the workspace and click **Health > Continuous validation**.
 The page shows all of the resources, outputs, and data sources with custom conditions that Terraform Cloud checked. Next to each object, Terraform Cloud reports whether the checks passed or failed. If one or more checks failed, Terraform Cloud displays the error messages for those conditions.
 
 A single resource, output, or data source may have multiple preconditions or postconditions. Terraform Cloud does not show the results from individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed.
