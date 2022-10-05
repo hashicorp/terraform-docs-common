@@ -12,7 +12,7 @@ When you add [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) to
 ## Policy Evaluation Run Stages
 
 Terraform Cloud only evaluates policies for successful plans. Terraform Cloud evaluates Sentinel and OPA policy sets separately and at different points in the run.
-- Sentinel policy evaluations occur after Terraform completes the plan and after both [run tasks](/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](/cloud-dodcs/cost-estimation). This lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
+- Sentinel policy evaluations occur after Terraform completes the plan and after both [run tasks](/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](/cloud-dodcs/cost-estimation). This order lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
 - OPA policy evaluations occur after Terraform completes the plan and after any run tasks. Unlike Sentinel policies, Terraform Cloud evaluates OPA policies immediately before cost estimation.
 
 Refer to [Run States and Stages](/cloud-docs/run/states) for more details.
