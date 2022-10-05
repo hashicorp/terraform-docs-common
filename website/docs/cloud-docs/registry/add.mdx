@@ -49,16 +49,16 @@ To add a public provider or module:
 
 -> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
 
-You can enable no-code provisioning for public modules after adding them to your registry. The no-code provisioning workflow requires automatic access to provider credentials for downstream users to successfully deploy the module's resources.
+You can enable no-code provisioning for public modules after adding them to your registry.
 
-To enable no-code provisioning: 
-1. Verify that the module meets the [requirements for no-code provisioning](/cloud-docs/no-code-provisioning/module-design#requirements). 
+To support the auto-apply workflow, ensure that downstream users can automatically load provider credentials into their new no-code workspaces. You can enable access by either creating a global variable set with the credentials for the module's provider, or by accessing outputs with credentials across workspaces. Refer to [Provider Credentials](/cloud-docs/no-code-provisioning/module-design#provider-credentials) for more details.
+
+To enable no-code provisioning:
+1. Verify that the module meets the [requirements for no-code provisioning](/cloud-docs/no-code-provisioning/module-design#requirements).
 1. Click the module to view its details.
 1. Select **Enable no-code provisioning** from the **Manage Module for Organization** dropdown.
 
-Your module’s details page now has a **No-Code Ready** badge to indicate that it supports no-code provisioning. 
-
-To support the auto-apply workflow, ensure that downstream users can automatically load provider credentials into their new no-code workspaces. You can enable access by either creating a global variable set with the credentials for the module's provider, or by accessing outputs with credentials across workspaces. Refer to [Provider Credentials](/cloud-docs/no-code-provisioning/module-design#provider-credentials) for more details.
+Your module’s details page now has a **No-Code Ready** badge to indicate that it supports no-code provisioning.
 
 To disable no-code provisioning, select **Disable no-code provisioning** from the **Manage Module for Organization** dropdown. Disabling also removes the **No-Code Ready** badge from the module’s details page.
 
