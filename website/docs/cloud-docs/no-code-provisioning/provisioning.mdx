@@ -5,7 +5,7 @@ description: How to provision infrastructure from a no-code ready module.
 
 # Provisioning No-Code Infrastructure
 
--> **Note:** No-code ready modules are in beta and available in the [Terraform Cloud Business Tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business Tier](https://www.hashicorp.com/products/terraform/pricing).
 
 No-code provisioning lets users deploy infrastructure resources in a new Terraform Cloud workspace without writing any Terraform configuration. This enables a self-service workflow while abstracting away the complexities of infrastructure management. No-code workspaces have slightly scoped functionality, but you can still edit the workspace's variables and settings, start new runs, and destroy infrastructure.
 
@@ -35,9 +35,10 @@ To launch the no-code workflow:
 
 1. Select the no-code ready module to view its details, then click **Provision workspace**. The **Configure module inputs** page appears. 
 
-Terraform Cloud scans the module configuration for input variables and prompts for values for any variables without defaults or undefined in an existing global variable set. Terraform requires values for these variables to successfully complete runs in the workspace. Terraform Cloud performs type validation for the variable values if the module configuration specifies a type. 
+     Terraform Cloud scans the module configuration for input variables and prompts for values for any variables without defaults or undefined in an existing global variable set. Terraform requires values for these variables to successfully complete runs in the workspace. Terraform Cloud performs type validation for the variable values if the module configuration specifies a type. 
 
 1. Set values for the input variables. You can choose to skip this step and configure the variables later. However, Terraform Cloud does not prompt you for these values again and your Terraform runs may fail. 
+
 1. Cick **Next: Workspace settings**.
     
 1. Enter a **Workspace Name**. The name must be unique within the organization and can include letters, numbers, dashes (-), and underscores (_). Refer to the [workspace naming recommendations](/cloud-docs/workspaces/naming) for more guidance.
