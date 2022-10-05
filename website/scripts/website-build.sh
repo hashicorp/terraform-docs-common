@@ -12,6 +12,8 @@ CURRENT_GIT_BRANCH=$VERCEL_GIT_COMMIT_REF
 # - override the default of "../content"
 LOCAL_CONTENT_DIR=../docs
 
+PRODUCT=terraform
+
 echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
 
 from_cache=false
@@ -37,6 +39,7 @@ cd "$PREVIEW_DIR"
 # Run the terraform-website content-repo start script
 PREVIEW_FROM_REPO=terraform-docs-common \
 IS_CONTENT_PREVIEW=true \
+REPO=$PRODUCT \
 LOCAL_CONTENT_DIR=$LOCAL_CONTENT_DIR \
 CURRENT_GIT_BRANCH=$CURRENT_GIT_BRANCH \
 npm run build:deploy-preview
