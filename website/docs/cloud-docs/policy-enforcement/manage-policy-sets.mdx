@@ -141,7 +141,7 @@ The policy set no longer appears on the UI and Terraform Cloud no longer applies
 
 ### (Sentinel Only) Sentinel Parameters
 
-[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value can be parsed as JSON, Terraform Cloud sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, Terraform Cloud sends it as a string.
+[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value parses as JSON, Terraform Cloud sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, Terraform Cloud sends it as a string.
 
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
 
