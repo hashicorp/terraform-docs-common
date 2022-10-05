@@ -316,7 +316,7 @@ The following table contains the attributes for the `run` namespace.
 |  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
 |  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only |
 |  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
-|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run and the [sensitivity](/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of each variable value. Each variable name maps to a `category` string denoting whether it is an input variable or an environment variable and a `sensitive` boolean.   |
+|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
 
 #### Organization Namespace
 
