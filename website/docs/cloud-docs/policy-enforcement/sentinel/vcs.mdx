@@ -64,10 +64,6 @@ policy "deny-public-ssh-nsg-rules" {
   source = "https://registry.terraform.io/v2/policies/hashicorp/azure-networking-terraform/1.0.2/policy/deny-public-ssh-nsg-rules.sentinel?checksum=sha256:75c95bf1d6eb48153cb31f15c49c237bf7829549beebe20effa07bcdd3f3cb74"
   enforcement_level = "advisory"
 }
-policy "aws-cis-4.1-networking-deny-public-ssh-acl-rules" {
- source            = "https://raw.githubusercontent.com/hashicorp/terraform-foundational-policies-library/master/cis/aws/networking/aws-cis-4.1-networking-deny-public-ssh-acl-rules/aws-cis-4.1-networking-deny-public-ssh-acl-rules.sentinel"
- enforcement_level = "advisory"
-}
 ```
 
 For GitHub, you must use the URL of the raw policy content. Other URL types cause Terraform Cloud to error when checking the policy. For example, do not use `https://github.com/hashicorp/policy-library-azure-networking-terraform/blob/main/policies/deny-public-ssh-nsg-rules/deny-public-ssh-nsg-rules.sentinel`.
