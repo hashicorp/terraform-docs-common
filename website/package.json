@@ -6,7 +6,7 @@
     "build": "./scripts/website-build.sh"
   },
   "devDependencies": {
-    "next": "^12.1.0"
+    "next": "^12.3.0"
   },
   "engines": {
     "node": ">=16.0.0",
