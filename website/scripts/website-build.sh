@@ -14,7 +14,7 @@ CURRENT_GIT_BRANCH=$VERCEL_GIT_COMMIT_REF
 # - override the default of "../content"
 LOCAL_CONTENT_DIR=../docs
 
-PRODUCT=terraform
+PRODUCT=terraform-docs-common
 
 echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
 
