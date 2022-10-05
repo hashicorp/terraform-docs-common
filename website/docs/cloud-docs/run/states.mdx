@@ -52,7 +52,7 @@ _Leaving this stage:_
 
 - If any mandatory tasks failed, the run skips to completion (**Plan Errored** state).
 - If any advisory tasks failed, the run proceeds to the **Planning** state, with a visible warning regarding the failed task.
-- If a combination of mandatory and advisory tasks are configured for a single run, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
+- If a single run has a combination of mandatory and advisory tasks, Terraform takes the most restrictive action. For example, the run fails if there are two advisory tasks that succeed and one mandatory task that fails.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
 ## The Plan Stage
