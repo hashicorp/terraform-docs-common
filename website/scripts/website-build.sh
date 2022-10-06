@@ -1,6 +1,6 @@
 # Repo which we are cloning and executing npm run build:deploy-preview within
 REPO_TO_CLONE=dev-portal
-# Set the subdirectory name for the terraform-website app
+# Set the subdirectory name for the base project
 PREVIEW_DIR=website-preview
 # The directory we want to clone the project into
 CLONE_DIR=website-preview
@@ -22,7 +22,7 @@ LOCAL_CONTENT_DIR=../docs
 from_cache=false
 
 if [ -d "$PREVIEW_DIR" ]; then
-echo "$PREVIEW_DIR found"
+  echo "$PREVIEW_DIR found"
   CLONE_DIR="$PREVIEW_DIR-tmp"
   from_cache=true
 fi
@@ -39,8 +39,8 @@ fi
 # cd into the preview directory project
 cd "$PREVIEW_DIR"
 
-# Run the terraform-website content-repo start script
-PREVIEW_FROM_REPO=terraform-docs-common 
+# Run the build:deploy-preview start script
+PREVIEW_FROM_REPO=terraform-docs-common \
 IS_CONTENT_PREVIEW=true \
 PREVIEW_MODE=$PREVIEW_MODE \
 REPO=$PRODUCT \
