@@ -2,44 +2,45 @@
 REPO_TO_CLONE=dev-portal
 # Set the subdirectory name for the terraform-website app
 PREVIEW_DIR=website-preview
-# Only Developer is supported for Terraform
-PREVIEW_MODE=developer
+# The directory we want to clone the project into
 CLONE_DIR=website-preview
+# The product for which we are building the deploy preview
+PRODUCT=terraform-docs-common
+# Preview mode, controls the UI rendered (either the product site or developer). Can be `io` or `developer`
+PREVIEW_MODE=developer
+
 # Get the git branch of the commit that triggered the deploy preview
 # - https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables
 # This will power remote image assets in local and deploy previews
 CURRENT_GIT_BRANCH=$VERCEL_GIT_COMMIT_REF
+echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
 
 # This is where content files live, relative to the website-preview dir
 # - override the default of "../content"
 LOCAL_CONTENT_DIR=../docs
 
-PRODUCT=terraform-docs-common
-
-echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
-
 from_cache=false
 
 if [ -d "$PREVIEW_DIR" ]; then
-    echo "$PREVIEW_DIR found"
-    CLONE_DIR="$PREVIEW_DIR-tmp"
-    from_cache=true
+echo "$PREVIEW_DIR found"
+  CLONE_DIR="$PREVIEW_DIR-tmp"
+  from_cache=true
 fi
 
-# Clone the terraform-website project, if needed
-echo "⏳ Cloning the terraform-website repo, this might take a while..."
-git clone --depth=1 https://github.com/hashicorp/$REPO_TO_CLONE.git "$CLONE_DIR"
+# Clone the base project, if needed
+echo "⏳ Cloning the $REPO_TO_CLONE repo, this might take a while..."
+git clone --depth=1 "https://github.com/hashicorp/$REPO_TO_CLONE.git" "$CLONE_DIR"
 
 if [ "$from_cache" = true ]; then
-    echo "Setting up $PREVIEW_DIR"
-    cp -R "./$CLONE_DIR/." "./$PREVIEW_DIR"
+  echo "Setting up $PREVIEW_DIR"
+  cp -R "./$CLONE_DIR/." "./$PREVIEW_DIR"
 fi
 
 # cd into the preview directory project
 cd "$PREVIEW_DIR"
 
 # Run the terraform-website content-repo start script
-PREVIEW_FROM_REPO=terraform-docs-common \
+PREVIEW_FROM_REPO=terraform-docs-common 
 IS_CONTENT_PREVIEW=true \
 PREVIEW_MODE=$PREVIEW_MODE \
 REPO=$PRODUCT \
