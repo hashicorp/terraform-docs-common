@@ -120,12 +120,15 @@ Refer to the [variables overview](/cloud-docs/workspaces/variables) documentatio
 <!-- BEGIN: TFC:only name:health-assessments -->
 #### Health
 
--> **Note:** Health Assessments are available in the [Terraform Cloud **Business** tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing), and continuous validation is in beta.
 
-Health assessment describes the regular, automatic inspection of a workspace to surface resource lifecycle concerns. Drift detection is a type of health assessment.
+Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
+- Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file. Drift detection requires Terraform version 0.15.4+.
+- Continuous validation determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure. Continuous validation requires Terraform version 1.3.0+.
 
-You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Enforcing health assessments overrides workspace settings but does not change them. Refer to [Health Assessments](/cloud-docs/workspaces/settings/health-assessments) in the workspaces documentation for more details.
+You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/cloud-docs/workspaces/health) in the workspaces documentation for more details.
 <!-- END: TFC:only name:health-assessments -->
+
 
 ### Integrations
 
