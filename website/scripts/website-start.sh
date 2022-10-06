@@ -1,18 +1,13 @@
 # Repo which we are cloning and executing npm run build:deploy-preview within
 REPO_TO_CLONE=dev-portal
-# Set the subdirectory name for the terraform-website app
+# Set the subdirectory name for the dev-portal app
 PREVIEW_DIR=website-preview
-# The directory we want to clone the project into
-CLONE_DIR=website-preview
 # The product for which we are building the deploy preview
 PRODUCT=terraform-docs-common
 # Preview mode, controls the UI rendered (either the product site or developer). Can be `io` or `developer`
 PREVIEW_MODE=developer
-
-# Get the git branch of the commit that triggered the deploy preview
-# - https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables
 # This will power remote image assets in local and deploy previews
-CURRENT_GIT_BRANCH=$VERCEL_GIT_COMMIT_REF
+CURRENT_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "CURRENT_GIT_BRANCH is $CURRENT_GIT_BRANCH"
 
 # This is where content files live, relative to the website-preview dir
