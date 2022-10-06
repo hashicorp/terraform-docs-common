@@ -34,17 +34,18 @@ A notification configuration specifies a destination URL, a payload type, and th
 
 <!-- BEGIN: TFC:only name:health-assessments -->
 
-- **Workspace Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if [health assessments](/enterprise/workspaces/settings/health-assessments) are enabled for the workspace.
-  - **Health Assessment Fail**: A health assessment failed. This notification is only available if [health assessments](/enterprise/workspaces/settings/health-assessments) are enabled for the workspace.
+- **Workspace Events**: Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
+  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if you enable [health assessments](/cloud-docs/workspaces/health) for the workspace.
+  - **Check Failure:** Terraform Cloud detected one or more failed continuous validation checks. This notification is only available if you enable health assessments for the workspace.
+  - **Health Assessment Fail**: A health assessment failed. This notification is only available if you enable health assessments for the workspace. Health assessments fail when Terraform Cloud cannot perform drift detection, continuous validation, or both. The notification does not specify the cause of the failure, but you can use the [Assessment Result](/cloud-docs/api-docs/assessment-results) logs to help diagnose the issue.
 
 <!-- END:   TFC:only name:health-assessments -->
 
 - **Run Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-  - **Created**: A run begins and enters the [Pending stage](/enterprise/run/states#1-the-pending-stage).
+  - **Created**: A run begins and enters the [Pending stage](/enterprise/run/states#the-pending-stage).
   - **Planning**: A run acquires the lock and starts to execute.
-  - **Needs Attention**: A plan has changes and Terraform requires user input to continue. This event may include approving the plan or a [policy override](/enterprise/run/states#7-the-policy-check-stage).
-  - **Applying**: A run enters the [Apply stage](/enterprise/run/states#8-the-apply-stage), where Terraform makes the infrastructure changes described in the plan.
+  - **Needs Attention**: A plan has changes and Terraform requires user input to continue. This event may include approving the plan or a [policy override](/enterprise/run/states#the-policy-check-stage).
+  - **Applying**: A run enters the [Apply stage](/enterprise/run/states#the-apply-stage), where Terraform makes the infrastructure changes described in the plan.
   - **Completed**: A run completed successfully.
   - **Errored**: A run terminated early due to error or cancellation.
 
