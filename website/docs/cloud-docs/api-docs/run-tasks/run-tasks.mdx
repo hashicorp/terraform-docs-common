@@ -427,8 +427,6 @@ This involves setting the run task enforcement level, which determines whether t
 
 You may also configure the run task to begin during a specific [run stage](/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/cloud-docs/run/states#the-post-plan-stage) by default.
 
--> **Note:** Configuring the [run stage](/cloud-docs/run/states) for a run task is in beta.
-
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
 | [204][] | Nothing                   | The request was successful                                             |
@@ -448,8 +446,6 @@ Properties without a default value are required.
 | `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, or `"pre_apply"`. |
 | `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
 | `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
-
--> **Note:** The `data.attributes.stage` key is in beta
 
 ### Sample Payload
 
