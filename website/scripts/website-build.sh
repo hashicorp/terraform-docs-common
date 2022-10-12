@@ -40,7 +40,7 @@ fi
 cd "$PREVIEW_DIR"
 
 # Run the build:deploy-preview start script
-PREVIEW_FROM_REPO=terraform-docs-common \
+PREVIEW_FROM_REPO=$PRODUCT \
 IS_CONTENT_PREVIEW=true \
 PREVIEW_MODE=$PREVIEW_MODE \
 REPO=$PRODUCT \

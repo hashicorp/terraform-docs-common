@@ -17,10 +17,8 @@ DOCKER_RUN_FLAGS=-it \
 		--rm \
 		--tty \
 		--volume "$(PWD)/docs:/app/docs" \
-		--volume "$(PWD)/public:/app/public" \
+		--volume "$(PWD)/img:/app/public" \
 		--volume "$(PWD)/data:/app/data" \
-		--volume "$(PWD)/../internal/gen:/internal/gen" \
-		--volume "$(PWD)/redirects.js:/app/redirects.js" \
 		--volume "next-dir:/app/website-preview/.next" \
 		--volume "$(PWD)/.env:/app/.env" \
 		-e "REPO=$(REPO)" \
