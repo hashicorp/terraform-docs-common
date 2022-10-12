@@ -302,6 +302,12 @@ curl \
          "attributes":{
             "status":"passed",
             "policy-kind":"opa",
+            "result-count": {
+              "advisory-failed":0,
+              "errored":0,
+              "mandatory-failed":0,
+              "passed":1
+            }
             "status-timestamps":{
                "passed-at":"2022-09-16T01:40:30+00:00",
                "queued-at":"2022-09-16T01:40:04+00:00",
@@ -357,8 +363,14 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 |----------------------------------- | ----------------------------------------------------------------------- |
 | `page[number]`                     | **Optional.** If omitted, the endpoint returns the first page.          |
 | `page[size]`                       | **Optional.** If omitted, the endpoint returns 20 agent pools per page. |
+| `filter[n][status]`                | **Optional.** If omitted, the endpoint returns all policies regardless of status. Must be one of: passed, failed, errored. |
+| `filter[n][enforcementLevel]`      | **Optional.** Only used if paired with a non-errored status filter. Must be one of: advisory, mandatory. |
+
+-> **Note**: The `filter[n]` is a zero indexed filter and can combine filtering combinations of statuses and enforcement levels. Policy outcomes with an errored status do not have an enforcement level.
 
 ### Sample Request
+
+#### All Policy Outcomes
 
 ```shell
 curl \
@@ -367,6 +379,17 @@ curl \
   --request GET \
   https://app.terraform.io/api/v2/policy-evaluations/poleval-8Jj9Hfoz892D9WMX/policy-set-outcomes
 ```
+
+#### Failed and Errored Policy Outcomes
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/policy-evaluations/poleval-8Jj9Hfoz892D9WMX/policy-set-outcomes?filter[0][status]=errored&filter[1][status]=failed&filter[1][enforcementLevel]=mandatory
+```
+
 
 ### Sample Response
 
@@ -392,6 +415,7 @@ curl \
             "policy-set-description":null,
             "result-count":{
                "advisory-failed":1,
+               "errored":0,
                "mandatory-failed":0,
                "passed":0
             }
@@ -471,6 +495,7 @@ curl --request GET \
          "policy-set-description":null,
          "result-count":{
             "advisory-failed":1,
+            "errored":0,
             "mandatory-failed":0,
             "passed":0
          }
