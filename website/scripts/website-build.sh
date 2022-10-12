@@ -29,15 +29,12 @@ fi
 
 # Clone the base project, if needed
 echo "⏳ Cloning the $REPO_TO_CLONE repo, this might take a while..."
-git clone --depth=1 "https://github.com/hashicorp/$REPO_TO_CLONE.git" "$CLONE_DIR"
+git clone --depth=1 "https://github.com/hashicorp/$REPO_TO_CLONE.git#kevin/mktg-content-api-var" "$CLONE_DIR"
 
 if [ "$from_cache" = true ]; then
   echo "Setting up $PREVIEW_DIR"
   cp -R "./$CLONE_DIR/." "./$PREVIEW_DIR"
 fi
-
-  echo "[DEBUG] .env"
-  cat "./$PREVIEW_DIR/.env"
 
 # cd into the preview directory project
 cd "$PREVIEW_DIR"
