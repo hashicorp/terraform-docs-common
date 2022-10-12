@@ -252,12 +252,13 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                                      | Type   | Default | Description                                                                                                                                                      |
-| --------------------------------------------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                                   | string |         | Must be `"registry-modules"`.                                                                                                                                    |
-| `data.attributes.vcs-repo.identifier`         | string |         | The repository from which to ingress the configuration.                                                                                                          |
-| `data.attributes.vcs-repo.oauth-token-id`     | string |         | The VCS Connection (OAuth Connection + Token) to use as identified. This ID can be obtained from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint. |
-| `data.attributes.vcs-repo.display_identifier` | string |         | The display identifier for the repository. For most VCS providers outside of BitBucket Cloud, this will match the `data.attributes.vcs-repo.identifier` string.  |
+| Key path                                      | Type    | Default | Description                                                                                                                                                      |
+| --------------------------------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                                   | string  |         | Must be `"registry-modules"`.                                                                                                                                    |
+| `data.attributes.vcs-repo.identifier`         | string  |         | The repository from which to ingress the configuration.                                                                                                          |
+| `data.attributes.vcs-repo.oauth-token-id`     | string  |         | The VCS Connection (OAuth Connection + Token) to use as identified. You can obtain this ID from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint. |
+| `data.attributes.vcs-repo.display_identifier` | string  |         | The display identifier for the repository. For most VCS providers outside of BitBucket Cloud, this identifier matches the `data.attributes.vcs-repo.identifier` string.  |
+| `data.attributes.no-code`                     | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module.
 
 A VCS repository identifier is a reference to a VCS repository in the format `:org/:repo`, where `:org` and `:repo` refer to the organization (or project key, for Bitbucket Server) and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.
 
@@ -274,6 +275,7 @@ The OAuth Token ID identifies the VCS connection, and therefore the organization
         "oauth-token-id":"ot-hmAyP66qk2AMVdbJ",
         "display_identifier":"lafentres/terraform-aws-my-module"
       }
+      "no-code": true
     },
     "type":"registry-modules"
   }
@@ -369,13 +371,14 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                        | Type   | Default | Description                                                                                                                                                                                                      |
-| ------------------------------- | ------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                     | string |         | Must be `"registry-modules"`.                                                                                                                                                                                    |
-| `data.attributes.name`          | string |         | The name of this module. May contain alphanumeric characters, with dashes and underscores allowed in non-leading or trailing positions. Maximum length is 64 characters.                                         |
-| `data.attributes.provider`      | string |         | Specifies the Terraform provider that this module is used for. May contain lowercase alphanumeric characters. Maximum length is 64 characters.                                                                   |
-| `data.attributes.namespace`     | string |         | The namespace of this module. Cannot be set for private modules. May contain alphanumeric characters, with dashes and underscores allowed in non-leading or trailing positions. Maximum length is 64 characters. |
-| `data.attributes.registry-name` | string |         | Indicates whether this is a publicly maintained module or private. Must be either `public` or `private`.                                                                                                         |
+| Key path                        | Type    | Default | Description                                                                                                                                                                                                      |
+| ------------------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                     | string  |         | Must be `"registry-modules"`.                                                                                                                                                                                    |
+| `data.attributes.name`          | string  |         | The name of this module. May contain alphanumeric characters, with dashes and underscores allowed in non-leading or trailing positions. Maximum length is 64 characters.                                         |
+| `data.attributes.provider`      | string  |         | Specifies the Terraform provider that this module is used for. May contain lowercase alphanumeric characters. Maximum length is 64 characters.                                                                   |
+| `data.attributes.namespace`     | string  |         | The namespace of this module. Cannot be set for private modules. May contain alphanumeric characters, with dashes and underscores allowed in non-leading or trailing positions. Maximum length is 64 characters. |
+| `data.attributes.registry-name` | string  |         | Indicates whether this is a publicly maintained module or private. Must be either `public` or `private`.                                                                                                         |
+| `data.attributes.no-code`       | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module.
 
 ### Sample Payload (private module)
 
@@ -387,6 +390,7 @@ Properties without a default value are required.
       "name": "my-module",
       "provider": "aws",
       "registry-name": "private"
+      "no-code": true
     }
   }
 }
@@ -403,6 +407,7 @@ Properties without a default value are required.
       "namespace": "terraform-aws-modules",
       "provider": "aws",
       "registry-name": "public"
+      "no-code": true
     }
   }
 }

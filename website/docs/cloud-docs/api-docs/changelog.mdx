@@ -7,6 +7,13 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+### 2022-10-06
+
+* Updated the [Policies API](/cloud-docs/api-docs/policies) with support for Open Policy Agent (OPA) policies.
+* Update [Policy Sets](/cloud-docs/api-docs/policy-sets) with support for OPA policy sets.
+* Updated [Policy Checks](/cloud-docs/api-docs/policy-checks) to add support for listing policy evaluations and policy set outcomes.
+* Update [Run Tasks Stage](/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) to include the new `policy_evaluations` attribute in the output.
+
 ### 2022-09-21
 
 * Update [State Versions](/cloud-docs/api-docs/state-versions#create) with optional `json-state-outputs` and `json-state` attributes, which are base-64 encoded external JSON representations of the terraform state. The read-only `hosted-json-state-download-url` attribute links to this version of the state file when available.
@@ -141,7 +148,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
     * added `POST /workspaces/:workspace_id/relationships/tags`
     * added `DELETE /workspaces/:workspace_id/relationships/tags`
   * Added [Organization Tags](/cloud-docs/api-docs/organization-tags).
-  * Added `tags` attribute to [`tfrun`](/cloud-docs/sentinel/import/tfrun)
+  * Added `tags` attribute to [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun)
 
 ### 2021-07-19
 
