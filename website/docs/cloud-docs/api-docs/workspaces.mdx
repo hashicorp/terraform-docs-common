@@ -1105,11 +1105,9 @@ $ curl \
 
 ## Safe Delete a workspace
 
-Safe deleting a workspace will first check if the workspace has resources under management, and if not it will delete the workspace.
+When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources. 
 
-It is considered "unsafe" to delete workspaces with resources under management, as deleting a workspace on Terraform Cloud will leave all infrastructure managed by the workspace orphaned from Terraform.
-
-A workspace can be safe deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+You can safe delete a workspace using two endpoints that behave identically. The first endpoint identifies a workspace with the workspace ID, and the other identifies the workspace by its name and organization.
 
 `POST /workspaces/:workspace_id/actions/safe-delete`
 
