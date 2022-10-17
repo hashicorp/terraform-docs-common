@@ -195,7 +195,7 @@ Queueing a destroy plan destroys the infrastructure managed by a workspace. If y
 
 Before queueing a destroy plan, you must enable the 'Allow destroy plans' setting and click the "Save settings" button.
 
-### Deleting a workspace with resources under management
+### Deleting a Workspace With Resources Under Management
 
 Deleting a workspace which is managing infrastructure **does not** destroy the infrastructure as well. This means that any resources managed by a deleted workspace will be removed from Terraform state, and left unmanaged by Terraform. These resources will need to be manually accounted for and either managed manually going forward, manually deleted, or [imported](/cli/commands/import) back into to different Terraform workspace.
 
