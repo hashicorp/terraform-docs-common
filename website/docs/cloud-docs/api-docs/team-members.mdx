@@ -42,11 +42,11 @@ The Team Membership API is used to add or remove users from teams. The [Team API
 
 ## Organization Membership
 
--> **Note:** To add users to a team, they must first be invited to join the organization by email, and accept the invitation. This ensures that you don't accidentally add the wrong person by mistyping a username. See [the Organization Memberships API documentation](/cloud-docs/api-docs/organization-memberships) for more information.
+-> **Note:** To add users to a team, they must first receive and accept the invitation to join the organization by email. This process ensures that you do not accidentally add the wrong person by mistyping a username. Refer to [the Organization Memberships API documentation](/cloud-docs/api-docs/organization-memberships) for more information.
 
-## Add a User to Team
+## Add a User to Team (With user ID)
 
-This method adds multiple users to a team. Both users and teams must already exist.
+This method adds multiple users to a team using the user ID. Both users and teams must already exist.
 
 `POST /teams/:team_id/relationships/users`
 
@@ -93,9 +93,58 @@ curl \
   https://app.terraform.io/api/v2/teams/257525/relationships/users
 ```
 
-## Delete a User from Team
+## Add a User to Team (With organization membership ID)
 
-This method removes multiple users from a team. Both users and teams must already exist. This DOES NOT delete the user; it only removes them from this team.
+This method adds multiple users to a team using the organization membership ID. Unlike the user ID method, the user only needs an invitation to the organization.
+
+`POST /teams/:team_id/relationships/organization-memberships`
+
+| Parameter  | Description         |
+| ---------- | ------------------- |
+| `:team_id` | The ID of the team. |
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path      | Type   | Default | Description                      |
+| ------------- | ------ | ------- | -------------------------------- |
+| `data[].type` | string |         | Must be `"organization-memberships"`.               |
+| `data[].id`   | string |         | The organization membership ID of the user to add. |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "organization-memberships",
+      "id": "ou-nX7inDHhmC3quYgy"
+    },
+    {
+      "type": "organization-memberships",
+      "id": "ou-tTJph1AQVK5ZmdND"
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/teams/257525/relationships/organization-memberships
+```
+
+## Delete a User from Team (With user ID)
+
+This method removes multiple users from a team using the user ID. Both users and teams must already exist. This method only removes a user from this team. It does not delete that user overall.
 
 `DELETE /teams/:team_id/relationships/users`
 
@@ -140,4 +189,53 @@ $ curl \
   --request DELETE \
   --data @payload.json \
   https://app.terraform.io/api/v2/teams/257525/relationships/users
+```
+
+## Delete a User from Team (With organization membership ID)
+
+This method removes multiple users from a team using the organization membership ID. This method only removes a user from this team. It does not delete that user overall.
+
+`DELETE /teams/:team_id/relationships/organization-memberships`
+
+| Parameter  | Description         |
+| ---------- | ------------------- |
+| `:team_id` | The ID of the team. |
+
+### Request Body
+
+This DELETE endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path      | Type   | Default | Description                         |
+| ------------- | ------ | ------- | ----------------------------------- |
+| `data[].type` | string |         | Must be `"organization-memberships"`.                  |
+| `data[].id`   | string |         | The organization membership ID of the user to remove. |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "organization-memberships",
+      "id": "ou-nX7inDHhmC3quYgy"
+    },
+    {
+      "type": "organization-memberships",
+      "id": "ou-tTJph1AQVK5ZmdND"
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/teams/257525/relationships/organization-memberships
 ```
