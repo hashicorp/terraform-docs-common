@@ -1132,13 +1132,13 @@ A workspace can be safe deleted via two endpoints, which behave identically. One
 
 ## Force Delete a workspace
 
-Force deleting a workspace removes it without checking whether the workspace currently has [resources under management](/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management). This ignores all of the safety checks present in a [safe delete](#safe-delete-a-workspace).
+During a force delete, Terraform Cloud removes the specified workspace without checking whether it is managing resources. We recommend using the [safe delete endpoint](#safe-delete-a-workspace) instead, when possible.
 
-By default workspaces may only be force deleted by an organization owner. If the [Teams can delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general) organization setting is enabled, workspace admins may also force delete.
+!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it. 
 
-!> **Warning:** Use caution when force deleting a workspace. Any infrastructure managed by the workspace will no longer be managed by Terraform. It is recommended that you apply a [Destroy Run](/cloud-docs/run/modes-and-options#destroy-mode) before deleting a workspace.
+By default, only organization owners can force delete workspaces. Organization owners can also update [organization's settings](/cloud-docs/users-teams organizations/organizations#general) to let workspace admins force delete their own workspaces.
 
-A workspace can be force deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+You can use two endpoints to force delete a workspace, which behave identically. One endpoint identifies the workspace with its workspace ID and the other endpoint identifies the workspace with its name and organization.
 
 `DELETE /workspaces/:workspace_id`
 
