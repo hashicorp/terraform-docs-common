@@ -1128,7 +1128,7 @@ A workspace can be safe deleted via two endpoints, which behave identically. One
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | Nothing                   | Successfully deleted the workspace                                    |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
-| [409][] | [JSON API error object][] | Workspace is not safe to delete                                       |
+| [409][] | [JSON API error object][] | Workspace is not safe to delete because it is managing resources                                       |
 
 ## Force Delete a workspace
 
