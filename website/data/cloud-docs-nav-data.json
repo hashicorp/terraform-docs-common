@@ -156,13 +156,13 @@
           }
         ]
       },
+      { "title": "Health", "path": "workspaces/health" },
       {
         "title": "Settings",
         "routes": [
           { "title": "Overview", "path": "workspaces/settings" },
           { "title": "VCS Connections", "path": "workspaces/settings/vcs" },
           { "title": "Access", "path": "workspaces/settings/access" },
-          { "title": "Health Assessments", "path": "workspaces/settings/health-assessments" },
           {
             "title": "Notifications",
             "path": "workspaces/settings/notifications"
@@ -316,56 +316,89 @@
     ]
   },
   {
+    "title": "No-Code Provisioning",
+    "routes": [
+      { 
+        "title": "Designing No-Code Ready Modules",
+        "path": "no-code-provisioning/module-design" 
+      },
+      { 
+        "title": "Provisioning No-Code Infrastructure",
+        "path": "no-code-provisioning/provisioning" 
+      }
+    ]
+  },
+  {
     "title": "Migrating to Terraform Cloud",
     "path": "migrate"
   },
   {
-    "title": "Sentinel Policy as Code",
+    "title": "Policy Enforcement",
     "routes": [
-      { "title": "Overview", "path": "sentinel" },
+      { "title": "Overview", "path": "policy-enforcement" },
       {
-        "title": "Using Sentinel with Terraform 0.12",
-        "path": "sentinel/sentinel-tf-012"
-      },
-      {
-        "title": "Manage Policies",
-        "path": "sentinel/manage-policies"
-      },
-      {
-        "title": "Enforce and Override Policies",
-        "path": "sentinel/enforce"
-      },
-      {
-        "title": "Mocking Terraform Sentinel Data",
-        "path": "sentinel/mock"
-      },
-      {
-        "title": "Working With JSON Result Data",
-        "path": "sentinel/json"
-      },
-      {
-        "title": "Defining Policies",
+        "title": "Sentinel Policies",
         "routes": [
-          { "title": "Overview", "path": "sentinel/import" },
-          { "title": "tfconfig", "path": "sentinel/import/tfconfig" },
-          {
-            "title": "tfconfig/v2",
-            "path": "sentinel/import/tfconfig-v2"
+          { "title": "Defining Policies",
+            "path": "policy-enforcement/sentinel"
           },
-          { "title": "tfplan", "path": "sentinel/import/tfplan" },
           {
-            "title": "tfplan/v2",
-            "path": "sentinel/import/tfplan-v2"
+            "title": "Imports",
+            "routes": [
+              { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
+              {
+                "title": "tfconfig/v2",
+                "path": "policy-enforcement/sentinel/import/tfconfig-v2"
+              },
+              { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
+              {
+                "title": "tfplan/v2",
+                "path": "policy-enforcement/sentinel/import/tfplan-v2"
+              },
+              { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
+              {
+                "title": "tfstate/v2",
+                "path": "policy-enforcement/sentinel/import/tfstate-v2"
+              },
+              { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
+            ]
           },
-          { "title": "tfstate", "path": "sentinel/import/tfstate" },
+          { "title": "Policy Set VCS Repositories",
+            "path": "policy-enforcement/sentinel/vcs"
+          },
           {
-            "title": "tfstate/v2",
-            "path": "sentinel/import/tfstate-v2"
+            "title": "Mocking Terraform Sentinel Data",
+            "path": "policy-enforcement/sentinel/mock"
           },
-          { "title": "tfrun", "path": "sentinel/import/tfrun" }
+          {
+            "title": "Working With JSON Result Data",
+            "path": "policy-enforcement/sentinel/json"
+          },
+          {
+            "title": "Using Sentinel with Terraform 0.12",
+            "path": "policy-enforcement/sentinel/sentinel-tf-012"
+          }
         ]
       },
-      { "title": "Example Policies", "path": "sentinel/examples" }
+      {
+        "title": "OPA Policies",
+        "routes": [
+          { "title": "Defining Policies",
+            "path": "policy-enforcement/opa"
+          },
+          { "title": "Policy Set VCS Repositories",
+            "path": "policy-enforcement/opa/vcs"
+          }
+        ]
+      },
+      {
+        "title": "Managing Policy Sets",
+        "path": "policy-enforcement/manage-policy-sets"
+      },
+      {
+        "title": "Policy Results",
+        "path": "policy-enforcement/policy-results"
+      }
     ]
   },
   {

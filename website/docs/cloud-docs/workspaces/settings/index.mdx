@@ -19,7 +19,6 @@ Workspace settings are separated into several pages, which are listed in the wor
 - "Team Access," for managing workspace permissions.
 - "Version Control", for managing the workspace's VCS integration.
 - "Destruction and Deletion", for removing a workspace and the infrastructure it manages.
-- "Health", for enforcing health assessments across eligible workspaces.
 
 Changing settings requires admin access to the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -64,7 +63,7 @@ Changing your workspace's execution mode after a run has already been planned wi
 To minimize the number runs that error when changing your workspace's execution mode, you should:
 
 1. Disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) if you have it enabled.
-1. Complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#1-the-pending-stage).
+1. Complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#the-pending-stage).
 1. [Lock](/cloud-docs/workspaces/settings#locking) your workspace to prevent any new runs.
 1. Change the execution mode.
 1. Enable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply), if you had it enabled before changing your execution mode.
@@ -124,17 +123,6 @@ Which other workspaces within the organization can access the state of the works
 By default, new workspaces in Terraform Cloud do not allow other workspaces to access their state. We recommend that you follow the principle of least privilege and only enable state access between workspaces that specifically need information from each other.
 
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
-
-<!-- BEGIN: TFC:only name:health-assessments -->
-### Health
-
-~> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
-
-Health assessment describes the regular, automatic inspection of a workspace to surface resource lifecycle concerns. When you enable health assessments, Terraform Cloud automatically runs an assessment for the workspace every 24 hours. You can enable health assessments to check your workspace for infrastructure drift.
-
-Refer to [Health Assessments](/cloud-docs/workspaces/settings/health-assessments) for details.
-
-<!-- END: TFC:only name:health-assessments -->
 
 ### User Interface
 
@@ -206,3 +194,11 @@ In almost all cases, you should perform both actions in that order when destroyi
 Queueing a destroy plan destroys the infrastructure managed by a workspace. If you don't do this, the infrastructure resources will continue to exist but will become unmanaged; you'll need to go into your infrastructure providers to delete the resources manually.
 
 Before queueing a destroy plan, you must enable the 'Allow destroy plans' setting and click the "Save settings" button.
+
+### Deleting a Workspace With Resources Under Management
+
+Terraform does not automatically destroy managed infrastructure when you delete a workspace. 
+
+After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/cli/commands/import) them into another Terraform workspace.
+
+By default, [workspace administrators](/cloud-docs/users-teams-organizations/permissions#workspace-admins) can only delete unlocked workspaces that are not managing any infrastructure. Organization owners can force delete a workspace to override these protections. Organization owners can also configure the [organization's settings](/cloud-docs/users-teams-organizations/organizations#general) to let workspace administrators force delete their own workspaces.
