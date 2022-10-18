@@ -1,10 +1,12 @@
 ---
-page_title: Run Tasks Integration - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Run Tasks Integration - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
 [401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -36,11 +38,15 @@ The service receiving the run task request should respond with `200 OK`, or Terr
 
 The POST request submits a JSON object with the following properties as a request payload.
 
+#### Common Properties
+
+All request payloads contain the following properties.
+
 |            Key path             |  Type   |          Values          |                                                 Description                                                 |
 | ------------------------------- | ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `payload_version`               | integer | `1`                      | Schema version of the payload. Only `1` is supported.                                                       |
 | `access_token`                  | string  |                          | Bearer token to use when calling back to Terraform Cloud.                                                   |
-| `stage`                         | string  | `post-plan`, `pre-apply` | The [stage](/cloud-docs/run/states) the task was triggered at.                                              |
+| `stage`                         | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/cloud-docs/run/states) when Terraform Cloud triggers the run task.  The `stage` property is in beta.                                            |
 | `is_speculative`                | bool    |                          | Whether the task is part of a [speculative run](/cloud-docs/run#speculative-plans).                         |
 | `task_result_id`                | string  |                          | ID of task result within Terraform Cloud.                                                                   |
 | `task_result_enforcement_level` | string  | `mandatory`, `advisory`  | Enforcement level for this task.                                                                            |
@@ -54,11 +60,30 @@ The POST request submits a JSON object with the following properties as a reques
 | `workspace_name`                | string  |                          | Name of the workspace.                                                                                      |
 | `workspace_app_url`             | string  |                          | URL within Terraform Cloud to the workspace.                                                                |
 | `organization_name`             | string  |                          | Name of the organization the task is configured within.                                                     |
-| `plan_json_api_url`             | string  |                          | URL to retrieve the JSON Terraform plan for this run.                                                       |
 | `vcs_repo_url`                  | string  |                          | URL to the workspace's VCS repository. This is `null` if the workspace does not have a VCS repository.              |
 | `vcs_branch`                    | string  |                          | Repository branch that the workspace executes from. This is `null` if the workspace does not have a VCS repository. |
 | `vcs_pull_request_url`          | string  |                          | URL to the Pull Request/Merge Request that triggered this run. This is `null` if the run was not triggered.         |
 | `vcs_commit_url`                | string  |                          | URL to the commit that triggered this run. This is `null` if the workspace does not a VCS repository.               |
+
+#### Pre-Plan Properties
+
+-> **Note:** Pre-plan run tasks are in beta.
+
+Requests with `stage` set to `pre_plan` contain the following additional properties.
+
+| Key path                             | Type   | Values | Description                                                                                                                                                                                      |
+|--------------------------------------|--------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `configuration_version_id`           | string |        | The ID of the [configuration version](/cloud-docs/api-docs/configuration-versions) for the run.                                                                                                      |
+| `configuration_version_download_url` | string |        | The URL to [download the configuration version](cloud-docs/api-docs/configuration-versions#download-configuration-files). This is `null` if the configuration version is not available to download. |
+| `workspace_working_directory`        | string |        | The working directory specified in the run's [workspace settings](/cloud-docs/workspaces/settings#terraform-working-directory).                                                                                                     |
+
+#### Post-Plan Properties
+
+Requests with `stage` set to `post_plan` contain the following additional properties.
+
+| Key path            | Type   | Values | Description                                           |
+|---------------------|--------|--------|-------------------------------------------------------|
+| `plan_json_api_url` | string |        | The URL to retrieve the JSON Terraform plan for this run. |
 
 ### Sample Payload
 

@@ -1,7 +1,5 @@
 ---
-page_title: >-
-  Adding Public Providers and Modules - Private Registry - Terraform Cloud and
-  Terraform Enterprise
+page_title: Adding Public Providers and Modules - Private Registry - Terraform Cloud
 description: >-
   Add providers and modules from the public Terraform Registry to your
   organization's private registry.
@@ -13,7 +11,7 @@ description: >-
 
 You can add providers and modules from the public [Terraform Registry](/registry) to your Terraform Cloud private registry. The private registry stores a pointer to these public providers and modules so that you can view their data from within Terraform Cloud. This lets you clearly designate which public providers and modules are recommended for the organization and makes their supporting documentation and examples centrally accessible.
 
--> **Note:** Public providers and modules are available in Terraform Enterprise v202012-1 and later. Your instance must allow access to `registry.terraform.io` and `https://yy0ffni7mf-dsn.algolia.net/`.
+-> **Note:** Your Terraform Enterprise instance must allow access to `registry.terraform.io` and `https://yy0ffni7mf-dsn.algolia.net/`.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -25,7 +23,7 @@ All members of an organization can view and use public providers and modules. Me
 
 ## Adding a Public Provider or Module
 
-> **Hands-on:** Try the [Add Public Providers and Modules to your Private Registry](https://learn.hashicorp.com/tutorials/terraform/private-registry-add) tutorial and [Share Modules in the Private Registry](https://learn.hashicorp.com/tutorials/terraform/module-private-registry?in=terraform/modules) tutorials on HashiCorp Learn.
+> **Hands-on:** Try the [Add Public Providers and Modules to your Private Registry](https://learn.hashicorp.com/tutorials/terraform/private-registry-add) tutorial and [Share Modules in the Private Registry](https://learn.hashicorp.com/tutorials/terraform/module-private-registry?in=terraform/modules) tutorials.
 
 To add a public provider or module:
 
@@ -37,7 +35,7 @@ To add a public provider or module:
 
    ![Terraform Cloud screenshot: the Search Public Modules page](/img/docs/add-search-public-modules-providers.png)
 
-1. Enter any combination of namespaces (e.g. hashicorp), and module or provider names into the search field. You can click **Providers** and **Modules** to toggle between lists of providers and modules that meet the search criteria.
+1. Enter any combination of namespaces (such as hashicorp), and module or provider names into the search field. You can click **Providers** and **Modules** to toggle between lists of providers and modules that meet the search criteria.
 
 1. Do one of the following to add a provider or module to your private registry:
    - Hover over the provider or module and click **+ Add**.
@@ -47,9 +45,26 @@ To add a public provider or module:
 
 1. Click **Add to organization** in the dialog box. Members of your organization can now  begin using it from the private registry.
 
+## Enabling and Disabling No-Code Provisioning
+
+-> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+
+You can enable no-code provisioning for public modules after adding them to your registry.
+
+To support the auto-apply workflow, ensure that downstream users can automatically load provider credentials into their new no-code workspaces. You can enable access by either creating a global variable set with the credentials for the module's provider, or by accessing outputs with credentials from other workspaces. Refer to [Provider Credentials](/cloud-docs/no-code-provisioning/module-design#provider-credentials) for more details.
+
+To enable no-code provisioning:
+1. Verify that the module meets the [requirements for no-code provisioning](/cloud-docs/no-code-provisioning/module-design#requirements).
+1. Click the module to view its details.
+1. Select **Enable no-code provisioning** from the **Manage Module for Organization** dropdown.
+
+Your module’s details page now has a **No-Code Ready** badge to indicate that it supports no-code provisioning.
+
+To disable no-code provisioning, select **Disable no-code provisioning** from the **Manage Module for Organization** dropdown. Disabling also removes the **No-Code Ready** badge from the module’s details page.
+
 ## Removing a Public Provider or Module
 
-Removing a public provider or module from a private registry does not remove it from the public Terraform Registry. Users in the organization will still be able to use the removed provider or module without changing their configurations.
+Removing a public provider or module from a private registry does not remove it from the public Terraform Registry. Users in the organization can still use the removed provider or module without changing their configurations.
 
 To remove a public provider or module from an organization's private registry:
 
@@ -58,4 +73,4 @@ To remove a public provider or module from an organization's private registry:
 1. Select the provider or module to view its details, open the **Manage for Organization** menu, and click **Remove from organization** (providers) or **Delete module** (modules).
    ![Terraform Cloud screenshot: the delete module button](/img/docs/add-delete-module-button.png)
 
-1. Enter the provider or module name in the dialog box to confirm and then click **Remove** (providers) or **Delete** (modules). The provider or module is removed from the organization's private registry.
+1. Enter the provider or module name in the dialog box to confirm and then click **Remove** (providers) or **Delete** (modules). The provider or module no longer appears in the organization's private registry.

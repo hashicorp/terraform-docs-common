@@ -1,5 +1,5 @@
 ---
-page_title: Policy Set Parameters - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Policy Set Parameters - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,9 +36,11 @@ page_title: Policy Set Parameters - API Docs - Terraform Cloud and Terraform Ent
 
 # Policy Set Parameters API
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Sentinel and OPA policies available in the [Terraform Cloud Team & Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-This set of APIs covers create, update, list and delete operations on parameters.
+[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. They can help you avoid hardcoding sensitive parameters into a policy. 
+
+Parameters are only available for Sentinel policies. This set of APIs provides endpoints to create, update, list and delete parameters.
 
 ## Create a Parameter
 

@@ -1,5 +1,5 @@
 ---
-page_title: Policies - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Policies - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,15 +36,15 @@ page_title: Policies - API Docs - Terraform Cloud and Terraform Enterprise
 
 # Policies API
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud Team & Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA Policies are not available in Terraform Enterprise.
 
-[Sentinel Policy as Code](/cloud-docs/sentinel) is an embedded policy as code framework integrated with Terraform Cloud.
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices. Terraform Cloud policy enforcement lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces. Refer to [Policy Enforcement]((/cloud-docs/policy-enforcement) for more details.
 
-Policies are configured on a per-organization level and are organized and grouped into [policy sets](/cloud-docs/sentinel/manage-policies#policies-and-policy-sets), which define the workspaces on which policies are enforced during runs. In these workspaces, the plan's changes are validated against the relevant policies after the plan step. (For details, see [Run States and Stages](/cloud-docs/run/states).)
+You group policies into [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
 
-This page documents the API endpoints to create, read, update, and delete the Sentinel policies in an organization. Use of these endpoints provides a method to manually manage individual policies within Terraform Cloud. To view and manage the results of a specific run's policy check, use the [Runs API](/cloud-docs/api-docs/run).
+This page documents the API endpoints to create, read, update, and delete policies in an organization. To manage policy sets, use the [Policy Sets API](/cloud-docs/api-docs/policy-sets). To manage the policy results, use the [Runs API](/cloud-docs/api-docs/run).
 
-~> **Note**: These endpoints are no longer the recommended way to use Sentinel features in Terraform Cloud. We suggest using versioned policy sets, which allows integrating with VCS or uploading policy set data and configuration as a whole. Use the [policy sets API](/cloud-docs/api-docs/policy-sets) to leverage versioned policy sets.
+-> **Note**: We no longer recommend using these endpoints to manage Sentinel policies in Terraform Cloud. For Sentinel, we recommend creating policy sets with the [Policy Sets API](/cloud-docs/api-docs/policy-sets). This approach lets you integrate with version control systems and upload policy set data and configuration together.
 
 ## Create a Policy
 
@@ -70,17 +70,19 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                                | Type           | Default          | Description                                                                                                                                                                                                                                                                                                                                |
-| --------------------------------------- | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                             | string         |                  | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.name`                  | string         |                  | The name of the policy, which cannot be modified after creation. Can include letters, numbers, `-`, and `_`.                                                                                                                                                                                                                               |
-| `data.attributes.description`           | string         | `null`           | A description of the policy's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                                                        |
-| `data.attributes.enforce`               | array\[object] |                  | An array of enforcement configurations which map Sentinel file paths to their enforcement modes. Currently policies only support a single file, so this array will consist of a single element. If the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then the default `hard-mandatory` will be used. |
-| `data.attributes.enforce[].path`        | string         |                  | Must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`.                                                                                                                                                                                                                                                    |
-| `data.attributes.enforce[].mode`        | string         | `hard-mandatory` | The enforcement level of the policy. Valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For more details, see [Managing Policies](/cloud-docs/sentinel/manage-policies).                                                                                                                                           |
-| `data.relationships.policy-sets.data[]` | array\[object] | `[]`             | A list of resource identifier objects to define which policy sets the new policy will be a member of. These objects must contain `id` and `type` properties, and the `type` property must be `policy-sets` (e.g. `{ "id": "polset-3yVQZvHzf5j3WRJ1","type": "policy-sets" }`).                                                             |
+| Key path                                | Type           | Default                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------------------- | -------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.type`                             | string         |                                               | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.name`                  | string         |                                               | The name of the policy, which can include letters, numbers, `-`, and `_`. You cannot modify this name after creation.                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.description`           | string         | `null`                                        | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                |
+| `data.attributes.kind`                  | string         | `sentinel`                                    | The policy-as-code framework for the policy. Valid values are `"sentinel"` and `"opa"`.                                                                                                                                                                                                                                                                                                                                      |
+| `data.attributes.query`                 | string         |                                               | The OPA query to run. Only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                       |
+| `data.attributes.enforce`               | array\[object] |                                               | An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`. |
+| `data.attributes.enforce[].path`        | string         |                                               | For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                    |
+| `data.attributes.enforce[].mode`        | string         | `hard-mandatory`(Sentinel) , `advisory` (OPA) | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/cloud-docs/policy-enforcement/manage-policies) for details.                                                                                                                                         |
+| `data.relationships.policy-sets.data[]` | array\[object] | `[]`                                          | A list of resource identifier objects to define which policy sets include the new policy. These objects must contain `id` and `type` properties, and the `type` property must be `policy-sets`. For example,`{ "id": "polset-3yVQZvHzf5j3WRJ1","type": "policy-sets" }`.                                                                                                                                                 |
 
-### Sample Payload
+### Sample Payload (Sentinel)
 
 ```json
 {
@@ -93,7 +95,37 @@ Properties without a default value are required.
         }
       ],
       "name": "my-example-policy",
-      "description": "An example policy."
+      "description": "An example policy.",
+      "kind": "sentinel"
+    },
+    "relationships": {
+      "policy-sets": {
+        "data": [
+          { "id": "polset-3yVQZvHzf5j3WRJ1", "type": "policy-sets" }
+        ]
+      }
+    },
+    "type": "policies"
+  }
+}
+```
+
+### Sample Payload (OPA)
+
+```json
+{
+  "data": {
+    "attributes": {
+      "enforce": [
+        {
+          "path": "my-example-policy.rego",
+          "mode": "advisory"
+        }
+      ],
+      "name": "my-example-policy",
+      "description": "An example policy.",
+      "kind": "opa",
+      "query": "terraform.main"
     },
     "relationships": {
       "policy-sets": {
@@ -118,7 +150,7 @@ curl \
   https://app.terraform.io/api/v2/organizations/my-organization/policies
 ```
 
-### Sample Response
+### Sample Response (Sentinel)
 
 ```json
 {
@@ -131,6 +163,45 @@ curl \
       "enforce": [
         {
           "path":"my-example-policy.sentinel",
+          "mode":"advisory"
+        }
+      ],
+      "policy-set-count": 1,
+      "updated-at": null
+    },
+    "relationships": {
+      "organization": {
+        "data": { "id": "my-organization", "type": "organizations" }
+      },
+      "policy-sets": {
+        "data": [
+          { "id": "polset-3yVQZvHzf5j3WRJ1", "type": "policy-sets" }
+        ]
+      }
+    },
+    "links": {
+      "self":"/api/v2/policies/pol-u3S5p2Uwk21keu1s",
+      "upload":"/api/v2/policies/pol-u3S5p2Uwk21keu1s/upload"
+    }
+  }
+}
+```
+
+### Sample Response (OPA)
+
+```json
+{
+  "data": {
+    "id":"pol-u3S5p2Uwk21keu1s",
+    "type":"policies",
+    "attributes": {
+      "name":"my-example-policy",
+      "description":"An example policy.",
+      "kind": "opa",
+      "query": "terraform.main",
+      "enforce": [
+        {
+          "path":"my-example-policy.rego",
           "mode":"advisory"
         }
       ],
@@ -187,6 +258,7 @@ curl --request GET \
     "attributes": {
       "name": "my-example-policy",
       "description":"An example policy.",
+      "kind": "sentinel",
       "enforce": [
         {
           "path": "my-example-policy.sentinel",
@@ -223,7 +295,7 @@ curl --request GET \
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `:policy_id` | The ID of the policy to upload code to. Use the "List Policies" endpoint (or the response to a "Create Policy" request) to find IDs. |
 
-This endpoint uploads code to an existing Sentinel policy.
+This endpoint uploads code to an existing Sentinel or OPA policy.
 
 -> **Note**: This endpoint does not use JSON-API's conventions for HTTP headers and body serialization.
 
@@ -231,9 +303,10 @@ This endpoint uploads code to an existing Sentinel policy.
 
 ### Request Body
 
-This PUT endpoint requires the text of a valid Sentinel policy, with a `Content-Type` of `application/octet-stream`.
+This PUT endpoint requires the text of a valid Sentinel or OPA policy with a `Content-Type` of `application/octet-stream`.
 
-See [Defining Policies](/cloud-docs/sentinel/import) for details about writing Sentinel code.
+- Refer to [Defining Sentinel Policies](/cloud-docs/policies/sentinel/import) for details about writing Sentinel code.
+- Refer to [Defining OPA Policies](/cloud-docs/policies/opa/opa-policy-guidelines) for details about writing OPA code.
 
 ### Sample Payload
 
@@ -248,7 +321,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/octet-stream" \
   --request PUT \
-  --data-binary @payload.sentinel \
+  --data-binary @payload.file \
   https://app.terraform.io/api/v2/policies/pol-u3S5p2Uwk21keu1s/upload
 ```
 
@@ -274,14 +347,14 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                         | Type           | Default          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------------------- | -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                      | string         |                  | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `data.attributes.name`           | string         | (Current name)   | Ignored if present.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.description`    | string         | `null`           | A description of the policy's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.enforce`        | array\[object] |                  | An array of enforcement configurations which map Sentinel file paths to their enforcement modes. Currently policies only support a single file, so this array will consist of a single element. The value provided **replaces** the enforcement map. To make an incremental update, you can first fetch the current value of this map from the [show endpoint](#show-a-policy) and modify it. If the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then the default `hard-mandatory` will be used. |
-| `data.attributes.enforce[].path` | string         |                  | Must be `<NAME>.sentinel`, where `<NAME>` matches the original value of `data.attributes.name`.                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `data.attributes.enforce[].mode` | string         | `hard-mandatory` | The enforcement level of the policy. Valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For more details, see [Managing Policies](/cloud-docs/sentinel/manage-policies).                                                                                                                                                                                                                                                                                                                                         |
+| Key path                         | Type           | Default                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------------------- | -------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                      | string         |                                               | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `data.attributes.description`    | string         | `null`                                        | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                 |
+| `data.attributes.query`          | string         |                                               | The OPA query to run. This is only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                |
+| `data.attributes.enforce`        | array\[object] |                                               | An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`.  |
+| `data.attributes.enforce[].path` | string         |                                               | For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                     |
+| `data.attributes.enforce[].mode` | string         | `hard-mandatory`(Sentinel) , `advisory` (OPA) | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/cloud-docs/policy-enforcement/manage-policies) for details.                                                                                                                                          |
 
 ### Sample Payload
 
@@ -322,6 +395,7 @@ curl \
     "attributes": {
       "name":"my-example-policy",
       "description":"An example policy.",
+      "kind": "sentinel",
       "enforce": [
         {
           "path":"my-example-policy.sentinel",
@@ -362,11 +436,13 @@ curl \
 
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter      | Description                                                              |
-| -------------- | ------------------------------------------------------------------------ |
-| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.       |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policies per page. |
-| `search[name]` | **Optional.** Allows searching the organization's policies by name.      |
+| Parameter      | Description                                                                                                                       |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                                                                |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policies per page.                                                          |
+| `search[name]` | **Optional.** Allows searching the organization's policies by name.                                                               |
+| `filter[kind]` | **Optional.** If specified, restricts results to those with the matching policy kind value. Valid values are `sentinel` and `opa` |                                                             |
+
 
 ### Sample Request
 
@@ -392,7 +468,8 @@ curl \
         "name": "my-example-policy",
         "description": "An example policy.",
         "policy-set-count": 0,
-        "updated-at": "2017-10-10T20:52:13.898Z"
+        "updated-at": "2017-10-10T20:52:13.898Z",
+        "kind": "sentinel"
       },
       "id": "pol-u3S5p2Uwk21keu1s",
       "relationships": {
@@ -406,6 +483,45 @@ curl \
         "upload": "/api/v2/policies/pol-u3S5p2Uwk21keu1s/upload"
       },
       "type": "policies"
+    },
+    {
+       "id":"pol-vM2rBfj7V2Faq8By",
+       "type":"policies",
+       "attributes":{
+       "name":"policy1",
+       "description":null,
+       "enforce":[
+         {
+            "path":"policy1.rego",
+            "mode":"advisory"
+         }
+       ],
+       "policy-set-count":1,
+       "updated-at":"2022-09-13T04:57:43.516Z",
+       "kind":"opa",
+       "query":"data.terraform.rules.policy1.rule"
+       },
+       "relationships":{
+          "organization":{
+            "data":{
+              "id":"hashicorp",
+              "type":"organizations"
+            }
+          },
+          "policy-sets":{
+            "data":[
+              {
+                "id":"polset-FYu3k5WY5eecwwdt",
+                "type":"policy-sets"
+              }
+            ]
+          }
+       },
+       "links":{
+         "self":"/api/v2/policies/pol-vM2rBfj7V2Faq8By",
+         "upload":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/upload",
+         "download":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/download"
+       }
     }
   ]
 }

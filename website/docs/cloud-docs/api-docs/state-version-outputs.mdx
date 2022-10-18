@@ -1,5 +1,5 @@
 ---
-page_title: State Version Outputs - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: State Version Outputs - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -13,8 +13,7 @@ page_title: State Version Outputs - API Docs - Terraform Cloud and Terraform Ent
 # State Version Outputs API
 
 State version outputs are the [output values](/language/values/outputs) from a Terraform state file. They include
-the name and value of the output, as well as a sensitive boolean if the value
-should be hidden by default in UIs.
+the name and value of the output, as well as a sensitive boolean if the value should be hidden by default in UIs.
 
 ## List State Version Outputs
 
@@ -66,6 +65,15 @@ curl \
           "strawberry",
           "blueberry",
           "rasberry"
+        ],
+        "detailed_type": [
+          "tuple",
+          [
+            "string",
+            "string",
+            "string",
+            "string"
+          ]
         ]
       },
       "links": {
@@ -84,6 +92,15 @@ curl \
           "potato",
           "tomato",
           "onions"
+        ],
+        "detailed_type": [
+          "tuple",
+          [
+            "string",
+            "string",
+            "string",
+            "string"
+          ]
         ]
       },
       "links": {
@@ -145,7 +162,8 @@ curl \
       "name": "flavor",
       "sensitive": false,
       "type": "string",
-      "value": "Peanut Butter"
+      "value": "Peanut Butter",
+      "detailed-type": "string"
     },
     "links": {
       "self": "/api/v2/state-version-outputs/wsout-J2zM24JPFbfc7bE5"
@@ -192,7 +210,8 @@ curl \
         "name": "flavor",
         "sensitive": false,
         "type": "string",
-        "value": "Peanut Butter"
+        "value": "Peanut Butter",
+        "detailed-type": "string"
       },
       "links": {
         "self": "/api/v2/state-version-outputs/wsout-J2zM24JPFbfc7bE5"
@@ -205,7 +224,8 @@ curl \
         "name": "recipe",
         "sensitive": true,
         "type": "string",
-        "value": null 
+        "value": "Don Douglas' Peanut Butter Frenzy",
+        "detailed-type": "string"
       },
       "links": {
         "self": "/api/v2/state-version-outputs/wsout-FLzM23Gcd5f37bE5"
