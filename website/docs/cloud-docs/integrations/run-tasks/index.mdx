@@ -83,7 +83,7 @@ $ echo -n $WEBHOOK_BODY | openssl dgst -sha512 -hmac "$HMAC_KEY"
 ```
 
 ## HCP Packer Run Task
-> **Hands On:** Try the [Set Up Terraform Cloud Run Task for HCP Packer](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task), [Standard tier run task image validation](https://learn.hashicorp.com/tutorials/packer/run-tasks-data-source-image-validation), and [Plus tier run task image validation](https://learn.hashicorp.com/tutorials/packer/run-tasks-resource-image-validation) tutorials on HashiCorp Learn to set up and test the Terraform Cloud Run Task integration end to end.
+> **Hands On:** Try the [Set Up Terraform Cloud Run Task for HCP Packer](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task), [Standard tier run task image validation](https://learn.hashicorp.com/tutorials/packer/run-tasks-data-source-image-validation), and [Plus tier run task image validation](https://learn.hashicorp.com/tutorials/packer/run-tasks-resource-image-validation) tutorials to set up and test the Terraform Cloud Run Task integration end to end.
 
 [Packer](https://www.packer.io/) lets you create identical machine images for multiple platforms from a single source template. The [HCP Packer registry](https://cloud.hashicorp.com/docs/packer) lets you track golden images, designate images for test and production environments, and query images to use in Packer and Terraform configurations.
 
@@ -104,6 +104,12 @@ To get started, [sign up](https://info.aquasec.com/terraform-trivy) for the Triv
 [Bridgecrew](https://bridgecrew.io/) helps teams address security and compliance errors in Terraform as part of each and every code review.
 
 To get started, sign up for an eligible [pricing](https://bridgecrew.io/pricing/) plan, and follow the instructions in the [Integration via Run Tasks](https://docs.bridgecrew.io/docs/integrate-with-terraform-cloud#integration-via-run-tasks) user documentation.
+
+### Check Point
+
+[Check Point](https://www.checkpoint.com/) SpectralOps integration with Terraform Cloud & Terraform Enterprise enables security teams to empower their engineers to monitor, classify, and protect their code & infrastructure for security misconfiguration.
+
+To get started, follow the instructions in the [Terraform Cloud integration](https://get.spectralops.io/docs/integration/tfc/) user documentation.
 
 ### Firefly
 
@@ -145,13 +151,19 @@ To get started, request early access at [Moderne.io](https://moderne.io/), and f
 
 To get started, follow the instructions in the [Terraform Cloud integration](https://docs.oak9.io/oak9/fundamentals/integrations/setup-terraform-cloud-run-task) user documentation.
 
+### Rapid7
+
+[Rapid7's](https://rapid7.com/) InsightCloudSec enables security teams to provide a single, consistent definition of good across the full CI/CD pipeline, allowing them to evaluate potential risks of Infrastructure as Code (IaC) templates during building and pre-deployment.
+
+To get started, follow the instructions in the [Terraform Cloud integration](https://docs.divvycloud.com/docs/integrate-with-terraform-cloudenterprise) user documentation.
+
 ### Snyk
 
 The [Snyk](https://snyk.io/) integration for Terraform Cloud allows teams using Terraform to find, track, and fix security misconfigurations in their cloud infrastructure as part of their SDLC before they ever reach production.
 
 To get started, [create a free Snyk account](https://snyk.io/) and follow the instructions in the [Integrating Snyk with Terraform Cloud](https://docs.snyk.io/features/integrations/ci-cd-integrations/integrating-snyk-with-terraform-cloud) user documentation.
 
-> **Hands-on:** Try the [Configure Snyk Run Task in Terraform Cloud tutorial](https://learn.hashicorp.com/tutorials/terraform/cloud-run-tasks-snyk?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) on HashiCorp Learn.
+> **Hands-on:** Try the [Configure Snyk Run Task in Terraform Cloud tutorial](https://learn.hashicorp.com/tutorials/terraform/cloud-run-tasks-snyk?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS).
 
 ### Sophos
 
@@ -159,7 +171,7 @@ Sophos Factory works with Terraform Cloud run tasks to enable IaC security tools
 
 ### Styra
 
-Styra DAS works with Terraform Cloud to ensure that plans for an apply action are always evaluated against your DAS Terraform OPA policies. To get started, refer to the [Terraform Cloud](https://docs.styra.com/tutorials/terraform-cloud/introduction) content in the Styra documentation.
+Styra DAS works with Terraform Cloud to always evaluate plans for an apply action against your DAS Terraform OPA policies. To get started, refer to the [Terraform Cloud](https://docs.styra.com/tutorials/terraform-cloud/introduction) content in the Styra documentation.
 
 ### Tenable
 
@@ -175,3 +187,7 @@ To get started, follow the instructions in the [Terraform Cloud integration](htt
 
 Vantage helps developers understand and optimize their cloud infrastructure costs. The Run Tasks API integration provides actionable cost recommendations and accrued and forecasted costs from their AWS & GCP accounts each time they make infrastructure changes. To get started, follow the [Run Task Integration Instructions](https://docs.vantage.sh/terraform_cloud_integration/) in the Vantage documentation.
 
+
+### ZScaler
+
+ZScaler's posture control integration for Terraform Cloud enables development teams to scan Terraform files for infrastructure changes and compare the output against security policies for public cloud providers and Kubernetes. To get started, [request a demo here](https://www.zscaler.com/products/posture-control/infrastructure-as-code-security).

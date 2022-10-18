@@ -7,14 +7,16 @@ description: Find available providers and modules and include them in configurat
 
 All users in an organization can view the Terraform Cloud private registry and use the available providers and modules. A private registry has some key requirements and differences from the [public Terraform Registry](/registry):
 
-- **Location:** You must use Terraform Cloud's web UI to search for providers, modules, and usage examples.
+- **Location:** Search for providers, modules, and usage examples in the Terraform Cloud private registry UI.
 - **Provider and Module block `source` argument:** Private providers and modules use a [different format](/cloud-docs/registry/using#using-private-providers-and-modules-in-configurations).
 - **Terraform version:** Terraform Cloud workspaces using version 0.11 and higher can automatically access your private modules during Terraform runs, and workspaces using version 0.13 and higher can also automatically access private providers.
 - **Authentication:** If you run Terraform on the command line, you must [authenticate](/cloud-docs/registry/using#authentication) to Terraform Cloud or your instance to use providers and modules in your organization’s private registry.
 
+Terraform Cloud supports using modules in written configuration or through the [no-code provisioning workflow](/cloud-docs/no-code-provisioning/provisioning).
+
 ## Finding Providers and Modules
 
-To find available providers and modules, click the **Registry** button in the main navigation bar. The **Registry** page appears.
+To find available providers and modules, go to your organization, and click **Registry**. The **Registry** page appears.
 
 ![Terraform Cloud screenshot: a filtered list of available providers](/img/docs/registry-page-filtered.png)
 
@@ -38,9 +40,13 @@ Use the **Submodules** menu to navigate to the detail pages for any nested modul
 
 ![Terraform Cloud screenshot: a module submodules button](/img/docs/using-submodules-dropdown.png)
 
+## Provisioning Infrastructure from No-Code Ready Modules
+
+You can use modules marked **No-Code Ready** to create a new workspace and automatically provision the module's resources without writing any Terraform configuration. Refer to [Provisioning No-Code Infrastructure](/cloud-docs/no-code-provisioning/provisioning) for details.
+
 ## Using Public Providers and Modules in Configurations
 
-> **Hands-on:** Try the [Use Modules from the Registry](https://learn.hashicorp.com/tutorials/terraform/module-use?in=terraform/modules) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Use Modules from the Registry](https://learn.hashicorp.com/tutorials/terraform/module-use?in=terraform/modules) tutorial.
 
 The syntax for public providers in a private registry is the same as for providers that you use directly from the public Terraform Registry. The syntax for the [provider block](/language/providers/configuration#provider-configuration-1) `source` argument is `<NAMESPACE>/<PROVIDER_NAME>`.
 
@@ -111,7 +117,7 @@ A workspace can only use private providers and modules from its own organization
 
 - **Terraform Cloud:** [Add providers and modules to the registry](/cloud-docs/registry/publish#sharing-modules-across-organizations) for each organization that requires access.
 
-- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization. 
+- **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization.
 
 ## Running Configurations with Private Providers and Modules
 

@@ -15,7 +15,7 @@ description: >-
 
 # The CLI-driven Run Workflow
 
-> **Hands-on:** Try the [Log in to Terraform Cloud from the CLI](https://learn.hashicorp.com/tutorials/terraform/cloud-login?in=terraform/0-13) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Log in to Terraform Cloud from the CLI](https://learn.hashicorp.com/tutorials/terraform/cloud-login?in=terraform/0-13) tutorial.
 
 Terraform Cloud has three workflows for managing Terraform runs.
 
@@ -101,7 +101,7 @@ Automatically created workspaces might not be immediately ready to use, so use T
 
 Remote runs in Terraform Cloud use:
 
-- Run-specific variables set via the command line or in your local environment. Terraform only uses the environment variables from your shell environment that are prefixed with `TF_VAR`.
+- Run-specific variables set through the command line or in your local environment. Terraform can use shell environment variables prefixed with `TF_VAR_` as input variables for the run, but you must still set all required environment variables, like provider credentials, inside the workspace.
 - Workspace-specific Terraform and environment variables set in the workspace.
 - Variable sets applied to the workspace.
 - Terraform variables from any `*.auto.tfvars` files included in the configuration.
@@ -194,16 +194,16 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ### Non-Interactive Workflows
 
-> **Hands On:** Try the [Deploy Infrastructure with Terraform Cloud and CircleCI](https://learn.hashicorp.com/tutorials/terraform/circle-ci) tutorial on HashiCorp Learn.
+> **Hands On:** Try the [Deploy Infrastructure with Terraform Cloud and CircleCI](https://learn.hashicorp.com/tutorials/terraform/circle-ci) tutorial.
 
 External systems cannot run the traditional apply workflow because Terraform requires console input from the user to approve plans. We recommend using the [API-driven Run Workflow](/cloud-docs/run/api) for non-interactive workflows when possible.
 
 If you prefer to use the CLI in a non-interactive environment, we recommend first running a [speculative plan](/cloud-docs/run#speculative-plans) to preview the changes Terraform will make to your infrastructure. Then, use one of the following approaches with the `-auto-approve` flag based on the [execution mode](/cloud-docs/workspaces/settings#execution-mode) of your workspace. The [`-auto-approve`](/cli/commands/apply#auto-approve) flag skips prompting you to approve the plan.
 
 - **Local Execution:**  Save the approved speculative plan and then run `terraform apply -auto-approve` with the saved plan.
-- **Remote Execution:** Terraform Cloud does not support uploading saved plans for remote execution, so we recommend running `terraform apply -auto-approve` immediately after approving the speculative plan to prevent the plan from becoming stale. 
+- **Remote Execution:** Terraform Cloud does not support uploading saved plans for remote execution, so we recommend running `terraform apply -auto-approve` immediately after approving the speculative plan to prevent the plan from becoming stale.
 
-  !> **Warning:** Remote execution with non-interactive workflows requires auto-approved deployments. Minimize the risk of unpredictable infrastructure changes and configuration drift by making sure that no one can change your infrastructure outside of your automated build pipeline. 
+  !> **Warning:** Remote execution with non-interactive workflows requires auto-approved deployments. Minimize the risk of unpredictable infrastructure changes and configuration drift by making sure that no one can change your infrastructure outside of your automated build pipeline.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 

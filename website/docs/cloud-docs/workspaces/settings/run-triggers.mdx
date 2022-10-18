@@ -4,7 +4,7 @@ page_title: Run Triggers - Workspaces - Terraform Cloud
 
 # Run Triggers
 
-> **Hands-on:** Try the [Connect Workspaces with Run Triggers](https://learn.hashicorp.com/tutorials/terraform/cloud-run-triggers?in=terraform/cloud&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Connect Workspaces with Run Triggers](https://learn.hashicorp.com/tutorials/terraform/cloud-run-triggers?in=terraform/cloud&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
 
 Terraform Cloud provides a way to connect your workspace to one or more workspaces within your organization, known as "source workspaces". These connections, called run triggers, allow runs to queue automatically in your workspace on successful apply of runs in any of the source workspaces. You can connect each workspace to up to 20 source workspaces.
 
@@ -51,3 +51,6 @@ Operators of your source workspaces will be informed of the connection to your w
 A common way to share information between workspaces is the [`terraform_remote_state` data source](/language/state/remote-state-data), which allows a Terraform configuration to access a source workspace's root-level [outputs](/language/values/outputs).
 
 Before other workspaces can read the outputs of a workspace, it must be configured to allow access. For more information about cross-workspace state access in Terraform Cloud, see [Terraform State in Terraform Cloud](/cloud-docs/workspaces/state).
+
+~> **Important:** We recommend using the [`tfe_outputs` data source](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/outputs) in the [Terraform Cloud/Enterprise Provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) to access remote state outputs in Terraform Cloud or Terraform Enterprise. The `tfe_outputs` data source is more secure because it does not require full access to workspace state to fetch outputs.
+

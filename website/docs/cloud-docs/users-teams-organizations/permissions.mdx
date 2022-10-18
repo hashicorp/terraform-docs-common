@@ -11,7 +11,7 @@ description: >-
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-> **Hands-on:** Try the [Manage Permissions in Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-permissions?in=terraform/cloud&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Manage Permissions in Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-permissions?in=terraform/cloud&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
 
 Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions.
 
@@ -95,6 +95,7 @@ Workspace admins have all [General Workspace Permissions][], as well as the abil
 - Read and write workspace settings. This includes general settings, notification configurations, run triggers, and more.
 - Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
 - Delete the workspace
+  - Depending on the [organization's settings](/cloud-docs/users-teams-organizations/organizations#general), workspace admins may only be able to delete the workspace if it is not actively managing infrastructure. Refer to [Deleting a Workspace With Resources Under Management](/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) for details.
 
 ### Fixed Permission Sets
 

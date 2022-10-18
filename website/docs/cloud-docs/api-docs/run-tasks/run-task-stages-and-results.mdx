@@ -20,7 +20,7 @@ page_title: Run Task Stages and Results - API Docs - Terraform Cloud
 
 Terraform Cloud uses run task stages and run task results to track [run task](/cloud-docs/workspaces/settings/run-tasks) execution.
 
-When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that will trigger run tasks. You can configure run tasks during the [Pre-Plan Stage](/cloud-docs/run/states#3-the-pre-plan-stage), [Post-Plan Stage](/cloud-docs/run/states#5-the-post-plan-stage) and [Pre-Apply Stage](/cloud-docs/run/states#8-the-pre-apply-stage).
+When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/cloud-docs/run/states#the-post-plan-stage) and [Pre-Apply Stage](/cloud-docs/run/states#the-pre-apply-stage).
 
 -> **Note:** Pre-plan and pre-apply run tasks are in beta.
 
@@ -34,15 +34,16 @@ This page lists the endpoints to retrieve run task stages and run task results. 
 
 The run task stage status is found in `data.attributes.status`, and you can reference the following list of possible values.
 
-| Status        | Description                                                                      |
-|---------------|----------------------------------------------------------------------------------|
-| `pending`     | The initial status of a run task stage after creation.                           |
-| `running`     | The run task stage is executing one or more tasks, which have not yet completed. |
-| `passed`      | All of the run task results in the stage passed.                                 |
-| `failed`      | One more results in the run task stage failed.                                   |
-| `errored`     | The run task stage has errored.                                                  |
-| `canceled`    | The run task stage has been canceled.                                            |
-| `unreachable` | The run task stage could not be executed.                                        |
+| Status              | Description                                                                                                                                |
+|-------------------- |------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pending`           | The initial status of a run task stage after creation.                                                                                     |
+| `running`           | The run task stage is executing one or more tasks, which have not yet completed.                                                           |
+| `passed`            | All of the run task results in the stage passed.                                                                                           |
+| `failed`            | One more results in the run task stage failed.                                                                                             |
+| `awaiting_override` | The task stage is waiting for user input. Once a user manually overrides the failed policy checks, the run returns to the `running` state. |
+| `errored`           | The run task stage has errored.                                                                                                            |
+| `canceled`          | The run task stage has been canceled.                                                                                                      |
+| `unreachable`       | The run task stage could not be executed.                                                                                                  |
 
 ### Run Task Result Status
 
@@ -120,6 +121,14 @@ curl \
               "type": "task-results"
             }
           ]
+        },
+        "policy-evaluations":{
+          "data":[
+            {
+              "id":"poleval-iouaha9KLgGWkBRQ",
+              "type":"policy-evaluations"
+            }
+          ]
         }
       },
       "links": {
@@ -185,7 +194,15 @@ curl \
             "type": "task-results"
           }
         ]
-      }
+      },
+      "policy-evaluations":{
+        "data":[
+          {
+            "id":"poleval-iouaha9KLgGWkBRQ",
+            "type":"policy-evaluations"
+          }
+        ]
+     }
     },
     "links": {
       "self": "/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi"
@@ -264,8 +281,80 @@ curl \
 
 The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
 
-| Resource        | Description                                                |
-|-----------------|------------------------------------------------------------|
-| `run`           | Additional information about the associated run.           |
-| `run.workspace` | Additional information about the associated workspace.     |
-| `task-results`  | Additional information about the results for a task-stage. |
+| Resource             | Description                                               |
+|--------------------- |---------------------------------------------------------- |
+| `run`                | Information about the associated run.                     |
+| `run.workspace`      | Information about the associated workspace.               |
+| `task-results`       | Information about the results for a task-stage.           |
+| `policy-evaluations`  | Information about the policy evaluations for a task-stage. |
+
+## Override a Task Stage
+
+`POST /task-stages/:task_stage_id/actions/override`
+
+| Parameter            | Description                                                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| `:task_stage_id`     | The ID of the task stage to override.                                                           |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/task-stages/ts-rL5ZsuwfjqfPJcdi/actions/override
+```
+
+### Sample Response
+
+```json
+{
+   "data":{
+      "id":"ts-F7MumZQcJzVh1ZZk",
+      "type":"task-stages",
+      "attributes":{
+         "status":"running",
+         "stage":"post_plan",
+         "status-timestamps":{
+            "running-at":"2022-09-21T06:36:54+00:00",
+            "awaiting-override-at":"2022-09-21T06:31:50+00:00"
+         },
+         "created-at":"2022-09-21T06:29:44.632Z",
+         "updated-at":"2022-09-21T06:36:54.952Z",
+         "permissions":{
+            "can-override-policy":true,
+            "can-override-tasks":false,
+            "can-override":true
+         },
+         "actions":{
+            "is-overridable":false
+         }
+      },
+      "relationships":{
+         "run":{
+            "data":{
+               "id":"run-K6N4BAz8NfUyR2QB",
+               "type":"runs"
+            }
+         },
+         "task-results":{
+            "data":[
+
+            ]
+         },
+         "policy-evaluations":{
+            "data":[
+               {
+                  "id":"poleval-atNKxwvjYy4Gwk3k",
+                  "type":"policy-evaluations"
+               }
+            ]
+         }
+      },
+      "links":{
+         "self":"/api/v2/task-stages/ts-F7MumZQcJzVh1ZZk"
+      }
+   }
+}
+```
