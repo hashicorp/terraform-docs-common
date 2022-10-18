@@ -26,7 +26,7 @@ When Terraform Cloud creates a [run][], it reads the run tasks associated to the
 
 Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, Terraform Cloud creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
 
-This page lists the endpoints to retrieve run task stages and run task results. Refer to the [Run Tasks API](/cloud-docs/api-docs/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](/cloud-docs/api-docs/run-tasks-integration) for endpoints to build custom run tasks for the Terraform Cloud ecosystem.
+This page lists the endpoints to retrieve run task stages and run task results. Refer to the [Run Tasks API](/cloud-docs/api-docs/run-tasks/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](/cloud-docs/api-docs/run-tasks/run-tasks-integration) for endpoints to build custom run tasks for the Terraform Cloud ecosystem.
 
 ## Attributes
 
@@ -73,7 +73,7 @@ The run task result status is found in `data.attributes.status`, and you can ref
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                          |
 |----------------|----------------------------------------------------------------------|
@@ -279,7 +279,7 @@ curl \
 
 ### Task Stage
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource             | Description                                               |
 |--------------------- |---------------------------------------------------------- |

@@ -71,10 +71,10 @@ If you have already configured all Terraform variables, we recommend [manually s
 - [Upload configuration versions](/cloud-docs/workspaces/configurations#providing-configuration-versions): If you chose the API or CLI-Driven workflow, you must upload configuration versions for the workspace.
 - [Edit environment variables](/cloud-docs/workspaces/variables): Shell environment variables store credentials and customize Terraform's behavior.
 - [Edit additional workspace settings](/cloud-docs/workspaces/settings): This includes notifications, permissions, and run triggers to start runs automatically.
-- [Learn more about running Terraform in your workspace](/cloud-docs/run): This includes how Terraform processes runs within the workspace, run modes, run states, etc.
+- [Learn more about running Terraform in your workspace](/cloud-docs/run/remote-operations): This includes how Terraform processes runs within the workspace, run modes, run states, etc.
 
 ### VCS Connection
 
 If you connected a VCS repository to the workspace, Terraform Cloud automatically registers a webhook with your VCS provider. A workspace with no runs will not accept new runs from a VCS webhook, so you must [manually start at least one run](/cloud-docs/run/ui#manually-starting-runs).
 
-After you manually start a run, Terraform Cloud automatically queues a plan when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/cloud-docs/vcs/#webhooks) for more details.
+After you manually start a run, Terraform Cloud automatically queues a plan when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/cloud-docs/vcs#webhooks) for more details.

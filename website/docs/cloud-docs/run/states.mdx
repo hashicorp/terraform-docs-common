@@ -41,7 +41,7 @@ The pre-plan phase only occurs if there are enabled [run tasks](/cloud-docs/work
 
 -> **Note:** Pre-plan run tasks are in beta.
 
-All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans).
+All runs can enter this phase, including [speculative plans](/cloud-docs/run/remote-operations#speculative-plans).
 
 _States in this stage:_
 
@@ -80,7 +80,7 @@ _Leaving this stage:_
 ## The Post-Plan Stage
 
 The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/cloud-docs/workspaces/settings/run-tasks) enabled
-for the workspace. All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans). During this phase, Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
+for the workspace. All runs can enter this phase, including [speculative plans](/cloud-docs/run/remote-operations#speculative-plans). During this phase, Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
 
 -> **Note:** The information sent to the configured external system includes the [JSON output](/internals/json-format) of the Terraform plan.
 

@@ -19,9 +19,9 @@ Terraform Cloud's private registry works similarly to the [public Terraform Regi
 
 ## Private Providers and Modules
 
-[Private providers](/cloud-docs/registry/publish-providers) and [private modules](/cloud-docs/registry/publish) are hosted on an organization's private registry and are only available to members of that organization. In Terraform Enterprise, private modules are also available to other organizations that are configured to [share modules](/enterprise/admin/application/module-sharing) with that organization.
+[Private providers](/cloud-docs/registry/publish-providers) and [private modules](/cloud-docs/registry/publish-modules) are hosted on an organization's private registry and are only available to members of that organization. In Terraform Enterprise, private modules are also available to other organizations that are configured to [share modules](/enterprise/admin/application/module-sharing) with that organization.
 
 
 ## Managing Usage
 
-You can create [Sentinel policies](/cloud-docs/sentinel) to manage how members of your organization can use modules from the private registry. For example, you can mandate that all non-root modules in Terraform configurations must be private or public modules from your own private registry. You can even require that all of those modules use recent versions with a policy like [this example on GitHub](https://github.com/hashicorp/terraform-guides/blob/master/governance/third-generation/cloud-agnostic/http-examples/use-recent-versions-from-pmr.sentinel).
+You can create [Sentinel policies](/cloud-docs/policy-enforcement) to manage how members of your organization can use modules from the private registry. For example, you can mandate that all non-root modules in Terraform configurations must be private or public modules from your own private registry. You can even require that all of those modules use recent versions with a policy like [this example on GitHub](https://github.com/hashicorp/terraform-guides/blob/master/governance/third-generation/cloud-agnostic/http-examples/use-recent-versions-from-pmr.sentinel).
