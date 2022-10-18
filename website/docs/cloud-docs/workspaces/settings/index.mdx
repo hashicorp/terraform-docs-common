@@ -194,3 +194,11 @@ In almost all cases, you should perform both actions in that order when destroyi
 Queueing a destroy plan destroys the infrastructure managed by a workspace. If you don't do this, the infrastructure resources will continue to exist but will become unmanaged; you'll need to go into your infrastructure providers to delete the resources manually.
 
 Before queueing a destroy plan, you must enable the 'Allow destroy plans' setting and click the "Save settings" button.
+
+### Deleting a Workspace With Resources Under Management
+
+Terraform does not automatically destroy managed infrastructure when you delete a workspace. 
+
+After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/cli/commands/import) them into another Terraform workspace.
+
+By default, [workspace administrators](/cloud-docs/users-teams-organizations/permissions#workspace-admins) can only delete unlocked workspaces that are not managing any infrastructure. Organization owners can force delete a workspace to override these protections. Organization owners can also configure the [organization's settings](/cloud-docs/users-teams-organizations/organizations#general) to let workspace administrators force delete their own workspaces.
