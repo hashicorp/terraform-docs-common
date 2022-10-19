@@ -25,3 +25,5 @@ vendor/
 coverage.txt
 
 .vscode/
+
+website-preview
