@@ -19,7 +19,7 @@ general information about how Terraform uses state [here][ref-tf-state].
 time, the usefulness of this import is somewhat limited, as it will usually give
 you the state _prior_ to the plan the policy check is currently being run for.
 Depending on your needs, you may find the
-[`applied`](/cloud-docs/sentinel/import/tfplan#value-applied) collection in `tfplan` more useful,
+[`applied`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-applied) collection in `tfplan` more useful,
 which will give you a _predicted_ state by applying plan data to the data found
 here. The one exception to this rule is _data sources_, which will always give
 up to date data here, as long as the data source could be evaluated at plan
@@ -178,7 +178,7 @@ particular type from all modules using the `tfplan` import. By changing `tfplan`
 in this function to `tfstate`, you could make a similar function find all
 resources of a specific type in the current state.
 
-[iterate-over-modules]: /cloud-docs/sentinel/import/#iterate-over-modules-and-find-resources
+[iterate-over-modules]: /cloud-docs/policy-enforcement/sentinel#sentinel-imports
 
 ### Value: `terraform_version`
 
@@ -198,14 +198,14 @@ import "tfstate"
 main = rule { tfstate.terraform_version matches "^0\\.11\\.\\d+$" }
 ```
 
--> **NOTE:** This value is also available via the [`tfplan`](/cloud-docs/sentinel/import/tfplan)
+-> **NOTE:** This value is also available via the [`tfplan`](/cloud-docs/policy-enforcement/sentinel/import/tfplan)
 import, which will be more current when a policy check is run against a plan.
 It's recommended you use the value in `tfplan` until Terraform Cloud
 supports policy checks in other stages of the workspace lifecycle. See the
 [`terraform_version`][import-tfplan-terraform-version] reference within the
 `tfplan` import for more details.
 
-[import-tfplan-terraform-version]: /cloud-docs/sentinel/import/tfplan#value-terraform_version
+[import-tfplan-terraform-version]: /cloud-docs/policy-enforcement/sentinel/import/tfplan#value-terraform_version
 
 ## Namespace: Module
 
