@@ -34,7 +34,7 @@ page_title: Workspaces - API Docs - Terraform Cloud
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[speculative plans]: /cloud-docs/run/#speculative-plans
+[speculative plans]: /cloud-docs/run/remote-operations#speculative-plans
 
 # Workspaces API
 
@@ -689,7 +689,7 @@ This endpoint lists workspaces in the organization.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter              | Description                                                                                                                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2070,7 +2070,7 @@ The list returned by this endpoint is subject to the caller's normal workspace p
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2429,7 +2429,7 @@ This endpoint returns the tags that are currently associated to a workspace.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2617,7 +2617,7 @@ Status code `204`.
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 * `organization` - The full organization record.
 * `current_configuration_version` - The last configuration this workspace received, excluding plan-only configurations. Terraform uses this configuration for new runs, unless you provide a different one.

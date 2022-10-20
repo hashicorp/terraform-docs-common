@@ -49,7 +49,7 @@ policy to pass if the workspace ends in `-dev`). While this is useful for
 extremely granular exceptions, the workspace name could be edited by
 workspace admins, effectively bypassing the policy. In this case, where an
 extremely strict separation of policy managers vs. workspace practitioners is
-required, using [policy sets](/cloud-docs/sentinel/manage-policies)
+required, using [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets)
 to only enforce the policy on non-development workspaces is more appropriate.
 
 [run-glossary]: /docs/glossary#run
@@ -116,7 +116,7 @@ Provides the targets specified using the [`-replace`](/cli/commands/plan#resourc
 
 * **Value Type:** Boolean.
 
-Specifies whether the plan associated with the run is a [speculative plan](/cloud-docs/run/#speculative-plans) only.
+Specifies whether the plan associated with the run is a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) only.
 
 ### Value: `target_addrs`
 
