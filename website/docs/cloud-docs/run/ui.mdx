@@ -19,7 +19,7 @@ In the UI and VCS workflow, every workspace is associated with a specific branch
 
 Terraform Cloud also performs a [speculative plan][] when a pull request is opened against that branch. Terraform Cloud posts a link to the plan in the pull request, and re-runs the plan if the pull request is updated.
 
-[speculative plan]: /cloud-docs/run/#speculative-plans
+[speculative plan]: /cloud-docs/run/remote-operations#speculative-plans
 
 The Terraform code for a normal run always comes from version control, and is always associated with a specific commit.
 
@@ -39,7 +39,7 @@ Manually starting a run requires permission to queue plans for the workspace. ([
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-If the workspace has a plan that is still in the [plan stage](/cloud-docs/run/states#4-the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the "Current Run" page and click "Run this plan now". Be aware that this will terminate the current plan and unlock the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan is known not to have all the desired changes.
+If the workspace has a plan that is still in the [plan stage](/cloud-docs/run/states#the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the **Current Run** page and click **Run this plan now**. Be aware that this action terminates the current plan and unlocks the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan does not have all the desired changes.
 
 ## Confirming or Discarding Plans
 

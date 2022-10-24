@@ -7,7 +7,7 @@ description: >-
 
 # Terraform Configurations in Terraform Cloud Workspaces
 
-[remote operations]: /cloud-docs/run
+[remote operations]: /cloud-docs/run/remote-operations
 
 [execution mode]: /cloud-docs/workspaces/settings#execution-mode
 
@@ -29,7 +29,7 @@ There are two ways to provide configuration versions for a workspace:
 
   A VCS connection can be configured [when a workspace is created](/cloud-docs/workspaces/creating), or later in its [version control settings](/cloud-docs/workspaces/settings/vcs).
 
-  -> **Note:** When a workspace is connected to a VCS repository, directly uploaded configuration versions can only be used for [speculative plans](/cloud-docs/run/#speculative-plans). This helps ensure your VCS remains the source of truth for all real infrastructure changes.
+  -> **Note:** When a workspace is connected to a VCS repository, directly uploaded configuration versions can only be used for [speculative plans](/cloud-docs/run/remote-operations#speculative-plans). This helps ensure your VCS remains the source of truth for all real infrastructure changes.
 
 - **With direct uploads.** You can use a variety of tools to directly upload configuration content to Terraform Cloud:
 

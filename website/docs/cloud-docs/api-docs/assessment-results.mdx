@@ -24,9 +24,11 @@ description: >-
 
 # Assessment Results API
 
-An Assessment Result is the record of an instance of continuous validation.
+An Assessment Result is the summary record of an instance of health assessment. Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Refer to [Health](/cloud-docs/workspaces/health) for more details.
 
 ## Show Assessment Result
+
+Any user with read access to a workspace can retrieve assessment results for the workspace.
 
 `GET api/v2/assessment-results/:assessment_result_id`
 
@@ -92,7 +94,7 @@ $ curl \
 
 ### JSON Schema file
 
-The following endpoint returns the JSON [provider schema](https://www.terraform.io/cli/commands/providers/schema) associated with the assessment result.
+The following endpoint returns the JSON [provider schema](/cli/commands/providers/schema) associated with the assessment result.
 
 `GET api/v2/assessment-results/:assessment_result_id/json-schema`
 
