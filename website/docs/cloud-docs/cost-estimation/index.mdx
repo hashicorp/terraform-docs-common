@@ -31,7 +31,7 @@ Note that this is just an estimate; some resources don't have cost information a
 
 ## Verifying Costs in Policies
 
-You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
+You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
 
 ```python
 import "tfrun"

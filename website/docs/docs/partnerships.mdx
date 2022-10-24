@@ -29,9 +29,9 @@ Our Workflow Partners typically have the following use cases:
 - **CI/CD:** Partners focused on continuous integration and continuous delivery/deployment.
 - **VCS:** Partners focused on tracking and managing software code changes.
 
-Most workflow partners create [run tasks](/cloud-docs/integrations/run-tasks) that let them integrate their services directly into the Terraform workflow. [Run tasks](/cloud-docs/integrations/run-tasks) let Terraform Cloud execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can configure run tasks to execute during the post-plan and the pre-plan (public beta) run stages. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
+Most workflow partners create [run tasks](/cloud-docs/integrations/run-tasks) that let them integrate their services directly into the Terraform workflow. [Run tasks](/cloud-docs/integrations/run-tasks) let Terraform Cloud execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can configure run tasks to execute during the pre-plan, post-plan and the pre-apply run stages. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
 
-Most workflow partners create run tasks that let them integrate their services directly into the Terraform workflow. Most workflow partners integrate with the Terraform workflow itself. Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. This integration offers much more extensibility to Terraform Cloud customers, enabling them to integrate your services into the Terraform Cloud workflow. This feature allows users to add and execute these tasks during the post-plan and the new pre-plan and pre-apply stages. Eventually, we will open the third phase of this workflow to Terraform Cloud users, the post-apply stage. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
+Most workflow partners create run tasks that let them integrate their services directly into the Terraform workflow. Most workflow partners integrate with the Terraform workflow itself. Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. This integration offers much more extensibility to Terraform Cloud customers, enabling them to integrate your services into the Terraform Cloud workflow. This feature allows users to add and execute these tasks during the pre-plan, post-plan and pre-apply stages. Eventually, we will open the third phase of this workflow to Terraform Cloud users, the post-apply stage. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
 
 ![Integration program diagram](/img/docs/terraform-integration-program-diagram.png)
 
@@ -150,13 +150,11 @@ If a vendor chooses not to support their provider, the provider's tag may change
 
 ## Terraform Cloud Integrations
 
-Run tasks allow Terraform Cloud to execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can add and execute these tasks during the pre-plan (public beta), pre-apply (public beta) and post-plan run stages. To execute a run task, Terraform Cloud sends an API payload to the external system. This payload contains a collection of run-related information and a callback URL that the external system can use to send updates back to Terraform Cloud.
+Run tasks allow Terraform Cloud to execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can add and execute these tasks during the pre-plan, post-plan and the pre-apply run stages. To execute a run task, Terraform Cloud sends an API payload to the external system. This payload contains a collection of run-related information and a callback URL that the external system can use to send updates back to Terraform Cloud.
 
 The external system can then use this run information and respond back to Terraform Cloud with a passed or failed status. Terraform Cloud uses this status response to determine if a run should proceed, based on the task's enforcement settings within a workspace.
 
 Partners who successfully complete the Terraform Cloud integration checklist obtain a Terraform Cloud badge. This badge signifies HashiCorp validated the integration under ideal conditions and the partner is a member of the HashiCorp Technology Partner Program.
-
-- Note: As of September 2022, pre-plan and pre-apply run tasks are available only as a public beta feature, are subject to change, and not all customers see this functionality in their Terraform Cloud organization. This feature's enablement is the default for our Terraform Cloud Business tier customers. If you have a customer who wants to run tasks and are not a current Terraform Cloud Business tier customer, please ask them to [sign up for the public beta](https://docs.google.com/forms/d/e/1FAIpQLSf3JJIkU05bKWov2wXa9c-QV524WNaHuGIk7xjHnwl5ceGw2A/viewform).
 
 <ImageConfig height={200} width={200} hideBorder>
 
@@ -183,13 +181,11 @@ For partners who are new to working with Hashicorp, we recommend [signing up for
 
 ### 2. Develop and Test
 
-Partners should build an integration using the [run tasks APIs in Terraform Cloud](/cloud-docs/api-docs/run-tasks). To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available). For a more hands-on experience with run tasks follow the [HCP Packer run tasks learn guide here](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task?in=terraform/cloud).
+Partners should build an integration using the [run tasks APIs in Terraform Cloud](/cloud-docs/api-docs/run-tasks/run-tasks). To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available). For a more hands-on experience with run tasks follow the [HCP Packer run tasks learn guide here](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task?in=terraform/cloud).
 
 For the run tasks API documentation [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
 
 ![RunTask Diagram](/img/docs/post-plan-runtask-diagram.png)
-
--> **Note:** Pre-plan and pre-apply run tasks are only available as a public beta. [Updated September 1, 2022]
 
 To better understand how pre-plan run task enhances the Terraform workflow, refer to the diagram of pre-plan tasks. For additional API resources, [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results).
 

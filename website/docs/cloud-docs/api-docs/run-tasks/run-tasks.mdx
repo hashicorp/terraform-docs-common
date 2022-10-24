@@ -40,7 +40,7 @@ page_title: Run Tasks - API Docs - Terraform Cloud
 
 [Run tasks](/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
 
-Refer to [run tasks Integration](/cloud-docs/api-docs/run-tasks-integration) for the API endpoints related triggering run tasks and the expected integration response.
+Refer to [run tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) for the API endpoints related triggering run tasks and the expected integration response.
 
 ## Required Permissions
 
@@ -157,7 +157,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                                                                                                            |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -427,8 +427,6 @@ This involves setting the run task enforcement level, which determines whether t
 
 You may also configure the run task to begin during a specific [run stage](/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/cloud-docs/run/states#the-post-plan-stage) by default.
 
--> **Note:** Configuring the [run stage](/cloud-docs/run/states) for a run task is in beta.
-
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
 | [204][] | Nothing                   | The request was successful                                             |
@@ -448,8 +446,6 @@ Properties without a default value are required.
 | `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, or `"pre_apply"`. |
 | `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
 | `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
-
--> **Note:** The `data.attributes.stage` key is in beta
 
 ### Sample Payload
 
@@ -531,7 +527,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                 |
 | -------------- | --------------------------------------------------------------------------- |

@@ -34,7 +34,7 @@ page_title: Workspaces - API Docs - Terraform Cloud
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[speculative plans]: /cloud-docs/run/#speculative-plans
+[speculative plans]: /cloud-docs/run/remote-operations#speculative-plans
 
 # Workspaces API
 
@@ -129,7 +129,7 @@ _With a VCS repository_
   }
 }
 ```
-_Using Git Tags
+_Using Git Tags_
 
 Terraform Cloud triggers a run when you push a Git tag that matches the regular expression (SemVer): `1.2.3`, `22.33.44`, etc.
 
@@ -281,7 +281,8 @@ _Without a VCS repository_
         "can-unlock": true,
         "can-update": true,
         "can-update-variable": true,
-        "can-read-assessment-result": true
+        "can-read-assessment-result": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -391,7 +392,8 @@ _With a VCS repository_
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -592,7 +594,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -686,7 +689,7 @@ This endpoint lists workspaces in the organization.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter              | Description                                                                                                                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -743,7 +746,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -857,7 +861,8 @@ $ curl \
           "can-read-variable": true,
           "can-unlock": true,
           "can-update": true,
-          "can-update-variable": true
+          "can-update-variable": true,
+          "can-force-delete" : true
         },
         "plan-duration-average": null,
         "policy-check-failures": null,
@@ -1003,7 +1008,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": 20000,
       "policy-check-failures": null,
@@ -1097,9 +1103,40 @@ $ curl \
 }
 ```
 
-## Delete a workspace
+## Safe Delete a workspace
 
-A workspace can be deleted via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources. 
+
+You can safe delete a workspace using two endpoints that behave identically. The first endpoint identifies a workspace with the workspace ID, and the other identifies the workspace by its name and organization.
+
+`POST /workspaces/:workspace_id/actions/safe-delete`
+
+| Parameter       | Description                       |
+| --------------- | --------------------------------- |
+| `:workspace_id` | The ID of the workspace to delete. |
+
+`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete` 
+
+| Parameter            | Description                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------- |
+| `:organization_name` | The name of the workspace's organization.                                      |
+| `:name`              | The name of the workspace to delete, which can only include letters, numbers, `-`, and `_`. |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
+| [409][] | [JSON API error object][] | Workspace is not safe to delete because it is managing resources                                       |
+
+## Force Delete a workspace
+
+During a force delete, Terraform Cloud removes the specified workspace without checking whether it is managing resources. We recommend using the [safe delete endpoint](#safe-delete-a-workspace) instead, when possible.
+
+!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it. 
+
+By default, only organization owners can force delete workspaces. Organization owners can also update [organization's settings](/cloud-docs/users-teams organizations/organizations#general) to let workspace admins force delete their own workspaces.
+
+You can use two endpoints to force delete a workspace, which behave identically. One endpoint identifies the workspace with its workspace ID and the other endpoint identifies the workspace with its name and organization.
 
 `DELETE /workspaces/:workspace_id`
 
@@ -1113,6 +1150,12 @@ A workspace can be deleted via two endpoints, which behave identically. One refe
 | -------------------- | ------------------------------------------------------------------------------------------- |
 | `:organization_name` | The name of the organization the workspace belongs to.                                      |
 | `:name`              | The name of the workspace to delete, which can only include letters, numbers, `-`, and `_`. |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [403][] | [JSON API error object][] | Not authorized to perform a force delete on the workspace             |
+| [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
 
 ### Sample Request
 
@@ -1207,7 +1250,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1377,7 +1421,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1538,7 +1583,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1718,7 +1764,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -1907,7 +1954,8 @@ $ curl \
         "can-read-variable": true,
         "can-unlock": true,
         "can-update": true,
-        "can-update-variable": true
+        "can-update-variable": true,
+        "can-force-delete" : true
       },
       "plan-duration-average": null,
       "policy-check-failures": null,
@@ -2022,7 +2070,7 @@ The list returned by this endpoint is subject to the caller's normal workspace p
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2077,7 +2125,8 @@ $ curl \
           "can-read-variable": true,
           "can-unlock": true,
           "can-update": true,
-          "can-update-variable": true
+          "can-update-variable": true,
+          "can-force-delete" : true
         },
         "plan-duration-average": null,
         "policy-check-failures": null,
@@ -2380,7 +2429,7 @@ This endpoint returns the tags that are currently associated to a workspace.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2568,7 +2617,7 @@ Status code `204`.
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 * `organization` - The full organization record.
 * `current_configuration_version` - The last configuration this workspace received, excluding plan-only configurations. Terraform uses this configuration for new runs, unless you provide a different one.
