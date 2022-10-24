@@ -698,6 +698,7 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 | `search[name]`         | **Optional.** Allows searching the organization's workspaces by name.                                                                                                               |
 | `search[tags]`         | **Optional.** If specified, restricts results to workspaces with that tag. If multiple comma separated values are specified, results matching all of the tags are returned.         |
 | `search[exclude-tags]` | **Optional.** If specified, results exclude workspaces with that tag. If multiple comma separated values are specified, workspaces with tags matching any of the tags are excluded. |
+| `search[wildcard-name]`| **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with substring `-prod-` regardless of prefix and/or suffix.              |
 
 ### Sample Request
 
@@ -1105,7 +1106,7 @@ $ curl \
 
 ## Safe Delete a workspace
 
-When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources. 
+When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources.
 
 You can safe delete a workspace using two endpoints that behave identically. The first endpoint identifies a workspace with the workspace ID, and the other identifies the workspace by its name and organization.
 
@@ -1115,7 +1116,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 | --------------- | --------------------------------- |
 | `:workspace_id` | The ID of the workspace to delete. |
 
-`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete` 
+`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete`
 
 | Parameter            | Description                                                                                 |
 | -------------------- | ------------------------------------------------------------------------------------------- |
@@ -1132,7 +1133,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 
 During a force delete, Terraform Cloud removes the specified workspace without checking whether it is managing resources. We recommend using the [safe delete endpoint](#safe-delete-a-workspace) instead, when possible.
 
-!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it. 
+!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it.
 
 By default, only organization owners can force delete workspaces. Organization owners can also update [organization's settings](/cloud-docs/users-teams organizations/organizations#general) to let workspace admins force delete their own workspaces.
 
