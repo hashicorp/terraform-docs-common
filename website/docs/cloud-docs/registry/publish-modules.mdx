@@ -55,14 +55,16 @@ You can publish modules through the UI as shown below or with the [Registry Modu
 
 To publish a new module:
 
-1. Click **Registry** in the main navigation bar. The **Registry** page appears.
+1. Click **Registry**. The **Registry** page appears.
 
 1. Click **Publish** and select **Module**.
 
+**SCREENSHOT FOR DELETION**
    ![Terraform Cloud screenshot: the "registry" button and the "+Add Module" button](/img/docs/publish-add-button.png)
 
    The **Add Module** page appears with a list of available repositories.
 
+**SCREENSHOT FOR DELETION**
    ![Terraform Cloud screenshot: the "add module" page, with a repository name entered](/img/docs/publish-add-module.png)
 
 1. Select the repository containing the module you want to publish.
@@ -73,6 +75,7 @@ To publish a new module:
 
    Terraform Cloud displays a loading page while it imports the module versions and then takes you to the new module's details page. On the details page, you can view available versions, read documentation, and copy a usage example.
 
+**SCREENSHOT FOR DELETION**
    ![Terraform Cloud screenshot: a module details page](/img/docs/publish-module-details.png)
 
 ## Releasing New Versions of a Module
@@ -99,6 +102,7 @@ You can delete individual versions of a module or the entire module. If deleting
    - **Delete all versions for this provider for this module:** Deletes the entire module for a single provider. This is important if you have modules with the same name but with different providers. For example, if you have module repos named `terraform-aws-appserver` and `terraform-azure-appserver`, the registry treats them as alternate providers of the same `appserver` module.
    - **Delete all providers and versions for this module:** Deletes all modules with this name, even if they are from different providers. For example, both `terraform-aws-appserver` and `terraform-azure-appserver` would be deleted.
 
+**SCREENSHOT FOR DELETION**
    ![Terraform Cloud screenshot: the deletion dialog](/img/docs/publish-delete.png)
 
 1. Type the module name and click **Delete**.
