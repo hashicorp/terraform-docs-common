@@ -698,7 +698,7 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 | `search[name]`         | **Optional.** Allows searching the organization's workspaces by name.                                                                                                               |
 | `search[tags]`         | **Optional.** If specified, restricts results to workspaces with that tag. If multiple comma separated values are specified, results matching all of the tags are returned.         |
 | `search[exclude-tags]` | **Optional.** If specified, results exclude workspaces with that tag. If multiple comma separated values are specified, workspaces with tags matching any of the tags are excluded. |
-| `search[wildcard-name]`| **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with grouped chars `-prod-` regardless of prefix and/or suffix.              |
+| `search[wildcard-name]`| **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with substring `-prod-` regardless of prefix and/or suffix.              |
 
 ### Sample Request
 
