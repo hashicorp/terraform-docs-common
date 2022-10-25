@@ -104,14 +104,12 @@ Terraform Cloud does not allow you to change the API URL for an existing VCS con
 
 ### Reauthorizing VCS OAuth Providers
 
-In the event a VCS OAuth connection breaks, you can reauthorize an existing VCS provider while retaining any vcs connected resources. i.e (Workspaces)
+If a VCS OAuth connection breaks, you can reauthorize an existing VCS provider while retaining any VCS connected resources, like workspaces. We recommend only using this feature to fix broken VCS connections. We also recommend reauthorizing using the same VCS account to avoid permission changes to your repositories. 
 
-To utilize this feature, do the following:
-- Navigate to the VCS Provider page within your organization settings and you should see an "Reauthorize" button on the existing VCS provider. 
-- After pressing the Reauthorize button, you will receive a confirmation dialog to confirm the action.
-- Once confirmed, you will be redirected to your VCS Provider and be prompted for your to authorization.
-
--> **Note:** We recommend only using this feature to fix broken vcs connections. Additionally we recommend using the same VCS authorized account as when the connection was first created, to avoid changes in permissioning to your repositories. 
+To reauthorize a VCS connection, complete the following steps:
+1. Go to your organization's settings and click **Providers** under **Version Control**.
+1. Click **Reauthorize** in the **OAuth Token ID** column. 
+1. Confirm the reauthorization. Terraform Cloud redirects you to your VCS Provider where you can reauthorize the connection.
 
 ## Certificate Errors on Terraform Enterprise
 
