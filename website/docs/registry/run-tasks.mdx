@@ -5,7 +5,7 @@ description: |-
 ---
 
 # Run Tasks
-Terraform Cloud [run tasks](/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services into Terraform runs. 
+Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services into Terraform runs. 
 
 Each run task in a [workspace](/terraform/cloud-docs/workspaces) sends information to an external service at a specific run stage, such as after Terraform completes the plan. The external service processes the information and then sends a passed or failed status back to Terraform Cloud. Depending on the workspace’s configuration, failed run tasks can stop runs and prevent Terraform from provisioning infrastructure. 
 
@@ -27,9 +27,7 @@ To add your run task to the Terraform registry:
 
 1. Sign our Technology Partner Agreement to become a HashiCorp technology partner. HashiCorp sends you the agreement after you complete Technology Program Application.
 
-1. Build and test your run task. 
-
-This process requires choosing which stages of the Terraform run cycle you want your run task to support. For example, you may want to let users configure your run task to execute either before or after Terraform Cloud completes the plan. We also recommend thoroughly testing your run task in both passing and failing scenarios. Refer to [Run Tasks Integration](cloud-docs/api-docs/run-tasks/run-task-stages-and-results) for more information.
+1. Build and test your run task. This process requires choosing which stages of the Terraform run cycle you want your run task to support. For example, you may want to let users configure your run task to execute either before or after Terraform Cloud completes the plan. We also recommend thoroughly testing your run task in both passing and failing scenarios. Refer to [Run Tasks Stages and Results](/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) for more information.
 
 1. Provide a functional demonstration to a member of the HashiCorp Technology Alliances team. 
 
