@@ -19,7 +19,7 @@ Terraform Cloud runs support many of the same modes and options available in the
 
 ## Refresh-Only Mode
 
-> **Hands-on:** Try the [Use Refresh-Only Mode to Sync Terraform State](https://learn.hashicorp.com/tutorials/terraform/refresh) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Use Refresh-Only Mode to Sync Terraform State](https://learn.hashicorp.com/tutorials/terraform/refresh) tutorial.
 
 -> **Version note:** Refresh-only support requires a workspace using at least Terraform CLI v0.15.4.
 
@@ -56,7 +56,7 @@ A no-operation (empty) apply enables Terraform Cloud to apply a run from a plan 
 
 ## Plan Only/Speculative Plan
 
-This option creates a [speculative plan](/cloud-docs/run#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it. You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
+This option creates a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it. You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
 
 - **API:** Set the `plan-only` field to `true` and specify an available terraform version using the `terraform-version` field.
 - **UI:** Open the workspace's **Actions** menu, select **Start new plan**, and then choose **Plan only** as the run type.
@@ -70,8 +70,8 @@ This option creates a [speculative plan](/cloud-docs/run#speculative-plans). The
 
 The usual caveats for targeting in local operations imply some additional limitations on Terraform Cloud features for remote plans created with targeting:
 
-- [Sentinel](/cloud-docs/sentinel) policy checks for targeted plans will see only the selected subset of resource instances planned for changes in [the `tfplan` import](/cloud-docs/sentinel/import/tfplan) and [the `tfplan/v2` import](/cloud-docs/sentinel/import/tfplan-v2), which may cause an unintended failure for any policy that requires a planned change to a particular resource instance selected by its address.
+- [Sentinel](/cloud-docs/policy-enforcement) policy checks for targeted plans will see only the selected subset of resource instances planned for changes in [the `tfplan` import](/cloud-docs/policy-enforcement/sentinel/import/tfplan) and [the `tfplan/v2` import](/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2), which may cause an unintended failure for any policy that requires a planned change to a particular resource instance selected by its address.
 
 - [Cost Estimation](/cloud-docs/cost-estimation) is disabled for any run created with `-target` set, to prevent producing a misleading underestimate of cost due to resource instances being excluded from the plan.
 
-You can disable or constrain use of targeting in a particular workspace using a Sentinel policy based on [the `tfrun.target_addrs` value](/cloud-docs/sentinel/import/tfrun#value-target_addrs).
+You can disable or constrain use of targeting in a particular workspace using a Sentinel policy based on [the `tfrun.target_addrs` value](/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs).

@@ -10,7 +10,7 @@ Terraform configurations can pull in Terraform modules from [a variety of differ
 
 To access a private Git repository, Terraform either needs login credentials (for HTTPS access) or an SSH key. Terraform Cloud can store private SSH keys centrally, and you can easily use them in any workspace that clones modules from a Git server.
 
--> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/cloud-docs/vcs/#ssh-keys).
+-> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/cloud-docs/vcs#ssh-keys).
 
 Terraform Cloud manages SSH keys used to clone Terraform modules at the organization level, and allows multiple keys to be added for the organization. You can add or delete keys via the organization's settings. Once a key is uploaded, the text of the key is not displayed to users.
 
@@ -43,8 +43,6 @@ To delete a key, find it in the list of keys and click its "Delete" button. Befo
 ## Assigning Keys to Workspaces
 
 To assign a key to a workspace, navigate to that workspace's page and choose "SSH Key" from the "Settings" menu.
-
-![Terraform Cloud screenshot: the settings menu on a workspace's page](/img/docs/settings-tabs.png)
 
 Select a named key from the "SSH Key" dropdown menu, then click the "Update SSH key" button.
 

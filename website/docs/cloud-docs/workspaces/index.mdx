@@ -13,7 +13,7 @@ When run locally, Terraform manages each collection of infrastructure with a per
 
 Terraform Cloud manages infrastructure collections with _workspaces_ instead of directories. A workspace contains everything Terraform needs to manage a given collection of infrastructure, and separate workspaces function like completely separate working directories.
 
-> **Hands-on:** Try the [Create a Workspace](https://learn.hashicorp.com/tutorials/terraform/cloud-workspace-create?in=terraform/cloud-get-started) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Create a Workspace](https://learn.hashicorp.com/tutorials/terraform/cloud-workspace-create?in=terraform/cloud-get-started) tutorial.
 
 ## Workspace Contents
 
@@ -36,7 +36,8 @@ In addition to the basic Terraform content, Terraform Cloud keeps some additiona
 
 For workspaces with remote operations enabled (the default), Terraform Cloud performs Terraform runs on its own disposable virtual machines, using that workspace's configuration, variables, and state.
 
-Refer to [Terraform Runs and Remote Operations](/cloud-docs/run) for more details.
+Refer to [Terraform Runs and Remote Operations](/cloud-docs/run/remote-operations) for more details.
+
 
 ## Terraform Cloud vs. Terraform CLI Workspaces
 
@@ -49,8 +50,6 @@ Both Terraform Cloud and Terraform CLI have features called workspaces, but they
 ## Listing and Filtering Workspaces
 
 Click **Workspaces** in the top navigation bar. Terraform Cloud shows a list of all workspaces in the current organization.
-
-![Screenshot: the list of workspaces](/img/docs/index-list.png)
 
 This list only includes workspaces where the current user account has permission to read runs. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -77,8 +76,21 @@ For example, the code that manages your production environment's infrastructure 
 
 Much like splitting monolithic applications into smaller microservices, this enables teams to make changes in parallel. In addition, it makes it easier to re-use configurations to manage other environments of infrastructure ("app1-dev," etc.).
 
-In Terraform Enterprise, administrators can use [Admin Settings](/cloud-docs/api-docs/admin/settings) to set the maximum number of workspaces for any single organization. You can also set a workspaces limit with the [tfe-terraform-provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization#workspace_limit).
+In Terraform Enterprise, administrators can use [Admin Settings](/enterprise/api-docs/admin/settings) to set the maximum number of workspaces for any single organization. You can also set a workspaces limit with the [tfe-terraform-provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization#workspace_limit).
 
 ## Creating Workspaces
 
 You can create workspaces through the [Terraform Cloud UI](/cloud-docs/workspaces/creating), the [Workspaces API](/cloud-docs/api-docs/workspaces), or the [Terraform Cloud CLI integration](/cli/cloud).
+
+<!-- BEGIN: TFC:only name:health-assessments -->
+## Workspace Health
+
+-> **Note:** Health Assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing), and continuous validation is in beta.
+
+Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
+
+- Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file.
+- Continuous validation determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure.
+
+You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/cloud-docs/workspaces/health) in the workspaces documentation for more details.
+<!-- END: TFC:only name:health-assessments -->
