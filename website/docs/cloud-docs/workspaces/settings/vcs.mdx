@@ -83,9 +83,11 @@ You must include an additional `\` to escape the regex pattern when you manage y
 | **Version contains a prefix** | `\d+.\d+.\d+$`            | `\\d+.\\d+.\\d+$`        |
 | **Version contains a suffix** | `^\d+.\d+.\d+`            | `^\\d+.\\d+.\\d+`        |
 
+Runs will be triggered on all tags matching this pattern, regardless of the value in the [VCS Branch](#vcs-branch) setting
+
 ### VCS Branch
 
-This designates which branch of the repository Terraform Cloud should use in the workspace. If left blank, Terraform Cloud uses the repository's default branch.
+This designates which branch of the repository Terraform Cloud should use in the workspace if you are using [Always Trigger Runs](#always-trigger-runs) or [Only trigger runs when files in specified paths change](#only-trigger-runs-when-files-in-specified-paths-change). If left blank, Terraform Cloud uses the repository's default branch. If you are triggering runs when a [git tag is published](#trigger-runs-when-a-git-tag-is-published), all tags will trigger runs, regardless of what this field is set to.
 
 ### Automatic Speculative Plans
 
