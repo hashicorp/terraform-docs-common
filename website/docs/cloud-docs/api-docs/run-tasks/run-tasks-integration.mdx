@@ -17,7 +17,7 @@ page_title: Run Tasks Integration - API Docs - Terraform Cloud
 [Run tasks](/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle.
 This page lists the API endpoints used to trigger a run task and the expected response from the integration.
 
-Refer to [run tasks](/cloud-docs/api-docs/run-tasks) for the API endpoints to create and manage run tasks within Terraform Cloud.
+Refer to [run tasks](/cloud-docs/api-docs/run-tasks/run-tasks) for the API endpoints to create and manage run tasks within Terraform Cloud.
 
 ## Run Task Request
 
@@ -46,8 +46,8 @@ All request payloads contain the following properties.
 | ------------------------------- | ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `payload_version`               | integer | `1`                      | Schema version of the payload. Only `1` is supported.                                                       |
 | `access_token`                  | string  |                          | Bearer token to use when calling back to Terraform Cloud.                                                   |
-| `stage`                         | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/cloud-docs/run/states) when Terraform Cloud triggers the run task.  The `stage` property is in beta.                                            |
-| `is_speculative`                | bool    |                          | Whether the task is part of a [speculative run](/cloud-docs/run#speculative-plans).                         |
+| `stage`                         | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/cloud-docs/run/states) when Terraform Cloud triggers the run task.             |
+| `is_speculative`                | bool    |                          | Whether the task is part of a [speculative run](/cloud-docs/run/remote-operations#speculative-plans).       |
 | `task_result_id`                | string  |                          | ID of task result within Terraform Cloud.                                                                   |
 | `task_result_enforcement_level` | string  | `mandatory`, `advisory`  | Enforcement level for this task.                                                                            |
 | `task_result_callback_url`      | string  |                          | URL that should called back with the result of this task.                                                   |
@@ -66,8 +66,6 @@ All request payloads contain the following properties.
 | `vcs_commit_url`                | string  |                          | URL to the commit that triggered this run. This is `null` if the workspace does not a VCS repository.               |
 
 #### Pre-Plan Properties
-
--> **Note:** Pre-plan run tasks are in beta.
 
 Requests with `stage` set to `pre_plan` contain the following additional properties.
 

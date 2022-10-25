@@ -40,7 +40,7 @@ To perform an upload, a few user parameters must be set:
 - **path_to_content_directory** is the folder with the terraform configuration. There must be at least one `.tf` file in the root of this path.
 - **organization** is the organization name (not ID) for your Terraform Cloud organization.
 - **workspace** is the workspace name (not ID) in the Terraform Cloud organization.
-- **$TOKEN** is the API Token used for [authenticating with the Terraform Cloud API](/cloud-docs/api-docs/#authentication).
+- **$TOKEN** is the API Token used for [authenticating with the Terraform Cloud API](/cloud-docs/api-docs#authentication).
 
 This script extracts the `path_to_content_directory`, `organization`, and `workspace` from command line arguments, and expects the `$TOKEN` as an environment variable.
 
@@ -138,8 +138,6 @@ chmod +x ./terraform-enterprise-push.sh
 #!/bin/bash
 
 # Complete script for API-driven runs.
-# Documentation can be found at:
-# https://www.terraform.io/docs/cloud/run/api.html
 
 # 1. Define Variables
 

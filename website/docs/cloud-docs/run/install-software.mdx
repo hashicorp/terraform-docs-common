@@ -68,7 +68,7 @@ To use community providers or your own custom providers with Terraform versions 
 
 There are two ways to accomplish this:
 
-- Add the provider binary to the VCS repo (or manually-uploaded configuration version) for any workspace that uses it. Place the compiled `linux_amd64` version of the plugin at `terraform.d/plugins/linux_amd64/<PLUGIN NAME>` (as a relative path from the root of the working directory). The plugin name should follow the [naming scheme](/language/configuration-0-11/providers#plugin-names-and-versions) and the plugin file must have read and execute permissions. (Third-party plugins are often distributed with an appropriate filename already set in the distribution archive.)
+- Add the provider binary to the VCS repo (or manually-uploaded configuration version) for any workspace that uses it. Place the compiled `linux_amd64` version of the plugin at `terraform.d/plugins/linux_amd64/<PLUGIN NAME>` (as a relative path from the root of the working directory). The plugin name should follow the [naming scheme](/language/v1.1.x/configuration-0-11/providers#plugin-names-and-versions) and the plugin file must have read and execute permissions. (Third-party plugins are often distributed with an appropriate filename already set in the distribution archive.)
 
   You can add plugins directly to a configuration repo, or you can add them as Git submodules and symlink the executable files into `terraform.d/plugins/`. Submodules are a good choice when many workspaces use the same custom provider, since they keep your repos smaller. If using submodules, enable the ["Include submodules on clone" setting](/cloud-docs/workspaces/settings/vcs#include-submodules-on-clone) on any affected workspace.
 

@@ -9,7 +9,7 @@ description: >-
 
 -> **Note:** Cost estimation is a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
-> **Hands-on:** Try the [Control Costs with Policies](https://learn.hashicorp.com/tutorials/terraform/cost-estimation?in=terraform/cloud-get-started&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial on HashiCorp Learn.
+> **Hands-on:** Try the [Control Costs with Policies](https://learn.hashicorp.com/tutorials/terraform/cost-estimation?in=terraform/cloud-get-started) tutorial to practice enabling cost estimation and define a policy to check the total monthly delta.
 
 Terraform Cloud provides cost estimates for many resources found in your Terraform configuration. For each resource an hourly and monthly cost is shown, along with the monthly delta. The total cost and delta of all estimable resources is also shown.
 
@@ -31,7 +31,7 @@ Note that this is just an estimate; some resources don't have cost information a
 
 ## Verifying Costs in Policies
 
-You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
+You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
 
 ```python
 import "tfrun"
