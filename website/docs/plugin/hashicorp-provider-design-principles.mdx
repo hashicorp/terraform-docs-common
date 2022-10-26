@@ -41,8 +41,8 @@ The benefits of this practice include:
 Notes:
 
 - Dates and times should always be modeled in RFC 3339 whenever possible
-- Terraform does not support recursive types (but this can in some cases be modeled using a dynamic type)
-- Boolean attributes should be oriented so that true means to do something and false means not to do it, sometimes this means inverting the API
+- Terraform does not support recursive types (but sometimes you can model them using a dynamic type)
+- Boolean attributes should indicate that `true` means to do something and `false` means not to do it, sometimes using boolean attributes means inverting the API
 
 ## Resources should be importable
 
