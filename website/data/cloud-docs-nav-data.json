@@ -82,6 +82,7 @@
           { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
         ]
       },
+      { "title": "Projects", "path": "api-docs/projects" },
       { "title": "Project Team Access", "path": "api-docs/project-team-access" },
       { "title": "Runs", "path": "api-docs/run" },
       {
