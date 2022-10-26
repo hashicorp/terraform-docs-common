@@ -101,6 +101,16 @@ Terraform Cloud does not allow you to change the API URL for an existing VCS con
 1. [Delete each affected module](/cloud-docs/api-docs/private-registry/modules#delete-a-module), then [create a new module](/cloud-docs/api-docs/private-registry/modules#publish-a-private-module-from-a-vcs) from the new connection's version of the relevant repo.
 1. Delete the old VCS connection.
 
+
+### Reauthorizing VCS OAuth Providers
+
+If a VCS OAuth connection breaks, you can reauthorize an existing VCS provider while retaining any VCS connected resources, like workspaces. We recommend only using this feature to fix broken VCS connections. We also recommend reauthorizing using the same VCS account to avoid permission changes to your repositories. 
+
+To reauthorize a VCS connection, complete the following steps:
+1. Go to your organization's settings and click **Providers** under **Version Control**.
+1. Click **Reauthorize** in the **OAuth Token ID** column. 
+1. Confirm the reauthorization. Terraform Cloud redirects you to your VCS Provider where you can reauthorize the connection.
+
 ## Certificate Errors on Terraform Enterprise
 
 When debugging failures of VCS connections due to certifcate errors, running additional diagnostics using the OpenSSL command may provide more information about the failure.
