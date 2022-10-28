@@ -55,29 +55,33 @@ You can publish modules through the UI as shown below or with the [Registry Modu
 
 To publish a new module:
 
-1. Click **Registry** in the main navigation bar. The **Registry** page appears.
+  1.  Click **Registry** in the main navigation bar. The **Registry** page appears.
 
-1. Click **Publish** and select **Module**.
+  1.  Click **Publish** and select **Module**.
 
-   ![Terraform Cloud screenshot: the "registry" button and the "+Add Module" button](/img/docs/publish-add-button.png)
+    ![Terraform Cloud screenshot: the "registry" button and the "+Add Module" button](/img/docs/publish-add-button.png)
 
-   The **Add Module** page appears with a list of available repositories.
+    The **Add Module** page appears with a list of available repositories.
 
-   ![Terraform Cloud screenshot: the "add module" page, with a repository name entered](/img/docs/publish-add-module.png)
+    ![Terraform Cloud screenshot: the "add module" page, with a repository name entered](/img/docs/publish-add-module.png)
 
-1. Select the repository containing the module you want to publish.
+  1.  Select the repository containing the module you want to publish.
 
-   You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
+    You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
 
-1. (Optional) If this module is a [no-code ready module](/cloud-docs/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
+  <!-- BEGIN: TFC:only name:no-code -->
   
-    -> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
-    
-1. Click **Publish module**.
+  1.  (Optional) If this module is a [no-code ready module](/enterprise/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
 
-   Terraform Cloud displays a loading page while it imports the module versions and then takes you to the new module's details page. On the details page, you can view available versions, read documentation, and copy a usage example.
+  -> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
 
-   ![Terraform Cloud screenshot: a module details page](/img/docs/publish-module-details.png)
+  <!-- END: TFC:only name:no-code -->
+
+  1.  Click **Publish module**.
+
+    Terraform Cloud displays a loading page while it imports the module versions and then takes you to the new module's details page. On the details page, you can view available versions, read documentation, and copy a usage example.
+
+    ![Terraform Cloud screenshot: a module details page](/img/docs/publish-module-details.png)
 
 ## Releasing New Versions of a Module
 
