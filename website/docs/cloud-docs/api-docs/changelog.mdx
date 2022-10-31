@@ -7,8 +7,14 @@ page_id: api-changelog
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+## 2022-10-17
+
+* Updated the [Organizations API](/cloud-docs/api-docs/organizations) with the `allow-force-delete-workspaces`, which controls whether workspace administrators can delete workspaces with resources under management.
+* Updated the [Workspacess API](/cloud-docs/api-docs/workspaces) with a safe delete endpoint that guards against deleting workspaces that are managing resources.
+
 ### 2022-10-12
 
+* Update [Policy Checks](/cloud-docs/api-docs/policy-checks) with result counts and support for filtering policy set outcomes.
 * Update [Team Membership API](/cloud-docs/api-docs/team-members) to include adding and removing users from teams using organization membership ID.
 
 ### 2022-10-06
@@ -31,18 +37,18 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-06-23
 
-* Added the [Assessments](/cloud-docs/api-docs/assessments).
+* Added the [Assessments](/cloud-docs/api-docs/assessment-results).
 * Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
 [Notification Configurations](/cloud-docs/api-docs/notification-configurations#notification-triggers) to account for assessments.
 * Added new query parameter(s) to [List Runs endpoint](/cloud-docs/api-docs/run#list-runs-in-a-workspace).
 
 ### 2022-06-21
-* Updated [Admin Organizations](/cloud-docs/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
-* Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a filter parameter `filter[allowed_workspaces][name]` so that agent pools can be filtered by name of an associated workspace. The given workspace must be allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).
+* Updated [Admin Organizations](/enterprise/api-docs/admin/organizations) endpoints with new `workspace-limit` setting. This is available in Terraform Enterprise v202207-1 and later.
+* Updated [List Agent Pools](/cloud-docs/api-docs/agents#list-agent-pools) to accept a filter parameter `filter[allowed_workspaces][name]` so that agent pools can be filtered by name of an associated workspace. The given workspace must be allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).
 * Added new `organization-scoped` attribute and `allowed-workspaces` relationship to the request/response body of the below endpoints. This is available in Terraform Enterprise v202207-1 and later.
-  * [Show an Agent Pool](/cloud-docs/api-docs/agents/#show-an-agent-pool)
-  * [Create an Agent Pool](/cloud-docs/api-docs/agents/#create-an-agent-pool)
-  * [Update an Agent Pool](/cloud-docs/api-docs/agents/#update-an-agent-pool)
+  * [Show an Agent Pool](/cloud-docs/api-docs/agents#show-an-agent-pool)
+  * [Create an Agent Pool](/cloud-docs/api-docs/agents#create-an-agent-pool)
+  * [Update an Agent Pool](/cloud-docs/api-docs/agents#update-an-agent-pool)
 
 ### 2022-06-17
 * Updated [Creating a Run Task](/cloud-docs/workspaces/settings/run-tasks#creating-a-run-task) section to include the new description information for the run task to be configured.
@@ -50,7 +56,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-06-09
 
-* Updated [List Agent Pools](/cloud-docs/api-docs/agents/#list-agent-pools) to accept a search parameter `q`, so that agent pools can be searched by `name`. This is available in Terraform Enterprise v202207-1 and later.
+* Updated [List Agent Pools](/cloud-docs/api-docs/agents#list-agent-pools) to accept a search parameter `q`, so that agent pools can be searched by `name`. This is available in Terraform Enterprise v202207-1 and later.
 * Fixed [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add missing `search[tags]` query parameter.
 * Updated [List Workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) to add new `search[exclude_tags]` query parameter. This is available in Terraform Enterprise v202207-1 and later.
 
@@ -63,7 +69,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-05-04
 
-* Updated [Feature Sets](https://www.terraform.io/cloud-docs/api-docs/feature-sets#list-feature-sets) to add new `run-tasks` attribute.
+* Updated [Feature Sets](/cloud-docs/api-docs/feature-sets#list-feature-sets) to add new `run-tasks` attribute.
 
 ### 2022-05-03
 
@@ -98,7 +104,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2022-02-28
 
-* Introduced the [Registry Providers](/cloud-docs/api-docs/providers) endpoints to manage private providers for a private registry.
+* Introduced the [Registry Providers](/cloud-docs/api-docs/private-registry/providers) endpoints to manage private providers for a private registry.
 
 ### 2021-12-09
 
@@ -128,7 +134,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2021-11-18
 
-* Introduced the [Registry Providers](/cloud-docs/api-docs/providers) endpoint to manage public providers for a
+* Introduced the [Registry Providers](/cloud-docs/api-docs/private-registry/providers) endpoint to manage public providers for a
   private registry. These endpoints will be available in the following TFE Release: `v202112-1`
 
 ### 2021-09-12
@@ -166,20 +172,20 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ### 2021-06-8
 
-* Updated [Registry Module APIs](/cloud-docs/api-docs/modules).
+* Updated [Registry Module APIs](/cloud-docs/api-docs/private-registry/modules).
   * added `registry_name` scoped APIs.
   * added `organization_name` scoped APIs.
-  * added [Module List API](/cloud-docs/api-docs/modules#list-registry-modules-for-an-organization).
-  * updated [Module Delete APIs](/cloud-docs/api-docs/modules#delete-a-module) (see deprecation note below).
+  * added [Module List API](/cloud-docs/api-docs/private-registry/modules#list-registry-modules-for-an-organization).
+  * updated [Module Delete APIs](/cloud-docs/api-docs/private-registry/modules#delete-a-module) (see deprecation note below).
   * **CLOUD**: added public registry module related APIs.
-* **DEPRECATION**: The following [Registry Module APIs](/cloud-docs/api-docs/modules) have been replaced with newer apis and will be removed in the future.
-  * The following endpoints to delete modules are replaced with [Module Delete APIs](/cloud-docs/api-docs/modules#delete-a-module)
+* **DEPRECATION**: The following [Registry Module APIs](/cloud-docs/api-docs/private-registry/modules) have been replaced with newer apis and will be removed in the future.
+  * The following endpoints to delete modules are replaced with [Module Delete APIs](/cloud-docs/api-docs/private-registry/modules#delete-a-module)
     * `POST /registry-modules/actions/delete/:organization_name/:name/:provider/:version` replaced with `DELETE /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider/:version`
     * `POST /registry-modules/actions/delete/:organization_name/:name/:provider` replaced with `DELETE /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider`
     * `POST /registry-modules/actions/delete/:organization_name/:name` replaced with `DELETE /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name`
-  * `POST /registry-modules` replaced with [`POST /organizations/:organization_name/registry-modules/vcs`](/cloud-docs/api-docs/modules#publish-a-private-module-from-a-vcs)
-  * `POST /registry-modules/:organization_name/:name/:provider/versions` replaced with [`POST /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider/versions`](/cloud-docs/api-docs/modules#create-a-module-version)
-  * `GET /registry-modules/show/:organization_name/:name/:provider` replaced with [`GET /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider`](/cloud-docs/api-docs/modules#get-a-module)
+  * `POST /registry-modules` replaced with [`POST /organizations/:organization_name/registry-modules/vcs`](/cloud-docs/api-docs/private-registry/modules#publish-a-private-module-from-a-vcs)
+  * `POST /registry-modules/:organization_name/:name/:provider/versions` replaced with [`POST /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider/versions`](/cloud-docs/api-docs/private-registry/modules#create-a-module-version)
+  * `GET /registry-modules/show/:organization_name/:name/:provider` replaced with [`GET /organizations/:organization_name/registry-modules/:registry_name/:namespace/:name/:provider`](/cloud-docs/api-docs/private-registry/modules#get-a-module)
 
 ### 2021-05-27
 
@@ -192,7 +198,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ### 2021-04-16
 
 * Introduced [Controlled Remote State Access](https://www.hashicorp.com/blog/announcing-controlled-remote-state-access-for-terraform-cloud-and-enterprise).
-  * [Admin Settings](/cloud-docs/api-docs/admin/settings): added `default-remote-state-access` attribute.
+  * [Admin Settings](/enterprise/api-docs/admin/settings): added `default-remote-state-access` attribute.
   * [Workspaces](/cloud-docs/api-docs/workspaces):
     * added `global-remote-state` attribute.
     * added [Remote State Consumers](/cloud-docs/api-docs/workspaces#get-remote-state-consumers) relationship.
@@ -204,13 +210,13 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ### 2021-03-23
 
 * **ENTERPRISE**: `v202103-1` Introduced [Share Modules Across Organizations with Terraform Enterprise](https://www.hashicorp.com/blog/share-modules-across-organizations-terraform-enterprise).
-  * [Admin Organizations](/cloud-docs/api-docs/admin/organizations):
-    * added new query parameters to [List all Organizations endpoint](/cloud-docs/api-docs/admin/organizations#query-parameters)
+  * [Admin Organizations](/enterprise/api-docs/admin/organizations):
+    * added new query parameters to [List all Organizations endpoint](/enterprise/api-docs/admin/organizations#query-parameters)
     * added module-consumers link in `relationships` response
-    * added [update module consumers endpoint](/cloud-docs/api-docs/admin/organizations#update-an-organization-39-s-module-consumers)
-    * added [list module consumers endpoint](/cloud-docs/api-docs/admin/organizations#list-module-consumers-for-an-organization)
+    * added [update module consumers endpoint](/enterprise/api-docs/admin/organizations#update-an-organization-39-s-module-consumers)
+    * added [list module consumers endpoint](/enterprise/api-docs/admin/organizations#list-module-consumers-for-an-organization)
   * [Organizations](/cloud-docs/api-docs/organizations): added [Module Producers](/cloud-docs/api-docs/organizations#show-module-producers)
-  * **DEPRECATION**: [Admin Module Sharing](/cloud-docs/api-docs/admin/module-sharing): is replaced with a new JSON::Api compliant [endpoint](/cloud-docs/api-docs/admin/organizations#update-an-organization-39-s-module-consumers)
+  * **DEPRECATION**: [Admin Module Sharing](/enterprise/api-docs/admin/module-sharing): is replaced with a new JSON::Api compliant [endpoint](/enterprise/api-docs/admin/organizations#update-an-organization-39-s-module-consumers)
 
 ### 2021-03-18
 

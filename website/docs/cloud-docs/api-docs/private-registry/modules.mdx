@@ -62,7 +62,7 @@ The Terraform Cloud Module Registry endpoints differs from the Module Registry e
 - The `:namespace` parameter should be replaced with the organization name for private modules.
 - The private module registry discovery endpoints have the path prefix provided in the [discovery document](/registry/api-docs#service-discovery) which is currently `/api/registry/v1`.
 - The public module registry discovery endpoints have the path prefix provided in the [discovery document](/registry/api-docs#service-discovery) which is currently `/api/registry/public/v1`.
-- [Authentication](/cloud-docs/api-docs/#authentication) is handled the same as all other Terraform Cloud endpoints.
+- [Authentication](/cloud-docs/api-docs#authentication) is handled the same as all other Terraform Cloud endpoints.
 
 ### Sample Registry Request (private module)
 
@@ -113,7 +113,7 @@ Lists the modules that are available to a given organization. This includes the 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter            | Description                                                                                                                                                        |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

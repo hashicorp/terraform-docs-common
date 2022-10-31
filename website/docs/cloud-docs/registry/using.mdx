@@ -115,7 +115,7 @@ To test configurations on a developer workstation without the remote backend con
 
 A workspace can only use private providers and modules from its own organization's registry. When using providers or modules from multiple organizations in the same configuration, we recommend:
 
-- **Terraform Cloud:** [Add providers and modules to the registry](/cloud-docs/registry/publish#sharing-modules-across-organizations) for each organization that requires access.
+- **Terraform Cloud:** [Add providers and modules to the registry](/cloud-docs/registry/publish-modules#sharing-modules-across-organizations) for each organization that requires access.
 
 - **Terraform Enterprise:** Check your site's [module sharing](/enterprise/admin/application/module-sharing) configuration. Workspaces can also use private modules from organizations that are sharing modules with the workspace's organization.
 
@@ -132,7 +132,7 @@ To authenticate with Terraform Cloud, you can use either a [user token](/cloud-d
 
 - **User Token**: Allows you to access providers and modules from any organization in which you are a member. You are a member of an organization if you belong to any team in that organization. You can also access modules from any organization that is sharing modules with any of your organizations.
 
- -> **Note:** When SAML SSO is enabled, there is a [session timeout for user API tokens](/enterprise/user-management/saml/login#api-token-expiration), requiring you to periodically re-authenticate through the web UI. Expired tokens produce a _401 Unauthorized_ error. A SAML SSO account with [IsServiceAccount](/enterprise/user-management/saml/attributes#isserviceaccount) is treated as a service account and will not have the session timeout.
+ -> **Note:** When SAML SSO is enabled, there is a [session timeout for user API tokens](/enterprise/saml/login#api-token-expiration), requiring you to periodically re-authenticate through the web UI. Expired tokens produce a _401 Unauthorized_ error. A SAML SSO account with [IsServiceAccount](/enterprise/saml/attributes#isserviceaccount) is treated as a service account and will not have the session timeout.
 
 - **Team Token**: Allows you to access the private registry of that team's organization and the registries from any other organizations that have configured sharing.
 
