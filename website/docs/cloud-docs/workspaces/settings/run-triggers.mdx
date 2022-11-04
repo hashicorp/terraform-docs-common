@@ -16,13 +16,9 @@ Run triggers are designed for workspaces that rely on information or infrastruct
 
 To add or delete a run trigger, navigate to the desired workspace and choose "Run Triggers" from the "Settings" menu:
 
-![Screenshot: a workspace's settings drop-down menu](/img/docs/run-triggers-workspace-settings.png)
-
 This takes you to the run triggers settings page, which shows any existing run triggers. Configuring run triggers requires admin access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Admins are able to delete any of their workspace’s run triggers from this page.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
-
-![Screenshot: a workspace's run triggers settings page](/img/docs/run-triggers-index.png)
 
 ## Creating a Run Trigger
 
@@ -32,19 +28,13 @@ Creating run triggers requires admin access to the workspace. You must also have
 
 Under the "Source Workspaces" section, select the workspace you would like to connect as your source and click "Add workspace". You now have a run trigger established with your source workspace. Any run from that source workspace which applies successfully will now cause a new run to be queued in your workspace.
 
-![Screenshot: a workspace's run triggers settings page, with the source workspace dropdown open](/img/docs/run-triggers-index-source-workspace-dropdown.png)
-
 -> **Note:** Runs initiated in your workspace as the result of a run trigger connection to a source workspace will not auto-apply, regardless of your [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting selection. You will need to manually apply these runs.
 
 ## Interacting with Run Triggers
 
 Runs which are queued in your workspace through a run trigger will include extra information in their run details section. This includes links to the source workspace and the successfully applied run that activated the run trigger.
 
-![Screenshot: a run's run details section](/img/docs/run-triggers-run-details.png)
-
-Operators of your source workspaces will be informed of the connection to your workspace during the [plan](/docs/glossary#plan-noun-1-) and [apply](/docs/glossary#apply-noun-) phases of their run.
-
-![Screenshot: a source workspace run's plan phase, showing connected workspaces](/img/docs/run-triggers-run-plan-apply-phases.png)
+The source workspace includes a message in the [plan](/docs/glossary#plan-noun-1-) and [apply](/docs/glossary#apply-noun-) and apply run details that specifies the workspaces where Terraform Cloud automatically starts a run. 
 
 ## Using a Remote State Data Source
 
