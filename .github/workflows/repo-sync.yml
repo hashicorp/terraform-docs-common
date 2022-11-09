@@ -4,7 +4,7 @@
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # every 15th minute (00:00, 00:15, 00:30, 00:45, etc.)
+    - cron: "0 */2 * * *" # https://crontab.guru/every-2-hours
   workflow_dispatch:
 
 jobs:
