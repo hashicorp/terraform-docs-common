@@ -5,8 +5,6 @@ description: >-
   configuration for remote CLI runs.
 ---
 
-[sentinel]: /cloud-docs/policy-enforcement
-
 [private]: /cloud-docs/registry
 
 [speculative plan]: /cloud-docs/run/remote-operations#speculative-plans
@@ -27,7 +25,7 @@ Terraform Cloud has three workflows for managing Terraform runs.
 
 The [CLI integration](/cli/cloud) brings Terraform Cloud's collaboration features into the familiar Terraform CLI workflow. It offers the best of both worlds to developers who are already comfortable with using the Terraform CLI, and it can work with existing CI/CD pipelines.
 
-You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud; they use variables from the appropriate workspace, enforce any applicable [Sentinel policies][sentinel], and can access Terraform Cloud's [private registry][private] and remote state inputs.
+You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud, use variables from the appropriate workspace, enforce any applicable [Sentinel or OPA policies][/cloud-docs/policy-enforcement], and can access Terraform Cloud's [private registry][private] and remote state inputs.
 
 Terraform Cloud offers two kinds of CLI-driven runs, to support different stages of your workflow:
 
@@ -208,16 +206,17 @@ If you prefer to use the CLI in a non-interactive environment, we recommend firs
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 
-## Sentinel Policies
+## Policy Enforcement
 
-If the specified workspace uses Sentinel policies, those policies will run against all speculative plans and remote applies in that workspace. Policy output is shown in the terminal.
+-> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
 
-Failed policies can pause or prevent an apply, depending on the enforcement level:
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA). 
 
-- Hard mandatory checks cannot be overridden and they prevent `terraform apply` from applying changes.
-- Soft mandatory checks can be overridden by users with permission to [manage policy overrides](/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides). If your account can override a failed check, Terraform will prompt you to type "override" to confirm. (Note that typing "yes" will not work.) If you override the check, you will be prompted to apply the run (unless auto-apply is enabled).
+If the specified workspace uses policies, Terraform Cloud runs those policies against all speculative plans and remote applies in that workspace. Failed policies can pause or prevent an apply, depending on the enforcement level. Refer to [Policy Enforcement](/cloud-docs/policy-enforcement) for details.
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers
+For Sentinel, the Terraform CLI prints policy results for CLI-driven runs. CLI support for policy results is not available for OPA.
+
+The following example shows Sentinel policy output in the terminal.  
 
 ```
 $ terraform apply
