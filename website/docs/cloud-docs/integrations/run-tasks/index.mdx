@@ -17,6 +17,10 @@ To build a custom integration, you must have a server capable of receiving reque
 
 This feature relies heavily on the proper parsing of [plan JSON output](/internals/json-format). When sending this output to an external system, be certain that system can properly interpret the information provided.
 
+## Available Run Tasks
+
+-> **Note:** You can view the most up-to-date list of run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks).
+
 ## Integration Details
 
 When a run reaches the appropriate phase and a run task is triggered, the supplied URL will receive details about the run in a payload similar to the one below. The server receiving the run task should respond `200 OK`, or Terraform will retry to trigger the run task.
@@ -90,7 +94,3 @@ $ echo -n $WEBHOOK_BODY | openssl dgst -sha512 -hmac "$HMAC_KEY"
 The HCP Packer validation run task checks the image artifacts within a Terraform configuration. If the configuration references images marked as unusable (revoked), the run task fails and provides an error message containing the number of revoked artifacts and whether HCP Packer has metadata for newer versions. For HCP Packer Plus registries, run tasks also help you identify hardcoded and untracked images that may not meet security and compliance requirements.
 
 To get started, [create an HCP Packer account](https://cloud.hashicorp.com/products/packer) and follow the instructions in the [HCP Packer Run Task](https://cloud.hashicorp.com/docs/packer/manage-image-use/terraform-cloud-run-tasks) documentation.
-
-## Available Run Tasks
-
--> **Note:** You can view the most up-to-date list of run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks).
