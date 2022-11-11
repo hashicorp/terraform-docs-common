@@ -40,7 +40,7 @@ To create a new run task:
 
 ## Associating Run Tasks with a Workspace
 
-1. Click **Workspaces** in the top navigation bar and then go to the workspace where you want to associate run tasks.
+1. Click **Workspaces** and then go to the workspace where you want to associate run tasks.
 
 1. Open the **Settings** menu and select **Run Tasks**.
 
@@ -65,14 +65,6 @@ Run tasks perform actions between the [plan](/cloud-docs/run/states#the-plan-sta
 
 For example, if a mandatory task fails and an advisory task succeeds, the run fails. If an advisory task fails, but a mandatory task succeeds, the run succeeds and proceeds to the apply stage. Regardless of the exit status of a task, Terraform Cloud displays the status and any related message data in the UI.
 
-The following example shows a run that failed due to a mandatory run task.
-
-![Screenshot: a run with failed tasks](/img/docs/run-tasks-run-failed.png)
-
-The following example shows a run that succeeded.
-
-![Screenshot: a run with passed tasks](/img/docs/run-tasks-run-success.png)
-
 ## Removing a Run Task from a Workspace
 
 Removing a run task from a workspace does not delete it from the organization. To remove a run task from a specific workspace:
@@ -85,7 +77,7 @@ Removing a run task from a workspace does not delete it from the organization. T
 
 You must remove a run task from all associated workspaces before you can delete it. To delete a run task:
 
-1. Navigate to **Settings** in the top navigation bar and click **Run Tasks**.
+1. Navigate to **Settings** and click **Run Tasks**.
 
 1. Click the ellipses (...) next to the run task you want to delete, and then click **Edit**.
 
