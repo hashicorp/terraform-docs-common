@@ -21,12 +21,14 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 * Update [Policy Checks](/cloud-docs/api-docs/policy-checks) with result counts and support for filtering policy set outcomes.
 * Update [Team Membership API](/cloud-docs/api-docs/team-members) to include adding and removing users from teams using organization membership ID.
 
+<!-- BEGIN: TFC:only name:opa-policies -->
 ### 2022-10-06
 
 * Updated the [Policies API](/cloud-docs/api-docs/policies) with support for Open Policy Agent (OPA) policies.
 * Update [Policy Sets](/cloud-docs/api-docs/policy-sets) with support for OPA policy sets.
 * Updated [Policy Checks](/cloud-docs/api-docs/policy-checks) to add support for listing policy evaluations and policy set outcomes.
 * Update [Run Tasks Stage](/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) to include the new `policy_evaluations` attribute in the output.
+* <!-- END: TFC:only name:opa-policies -->
 
 ### 2022-09-21
 
@@ -40,10 +42,12 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 * Updated [Run Tasks Integration](/cloud-docs/api-docs/run-tasks/run-tasks-integration) to specify the different request payloads for different stages.
 
 ### 2022-06-23
-
-* Added the [Assessments](/cloud-docs/api-docs/assessment-results).
+<!-- BEGIN: TFC:only name:health-assessments -->
+* Added the [Assessments](/cloud-docs/api-docs/assessments).
 * Updated [Workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) and
 [Notification Configurations](/cloud-docs/api-docs/notification-configurations#notification-triggers) to account for assessments.
+<!-- END: TFC:only name:health-assessments -->
+
 * Added new query parameter(s) to [List Runs endpoint](/cloud-docs/api-docs/run#list-runs-in-a-workspace).
 
 ### 2022-06-21
