@@ -85,4 +85,4 @@ resource "aws_instance" "redis_server" {
   subnet_id = data.tfe_outputs.vpc.outputs.subnet_id
 }
 ```
-**Note:** Remote state access controls do not apply when using the `tfe_outputs` data source.
+-> **Note:** Remote state access controls do not apply when using the `tfe_outputs` data source.
