@@ -58,7 +58,7 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 
 [terraform-cdk]: https://github.com/hashicorp/terraform-cdk
 [terraform]: https://github.com/hashicorp/terraform
-[terraform-website]: https://github.com/hashicorp/terraform-cdk
+[terraform-website]: https://github.com/hashicorp/terraform-website
 [terraform-docs-common]: https://github.com/hashicorp/terraform-docs-common
 [terraform-docs-agents]: https://github.com/hashicorp/terraform-docs-agents
 [terraform-plugin-sdk]: https://github.com/hashicorp/terraform-plugin-sdk

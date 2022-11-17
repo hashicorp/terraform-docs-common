@@ -1,5 +1,6 @@
 ---
 page_title: Feature Sets - API Docs - Terraform Cloud
+tfc_only: true
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -38,7 +39,7 @@ page_title: Feature Sets - API Docs - Terraform Cloud
 
 -> **Note:** The feature sets API is only available in Terraform Cloud.
 
-Feature sets represent the different [pricing plans](/cloud-docs/paid) available to Terraform Cloud organizations. An organization's [entitlement set](/cloud-docs/api-docs/#feature-entitlements) is calculated using its [subscription](/cloud-docs/api-docs/subscriptions) and feature set.
+Feature sets represent the different [pricing plans](/cloud-docs/overview) available to Terraform Cloud organizations. An organization's [entitlement set](/cloud-docs/api-docs#feature-entitlements) is calculated using its [subscription](/cloud-docs/api-docs/subscriptions) and feature set.
 
 ## List Feature Sets
 
@@ -48,7 +49,7 @@ This endpoint lists the feature sets available in Terraform Cloud.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                  |
 | -------------- | ---------------------------------------------------------------------------- |
@@ -200,7 +201,7 @@ This endpoint lists the feature sets a particular organization is eligible to ac
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------- |

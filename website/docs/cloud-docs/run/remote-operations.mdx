@@ -35,7 +35,7 @@ Terraform Cloud Agents also support running custom programs, called hooks, durin
 
 ## Runs and Workspaces
 
-Terraform Cloud always performs Terraform runs in the context of a [workspace](/cloud-docs/run). The workspace serves the same role that a persistent working directory serves when running Terraform locally: it provides the configuration, state, and variables for the run.
+Terraform Cloud always performs Terraform runs in the context of a [workspace](/cloud-docs/run/remote-operations). The workspace serves the same role that a persistent working directory serves when running Terraform locally: it provides the configuration, state, and variables for the run.
 
 ### Configuration Versions
 
@@ -92,8 +92,6 @@ There are three ways to run speculative plans:
 #### Retry a speculative plan in the UI
 
 If a speculative plan fails due to an external factor, you can run it again using the "Retry Run" button on its page:
-
-![Screenshot: Clicking on the "Retry Run" button to trigger a new run](/img/docs/retry.gif)
 
 Retrying a plan requires permission to queue plans for that workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Only failed or canceled plans can be retried.
 

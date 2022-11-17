@@ -1,0 +1,51 @@
+---
+page_title: Designing No-Code Ready Modules - No-Code Provisioning - Terraform Cloud
+description: No-code ready modules let users deploy a module's resources without writing configuration. Prepare modules for no-code ready provisioning.
+tfc_only: true
+---
+
+# Designing No-Code Ready Modules
+
+-> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+
+Terraform [modules](/language/modules) let you define standardized collections of infrastructure resources that downstream users can more easily deploy. No-code ready modules build on these advantages by letting users deploy a module's resources without writing any Terraform configuration. This practice is called no-code provisioning.
+
+No-code provisioning enables a self-service workflow that lets users provision approved collections of resources without learning Terraform or infrastructure best practices. You can enable no-code provisioning for any public or private module in your [private registry](/cloud-docs/registry). Users can then [provision no-code infrastructure](/cloud-docs/no-code-provisioning/provisioning), set the module's input variables, and deploy its resources.
+
+> **Hands On:** Try the [Create and Use No-Code Ready Modules tutorial](https://learn.hashicorp.com/tutorials/terraform/no-code-provisioning).
+
+The same best practices apply to both standard and no-code ready module design. However, no-code modules have additional requirements and considerations.
+
+## Requirements
+
+A no-code ready module must meet the following requirements:
+- **Root Module Structure:** The module must follow [standard module structure](/language/modules/develop/structure) and define its resources in the root directory of the repository. This structure allows the public and private registries to generate documentation, track resource usage, and parse submodules and examples.
+- **Provider Configuration:** A no-code ready module must declare the required provider(s) directly in the module. This configuration differs from the recommendations for [modules used in written configuration](/language/modules/develop/providers#legacy-shared-modules-with-provider-configurations).
+
+### Provider credentials
+
+Organization administrators must determine how no-code workspaces access credentials for provider authentication and design modules accordingly.
+
+When module consumers follow the no-code workflow, Terraform Cloud automatically creates a new workspace for the resources and attempts to provision them. New workspaces must be able to access credentials for all providers defined within the module.
+
+You can grant new no-code workspace provider credentials using one of the following methods:
+
+- Create a [global variable set](/cloud-docs/workspaces/variables/managing-variables#variable-sets) that Terraform Cloud applies to all existing and future workspaces in the organization. This action automatically grants newly-created workspaces access to the required provider credentials.
+- Expose provider credentials as sensitive outputs in another workspace. You must add additional configuration to the module to access these values through [remote state data sources](/language/state/remote-state-data) and then reference them in provider configuration. This approach provides more control over access to these credentials than placing them in a global variable set.
+- Elect to let the first run in new no-code workspaces fail and have module users add credentials directly to the workspace after creation. This approach provides the most control over access to provider credentials, but requires manual intervention. Module users must manually start a new run to provision infrastructure after they configure the credentials.
+
+## Module Design Recommendations
+
+Similarly to a [standard module](/language/modules/develop#when-to-write-a-module), a well-designed no-code ready module composes resources so that they are easy for others to deploy. However, no-code module users are less familiar with Terraform, so we recommend the following best practices for no-code module design.
+
+### Build For a Specific Use Case
+
+No-code ready module users are typically less familiar with Terraform and infrastructure management. Reduce the amount of technical decision-making required to deploy the module by scoping it to a single, specific use case. This approach lets users focus on business concerns instead of infrastructure concerns.
+
+For example, you could build modules that satisfy the following well-scoped use cases:
+- Deploying all resources needed for a three-tier web application
+- Deploying a database with constraints on resource allocation and deployment region
+
+### Provide Variable Defaults When Possible
+
+The no-code provisioning workflow prompts users to set values for the module's input variables before creating the new workspace and deploying resources. We recommend setting reasonable defaults when possible to reduce the effort and expertise needed to deploy the module. Remember that the workspace can also access variable values set through global variable sets in your organization.

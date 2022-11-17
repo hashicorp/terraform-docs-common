@@ -10,7 +10,7 @@ Terraform configurations can pull in Terraform modules from [a variety of differ
 
 To access a private Git repository, Terraform either needs login credentials (for HTTPS access) or an SSH key. Terraform Cloud can store private SSH keys centrally, and you can easily use them in any workspace that clones modules from a Git server.
 
--> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/cloud-docs/vcs/#ssh-keys).
+-> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/cloud-docs/vcs#ssh-keys).
 
 Terraform Cloud manages SSH keys used to clone Terraform modules at the organization level, and allows multiple keys to be added for the organization. You can add or delete keys via the organization's settings. Once a key is uploaded, the text of the key is not displayed to users.
 
@@ -22,8 +22,6 @@ To assign a key to a workspace, go to its settings and choose a previously added
 ## Adding and Deleting Keys
 
 To add or delete an SSH private key, use the main menu to go to your organization's settings and choose "Manage SSH Keys" from the navigation sidebar. This page has a form for adding new keys and a list of existing keys.
-
-![Terraform Cloud screenshot: the manage SSH keys page](/img/docs/keys-manage.png)
 
 To add a key:
 
@@ -38,16 +36,14 @@ After the key is saved, it will appear below in the list of keys. Keys are only 
 
 To delete a key, find it in the list of keys and click its "Delete" button. Before deleting a key, you should assign a new key to any workspaces that are using it.
 
-~> **Important:** If any workspaces are still using a key when you delete it, they will be unable to clone modules from private repos until you assign them a new key. This might cause Terraform runs to fail.
+~> **Important:** If any workspaces are still using a key when you delete it, they can no longer clone modules from private repos until you assign them a new key. This inability might cause Terraform runs to fail.
+
+~> **Important:** If you upload an invalid ssh key, you should upload the correct ssh key and push a new commit for the new key to take effect.
 
 ## Assigning Keys to Workspaces
 
 To assign a key to a workspace, navigate to that workspace's page and choose "SSH Key" from the "Settings" menu.
 
-![Terraform Cloud screenshot: the settings menu on a workspace's page](/img/docs/settings-tabs.png)
-
 Select a named key from the "SSH Key" dropdown menu, then click the "Update SSH key" button.
-
-![Terraform Cloud screenshot: the SSH key dropdown menu](/img/docs/keys-dropdown.png)
 
 In subsequent runs, Terraform Cloud will use the selected SSH key in this workspace when cloning modules from Git.

@@ -17,8 +17,6 @@ Terraform Cloud provides cost estimates for many resources found in your Terrafo
 
 The Team & Governance plan enables cost estimation by default. You can enable or disable the feature in your organization's settings.
 
-![enable cost estimation](/img/docs/cost-estimation-enable.png)
-
 ## Viewing a Cost Estimate
 
 When enabled, Terraform Cloud performs a cost estimate for every run. Estimated costs appear in the run UI as an extra run phase, between the plan and apply.
@@ -27,11 +25,9 @@ The estimate displays a total monthly cost by default; you can expand the estima
 
 Note that this is just an estimate; some resources don't have cost information available or have unpredictable usage-based pricing. Supported resources are listed in this document's sub-pages.
 
-![cost estimation run](/img/docs/cost-estimation-run.png)
-
 ## Verifying Costs in Policies
 
-You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
+You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
 
 ```python
 import "tfrun"
