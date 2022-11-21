@@ -118,7 +118,7 @@ One of the stages of a [run][], in which changes are made to real infrastructure
 In Terraform's CLI, applies are performed with the `terraform apply` command. Terraform Cloud runs `terraform apply` using a [plan file][] as its input.
 
 - [Terraform docs: The `terraform apply` command](/cli/commands/apply)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/cloud-docs/run/remote-operations)
 
 ## Apply (verb)
 
@@ -129,7 +129,7 @@ To make changes to real infrastructure in order to make it match the desired sta
 In conversation, it's common to refer to "applying a [plan][]" (usually in the context of Terraform Cloud's workflow) or "applying a [configuration][]" (usually in the context of the Terraform CLI workflow).
 
 - [Terraform docs: The `terraform apply` command](/cli/commands/apply)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/cloud-docs/run/remote-operations)
 
 ## Argument
 
@@ -151,7 +151,7 @@ In Terraform's [configuration][] language: a named piece of data that belongs to
 
 Terraform [resources][] and [data sources][] make all of their [arguments][] available as readable attributes, and also typically export additional read-only attributes.
 
-- [Terraform docs: Expressions — Indices and Attributes](/configuration/expressions#indices-and-attributes)
+- [Terraform docs: Expressions — Indices and Attributes](/language/expressions#indices-and-attributes)
 
 ## Backend
 
@@ -162,7 +162,7 @@ The part of Terraform's core that determines how Terraform stores [state][] and 
 
 In a general computer science sense, a backend is any lower-level implementation that enables a higher-level feature. But in the context of Terraform, "backend" always means the built-in code that handles state and operations.
 
-- [Terraform docs: Backends](/language/settings/backends)
+- [Terraform docs: Backends](/language/settings/backends/configuration)
 
 ## Blob Storage
 
@@ -292,7 +292,7 @@ Data sources are implemented by [providers][].
 
 This status tracks a [resource][] that was marked for deletion, but still remains in the Terraform [state][] and infrastructure due an error from a previous [apply][]. Terraform expected to replace the existing resource by creating a new resource, then destroying the existing resource, but an error occurred in the apply before the destruction. Existing references to the resource refer to the new resource. Terraform will destroy the `deposed` resource on the next apply. This only can occur in resource [configurations][] that have the `lifecycle` configuration block `create_before_destroy` [argument][] set to `true`.
 
-- [Terraform docs: Resources](/configuration/resources)
+- [Terraform docs: Resources](/language/resources)
 
 ## Expression
 
@@ -303,7 +303,7 @@ In Terraform's [configuration][] language: a piece of syntax that represents a v
 
 Prior to Terraform 0.12, \[interpolation]\[] was the only way to use non-literal expressions in Terraform configurations; in 0.12 and later, expressions can be used independently.
 
-- [Terraform docs: Expressions](/configuration/expressions)
+- [Terraform docs: Expressions](/language/expressions)
 
 ## Fork
 
@@ -388,7 +388,7 @@ Prior to Terraform 0.12, interpolation was the only way to use non-literal [expr
 
 Interpolation is a very common feature in programming languages; for example, Ruby uses `#{<EXPRESSION>}` placeholders in double-quoted strings, and JavaScript (ES6 and up) uses `${<EXPRESSION>}` placeholders in backtick-quoted strings.
 
-- [Terraform docs: Expressions - String Templates](/configuration/expressions#string-templates)
+- [Terraform docs: Expressions - String Templates](/language/expressions#string-templates)
 
 ## JSON
 
@@ -525,7 +525,7 @@ Also "queue plan".
 
 To start a new [run][], which begins by running a Terraform [plan (noun)][plan].
 
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/cloud-docs/run/remote-operations)
 
 ## Plan (noun, 1)
 
@@ -545,7 +545,7 @@ In Terraform Cloud, plans are performed by committing changes to a workspace's c
 Terraform Cloud's workflow always creates a [plan file][], which can be auto-applied or can wait for a user's approval. Terraform Cloud also supports [speculative plans][], which are for informational purposes only and cannot be applied.
 
 - [Terraform docs: The `terraform plan` command](/cli/commands/plan)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/cloud-docs/run/remote-operations)
 
 ## Plan File
 
@@ -569,7 +569,7 @@ Terraform Cloud always uses a saved plan as the input to an [apply][], so that a
 
 [Sentinel][] code that can be enforced on runs. Combined into [policy sets][].
 
-- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/sentinel/manage-policies)
+- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/policy-enforcement/manage-policy-sets)
 
 ## Policy Check
 
@@ -591,7 +591,7 @@ Part of a [run][]. After gathering the [configuration][], [state][], and [plan f
 
 A list of [Sentinel][] [policies][] to enforce globally or on specific workspaces.
 
-- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/sentinel/manage-policies)
+- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/policy-enforcement/manage-policy-sets)
 
 ## Private Terraform Registry
 
@@ -674,7 +674,7 @@ The ability to start a [run][] (or perform a few other tasks) from your local [C
 
 Terraform Cloud performs Terraform runs in its own disposable VMs, where it can capture information, control access to secrets, etc., but many users are accustomed to running Terraform on their local machines. Remote operations exist to help split the difference.
 
-- [Terraform Cloud Docs: Terraform Runs and Remote Operations](/cloud-docs/run#remote-operations)
+- [Terraform Cloud Docs: Terraform Runs and Remote Operations](/cloud-docs/run/remote-operations#remote-operations)
 
 ## Remote Backend
 
@@ -714,7 +714,7 @@ A resource block in a configuration instructs Terraform to _manage_ the describe
 
 Terraform uses cloud provider [APIs][] to create, edit, and destroy resources. Terraform [providers][] are responsible for defining resource types and mapping transitions in a resource's state to a specific series of API calls that will carry out the necessary changes.
 
-- [Terraform docs: Resources](/configuration/resources)
+- [Terraform docs: Resources](/language/resources)
 
 ## Root Module
 
@@ -746,7 +746,7 @@ The process of using Terraform to make real infrastructure match the desired sta
 In Terraform Cloud, runs are performed in a series of stages ([plan][], [policy check][], and [apply][]), though not every stage occurs in every run. Terraform Cloud saves information about historical runs.
 
 - [Learn Terraform: Get Started](https://learn.hashicorp.com/collections/terraform/aws-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/cloud-docs/run/remote-operations)
 
 ## Run Triggers
 
@@ -780,7 +780,7 @@ Terraform Enterprise can use an S3-compatible [blob storage][] service when conf
 
 SAML is an XML-based standard for authentication and authorization. Terraform Enterprise can act as a service provider (SP) (or Relying Party, RP) with your internal SAML identity provider (IdP). The SAML Single Sign On feature is only available on [Terraform Enterprise][]; the Terraform Cloud SaaS does not support it.
 
-- [Terraform Enterprise docs: SAML Single Sign-On](/enterprise/user-management/saml)
+- [Terraform Enterprise docs: SAML Single Sign-On](/enterprise/saml/configuration)
 
 ## Sentinel
 
@@ -790,7 +790,7 @@ SAML is an XML-based standard for authentication and authorization. Terraform En
 
 A language and runtime for managing policy as code. Allows you to define rules around operations in Terraform Cloud.
 
-- [Terraform Cloud docs: Sentinel](/cloud-docs/sentinel)
+- [Terraform Cloud docs: Sentinel](/cloud-docs/policy-enforcement)
 
 ## Site Admin
 
@@ -879,7 +879,7 @@ Terraform Cloud is available as a hosted service at <https://app.terraform.io>. 
 
 Prior to mid-2019, "Terraform Enterprise" (TFE) was the name of the Terraform Cloud application, and "Private Terraform Enterprise" (PTFE) was the name of the on-premises distribution.
 
-- [Terraform Cloud docs](/cloud)
+- [Terraform Cloud docs](https://cloud.hashicorp.com/products/terraform)
 
 ## Terraform Enterprise
 

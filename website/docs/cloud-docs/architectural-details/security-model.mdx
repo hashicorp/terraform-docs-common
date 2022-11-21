@@ -3,6 +3,7 @@ page_title: Security Model - Terraform Cloud
 description: >-
   Learn the authorization model, potential security threats, and our
   recommendations for securely using Terraform Cloud.
+tfc_only: true
 ---
 
 # Terraform Cloud Security Model
@@ -19,7 +20,7 @@ Terraform Cloud organizes infrastructure with workspaces. Workspaces represent a
 
 ### Terraform Runs - Plans and Applies
 
-Terraform Cloud will provision infrastructure according to your Terraform configuration which you can upload through the VCS-driven, API-driven, or CLI-driven workflows. You can read more about the different workflows [here](/cloud-docs/run/#starting-runs). It’s important to note that Terraform Cloud performs all Terraform operations within the same privilege context. Both the plan and apply operations have access to the full workspace variables, state versions, and Terraform configuration.
+Terraform Cloud will provision infrastructure according to your Terraform configuration which you can upload through the VCS-driven, API-driven, or CLI-driven workflows. You can read more about the different workflows [here](/cloud-docs/run/remote-operations#starting-runs). It’s important to note that Terraform Cloud performs all Terraform operations within the same privilege context. Both the plan and apply operations have access to the full workspace variables, state versions, and Terraform configuration.
 
 ### Terraform State File
 
@@ -72,7 +73,7 @@ All communication between clients and Terraform Cloud is encrypted end-to-end us
 
 ### Confidentiality of State Versions, Terraform Configurations, and Stored Variables.
 
-As a user, you will entrust Terraform Cloud with information that is very sensitive to your organization such as API tokens, your Terraform configurations, and your Terraform state file. Terraform Cloud is designed to ensure the confidentiality of this information, it relies on [Vault Transit](https://www.vaultproject.io/docs/secrets/transit/index.html) for encrypting workspace variables. Terraform configurations and state are encrypted at rest with uniquely derived encryption keys backed by Vault. You can view how all customer data is encrypted and stored on our [data security page](/cloud-docs/architectural-details/data-security).
+As a user, you will entrust Terraform Cloud with information that is very sensitive to your organization such as API tokens, your Terraform configurations, and your Terraform state file. Terraform Cloud is designed to ensure the confidentiality of this information, it relies on [Vault Transit](https://developer.hashicorp.com/vault/docs/secrets/transit) for encrypting workspace variables. Terraform configurations and state are encrypted at rest with uniquely derived encryption keys backed by Vault. You can view how all customer data is encrypted and stored on our [data security page](/cloud-docs/architectural-details/data-security).
 
 ### Enforcement of Authentication and Authorization Policies for Data Access and Actions Taken Through the UI or API.
 
@@ -128,8 +129,8 @@ Users of the [owners team](/cloud-docs/users-teams-organizations/teams#the-owner
 
 ### Protect API Keys
 
-Terraform Cloud allows you to create [user, team, and organization API tokens](/cloud-docs/api-docs/#authentication). You should take care to store these tokens securely, and rotate them periodically.
-Vault users can leverage the [Terraform Cloud Secret backend](https://www.vaultproject.io/docs/secrets/terraform), which allows you to generate ephemeral tokens.
+Terraform Cloud allows you to create [user, team, and organization API tokens](/cloud-docs/api-docs#authentication). You should take care to store these tokens securely, and rotate them periodically.
+Vault users can leverage the [Terraform Cloud Secret backend](https://developer.hashicorp.com/vault/docs/secrets/terraform), which allows you to generate ephemeral tokens.
 
 ### Control Access to Source Code
 

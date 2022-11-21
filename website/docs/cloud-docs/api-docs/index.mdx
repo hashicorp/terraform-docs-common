@@ -1,5 +1,5 @@
 ---
-page_title: API Docs - Terraform Cloud and Terraform Enterprise
+page_title: API Docs - Terraform Cloud
 description: >-
   Use the API to manage runs, workspaces, policies, and more. This introduction
   includes authentication, features, and formatting.
@@ -40,8 +40,6 @@ description: >-
 # Terraform Cloud API Documentation
 
 Terraform Cloud provides an API for a subset of its features. If you have any questions or want to request new API features, please email <support@hashicorp.com>.
-
-See the navigation sidebar for the list of available endpoints.
 
 -> **Note:** Before planning an API integration, consider whether [the `tfe` Terraform provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) meets your needs. It can't create or approve runs in response to arbitrary events, but it's a useful tool for managing your organizations, teams, and workspaces as code.
 
@@ -90,7 +88,7 @@ The following entitlements are available:
 - `self-serve-billing` — Allows an organization to pay via credit card using the in-app billing UI.
 - `state-storage` — Allows an organization to store state versions in its workspaces, which enables local Terraform runs with Terraform Cloud. Affects the [state versions][] endpoints.
 - `sentinel` — Allows an organization to use [Sentinel][]. Affects the [policies][], [policy sets][], and [policy checks][] endpoints.
-- `sso` — Allows an organization to manage and authenticate users via [single sign on][].
+- `sso` — Allows an organization to manage and authenticate users with single sign on.
 - `teams` — Allows an organization to manage access to its workspaces with [teams](/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
 - `user-limit` — An integer value representing the maximum number of users allowed for the organization. If blank, there is no limit.
 - `vcs-integrations` — Allows an organization to [connect with a VCS provider][vcs integrations] and link VCS repositories to workspaces. Affects the [OAuth Clients][o-clients], and [OAuth Tokens][o-tokens] endpoints, and determines whether the `data.attributes.vcs-repo` property can be set for [workspaces][].
@@ -123,15 +121,15 @@ The following entitlements are available:
 
 [private module registry]: /cloud-docs/registry
 
-[registry modules]: /cloud-docs/api-docs/modules
+[registry modules]: /cloud-docs/api-docs/private-registry/modules
 
-[registry providers]: /cloud-docs/api-docs/providers
+[registry providers]: /cloud-docs/api-docs/private-registry/providers
 
 [runs]: /cloud-docs/api-docs/run
 
-[run tasks]: /cloud-docs/api-docs/run-tasks
+[run tasks]: /cloud-docs/api-docs/run-tasks/run-tasks
 
-[Sentinel]: /cloud-docs/sentinel
+[Sentinel]: /cloud-docs/policy-enforcement/sentinel
 
 [single sign on]: /cloud-docs/users-teams-organizations/single-sign-on
 
@@ -324,8 +322,7 @@ $ curl \
 
 ## Rate Limiting
 
-You can make up to 30 requests per second to the API as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. A few endpoints
-have lower limits to prevent certain spam and abuse scenarios. If you receive a rate limited response, the limit will be reflected in the `x-ratelimit-limit` header once triggered.
+You can make up to 30 requests per second to the API as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. A few endpoints relating to user authentication have lower limits to prevent certain spam and abuse scenarios. Typical uses of the API should not notice those limits. If you receive a rate limited response, the limit will be reflected in the `x-ratelimit-limit` header once triggered.
 
 Authenticated requests are allocated to the user associated with the authentication token. This means that a user with multiple tokens will still be limited to 30 requests per second, additional tokens will not allow you to increase the requests per second permitted.
 

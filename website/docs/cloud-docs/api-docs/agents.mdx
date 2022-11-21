@@ -1,5 +1,5 @@
 ---
-page_title: Agent Pools and Agents - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Agent Pools and Agents - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -59,15 +59,15 @@ This endpoint allows you to list agent pools, their agents, and their tokens for
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
 |------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `q`                                | **Optional.** A search query string. Agent pools are searchable by name. Available in Terraform Enterprise v202207-1 and later.                                                                                                                                                                                             |
+| `q`                                | **Optional.** A search query string. Agent pools are searchable by name.                                                                                                                                                                                              |
 | `sort`                             | **Optional.** Allows sorting the returned agents pools. Valid values are `"name"` and `"created-at"`. Prepending a hyphen to the sort parameter will reverse the order (e.g. `"-name"`).                                                                                                                                    |
 | `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
 | `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
-| `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). Available in Terraform Enterprise v202207-1 and later. |                                                                             |
+| `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |                                                                             |
 
 ### Sample Request
 
@@ -163,7 +163,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                 | Description                                                                  |
 | ------------------------- | ---------------------------------------------------------------------------- |
@@ -407,9 +407,9 @@ Properties without a default value are required.
 |---------------------------------------------------|--------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.type`                                       | string |         | Must be `"agent-pools"`.                                                                                                                                                                                                                         |
 | `data.attributes.name`                            | string |         | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                    |
-| `data.attributes.organization-scoped`             | bool   | true    | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool. Available in Terraform Enterprise v202207-1 and later.                                                                                          |
-| `data.relationships.allowed-workspaces.data.type` | string |         | Must be `"workspaces"`. Available in Terraform Enterprise v202207-1 and later.                                                                                                                                                                   |
-| `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that is allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). Available in Terraform Enterprise v202207-1 and later. |
+| `data.attributes.organization-scoped`             | bool   | true    | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
+| `data.relationships.allowed-workspaces.data.type` | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
+| `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).  |
 
 ### Sample Payload
 
@@ -513,9 +513,9 @@ Properties without a default value are required.
 |---------------------------------------------------|--------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.type`                                       | string |                  | Must be `"agent-pools"`.                                                                                                                                                                                                                         |
 | `data.attributes.name`                            | string | (previous value) | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                    |
-| `data.attributes.organization-scoped`             | bool   | true             | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool. Available in Terraform Enterprise v202207-1 and later.                                                                                          |
-| `data.relationships.allowed-workspaces.data.type` | string |                  | Must be `"workspaces"`. Available in Terraform Enterprise v202207-1 and later.                                                                                                                                                                   |
-| `data.relationships.allowed-workspaces.data.id`   | string |                  | The ID of the workspace that is allowed to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). Available in Terraform Enterprise v202207-1 and later. |
+| `data.attributes.organization-scoped`             | bool   | true             | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
+| `data.relationships.allowed-workspaces.data.type` | string |                  | Must be `"workspaces"`.                                                                                                                                                                   |
+| `data.relationships.allowed-workspaces.data.id`   | string |                  | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |
 
 ### Sample Payload
 
@@ -618,7 +618,7 @@ $ curl \
 
 ### Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name  | Description                                 |
 | -------------- | ------------------------------------------- |

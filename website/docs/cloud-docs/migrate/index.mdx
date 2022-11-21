@@ -1,14 +1,15 @@
 ---
-page_title: Migrating to Terraform Cloud or Terraform Enterprise - Terraform Cloud and Terraform Enterprise
+page_title: Migrating to Terraform Cloud or Terraform Enterprise - Terraform Cloud
 description: >-
-  Migrate state to Terraform Cloud or Terraform Enterprise to continue managing existing infrastructure without de-provisioning.
+  Migrate state to Terraform Cloud or Terraform Enterprise to continue managing
+  existing infrastructure without de-provisioning.
 ---
 
 # Migrating to Terraform Cloud or Terraform Enterprise
 
 You can begin using Terraform Cloud to manage existing resources without de-provisioning them. This requires migrating the Terraform [state files](/language/state) for those resources to one or more Terraform Cloud workspaces. You can perform this migration with either the Terraform CLI or the Terraform Cloud API.
 
-> **Hands-on:** Try the [Migrate State to Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/state) tutorial on HashiCorp Learn for a walkthrough using the CLI method.
+> **Hands-on:** Try the [Migrate State to Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/state) tutorial to practice using the CLI method.
 
 ## Requirements
 
@@ -33,7 +34,7 @@ terraform {
 
 Refer to [Using Terraform Cloud](/cli/cloud) in the Terraform CLI documentation for details about how to configure the `cloud` block and migrate state to one or more Terraform Cloud workspaces.
 
--> **Note:** The `cloud` block is available in Terraform v1.1 and later and Terraform Enterprise v202201 and later. Previous versions can use the [`remote` backend](/language/settings/backends/remote) to configure the CLI workflow and migrate state.
+-> **Note:** The `cloud` block is available in Terraform v1.1 and later. Previous versions can use the [`remote` backend](/language/settings/backends/remote) to configure the CLI workflow and migrate state.
 
 ## API Migration
 

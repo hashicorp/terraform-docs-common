@@ -1,5 +1,5 @@
 ---
-page_title: Variable Sets - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Variable Sets - API Docs - Terraform Cloud
 description: >-
   Variable sets allow you to reuse variables across multiple workspaces. Create,
   read, update, and delete variable sets with the Terraform Cloud API.
@@ -309,6 +309,15 @@ List all variable sets for a workspace.
 | --------------- | ---------------- |
 | `:workspace_id` | The workspace ID |
 
+### Query Parameters
+
+Both of the endpoints support pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter                 | Description                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------- |
+| `page[number]`            | **Optional.** If omitted, the endpoint returns the first page.           |
+| `page[size]`              | **Optional.** If omitted, the endpoint returns 20 varsets per page.       |
+
 ### Sample Response
 
 ```json
@@ -353,6 +362,16 @@ List all variable sets for a workspace.
     "prev": null,
     "next": null,
     "last": "app.terrafor.io/app/my_organization/varsets?page=1"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "next-page": null,
+      "page-size": 20,
+      "prev-page": null,
+      "total-count": 1,
+      "total-pages": 1
+    }
   }
 }
 ```
@@ -704,7 +723,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name        | Description                                       |
 | -------------------- | ------------------------------------------------- |

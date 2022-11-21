@@ -1,14 +1,16 @@
 ---
-page_title: GitHub.com (OAuth) - VCS Providers - Terraform Cloud and Terraform Enterprise
+page_title: GitHub.com (OAuth) - VCS Providers - Terraform Cloud
 ---
 
 # Configuring GitHub.com Access (OAuth)
 
-These instructions are for using GitHub.com for Terraform Cloud's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. For beginning users on Terraform Cloud, we recommend using our [configuration-free GitHub App](/cloud-docs/vcs/github-app) to access repositories instead.
+These instructions are for using GitHub.com for Terraform Cloud's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. [GitHub Enterprise has separate instructions,](/enterprise/vcs/github-enterprise) as do the [other supported VCS providers.](/enterprise/vcs)
 
-[GitHub Enterprise has separate instructions,](/cloud-docs/vcs/github-enterprise) as do the [other supported VCS providers.](/cloud-docs/vcs)
+<!-- BEGIN: TFC:only -->
+For beginning users on Terraform Cloud, we recommend using our [configuration-free GitHub App](/cloud-docs/vcs/github-app) to access repositories instead.
+<!-- END: TFC:only -->
 
-Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/enterprise/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -27,18 +29,11 @@ The rest of this page explains the GitHub versions of these steps.
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 
-1. Open Terraform Cloud in your browser and navigate to the "VCS Providers" settings for your organization. Click the "Add VCS Provider" button.
+1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
 
-   If you just created your organization, you might already be on this page. Otherwise:
+1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
-   1. Make sure the upper-left organization menu currently shows your organization.
-   1. Click the "Settings" link at the top of the page (or within the ☰ menu)
-   1. On the next page, click "Providers" in the "Version control" section of the left sidebar.
-   1. Click the "Add a VCS Provider" button.
-
-1. The "Add VCS Provider" page is divided into multiple steps to guide you through adding a new VCS provider.
-
-   For the first step, select "GitHub" then select "GitHub.com" from the dropdown. The page will move to the next step.
+1. Select **GitHub** and then select **GitHub.com** from the menu. The page moves to the next step.
 
 Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring Terraform Cloud.
 
@@ -52,9 +47,9 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
    This page is located at <https://github.com/settings/applications/new>. You can also reach it through GitHub's menus:
 
-   - In the upper right corner, click your profile picture and choose "Settings."
-   - In the navigation sidebar, click "Developer settings," then make sure you're on the "OAuth Apps" page (not "GitHub Apps").
-   - In the upper right corner, click the "New OAuth App" button.
+   - Click your profile picture and choose "Settings."
+   - Click "Developer settings," then make sure you're on the "OAuth Apps" page (not "GitHub Apps").
+   - Click the "New OAuth App" button.
 
 1. This page has a form with four text fields.
 
@@ -82,8 +77,6 @@ Leave the page open in a browser tab. In the next step you will copy values from
 ## Step 3: On Terraform Cloud, Set up Your Provider
 
 1. Enter the **Client ID** and **Client Secret** from the previous step, as well as an optional **Name** for this VCS connection.
-
-   ![Terraform Cloud screenshot: add client fields](/img/docs/gh-tfe-add-client-fields.png)
 
 1. Click "Connect and continue." This takes you to a page on GitHub.com, asking whether you want to authorize the app.
 
@@ -117,8 +110,6 @@ Most organizations will not need to add an SSH private key. However, if the orga
 1. While logged into the GitHub.com account you want Terraform Cloud to act as, navigate to the SSH Keys settings page, add a new SSH key and paste the value of the SSH public key you just created.
 
 1. In Terraform Cloud's "Add VCS Provider" page, paste the text of the **SSH private key** you just created, and click the "Add SSH Key" button.
-
-   ![Terraform Cloud screenshot: the ssh key screen](/img/docs/gh-ssh-key.png)
 
 ## Step 5: Contact Your GitHub Organization Admins
 

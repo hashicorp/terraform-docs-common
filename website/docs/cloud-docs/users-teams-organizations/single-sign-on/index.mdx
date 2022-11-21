@@ -1,15 +1,16 @@
 ---
-page_title: Single Sign-on - Terraform Cloud and Terraform Enterprise
+page_title: Single Sign-on - Terraform Cloud
 description: >-
   Learn how single sign-on (SSO) works in Terraform Cloud, how to sign in with
   SSO, and more.
+tfc_only: true
 ---
 
 # Single Sign-on
 
 -> **Note:** Single sign-on is a paid feature, available as part of the **Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
-~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/enterprise/user-management/saml/configuration).
+~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/enterprise/saml/configuration).
 
 Terraform Cloud allows organizations to configure support for SAML 2.0 single sign-on (SSO), an alternative to traditional [user](/cloud-docs/users-teams-organizations/users) management. By using SSO, your organization can centralize management of users for Terraform Cloud and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
 
@@ -43,19 +44,11 @@ If an organization's owners disable SSO (or downgrade the organization's account
 
 1. Click "Sign in via SSO".
 
-1. Provide your organization name and click "Next".
-
-   ![Screenshot: The Terraform Cloud SSO sign-in page, asking for an organization name.](/img/docs/sign-in.png)
+1. Provide your organization name and click **Next"**.
 
 1. If you've signed in to Terraform Cloud with SSO before, proceed to the next step.
 
    If you're signing in for the first time under this account or for the first time accessing this organization, you'll be required to create a new account or link to an existing account. Use the links below the account creation form if you want to link your SSO identity to an existing account, then fill out and submit the relevant form.
-
-   ![Screenshot: Terraform Cloud's create account page.](/img/docs/create-account.png)
-
-   ![Screenshot: The password prompt for linking an SSO email address to the currently signed-in Terraform Cloud account.](/img/docs/matched-linking.png)
-
-   ![Screenshot: the username and password prompt for linking an SSO email address to another Terraform Cloud account.](/img/docs/chosen-linking.png)
 
 1. You will be redirected to your SSO identity provider. Authenticate your account as necessary.
 
@@ -69,8 +62,6 @@ To enable team membership mapping:
 
 1. Click **Settings** in the navigation bar and then click **SSO** in the sidebar. The SSO configuration page appears.
 1. Toggle the **Enable team management to customize your team attribute**.
-
-![Screenshot: the Terraform Cloud SAML team membership toggle](/img/docs/saml-team-membership-cloud.png)
 
 When team management is enabled, you can configure which SAML attribute in the SAMLResponse will control team membership. This defaults to the `MemberOf` attribute. The expected format of the corresponding `AttributeValue` in the SAMLResponse is a either a string containing a comma-separated list of teams, or separate `AttributeValue` items specifying teams.
 

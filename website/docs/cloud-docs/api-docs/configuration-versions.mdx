@@ -1,5 +1,5 @@
 ---
-page_title: Configuration Versions - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Configuration Versions - API Docs - Terraform Cloud
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -72,7 +72,7 @@ A configuration version created through the API or CLI can only be used in runs 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                            |
 | -------------- | -------------------------------------------------------------------------------------- |
@@ -368,8 +368,6 @@ This endpoint notifies Terraform Cloud to discard the uploaded `.tar.gz` file as
 
 Terraform Cloud automatically archives configuration versions created through VCS when associated runs are complete and then re-fetches the files for subsequent runs.
 
--> **Note:** This endpoint is available in Terraform Enterprise v202203-1 or later.
-
 | Status  | Response                  | Reason(s)                                                                                                                                     |
 | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | [202][] | none                      | Successfully initiated the archive process.                                                                                                   |
@@ -406,8 +404,6 @@ curl \
 
 These endpoints generate a temporary URL to the location of the configuration version in a `.tar.gz` archive, and then redirect to that link. If using a client that can follow redirects, you can use these endpoints to save the `.tar.gz` archive locally without needing to save the temporary URL. These endpoints will return an error if attempting to download a configuration version that is not in an `uploaded` [state](#configuration-version-states).
 
--> **Note:** These endpoints are available in Terraform Enterprise v202203-1 or later.
-
 | Status  | Response                  | Reason                                                                                                                      |
 |---------|---------------------------|-----------------------------------------------------------------------------------------------------------------------------|
 | [302][] | HTTP Redirect             | Configuration version found and temporary download URL generated                                                            |
@@ -426,7 +422,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name        | Description                                       |
 | -------------------- | ------------------------------------------------- |
