@@ -10,7 +10,7 @@ tfc_only: true
 
 [cli]: /cli
 
-[speculative plans]: /cloud-docs/run/#speculative-plans
+[speculative plans]: /cloud-docs/run/remote-operations#speculative-plans
 
 [remote_state]: /language/state/remote-state-data
 
@@ -76,7 +76,7 @@ Terraform Cloud runs Terraform on disposable virtual machines in its own cloud i
 
 Remote execution helps provide consistency and visibility for critical provisioning operations. It also enables powerful features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
-- More info: [Terraform Runs and Remote Operations](/cloud-docs/run)
+- More info: [Terraform Runs and Remote Operations](/cloud-docs/run/remote-operations)
 
 #### Support for Local Execution
 
@@ -114,7 +114,7 @@ Each workspace can be linked to a VCS repository that contains its Terraform con
 VCS integration is powerful, but optional; if you use an unsupported VCS or want to preserve an existing validation and deployment pipeline, you can use the API or Terraform CLI to upload new configuration versions. You'll still get the benefits of remote execution and Terraform Cloud's other features.
 
 - More info: [VCS-driven Runs](/cloud-docs/run/ui)
-- More info: [Supported VCS Providers](/cloud-docs/vcs/#supported-vcs-providers)
+- More info: [Supported VCS Providers](/cloud-docs/vcs#supported-vcs-providers)
 
 ### Command Line Integration
 
@@ -160,7 +160,7 @@ Terraform Cloud can send notifications about Terraform runs to other systems, in
 
 Run Tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle.
 
-There are several [partner integrations](https://www.hashicorp.com/integrations) already available, or you can create your own based on the [API](/cloud-docs/api-docs/run-tasks).
+There are several [partner integrations](https://www.hashicorp.com/integrations) already available, or you can create your own based on the [API](/cloud-docs/api-docs/run-tasks/run-tasks).
 
 - More info: [Run Tasks](/cloud-docs/workspaces/settings/run-tasks)
 
@@ -168,13 +168,13 @@ There are several [partner integrations](https://www.hashicorp.com/integrations)
 
 Larger organizations are more complex, and tend to use access controls and explicit policies to help manage that complexity. Terraform Cloud's paid upgrade plans provide extra features to help meet the control and governance needs of large organizations.
 
-- More info: [Free and Paid Plans](/cloud-docs/paid)
+- More info: [Free and Paid Plans](/cloud-docs/overview)
 
 ### Team-Based Permissions System
 
 With Terraform Cloud's team management, you can define groups of users that match your organization's real-world teams and assign them only the permissions they need. When combined with the access controls your VCS provider already offers for code, workspace permissions are an effective way to follow the principle of least privilege.
 
-- More info: [Users, Teams, and Organizations](/cloud-docs/users-teams-organizations)
+- More info: [Users, Teams, and Organizations](/cloud-docs/users-teams-organizations/permissions)
 
 ### Policy Enforcement
 

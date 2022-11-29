@@ -13,7 +13,7 @@ Each Terraform Cloud workspace has its own separate state data, used for runs wi
 
 ## State Usage in Terraform Runs
 
-In [remote runs](/cloud-docs/run), Terraform Cloud automatically configures Terraform to use the workspace's state; the Terraform configuration does not need an explicit backend configuration. (If a backend configuration is present, it will be overridden.)
+In [remote runs](/cloud-docs/run/remote-operations), Terraform Cloud automatically configures Terraform to use the workspace's state; the Terraform configuration does not need an explicit backend configuration. (If a backend configuration is present, it will be overridden.)
 
 In local runs (available for workspaces whose execution mode setting is set to "local"), you can use a workspace's state by configuring the [CLI integration](/cli/cloud) and authenticating with a user token that has permission to read and write state versions for the relevant workspace. When using a Terraform configuration that references outputs from another workspace, the authentication token must also have permission to read state outputs for that workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -39,7 +39,7 @@ Manual state manipulation in Terraform Cloud workspaces requires the use of Terr
 
 Terraform's built-in [`terraform_remote_state` data source](/language/state/remote-state-data) lets you share arbitrary information between configurations via root module [outputs](/language/values/outputs).
 
-Terraform Cloud automatically manages API credentials for `terraform_remote_state` access during [runs managed by Terraform Cloud](/cloud-docs/run#remote-operations). This means you do not usually need to include an API token in a `terraform_remote_state` data source's configuration.
+Terraform Cloud automatically manages API credentials for `terraform_remote_state` access during [runs managed by Terraform Cloud](/cloud-docs/run/remote-operations#remote-operations). This means you do not usually need to include an API token in a `terraform_remote_state` data source's configuration.
 
 ## Upgrading State
 
@@ -47,7 +47,7 @@ You can upgrade a workspace's state version to a new Terraform version without m
 
 1.  Run a [speculative plan](/cloud-docs/run/ui#testing-terraform-upgrades-with-speculative-plans) to test whether your configuration is compatible with the new Terraform version. You can run speculative plans with a Terraform version that is different than the one currently selected for the workspace.
 1.  Select **Settings > General** and select the desired new **Terraform Version**.
-1. Click **Actions > Start new run** and then select **Allow empty apply** as the run type. An [empty apply](/cloud-docs/run/modes-and-options#allow-empty-apply) allows Terraform to apply a plan that produces no infrastructure changes. Terraform upgrades the state file version during the apply process.
+1.  Click **Actions > Start new run** and then select **Allow empty apply** as the run type. An [empty apply](/cloud-docs/run/modes-and-options#allow-empty-apply) allows Terraform to apply a plan that produces no infrastructure changes. Terraform upgrades the state file version during the apply process.
 
 -> **Note:** If the desired Terraform version is incompatible with a workspace's existing state version, the run fails and Terraform Cloud prompts you to run an apply with a compatible version first. Refer to the [Terraform upgrade guides](/language/upgrade-guides) for details about upgrading between versions.
 
@@ -66,11 +66,12 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 
 ### Data Source Configuration
 
-To configure a `terraform_remote_state` data source that references a Terraform Cloud workspace, set the data source's `backend` argument to `remote` and specify the organization and workspace in the `config` argument.
+To configure a `tfe_outputs` data source that references a Terraform Cloud workspace, specify the organization and workspace in the `config` argument.
+
+You must still properly configure the `tfe` provider with a valid authentication token and correct permissions to Terraform Cloud. 
 
 ```hcl
-data "terraform_remote_state" "vpc" {
-  backend = "remote"
+data "tfe_outputs" "vpc" {
   config = {
     organization = "example_corp"
     workspaces = {
@@ -81,6 +82,7 @@ data "terraform_remote_state" "vpc" {
 
 resource "aws_instance" "redis_server" {
   # Terraform 0.12 and later: use the "outputs.<OUTPUT NAME>" attribute
-  subnet_id = data.terraform_remote_state.vpc.outputs.subnet_id
+  subnet_id = data.tfe_outputs.vpc.outputs.subnet_id
 }
 ```
+-> **Note:** Remote state access controls do not apply when using the `tfe_outputs` data source.

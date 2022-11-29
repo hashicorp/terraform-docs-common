@@ -34,7 +34,7 @@ page_title: Workspaces - API Docs - Terraform Cloud
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[speculative plans]: /cloud-docs/run/#speculative-plans
+[speculative plans]: /cloud-docs/run/remote-operations#speculative-plans
 
 # Workspaces API
 
@@ -241,7 +241,7 @@ $ curl \
 
 _Without a VCS repository_
 
-**Note:** The `assessments-enabled` property is only acceppted by or returned from Terraform Cloud.
+**Note:** The `assessments-enabled` property is only accepted by or returned from Terraform Cloud.
 
 ```json
 {
@@ -689,7 +689,7 @@ This endpoint lists workspaces in the organization.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter              | Description                                                                                                                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -698,6 +698,7 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 | `search[name]`         | **Optional.** Allows searching the organization's workspaces by name.                                                                                                               |
 | `search[tags]`         | **Optional.** If specified, restricts results to workspaces with that tag. If multiple comma separated values are specified, results matching all of the tags are returned.         |
 | `search[exclude-tags]` | **Optional.** If specified, results exclude workspaces with that tag. If multiple comma separated values are specified, workspaces with tags matching any of the tags are excluded. |
+| `search[wildcard-name]`| **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with substring `-prod-` regardless of prefix and/or suffix.              |
 
 ### Sample Request
 
@@ -712,122 +713,122 @@ $ curl \
 
 ```json
 {
-  "data": {
-    "attributes": {
-      "actions": {
-        "is-destroyable": true
-      },
-      "allow-destroy-plan": true,
-      "apply-duration-average": null,
-      "auto-apply": false,
-      "auto-destroy-at": null,
-      "created-at": "2021-08-16T21:50:58.726Z",
-      "description": null,
-      "environment": "default",
-      "execution-mode": "remote",
-      "file-triggers-enabled": true,
-      "global-remote-state": false,
-      "latest-change-at": "2021-08-16T21:50:58.726Z",
-      "locked": false,
-      "name": "workspace-2",
-      "operations": true,
-      "permissions": {
-        "can-create-state-versions": true,
-        "can-destroy": true,
-        "can-force-unlock": true,
-        "can-lock": true,
-        "can-manage-run-tasks": true,
-        "can-manage-tags": true,
-        "can-queue-apply": true,
-        "can-queue-destroy": true,
-        "can-queue-run": true,
-        "can-read-settings": true,
-        "can-read-state-versions": true,
-        "can-read-variable": true,
-        "can-unlock": true,
-        "can-update": true,
-        "can-update-variable": true,
-        "can-force-delete" : true
-      },
-      "plan-duration-average": null,
-      "policy-check-failures": null,
-      "queue-all-runs": false,
-      "resource-count": 0,
-      "run-failures": null,
-      "source": "tfe-api",
-      "source-name": null,
-      "source-url": null,
-      "speculative-enabled": true,
-      "structured-run-output-enabled": true,
-      "terraform-version": "0.11.1",
-      "trigger-prefixes": [],
-      "updated-at": "2021-08-16T21:50:58.726Z",
-      "vcs-repo": {
-        "branch": "",
-        "display-identifier": "example/terraform-test-proj",
-        "identifier": "example/terraform-test-proj",
-        "ingress-submodules": false,
-        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
-        "repository-http-url": "https://github.com/example/terraform-test-proj",
-        "service-provider": "github",
-        "tags-regex": null,
-        "webhook-url": "https://app.terraform.io/webhooks/vcs/704ac743-df64-4b8e-b9a3-a4c5fe1bec87"
-      },
-      "vcs-repo-identifier": "example/terraform-test-proj",
-      "working-directory": "",
-      "workspace-kpis-runs-count": null
-    },
-    "id": "ws-KTuq99JSzgmDSvYj",
-    "links": {
-      "self": "/api/v2/organizations/my-organization/workspaces/workspace-2"
-    },
-    "relationships": {
-      "agent-pool": {
-        "data": null
-      },
-      "current-configuration-version": {
-        "data": {
-          "id": "cv-9WgU5LYoTq3rrnG6",
-          "type": "configuration-versions"
+  "data": [
+    {
+      "attributes": {
+        "actions": {
+          "is-destroyable": true
         },
-        "links": {
-          "related": "/api/v2/configuration-versions/cv-9WgU5LYoTq3rrnG6"
+        "allow-destroy-plan": true,
+        "apply-duration-average": null,
+        "auto-apply": false,
+        "auto-destroy-at": null,
+        "created-at": "2021-08-16T21:50:58.726Z",
+        "description": null,
+        "environment": "default",
+        "execution-mode": "remote",
+        "file-triggers-enabled": true,
+        "global-remote-state": false,
+        "latest-change-at": "2021-08-16T21:50:58.726Z",
+        "locked": false,
+        "name": "workspace-2",
+        "operations": true,
+        "permissions": {
+          "can-create-state-versions": true,
+          "can-destroy": true,
+          "can-force-unlock": true,
+          "can-lock": true,
+          "can-manage-run-tasks": true,
+          "can-manage-tags": true,
+          "can-queue-apply": true,
+          "can-queue-destroy": true,
+          "can-queue-run": true,
+          "can-read-settings": true,
+          "can-read-state-versions": true,
+          "can-read-variable": true,
+          "can-unlock": true,
+          "can-update": true,
+          "can-update-variable": true,
+          "can-force-delete": true
+        },
+        "plan-duration-average": null,
+        "policy-check-failures": null,
+        "queue-all-runs": false,
+        "resource-count": 0,
+        "run-failures": null,
+        "source": "tfe-api",
+        "source-name": null,
+        "source-url": null,
+        "speculative-enabled": true,
+        "structured-run-output-enabled": true,
+        "terraform-version": "0.11.1",
+        "trigger-prefixes": [],
+        "updated-at": "2021-08-16T21:50:58.726Z",
+        "vcs-repo": {
+          "branch": "",
+          "display-identifier": "example/terraform-test-proj",
+          "identifier": "example/terraform-test-proj",
+          "ingress-submodules": false,
+          "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
+          "repository-http-url": "https://github.com/example/terraform-test-proj",
+          "service-provider": "github",
+          "tags-regex": null,
+          "webhook-url": "https://app.terraform.io/webhooks/vcs/704ac743-df64-4b8e-b9a3-a4c5fe1bec87"
+        },
+        "vcs-repo-identifier": "example/terraform-test-proj",
+        "working-directory": "",
+        "workspace-kpis-runs-count": null
+      },
+      "id": "ws-KTuq99JSzgmDSvYj",
+      "links": {
+        "self": "/api/v2/organizations/my-organization/workspaces/workspace-2"
+      },
+      "relationships": {
+        "agent-pool": {
+          "data": null
+        },
+        "current-configuration-version": {
+          "data": {
+            "id": "cv-9WgU5LYoTq3rrnG6",
+            "type": "configuration-versions"
+          },
+          "links": {
+            "related": "/api/v2/configuration-versions/cv-9WgU5LYoTq3rrnG6"
+          }
+        },
+        "current-run": {
+          "data": null
+        },
+        "current-state-version": {
+          "data": null
+        },
+        "latest-run": {
+          "data": null
+        },
+        "organization": {
+          "data": {
+            "id": "my-organization",
+            "type": "organizations"
+          }
+        },
+        "outputs": {
+          "data": []
+        },
+        "readme": {
+          "data": {
+            "id": "227347",
+            "type": "workspace-readme"
+          }
+        },
+        "remote-state-consumers": {
+          "links": {
+            "related": "/api/v2/workspaces/ws-KTuq99JSzgmDSvYj/relationships/remote-state-consumers"
+          }
         }
       },
-      "current-run": {
-        "data": null
-      },
-      "current-state-version": {
-        "data": null
-      },
-      "latest-run": {
-        "data": null
-      },
-      "organization": {
-        "data": {
-          "id": "my-organization",
-          "type": "organizations"
-        }
-      },
-      "outputs": {
-        "data": []
-      },
-      "readme": {
-        "data": {
-          "id": "227347",
-          "type": "workspace-readme"
-        }
-      },
-      "remote-state-consumers": {
-        "links": {
-          "related": "/api/v2/workspaces/ws-KTuq99JSzgmDSvYj/relationships/remote-state-consumers"
-        }
-      }
+      "type": "workspaces"
     },
-    "type": "workspaces"
-  },
-  {
-    "data": {
+    {
       "attributes": {
         "actions": {
           "is-destroyable": true
@@ -862,7 +863,7 @@ $ curl \
           "can-unlock": true,
           "can-update": true,
           "can-update-variable": true,
-          "can-force-delete" : true
+          "can-force-delete": true
         },
         "plan-duration-average": null,
         "policy-check-failures": null,
@@ -925,6 +926,7 @@ $ curl \
       },
       "type": "workspaces"
     }
+  ]
 }
 ```
 
@@ -1105,7 +1107,7 @@ $ curl \
 
 ## Safe Delete a workspace
 
-When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources. 
+When you delete a Terraform Cloud workspace with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, Terraform Cloud only deletes the workspace if it is not managing resources.
 
 You can safe delete a workspace using two endpoints that behave identically. The first endpoint identifies a workspace with the workspace ID, and the other identifies the workspace by its name and organization.
 
@@ -1115,7 +1117,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 | --------------- | --------------------------------- |
 | `:workspace_id` | The ID of the workspace to delete. |
 
-`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete` 
+`DELETE /organizations/:organization_name/workspaces/:name/actions/safe-delete`
 
 | Parameter            | Description                                                                                 |
 | -------------------- | ------------------------------------------------------------------------------------------- |
@@ -1132,7 +1134,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 
 During a force delete, Terraform Cloud removes the specified workspace without checking whether it is managing resources. We recommend using the [safe delete endpoint](#safe-delete-a-workspace) instead, when possible.
 
-!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it. 
+!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it.
 
 By default, only organization owners can force delete workspaces. Organization owners can also update [organization's settings](/cloud-docs/users-teams organizations/organizations#general) to let workspace admins force delete their own workspaces.
 
@@ -2070,7 +2072,7 @@ The list returned by this endpoint is subject to the caller's normal workspace p
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2429,7 +2431,7 @@ This endpoint returns the tags that are currently associated to a workspace.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2617,7 +2619,7 @@ Status code `204`.
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 * `organization` - The full organization record.
 * `current_configuration_version` - The last configuration this workspace received, excluding plan-only configurations. Terraform uses this configuration for new runs, unless you provide a different one.

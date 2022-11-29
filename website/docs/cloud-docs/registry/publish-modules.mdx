@@ -51,33 +51,32 @@ A module repository must meet all of the following requirements before you can a
 
 ## Publishing a New Module
 
-You can publish modules through the UI as shown below or with the [Registry Modules API](/cloud-docs/api-docs/modules). The API also supports publishing modules without a VCS repo as the source, which is not possible in the UI.
+You can publish modules through the UI as shown below or with the [Registry Modules API](/cloud-docs/api-docs/private-registry/modules). The API also supports publishing modules without a VCS repo as the source, which is not possible in the UI.
 
 To publish a new module:
 
-1. Click **Registry** in the main navigation bar. The **Registry** page appears.
 
-1. Click **Publish** and select **Module**.
+  1. Click **Registry**. The **Registry** page appears.
 
-   ![Terraform Cloud screenshot: the "registry" button and the "+Add Module" button](/img/docs/publish-add-button.png)
-
-   The **Add Module** page appears with a list of available repositories.
-
-   ![Terraform Cloud screenshot: the "add module" page, with a repository name entered](/img/docs/publish-add-module.png)
-
-1. Select the repository containing the module you want to publish.
-
-   You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
-
-1. (Optional) If this module is a [no-code ready module](/cloud-docs/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
-  
-    -> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+  1.  Click **Publish** and select **Module**.
     
-1. Click **Publish module**.
+    The **Add Module** page appears with a list of available repositories.
 
-   Terraform Cloud displays a loading page while it imports the module versions and then takes you to the new module's details page. On the details page, you can view available versions, read documentation, and copy a usage example.
+  1. Select the repository containing the module you want to publish.
 
-   ![Terraform Cloud screenshot: a module details page](/img/docs/publish-module-details.png)
+    You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
+
+  <!-- BEGIN: TFC:only name:no-code -->
+  
+  1.  (Optional) If this module is a [no-code ready module](/enterprise/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
+
+  -> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+
+  <!-- END: TFC:only name:no-code -->
+
+  1.  Click **Publish module**.
+
+    Terraform Cloud displays a loading page while it imports the module versions and then takes you to the new module's details page. On the details page, you can view available versions, read documentation, and copy a usage example.
 
 ## Releasing New Versions of a Module
 
@@ -102,8 +101,6 @@ You can delete individual versions of a module or the entire module. If deleting
    - **Delete only this module version:** Deletes only the version of the module you were viewing when you clicked **Delete module**.
    - **Delete all versions for this provider for this module:** Deletes the entire module for a single provider. This action is important if you have modules with the same name but with different providers. For example, if you have module repos named `terraform-aws-appserver` and `terraform-azure-appserver`, the registry treats them as alternate providers of the same `appserver` module.
    - **Delete all providers and versions for this module:** Deletes all modules with this name, even if they are from different providers. For example, this action deletes both `terraform-aws-appserver` and `terraform-azure-appserver`.
-
-   ![Terraform Cloud screenshot: the deletion dialog](/img/docs/publish-delete.png)
 
 1. Type the module name and click **Delete**.
 

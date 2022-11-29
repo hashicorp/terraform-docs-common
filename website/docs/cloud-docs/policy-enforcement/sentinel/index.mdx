@@ -27,7 +27,7 @@ Terraform Cloud provides four imports to define policy rules for the plan, confi
 - [tfrun](/cloud-docs/policy-enforcement/sentinel/import/tfrun) - Access data associated with a [run in Terraform Cloud](/cloud-docs/run/remote-operations). For example, you could retrieve the run's workspace.
 
 You can create mocks of these imports to use with the the [Sentinel
-CLI](https://docs.hashicorp.com/sentinel/commands) mocking and testing features. Refer to [Mocking Terraform Sentinel Data](/cloud-docs/sentinel/mock) for more details.
+CLI](https://docs.hashicorp.com/sentinel/commands) mocking and testing features. Refer to [Mocking Terraform Sentinel Data](/cloud-docs/policy-enforcement/sentinel/mock) for more details.
 
 -> **Note:** Terraform Cloud does not support custom imports.
 
@@ -161,7 +161,7 @@ Note that this function prints a warning message for **every** resource instance
 that violates the condition. This allows writers of Terraform code to fix all
 violations after just one policy check. It also prints warnings when the
 attribute being evaluated is
-[computed](/cloud-docs/sentinel/import/tfplan#value-computed) and does
+[computed](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-computed) and does
 not evaluate the condition in this case since the applied value will not be
 known.
 
