@@ -10,12 +10,13 @@ Terraform Cloud can estimate monthly costs for many AWS Terraform resources.
 
 -> **Note:** Terraform Enterprise requires AWS credentials to support cost estimation. These credentials are configured at the instance level, not the organization level. See the [Application Administration docs](/enterprise/admin/application/integration) for more details.
 
-## Handled Resources
+## Supported Resources
 
-Below is a list of resources that cost estimation supports. Resources that incur cost are marked as such.
+Cost estimation supports the following resources:
 
-| Resource | Status |
-| aws_alb | incurs cost |
+| Resource | Incurs Cost |
+| ----------- | ----------- |
+| `aws_alb` | X |
 | aws_autoscaling_group | incurs cost |
 | aws_cloudhsm_v2_hsm | incurs cost |
 | aws_cloudwatch_dashboard | incurs cost |
