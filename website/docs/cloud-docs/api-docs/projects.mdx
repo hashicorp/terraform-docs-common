@@ -191,11 +191,14 @@ This endpoint lists projects in the organization.
 
 This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter             | Description                                                              |
-|-----------------------|--------------------------------------------------------------------------|
-| `page[number]`        | **Optional.** If omitted, the endpoint will return the first page.       |
-| `page[size]`          | **Optional.** If omitted, the endpoint will return 20 projects per page. |
-| `filter[project][id]` | **Optional.** Allows filtering the organization's projects by ID.        |
+| Parameter                               | Description                                                                                                |
+|-----------------------------------------|------------------------------------------------------------------------------------------------------------|
+| `page[number]`                          | **Optional.** If omitted, the endpoint will return the first page.                                         |
+| `page[size]`                            | **Optional.** If omitted, the endpoint will return 20 projects per page.                                   |
+| `q`                                     | **Optional.** Allows querying a list of projects by name. This search is case-insensitive.                 |
+| `filter[permissions][create-workspace]` | **Optional.** If present, returns a list of projects that the authenticated user can create workspaces in. |
+| `filter[permissions][update]`           | **Optional.** If present, returns a list of projects that the authenticated user can update.               |
+
 
 ### Sample Request
 
