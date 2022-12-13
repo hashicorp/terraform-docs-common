@@ -55,7 +55,7 @@ Terraform Cloud shows the new organization and prompts you to create a new works
 
 Your organization’s managed resource count helps you understand the number of infrastructure resources that Terraform Cloud manages across all your workspaces.
 
-Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) instance in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. Refer to [Managed Resources Count](/terraform/cloud-docs/workspaces/state#managed-resources-count) in the workspace state documentation for more details.
+Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) instance in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource created with the `count` or `for_each` meta-arguments. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. Refer to [Managed Resources Count](/terraform/cloud-docs/workspaces/state#managed-resources-count) in the workspace state documentation for more details.
 
 You can view your organization's managed resource count on the **Usage** page.
 
