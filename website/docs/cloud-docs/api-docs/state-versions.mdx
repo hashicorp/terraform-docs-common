@@ -52,7 +52,7 @@ Attribute                        | Description
 `resources-processed`            | A Boolean flag indicating whether Terraform Cloud has finished asynchronously extracting outputs, resources, and other information about this state data.
 `serial`                         | The serial number of this state instance, which increases every time Terraform creates new state in the workspace.
 `state-version`                  | The version of the internal state format used for this state. Different Terraform versions read and write different format versions, but it only changes infrequently.
-`terraform-version`              | The Terraform version that created this state.
+`terraform-version`              | The Terraform version that created this state. Populated asynchronously.
 `vcs-commit-sha`                 | The SHA of the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
 `vcs-commit-url`                 | A link to the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
 
