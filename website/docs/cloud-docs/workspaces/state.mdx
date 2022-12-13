@@ -31,7 +31,7 @@ You can view a workspace's state versions from its **States** tab. Each state in
 
 Your organization’s managed resource count helps you understand the number of infrastructure resources that Terraform Cloud manages across all your workspaces.
 
-Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) instance in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. For example, `"aws_instance" "servers" { count = 10 }` creates ten separate managed resources in state. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. 
+Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. For example, `"aws_instance" "servers" { count = 10 }` creates ten separate managed resources in state. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. 
 
 ### Examples - Managed Resources
 
