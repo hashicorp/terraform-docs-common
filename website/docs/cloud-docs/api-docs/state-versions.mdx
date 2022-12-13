@@ -36,6 +36,26 @@ page_title: State Versions - API Docs - Terraform Cloud
 
 # State Versions API
 
+## Attributes
+
+State version API objects represent a instance of Terraform state data, but do not directly contain the stored state. Instead, they contain information about the state, its properties, and its contents, and include one or more URLs from which the state can be downloaded.
+
+Some of the information returned in a state version API object might be **populated asynchronously** by Terraform Cloud. This includes resources, modules, providers, and the [state version outputs](/cloud-docs/api-docs/state-version-outputs) associated with the state version. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the state version object indicates whether or not Terraform Cloud has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
+
+Attribute                        | Description
+---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`hosted-json-state-download-url` | A URL from which you can download the state data in a [stable format](/internals/json-format) appropriate for external integrations to consume. Only available if the state was created by Terraform 1.3+.
+`hosted-state-download-url`      | A URL from which you can download the raw state data, in the format used internally by Terraform.
+`modules`                        | Extracted information about the Terraform modules in this state data. Populated asynchronously.
+`providers`                      | Extracted information about the Terraform providers used for resources in this state data. Populated asynchronously.
+`resources`                      | Extracted information about the resources in this state data. Populated asynchronously.
+`resources-processed`            | A Boolean flag indicating whether Terraform Cloud has finished asynchronously extracting outputs, resources, and other information about this state data.
+`serial`                         | The serial number of this state instance, which increases every time Terraform creates new state in the workspace.
+`state-version`                  | The version of the internal state format used for this state. Different Terraform versions read and write different format versions, but it only changes infrequently.
+`terraform-version`              | The Terraform version that created this state.
+`vcs-commit-sha`                 | The SHA of the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
+`vcs-commit-url`                 | A link to the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
+
 ## Create a State Version
 
 > **Hands-on:** Try the [Version Remote State with the Terraform Cloud API](https://learn.hashicorp.com/tutorials/terraform/cloud-state-api?in=terraform/cloud) tutorial to download a remote state file and use the Terraform API to create a new state version.
@@ -121,8 +141,6 @@ curl \
 ```
 
 ### Sample Response
-
--> **Note**: The `hosted-state-download-url` attribute provides a URL from which you can download the raw, internal state. When Terraform 1.3+ is used, the `hosted-json-state-download-url` attribute provides the same state, but in a [stable format](/internals/json-format).
 
 ```json
 {
