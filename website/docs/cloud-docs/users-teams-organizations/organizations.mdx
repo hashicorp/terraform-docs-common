@@ -49,6 +49,7 @@ On Terraform Cloud, any user can create a new organization. If you do not belong
 
 Terraform Cloud shows the new organization and prompts you to create a new workspace. You can also [invite other users](#users) to join the organization.
 
+<!-- BEGIN: TFC:only name:managed-resources -->
 ## Managed Resources
 
 -> **Note:** A managed resources count for each organization is available in the [Terraform Cloud Business tier](https://cloud.hashicorp.com/products/terraform/pricing).
@@ -58,6 +59,8 @@ Your organization’s managed resource count helps you understand the number of 
 Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) instance in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource created with the `count` or `for_each` meta-arguments. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. Refer to [Managed Resources Count](/terraform/cloud-docs/workspaces/state#managed-resources-count) in the workspace state documentation for more details.
 
 You can view your organization's managed resource count on the **Usage** page.
+
+<!-- END: TFC:only name:managed-resources -->
 
 ## Managing Settings
 
