@@ -32,7 +32,9 @@ In addition to the basic Terraform content, Terraform Cloud keeps some additiona
 
 - **Run history:** When Terraform Cloud manages a workspace's Terraform runs, it retains a record of all run activity, including summaries, logs, a reference to the changes that caused the run, and user comments. Refer to [Viewing and Managing Runs](/cloud-docs/run/manage) for more details.
 
+<!-- BEGIN: TFC:only name:managed-resources -->
 The top of each workspace shows a resource count, which reflects the number of resources recorded in the workspace’s state file. This includes both managed [resources](/language/resources/syntax) and [data sources](/language/data-sources.
+<!-- END: TFC:only name:managed-resources -->
 
 ## Terraform Runs
 
