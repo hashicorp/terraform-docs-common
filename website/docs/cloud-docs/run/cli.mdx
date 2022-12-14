@@ -250,3 +250,17 @@ Do you want to override the soft failed policy check?
 ## Options for Plans and Applies
 
 [Run Modes and Options](/cloud-docs/run/modes-and-options) contains more details about the various options available for plans and applies when you use the CLI-driven workflow.
+
+## Networking/Connection Issues
+
+Sometimes during a CLI-driven run, errors relating to network connectivity issues arise. Examples of these kinds of errors include:
+
+* `Client.Timeout exceeded while awaiting headers`
+* `context deadline exceeded`
+* `TLS handshake timeout`
+
+Sometimes there are network hiccups that are outside of our control. If you're seeing these kinds of errors, after making sure your network connection is operational, the following are a few common configuration settings to check:
+
+* Determine if there is any firewall software on your system that could be blocking the `terraform` command, and explicitly approve it.
+* Verify that you're using a valid DNS server IP address.
+* Remove any expired TLS certificates for your system.
