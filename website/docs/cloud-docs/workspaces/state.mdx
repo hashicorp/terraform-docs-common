@@ -25,6 +25,154 @@ In addition to the current state, Terraform Cloud retains historical state versi
 
 You can view a workspace's state versions from its **States** tab. Each state in the list indicates which run and which VCS commit (if applicable) it was associated with. Click a state in the list for more details, including a diff against the previous state and a link to the raw state file.
 
+<!-- BEGIN: TFC:only name:managed-resources -->
+## Managed Resources Count
+
+-> **Note:** A managed resources count for each organization is available in the [Terraform Cloud Business tier](https://cloud.hashicorp.com/products/terraform/pricing).
+
+Your organization’s managed resource count helps you understand the number of infrastructure resources that Terraform Cloud manages across all your workspaces.
+
+Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. For example, `"aws_instance" "servers" { count = 10 }` creates ten separate managed resources in state. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. 
+
+### Examples - Managed Resources
+
+The following Terraform state excerpt describes a  `random` resource. Terraform Cloud counts  `random` as one managed resource because `“mode”: “managed”`.
+
+```json
+"resources": [
+{
+      "mode": "managed",
+      "type": "random_pet",
+      "name": "random",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "puma",
+            "keepers": null,
+            "length": 1,
+            "prefix": null,
+            "separator": "-"
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    }
+]
+```
+
+A single resource configuration block can describe multiple resource instances with the [`count`](language/meta-arguments/count) or [`for_each`](/language/meta-arguments/for_each) meta-arguments. Each of these instances counts as a managed resource.
+
+The following example shows a Terraform state excerpt with 2 instances of a `aws_subnet` resource. Terraform Cloud counts each instance of `aws_subnet` as a separate managed resource.
+
+```json
+{
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-2:561656980159:subnet/subnet-024b05c4fba9c9733",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-2a",
+            ##...
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "-public-us-east-2a"
+            },
+            "tags_all": {
+              "Name": "-public-us-east-2a"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f693f9721b61333b"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this",
+            "module.vpc.aws_vpc_ipv4_cidr_block_association.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-2:561656980159:subnet/subnet-08924f16617e087b2",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-2b",
+            ##...
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "tags": {
+              "Name": "-public-us-east-2b"
+            },
+            "tags_all": {
+              "Name": "-public-us-east-2b"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0f693f9721b61333b"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this",
+            "module.vpc.aws_vpc_ipv4_cidr_block_association.this"
+          ]
+        }
+      ]
+}
+```
+
+### Example - Excluded Data Source
+
+The following Terraform state excerpt describes a `aws_availability_zones` data source. Terraform Cloud does not include `aws_availability_zones` in the managed resource count because `”mode”: “data”`.
+
+```json
+ "resources": [
+    {
+      "mode": "data",
+      "type": "aws_availability_zones",
+      "name": "available",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "all_availability_zones": null,
+            "exclude_names": null,
+            "exclude_zone_ids": null,
+            "filter": null,
+            "group_names": [
+              "us-east-2"
+            ],
+            "id": "us-east-2",
+            "names": [
+              "us-east-2a",
+              "us-east-2b",
+              "us-east-2c"
+            ],
+            "state": null,
+            "zone_ids": [
+              "use2-az1",
+              "use2-az2",
+              "use2-az3"
+            ]
+          },
+          "sensitive_attributes": []
+        }
+      ]
+     }
+   ]
+```
+<!-- END: TFC:only name:managed-resources -->
+
 ## State Manipulation
 
 Certain tasks (including importing resources, tainting resources, moving or renaming existing resources to match a changed configuration, and more) require modifying Terraform state outside the context of a run.
