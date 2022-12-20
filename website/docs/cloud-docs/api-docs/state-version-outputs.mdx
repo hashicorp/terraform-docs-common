@@ -15,6 +15,8 @@ page_title: State Version Outputs - API Docs - Terraform Cloud
 State version outputs are the [output values](/language/values/outputs) from a Terraform state file. They include
 the name and value of the output, as well as a sensitive boolean if the value should be hidden by default in UIs.
 
+~> **Important:** The state version outputs for a state version (as well as some other information about it) might be **populated asynchronously** by Terraform Cloud. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the associated [state version object](/cloud-docs/api-docs/state-versions) indicates whether or not Terraform Cloud has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
+
 ## List State Version Outputs
 
 `GET /state-versions/:state_version_id/outputs`
