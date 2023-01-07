@@ -214,18 +214,14 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 
 ### Data Source Configuration
 
-To configure a `tfe_outputs` data source that references a Terraform Cloud workspace, specify the organization and workspace in the `config` argument.
+To configure a `tfe_outputs` data source that references a Terraform Cloud workspace, specify the organization and workspace.
 
 You must still properly configure the `tfe` provider with a valid authentication token and correct permissions to Terraform Cloud. 
 
 ```hcl
 data "tfe_outputs" "vpc" {
-  config = {
-    organization = "example_corp"
-    workspaces = {
-      name = "vpc-prod"
-    }
-  }
+  organization = "example_corp"
+  workspace = "vpc-prod"
 }
 
 resource "aws_instance" "redis_server" {
