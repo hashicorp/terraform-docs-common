@@ -1,0 +1,155 @@
+---
+page_title: Plugin Development - Terraform Plugin Protocol
+description: >-
+  Learn how Terraform communicates with plugins.
+---
+
+# Terraform Plugin Protocol
+
+The Terraform Plugin Protocol is a versioned interface between Terraform CLI and Terraform Plugins.
+
+During [discovery](/plugin/how-terraform-works#discovery), the Terraform Registry uses the protocol version as additional compatibility metadata when deciding which plugin versions Terraform CLI can select. You can configure this metadata in the [Terraform Registry manifest file](/registry/providers/publishing#terraform-registry-manifest-file) when you create a plugin release.
+
+Major versions of the protocol delineate Terraform CLI and Terraform Plugin compatibility. Minor versions of the protocol are additive. The protocol is implemented in [Protocol Buffers](https://developers.google.com/protocol-buffers) and [gRPC](https://grpc.io/), with the canonical source for protocol definitions located in the [Terraform CLI repository](https://github.com/hashicorp/terraform/tree/main/docs/plugin-protocol).
+
+## Protocol Version 6
+
+Protocol version 6 is compatible with Terraform CLI version 1.0 and later. Protocol version 6 includes all version 5 functionality for providers, plus:
+
+* **Nested Attributes**: Define `SchemaAttribute` with the `NestedType` field.
+  * Enable practitioners to use easier [argument syntax](/language/syntax/configuration#arguments) instead of [block syntax](/language/syntax/configuration#blocks).
+  * Configure value sensitivity on individual nested attributes, rather than an entire read-only (`Computed` only) attribute.
+
+Implementations include:
+
+* [terraform-plugin-framework](/plugin/framework): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
+* [terraform-plugin-go tf6server](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-go/tfprotov6/tf6server): A lower-level SDK to develop Terraform providers for more advanced use cases.
+* [tf5to6server](/plugin/mux/translating-protocol-version-5-to-6): A package to translate protocol version 5 providers into protocol version 6.
+* [tf6muxserver](/plugin/mux/combining-protocol-version-6-providers): A package to combine multiple protocol version 6 providers.
+
+## Protocol Version 5
+
+Protocol version 5 is compatible with Terraform CLI version 0.12 and later.
+
+Implementations include:
+
+* [terraform-plugin-framework](/plugin/framework): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
+* [terraform-plugin-sdk/v2](/plugin/sdkv2): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
+* [terraform-plugin-go tf5server](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-go/tfprotov5/tf5server): A lower-level SDK to develop Terraform providers for more advanced use cases.
+* [tf6to5server](/plugin/mux/translating-protocol-version-6-to-5): A package to translate protocol version 6 providers into protocol version 5.
+* [tf5muxserver](/plugin/mux/combining-protocol-version-5-providers): A package to combine multiple protocol version 5 providers.
+
+## Protocol RPCs
+
+The Terraform plugin protocol specifies the following RPCs:
+
+| Protocol Version 5         | Protocol Version 6         |
+|----------------------------|----------------------------|
+| GetSchema                  | GetProviderSchema          |
+| PrepareProviderConfig      | ValidateProviderConfig     |
+| ValidateResourceTypeConfig | ValidateResourceConfig     |
+| ValidateDataSourceConfig   | ValidateDataResourceConfig |
+| UpgradeResourceState       | UpgradeResourceState       |
+| Configure                  | ConfigureProvider          |
+| ReadResource               | ReadResource               |
+| ReadDataSource             | ReadDataSource             |
+| PlanResourceChange         | PlanResourceChange         |
+| ApplyResourceChange        | ApplyResourceChange        |
+| ImportResourceState        | ImportResourceState        |
+
+![diagram: Terraform Plugin Protocol 6 RPCs](/img/docs/terraform-plugin-protocol-6-rpcs-all.png)
+
+## RPCs and Terraform commands
+
+The following illustrate the RPCs that are sent during execution of the specified Terraform commands.
+
+The RPCs issued are for a provider that is using version 6 of the Terraform plugin protocol when the Terraform configuration contains configuration for the provider, a resource and a data source.
+
+### _terraform validate_
+
+Executing _terraform validate_ results in the following unique RPCs:
+
+![diagram: Terraform Plugin Protocol 6 Validate RPCs](/img/docs/terraform-plugin-protocol-6-rpcs-validate.png)
+
+The actual sequence of RPCs is as follows:
+
+- GetProviderSchema
+- GetProviderSchema
+- ValidateProviderConfig
+- ValidateResourceConfig
+- ValidateDataResourceConfig
+
+The correlation between the RPCs and the Terraform plugin framework methods is as follows:
+
+| Protocol RPCs                                                              | Framework Functionality                                                                                                                                            |
+|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GetProviderSchema                                                          | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method                                                                    |
+| ValidateDataSourceConfig / ValidateProviderConfig / ValidateResourceConfig | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
+
+### _terraform plan_
+
+Executing _terraform plan_ results in the following unique RPCs:
+
+![diagram: Terraform Plugin Protocol 6 Plan RPCs](/img/docs/terraform-plugin-protocol-6-rpcs-plan.png)
+
+The actual sequence of RPCs is as follows:
+
+- GetProviderSchema
+- GetProviderSchema
+- ValidateProviderConfig
+- ValidateResourceConfig
+- ValidateDataResourceConfig
+- GetProviderSchema
+- ValidateProviderConfig
+- ConfigureProvider
+- ValidateResourceConfig
+- ValidateDataResourceConfig
+- ReadDataSource
+- PlanResourceChange
+
+### _terraform apply_
+
+Executing _terraform apply_ (with default -refresh=true and -auto-approve) results in the following unique RPCs:
+
+![diagram: Terraform Plugin Protocol 6 Plan RPCs](/img/docs/terraform-plugin-protocol-6-rpcs-apply.png)
+
+The actual sequence of RPCs is as follows:
+
+- GetProviderSchema
+- GetProviderSchema
+- ValidateProviderConfig
+- ValidateResourceConfig
+- ValidateDataResourceConfig
+- GetProviderSchema
+- ValidateProviderConfig
+- ConfigureProvider
+- UpgradeResourceState
+  - only called if resource already exists in state
+- ValidateResourceConfig
+- ValidateDataResourceConfig
+- ReadResource
+  - only called if resource already exists in state)
+- ReadDataSource
+- PlanResourceChange
+  - if _-auto-approve_ is not used this is the point at which Terraform prompts the practitioner to confirm the proposed changes
+- GetProviderSchema
+- ValidateProviderConfig
+- ConfigureProvider
+- UpgradeResourceState
+  - only called if resource already exists in state
+- ValidateResourceConfig
+- PlanResourceChange
+- ApplyResourceChange
+
+## RPCs and Terraform plugin framework functions
+
+The RPCs sent by Terraform core when Terraform commands are executed result in the subsequent execution of methods or functions defined within Terraform plugin providers.
+
+The following table shows the correlation between
+
+The RPCs listed are for a provider that is using version 6 of the Terraform plugin protocol. The equivalent RPCs for a provider that is using version 5 of the protocol are listed above. The same provider functions and methods are called irrespective of the protocol version that is being used.
+
+
+[0]: https://en.wikipedia.org/wiki/Static_build#Static_building
+
+[1]: https://golang.org/
