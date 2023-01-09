@@ -73,18 +73,18 @@ Executing _terraform validate_ results in the following unique RPCs:
 
 The actual sequence of RPCs is as follows:
 
-- `GetProviderSchema`
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ValidateResourceConfig`
-- `ValidateDataResourceConfig`
+- [GetProviderSchema](#getproviderschema-rpc)
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [ValidateDataResourceConfig](#validateconfig-rpcs)
 
 The correlation between the RPCs and the Terraform plugin framework methods is as follows:
 
-| Protocol RPCs                                                                    | Framework Functionality                                                                                                                                            |
-|----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GetProviderSchema`                                                              | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method                                                                    |
-| `ValidateDataSourceConfig` / `ValidateProviderConfig` / `ValidateResourceConfig` | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
+| Protocol RPCs                                                                     | Framework Functionality                                                                                                                                            |
+|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GetProviderSchema`                                                               | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method                                                                    |
+| `ValidateProviderConfig` / `ValidateResourceConfig` /`ValidateDataResourceConfig` | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
 
 ### _terraform plan_
 
@@ -94,28 +94,28 @@ Executing _terraform plan_ results in the following unique RPCs:
 
 The actual sequence of RPCs is as follows:
 
-- `GetProviderSchema`
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ValidateResourceConfig`
-- `ValidateDataResourceConfig`
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ConfigureProvider`
-- `ValidateResourceConfig`
-- `ValidateDataResourceConfig`
-- `ReadDataSource`
-- `PlanResourceChange`
+- [GetProviderSchema](#getproviderschema-rpc)
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [ValidateDataResourceConfig](#validateconfig-rpcs)
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ConfigureProvider](#configureprovider-rpc)
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [ValidateDataResourceConfig](#validateconfig-rpcs)
+- [ReadDataSource](#read-rpcs)
+- [PlanResourceChange](#planresourcechange-rpc)
 
 The correlation between the RPCs and the Terraform plugin framework methods is as follows:
 
-| Protocol RPCs                                                                    | Framework Functionality                                                                                                                                            |
-|----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GetProviderSchema`                                                              | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method                                                                    |
-| `ValidateDataSourceConfig` / `ValidateProviderConfig` / `ValidateResourceConfig` | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
-| `ConfigureProvider`                                                              | `provider.Provider` interface `Configure` method                                                                                                                   |
-| `ReadDataSource` / `ReadResource`                                                | `datasource.DataSource` and `resource.Resource` interface `Read` method                                                                                            |
-| `PlanResourceChange`                                                             | `resource.Resource` interface `Schema` method plan modifiers and `ModifyPlan` method                                                                               |
+| Protocol RPCs                                                                     | Framework Functionality                                                                                                                                            |
+|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GetProviderSchema`                                                               | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method                                                                    |
+| `ValidateProviderConfig` / `ValidateResourceConfig` /`ValidateDataResourceConfig` | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
+| `ConfigureProvider`                                                               | `provider.Provider` interface `Configure` method                                                                                                                   |
+| `ReadResource` / `ReadDataSource`                                                 | `resource.Resource` and `datasource.DataSource` interface `Read` method                                                                                            |
+| `PlanResourceChange`                                                              | `resource.Resource` interface `Schema` method plan modifiers and `ModifyPlan` method                                                                               |
 
 ### _terraform apply_
 
@@ -125,48 +125,48 @@ Executing _terraform apply_ (with default -refresh=true and -auto-approve) resul
 
 The actual sequence of RPCs is as follows:
 
-- `GetProviderSchema`
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ValidateResourceConfig`
-- `ValidateDataResourceConfig`
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ConfigureProvider`
-- `UpgradeResourceState`
+- [GetProviderSchema](#getproviderschema-rpc)
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [ValidateDataResourceConfig](#validateconfig-rpcs)
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ConfigureProvider](#configureprovider-rpc)
+- UpgradeResourceState
   - only called if resource already exists in state
-- `ValidateResourceConfig`
-- `ValidateDataResourceConfig`
-- `ReadResource`
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [ValidateDataResourceConfig](#validateconfig-rpcs)
+- [ReadResource](#read-rpcs)
   - only called if resource already exists in state)
-- `ReadDataSource`
-- `PlanResourceChange`
+- [ReadDataSource](#read-rpcs)
+- [PlanResourceChange](#planresourcechange-rpc)
   - if _-auto-approve_ is not used this is the point at which Terraform prompts the practitioner to confirm the proposed changes
-- `GetProviderSchema`
-- `ValidateProviderConfig`
-- `ConfigureProvider`
-- `UpgradeResourceState`
+- [GetProviderSchema](#getproviderschema-rpc)
+- [ValidateProviderConfig](#validateconfig-rpcs)
+- [ConfigureProvider](#configureprovider-rpc)
+- UpgradeResourceState
   - only called if resource already exists in state
-- `ValidateResourceConfig`
-- `PlanResourceChange`
-- `ApplyResourceChange`
+- [ValidateResourceConfig](#validateconfig-rpcs)
+- [PlanResourceChange](#planresourcechange-rpc)
+- [ApplyResourceChange](#applyresourcechange-rpc)
 
 The correlation between the RPCs and the Terraform plugin framework methods is as follows:
 
-| Protocol RPCs                                                                    | Framework Functionality                                                                                                                                            |
-|----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GetProviderSchema`                                                              | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method                                                                    |
-| `ValidateDataSourceConfig` / `ValidateProviderConfig` / `ValidateResourceConfig` | `datasource.DataSource`, `provider.Provider`, and `resource.Resource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
-| `ConfigureProvider`                                                              | `provider.Provider` interface `Configure` method                                                                                                                   |
-| `ReadDataSource` / `ReadResource`                                                | `datasource.DataSource` and `resource.Resource` interface `Read` method                                                                                            |
-| `PlanResourceChange`                                                             | `resource.Resource` interface `Schema` method plan modifiers and `ModifyPlan` method                                                                               |
-| `ApplyResourceChange`                                                            | `resource.Resource` interface `Create`, `Update`, or `Delete` method                                                                                               |
+| Protocol RPCs                                                                     | Framework Functionality                                                                                                                                            |
+|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GetProviderSchema`                                                               | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method                                                                    |
+| `ValidateProviderConfig` / `ValidateResourceConfig` /`ValidateDataResourceConfig` | `provider.Provider`, `resource.Resource`, and `datasource.DataSource` interface `Schema` method validators, `ConfigValidators` method, and `ValidateConfig` method |
+| `ConfigureProvider`                                                               | `provider.Provider` interface `Configure` method                                                                                                                   |
+| `ReadResource` / `ReadDataSource`                                                 | `resource.Resource` and `datasource.DataSource` interface `Read` method                                                                                            |
+| `PlanResourceChange`                                                              | `resource.Resource` interface `Schema` method plan modifiers and `ModifyPlan` method                                                                               |
+| `ApplyResourceChange`                                                             | `resource.Resource` interface `Create`, `Update`, or `Delete` method                                                                                               |
 
 ## RPCs and Terraform plugin framework
 
 The RPCs sent by Terraform core when Terraform commands are executed result in the subsequent execution of methods defined within Terraform plugin providers.
 
-The RPCs listed are for a provider that is using version 6 of the Terraform plugin protocol. The equivalent RPCs for a provider that is using version 5 of the protocol are listed above. The same provider functions and methods are called irrespective of the protocol version that is being used.
+The RPCs listed are for a provider that is using version 6 of the Terraform plugin protocol. The equivalent RPCs for a provider that is using version 5 of the protocol are listed in [Protocol RPCs](#protocol-rpcs). The same provider functions and methods are called irrespective of the protocol version that is being used.
 
 ## GetProviderSchema RPC
 
@@ -176,7 +176,7 @@ The RPC flows through the Terraform plugin framework and ultimately calls the `S
 
 ![diagram: GetProviderSchema RPC](/img/docs/terraform-plugin-protocol-6-get-provider-schema.png)
 
-## ValidateProvider|Resource|DataResourceConfig RPCs
+## ValidateConfig RPCs
 
 When _terraform validate | plan | apply_ are executed if the Terraform configuration contains configuration for the provider then Terraform core issues the `ValidateProviderConfig` RPC. Additionally, the `ValidateResourceConfig` and `ValidateDataResourceConfig` RPCs are issued for each of the resources and data sources that appear in the Terraform configuration. There is a 1:1 match between the schema returned from the `GetProviderSchema` RPC and the `Validate<Provider|Resource|DataResource>Config` RPCs.
 
@@ -194,7 +194,7 @@ The RPC flows through the Terraform plugin framework and ultimately calls the `C
 
 ![diagram: ConfigureProvider RPC](/img/docs/terraform-plugin-protocol-6-configure-provider.png)
 
-## ReadResource|DataSource RPCs
+## Read RPCs
 
 When _terraform plan | apply_ are executed Terraform core issues the `ReadResource` and `ReadDataSource` RPCs. Note that the `ReadResource` RPC is only issued when a resource already exists in state.
 
