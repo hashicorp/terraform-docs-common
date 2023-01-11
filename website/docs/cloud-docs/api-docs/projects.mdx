@@ -217,7 +217,7 @@ $ curl \
 {
   "data": [
     {
-      "id": "prj-zezevUXSFVFdfnHE",
+      "id": "prj-W6k9K23oSXRHGpj3",
       "type": "projects",
       "attributes": {
         "name": "Default Project",
@@ -239,11 +239,11 @@ $ curl \
         }
       },
       "links": {
-        "self": "/api/v2/projects/prj-zezevUXSFVFdfnHE"
+        "self": "/api/v2/projects/prj-W6k9K23oSXRHGpj3"
       }
     },
     {
-      "id": "prj-WsVcWRr7SfxRci1v",
+      "id": "prj-YoriCxAawTMDLswn",
       "type": "projects",
       "attributes": {
         "name": "Infrastructure Project",
@@ -265,10 +265,31 @@ $ curl \
         }
       },
       "links": {
-        "self": "/api/v2/projects/prj-WsVcWRr7SfxRci1v"
+        "self": "/api/v2/projects/prj-YoriCxAawTMDLswn"
       }
     }
-  ]
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/organizations/my-organization/projects?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/organizations/my-organization/projects?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/organizations/my-organization/projects?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "status-counts": {
+      "total": 2,
+      "matching": 2
+    },
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
 }
 ```
 
