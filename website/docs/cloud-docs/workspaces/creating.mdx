@@ -21,9 +21,25 @@ Workspaces organize infrastructure into meaningful groups. Create new workspaces
 
 ## Permissions
 
-You must be a member of a team with [manage workspaces permissions](/cloud-docs/users-teams-organizations/permissions#manage-workspaces) to create a workspace.
+You must be a member of a team with [manage all projects & workspaces permissions](/cloud-docs/users-teams-organizations/permissions#manage-all-projects-workspaces), [manage workspaces only permissions](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only), or [admin permissions for a project](/cloud-docs/users-teams-organizations/permissions#project-admins) to create a workspace.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+## Workspace Naming
+
+We recommend using consistent and informative names for new workspaces. One common approach is combining the workspace's important attributes in a consistent order. Attributes can be any defining characteristic of a workspace, such as the component, the component’s run environment, and the region where the workspace is provisioning infrastructure.
+
+This strategy could produce the following example workspace names:
+- networking-prod-us-east
+- networking-staging-us-east
+- networking-prod-eu-central
+- networking-staging-eu-central
+- monitoring-prod-us-east
+- monitoring-staging-us-east
+- monitoring-prod-eu-central
+- monitoring-staging-eu-central
+
+You can add additional attributes to your workspace names as needed. For example, you may add the infrastructure provider, datacenter, or line of business.
 
 ## Create a Workspace
 
@@ -35,28 +51,27 @@ You must be a member of a team with [manage workspaces permissions](/cloud-docs/
 
 [submodules]: /cloud-docs/workspaces/settings/vcs#include-submodules-on-clone
 
-The workspace creation process varies depending on the workflow you choose (e.g., CLI-driven). To create a workspace in the Terraform Cloud UI:
-
-1. Click **Workspaces** to view a list of the workspaces within your organization.
-1. Click **+ New Workspace**. The **Create a new Workspace** page appears.
+The workspace creation process varies depending on the workspace workflow you choose (VCS, API, or CLI-driven). To create a workspace in the Terraform Cloud UI:
+1. Click **Projects & workspaces** to view a list of the workspaces within your organization.
+1. Click **New**, then select **Workspace** from the dropdown menu.
 1. Choose a workflow type: **Version control**, **CLI-driven**, or **API-driven**.
 1. (Version control only) Choose an existing version control provider or configure a new one. Refer to [Connecting VCS Providers](/cloud-docs/vcs) for more details.
 1. (Version control only) Choose a repository from the filterable list. The **Configure settings** page appears.
 
--> **Note:** Depending on your provider, you may need to change which account's repositories are shown. You can also scroll to the bottom of the list and enter the repository ID in the text field if it is not immediately visible.
+  -> **Note:** Depending on your provider, you may need to change which account's repositories are shown. You can also scroll to the bottom of the list and enter the repository ID in the text field if it is not immediately visible.
 
-1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to our [workspace naming recommendations](/cloud-docs/workspaces/naming).
+1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to the [workspace naming recommendations](#workspace-naming).
+1. If you have access to multiple projects, choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](/workspaces/organize-workspaces-with-projects) for more details. 
 1. Add an optional **Description** that will appear at the top of the workspace in the Terraform Cloud UI.
-
 1. (Version control only) Open **Advanced options** to optionally configure the following settings:
    - [Terraform Working Directory][workdir]
    - [Automatic Run Triggering][trigger]
    - [VCS branch][branch]
    - [Include submodules on clone][submodules]
-
 1. Click **Create workspace**.
 
 For CLI and API-driven workspaces, the workspace overview page appears. For version control workspaces, the **Configure Terraform variables** page appears.
+
 
 ### Configure Terraform Variables (Version Control Only)
 

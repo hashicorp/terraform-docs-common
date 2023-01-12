@@ -27,6 +27,7 @@ There are also some actions within an organization that are only available to ow
 
 Permissions for the owners team include:
 
+- Manage projects & workspaces (refer to [Organization Permissions][] below; equivalent to admin permissions on every project & workspace)
 - Manage workspaces (refer to [Organization Permissions][] below; equivalent to admin permissions on every workspace)
 - Manage policies (refer to [Organization Permissions][] below)
 - Manage policy overrides (refer to [Organization Permissions][] below)
@@ -147,11 +148,59 @@ The minimum custom permissions set for a workspace is the permission to read run
 
 Some permissions - such as the runs permission - are tiered: you can assign one permission per category, since higher permissions include all of the capabilities of the lower ones.
 
+## Project Permissions
+
+You can assign project-specific permissions to teams.
+
+### Fixed Permission Sets
+
+Fixed permission sets are bundles of specific permissions for a project, designed for common usage patterns. You can only assign project-specific permissions through one of these permission sets.
+
+#### Project Admins
+
+Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project.
+
+Members of teams with "admin" permissions for a project have [General Workspace Permissions][#general-workspace-permissions] for every workspace in the project, as well as the ability to:
+
+- Read and update project settings.
+- Delete the project.
+- Create workspaces in the project.
+- Move workspaces into or out of the project. This also requires Project admin permissions for the source or destination project.
+- Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
+
+#### Read
+
+The "read" permission set is for users who need to view information about the status and configuration of managed infrastructure for their job function, but are not responsible for maintaining that infrastructure. Read access grants users the permissions to:
+- Read the project name.
+- Read the workspaces in the project.
+
 ## Organization Permissions
 
-Separate from workspace permissions, you can grant teams permissions to manage certain resources or settings across an organization. To set these permissions for a team, go to your organization's **Settings**. Then click **Teams**, and select the team name from the list.
+Separate from project and workspace permissions, you can grant teams permissions to manage certain resources or settings across an organization. To set these permissions for a team, go to your organization's **Settings**. Then click **Teams**, and select the team name from the list.
 
 The following organization permissions are available:
+
+### Projects & workspaces permissions
+
+You must select a level of access for projects and workspaces.
+
+#### Manage all projects & workspaces
+
+Allows members to create and manage all projects and workspaces within the organization. In addition to all the permissions granted by “Manage workspaces only”, this also lets users:
+- Manage other teams' access to all projects
+- Create, edit, and delete projects (otherwise only available to organization owners).
+- Move workspaces between projects.
+
+#### Manage workspaces only
+
+Allows members to create and manage all workspaces within the organization. This lets users:
+- Admin access to all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
+- Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project". 
+- Create, update, and delete [Variable Sets](/cloud-docs/workspaces/variables/managing-variables#variable-sets)
+
+#### No access
+
+Does not grant members any explicit access to projects and workspaces. Permissions may still be granted to individual projects or workspaces through [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) and  [Workspace Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
 ### Manage Policies
 
@@ -168,22 +217,6 @@ Allows members to create, edit, and delete run tasks on the organization.
 Allows members to override soft-mandatory policy checks.
 
 This permission implicitly gives permission to read runs on all workspaces, which is necessary to override policy checks.
-
-### Manage Workspaces
-
-Allows members to create and administrate all workspaces within the organization. This grants the following abilities:
-
-- Admin access to all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
-- The ability to create new workspaces (otherwise only available to organization owners).
-- Create, update, and delete [Variable Sets](/cloud-docs/workspaces/variables/managing-variables#variable-sets)
-
-### Manage Projects
-
-Allows members to create and administrate all projects within the organization. This grants the following abilities:
-
-- Admin access to all projects.
-- Admin access to all workspaces (effectively the same permissions as "Manage Workspaces").
-- The ability to create new projects.
 
 ### Manage VCS Settings
 

@@ -140,10 +140,13 @@
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
+        "title": "Organizing Workspaces With Projects",
+        "path": "workspaces/organize-workspaces-with-projects"
+      },
+      {
         "title": "Creating Workspaces",
         "path": "workspaces/creating"
       },
-      { "title": "Naming", "path": "workspaces/naming" },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
