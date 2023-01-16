@@ -160,12 +160,12 @@ Fixed permission sets are bundles of specific permissions for a project, designe
 
 Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project.
 
-Members of teams with "admin" permissions for a project have [General Workspace Permissions][#general-workspace-permissions] for every workspace in the project, as well as the ability to:
+Members of teams with "admin" permissions for a project have [General Workspace Permissions][#general-workspace-permissions] for every workspace in the project,  and the ability to:
 
 - Read and update project settings.
 - Delete the project.
 - Create workspaces in the project.
-- Move workspaces into or out of the project. This also requires Project admin permissions for the source or destination project.
+- Move workspaces into or out of the project. This also requires project admin permissions for the source or destination project.
 - Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
 
 #### Read
@@ -187,20 +187,20 @@ You must select a level of access for projects and workspaces.
 #### Manage all projects & workspaces
 
 Allows members to create and manage all projects and workspaces within the organization. In addition to all the permissions granted by “Manage workspaces only”, this also lets users:
-- Manage other teams' access to all projects
+- Manage other teams' access to all projects.
 - Create, edit, and delete projects (otherwise only available to organization owners).
 - Move workspaces between projects.
 
 #### Manage workspaces only
 
 Allows members to create and manage all workspaces within the organization. This lets users:
-- Admin access to all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
+- Manage all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
 - Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project". 
 - Create, update, and delete [Variable Sets](/cloud-docs/workspaces/variables/managing-variables#variable-sets)
 
 #### No access
 
-Does not grant members any explicit access to projects and workspaces. Permissions may still be granted to individual projects or workspaces through [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) and  [Workspace Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
 ### Manage Policies
 
