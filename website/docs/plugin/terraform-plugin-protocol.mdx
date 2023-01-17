@@ -46,15 +46,15 @@ The Terraform plugin protocol specifies the following RPCs:
 | Protocol Version 5           | Protocol Version 6           | Description                                                                                                                                                                                                                          |
 |------------------------------|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GetSchema`                  | `GetProviderSchema`          | Returns provider schema, provider metaschema, all resource schemas and all data source schemas.                                                                                                                                      |
-| `PrepareProviderConfig`      | `ValidateProviderConfig`     | Validates the practitioner supplied provider configuration by verifying types conform to the schema and allows for custom or advanced validation.                                                                                    |
-| `ValidateResourceTypeConfig` | `ValidateResourceConfig`     | Validates the practitioner supplied resource configuration by verifying types conform to the schema and allows for custom or advanced validation.                                                                                    |
-| `ValidateDataSourceConfig`   | `ValidateDataResourceConfig` | Validates the practitioner supplied data source configuration by verifying types conform to the schema and allows for custom or advanced validation.                                                                                 |
-| `UpgradeResourceState`       | `UpgradeResourceState`       | Called when a resource in state has a schema that doesn't match the current version. The provider is expected to modify the state to upgrade it to the latest schema.                                                                |
-| `Configure`                  | `ConfigureProvider`          | Passes the practitioner-specified provider configuration to the provider.                                                                                                                                                            |
+| `PrepareProviderConfig`      | `ValidateProviderConfig`     | Validates the practitioner supplied provider configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                    |
+| `ValidateResourceTypeConfig` | `ValidateResourceConfig`     | Validates the practitioner supplied resource configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                    |
+| `ValidateDataSourceConfig`   | `ValidateDataResourceConfig` | Validates the practitioner supplied data source configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                 |
+| `UpgradeResourceState`       | `UpgradeResourceState`       | Called when a resource has existing state. Primarily useful for when the schema version does not match the current version. The provider is expected to modify the state to upgrade it to the latest schema.                                                                |
+| `Configure`                  | `ConfigureProvider`          | Passes the practitioner supplied provider configuration to the provider.                                                                                                                                                            |
 | `ReadResource`               | `ReadResource`               | Called when refreshing a resource's state.                                                                                                                                                                                           |
 | `ReadDataSource`             | `ReadDataSource`             | Called when refreshing a data source's state.                                                                                                                                                                                        |
 | `PlanResourceChange`         | `PlanResourceChange`         | Calculates a plan for a resource. A proposed new state is generated, which the provider can modify.                                                                                                                                  |
-| `ApplyResourceChange`        | `ApplyResourceChange`        | Called when a diff between the resource's state and configuration has been detected, and the practitioner has approved a planned change. The provider is to apply the changes contained in the plan, and return the resulting state. |
+| `ApplyResourceChange`        | `ApplyResourceChange`        | Called when a practitioner has approved a planned change. The provider is to apply the changes contained in the plan, and return a resulting state matching the given plan. |
 | `ImportResourceState`        | `ImportResourceState`        | Called when importing a resource into state so that the resource becomes managed.                                                                                                                                                    |
 
 ![diagram: Terraform Plugin Protocol 6 RPCs](/img/docs/terraform-plugin-protocol-6-rpcs-all.png)
@@ -110,11 +110,8 @@ The general sequence of RPCs is as follows:
 - UpgradeResourceState
   - only called if resource already exists in state
 - ReadResource
-  - only called if resource already exists in state)
+  - only called if resource already exists in state
 - ReadDataSource
 - PlanResourceChange
 - ApplyResourceChange
 
-[0]: https://en.wikipedia.org/wiki/Static_build#Static_building
-
-[1]: https://golang.org/
