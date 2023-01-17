@@ -7,18 +7,15 @@ description: >-
 
 # Workspace Settings
 
-Terraform Cloud workspaces can be reconfigured after creation.
-
-Workspace settings are separated into several pages, which are listed in the workspace's "Settings" menu. The following groups of settings are available:
-
-- "General", for basic configuration.
-- "Locking", for temporarily preventing new plans and applies.
-- "Notifications", for configuring run notifications.
-- "Run Triggers", for configuring run triggers.
-- "SSH Key", for configurations that use Git-based module sources.
-- "Team Access," for managing workspace permissions.
-- "Version Control", for managing the workspace's VCS integration.
-- "Destruction and Deletion", for removing a workspace and the infrastructure it manages.
+You can change a workspace’s settings after creation. Workspace settings are separated into several pages.
+- [General](#general): Settings that determine how the workspace functions, including its name, description, associated project, Terraform version, and execution mode.
+- [Locking](#locking): Locking a workspace temporarily prevents new plans and applies.
+- [Notifications](#notifications): Settings that let you configure run notifications.
+- [Run Triggers](#run-triggers): Settings that let you configure run triggers. Run triggers allow runs to queue automatically in your workspace when runs in other workspaces are successful.
+- [SSH Key](#ssh-key): Set a private SSH key for downloading Terraform modules from Git-based module sources. 
+- [Team Access](#team-access): Settings that let you manage which teams can view the workspace and use it to provision infrastructure.
+- [Version Control](#version-control): Manage the workspace’s VCS integration.
+- [Destruction and Deletion](#destruction-and-deletion): Remove a workspace and the infrastructure it manages.
 
 Changing settings requires admin access to the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
@@ -28,21 +25,27 @@ Changing settings requires admin access to the relevant workspace. ([More about 
 
 ## General
 
-The "General Settings" page configures a workspace's name, plus some details about how Terraform runs behave.
-
-After changing any of these settings, you must click the "Save settings" button at the bottom of the page.
+General settings let you change a workspace's name, description, the project it belongs to, and details about how Terraform runs operate. After changing these settings, click **Save settings** at the bottom of the page.
 
 ### ID
 
-Every workspace has a unique ID that cannot be changed. Workspace IDs are sometimes necessary when working with [Terraform Cloud's API](/cloud-docs/api-docs).
+Every workspace has a unique ID that you cannot change. You may need to reference the workspace's ID when using the [Terraform Cloud API](/cloud-docs/api-docs).
 
-Click the icon beside the ID to copy it to the clipboard.
+Click the icon beside the ID to copy it to your clipboard.
 
 ### Name
 
 The display name of the workspace.
 
-~> **Important:** Since some API calls refer to a workspace by its name, changing the name can sometimes break existing integrations.
+!> **Warning:** Some API calls refer to a workspace by its name, so changing the name may break existing integrations.
+
+### Project
+
+The [project](/cloud-docs/workspaces/organize-workspaces-with-projects) that this workspace belongs to. Changing the workspace’s project can change the read and write permissions for the workspace and which users can access it. Refer to [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) for  more detail on workspace access. 
+
+### Description (Optional)
+
+Enter a brief description of the workspace's purpose or types of infrastructure.
 
 ### Description (Optional)
 
@@ -120,7 +123,7 @@ Which other workspaces within the organization can access the state of the works
 
   The workspace selector is searchable; if you don't initially see a workspace you're looking for, type part of its name.
 
-By default, new workspaces in Terraform Cloud do not allow other workspaces to access their state. We recommend that you follow the principle of least privilege and only enable state access between workspaces that specifically need information from each other.
+By default, new workspaces in Terraform Cloud do not allow other workspaces to access their state. We recommend that you follow the principle of least privilege and only enable state access between workspaces that specifically need information from each other. To configure remote state sharing, a user must have read access for the destination workspace. If a user does not have access to the destination workspace due to scoped project or workspace permissions, they will not have complete visibility into the list of other workspace that can access its state.
 
 -> **Note:** The default access permissions for new workspaces in Terraform Cloud changed in April 2021. Workspaces created before this change defaulted to allowing global access within their organization. These workspaces can be changed to more restrictive access at any time. Terraform Enterprise administrators can choose whether new workspaces on their instances default to global access or selective access.
 

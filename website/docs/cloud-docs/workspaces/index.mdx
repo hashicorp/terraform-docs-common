@@ -53,22 +53,23 @@ Both Terraform Cloud and Terraform CLI have features called workspaces, but they
 
 ## Listing and Filtering Workspaces
 
-Click **Workspaces**. Terraform Cloud shows a list of all workspaces in the current organization.
-
-This list only includes workspaces where the current user account has permission to read runs. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Click **Projects & workspaces**. Terraform Cloud displays the workspaces the current user account has permission to read runs for. The project drawer lists any projects the user has access to. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-If the list is large, you can use the filter tools at the top of the list to find the workspaces you're interested in.
+If your organization contains many workspaces, you can use the filter tools at the top of the list to find the workspaces you are interested in.
 
 The following filters are available:
 
-- **Status filters:** These filters show workspaces by the status of their current run. There are five quick filter buttons that collect the most commonly used groups of statuses (needs attention, errored, running, on hold and success), and a custom filter button (with a funnel icon) where you can select any number of statuses from a menu.
+- **Project filter:** Click the left chevron icon next to **Workspaces** to open the project drawer. Clicking on a project will filter the workspaces list to show only the workspaces in the selected project. If your organization has many projects, click the search icon next to **Projects** to find a project.
 
-  When you choose a status filter, the list will only include workspaces whose current runs match the selected statuses. You can remove the status filter by clicking the "All" button, or by unchecking everything in the custom filter menu.
+- **Run Status filter buttons:** These filters display workspaces with the selected run status. There are five quick filter buttons that collect the most commonly used groups of statuses: Needs Attention, Errored, Running, On Hold, and Applied.
+
 - **Tag filter:** The tag filter shows a list of tags added to all workspaces. Choosing one or more will show only workspaces tagged with all of the chosen tags.
-- **List order:** The list order button is marked with two arrows, pointing up and down. You can choose to order the list by time or by name, in forward or reverse order.
-- **Name filter:** The search field at the far right of the filter bar lets you filter workspaces by name. If you enter a string in this field and press enter, only workspaces whose names contain that string will be shown.
+- **Status filter** - The status filter shows a list of all possible statuses that apply to workspaces. When you choose a status filter, the list will only include workspaces whose current runs match the selected statuses. 
+- **Health filter** - The health filter lists workspaces based on the results of the last health assessment: Drifted, Health error, or Check failed.
+- **Column sorting:** For any columns marked with two arrows, you can click the arrows to change the sort order for the column. You can sort the list by workspace name by alphabetical order, or by the latest change time for the workspace. 
+- **Workspace search bar:** The search field at the far right of the filter bar lets you filter workspaces by name. If you enter a string in this field and press enter, only workspaces whose names contain that string will be shown.
 
   The name filter can combine with a status and/or tag filter, to narrow the list down further.
 
@@ -81,6 +82,13 @@ For example, the code that manages your production environment's infrastructure 
 Much like splitting monolithic applications into smaller microservices, this enables teams to make changes in parallel. In addition, it makes it easier to re-use configurations to manage other environments of infrastructure ("app1-dev," etc.).
 
 In Terraform Enterprise, administrators can use [Admin Settings](/enterprise/api-docs/admin/settings) to set the maximum number of workspaces for any single organization. You can also set a workspaces limit with the [tfe-terraform-provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization#workspace_limit).
+
+## Organize Workspaces with Projects
+
+Projects let you organize your workspaces into groups. Organizations with the [Team & Governance](https://www.hashicorp.com/products/terraform/pricing) tier can assign project permissions to scope access to collections of workspaces based on business units and responsibilities.
+
+Refer to [Organize Workspaces with Projects](/cloud-docs/workspaces/organize-workspaces-with-projects) for more details.
+
 
 ## Creating Workspaces
 

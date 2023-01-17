@@ -84,13 +84,18 @@ Remote execution helps provide consistency and visibility for critical provision
 
 Remote execution can be disabled on specific workspaces with the ["Execution Mode" setting][execution_mode]. The workspace will still host remote state, and Terraform CLI can use that state for local runs via the [Terraform Cloud CLI integration](/cli/cloud).
 
-### Workspaces for Organizing Infrastructure
+## Organize Infrastructure with Projects and Workspaces
 
-Terraform's local workflow manages a collection of infrastructure with a _persistent working directory,_ which contains configuration, state data, and variables. Practitioners can use separate directories to organize infrastructure resources into meaningful groups, and Terraform will use content from whichever directory it is invoked from.
+Terraform's local workflow manages a collection of infrastructure with a persistent working directory, which contains configuration, state data, and variables. You can use separate directories to organize infrastructure resources into meaningful groups, and Terraform will use the configuration in the directory you invoke Terraform commands from.
 
-Terraform Cloud organizes infrastructure with _workspaces_ instead of directories. Each workspace contains everything necessary to manage a given collection of infrastructure, and Terraform uses that content whenever it executes in the context of that workspace.
+Terraform Cloud organizes infrastructure into projects and workspaces instead of directories. Each workspace contains everything necessary to manage a given collection of infrastructure, and Terraform uses that content when it runs in the context of that workspace.
 
-- More info: [Workspaces](/cloud-docs/workspaces)
+You can use projects to organize your workspaces into groups. Organizations with the [Team & Governance](https://www.hashicorp.com/products/terraform/pricing) tier can assign teams permissions for specific projects. 
+This lets you grant access to collections of workspaces instead of using workspace-specific or organization-wide permissions, making it easier to limit access to only the resources required for a team member's job function. 
+
+Refer to [Workspaces](/cloud-docs/workspaces) and [Organizing Workspaces with Projects](/cloud-docs/workspaces/projects) for more details. 
+
+
 
 ### Remote State Management, Data Sharing, and Run Triggers
 

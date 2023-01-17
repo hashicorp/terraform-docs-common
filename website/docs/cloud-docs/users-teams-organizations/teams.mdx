@@ -133,7 +133,7 @@ You can grant teams various permissions on workspaces. Refer to [Workspace Permi
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-[Organization-level permissions](cloud-docs/users-teams-organizations/permissions#organization-permissions) can also supersede lower workspace permissions. For example, if a team only has permission to read runs for a given workspace but also has permission to manage workspaces for the organization, members of that team have admin access to the workspace. Conversely, if the team has permission to manage policies for the organization (which gives permission to read runs for all workspaces) and also has admin access to a specific workspace, Terraform Cloud grants the higher admin permission level on that workspace.
+[Organization-level permissions](cloud-docs/users-teams-organizations/permissions#organization-permissions) and [project-level permissions](cloud-docs/users-teams-organizations/permissions#project-permissions). For example, if a team only has permission to read runs for a given workspace but also has permission to manage workspaces for the organization, members of that team have admin access to the workspace. Conversely, if the team has permission to manage policies for the organization (which gives permission to read runs for all workspaces) and also has admin access to a specific workspace, Terraform Cloud grants the higher admin permission level on that workspace.
 
 To manage team permissions on a workspace:
 
@@ -141,6 +141,15 @@ To manage team permissions on a workspace:
 1. Click **Add team and permissions** to select a team and assign a pre-built or custom permission set.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+## Managing Project Access
+
+You can grant teams permissions to manage a project and the workspaces that belong to it. Refer to [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) for details.
+
+## Managing Organization Access
+
+Organization owners can grant teams permissions to manage policies, projects and workspaces, VCS settings, private registry providers and modules, and policy overrides across an organization. Refer to [Organization Permissions](/cloud-docs/users-teams-organizations/permissions#organization-permissions) for details.
+
 
 ## Managing Organization Access
 
