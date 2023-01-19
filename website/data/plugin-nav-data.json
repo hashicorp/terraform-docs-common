@@ -6,6 +6,10 @@
     "path": "how-terraform-works"
   },
   {
+    "title": "Terraform Plugin Protocol",
+    "path": "terraform-plugin-protocol"
+  },
+  {
     "title": "Provider Design Principles",
     "path": "hashicorp-provider-design-principles"
   },
