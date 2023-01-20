@@ -14,8 +14,8 @@
     "path": "hashicorp-provider-design-principles"
   },
   {
-    "title": "Which SDK should I use?",
-    "path": "which-sdk"
+    "title": "Framework Benefits",
+    "path": "framework-benefits"
   },
   {
     "title": "Publishing to the Registry",
