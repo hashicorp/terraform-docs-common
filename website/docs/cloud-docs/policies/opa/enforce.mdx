@@ -1,0 +1,24 @@
+---
+page_title: Enforce and Override Policy Check Results - OPA - Terraform Cloud
+description: >-
+Learn when Terraform Cloud performs policy checks and what happens when
+different types of policy checks fail.
+---
+
+# Overriding Policy Check Results
+
+-> **Note:** OPA policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+
+You can define individual policies within larger policy sets and apply those policy sets to all or a subset of workspaces in an organization. Terraform Cloud then enforces all of those policies on every workspace run.
+
+Policy checks occur after a plan and any enabled cost estimates are successfully executed in the run. This allows policies to restrict costs based on the data in the cost estimates. If the plan fails, OPA does not perform policy checks. The policy checks use data from the plan and run to verify and enforce the rules in each policy.
+
+Refer to the [Managing Policies](/cloud-docs/policies/opa/manage-policies) documentation for more detail about enforcement.
+
+## OPA
+
+For OPA, all `mandatory` must pass or be overridden in order for the run to continue to the "Confirm & Apply" state.
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+If an `advisory` policy check fails, it will show the warning state in the run, and the execution of the run will continue to the "Confirm & Apply" state. No user action is required to override or continue the run execution.

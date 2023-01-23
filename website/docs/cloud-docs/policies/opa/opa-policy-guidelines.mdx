@@ -1,0 +1,92 @@
+---
+page_title:  Defining Policies - Open Policy Agent - Terraform Cloud
+description: >-
+  Policies are rules that are enforced on Terraform runs. Learn how to write
+  policies with these set of guidelines.
+---
+
+# Defining Policies for Open Policy Agent
+
+-> **Note:** OPA policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+
+OPA Policies are rules which are enforced on Terraform runs to validate that the plan and corresponding resources are in compliance with company policies.
+OPA is a policy-as-code that uses [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/) to run Terraform input data against a set of rules/policies.
+See [How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0.13.5/how-do-i-write-policies/) for more information.
+
+## Writing OPA Policies
+
+Rego policies can be written however suits your needs, however the result of the associated queries must return an array.
+
+An empty array is deemed a success, and an array with any number of elements is deemed to have failed.
+
+### OPA Input
+
+Both Terraform plan and Terraform run data can be accessed via `input.plan` or `input.run` in the rego policy files.
+Terraform input data needs to be a valid JSON file. Terraform input data will be the output of Terraform plan and the Terraform run data
+(which will contain details such as workspace details, organization name etc).
+
+Example Terraform input data
+
+```json
+{
+ "plan": {
+  "format_version": "1.1",
+  "output_changes": {
+  },
+  "planned_values": {
+   },
+   "resource_changes": [
+  ],
+  "terraform_version": "1.2.7"
+ },
+
+ "run": {
+   "organization": {
+   "name": "hashicorp"
+   },
+   "workspace": {
+   }
+ }
+}
+```
+
+### Versioned Policy Sets
+
+For versioned policy sets (API, VCS), a HCL configuration file is required to be located at `policies.hcl`.
+Note that we also support the JSON variant of HCL syntax as an alternative and will look for `policies.json` if no HCL file exists.
+
+The configuration file outlines the "policies" to run. Due to the differences between OPA and Sentinel, there is not a direct 1 to 1
+mapping of file to policy. Instead, there is a mapping of OPA query to policy.
+The HCL file can contain multiple policy blocks that each define a query. An example configuration looks like this:
+
+```hcl
+policy "policy1" {
+    query = "data.terraform.policy1.deny"
+}
+```
+
+In the above, a policy named `policy1` is defined with a query.
+This query may evaluate across multiple files, or a single file. This is normal practice for OPA and should be expected.
+Optionally, you can also provide a `description` and an `enforcement_level` property. Where no enforcement level is specified,
+the enforcement level of `advisory` is assumed.
+
+```hcl
+policy "policy1" {
+    query = "data.terraform.policy1.deny"
+    enforcement_level = "mandatory"
+    description = "policy1 description"
+}
+```
+
+Here is an example of what a rego file that matches the above query looks like:
+
+```rego
+package terraform.policy1
+deny[msg] {
+  msg := "This is the output"
+}
+```
+### Managed Policies
+
+When creating a managed policy for OPA, the UI will prompt for a "query" to be run against the supplied Rego file.
+As outlined above, the result of this query must be an array, however the contents of the Rego file are not restricted in any way.
