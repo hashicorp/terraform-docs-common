@@ -56,7 +56,7 @@ with the capitalized values replaced with the following:
 * **WORKSPACE_NAME**: The workspace name this policy will apply to, such as `my-workspace-name`
 * **RUN_PHASE**: The run phase this policy will apply to, currently one of `plan` or `apply`.
 
-**Note**: if different permissions are desired for plan and apply, then two separate roles and trust policies must be created for each of these run phases to properly match them to the correct access level.
+-> **Note:** if different permissions are desired for plan and apply, then two separate roles and trust policies must be created for each of these run phases to properly match them to the correct access level.
 If the same permissions will be used regardless of run phase, then the condition can be modified like the below to use `StringLike` instead of `StringEquals` for the sub and include a `*` after `run_phase:` to perform a wildcard match:
 
 ```json
