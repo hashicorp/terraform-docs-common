@@ -160,6 +160,12 @@ We also recommend passing credentials to Terraform as environment variables inst
 
 Although Terraform cloud does not store environment variables in state, it can include them in log files if `TF_LOG` is set to `TRACE`.
 
+#### Dynamic Credentials
+
+An alternative to passing static credentials for some providers is to use [dynamic credentials](/cloud-docs/workspaces/dynamic-provider-credentials).
+
+Dynamic credentials allows for using temporary per-run credentials and eliminates the need to manually rotate secrets.
+
 ### Character Limits
 
 The following limits apply to variables:
