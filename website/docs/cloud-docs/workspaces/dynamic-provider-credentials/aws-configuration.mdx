@@ -23,7 +23,7 @@ You must enable and configure an OIDC identity provider and accompanying role an
 ### Create an OIDC Identity Provider
 AWS documentation for setting this up through the AWS console or API can be found here: [Creating OpenID Connect (OIDC) identity providers - AWS Identity and Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html).
 
-The `provider URL` should be set to the address of Terraform Cloud (e.g., https://app.terraform.io **without** a trailing slash), and the `audience` should be set to `aws.workload.identity` or the value of `TFC_AWS_WORKLOAD_IDENTITY_AUDIENCE`, if configured."
+The `provider URL` should be set to the address of Terraform Cloud (e.g., https://app.terraform.io **without** a trailing slash), and the `audience` should be set to `aws.workload.identity` or the value of `TFC_AWS_WORKLOAD_IDENTITY_AUDIENCE`, if configured.
 ### Configure a Role and Trust Policy
 You must configure a role and corresponding trust policy. Amazon documentation on setting this up can be found here: [Creating a role for web identity or OpenID Connect Federation (console) - AWS Identity and Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html).
 The trust policy will be of the form:

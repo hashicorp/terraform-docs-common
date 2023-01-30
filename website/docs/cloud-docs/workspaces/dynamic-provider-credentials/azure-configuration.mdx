@@ -9,7 +9,7 @@ description: >-
 
 -> **Note:** Dynamic Credentials are in beta.
 
-~> **Important**: Ensure you are using version **3.25.0** or later of the **AzureRM provider** and version **2.29.0** or later of the **AzureAD provider** as required OIDC functionality was introduced in these provider versions.
+~> **Important:** Ensure you are using version **3.25.0** or later of the **AzureRM provider** and version **2.29.0** or later of the **AzureAD provider** as required OIDC functionality was introduced in these provider versions.
 
 ~> **Important:** If using self-managed agents, make sure you’re using **v1.5.0-rc.2** or later.
 
@@ -27,7 +27,7 @@ Follow the steps mentioned in the AzureRM provider docs here: [Creating the Appl
 
 As mentioned in the documentation it will be important to make note of the `client_id` for the application as you will use this later for authentication.
 
-**Note**: you will want to skip the `“Configure Azure Active Directory Application to Trust a GitHub Repository”` section as this does not apply here.
+-> **Note:** you will want to skip the `“Configure Azure Active Directory Application to Trust a GitHub Repository”` section as this does not apply here.
 ### Grant the Application Access to Manage Resources in Your Azure Subscription
 You must now give the created Application permission to modify resources within your Subscription.
 
@@ -47,7 +47,7 @@ The following information should be specified:
 The following is optional, but may be desired:
 * **Audience**: Enter the audience value that will be set when requesting the identity token. This will be `api://AzureADTokenExchange` by default. This should be set to the value of `TFC_AZURE_WORKLOAD_IDENTITY_AUDIENCE` if this has been configured.
 
-**Note**: because the `Subject identifier` for federated credentials is a direct string match, two federated identity credentials need to be created for each workspace using dynamic credentials: one that matches `run_phase:plan` and one that matches `run_phase:apply`.
+-> **Note:** because the `Subject identifier` for federated credentials is a direct string match, two federated identity credentials need to be created for each workspace using dynamic credentials: one that matches `run_phase:plan` and one that matches `run_phase:apply`.
 
 ## Configure Terraform Cloud
 You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with Azure using dynamic credentials. You can set these as workspace variables.
