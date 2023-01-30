@@ -69,6 +69,39 @@ Terraform Cloud uses the user token to access a workspace's state when you:
 
 Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions) for more details about workspace permissions.
 
+### Provider Authentication
+
+Runs in Terraform Cloud typically require some form of credentials to authenticate with infrastructure providers. Credentials can be provided statically through Environment or Terraform [variables](/cloud-docs/workspaces/variables), or can be generated on a per-run basis through [dynamic credentials](/cloud-docs/workspaces/dynamic-provider-credentials) for certain providers. Below are pros and cons to each approach.
+
+#### Static Credentials
+
+##### Pros
+
+- Simple to setup
+- Broad support across providers
+
+##### Cons
+
+- Requires regular manual rotation for enhanced security posture
+- Large blast radius if a credential is exposed and needs to be revoked
+
+#### Dynamic Credentials
+
+-> **Note:** Dynamic Credentials are in beta.
+
+##### Pros
+
+- Eliminates the need for manual rotation of credentials on Terraform Cloud
+- Terraform Cloud metadata - including the run's project, workspace, and run-phase - is encoded into every token to allow for granular permission scoping on the target cloud platform
+- Credentials are short-lived, which reduces blast radius of potential credential exposure
+
+##### Cons
+
+- More complicated initial setup compared to using static credentials
+- Not supported for all providers
+
+The full list of supported providers and setup instructions can be found in the [dynamic credentials](/cloud-docs/workspaces/dynamic-provider-credentials) documentation.
+
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ### Environment Variables
