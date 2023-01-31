@@ -12,7 +12,7 @@ Terraform Cloud can estimate monthly costs for many AWS Terraform resources.
 
 ## Supported Resources
 
-Cost estimation supports the following resources:
+Cost estimation supports the following resources. Not all possible values for attributes of each resource are supported, ex. newer instance types or EBS volume types.
 
 | Resource | Incurs Cost |
 | ----------- | ----------- |
@@ -30,7 +30,7 @@ Cost estimation supports the following resources:
 | `aws_instance` | X |
 | `aws_kms_key` | X |
 | `aws_lb` | X |
-| `aws_rds_cluster` | X |
+| `aws_rds_cluster_instance` | X |
 | `aws_acm_certificate_validation` | |
 | `aws_alb_listener` | |
 | `aws_alb_listener_rule` | |
