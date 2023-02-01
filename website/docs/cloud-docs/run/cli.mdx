@@ -259,8 +259,8 @@ Sometimes during a CLI-driven run, errors relating to network connectivity issue
 * `context deadline exceeded`
 * `TLS handshake timeout`
 
-Sometimes there are network hiccups that are outside of our control. If you're seeing these kinds of errors, after making sure your network connection is operational, the following are a few common configuration settings to check:
+Sometimes there are network problems beyond our control. If you have network errors, verify your network connection is operational. Then, check the following common configuration settings:
 
-* Determine if there is any firewall software on your system that could be blocking the `terraform` command, and explicitly approve it.
-* Verify that you're using a valid DNS server IP address.
+* Determine if any firewall software on your system blocks the `terraform` command and explicitly approve it.
+* Verify that you have a valid DNS server IP address.
 * Remove any expired TLS certificates for your system.
