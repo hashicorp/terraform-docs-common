@@ -62,7 +62,7 @@ The following Terraform state excerpt describes a  `random` resource. Terraform 
 ]
 ```
 
-A single resource configuration block can describe multiple resource instances with the [`count`](language/meta-arguments/count) or [`for_each`](/language/meta-arguments/for_each) meta-arguments. Each of these instances counts as a managed resource.
+A single resource configuration block can describe multiple resource instances with the [`count`](/language/meta-arguments/count) or [`for_each`](/language/meta-arguments/for_each) meta-arguments. Each of these instances counts as a managed resource.
 
 The following example shows a Terraform state excerpt with 2 instances of a `aws_subnet` resource. Terraform Cloud counts each instance of `aws_subnet` as a separate managed resource.
 
