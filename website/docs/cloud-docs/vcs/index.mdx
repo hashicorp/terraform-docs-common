@@ -56,7 +56,7 @@ To use configurations from VCS, Terraform Cloud needs to do several things:
 
 Terraform Cloud uses webhooks to monitor new commits and pull requests.
 
-- When someone adds new commits to a branch, any Terraform Cloud workspaces based on that branch will begin a Terraform run. Usually a user must inspect the plan output and approve an apply, but you can also enable automatic applies on a per-workspace basis. You can prevent automatic runs by locking a workspace.
+- When someone adds new commits to a branch, any Terraform Cloud workspaces based on that branch will begin a Terraform run. Usually a user must inspect the plan output and approve an apply, but you can also enable automatic applies on a per-workspace basis. You can prevent automatic runs by locking a workspace. A run will only occur if the workspace has not previously processed a run for the commit SHA.
 - When someone submits a pull request/merge request to a branch, any Terraform Cloud workspaces based on that branch will perform a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) with the contents of the request and links to the results on the PR's page. This helps you avoid merging PRs that cause plan failures.
 
 ~> **Important:** In Terraform Enterprise, integration with a SaaS VCS provider (GitHub.com, GitLab.com, Bitbucket Cloud, or Azure DevOps Services) requires ingress from the public internet. This lets the inbound web hooks reach Terraform Enterprise. You should also configure appropriate security controls, such as a Web Application Firewall (WAF).
@@ -108,9 +108,7 @@ For complete details, click the link for your VCS provider:
 
 ## Viewing events
 
--> **Note**: The VCS Event Viewer is still in beta as support is being added for additional VCS providers. Currently only GitLab.com connections established after December 2020 are supported.
-
-VCS events describe changes within your organization for VCS-related actions, such as creating a new VCS provider (also called an OAuth Client), loading repositories while creating a new workspace, or processing incoming webhooks. Displayed events are limited to the past 10 days.
+VCS events describe changes within your organization for VCS-related actions, such as when a webhook is received with a previously processed commit SHA. Displayed events are limited to the past 30 days.
 
 Viewing VCS events requires permission to manage VCS settings for the organization. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
 

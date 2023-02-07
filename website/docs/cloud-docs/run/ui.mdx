@@ -31,6 +31,8 @@ A workspace is linked to one branch of a VCS repository and ignores changes to o
 
 -> **Note:** A workspace with no runs will not accept new runs via VCS webhook. At least one run must be manually queued to confirm that the workspace is ready for further runs.
 
+-> **Note:** A workspace will not process a webhook if the workspace previously processed a webhook with the same commit SHA and created a run. To trigger a run, create a new commit. If workspace receives a webhook with a previously processed commit, a new event is added to the [VCS events](/cloud-docs/vcs#viewing-events) page documenting the received webhook.
+
 ## Manually Starting Runs
 
 When you initially set up the workspace and add variables, or when the code in version control hasn't changed but you've modified some variables, you can manually start a run from the UI. Each workspace has an "Actions" menu in its header, which includes a "Start new plan" action for this purpose. When creating a new plan, you can optionally provide a message and can choose between normal and [refresh-only](/cloud-docs/run/modes-and-options#refresh-only-mode) modes.
