@@ -87,7 +87,7 @@ The fix is to update the OAuth Callback URL in your VCS provider to use app.terr
 
 A workspace with no runs will not accept new runs from a VCS webhook. You must queue at least one run manually.
 
-A workspace will not process a webhook if the workspace previously processed a webhook with the same commit SHA and created a run. To trigger a run, create a new commit. If workspace receives a webhook with a previously processed commit, a new event is added to the [VCS events](/cloud-docs/vcs#viewing-events) page documenting the received webhook.
+A workspace will not process a webhook if the workspace previously processed a webhook with the same commit SHA and created a run. To trigger a run, create a new commit. If a workspace receives a webhook with a previously processed commit, a new event will be added to the [VCS Events](/cloud-docs/vcs#viewing-events) page documenting the received webhook.
 
 ### Changing the URL for a VCS provider
 
