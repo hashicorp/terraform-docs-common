@@ -82,7 +82,7 @@ You can only do this with files ending in `auto.tfvars`; Terraform Cloud does no
 
 > **Hands On:** Try the [Manage Variable Sets in Terraform Cloud tutorial](https://learn.hashicorp.com/tutorials/terraform/cloud-multiple-variable-sets) tutorial.
 
-Only members of the [Owners Team](/cloud-docs/users-teams-organizations/permissions#organization-owners) or members of a team with the [Manage Workspaces](/cloud-docs/users-teams-organizations/permissions#manage-workspaces) permission can create, update, and delete variable sets.
+Only members of the [Owners Team](/cloud-docs/users-teams-organizations/permissions#organization-owners) or members of a team with the [Manage all projects & workspaces](/cloud-docs/users-teams-organizations/permissions#manage-all-projects-workspaces) or [Manage workspaces only](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only) permission can create, update, and delete variable sets.
 
 To view variable sets for your organization, click **Settings**, then click **Variable sets**.
 
@@ -159,6 +159,12 @@ Terraform Cloud encrypts all variable values securely using [Vault's transit bac
 We also recommend passing credentials to Terraform as environment variables instead of Terraform variables when possible, since Terraform runs receive the full text of all Terraform variable values, including [sensitive](#sensitive-values) ones. It may print the values in logs and state files if the configuration sends the value to an output or a resource parameter. Sentinel mocks downloaded from runs will also contain the sensitive values of Terraform variables.
 
 Although Terraform cloud does not store environment variables in state, it can include them in log files if `TF_LOG` is set to `TRACE`.
+
+#### Dynamic Credentials
+
+An alternative to passing static credentials for some providers is to use [dynamic credentials](/cloud-docs/workspaces/dynamic-provider-credentials).
+
+Dynamic credentials allows for using temporary per-run credentials and eliminates the need to manually rotate secrets.
 
 ### Character Limits
 

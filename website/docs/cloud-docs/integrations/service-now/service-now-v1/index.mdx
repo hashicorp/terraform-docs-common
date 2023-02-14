@@ -53,7 +53,7 @@ Once you have obtained the files from your sales representative, check them into
 Before installing the ServiceNow integration, you need to perform some setup and gather some information in Terraform Enterprise.
 
 1. [Create an organization](/cloud-docs/users-teams-organizations/organizations) (or choose an existing organization) where ServiceNow will create new workspaces.
-1. [Create a team](/cloud-docs/users-teams-organizations/teams) for that organization called "ServiceNow", and ensure that it has the organization-level ["Manage Workspaces" permission](/cloud-docs/users-teams-organizations/permissions#manage-workspaces). You do not need to add any users to this team.
+1. [Create a team](/cloud-docs/users-teams-organizations/teams) for that organization called "ServiceNow", and ensure that it has the organization-level ["Manage workspaces only" permission](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only). You do not need to add any users to this team.
 1. On the "ServiceNow" team's settings page, generate a [team API token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). **Save this API token for later.**
 1. If you haven't yet done so, [connect a VCS provider](/cloud-docs/vcs) for this Terraform organization.
 1. On the organization's VCS provider settings page, find the "OAuth Token ID" for your VCS provider. This is an opaque ID that Terraform Enterprise uses to identify this VCS provider. **Save the OAuth Token ID for later.**

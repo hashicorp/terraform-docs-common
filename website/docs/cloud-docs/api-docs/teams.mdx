@@ -62,9 +62,10 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 
 | Parameter       | Description                                                                                                                                                                  |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `filter[names]` | **Optional**: If specified, restricts results to a team with a matching name. If multiple comma separated values are specified, teams matching any of the names are returned.|
+| `q`             | **Optional.** Allows querying a list of teams by name. This search is case-insensitive.                                                                                      |
+| `filter[names]` | **Optional.** If specified, restricts results to a team with a matching name. If multiple comma separated values are specified, teams matching any of the names are returned.|
 | `page[number]`  | **Optional.** If omitted, the endpoint will return the first page.                                                                                                           |
-| `page[size]`    | **Optional.** If omitted, the endpoint will return 20 runs per page.                                                                                                         |
+| `page[size]`    | **Optional.** If omitted, the endpoint will return 20 teams per page.                                                                                                        |
 
 ### Sample Request
 
@@ -103,7 +104,10 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
           "manage-policy-overrides": false,
           "manage-run-tasks": true,
           "manage-workspaces": false,
-          "manage-vcs-settings": false
+          "manage-vcs-settings": false,
+          "manage-projects": false,
+          "read-projects": false,
+          "read-workspaces": false
         }
       },
       "relationships": {
@@ -144,13 +148,15 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                                | Type   | Default    | Description                                                                                                                                                                                                                          |
-| --------------------------------------- | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                             | string |            | Must be `"teams"`.                                                                                                                                                                                                                   |
-| `data.attributes.name`                  | string |            | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                              |
-| `data.attributes.sso-team-id`           | string | (nothing)  | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                |
-| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, and `manage-modules` properties with boolean values. All properties default to `false`. |
-| `data.attributes.visibility` **(beta)** | string | `"secret"` | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                             |
+-> **Note:** You cannot set `manage-workspaces` to `false` when setting `manage-projects` to `true`, since project permissions cascade down to workspaces. This is also the case for `read-workspaces` and `read-projects`. If `read-projects` is `true`, `read-workspaces` must be `true` as well.
+
+| Key path                                | Type   | Default    | Description                                                                                                                                                                                                                                                                                                       |
+|-----------------------------------------|--------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                             | string |            | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
+| `data.attributes.name`                  | string |            | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
+| `data.attributes.sso-team-id`           | string | (nothing)  | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                                                                                             |
+| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, and `read-workspaces` properties with boolean values. All properties default to `false`. |
+| `data.attributes.visibility` **(beta)** | string | `"secret"` | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
 
 ### Sample Payload
 
@@ -197,7 +203,10 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-vcs-settings": false,
         "manage-workspaces": true,
         "manage-providers": false,
-        "manage-modules": false
+        "manage-modules": false,
+        "manage-projects": false,
+        "read-projects": false,
+        "read-workspaces": true
       },
       "permissions": {
         "can-update-membership": true,
@@ -272,7 +281,10 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-workspaces": false,
         "manage-vcs-settings": false,
         "manage-providers": false,
-        "manage-modules": false
+        "manage-modules": false,
+        "manage-projects": false,
+        "read-projects": false,
+        "read-workspaces": false
       }
     },
     "relationships": {
@@ -312,13 +324,16 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                                | Type   | Default          | Description                                                                                                                                                                                                                          |
-| --------------------------------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                             | string |                  | Must be `"teams"`.                                                                                                                                                                                                                   |
-| `data.attributes.name`                  | string | (previous value) | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                              |
-| `data.attributes.sso-team-id`           | string | (previous value) | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                |
-| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, and `manage-modules` properties with boolean values. All properties default to `false`. |
-| `data.attributes.visibility` **(beta)** | string | (previous value) | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                             |
+-> **Note:** You cannot set `manage-workspaces` to `false` when setting `manage-projects` to `true`, since project permissions cascade down to workspaces. This is also the case for `read-workspaces` and `read-projects`. If `read-projects` is `true`, `read-workspaces` must be `true` as well.
+
+
+| Key path                                | Type   | Default          | Description                                                                                                                                                                                                                                                                                                       |
+|-----------------------------------------|--------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                             | string |                  | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
+| `data.attributes.name`                  | string | (previous value) | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
+| `data.attributes.sso-team-id`           | string | (previous value) | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                                                                                             |
+| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, and `read-workspaces` properties with boolean values. All properties default to `false`. |
+| `data.attributes.visibility` **(beta)** | string | (previous value) | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
 
 ### Sample Payload
 
@@ -364,7 +379,10 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-vcs-settings": true,
         "manage-workspaces": true,
         "manage-providers": false,
-        "manage-modules": false
+        "manage-modules": false,
+        "manage-projects": false,
+        "read-projects": false,
+        "read-workspaces": true
       },
       "visibility": "organization",
       "permissions": {

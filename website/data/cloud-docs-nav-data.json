@@ -82,6 +82,8 @@
           { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
         ]
       },
+      { "title": "Projects", "path": "api-docs/projects" },
+      { "title": "Project Team Access", "path": "api-docs/project-team-access" },
       { "title": "Runs", "path": "api-docs/run" },
       {
         "title": "Run Tasks",
@@ -102,7 +104,6 @@
         "path": "api-docs/state-version-outputs"
       },
       { "title": "Subscriptions", "path": "api-docs/subscriptions" },
-      { "title": "Team Access", "path": "api-docs/team-access" },
       { "title": "Team Membership", "path": "api-docs/team-members" },
       { "title": "Team Tokens", "path": "api-docs/team-tokens" },
       { "title": "Teams", "path": "api-docs/teams" },
@@ -115,6 +116,7 @@
         "title": "Workspace-Specific Variables",
         "path": "api-docs/workspace-variables"
       },
+      { "title": "Workspace Team Access", "path": "api-docs/team-access" },
       {
         "title": "Workspace Resources",
         "path": "api-docs/workspace-resources"
@@ -138,13 +140,28 @@
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
+        "title": "Organizing Workspaces With Projects",
+        "path": "workspaces/organize-workspaces-with-projects"
+      },
+      {
         "title": "Creating Workspaces",
         "path": "workspaces/creating"
       },
-      { "title": "Naming", "path": "workspaces/naming" },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
+      },
+      {
+        "title": "Dynamic Provider Credentials",
+        "routes": [
+          { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials" },
+          { "title":  "Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/workload-identity-tokens" },
+          { "title":  "Vault Configuration", "path":  "workspaces/dynamic-provider-credentials/vault-configuration" },
+          { "title":  "AWS Configuration", "path":  "workspaces/dynamic-provider-credentials/aws-configuration" },
+          { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
+          { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
+          { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" }
+        ]
       },
       {
         "title": "Variables",

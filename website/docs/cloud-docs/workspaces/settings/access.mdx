@@ -21,25 +21,21 @@ Terraform Cloud manages users' permissions to workspaces with teams.
 
 - [Workspace-level permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions) can be granted to an individual team on a particular workspace. These permissions can be managed on the workspace by anyone with admin access to the workspace.
 - In addition, some [organization-level permissions](/cloud-docs/users-teams-organizations/permissions#organization-permissions) can be granted to a team which apply to every workspace in the organization. For example, the
-  [manage workspaces](/cloud-docs/users-teams-organizations/permissions#manage-workspaces) grants the workspace-level admin permission to every workspace in the organization. Organization-level permissions can only be managed by organization owners.
+  [manage workspaces only](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only) and [manage all projects & workspaces](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only) permissions grant the workspace-level admin permission to every workspace in the organization. Organization-level permissions can only be managed by organization owners.
 
 ## Managing Workspace Access Permissions
 
-When a workspace is created, only [the owners team](/cloud-docs/users-teams-organizations/teams#the-owners-team) and teams with the "manage workspaces" permission can access it, with full admin permissions. These teams' access can't be removed from a workspace.
+When a user creates a workspace, only [the owners team](/cloud-docs/users-teams-organizations/teams#the-owners-team), teams with the "Manage Workspaces" or the “Manage Projects & Workspaces” [organization permission](/cloud-docs/users-teams-organizations/permissions#project-permissions), and teams with the “Project Admin” project permission can access a workspace with full admin permissions. You cannot override these teams' permissions through the workspace's specific permissions. 
 
-To manage other teams' access, select "Team Access" from a workspace's "Settings" menu.
+To manage a team's access to a workspace, select "Team Access" from the workspace's "Settings" menu.
 
-This screen displays all teams granted workspace-level permissions to the workspace. To add a team, select "Add team and
-permissions".
+This screen displays all teams granted workspace-level permissions to the workspace. To add a team, select "Add team and permissions".
 
-A list of teams which can be added to the workspace is shown. Select a team to continue and select the team's
-permissions:
+Terraform Cloud displays the teams you can grant workspace access to. Select a team to continue and configure that team's permissions.
 
-Four [fixed permissions sets](/cloud-docs/users-teams-organizations/permissions#fixed-permission-sets) (read, plan, write, and admin) are available for basic usage.
+There are four [fixed permissions sets](/cloud-docs/users-teams-organizations/permissions#fixed-permission-sets) available for basic usage: Read, Plan, Write, and Admin.
 
-To enable finer-grained selection of non-admin permissions, select "Customize permissions for this team":
+To enable finer-grained selection of non-admin permissions, select "Customize permissions for this team". On this screen, you can select specific permissions to grant the team for the workspace. 
 
-On this screen, you may pick and choose individual permissions to grant the team for the workspace.
+For more information on permissions, see [the documentation on Workspace Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
-For more information on permissions, see [the documentation on Workspace
-Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).

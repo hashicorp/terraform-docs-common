@@ -62,7 +62,7 @@ The following Terraform state excerpt describes a  `random` resource. Terraform 
 ]
 ```
 
-A single resource configuration block can describe multiple resource instances with the [`count`](language/meta-arguments/count) or [`for_each`](/language/meta-arguments/for_each) meta-arguments. Each of these instances counts as a managed resource.
+A single resource configuration block can describe multiple resource instances with the [`count`](/language/meta-arguments/count) or [`for_each`](/language/meta-arguments/for_each) meta-arguments. Each of these instances counts as a managed resource.
 
 The following example shows a Terraform state excerpt with 2 instances of a `aws_subnet` resource. Terraform Cloud counts each instance of `aws_subnet` as a separate managed resource.
 
@@ -177,7 +177,13 @@ The following Terraform state excerpt describes a `aws_availability_zones` data 
 
 Certain tasks (including importing resources, tainting resources, moving or renaming existing resources to match a changed configuration, and more) require modifying Terraform state outside the context of a run.
 
-Manual state manipulation in Terraform Cloud workspaces requires the use of Terraform CLI, using the same commands as would be used in a local workflow (`terraform import`, `terraform taint`, etc.). To manipulate state, you must configure the [CLI integration](/cli/cloud) and authenticate with a user token that has permission to read and write state versions for the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Manual state manipulation in Terraform Cloud workspaces, with the exception of [rolling back to a previous state version](#rolling-back-to-a-previous-state), requires the use of Terraform CLI, using the same commands as would be used in a local workflow (`terraform import`, `terraform taint`, etc.). To manipulate state, you must configure the [CLI integration](/cli/cloud) and authenticate with a user token that has permission to read and write state versions for the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+
+### Rolling Back to a Previous State
+
+You can rollback to a previous, known good state version using the Terraform Cloud UI. Navigate to the state you want to rollback to and click the **Advanced** toggle button. This option requires that you have access to create new state and that you lock the workspace. It works by duplicating the state that you specify and making it the workspace's current state version. The workspace remains locked. To undo the rollback operation, rollback to the state version that was previously the latest state.
+
+-> **Note:** You can rollback to any prior state, but you should use caution because replacing state improperly can result in orphaned or duplicated infrastructure resources. This feature is provided as a convenient alternative to manually downloading older state and using state manipulation commands in the CLI to push it to Terraform Cloud.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -216,7 +222,7 @@ By default, new workspaces in Terraform Cloud do not allow other workspaces to a
 
 To configure a `tfe_outputs` data source that references a Terraform Cloud workspace, specify the organization and workspace in the `config` argument.
 
-You must still properly configure the `tfe` provider with a valid authentication token and correct permissions to Terraform Cloud. 
+You must still properly configure the `tfe` provider with a valid authentication token and correct permissions to Terraform Cloud.
 
 ```hcl
 data "tfe_outputs" "vpc" {
