@@ -99,11 +99,15 @@ Commits and pull requests to connected VCS repositories will trigger a plan oper
 
 Terraform providers and modules used in your Terraform configuration will have full access to the variables and Terraform state within a workspace. Terraform Cloud cannot prevent malicious providers and modules from exfiltrating this sensitive data. We recommend only using trusted modules and providers within your Terraform configuration.
 
-### Malicious Bypasses of Sentinel Policies
+### Malicious Bypasses of Terraform Policies
+The policy-as-code frameworks used by the Terraform [Policy Enforcement](https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement) feature are embedded within Terraform Cloud and can be used to ensure the infrastructure provisioned using Terraform complies with defined organizational policies. The goal of this feature is to enforce compliance with organizational policies and best practices when provisioning infrastructure using Terraform.
 
-[Sentinel](https://www.hashicorp.com/sentinel) is an embedded policy-as-code framework integrated with the HashiCorp Enterprise products. You can create Sentinel policies to ensure the infrastructure provisioned by Terraform is compliant with a set of policies defined by your organization.
+It is important to note that the policy-as-code integration in Terraform Cloud should be viewed as a guide or set of guardrails, not a security boundary. It is not designed to prevent malicious actors from executing malicious Terraform configurations or modifying infrastructure.
 
-Sentinel aims to prevent well-intentioned operators from writing configurations that violate organizational policies or best practices. It is not intended to be used as a security boundary that prevents malicious actors from executing malicious Terraform configuration, or modifying Terraform-provisioned infrastructure. Think of Sentinel as guard rails, not a locked door.
+### Malicious or Insecure Third-Party Run Tasks
+Terraform [Run Tasks](https://developer.hashicorp.com/terraform/cloud-docs/integrations/run-tasks) are provided with access to all Terraform configuration and plan data. Terraform Cloud does not have the capability to prevent malicious Run Tasks from potentially exfiltrating sensitive data that may be present in either the Terraform configuration or plan.
+
+In order to minimize potential security risks, it is highly recommended to only utilize trusted technology partners for Run Tasks within your Terraform organization and limit the number of users who have been assigned the "manage run tasks" permission.
 
 ### Access to Sensitive Variables or State from Terraform Operations
 
