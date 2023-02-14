@@ -107,7 +107,7 @@ It is important to note that the policy-as-code integration in Terraform Cloud s
 ### Malicious or Insecure Third-Party Run Tasks
 Terraform [Run Tasks](https://developer.hashicorp.com/terraform/cloud-docs/integrations/run-tasks) are provided with access to all Terraform configuration and plan data. Terraform Cloud does not have the capability to prevent malicious Run Tasks from potentially exfiltrating sensitive data that may be present in either the Terraform configuration or plan.
 
-In order to minimize potential security risks, it is highly recommended to only utilize trusted technology partners for Run Tasks within your Terraform organization and limit the number of users who have been assigned the "manage run tasks" permission.
+In order to minimize potential security risks, it is highly recommended to only utilize trusted technology partners for Run Tasks within your Terraform organization and limit the number of users who have been assigned the [Manage Run Tasks](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/permissions#manage-run-tasks) permission.
 
 ### Access to Sensitive Variables or State from Terraform Operations
 
