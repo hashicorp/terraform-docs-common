@@ -159,13 +159,29 @@ Fixed permission sets are bundles of specific permissions for a project, designe
 
 Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project.
 
-Members of teams with "admin" permissions for a project have [General Workspace Permissions][#general-workspace-permissions] for every workspace in the project,  and the ability to:
+Members of teams with "admin" permissions for a project have [General Workspace Permissions][] for every workspace in the project,  and the ability to:
 
 - Read and update project settings.
 - Delete the project.
 - Create workspaces in the project.
 - Move workspaces into or out of the project. This also requires project admin permissions for the source or destination project.
 - Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
+
+#### Write
+
+The "write" permission set is for people who do most of the day-to-day work of provisioning and modifying managed infrastructure. Write access grants the following workspace permissions:
+- Read the project name.
+- Lock and unlock all workspaces in this project.
+- Read and write variables for all workspaces in this project.
+- Accesss state for all workspaces in this project.
+- Approve runs for all workspaces in this project.
+
+#### Plan
+
+The "plan" permission set is for people who might propose changes to managed infrastructure, but whose proposed changes should be approved before they are applied. Plan access grants the following workspace permissions:
+- Read the project name.
+- Create runs for all workspaces in the project.
+- Add run comments for all workspaces in the project.
 
 #### Read
 
