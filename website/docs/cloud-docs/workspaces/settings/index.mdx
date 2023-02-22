@@ -17,11 +17,11 @@ You can change a workspace’s settings after creation. Workspace settings are s
 - [Version Control](#version-control): Manage the workspace’s VCS integration.
 - [Destruction and Deletion](#destruction-and-deletion): Remove a workspace and the infrastructure it manages.
 
-Changing settings requires admin access to the relevant workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Changing settings requires admin access to the relevant workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
--> **API:** See the [Update a Workspace endpoint](/cloud-docs/api-docs/workspaces#update-a-workspace) (`PATCH /organizations/:organization_name/workspaces/:name`).
+-> **API:** See the [Update a Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace) (`PATCH /organizations/:organization_name/workspaces/:name`).
 
 ## General
 
@@ -29,7 +29,7 @@ General settings let you change a workspace's name, description, the project it 
 
 ### ID
 
-Every workspace has a unique ID that you cannot change. You may need to reference the workspace's ID when using the [Terraform Cloud API](/cloud-docs/api-docs).
+Every workspace has a unique ID that you cannot change. You may need to reference the workspace's ID when using the [Terraform Cloud API](/terraform/cloud-docs/api-docs).
 
 Click the icon beside the ID to copy it to your clipboard.
 
@@ -41,7 +41,7 @@ The display name of the workspace.
 
 ### Project
 
-The [project](/cloud-docs/workspaces/organize-workspaces-with-projects) that this workspace belongs to. Changing the workspace’s project can change the read and write permissions for the workspace and which users can access it. Refer to [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) for  more detail on workspace access. 
+The [project](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) that this workspace belongs to. Changing the workspace’s project can change the read and write permissions for the workspace and which users can access it. Refer to [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for  more detail on workspace access. 
 
 ### Description (Optional)
 
@@ -57,20 +57,20 @@ Whether to use Terraform Cloud as the Terraform execution platform for this work
 
 The default value is "Remote", which instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment, and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
-To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/cli/cloud).
+To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/terraform/cli/cloud).
 
-If you instead need to allow Terraform Cloud to communicate with isolated, private, or on-premises infrastructure, consider using [Terraform Cloud Agents](/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and Terraform Cloud.
+If you instead need to allow Terraform Cloud to communicate with isolated, private, or on-premises infrastructure, consider using [Terraform Cloud Agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and Terraform Cloud.
 
 Changing your workspace's execution mode after a run has already been planned will cause the run to error when it is applied.
 
 To minimize the number runs that error when changing your workspace's execution mode, you should:
 
-1. Disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) if you have it enabled.
-1. Complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#the-pending-stage).
-1. [Lock](/cloud-docs/workspaces/settings#locking) your workspace to prevent any new runs.
+1. Disable [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) if you have it enabled.
+1. Complete any runs that are no longer in the [pending stage](/terraform/cloud-docs/run/states#the-pending-stage).
+1. [Lock](/terraform/cloud-docs/workspaces/settings#locking) your workspace to prevent any new runs.
 1. Change the execution mode.
-1. Enable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply), if you had it enabled before changing your execution mode.
-1. [Unlock](/cloud-docs/workspaces/settings#locking) your workspace.
+1. Enable [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply), if you had it enabled before changing your execution mode.
+1. [Unlock](/terraform/cloud-docs/workspaces/settings#locking) your workspace.
 
 ### Apply Method
 
@@ -78,8 +78,8 @@ Whether or not Terraform Cloud should automatically apply a successful Terraform
 
 Auto-apply has the following exception:
 
-- Plans queued by users without permission to apply runs for the workspace must be approved by a user who does have permission. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
-- Plans queued due to [run triggers](/cloud-docs/workspaces/settings/run-triggers) from another workspace must always be manually applied.
+- Plans queued by users without permission to apply runs for the workspace must be approved by a user who does have permission. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+- Plans queued due to [run triggers](/terraform/cloud-docs/workspaces/settings/run-triggers) from another workspace must always be manually applied.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -87,9 +87,9 @@ Auto-apply has the following exception:
 
 The Terraform version to use for all operations in the workspace. The default value is whichever release was current when the workspace was created.
 
-> **Hands-on:** Try the [Upgrade Terraform Version in Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-versions) tutorial.
+> **Hands-on:** Try the [Upgrade Terraform Version in Terraform Cloud](/terraform/tutorials/cloud/cloud-versions) tutorial.
 
--> **API:** You can specify a Terraform version when [creating a workspace](/cloud-docs/api-docs/workspaces#create-a-workspace) via the API. The API also supports setting a valid [version constraint](/language/expressions/version-constraints) as the Terraform version.
+-> **API:** You can specify a Terraform version when [creating a workspace](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace) via the API. The API also supports setting a valid [version constraint](/terraform/language/expressions/version-constraints) as the Terraform version.
 
 ### Terraform Working Directory
 
@@ -101,13 +101,13 @@ Setting a working directory creates a default filter for automatic run triggerin
 
 #### Default Run Trigger Filtering
 
-In VCS-backed workspaces that specify a working directory, Terraform Cloud assumes that only changes within that working directory should trigger a run. You can override this behavior with the [Automatic Run Triggering](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) settings.
+In VCS-backed workspaces that specify a working directory, Terraform Cloud assumes that only changes within that working directory should trigger a run. You can override this behavior with the [Automatic Run Triggering](/terraform/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) settings.
 
 #### Parent Directory Uploads
 
 If a working directory is configured, Terraform Cloud always expects the complete shared configuration directory to be available, since the configuration might use local modules from outside its working directory.
 
-In [runs triggered by VCS commits](/cloud-docs/run/ui), this is automatic. In [CLI-driven runs](/cloud-docs/run/cli), Terraform's CLI sometimes uploads additional content:
+In [runs triggered by VCS commits](/terraform/cloud-docs/run/ui), this is automatic. In [CLI-driven runs](/terraform/cloud-docs/run/cli), Terraform's CLI sometimes uploads additional content:
 
 - When the local working directory _does not match_ the name of the configured working directory, Terraform assumes it is the root of the configuration directory, and uploads only the local working directory.
 - When the local working directory _matches_ the name of the configured working directory, Terraform uploads one or more parents of the local working directory, according to the depth of the configured working directory. (For example, a working directory of `production` is only one level deep, so Terraform would upload the immediate parent directory. `consul/production` is two levels deep, so Terraform would upload the parent and grandparent directories.)
@@ -116,7 +116,7 @@ If you use the working directory setting, always run Terraform from a complete c
 
 ### Remote State Sharing
 
-Which other workspaces within the organization can access the state of the workspace during [runs managed by Terraform Cloud](/cloud-docs/run/remote-operations#remote-operations). The [`terraform_remote_state` data source](/language/state/remote-state-data) relies on state sharing to access workspace outputs.
+Which other workspaces within the organization can access the state of the workspace during [runs managed by Terraform Cloud](/terraform/cloud-docs/run/remote-operations#remote-operations). The [`terraform_remote_state` data source](/terraform/language/state/remote-state-data) relies on state sharing to access workspace outputs.
 
 - If "Share state globally" is enabled, all other workspaces within the organization can access this workspace's state during runs.
 - If global sharing is turned off, you can specify a list of workspaces within the organization that can access this workspace's state; no other workspaces will be allowed.
@@ -139,7 +139,7 @@ The Console UI experience is the traditional Terraform experience, where live te
 
 ## Locking
 
-~> **Important:** Unlike other settings, locks can also be managed by users with permission to lock and unlock the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+~> **Important:** Unlike other settings, locks can also be managed by users with permission to lock and unlock the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -159,31 +159,31 @@ You can also manage the workspace's lock from the **Actions** menu.
 
 The "Notifications" page allows Terraform Cloud to send webhooks to external services whenever specific run events occur in a workspace.
 
-See [Run Notifications](/cloud-docs/workspaces/settings/notifications) for detailed information about configuring notifications.
+See [Run Notifications](/terraform/cloud-docs/workspaces/settings/notifications) for detailed information about configuring notifications.
 
 ## Run Triggers
 
 The "Run Triggers" page configures connections between a workspace and one or more source workspaces. These connections, called "run triggers", allow runs to queue automatically in a workspace on successful apply of runs in any of the source workspaces.
 
-See [Run Triggers](/cloud-docs/workspaces/settings/run-triggers) for detailed information about configuring run triggers.
+See [Run Triggers](/terraform/cloud-docs/workspaces/settings/run-triggers) for detailed information about configuring run triggers.
 
 ## SSH Key
 
-If a workspace's configuration uses [Git-based module sources](/language/modules/sources) to reference Terraform modules in private Git repositories, Terraform needs an SSH key to clone those repositories. The "SSH Key" page lets you choose which key it should use.
+If a workspace's configuration uses [Git-based module sources](/terraform/language/modules/sources) to reference Terraform modules in private Git repositories, Terraform needs an SSH key to clone those repositories. The "SSH Key" page lets you choose which key it should use.
 
-See [Using SSH Keys for Cloning Modules](/cloud-docs/workspaces/settings/ssh-keys) for detailed information about this page.
+See [Using SSH Keys for Cloning Modules](/terraform/cloud-docs/workspaces/settings/ssh-keys) for detailed information about this page.
 
 ## Team Access
 
 The "Team Access" page configures which teams can perform which actions on a workspace.
 
-See [Managing Access to Workspaces](/cloud-docs/workspaces/settings/access) for detailed information.
+See [Managing Access to Workspaces](/terraform/cloud-docs/workspaces/settings/access) for detailed information.
 
 ## Version Control
 
 The "Version Control" page configures an optional VCS repository that contains the workspace's Terraform configuration. Version control integration is only relevant for workspaces with [remote execution](#execution-mode) enabled.
 
-See [VCS Connections](/cloud-docs/workspaces/settings/vcs) for detailed information about this page.
+See [VCS Connections](/terraform/cloud-docs/workspaces/settings/vcs) for detailed information about this page.
 
 ## Destruction and Deletion
 
@@ -202,6 +202,6 @@ Before queueing a destroy plan, you must enable the 'Allow destroy plans' settin
 
 Terraform does not automatically destroy managed infrastructure when you delete a workspace. 
 
-After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/cli/commands/import) them into another Terraform workspace.
+After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/terraform/cli/commands/import) them into another Terraform workspace.
 
-By default, [workspace administrators](/cloud-docs/users-teams-organizations/permissions#workspace-admins) can only delete unlocked workspaces that are not managing any infrastructure. Organization owners can force delete a workspace to override these protections. Organization owners can also configure the [organization's settings](/cloud-docs/users-teams-organizations/organizations#general) to let workspace administrators force delete their own workspaces.
+By default, [workspace administrators](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) can only delete unlocked workspaces that are not managing any infrastructure. Organization owners can force delete a workspace to override these protections. Organization owners can also configure the [organization's settings](/terraform/cloud-docs/users-teams-organizations/organizations#general) to let workspace administrators force delete their own workspaces.

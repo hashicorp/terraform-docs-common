@@ -11,7 +11,7 @@ description: >-
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-> **Hands-on:** Try the [Manage Permissions in Terraform Cloud](https://learn.hashicorp.com/tutorials/terraform/cloud-permissions?in=terraform/cloud&utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
+> **Hands-on:** Try the [Manage Permissions in Terraform Cloud](/terraform/tutorials/cloud/cloud-permissions?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
 
 Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions.
 
@@ -49,7 +49,7 @@ This list is not necessarily exhaustive.
 
 ## Workspace Permissions
 
-[workspace]: /cloud-docs/workspaces
+[workspace]: /terraform/cloud-docs/workspaces
 
 Most of Terraform Cloud's permissions system is focused on workspaces. In general, administrators want to delegate access to specific collections of infrastructure; Terraform Cloud implements this by granting permissions to teams on a per-workspace basis.
 
@@ -80,7 +80,7 @@ The following workspace permissions can be granted to teams on a per-workspace b
   - **Read variables:** — Allows users to view the values of Terraform variables and environment variables for the workspace. Note that variables marked as sensitive are write-only, and can't be viewed by any user.
   - **Read and write variables:** — _Implies permission to read variables._ Allows users to edit the values of variables in the workspace.
 - **State versions:**
-  - **Read state outputs:** — Allows users to access values in the workspace's most recent Terraform state that have been explicitly marked as public outputs. Output values are often used as an interface between separate workspaces that manage loosely coupled collections of infrastructure, so their contents can be relevant to people who have no direct responsibility for the managed infrastructure but still indirectly use some of its functions. This permission is required to access the [State Version Outputs](/cloud-docs/api-docs/state-version-outputs) API endpoint.
+  - **Read state outputs:** — Allows users to access values in the workspace's most recent Terraform state that have been explicitly marked as public outputs. Output values are often used as an interface between separate workspaces that manage loosely coupled collections of infrastructure, so their contents can be relevant to people who have no direct responsibility for the managed infrastructure but still indirectly use some of its functions. This permission is required to access the [State Version Outputs](/terraform/cloud-docs/api-docs/state-version-outputs) API endpoint.
 
     -> **Note:** **Read state versions** permission is required to use the `terraform output` command or the `terraform_remote_state` data source against the workspace.
   - **Read state versions:** — _Implies permission to read state outputs._ Allows users to read complete state files from the workspace. State files are useful for identifying infrastructure changes over time, but often contain sensitive information.
@@ -95,9 +95,9 @@ Admin permissions include the highest level of general permissions for the works
 Workspace admins have all [General Workspace Permissions][], as well as the ability to do the following tasks:
 
 - Read and write workspace settings. This includes general settings, notification configurations, run triggers, and more.
-- Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
+- Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
 - Delete the workspace
-  - Depending on the [organization's settings](/cloud-docs/users-teams-organizations/organizations#general), workspace admins may only be able to delete the workspace if it is not actively managing infrastructure. Refer to [Deleting a Workspace With Resources Under Management](/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) for details.
+  - Depending on the [organization's settings](/terraform/cloud-docs/users-teams-organizations/organizations#general), workspace admins may only be able to delete the workspace if it is not actively managing infrastructure. Refer to [Deleting a Workspace With Resources Under Management](/terraform/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) for details.
 
 ### Fixed Permission Sets
 
@@ -165,7 +165,7 @@ Members of teams with "admin" permissions for a project have [General Workspace 
 - Delete the project.
 - Create workspaces in the project.
 - Move workspaces into or out of the project. This also requires project admin permissions for the source or destination project.
-- Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
+- Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
 
 #### Read
 
@@ -195,7 +195,7 @@ Allows members to create and manage all projects and workspaces within the organ
 Allows members to create and manage all workspaces within the organization. This lets users:
 - Manage all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
 - Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project". 
-- Create, update, and delete [Variable Sets](/cloud-docs/workspaces/variables/managing-variables#variable-sets)
+- Create, update, and delete [Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets)
 
 #### View all projects & workspaces
 
@@ -209,13 +209,13 @@ Allows members to view all workspaces within the organization. This lets users:
 
 #### No access
 
-Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
 ### Manage Policies
 
 Allows members to create, edit, read, list and delete the organization's Sentinel policies.
 
-This permission implicitly gives permission to read runs on all workspaces, which is necessary to set enforcement of [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets).
+This permission implicitly gives permission to read runs on all workspaces, which is necessary to set enforcement of [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets).
 
 ### Manage Run Tasks
 
@@ -229,11 +229,11 @@ This permission implicitly gives permission to read runs on all workspaces, whic
 
 ### Manage VCS Settings
 
-Allows members to manage the set of [VCS providers](/cloud-docs/vcs) and [SSH keys](/cloud-docs/vcs#ssh-keys) available within the organization.
+Allows members to manage the set of [VCS providers](/terraform/cloud-docs/vcs) and [SSH keys](/terraform/cloud-docs/vcs#ssh-keys) available within the organization.
 
 ### Manage Private Registry
 
-Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/cloud-docs/registry). These permissions are otherwise only available to organization owners.
+Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/terraform/cloud-docs/registry). These permissions are otherwise only available to organization owners.
 
 ## Permissions Outside Terraform Cloud's Scope
 

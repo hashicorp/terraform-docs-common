@@ -32,17 +32,17 @@ page_title: Configuration Versions - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Configuration Versions API
 
--> **Note:** Before working with the runs or configuration versions APIs, read the [API-driven run workflow](/cloud-docs/run/api) page, which includes both a full overview of this workflow and a walkthrough of a simple implementation of it.
+-> **Note:** Before working with the runs or configuration versions APIs, read the [API-driven run workflow](/terraform/cloud-docs/run/api) page, which includes both a full overview of this workflow and a walkthrough of a simple implementation of it.
 
 A configuration version (`configuration-version`) is a resource used to reference the uploaded configuration files. It is associated with the run to use the uploaded configuration files for performing the plan and apply.
 
-You need read runs permission to list and view configuration versions for a workspace, and you need queue plans permission to create new configuration versions. Refer to the [permissions](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) documentation for more details.
+You need read runs permission to list and view configuration versions for a workspace, and you need queue plans permission to create new configuration versions. Refer to the [permissions](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) documentation for more details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -68,11 +68,11 @@ A configuration version created through the API or CLI can only be used in runs 
 
 | Parameter       | Description                                                                                                                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to list configurations from. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to list configurations from. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                            |
 | -------------- | -------------------------------------------------------------------------------------- |
@@ -261,9 +261,9 @@ curl \
 
 | Parameter       | Description                                                                                                                                                                                                                      |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to create the new configuration version in. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to create the new configuration version in. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 ### Request Body
 
@@ -338,7 +338,7 @@ Once a configuration version is created, use the `upload-url` attribute to [uplo
 
 ## Upload Configuration Files
 
--> **Note**: If `auto-queue-runs` was either not provided or set to `true` during creation of the configuration version, a run using this configuration version will be automatically queued on the workspace. If `auto-queue-runs` was set to `false` explicitly, then it is necessary to [create a run on the workspace](/cloud-docs/api-docs/run#create-a-run) manually after the configuration version is uploaded.
+-> **Note**: If `auto-queue-runs` was either not provided or set to `true` during creation of the configuration version, a run using this configuration version will be automatically queued on the workspace. If `auto-queue-runs` was set to `false` explicitly, then it is necessary to [create a run on the workspace](/terraform/cloud-docs/api-docs/run#create-a-run) manually after the configuration version is uploaded.
 
 `PUT https://archivist.terraform.io/v1/object/<UNIQUE OBJECT ID>`
 
@@ -422,7 +422,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name        | Description                                       |
 | -------------------- | ------------------------------------------------- |

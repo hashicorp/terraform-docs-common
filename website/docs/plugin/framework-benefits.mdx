@@ -8,12 +8,12 @@ description: >-
 
 HashiCorp offers two Go programming language Software Development Kits (SDKs) for building Terraform providers:
 
-- **[Terraform Plugin Framework](/plugin/framework):** The most recent SDK that is easier to use and more extensible than SDKv2.
-- **[SDKv2](/plugin/sdkv2):** SDKv2 is the prior SDK that many existing providers use. It is maintained for Terraform versions 1.x and earlier, but we have stopped most feature development so we can focus on improving the framework.
+- **[Terraform Plugin Framework](/terraform/plugin/framework):** The most recent SDK that is easier to use and more extensible than SDKv2.
+- **[SDKv2](/terraform/plugin/sdkv2):** SDKv2 is the prior SDK that many existing providers use. It is maintained for Terraform versions 1.x and earlier, but we have stopped most feature development so we can focus on improving the framework.
 
-We recommend using the framework for new provider development because it offers significant advantages as compared to the SDKv2. We also recommend migrating existing providers to the framework when possible. If you manage a large existing provider, you can use [`terraform-plugin-mux`](/plugin/mux) to migrate individual resources or data sources to the framework one at a time. Refer to [Migrating from SDK](/plugin/framework/migrating/providers#muxing) for details.
+We recommend using the framework for new provider development because it offers significant advantages as compared to the SDKv2. We also recommend migrating existing providers to the framework when possible. If you manage a large existing provider, you can use [`terraform-plugin-mux`](/terraform/plugin/mux) to migrate individual resources or data sources to the framework one at a time. Refer to [Migrating from SDK](/terraform/plugin/framework/migrating/providers#muxing) for details.
 
-This page is intended for developers experienced with SDKv2 plugins, and explains how the framework makes provider development and maintenance easier. If you are just getting started with provider development, we recommend viewing the [Framework documentation](/plugin/framework) instead. For a continued list of new or improved functionality in the framework, refer to [Framework Feature Comparison](/plugin/framework/migrating/benefits).
+This page is intended for developers experienced with SDKv2 plugins, and explains how the framework makes provider development and maintenance easier. If you are just getting started with provider development, we recommend viewing the [Framework documentation](/terraform/plugin/framework) instead. For a continued list of new or improved functionality in the framework, refer to [Framework Feature Comparison](/terraform/plugin/framework/migrating/benefits).
 
 ## Concise Abstractions
 
@@ -33,7 +33,7 @@ Data in the framework is fully exposed as compared to SDKv2.
 
 The majority of data handling in SDKv2 uses the [`helper/schema.ResourceData` type](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema#ResourceData), which could contain a merged configuration, plan, or state value, depending on the operation. SDKv2 also does not expose Terraform's null or unknown value concepts unambiguously, typically returning both null and unknown values as the same zero-value for the underlying Go type. For example, the SDK returns an empty string (`""`) for `schema.TypeString` values that are either null or unknown.
 
-The framework exposes the sources for data separately and lets you inspect whether a value is null or unknown. Refer to the [Framework Feature Comparison](/plugin/framework/migrating/benefits) for more details and examples.
+The framework exposes the sources for data separately and lets you inspect whether a value is null or unknown. Refer to the [Framework Feature Comparison](/terraform/plugin/framework/migrating/benefits) for more details and examples.
 
 ### Control Over Built-In Behaviors
 
@@ -254,4 +254,4 @@ Additional new and improved features in the framework include:
 - **Validation Capabilities**: The framework exposes many more configuration validation integration points than the SDK. It is also extensible with provider-defined types that implement validation in the type itself.
 - **Enhanced Import and Planning Capabilities**: The framework enables additional import and plan handling capabilities not available in SDKv2.
 
-Refer to [Framework Feature Comparison](/plugin/framework/migrating/benefits) for a continued list of features, details, and examples.
+Refer to [Framework Feature Comparison](/terraform/plugin/framework/migrating/benefits) for a continued list of features, details, and examples.

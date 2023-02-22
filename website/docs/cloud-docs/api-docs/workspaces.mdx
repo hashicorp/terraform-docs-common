@@ -30,17 +30,17 @@ page_title: Workspaces - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[speculative plans]: /cloud-docs/run/remote-operations#speculative-plans
+[speculative plans]: /terraform/cloud-docs/run/remote-operations#speculative-plans
 
 # Workspaces API
 
 Workspaces represent running infrastructure managed by Terraform.
 
-Viewing a workspace (individually or in a list) requires permission to read runs. Changing settings and force-unlocking require admin access to the workspace. Locking and unlocking a workspace requires permission to lock and unlock the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Viewing a workspace (individually or in a list) requires permission to read runs. Changing settings and force-unlocking require admin access to the workspace. Locking and unlocking a workspace requires permission to lock and unlock the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -52,7 +52,7 @@ Viewing a workspace (individually or in a list) requires permission to read runs
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to create the workspace in. The organization must already exist in the system, and the user must have permissions to create new workspaces. |
 
--> **Note:** Workspace creation is restricted to the owners team, teams with the "Manage Workspaces" permission, and the [organization API token](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+-> **Note:** Workspace creation is restricted to the owners team, teams with the "Manage Workspaces" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
 ### Request Body
 
@@ -68,24 +68,24 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.name`                        | string  |           | The name of the workspace, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                                                                                                                                                                                                                    |
 | `data.attributes.agent-pool-id`               | string  | (nothing) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                                                                                                                   |
 | `data.attributes.allow-destroy-plan`          | boolean | `true`    | Whether destroy plans can be queued on the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `data.attributes.assessments-enabled`         | boolean | `false`   | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise.                                                                                              |
-| `data.attributes.auto-apply`                  | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                                                                |
+| `data.attributes.assessments-enabled`         | boolean | `false`   | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise.                                                                                              |
+| `data.attributes.auto-apply`                  | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                                                                |
 | `data.attributes.description`                 | string  | (nothing) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `data.attributes.execution-mode`              | string  | `remote`  | Which [execution mode](/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                                                                                                                                          |
+| `data.attributes.execution-mode`              | string  | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                                                                                                                                          |
 | `data.attributes.file-triggers-enabled`       | boolean | `true`    | Whether to filter runs based on the changed files in a VCS push. If enabled, it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe the set of changed files that will start a run. If disabled, any push will trigger a run.                                                                                                                                                                                                                              |
-| `data.attributes.global-remote-state`         | boolean | `false`   | Whether the workspace should allow all workspaces in the organization to [access its state data](/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. **Note:** Terraform Enterprise admins can choose the default value for new workspaces if this attribute is omitted. |
+| `data.attributes.global-remote-state`         | boolean | `false`   | Whether the workspace should allow all workspaces in the organization to [access its state data](/terraform/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/terraform/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. **Note:** Terraform Enterprise admins can choose the default value for new workspaces if this attribute is omitted. |
 | `data.attributes.operations`                  | boolean | `true`    | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified.                                                                                                                                                                                                                                                                                   |
 | `data.attributes.queue-all-runs`              | boolean | `false`   | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued.                                                                                                                                                                                                                                                                                                                             |
 | `data.attributes.source-name`                 | string  | (nothing) | A friendly name for the application or client creating this workspace. If set, this will be displayed on the workspace as "Created via `<SOURCE NAME>`".                                                                                                                                                                                                                                                                                                                                                        |
 | `data.attributes.source-url`                  | string  | (nothing) | A URL for the application or client creating this workspace. This can be the URL of a related resource in another app, or a link to documentation or other info about the client.                                                                                                                                                                                                                                                                                                                               |
 | `data.attributes.speculative-enabled`         | boolean | true      | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents Terraform Cloud from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.                                                                                                                                                                                    |
-| `data.attributes.terraform-version`           | string  | (special) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version.                                                                                                                                   |
+| `data.attributes.terraform-version`           | string  | (special) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/terraform/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version.                                                                                                                                   |
 | `data.attributes.trigger-patterns`            | array   | `[]`      | List of glob patterns that describe the files Terraform Cloud monitors for changes. Trigger patterns are always appended to the root directory of the repository.                                                                                                                                                                                                                                                                                                                                               |
 | `data.attributes.trigger-prefixes`            | array   | `[]`      | List of trigger prefixes that describe the paths Terraform Cloud monitors for changes, in addition to the working directory. Trigger prefixes are always appended to the root directory of the repository. Terraform Cloud will start a run when files are changed in any directory path matching the provided set of prefixes.                                                                                                                                                                                 |
 | `data.attributes.vcs-repo.branch`             | string  | (nothing) | The repository branch that Terraform will execute from. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `master`) .                                                                                                                                                                                                                                                                                                                                          |
 | `data.attributes.vcs-repo.identifier`         | string  |           | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.                                                                                                                                                                                                                                                                                                      |
 | `data.attributes.vcs-repo.ingress-submodules` | boolean | `false`   | Whether submodules should be fetched when cloning the VCS repository.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `data.attributes.vcs-repo.oauth-token-id`     | string  |           | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                                                                                                              |
+| `data.attributes.vcs-repo.oauth-token-id`     | string  |           | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                                                                                                              |
 | `data.attributes.vcs-repo.tags-regex`         | string  | (nothing) | A regular expression used to match Git tags. Terraform Cloud triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                                                                                                                                                                                                                                                                                                                      |
 | `data.attributes.vcs-repo`                    | object  | (nothing) | Settings for the workspace's VCS repository. If omitted, the workspace is created without a VCS repo. If included, you must specify at least the `oauth-token-id` and `identifier` keys below.                                                                                                                                                                                                                                                                                                                  |
 | `data.attributes.working-directory`           | string  | (nothing) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                                                                                                                   |
@@ -210,7 +210,7 @@ A run will be triggered in this workspace when Terraform Cloud detects any of th
 
 _Using Terraform Cloud Agents_
 
-[Terraform Cloud Agents](/cloud-docs/api-docs/agents) are a solution to allow Terraform Cloud to communicate with isolated, private, or on-premises infrastructure.
+[Terraform Cloud Agents](/terraform/cloud-docs/api-docs/agents) are a solution to allow Terraform Cloud to communicate with isolated, private, or on-premises infrastructure.
 
 ```json
 {
@@ -646,22 +646,22 @@ Properties without a default value are required.
 | `data.attributes.name`                        | string         | (previous value) | A new name for the workspace, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization. **Warning:** Changing a workspace's name changes its URL in the API and UI.                                                                                                                                                                        |
 | `data.attributes.agent-pool-id`               | string         | (previous value) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                      |
 | `data.attributes.allow-destroy-plan`          | boolean        | (previous value) | Whether destroy plans can be queued on the workspace.                                                                                                                                                                                                                                                                                                                                                              |
-| `data.attributes.assessments-enabled`         | boolean        | `false`          | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
-| `data.attributes.auto-apply`                  | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                   |
+| `data.attributes.assessments-enabled`         | boolean        | `false`          | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Business tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). Not available in Terraform Enterprise. |
+| `data.attributes.auto-apply`                  | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                   |
 | `data.attributes.description`                 | string         | (previous value) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                   |
-| `data.attributes.execution-mode`              | string         | (previous value) | Which [execution mode](/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                                             |
+| `data.attributes.execution-mode`              | string         | (previous value) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value must not be specified if `operations` is specified.                                                                                                                                             |
 | `data.attributes.file-triggers-enabled`       | boolean        | (previous value) | Whether to filter runs based on the changed files in a VCS push. If enabled, it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe the set of changed files that will start a run. If disabled, any push will trigger a run.                                                                                                                                 |
-| `data.attributes.global-remote-state`         | boolean        | (previous value) | Whether the workspace should allow all workspaces in the organization to [access its state data](/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page.                        |
+| `data.attributes.global-remote-state`         | boolean        | (previous value) | Whether the workspace should allow all workspaces in the organization to [access its state data](/terraform/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/terraform/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page.                        |
 | `data.attributes.operations`                  | boolean        | (previous value) | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified.                                                                                                                                                                                      |
 | `data.attributes.queue-all-runs`              | boolean        | (previous value) | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued.                                                                                                                                                                                                                                |
 | `data.attributes.speculative-enabled`         | boolean        | (previous value) | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents Terraform Cloud from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.                                                                                       |
-| `data.attributes.terraform-version`           | string         | (previous value) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint.                                                                                                                          |
+| `data.attributes.terraform-version`           | string         | (previous value) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/terraform/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint.                                                                                                                          |
 | `data.attributes.trigger-patterns`            | array          | (previous value) | List of glob patterns that describe the files Terraform Cloud monitors for changes. Trigger patterns are always appended to the root directory of the repository.                                                                                                                                                                                                                                                  |
 | `data.attributes.trigger-prefixes`            | array          | (previous value) | List of trigger prefixes that describe the paths Terraform Cloud monitors for changes, in addition to the working directory. Trigger prefixes are always appended to the root directory of the repository. Terraform Cloud will start a run when files are changed in any directory path matching the provided set of prefixes.                                                                                    |
 | `data.attributes.vcs-repo.branch`             | string         | (previous value) | The repository branch that Terraform will execute from.                                                                                                                                                                                                                                                                                                                                                            |
 | `data.attributes.vcs-repo.identifier`         | string         | (previous value) | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.                                                                                                                                                                                                         |
 | `data.attributes.vcs-repo.ingress-submodules` | boolean        | (previous value) | Whether submodules should be fetched when cloning the VCS repository.                                                                                                                                                                                                                                                                                                                                              |
-| `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                 |
+| `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                 |
 | `data.attributes.vcs-repo.tags-regex`         | string         | (previous value) | A regular expression used to match Git tags. Terraform Cloud triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                                                                                                                                                                                                                         |
 | `data.attributes.vcs-repo`                    | object or null | (previous value) | To delete a workspace's existing VCS repo, specify `null` instead of an object. To modify a workspace's existing VCS repo, include whichever of the keys below you wish to modify. To add a new VCS repo to a workspace that didn't previously have one, include at least the `oauth-token-id` and `identifier` keys.                                                                                              |
 | `data.attributes.working-directory`           | string         | (previous value) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                      |
@@ -848,7 +848,7 @@ This endpoint lists workspaces in the organization.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter               | Description                                                                                                                                                                                                                                                                                                                                                                                                          |
 |-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1299,7 +1299,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 
 During a force delete, Terraform Cloud removes the specified workspace without checking whether it is managing resources. We recommend using the [safe delete endpoint](#safe-delete-a-workspace) instead, when possible.
 
-!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/cloud-docs/run/modes-and-options#destroy-mode) before you delete it.
+!> **Warning:** Terraform cannot track or manage the workspace's infrastructure after deletion. We recommend [destroying the workspace's infrastructure](/terraform/cloud-docs/run/modes-and-options#destroy-mode) before you delete it.
 
 By default, only organization owners can force delete workspaces. Organization owners can also update [organization's settings](/cloud-docs/users-teams organizations/organizations#general) to let workspace admins force delete their own workspaces.
 
@@ -1342,7 +1342,7 @@ This endpoint locks a workspace.
 
 | Parameter       | Description                                                                                                                                             |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to lock. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to lock. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 | Status  | Response                                     | Reason(s)                                                   |
 | ------- | -------------------------------------------- | ----------------------------------------------------------- |
@@ -1532,7 +1532,7 @@ This endpoint unlocks a workspace.
 
 | Parameter       | Description                                                                                                                                               |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to unlock. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to unlock. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 | Status  | Response                                     | Reason(s)                                                   |
 | ------- | -------------------------------------------- | ----------------------------------------------------------- |
@@ -1694,7 +1694,7 @@ This endpoint force unlocks a workspace. Only users with admin access are author
 
 | Parameter       | Description                                                                                                                                                     |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to force unlock. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to force unlock. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 | Status  | Response                                     | Reason(s)                                                   |
 | ------- | -------------------------------------------- | ----------------------------------------------------------- |
@@ -1856,7 +1856,7 @@ This endpoint assigns an SSH key to a workspace.
 
 | Parameter       | Description                                                                                                                                                              |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:workspace_id` | The workspace ID to assign the SSH key to. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to assign the SSH key to. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 ### Request Body
 
@@ -1867,7 +1867,7 @@ Properties without a default value are required.
 | Key path             | Type   | Default | Description                                                                                        |
 | -------------------- | ------ | ------- | -------------------------------------------------------------------------------------------------- |
 | `data.type`          | string |         | Must be `"workspaces"`.                                                                            |
-| `data.attributes.id` | string |         | The SSH key ID to assign. Obtain this from the [ssh-keys](/cloud-docs/api-docs/ssh-keys) endpoint. |
+| `data.attributes.id` | string |         | The SSH key ID to assign. Obtain this from the [ssh-keys](/terraform/cloud-docs/api-docs/ssh-keys) endpoint. |
 
 #### Sample Payload
 
@@ -2046,7 +2046,7 @@ This endpoint unassigns the currently assigned SSH key from a workspace.
 
 | Parameter       | Description                                                                                                                                                              |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:workspace_id` | The workspace ID to assign the SSH key to. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to assign the SSH key to. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 ### Request Body
 
@@ -2226,7 +2226,7 @@ $ curl \
 
 | Parameter       | Description                                                                                                                                                                       |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to get remote state consumers for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to get remote state consumers for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 This endpoint retrieves the list of other workspaces that are allowed to access the given workspace's state during runs.
 
@@ -2237,7 +2237,7 @@ The list returned by this endpoint is subject to the caller's normal workspace p
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2408,11 +2408,11 @@ $ curl \
 
 | Parameter       | Description                                                                                                                                                                           |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to replace remote state consumers for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to replace remote state consumers for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 This endpoint updates the workspace's remote state consumers to be _exactly_ the list of workspaces specified in the payload. It can only be used for workspaces where `global-remote-state` is false.
 
-This endpoint can only be used by teams with permission to manage workspaces for the entire organization — only those who can _view_ the entire list of consumers can _replace_ the entire list. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) Teams with admin permissions on specific workspaces can still modify remote state consumers for those workspaces, but must use the add (POST) and remove (DELETE) endpoints listed below instead of this PATCH endpoint.
+This endpoint can only be used by teams with permission to manage workspaces for the entire organization — only those who can _view_ the entire list of consumers can _replace_ the entire list. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) Teams with admin permissions on specific workspaces can still modify remote state consumers for those workspaces, but must use the add (POST) and remove (DELETE) endpoints listed below instead of this PATCH endpoint.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -2469,7 +2469,7 @@ Status code `204`.
 
 | Parameter       | Description                                                                                                                                                                       |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to add remote state consumers for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to add remote state consumers for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 This endpoint adds one or more remote state consumers to the workspace. It can only be used for workspaces where `global-remote-state` is false.
 
@@ -2530,7 +2530,7 @@ Status code `204`.
 
 | Parameter       | Description                                                                                                                                                                          |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:workspace_id` | The workspace ID to remove remote state consumers for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to remove remote state consumers for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 This endpoint removes one or more remote state consumers from a workspace, according to the contents of the payload. It can only be used for workspaces where `global-remote-state` is false.
 
@@ -2590,13 +2590,13 @@ Status code `204`.
 
 | Parameter       | Description                                                                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to fetch tags for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to fetch tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 This endpoint returns the tags that are currently associated to a workspace.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -2665,7 +2665,7 @@ matching organization tag exists with such name, a new one will be created.
 
 | Parameter       | Description                                                                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to add tags to. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to add tags to. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 | Status  | Response                  | Reason(s)                                                   |
 | ------- | ------------------------- | ----------------------------------------------------------- |
@@ -2733,7 +2733,7 @@ removed from the organization-wide list.
 
 | Parameter       | Description                                                                                                                                                         |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to remove tags from. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to remove tags from. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 | Status  | Response                  | Reason(s)                                                   |
 | ------- | ------------------------- | ----------------------------------------------------------- |
@@ -2784,7 +2784,7 @@ Status code `204`.
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 * `organization` - The full organization record.
 * `current_configuration_version` - The last configuration this workspace received, excluding plan-only configurations. Terraform uses this configuration for new runs, unless you provide a different one.

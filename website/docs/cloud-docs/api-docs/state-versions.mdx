@@ -30,7 +30,7 @@ page_title: State Versions - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -40,11 +40,11 @@ page_title: State Versions - API Docs - Terraform Cloud
 
 State version API objects represent an instance of Terraform state data, but do not directly contain the stored state. Instead, they contain information about the state, its properties, and its contents, and include one or more URLs from which the state can be downloaded.
 
-Some of the information returned in a state version API object might be **populated asynchronously** by Terraform Cloud. This includes resources, modules, providers, and the [state version outputs](/cloud-docs/api-docs/state-version-outputs) associated with the state version. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the state version object indicates whether or not Terraform Cloud has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
+Some of the information returned in a state version API object might be **populated asynchronously** by Terraform Cloud. This includes resources, modules, providers, and the [state version outputs](/terraform/cloud-docs/api-docs/state-version-outputs) associated with the state version. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the state version object indicates whether or not Terraform Cloud has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
 
 Attribute                        | Description
 ---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`hosted-json-state-download-url` | A URL from which you can download the state data in a [stable format](/internals/json-format) appropriate for external integrations to consume. Only available if the state was created by Terraform 1.3+.
+`hosted-json-state-download-url` | A URL from which you can download the state data in a [stable format](/terraform/internals/json-format) appropriate for external integrations to consume. Only available if the state was created by Terraform 1.3+.
 `hosted-state-download-url`      | A URL from which you can download the raw state data, in the format used internally by Terraform.
 `modules`                        | Extracted information about the Terraform modules in this state data. Populated asynchronously.
 `providers`                      | Extracted information about the Terraform providers used for resources in this state data. Populated asynchronously.
@@ -58,17 +58,17 @@ Attribute                        | Description
 
 ## Create a State Version
 
-> **Hands-on:** Try the [Version Remote State with the Terraform Cloud API](https://learn.hashicorp.com/tutorials/terraform/cloud-state-api?in=terraform/cloud) tutorial to download a remote state file and use the Terraform API to create a new state version.
+> **Hands-on:** Try the [Version Remote State with the Terraform Cloud API](/terraform/tutorials/cloud/cloud-state-api) tutorial to download a remote state file and use the Terraform API to create a new state version.
 
 `POST /workspaces/:workspace_id/state-versions`
 
 | Parameter       | Description                                                                                                                                                                                                       |
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `:workspace_id` | The workspace ID to create the new state version in. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to create the new state version in. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
-Creates a state version and sets it as the current state version for the given workspace. The workspace must be locked by the user creating a state version. The workspace may be locked [with the API](/cloud-docs/api-docs/workspaces#lock-a-workspace) or [with the UI](/cloud-docs/workspaces/settings#locking). This is most useful for migrating existing state from open source Terraform into a new Terraform Cloud workspace.
+Creates a state version and sets it as the current state version for the given workspace. The workspace must be locked by the user creating a state version. The workspace may be locked [with the API](/terraform/cloud-docs/api-docs/workspaces#lock-a-workspace) or [with the UI](/terraform/cloud-docs/workspaces/settings#locking). This is most useful for migrating existing state from open source Terraform into a new Terraform Cloud workspace.
 
-Creating state versions requires permission to read and write state versions for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Creating state versions requires permission to read and write state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -76,7 +76,7 @@ Creating state versions requires permission to read and write state versions for
 
 -> **Note:** For Free Tier organizations, Terraform Cloud always retains at least the last 100 states (across all workspaces) and at least the most recent state for every workspace. Additional states beyond the last 100 are retained for six months, and are then deleted.
 
--> **Note:** You cannot access this endpoint with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** You cannot access this endpoint with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason                                                            |
 |---------|---------------------------|-------------------------------------------------------------------|
@@ -99,7 +99,7 @@ Properties without a default value are required.
 | `data.attributes.md5`                | string  |           | An MD5 hash of the raw state version                                                                                                                                                                                                                                                       |
 | `data.attributes.state`              | string  |           | Base64 encoded raw state file                                                                                                                                                                                                                                                              |
 | `data.attributes.lineage`            | string  | (nothing) | **Optional** Lineage of the state version. Should match the lineage extracted from the raw state file. Early versions of terraform did not have the concept of lineage, so this is an optional attribute.                                                                                  |
-| `data.attributes.json-state`         | string  | (nothing) | **Optional** Base64 encoded json state, as expressed by `terraform show -json`. See [JSON Output Format](/internals/json-format) for more details                                                                                                                                          |
+| `data.attributes.json-state`         | string  | (nothing) | **Optional** Base64 encoded json state, as expressed by `terraform show -json`. See [JSON Output Format](/terraform/internals/json-format) for more details                                                                                                                                          |
 | `data.attributes.json-state-outputs` | string  | (nothing) | **Optional** Base64 encoded output values as represented by `terraform show -json` (the contents of the values/outputs key). If provided, the workspace outputs populate immediately. If omitted, Terraform Cloud populates the workspace outputs from the given state after a short time. |
 | `data.relationships.run.data.id`     | string  | (nothing) | **Optional** The ID of the run to associate with the state version.                                                                                                                                                                                                                        |
 
@@ -166,13 +166,13 @@ curl \
 
 `GET /state-versions`
 
-Listing state versions requires permission to read state versions for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Listing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                    | Description                                                                    |
 |------------------------------|--------------------------------------------------------------------------------|
@@ -385,12 +385,12 @@ curl \
 
 | Parameter       | Description                                                                                                                                                                                                                          |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `:workspace_id` | The ID for the workspace whose current state version you want to fetch. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID for the workspace whose current state version you want to fetch. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 Fetches the current state version for the given workspace. This state version
 will be the input state when running terraform operations.
 
-Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -508,7 +508,7 @@ curl \
 
 `GET /state-versions/:state_version_id`
 
-Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -632,17 +632,17 @@ curl \
 
 | Parameter       | Description                                                                                                                                                                                                       |
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `:workspace_id` | The workspace ID to create the new state version in. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to create the new state version in. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
-Creates a state version by duplicating the specified state version and sets it as the current state version for the given workspace. The workspace must be locked by the user creating a state version. The workspace may be locked [with the API](/cloud-docs/api-docs/workspaces#lock-a-workspace) or [with the UI](/cloud-docs/workspaces/settings#locking). This is most useful for rolling back to a known-good state after an operation such as a Terraform upgrade didn't go as planned.
+Creates a state version by duplicating the specified state version and sets it as the current state version for the given workspace. The workspace must be locked by the user creating a state version. The workspace may be locked [with the API](/terraform/cloud-docs/api-docs/workspaces#lock-a-workspace) or [with the UI](/terraform/cloud-docs/workspaces/settings#locking). This is most useful for rolling back to a known-good state after an operation such as a Terraform upgrade didn't go as planned.
 
-Creating state versions requires permission to read and write state versions for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Creating state versions requires permission to read and write state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 !> **Warning:** Use caution when rolling back to a previous state. Replacing state improperly can result in orphaned or duplicated infrastructure resources.
 
--> **Note:** You cannot access this endpoint with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** You cannot access this endpoint with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason                                                          |
 |---------|---------------------------|-----------------------------------------------------------------|
@@ -755,11 +755,11 @@ curl \
 
 ## List State Version Outputs
 
-The output values from a state version are also available via the API. For details, see the [state version outputs documentation.](/cloud-docs/api-docs/state-version-outputs#list-state-version-outputs)
+The output values from a state version are also available via the API. For details, see the [state version outputs documentation.](/terraform/cloud-docs/api-docs/state-version-outputs#list-state-version-outputs)
 
 ### Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 * `created_by` - The user that created the state version. For state versions created via a run executed by Terraform Cloud, this is an internal user account.
 * `run` - The run that created the state version, if applicable.

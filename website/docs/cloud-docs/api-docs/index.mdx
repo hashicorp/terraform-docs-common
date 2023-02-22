@@ -33,7 +33,7 @@ description: >-
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -43,7 +43,7 @@ Terraform Cloud provides an API for a subset of its features. If you have any qu
 
 -> **Note:** Before planning an API integration, consider whether [the `tfe` Terraform provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) meets your needs. It can't create or approve runs in response to arbitrary events, but it's a useful tool for managing your organizations, teams, and workspaces as code.
 
-HashiCorp provides a [stability policy](/cloud-docs/api-docs/stability-policy) for the Terraform Cloud API, ensuring backwards compatibility for stable endpoints. The [changelog](/cloud-docs/api-docs/changelog) tracks changes to the API for Terraform Cloud and Terraform Enterprise.
+HashiCorp provides a [stability policy](/terraform/cloud-docs/api-docs/stability-policy) for the Terraform Cloud API, ensuring backwards compatibility for stable endpoints. The [changelog](/terraform/cloud-docs/api-docs/changelog) tracks changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ## Authentication
 
@@ -51,17 +51,17 @@ All requests must be authenticated with a bearer token. Use the HTTP header `Aut
 
 There are three kinds of tokens available:
 
-- [User tokens](/cloud-docs/users-teams-organizations/users#api-tokens) — each Terraform Cloud user can have any number of API tokens, which can make requests on their behalf.
-- [Team tokens](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) — each team can have one API token at a time. This is intended for performing plans and applies via a CI/CD pipeline.
-- [Organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) — each organization can have one API token at a time. This is intended for automating the management of teams, team membership, and workspaces. The organization token cannot perform plans and applies.
+- [User tokens](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) — each Terraform Cloud user can have any number of API tokens, which can make requests on their behalf.
+- [Team tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) — each team can have one API token at a time. This is intended for performing plans and applies via a CI/CD pipeline.
+- [Organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) — each organization can have one API token at a time. This is intended for automating the management of teams, team membership, and workspaces. The organization token cannot perform plans and applies.
 
 ### Blob Storage Authentication
 
-Terraform Cloud relies on a HashiCorp-developed blob storage service for storing statefiles and multiple other pieces of customer data, all of which are documented on our [data security page](/cloud-docs/architectural-details/data-security).
+Terraform Cloud relies on a HashiCorp-developed blob storage service for storing statefiles and multiple other pieces of customer data, all of which are documented on our [data security page](/terraform/cloud-docs/architectural-details/data-security).
 
 Unlike the Terraform Cloud API, this service does not require that a bearer token be submitted with each request. Instead, each URL includes a securely generated secret and is only valid for 25 hours.
 
-For example, the [state versions api](/cloud-docs/api-docs/state-versions) returns a field named `hosted-state-download`, which is a URL of this form:
+For example, the [state versions api](/terraform/cloud-docs/api-docs/state-versions) returns a field named `hosted-state-download`, which is a URL of this form:
 `https://archivist.terraform.io/v1/object/<secret value>`
 
 This is a broadly accepted pattern for secure access. It is important to treat these URLs themselves as secrets. They should not be logged, nor shared with untrusted parties.
@@ -74,7 +74,7 @@ Each organization has a set of _entitlements_ that corresponds to its pricing ti
 
 If an organization doesn't have the necessary entitlement to use a given feature, Terraform Cloud returns a 404 error for API requests to any endpoints devoted to that feature.
 
-The [show entitlement set](/cloud-docs/api-docs/organizations#show-the-entitlement-set) endpoint can return information about an organization's current entitlements, which is useful if your client needs to change its interface when a given feature isn't available.
+The [show entitlement set](/terraform/cloud-docs/api-docs/organizations#show-the-entitlement-set) endpoint can return information about an organization's current entitlements, which is useful if your client needs to change its interface when a given feature isn't available.
 
 The following entitlements are available:
 
@@ -85,68 +85,68 @@ The following entitlements are available:
 - `operations` — Allows an organization to perform runs within Terraform Cloud. Affects the [runs][], [plans][], and [applies][] endpoints.
 - `policy-enforcement` — Allows an organization to use [Sentinel][]. Affects the [policies][], [policy sets][], and [policy checks][] endpoints.
 - `private-module-registry` — Allows an organization to publish and use modules with the [private module registry][]. Affects the [registry modules][] endpoints.
-- `run-tasks` — Allows an organization to use [run tasks](/cloud-docs/workspaces/settings/run-tasks). Affects the [run tasks][] endpoints.
+- `run-tasks` — Allows an organization to use [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks). Affects the [run tasks][] endpoints.
 - `self-serve-billing` — Allows an organization to pay via credit card using the in-app billing UI.
 - `sentinel` -  **DEPRECATED** Use `policy-enforcement` instead.
 - `state-storage` — Allows an organization to store state versions in its workspaces, which enables local Terraform runs with Terraform Cloud. Affects the [state versions][] endpoints.
 - `sso` — Allows an organization to manage and authenticate users with single sign on.
-- `teams` — Allows an organization to manage access to its workspaces with [teams](/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
+- `teams` — Allows an organization to manage access to its workspaces with [teams](/terraform/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
 - `user-limit` — An integer value representing the maximum number of users allowed for the organization. If blank, there is no limit.
 - `vcs-integrations` — Allows an organization to [connect with a VCS provider][vcs integrations] and link VCS repositories to workspaces. Affects the [OAuth Clients][o-clients], and [OAuth Tokens][o-tokens] endpoints, and determines whether the `data.attributes.vcs-repo` property can be set for [workspaces][].
 
-[agents]: /cloud-docs/api-docs/agents
+[agents]: /terraform/cloud-docs/api-docs/agents
 
-[agent pools]: /cloud-docs/api-docs/agents
+[agent pools]: /terraform/cloud-docs/api-docs/agents
 
-[agent tokens]: /cloud-docs/api-docs/agent-tokens
+[agent tokens]: /terraform/cloud-docs/api-docs/agent-tokens
 
-[applies]: /cloud-docs/api-docs/applies
+[applies]: /terraform/cloud-docs/api-docs/applies
 
-[audit trails]: /cloud-docs/api-docs/audit-trails
+[audit trails]: /terraform/cloud-docs/api-docs/audit-trails
 
-[Configuration Designer]: /cloud-docs/registry/design
+[Configuration Designer]: /terraform/cloud-docs/registry/design
 
-[cost estimation]: /cloud-docs/cost-estimation
+[cost estimation]: /terraform/cloud-docs/cost-estimation
 
-[o-clients]: /cloud-docs/api-docs/oauth-clients
+[o-clients]: /terraform/cloud-docs/api-docs/oauth-clients
 
-[o-tokens]: /cloud-docs/api-docs/oauth-tokens
+[o-tokens]: /terraform/cloud-docs/api-docs/oauth-tokens
 
-[plans]: /cloud-docs/api-docs/plans
+[plans]: /terraform/cloud-docs/api-docs/plans
 
-[policies]: /cloud-docs/api-docs/policies
+[policies]: /terraform/cloud-docs/api-docs/policies
 
-[policy checks]: /cloud-docs/api-docs/policy-checks
+[policy checks]: /terraform/cloud-docs/api-docs/policy-checks
 
-[policy sets]: /cloud-docs/api-docs/policy-sets
+[policy sets]: /terraform/cloud-docs/api-docs/policy-sets
 
-[private module registry]: /cloud-docs/registry
+[private module registry]: /terraform/cloud-docs/registry
 
-[registry modules]: /cloud-docs/api-docs/private-registry/modules
+[registry modules]: /terraform/cloud-docs/api-docs/private-registry/modules
 
-[registry providers]: /cloud-docs/api-docs/private-registry/providers
+[registry providers]: /terraform/cloud-docs/api-docs/private-registry/providers
 
-[runs]: /cloud-docs/api-docs/run
+[runs]: /terraform/cloud-docs/api-docs/run
 
-[run tasks]: /cloud-docs/api-docs/run-tasks/run-tasks
+[run tasks]: /terraform/cloud-docs/api-docs/run-tasks/run-tasks
 
-[Sentinel]: /cloud-docs/policy-enforcement/sentinel
+[Sentinel]: /terraform/cloud-docs/policy-enforcement/sentinel
 
-[single sign on]: /cloud-docs/users-teams-organizations/single-sign-on
+[single sign on]: /terraform/cloud-docs/users-teams-organizations/single-sign-on
 
-[state versions]: /cloud-docs/api-docs/state-versions
+[state versions]: /terraform/cloud-docs/api-docs/state-versions
 
-[teams]: /cloud-docs/api-docs/teams
+[teams]: /terraform/cloud-docs/api-docs/teams
 
-[team access]: /cloud-docs/api-docs/team-access
+[team access]: /terraform/cloud-docs/api-docs/team-access
 
-[team members]: /cloud-docs/api-docs/team-members
+[team members]: /terraform/cloud-docs/api-docs/team-members
 
-[team tokens]: /cloud-docs/api-docs/team-tokens
+[team tokens]: /terraform/cloud-docs/api-docs/team-tokens
 
-[vcs integrations]: /cloud-docs/vcs
+[vcs integrations]: /terraform/cloud-docs/vcs
 
-[workspaces]: /cloud-docs/api-docs/workspaces
+[workspaces]: /terraform/cloud-docs/api-docs/workspaces
 
 ## Response Codes
 

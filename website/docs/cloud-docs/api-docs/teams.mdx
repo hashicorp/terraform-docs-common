@@ -30,7 +30,7 @@ page_title: Teams - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -38,15 +38,15 @@ page_title: Teams - API Docs - Terraform Cloud
 
 -> **Note:** Team management is a paid feature, available as part of the **Team** upgrade package. Single sign-on is also a paid feature, available as part of the **Business** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-The Teams API is used to create, edit, and destroy teams as well as manage a team's organization-level permissions. The [Team Membership API](/cloud-docs/api-docs/team-members) is used to add or remove users from a team. Use the [Team Access API](/cloud-docs/api-docs/team-access) to associate a team with privileges on an individual workspace.
+The Teams API is used to create, edit, and destroy teams as well as manage a team's organization-level permissions. The [Team Membership API](/terraform/cloud-docs/api-docs/team-members) is used to add or remove users from a team. Use the [Team Access API](/terraform/cloud-docs/api-docs/team-access) to associate a team with privileges on an individual workspace.
 
-Any member of an organization can view visible teams and any secret teams they are a member of. Only organization owners can modify teams or view the full set of secret teams. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Any member of an organization can view visible teams and any secret teams they are a member of. Only organization owners can modify teams or view the full set of secret teams. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Organization Membership
 
--> **Note:** Users must be invited to join organizations before they can be added to teams. See [the Organization Memberships API documentation](/cloud-docs/api-docs/organization-memberships) for more information. Invited users who have not yet accepted will not appear in Teams API responses.
+-> **Note:** Users must be invited to join organizations before they can be added to teams. See [the Organization Memberships API documentation](/terraform/cloud-docs/api-docs/organization-memberships) for more information. Invited users who have not yet accepted will not appear in Teams API responses.
 
 ## List teams
 
@@ -58,7 +58,7 @@ Any member of an organization can view visible teams and any secret teams they a
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter       | Description                                                                                                                                                                  |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -431,7 +431,7 @@ $ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 - `users` (`string`) - Returns the full user record for every member of a team.
 - `organization-memberships` (`string`) - Returns the full organization membership record for every member of a team.

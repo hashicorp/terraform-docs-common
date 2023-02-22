@@ -30,7 +30,7 @@ page_title: Policy Checks - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -52,7 +52,7 @@ This endpoint lists the policy checks in a run.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                   |
 | -------------- | ----------------------------------------------------------------------------- |
@@ -244,7 +244,7 @@ curl \
 
 ### Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name      | Description                            |
 | ------------------ | -------------------------------------- |
@@ -255,7 +255,7 @@ The GET endpoints above can optionally return related resources, if requested wi
 
 ## List Policy Evaluations in the Task Stage
 
-Each run passes through several stages of action (pending, plan, policy check, apply, and completion), and shows the progress through those stages as [run states](cloud-docs/run/states).
+Each run passes through several stages of action (pending, plan, policy check, apply, and completion), and shows the progress through those stages as [run states](/terraform/cloud-docs/run/states).
 This endpoint allows you to list policy evaluations that are part of the task stage.
 
 This endpoint is only available for OPA policies.
@@ -274,7 +274,7 @@ This endpoint is only available for OPA policies.
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
 | Parameter                          | Description                                                                  |
 | ---------------------------------- | ---------------------------------------------------------------------------- |
@@ -357,7 +357,7 @@ This endpoint allows you to list policy set outcomes that are part of the policy
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
 | Parameter                          | Description                                                             |
 |----------------------------------- | ----------------------------------------------------------------------- |

@@ -19,7 +19,7 @@ reporting the results back to ServiceNow.
 
 Before configuring a service catalog, you must install and configured the
 Terraform Cloud integration software on your ServiceNow instance. These steps
-are covered in the [installation documentation](/cloud-docs/integrations/service-now).
+are covered in the [installation documentation](/terraform/cloud-docs/integrations/service-now).
 
 Additionally, you must have have the following information:
 
@@ -160,9 +160,9 @@ Once this is complete, ServiceNow will reflect that the Request Item has been
 provisioned.
 
 -> **Note:** The integration creates workspaces with
-[auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply)
+[auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply)
 enabled. Terraform Cloud will queue an apply for these workspaces whenever
 changes are merged to the associated VCS repositories. This is known as the
-[VCS-driven run workflow](/cloud-docs/run/ui). It is important to keep in mind
+[VCS-driven run workflow](/terraform/cloud-docs/run/ui). It is important to keep in mind
 that all of the ServiceNow workspaces connected to a given repository will be
 updated whenever changes are merged to the associated branch in that repository.

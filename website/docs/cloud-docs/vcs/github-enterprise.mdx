@@ -4,9 +4,9 @@ page_title: GitHub Enterprise - VCS Providers - Terraform Cloud
 
 # Configuring GitHub Enterprise Access
 
-These instructions are for using an on-premise installation of GitHub Enterprise for Terraform Cloud's VCS features. [GitHub.com has separate instructions,](/cloud-docs/vcs/github-enterprise) as do the [other supported VCS providers.](/cloud-docs/vcs)
+These instructions are for using an on-premise installation of GitHub Enterprise for Terraform Cloud's VCS features. [GitHub.com has separate instructions,](/terraform/cloud-docs/vcs/github-enterprise) as do the [other supported VCS providers.](/terraform/cloud-docs/vcs)
 
-Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -23,7 +23,7 @@ The rest of this page explains the GitHub Enterprise versions of these steps.
 
 ~> **Important:** Terraform Cloud needs to contact your GitHub Enterprise instance during setup and during normal operation. For the SaaS version of Terraform Cloud, this means GitHub Enterprise must be internet-accessible; for Terraform Enterprise, you must have network connectivity between your Terraform Enterprise and GitHub Enterprise instances.
 
--> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using Terraform Cloud's API. For details, see [the OAuth Clients API page](/cloud-docs/api-docs/oauth-clients).
+-> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using Terraform Cloud's API. For details, see [the OAuth Clients API page](/terraform/cloud-docs/api-docs/oauth-clients).
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 

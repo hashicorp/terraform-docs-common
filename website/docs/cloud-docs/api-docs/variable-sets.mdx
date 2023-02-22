@@ -7,9 +7,9 @@ description: >-
 
 # Variable Sets API
 
-A [variable set](/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces. For example, you could define a variable set of provider credentials and automatically apply it to one or all workspaces.
+A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces. For example, you could define a variable set of provider credentials and automatically apply it to one or all workspaces.
 
-You need [`read variables` permission](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in the owning organization. To create or edit variable sets, your team must have [`Manage Workspace` organization access](/cloud-docs/users-teams-organizations/teams#managing-organization-access). 
+You need [`read variables` permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in the owning organization. To create or edit variable sets, your team must have [`Manage Workspace` organization access](/terraform/cloud-docs/users-teams-organizations/teams#managing-organization-access). 
 
 ## Create a Variable Set
 
@@ -311,7 +311,7 @@ List all variable sets for a workspace.
 
 ### Query Parameters
 
-Both of the endpoints support pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+Both of the endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                 | Description                                                                  |
 | ------------------------- | ---------------------------------------------------------------------------- |
@@ -716,14 +716,14 @@ curl \
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[json api document]: /cloud-docs/api-docs#json-api-documents
+[json api document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [json api error object]: https://jsonapi.org/format/#error-objects
 
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name        | Description                                       |
 | -------------------- | ------------------------------------------------- |

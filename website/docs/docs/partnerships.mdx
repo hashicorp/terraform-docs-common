@@ -29,9 +29,9 @@ Our Workflow Partners typically have the following use cases:
 - **CI/CD:** Partners focused on continuous integration and continuous delivery/deployment.
 - **VCS:** Partners focused on tracking and managing software code changes.
 
-Most workflow partners create [run tasks](/cloud-docs/integrations/run-tasks) that let them integrate their services directly into the Terraform workflow. [Run tasks](/cloud-docs/integrations/run-tasks) let Terraform Cloud execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can configure run tasks to execute during the pre-plan, post-plan and the pre-apply run stages. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
+Most workflow partners create [run tasks](/terraform/cloud-docs/integrations/run-tasks) that let them integrate their services directly into the Terraform workflow. [Run tasks](/terraform/cloud-docs/integrations/run-tasks) let Terraform Cloud execute tasks in external systems at certain points in the Terraform Cloud run lifecycle. Specifically, Terraform Cloud users can configure run tasks to execute during the pre-plan, post-plan and the pre-apply run stages. Refer to the [Terraform Cloud Integrations](/terraform/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/terraform/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
 
-Most workflow partners create run tasks that let them integrate their services directly into the Terraform workflow. Most workflow partners integrate with the Terraform workflow itself. Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. This integration offers much more extensibility to Terraform Cloud customers, enabling them to integrate your services into the Terraform Cloud workflow. This feature allows users to add and execute these tasks during the pre-plan, post-plan and pre-apply stages. Eventually, we will open the third phase of this workflow to Terraform Cloud users, the post-apply stage. Refer to the [Terraform Cloud Integrations](/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
+Most workflow partners create run tasks that let them integrate their services directly into the Terraform workflow. Most workflow partners integrate with the Terraform workflow itself. Run tasks allow Terraform Cloud to execute tasks in external systems at specific points in the Terraform Cloud run lifecycle. This integration offers much more extensibility to Terraform Cloud customers, enabling them to integrate your services into the Terraform Cloud workflow. This feature allows users to add and execute these tasks during the pre-plan, post-plan and pre-apply stages. Eventually, we will open the third phase of this workflow to Terraform Cloud users, the post-apply stage. Refer to the [Terraform Cloud Integrations](/terraform/docs/partnerships#terraform-cloud-integrations) or [Terraform Enterprise Integrations](/terraform/docs/partnerships#terraform-enterprise-integrations) documentation for more details.
 
 ![Integration program diagram](/img/docs/terraform-integration-program-diagram.png)
 
@@ -54,7 +54,7 @@ Our Infrastructure Partners typically have the following use cases:
 - **PaaS (Platform-as-a-Service):** These are platform and PaaS providers that offer a range of hardware, software, and application development tools. This category includes smaller-scale providers and those with more specialized offerings.
 - **Web Services:** These partners focus on web hosting, web performance, CDN and DNS services.
 
-Infrastructure partners integrate by building and publishing a plugin called a Terraform [provider](/language/providers). Providers are executable binaries written in Go that communicate with Terraform Core over an RPC interface. The provider acts as a translation layer for transactions with external APIs, such as a public cloud service (AWS, GCP, Azure), a PaaS service (Heroku), a SaaS service (DNSimple, CloudFlare), or on-prem resources (vSphere). Providers work across Terraform OSS, Terraform Cloud and Terraform Enterprise. Refer to the [Terraform Provider Integrations documentation](/docs/partnerships#terraform-provider-integrations) for more detail.
+Infrastructure partners integrate by building and publishing a plugin called a Terraform [provider](/terraform/language/providers). Providers are executable binaries written in Go that communicate with Terraform Core over an RPC interface. The provider acts as a translation layer for transactions with external APIs, such as a public cloud service (AWS, GCP, Azure), a PaaS service (Heroku), a SaaS service (DNSimple, CloudFlare), or on-prem resources (vSphere). Providers work across Terraform OSS, Terraform Cloud and Terraform Enterprise. Refer to the [Terraform Provider Integrations documentation](/terraform/docs/partnerships#terraform-provider-integrations) for more detail.
 
 ## Terraform Provider Integrations
 
@@ -81,7 +81,7 @@ To get started with the Terraform provider development, we recommend reviewing a
 
 #### Provider Development Kit
 
-a) Writing custom providers [guide](https://learn.hashicorp.com/tutorials/terraform/provider-setup)
+a) Writing custom providers [guide](/terraform/tutorials/providers/provider-setup)
 
 b) Creating a Terraform Provider for Just About Anything: [video](https://www.youtube.com/watch?v=noxwUVet5RE)
 
@@ -126,7 +126,7 @@ All Terraform providers listed as Partner must contain one of the following open
 
 After your provider is complete and ready to release, you can publish it the integration to the [Terraform Registry](https://registry.terraform.io/). This makes it publicly available for all Terraform users.
 
-Follow the [Terraform Registry publishing documentation](/registry/providers/publishing) and review the [provider publishing learn guide](https://learn.hashicorp.com/tutorials/terraform/provider-release-publish?in=terraform/providers). If your company has multiple products with separate providers, we recommend publishing them under the same Github organization to help with discoverability.
+Follow the [Terraform Registry publishing documentation](/terraform/registry/providers/publishing) and review the [provider publishing learn guide](/terraform/tutorials/providers/provider-release-publish). If your company has multiple products with separate providers, we recommend publishing them under the same Github organization to help with discoverability.
 
 Once completed, your provider will be visible in the Terraform Registry and available to use in Terraform. Please confirm that everything looks correct and that documentation is rendering properly.
 
@@ -181,13 +181,13 @@ For partners who are new to working with Hashicorp, we recommend [signing up for
 
 ### 2. Develop and Test
 
-Partners should build an integration using the [run tasks APIs in Terraform Cloud](/cloud-docs/api-docs/run-tasks/run-tasks). To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available). For a more hands-on experience with run tasks follow the [HCP Packer run tasks learn guide here](https://learn.hashicorp.com/tutorials/packer/setup-tfc-run-task?in=terraform/cloud).
+Partners should build an integration using the [run tasks APIs in Terraform Cloud](/terraform/cloud-docs/api-docs/run-tasks/run-tasks). To learn more about how post-plan run tasks can enhance the Terraform Cloud workflow, refer to the following diagram and read our [run tasks announcement](https://www.hashicorp.com/blog/terraform-cloud-run-tasks-beta-now-available). For a more hands-on experience with run tasks follow the [HCP Packer run tasks learn guide here](/terraform/tutorials/cloud/setup-tfc-run-task).
 
-For the run tasks API documentation [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
+For the run tasks API documentation [click here](/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
 
 ![RunTask Diagram](/img/docs/post-plan-runtask-diagram.png)
 
-To better understand how pre-plan run task enhances the Terraform workflow, refer to the diagram of pre-plan tasks. For additional API resources, [click here](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results).
+To better understand how pre-plan run task enhances the Terraform workflow, refer to the diagram of pre-plan tasks. For additional API resources, [click here](/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results).
 
 ![RunTask Diagram](/img/docs/pre-plan-runtask-diagram.png)
 
@@ -197,7 +197,7 @@ Schedule time with your Partner Alliance manager to review your integration. The
 
 ### 4. Release
 
-We add new partners to the [Terraform Run Task page](/cloud-docs/integrations/run-tasks#run-tasks-technology-partners) after the integration review and documentation is complete. On this page, you will provide a two-line summary about your integration(s). If you have multiple integrations, we highly recommend creating a summary that highlights all potential integration options.
+We add new partners to the [Terraform Run Task page](/terraform/cloud-docs/integrations/run-tasks#run-tasks-technology-partners) after the integration review and documentation is complete. On this page, you will provide a two-line summary about your integration(s). If you have multiple integrations, we highly recommend creating a summary that highlights all potential integration options.
 
 You must provide documentation that helps users get started with your integration. You also need to provide documentation for our support team, including points of contact, email address, FAQ and/or best practices. We want to ensure end users are able to reach the right contacts for internal HashiCorp support when working with customers.
 

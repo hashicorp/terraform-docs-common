@@ -84,9 +84,9 @@ The `config` and `state` keys alias to the [`tfconfig`][import-tfconfig] and
 [`tfstate`][import-tfstate] namespaces, respectively, with the data sourced from
 the Terraform _plan_ (as opposed to actual configuration and state).
 
-[import-tfconfig]: /cloud-docs/policy-enforcement/sentinel/import/tfconfig
+[import-tfconfig]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig
 
-[import-tfstate]: /cloud-docs/policy-enforcement/sentinel/import/tfstate
+[import-tfstate]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate
 
 -> Note that these aliases are not represented as maps. While they will appear
 empty when viewed as maps, the specific import namespace keys will still be
@@ -201,7 +201,7 @@ Iterating through all modules to find particular resources can be useful. This
 particular type from all modules that have pending changes using the `tfplan`
 import.
 
-[iterate-over-modules]: /cloud-docs/policy-enforcement/sentinel#sentinel-imports
+[iterate-over-modules]: /terraform/cloud-docs/policy-enforcement/sentinel#sentinel-imports
 
 ### Value: `terraform_version`
 
@@ -236,9 +236,9 @@ comparison for int, float, or boolean values. This only applies to variables
 that are primitives themselves and not primitives within maps and lists, which
 will be their original types.
 
-[import-tfconfig-variables-default]: /cloud-docs/policy-enforcement/sentinel/import/tfconfig#value-default
+[import-tfconfig-variables-default]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig#value-default
 
-[import-tfconfig-variables]: /cloud-docs/policy-enforcement/sentinel/import/tfconfig#namespace-variables
+[import-tfconfig-variables]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig#namespace-variables
 
 If a default was accepted for the particular variable, the default value will be
 populated here.
@@ -357,7 +357,7 @@ Some examples of multi-level access are below:
   `tfplan.resources.aws_instance`, with names being the next level down, and so
   on.
 
-~> When [resource targeting](/cli/commands/plan#resource-targeting) is in effect, `tfplan.resources` will only include the resources specified as targets for the run. This may lead to unexpected outcomes if a policy expects a resource to be present in the plan. To prohibit targeted runs altogether, ensure [`tfrun.target_addrs`](/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs) is undefined or empty.
+~> When [resource targeting](/terraform/cli/commands/plan#resource-targeting) is in effect, `tfplan.resources` will only include the resources specified as targets for the run. This may lead to unexpected outcomes if a policy expects a resource to be present in the plan. To prohibit targeted runs altogether, ensure [`tfrun.target_addrs`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs) is undefined or empty.
 
 Further explanation of the namespace will be in the context of resources. As
 mentioned, when operating on data sources, use the same syntax, except with
