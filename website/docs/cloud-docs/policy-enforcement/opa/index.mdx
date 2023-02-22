@@ -8,9 +8,9 @@ description: Use the Rego policy language to define Open Policy Agent (OPA) poli
 
 -> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing). OPA policies are not available in Terraform Enterprise.
 
-Policies are rules that Terraform Cloud enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
+Policies are rules that Terraform Cloud enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
 
-> **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
+> **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorial.
 
 ## Defining Policies
 
@@ -59,7 +59,7 @@ The following example shows sample OPA input data.
 }
 ```
 
-Use the [Retrieve JSON Execution Plan endpoint](/cloud-docs/api-docs/plans#retrieve-the-json-execution-plan) to retrieve Terraform plan output data for testing. Refer to [Terraform Run Data](#terraform-run-data) for the properties included in Terraform run output data.
+Use the [Retrieve JSON Execution Plan endpoint](/terraform/cloud-docs/api-docs/plans#retrieve-the-json-execution-plan) to retrieve Terraform plan output data for testing. Refer to [Terraform Run Data](#terraform-run-data) for the properties included in Terraform run output data.
 
 ### Example Policies
 
@@ -263,7 +263,7 @@ test_workspace_tags_missing {
 
 ## Terraform Run Data
 
-Each [Terraform run](/docs/glossary#run) outputs data describing the run settings and the associated workspace.
+Each [Terraform run](/terraform/docs/glossary#run) outputs data describing the run settings and the associated workspace.
 
 ### Schema
 
@@ -312,10 +312,10 @@ The following table contains the attributes for the `run` namespace.
 |  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
 |  `refresh` | Boolean |  Whether the state refreshed prior to the plan |
 |   `refresh_only` |  Boolean | Whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
-|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
-|  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) only |
-|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
-|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
+|  `replace_addrs` | An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing) | The targets specified using the [`-replace`](/terraform/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
+|  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) only |
+|  `target_addrs` |  An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing). | The targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
+|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
 
 #### Organization Namespace
 
@@ -331,7 +331,7 @@ The following table contains the properties for the `workspace` namespace.
 |  `name` |  String | The name of the workspace, which can only include letters, numbers, `-`, and `_` |
 |  `created_at` | String | The time of the workspace's creation. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
 |  `description` | String | The description for the workspace. This value can be `null`. |
-|  `auto_apply` | Boolean | The workspace's [auto-apply](/cloud-docs/workspaces/settings#apply-method) setting |
+|  `auto_apply` | Boolean | The workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#apply-method) setting |
 |  `tags` | Array of strings | The list of tag names for the workspace |
-|  `working_directory` |  String | The configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
-|  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation](/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
+|  `working_directory` |  String | The configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
+|  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation](/terraform/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |

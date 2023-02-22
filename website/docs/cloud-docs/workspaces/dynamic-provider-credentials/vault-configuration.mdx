@@ -11,7 +11,7 @@ description: >-
 
 ~> **Important:** If using self-managed agents, make sure you’re using **v1.5.0-rc.2** or later.
 
-You can use Terraform Cloud’s native OpenID Connect integration with Vault to get [dynamic credentials](/cloud-docs/workspaces/dynamic-provider-credentials) for the Vault provider in your Terraform Cloud runs. Configuring the integration requires the following steps.
+You can use Terraform Cloud’s native OpenID Connect integration with Vault to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Vault provider in your Terraform Cloud runs. Configuring the integration requires the following steps.
 
 1. **[Configure Vault](#configure-vault):** Set up a trust configuration between Vault and Terraform Cloud. Then, you must create Vault roles and policies for your Terraform Cloud workspaces.
 2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use Dynamic Credentials.
@@ -93,7 +93,7 @@ Then run the following command to create a role named `tfc-role` with this confi
 ```shell
 vault write auth/jwt/role/tfc-role @vault-jwt-auth-role.json
 ```
-To understand all the available options for matching bound claims, refer to the [Terraform workload identity claim specification](/cloud-docs/workspaces/dynamic-provider-credentials) and the [Vault documentation on configuring bound claims](https://developer.hashicorp.com/vault/docs/auth/jwt#bound-claims). To understand all the options available when configuring Vault JWT auth roles, refer to the [Vault API documentation](https://developer.hashicorp.com/vault/api-docs/auth/jwt#create-role).
+To understand all the available options for matching bound claims, refer to the [Terraform workload identity claim specification](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) and the [Vault documentation on configuring bound claims](/vault/docs/auth/jwt#bound-claims). To understand all the options available when configuring Vault JWT auth roles, refer to the [Vault API documentation](/vault/api-docs/auth/jwt#create-role).
 
 !> **Warning:** you should always check, at minimum, the audience and the name of the organization in order to prevent unauthorized access from other Terraform Cloud organizations!
 
@@ -129,4 +129,4 @@ You can use the Vault provider to read secrets from Vault and use them with othe
 ### Vault Dynamic Secrets Engines
 You **cannot** access Vault’s dynamic secrets engines via the Vault provider’s dynamic secrets data sources (such as `[vault_aws_access_credentials](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/aws_access_credentials)`) when using this integration.
 
-This is because data sources in Terraform Cloud are read only once, during the plan, and the results are passed to the apply using a [plan output file](https://developer.hashicorp.com/terraform/cli/commands/plan#out-filename). When the plan’s Vault token is revoked, any dynamic secrets issued using that token are revoked as well, so they’ll be invalid when the apply runs.
+This is because data sources in Terraform Cloud are read only once, during the plan, and the results are passed to the apply using a [plan output file](/terraform/cli/commands/plan#out-filename). When the plan’s Vault token is revoked, any dynamic secrets issued using that token are revoked as well, so they’ll be invalid when the apply runs.

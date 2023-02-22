@@ -14,13 +14,13 @@ HashiCorp Terraform Cloud customers can integrate with Kubernetes using the offi
 
 ## Prerequisites
 
-All Terraform Cloud users can use the Terraform Cloud Operator for Kubernetes. Some features of Terraform Cloud that are [limited to certain tiers](/cloud-docs/overview) aren't available to the Terraform Cloud Operator for Kubernetes unless you've purchased the corresponding tier.
+All Terraform Cloud users can use the Terraform Cloud Operator for Kubernetes. Some features of Terraform Cloud that are [limited to certain tiers](/terraform/cloud-docs/overview) aren't available to the Terraform Cloud Operator for Kubernetes unless you've purchased the corresponding tier.
 
 ## Terraform Cloud Operator for Kubernetes
 
 ### Networking Requirements
 
-In order for the Terraform Cloud Operator for Kubernetes to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the Terraform Cloud application APIs. This may require perimeter networking as well as container host networking changes, depending on your environment. The IP ranges are documented in the [Terraform Cloud IP Ranges documentation](/cloud-docs/architectural-details/ip-ranges). The services which run on these IP ranges are described in the table below.
+In order for the Terraform Cloud Operator for Kubernetes to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the Terraform Cloud application APIs. This may require perimeter networking as well as container host networking changes, depending on your environment. The IP ranges are documented in the [Terraform Cloud IP Ranges documentation](/terraform/cloud-docs/architectural-details/ip-ranges). The services which run on these IP ranges are described in the table below.
 
 | Hostname         | Port/Protocol  | Directionality | Purpose                                                                                                            |
 | ---------------- | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -35,7 +35,7 @@ The current release of the Terraform Cloud Operator for Kubernetes supports the 
 
 ### Installation & Configuration
 
-1. Generate an [organization token](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within Terraform Cloud and save it to a file. (These instructions assume you're using a file named `credentials`.)
+1. Generate an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within Terraform Cloud and save it to a file. (These instructions assume you're using a file named `credentials`.)
 
 1. Create a [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/) with the Terraform Cloud API credentials.
 

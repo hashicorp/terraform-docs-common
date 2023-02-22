@@ -13,7 +13,7 @@ using the information found in this document.
 ServiceNow has the concept of a Variable Set which is a collection of ServiceNow
 Variables that can be referenced in a Flow from a Service Catalog item. The
 Terraform Integration codebase can create [Terraform Variables and Terraform
-Environment Variables](/cloud-docs/workspaces/variables) via the API using the
+Environment Variables](/terraform/cloud-docs/workspaces/variables) via the API using the
 `tf_variable.createVariablesFromSet()` function.
 
 This function looks for variables following these conventions:
@@ -93,4 +93,4 @@ For users who only need to order from the Terraform Catalog, we recommend
 creating another role with read-only permissions for
 `x_terraform_vcs_repositories` to view the available repositories for ordering
 infrastructure. Install the Terraform ServiceNow Service Catalog integration by
-following [the installation guide](/cloud-docs/integrations/service-now).
+following [the installation guide](/terraform/cloud-docs/integrations/service-now).

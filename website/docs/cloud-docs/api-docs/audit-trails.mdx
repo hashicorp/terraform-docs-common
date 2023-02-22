@@ -30,13 +30,13 @@ page_title: Audit Trails - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Audit Trails API
 
-Terraform Cloud retains 14 days of audit log information. The audit trails API exposes a stream of audit events, which describe changes to the application entities (workspaces, runs, etc.) that belong to a Terraform Cloud organization. Audit trails are a paid feature that is available as part of the **Terraform Cloud for Business** upgrade package. Refer to the [Terraform Cloud pricing page](https://www.hashicorp.com/products/terraform/pricing) for more details. Unlike other APIs, the Audit Trails API does not use the [JSON API specification](/cloud-docs/api-docs#json-api-formatting).
+Terraform Cloud retains 14 days of audit log information. The audit trails API exposes a stream of audit events, which describe changes to the application entities (workspaces, runs, etc.) that belong to a Terraform Cloud organization. Audit trails are a paid feature that is available as part of the **Terraform Cloud for Business** upgrade package. Refer to the [Terraform Cloud pricing page](https://www.hashicorp.com/products/terraform/pricing) for more details. Unlike other APIs, the Audit Trails API does not use the [JSON API specification](/terraform/cloud-docs/api-docs#json-api-formatting).
 
 -> **Note:** The Audit Trails API is not available for Terraform Enterprise.
 
@@ -44,11 +44,11 @@ Terraform Cloud retains 14 days of audit log information. The audit trails API e
 
 `GET /organization/audit-trail`
 
--> **Note:** This endpoint cannot be accessed with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). You must access it with an [organization token](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+-> **Note:** This endpoint cannot be accessed with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). You must access it with an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
 ### Query Parameters
 
-[These are standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+[These are standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                                                                                                                      |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

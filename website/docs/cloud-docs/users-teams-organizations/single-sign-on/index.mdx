@@ -10,9 +10,9 @@ tfc_only: true
 
 -> **Note:** Single sign-on is a paid feature, available as part of the **Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
-~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/enterprise/saml/configuration).
+~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/terraform/enterprise/saml/configuration).
 
-Terraform Cloud allows organizations to configure support for SAML 2.0 single sign-on (SSO), an alternative to traditional [user](/cloud-docs/users-teams-organizations/users) management. By using SSO, your organization can centralize management of users for Terraform Cloud and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
+Terraform Cloud allows organizations to configure support for SAML 2.0 single sign-on (SSO), an alternative to traditional [user](/terraform/cloud-docs/users-teams-organizations/users) management. By using SSO, your organization can centralize management of users for Terraform Cloud and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
 
 Current users of Terraform Cloud can link their SSO identity to their existing account, providing a smooth transition when an organization enables SSO.
 
@@ -20,9 +20,9 @@ Current users of Terraform Cloud can link their SSO identity to their existing a
 
 Select your preferred provider to learn more about what is supported for that provider and how to configure SSO for it.
 
-* [Microsoft Azure AD](/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
-* [Okta](/cloud-docs/users-teams-organizations/single-sign-on/okta)
-* [SAML](/cloud-docs/users-teams-organizations/single-sign-on/saml)
+* [Microsoft Azure AD](/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
+* [Okta](/terraform/cloud-docs/users-teams-organizations/single-sign-on/okta)
+* [SAML](/terraform/cloud-docs/users-teams-organizations/single-sign-on/saml)
 
 ## How SSO Works
 
@@ -32,7 +32,7 @@ Once SSO is enabled for an organization, all non-owner members must sign in thro
 
 ### SSO Identities and Terraform Cloud User Accounts
 
-SSO does not automatically provision Terraform Cloud user accounts. The first time you sign in with SSO, you must either provide a password to create a new Terraform Cloud user account (using your SSO email address as the username), or link your SSO identity to an existing Terraform Cloud user account. Once the SSO identity is linked, you can only log in to that organization using the linked account. You must [remove the SSO link](/cloud-docs/users-teams-organizations/single-sign-on/linking-user-account#remove-sso-identity-link) if you want to access the organization with a different user account.
+SSO does not automatically provision Terraform Cloud user accounts. The first time you sign in with SSO, you must either provide a password to create a new Terraform Cloud user account (using your SSO email address as the username), or link your SSO identity to an existing Terraform Cloud user account. Once the SSO identity is linked, you can only log in to that organization using the linked account. You must [remove the SSO link](/terraform/cloud-docs/users-teams-organizations/single-sign-on/linking-user-account#remove-sso-identity-link) if you want to access the organization with a different user account.
 
 The accounts of SSO users are normal Terraform Cloud user accounts. If logged in with username and password, these accounts can create, join, and interact with other Terraform Cloud organizations. However, they cannot interact with the SSO-enabled organization without signing in via SSO unless they belong to its owners team.
 

@@ -30,7 +30,7 @@ page_title: User Tokens - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -44,11 +44,11 @@ page_title: User Tokens - API Docs - Terraform Cloud
 | ---------- | ------------------- |
 | `:user_id` | The ID of the User. |
 
-Use the [Account API](/cloud-docs/api-docs/account) to find your own user ID.
+Use the [Account API](/terraform/cloud-docs/api-docs/account) to find your own user ID.
 
 The objects returned by this endpoint only contain metadata, and do not include the secret text of any authentication tokens. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
 
 | Status  | Response                                                | Reason                                                                                |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -58,7 +58,7 @@ The objects returned by this endpoint only contain metadata, and do not include 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                 |
 | -------------- | --------------------------------------------------------------------------- |
@@ -127,7 +127,7 @@ curl \
 
 The objects returned by this endpoint only contain metadata, and do not include the secret text of any authentication tokens. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
 
 | Status  | Response                                                | Reason                                                       |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------ |
@@ -177,11 +177,11 @@ curl \
 | ---------- | ------------------- |
 | `:user_id` | The ID of the User. |
 
-Use the [Account API](/cloud-docs/api-docs/account) to find your own user ID.
+Use the [Account API](/terraform/cloud-docs/api-docs/account) to find your own user ID.
 
 This endpoint returns the secret text of the created authentication token. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only create new tokens for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only create new tokens for that token's user account.
 
 | Status  | Response                                                | Reason                                                         |
 | ------- | ------------------------------------------------------- | -------------------------------------------------------------- |
@@ -258,7 +258,7 @@ curl \
 | --------- | ------------------------------------ |
 | `:id`     | The ID of the User Token to destroy. |
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only delete tokens for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only delete tokens for that token's user account.
 
 | Status  | Response                  | Reason                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------ |
