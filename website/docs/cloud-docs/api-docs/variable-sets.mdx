@@ -6,7 +6,7 @@ description: >-
 
 # Variable Sets API
 
-A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces. For example, you could define a variable set of provider credentials and automatically apply it to one or all workspaces.
+A [variable set](/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces and projects. For example, you could define a variable set of provider credentials and automatically apply it to a set of assigned workspaces, all workspaces in a project, or all workspaces in an organization.
 
 You need [`read variables` permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in the owning organization. To create or edit variable sets, your team must have [`Manage Workspace` organization access](/terraform/cloud-docs/users-teams-organizations/teams#managing-organization-access). 
 
@@ -704,7 +704,7 @@ curl \
 
 ## Apply Variable Set to Projects
 
-Accepts a list of projects to add the variable set to.
+Accepts a list of projects to add the variable set to. When the variable set is applied to a project, all workspaces in the project will have the variable set applied to them.
 
 `POST varsets/:varset_id/relationships/projects`
 
