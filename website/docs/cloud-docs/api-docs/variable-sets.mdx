@@ -28,6 +28,7 @@ Properties without a default value are required.
 | `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                             |
 | `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization.             |
 | `data.relationships.workspaces` | array   | \[]     | Array of references to workspaces that the variable set should be assigned to. Sending an empty array clears all workspace assignments. |
+| `data.relationships.projects` | array   | \[]     | Array of references to projects that the variable set should be assigned to. Sending an empty array clears all project assignments. |
 | `data.relationships.vars`       | array   | \[]     | Array of complete variable definitions that comprise the variable set.                                                                  |
 
 Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
@@ -104,6 +105,14 @@ curl \
           {
             "id": "ws-z6YvbWEYoE168kpq",
             "type": "workspaces"
+          }
+        ]
+      },
+      "projects": {
+        "data": [
+          {
+            "id": "prj-lkjasdlkfjs",
+            "type": "projects"
           }
         ]
       },
@@ -350,6 +359,12 @@ Both of the endpoints support pagination [with standard URL query parameters](/t
           "data": [
            {"id": "ws-abcd12345", "type": "workspaces"},
            {"id": "ws-abcd12346", "type": "workspaces"}
+          ]
+        },
+        "projects": {
+          "data": [
+           {"id": "prj-abcd12345", "type": "projects"},
+           {"id": "prj-abcd12346", "type": "projects"}
           ]
         }
       }
@@ -686,6 +701,103 @@ curl \
   --request DELETE \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/workspaces
 ```
+
+## Apply Variable Set to Projects
+
+Accepts a list of projects to add the variable set to.
+
+`POST varsets/:varset_id/relationships/projects`
+
+| Parameter    | Description         |
+| ------------ | ------------------- |
+| `:varset_id` | The variable set ID |
+
+Properties without a default value are required.
+
+| Key path      | Type   | Default | Description                                        |
+| ------------- | ------ | ------- | -------------------------------------------------- |
+| `data[].type` | string |         | Must be `"projects"`                               |
+| `data[].id`   | string |         | The id of the project to add the variable set to   |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | ------------------------- | --------------------------------------------------------------------- |
+| [204][] |                           | Successfully added variable set to the requested projects             |
+| [404][] | [JSON API error object][] | Variable set not found or user unauthorized to perform action         |
+| [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "projects",
+      "id": "prj-YwfuBJZkdai4xj9w"
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
+```
+
+## Remove a Variable Set from Projects
+
+Accepts a list of projects to remove the variable set from.
+
+`DELETE varsets/:varset_id/relationships/projects`
+
+| Parameter    | Description         |
+| ------------ | ------------------- |
+| `:varset_id` | The variable set ID |
+
+Properties without a default value are required.
+
+| Key path      | Type   | Default | Description                                             |
+| ------------- | ------ | ------- | ------------------------------------------------------- |
+| `data[].type` | string |         | Must be `"projects"`                                    |
+| `data[].id`   | string |         | The id of the project to delete the variable set from   |
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | ------------------------- | --------------------------------------------------------------------- |
+| [204][] |                           | Successfully removed variable set from the requested projects         |
+| [404][] | [JSON API error object][] | Variable set not found or user unauthorized to perform action         |
+| [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "projects",
+      "id": "prj-YwfuBJZkdai4xj9w"
+    },
+    {
+      "type": "projects",
+      "id": "prj-lkjasdfiojwerlkj"
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
+```
+
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
