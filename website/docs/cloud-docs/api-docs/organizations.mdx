@@ -30,7 +30,7 @@ page_title: Organizations - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -49,7 +49,7 @@ The Organizations API is used to list, show, create, update, and destroy organiz
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 Currently, this endpoint returns a full, unpaginated list of organizations (without pagination metadata) if both of the pagination query parameters are omitted. To avoid inconsistent behavior, we recommend always supplying pagination parameters when building against this API.
 
@@ -402,9 +402,9 @@ Properties without a default value are required.
 | `data.attributes.collaborator-auth-policy`                                | string  | password  | Authentication policy (`password` or `two_factor_mandatory`)                                                                                                                                                                                                                                                                                                                       |
 | `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
-| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
+| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
-| `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
 
 ### Sample Payload
 
@@ -574,9 +574,9 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.collaborator-auth-policy`                                | string  | password  | Authentication policy (`password` or `two_factor_mandatory`)                                                                                                                                                                                                                                                                                                                       |
 | `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
-| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
+| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
-| `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
 
 ### Sample Payload
 
@@ -718,7 +718,7 @@ The response body will be empty if successful.
 
 ## Show the Entitlement Set
 
-This endpoint shows the [entitlements](/cloud-docs/api-docs#feature-entitlements) for an organization.
+This endpoint shows the [entitlements](/terraform/cloud-docs/api-docs#feature-entitlements) for an organization.
 
 `GET /organizations/:organization_name/entitlement-set`
 
@@ -776,7 +776,7 @@ curl \
 
 ~> **Note:** This endpoint is not available on Terraform Cloud.
 
-This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/enterprise/admin/application/module-sharing).
+This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/terraform/enterprise/admin/application/module-sharing).
 
 `GET /organizations/:organization_name/relationships/module-producers`
 
@@ -791,7 +791,7 @@ This endpoint shows organizations that are configured to share modules with an o
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                      |
 | -------------- | -------------------------------------------------------------------------------- |
@@ -845,7 +845,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name         | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |

@@ -20,15 +20,15 @@ When enabled, Terraform Cloud automatically runs a health assessment for your wo
 
 Working with health assessments requires the following permissions:
 - To view health status for a workspace, you need read access to that workspace.
-- To change organization health settings, you must be an [organization owner](/cloud-docs/users-teams-organizations/permissions#organization-owners).
-- To change a workspace’s health settings, you must be an [administrator for that workspace](/cloud-docs/users-teams-organizations/permissions#workspace-admins).
+- To change organization health settings, you must be an [organization owner](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners).
+- To change a workspace’s health settings, you must be an [administrator for that workspace](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins).
 
 ## Workspace Requirements
 
 Workspaces require the following settings to receive health assessments:
 - Terraform version 0.15.4+ for drift detection only
 - Terraform version 1.3.0+ for drift detection and continuous validation
-- [Remote execution mode](/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for Terraform runs
+- [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for Terraform runs
 
 The latest Terraform run in the workspace must have been successful. If the most recent run ended in an errored state, Terraform Cloud pauses health assessments until there is a successful run.
 
@@ -36,7 +36,7 @@ The workspace must also have at least one run in which Terraform successfully ap
 
 ## Enable Health Assessments
 
-You can enforce health assessments across all eligible workspaces in an organization within the [organization settings](/cloud-docs/users-teams-organizations/organizations#health). Enforcing health assessments at an organization-level overrides workspace-level settings. You can only enable health assessments within a specific workspace when Terraform Cloud is not enforcing health assessments at the organization level.
+You can enforce health assessments across all eligible workspaces in an organization within the [organization settings](/terraform/cloud-docs/users-teams-organizations/organizations#health). Enforcing health assessments at an organization-level overrides workspace-level settings. You can only enable health assessments within a specific workspace when Terraform Cloud is not enforcing health assessments at the organization level.
 
 To enable health assessments within a workspace:
 
@@ -66,7 +66,7 @@ If you enable health assessments on multiple workspaces, assessments may run con
 
 ### Notifications
 
-Terraform Cloud sends [notifications](/cloud-docs/workspaces/settings/notifications) about health assessment results according to your workspace’s settings.
+Terraform Cloud sends [notifications](/terraform/cloud-docs/workspaces/settings/notifications) about health assessment results according to your workspace’s settings.
 
 ## Workspace Health Status
 
@@ -88,7 +88,7 @@ To view the continuous validation results from the latest health assessment, go 
 
 You can use one of the following approaches to correct workspace drift:
 - **Overwrite drift**: Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
-- **Update Terraform state and configuration:** Queue a refresh-only plan to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply. Refer to our [Manage Resource Drift](https://learn.hashicorp.com/tutorials/terraform/resource-drift) tutorial for a detailed example.
+- **Update Terraform state and configuration:** Queue a refresh-only plan to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply. Refer to our [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
 
 ## Continuous Validation
 
@@ -98,11 +98,11 @@ The Terraform configuration language provides `precondition` and `postcondition`
 
 Continuous validation lets Terraform Cloud regularly check whether the preconditions and postconditions in a workspace’s configuration continue to pass, validating the real-world infrastructure. For example, you can write a `postcondition` to check whether an API gateway certificate is valid. Continuous validation alerts you when the condition fails, so you can update the certificate and avoid errors the next time you want to update your infrastructure.
 
-Refer to [Preconditions and Postconditions](/language/expressions/custom-conditions#preconditions-and-postconditions) for more details about adding custom conditions in your Terraform configuration.
+Refer to [Preconditions and Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) for more details about adding custom conditions in your Terraform configuration.
 
 ### Example Use Cases
 
-[HCP Packer](https://cloud.hashicorp.com/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example postcondition fails when there is a newer AMI version available.
+[HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example postcondition fails when there is a newer AMI version available.
 
 ```hcl
 resource "aws_instance" "hashiapp" {

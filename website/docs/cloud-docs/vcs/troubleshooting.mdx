@@ -87,7 +87,7 @@ The fix is to update the OAuth Callback URL in your VCS provider to use app.terr
 
 A workspace with no runs will not accept new runs from a VCS webhook. You must queue at least one run manually.
 
-A workspace will not process a webhook if the workspace previously processed a webhook with the same commit SHA and created a run. To trigger a run, create a new commit. If a workspace receives a webhook with a previously processed commit, a Terraform Cloud will add a new event to the [VCS Events](/cloud-docs/vcs#viewing-events) page documenting the received webhook.
+A workspace will not process a webhook if the workspace previously processed a webhook with the same commit SHA and created a run. To trigger a run, create a new commit. If a workspace receives a webhook with a previously processed commit, a Terraform Cloud will add a new event to the [VCS Events](/terraform/cloud-docs/vcs#viewing-events) page documenting the received webhook.
 
 ### Changing the URL for a VCS provider
 
@@ -95,12 +95,12 @@ On rare occasions, you might need Terraform Cloud to change the URL it uses to r
 
 Terraform Cloud does not allow you to change the API URL for an existing VCS connection, but you can create a new VCS connection and update existing resources to use it. This is most efficient if you script the necessary updates using Terraform Cloud's API. In brief:
 
-1. [Configure a new VCS connection](/cloud-docs/vcs) with the updated URL.
-1. Obtain the [oauth-token IDs](/cloud-docs/api-docs/oauth-tokens) for the old and new OAuth clients.
-1. [List all workspaces](/cloud-docs/api-docs/workspaces#list-workspaces) (dealing with pagination if necessary), and use a JSON filtering tool like `jq` to make a list of all workspace IDs whose `attributes.vcs-repo.oauth-token-id` matches the old VCS connection.
-1. Iterate over the list of workspaces and [PATCH each one](/cloud-docs/api-docs/workspaces#update-a-workspace) to use the new `oauth-token-id`.
-1. [List all registry modules](/registry/api-docs#list-modules) and use their `source` property to determine which ones came from the old VCS connection.
-1. [Delete each affected module](/cloud-docs/api-docs/private-registry/modules#delete-a-module), then [create a new module](/cloud-docs/api-docs/private-registry/modules#publish-a-private-module-from-a-vcs) from the new connection's version of the relevant repo.
+1. [Configure a new VCS connection](/terraform/cloud-docs/vcs) with the updated URL.
+1. Obtain the [oauth-token IDs](/terraform/cloud-docs/api-docs/oauth-tokens) for the old and new OAuth clients.
+1. [List all workspaces](/terraform/cloud-docs/api-docs/workspaces#list-workspaces) (dealing with pagination if necessary), and use a JSON filtering tool like `jq` to make a list of all workspace IDs whose `attributes.vcs-repo.oauth-token-id` matches the old VCS connection.
+1. Iterate over the list of workspaces and [PATCH each one](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace) to use the new `oauth-token-id`.
+1. [List all registry modules](/terraform/registry/api-docs#list-modules) and use their `source` property to determine which ones came from the old VCS connection.
+1. [Delete each affected module](/terraform/cloud-docs/api-docs/private-registry/modules#delete-a-module), then [create a new module](/terraform/cloud-docs/api-docs/private-registry/modules#publish-a-private-module-from-a-vcs) from the new connection's version of the relevant repo.
 1. Delete the old VCS connection.
 
 

@@ -49,12 +49,12 @@ policy to pass if the workspace ends in `-dev`). While this is useful for
 extremely granular exceptions, the workspace name could be edited by
 workspace admins, effectively bypassing the policy. In this case, where an
 extremely strict separation of policy managers vs. workspace practitioners is
-required, using [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets)
+required, using [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets)
 to only enforce the policy on non-development workspaces is more appropriate.
 
-[run-glossary]: /docs/glossary#run
+[run-glossary]: /terraform/docs/glossary#run
 
-[workspace-glossary]: /docs/glossary#workspace
+[workspace-glossary]: /terraform/docs/glossary#workspace
 
 ## Namespace: root
 
@@ -108,21 +108,21 @@ Specifies whether the plan is in refresh-only mode, which ignores configuration 
 
 ### Value: `replace_addrs`
 
-* **Value Type:** An array of strings representing [resource addresses](/cli/state/resource-addressing).
+* **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-replace`](/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-replace`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be undefined if no resource targets are specified.
 
 ### Value: `speculative`
 
 * **Value Type:** Boolean.
 
-Specifies whether the plan associated with the run is a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) only.
+Specifies whether the plan associated with the run is a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) only.
 
 ### Value: `target_addrs`
 
-* **Value Type:** An array of strings representing [resource addresses](/cli/state/resource-addressing).
+* **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be undefined if no resource targets are specified.
 
 To prohibit targeted runs altogether, make sure the `target_addrs` value is undefined or empty:
 
@@ -136,7 +136,7 @@ main = (length(tfrun.target_addrs) else 0) == 0
 
 * **Value Type:** A string-keyed map of values.
 
-Provides the names of the variables that are configured within the run and the [sensitivity](/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of the value.
+Provides the names of the variables that are configured within the run and the [sensitivity](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of the value.
 
 ```
 variables (map of keys)
@@ -147,7 +147,7 @@ variables (map of keys)
 
 ## Namespace: organization
 
-The **organization namespace** contains data associated with the current run's Terraform Cloud [organization](/cloud-docs/users-teams-organizations/organizations).
+The **organization namespace** contains data associated with the current run's Terraform Cloud [organization](/terraform/cloud-docs/users-teams-organizations/organizations).
 
 ### Value: `name`
 
@@ -207,7 +207,7 @@ This value can be `null`.
 
 * **Value Type:** Boolean.
 
-Contains the workspace's [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting.
+Contains the workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting.
 
 ### Value: `tags`
 
@@ -219,7 +219,7 @@ Contains the list of tag names for the workspace.
 
 * **Value Type:** String.
 
-Contains the configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace.
+Contains the configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace.
 
 This value can be `null`.
 
@@ -229,7 +229,7 @@ This value can be `null`.
 
 Contains data associated with a VCS repository connected to the workspace.
 
-Details regarding each attribute can be found in the documentation for the Terraform Cloud [Workspaces API](/cloud-docs/api-docs/workspaces).
+Details regarding each attribute can be found in the documentation for the Terraform Cloud [Workspaces API](/terraform/cloud-docs/api-docs/workspaces).
 
 This value can be `null`.
 
@@ -247,7 +247,7 @@ The **cost_estimation namespace** contains data associated with the current run'
 
 This namespace is only present if a cost estimate is available.
 
--> Cost estimation is disabled for runs using [resource targeting](/cli/commands/plan#resource-targeting), which may cause unexpected failures.
+-> Cost estimation is disabled for runs using [resource targeting](/terraform/cli/commands/plan#resource-targeting), which may cause unexpected failures.
 
 -> **Note:** Cost estimates are not available for Terraform 0.11.
 

@@ -30,7 +30,7 @@ page_title: Modules - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -40,7 +40,7 @@ page_title: Modules - API Docs - Terraform Cloud
 
 ## Terraform Cloud Registry Implementation
 
-The Terraform Cloud Module Registry implements the [Registry standard API](/registry/api-docs) for consuming/exposing private modules. Refer to the [Module Registry HTTP API](/registry/api-docs) to perform the following:
+The Terraform Cloud Module Registry implements the [Registry standard API](/terraform/registry/api-docs) for consuming/exposing private modules. Refer to the [Module Registry HTTP API](/terraform/registry/api-docs) to perform the following:
 
 - Browse available modules
 - Search modules by keyword
@@ -60,9 +60,9 @@ For publicly curated modules, the Terraform Cloud Module Registry acts as a prox
 The Terraform Cloud Module Registry endpoints differs from the Module Registry endpoints in the following ways:
 
 - The `:namespace` parameter should be replaced with the organization name for private modules.
-- The private module registry discovery endpoints have the path prefix provided in the [discovery document](/registry/api-docs#service-discovery) which is currently `/api/registry/v1`.
-- The public module registry discovery endpoints have the path prefix provided in the [discovery document](/registry/api-docs#service-discovery) which is currently `/api/registry/public/v1`.
-- [Authentication](/cloud-docs/api-docs#authentication) is handled the same as all other Terraform Cloud endpoints.
+- The private module registry discovery endpoints have the path prefix provided in the [discovery document](/terraform/registry/api-docs#service-discovery) which is currently `/api/registry/v1`.
+- The public module registry discovery endpoints have the path prefix provided in the [discovery document](/terraform/registry/api-docs#service-discovery) which is currently `/api/registry/public/v1`.
+- [Authentication](/terraform/cloud-docs/api-docs#authentication) is handled the same as all other Terraform Cloud endpoints.
 
 ### Sample Registry Request (private module)
 
@@ -113,7 +113,7 @@ Lists the modules that are available to a given organization. This includes the 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter            | Description                                                                                                                                                        |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -238,7 +238,7 @@ curl \
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
 
-Publishes a new registry private module from a VCS repository, with module versions managed automatically by the repository's tags. The publishing process will fetch all tags in the source repository that look like [SemVer](https://semver.org/) versions with optional 'v' prefix. For each version, the tag is cloned and the config parsed to populate module details (input and output variables, readme, submodules, etc.). The [Module Registry Requirements](/registry/modules/publish#requirements) define additional requirements on naming, standard module structure and tags for releases.
+Publishes a new registry private module from a VCS repository, with module versions managed automatically by the repository's tags. The publishing process will fetch all tags in the source repository that look like [SemVer](https://semver.org/) versions with optional 'v' prefix. For each version, the tag is cloned and the config parsed to populate module details (input and output variables, readme, submodules, etc.). The [Module Registry Requirements](/terraform/registry/modules/publish#requirements) define additional requirements on naming, standard module structure and tags for releases.
 
 | Status  | Response                                           | Reason                                                         |
 | ------- | -------------------------------------------------- | -------------------------------------------------------------- |
@@ -256,7 +256,7 @@ Properties without a default value are required.
 | --------------------------------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `data.type`                                   | string  |         | Must be `"registry-modules"`.                                                                                                                                    |
 | `data.attributes.vcs-repo.identifier`         | string  |         | The repository from which to ingress the configuration.                                                                                                          |
-| `data.attributes.vcs-repo.oauth-token-id`     | string  |         | The VCS Connection (OAuth Connection + Token) to use as identified. You can obtain this ID from the [oauth-tokens](/cloud-docs/api-docs/oauth-tokens) endpoint. |
+| `data.attributes.vcs-repo.oauth-token-id`     | string  |         | The VCS Connection (OAuth Connection + Token) to use as identified. You can obtain this ID from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint. |
 | `data.attributes.vcs-repo.display_identifier` | string  |         | The display identifier for the repository. For most VCS providers outside of BitBucket Cloud, this identifier matches the `data.attributes.vcs-repo.identifier` string.  |
 | `data.attributes.no-code`                     | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module. Not available in Terraform Enterprise.
 

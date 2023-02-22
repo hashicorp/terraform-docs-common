@@ -7,11 +7,11 @@ description: >-
 
 # Terraform Configurations in Terraform Cloud Workspaces
 
-[remote operations]: /cloud-docs/run/remote-operations
+[remote operations]: /terraform/cloud-docs/run/remote-operations
 
-[execution mode]: /cloud-docs/workspaces/settings#execution-mode
+[execution mode]: /terraform/cloud-docs/workspaces/settings#execution-mode
 
-[Terraform configuration]: /language
+[Terraform configuration]: /terraform/language
 
 Each Terraform Cloud workspace is associated with a particular [Terraform configuration][], which is expected to change and evolve over time.
 
@@ -25,16 +25,16 @@ In order to perform [remote Terraform runs][remote operations] for a given works
 
 There are two ways to provide configuration versions for a workspace:
 
-- **With a connected VCS repository.** Terraform Cloud can automatically fetch content from supported VCS providers, and uses webhooks to get notified of code changes. This is the most convenient way to use Terraform Cloud. See [The UI- and VCS-driven Run Workflow](/cloud-docs/run/ui) for more information.
+- **With a connected VCS repository.** Terraform Cloud can automatically fetch content from supported VCS providers, and uses webhooks to get notified of code changes. This is the most convenient way to use Terraform Cloud. See [The UI- and VCS-driven Run Workflow](/terraform/cloud-docs/run/ui) for more information.
 
-  A VCS connection can be configured [when a workspace is created](/cloud-docs/workspaces/creating), or later in its [version control settings](/cloud-docs/workspaces/settings/vcs).
+  A VCS connection can be configured [when a workspace is created](/terraform/cloud-docs/workspaces/creating), or later in its [version control settings](/terraform/cloud-docs/workspaces/settings/vcs).
 
-  -> **Note:** When a workspace is connected to a VCS repository, directly uploaded configuration versions can only be used for [speculative plans](/cloud-docs/run/remote-operations#speculative-plans). This helps ensure your VCS remains the source of truth for all real infrastructure changes.
+  -> **Note:** When a workspace is connected to a VCS repository, directly uploaded configuration versions can only be used for [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans). This helps ensure your VCS remains the source of truth for all real infrastructure changes.
 
 - **With direct uploads.** You can use a variety of tools to directly upload configuration content to Terraform Cloud:
 
-  - **Terraform CLI:** With the [CLI integration](/cli/cloud) configured, the `terraform plan` and `terraform apply` commands will perform remote runs by uploading a configuration from a local working directory. See [The CLI-driven Run Workflow](/cloud-docs/run/cli) for more information.
-  - **API:** Terraform Cloud's API can accept configurations as `.tar.gz` files, which can be uploaded by a CI system or other workflow tools. See [The API-driven Run Workflow](/cloud-docs/run/api) for more information.
+  - **Terraform CLI:** With the [CLI integration](/terraform/cli/cloud) configured, the `terraform plan` and `terraform apply` commands will perform remote runs by uploading a configuration from a local working directory. See [The CLI-driven Run Workflow](/terraform/cloud-docs/run/cli) for more information.
+  - **API:** Terraform Cloud's API can accept configurations as `.tar.gz` files, which can be uploaded by a CI system or other workflow tools. See [The API-driven Run Workflow](/terraform/cloud-docs/run/api) for more information.
 
   When configuration versions are provided via the CLI or API, Terraform Cloud can't automatically react to code changes in the underlying VCS repository.
 
@@ -46,8 +46,8 @@ Most organizations either keep each Terraform configuration in a separate reposi
 
 Terraform Cloud works well with either approach, but monorepos require some extra configuration:
 
-- Each workspace must [specify a Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory), so Terraform Cloud knows which configuration to use.
-- If the repository includes any shared Terraform modules, you must add those directories to the [automatic run triggering setting](/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for any workspace that uses those modules.
+- Each workspace must [specify a Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory), so Terraform Cloud knows which configuration to use.
+- If the repository includes any shared Terraform modules, you must add those directories to the [automatic run triggering setting](/terraform/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for any workspace that uses those modules.
 
 -> **Note:** If your organization does not have a strong preference, we recommend using separate repositories for each configuration and using the private module registry to share modules. This allows for faster module development, since you don't have to update every configuration that consumes a module at the same time as the module itself.
 
@@ -67,6 +67,6 @@ Once all runs using a particular configuration version are complete, Terraform C
 
 - **Created with a connected VCS repository.** Terraform Cloud will automatically archive VCS configuration versions once all runs are complete and re-fetch the configuration files from VCS as needed for new runs.
 
-- **Created with direct uploads via the API or CLI.** Terraform Cloud does not archive CLI and API configuration versions automatically, because it cannot re-fetch the files for new runs. However, you can use the [Archive a Configuration Version](/cloud-docs/api-docs/configuration-versions#archive-a-configuration-version) endpoint to archive them manually.
+- **Created with direct uploads via the API or CLI.** Terraform Cloud does not archive CLI and API configuration versions automatically, because it cannot re-fetch the files for new runs. However, you can use the [Archive a Configuration Version](/terraform/cloud-docs/api-docs/configuration-versions#archive-a-configuration-version) endpoint to archive them manually.
 
 For Terraform Enterprise customers upgrading from a previous version, the functionality has a backfill capability that will clean up space for historical runs in batches. In each organization, Terraform Enterprise archives a batch of 100 configurations each time a run completes or a new configuration version is uploaded. This will gradually free up existing object storage space over time.

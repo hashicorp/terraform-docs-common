@@ -7,9 +7,9 @@ description: Learn how to release a provider and publish it to the Terraform Reg
 
 Anyone can publish and share a provider by signing into the Registry using their GitHub account and following a few additional steps.
 
-This page describes how to prepare a [Terraform provider](/language/providers) for publishing, and how to publish a prepared provider using the Registry's interface.
+This page describes how to prepare a [Terraform provider](/terraform/language/providers) for publishing, and how to publish a prepared provider using the Registry's interface.
 
-> **Hands-on:** Try the [Release and Publish a Provider to the Terraform Registry](https://learn.hashicorp.com/tutorials/terraform/provider-release-publish?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial. In this tutorial, you create a release for your custom Terraform provider and prepare your provider to publish to the Terraform Registry.
+> **Hands-on:** Try the [Release and Publish a Provider to the Terraform Registry](/terraform/tutorials/providers/provider-release-publish?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial. In this tutorial, you create a release for your custom Terraform provider and prepare your provider to publish to the Terraform Registry.
 
 ## Preparing your Provider
 
@@ -17,7 +17,7 @@ This page describes how to prepare a [Terraform provider](/language/providers) f
 
 Providers published to the Terraform Registry are written and built in the same way as other Terraform providers. A variety of resources are available to help our contributors build a quality integration:
 
-> **Hands-on:** Try the [Call APIs with Terraform Providers](https://learn.hashicorp.com/collections/terraform/providers?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials to create a custom Terraform provider, complete with authentication and create/read/update/delete/import functionality.
+> **Hands-on:** Try the [Call APIs with Terraform Providers](/terraform/tutorials/providers?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials to create a custom Terraform provider, complete with authentication and create/read/update/delete/import functionality.
 
 - [How to build a provider – Video](https://www.youtube.com/watch?v=2BvpqmFpchI)
 - [Sample provider developed by a HashiCorp partner](https://blog.container-solutions.com/write-terraform-provider-part-1)
@@ -30,7 +30,7 @@ Providers published to the Terraform Registry are written and built in the same 
 
 ### Documenting your Provider
 
-Your provider should contain an overview document (index.md), as well as a doc for each resource and data-source. See [Documenting Providers](/registry/providers/docs) for details about generating documentation and how to ensure your provider documentation renders properly on the Terraform Registry.
+Your provider should contain an overview document (index.md), as well as a doc for each resource and data-source. See [Documenting Providers](/terraform/registry/providers/docs) for details about generating documentation and how to ensure your provider documentation renders properly on the Terraform Registry.
 
 -> **Note:** In order to test how documents will render in the Terraform Registry, you can use the [Terraform Registry Doc Preview Tool](https://registry.terraform.io/tools/doc-preview).
 
@@ -54,10 +54,10 @@ It supports the following fields:
 | Field                        | Purpose                                                                                                                                                                                                                                                                                                                        |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `metadata`                   | Object containing additional data to be associated with a release.                                                                                                                                                                                                                                                             |
-| `metadata.protocol_versions` | List of strings with supported Terraform protocol versions of the provider. Providers developed using [Terraform Plugin SDK version 2](/plugin/sdkv2) should set this field to `["5.0"]`. Providers developed using [Terraform Plugin Framework](/plugin/framework) should set this field to `["6.0"]` unless the Framework is [explicitly configured for protocol version 5](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-framework/providerserver#ServeOpts.ProtocolVersion). Defaults to `["5.0"]`. |
+| `metadata.protocol_versions` | List of strings with supported Terraform protocol versions of the provider. Providers developed using [Terraform Plugin SDK version 2](/terraform/plugin/sdkv2) should set this field to `["5.0"]`. Providers developed using [Terraform Plugin Framework](/terraform/plugin/framework) should set this field to `["6.0"]` unless the Framework is [explicitly configured for protocol version 5](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-framework/providerserver#ServeOpts.ProtocolVersion). Defaults to `["5.0"]`. |
 | `version`                    | Numeric version of the manifest format, not the version of your provider. Set this to `1`.                                                                                                                                                                                                                                     |
 
-~> **Important:** If developing a provider using [Terraform Plugin Framework](/plugin/framework), ensure the protocol versions are set to `["6.0"]` or practitioners will receive errors when attempting to use the provider.
+~> **Important:** If developing a provider using [Terraform Plugin Framework](/terraform/plugin/framework), ensure the protocol versions are set to `["6.0"]` or practitioners will receive errors when attempting to use the provider.
 
 ### Creating a GitHub Release
 
@@ -65,7 +65,7 @@ Publishing a provider requires at least one version be available on GitHub Relea
 
 Terraform CLI and the Terraform Registry follow the Semantic Versioning specification when detecting a valid version, sorting versions, solving version constraints, and choosing the latest version. Prerelease versions are supported (available if explicitly defined but not chosen automatically) with a hyphen (-) delimiter, such as `v1.2.3-pre`.
 
-We have a list of [recommend OS / architecture combinations](/registry/providers/os-arch) for which we suggest most providers create binaries.
+We have a list of [recommend OS / architecture combinations](/terraform/registry/providers/os-arch) for which we suggest most providers create binaries.
 
 ~> **Important:** Avoid modifying or replacing an already-released version of a provider, as this will cause checksum errors for users when attempting to download the plugin. Instead, if changes are necessary, please release as a new version.
 
@@ -121,7 +121,7 @@ You can manually create the required assets by following these requirements or e
 
 ### Signing in
 
-Before publishing a provider, you must first sign in to the Terraform Registry with a GitHub account (see [the "User Account" section of the overview page](/registry#user-account)). The GitHub account used must have the following permission scopes on the provider repository you’d like to publish. Permissions can be verified by going to your [GitHub Settings](https://github.com/settings/applications) and selecting the Terraform Registry Application under Authorized OAuth Apps.
+Before publishing a provider, you must first sign in to the Terraform Registry with a GitHub account (see [the "User Account" section of the overview page](/terraform/registry#user-account)). The GitHub account used must have the following permission scopes on the provider repository you’d like to publish. Permissions can be verified by going to your [GitHub Settings](https://github.com/settings/applications) and selecting the Terraform Registry Application under Authorized OAuth Apps.
 
 ![screenshot: terraform registry github oauth required permissions](/img/docs/github-oauth-permissions.png)
 

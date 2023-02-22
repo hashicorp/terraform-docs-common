@@ -30,7 +30,7 @@ page_title: Workspace Resources - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -42,7 +42,7 @@ page_title: Workspace Resources - API Docs - Terraform Cloud
 
 | Parameter       | Description                                                                                                                                                                                                      |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to retrieve resources from. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [show workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to retrieve resources from. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [show workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 | Status  | Response                                    | Reason                                                      |
 | ------- | ------------------------------------------- | ----------------------------------------------------------- |
@@ -51,7 +51,7 @@ page_title: Workspace Resources - API Docs - Terraform Cloud
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                         |
 | -------------- | ----------------------------------------------------------------------------------- |
@@ -60,7 +60,7 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 
 ### Permissions
 
-To list resources the user must have permission to read resources for the specified workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+To list resources the user must have permission to read resources for the specified workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
