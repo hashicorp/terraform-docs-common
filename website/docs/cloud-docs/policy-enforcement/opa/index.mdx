@@ -9,7 +9,7 @@ description: Use the Rego policy language to define Open Policy Agent (OPA) poli
 -> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing). OPA policies are not available in Terraform Enterprise.
 
 Policies are rules that Terraform Cloud enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
-OPA Policies are run in [Terraform Cloud Agents](/terraform/cloud-docs/api-docs/agents) and are supported in version 1.4.0 and higher.
+OPA Policies are evaluated in [Terraform Cloud Agents](/terraform/cloud-docs/api-docs/agents) and requires Terraform Cloud Agent version 1.4.0 and higher.
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorial.
 
