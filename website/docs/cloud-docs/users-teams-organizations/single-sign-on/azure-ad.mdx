@@ -92,3 +92,17 @@ If you plan to make use of SAML to set usernames in your Microsoft Azure AD appl
    We recommend naming the claim "Username", leaving the namespace blank, and sourcing something like `user.displayname` or `user.mailnickname`.
 
 If you namespaced any of your claims, note that the attribute name passed by Microsoft Azure AD will follow the form `<claim_namespace/claim_name>`. Consider this when setting Team and Username attribute names.
+
+## Example For Team sync from AzureAd to TFC teams
+
+To create group whose all members have access to some specific team of SSO with specific privileges :-
+1. In the Azure portal, Create groups with any name and add members as per requirment .
+1. Go to Single Sign-On tab and inside **Attributes & Claims** , Add a **GroupClaim** with name **MemberOf** .
+1. Go to Terraform Cloud application and then select user & groups and then go insde required group , and copy the ObjectID form overview page . this we will use as SSO ID in next section .
+
+## Configuration (Terraform Cloud)
+1. In **Terraform Cloud portal** , create new team with required privileges , and paste the copied Object ID inside **SSO ID** tab inside team .
+1. Now login with one of the member user of azure group in TFC via SSO , that user will have spceific provileges as mentioend in TFC organization-teams.
+
+By above eaxample, the SSO user will be attached to secific team by defaut with desired permissions on TFC .
+
