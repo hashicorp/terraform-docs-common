@@ -37,6 +37,9 @@
         "path": "api-docs/cost-estimates"
       },
       { "title": "Feature Sets", "path": "api-docs/feature-sets" },
+      { "title": "GitHub App", "routes": [
+        { "title": "Installations", "path": "api-docs/github-app/installations" }
+      ] },
       { "title": "Invoices", "path": "api-docs/invoices" },
       { "title": "IP Ranges", "path": "api-docs/ip-ranges" },
       {
@@ -335,13 +338,13 @@
   {
     "title": "No-Code Provisioning",
     "routes": [
-      { 
+      {
         "title": "Designing No-Code Ready Modules",
-        "path": "no-code-provisioning/module-design" 
+        "path": "no-code-provisioning/module-design"
       },
-      { 
+      {
         "title": "Provisioning No-Code Infrastructure",
-        "path": "no-code-provisioning/provisioning" 
+        "path": "no-code-provisioning/provisioning"
       }
     ]
   },
