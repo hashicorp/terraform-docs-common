@@ -135,3 +135,30 @@ Protect your tokens carefully because they contain the same permissions as your 
 To revoke a token, click the **trash can** next to it. That token will no longer be able to authenticate as your user account.
 
 -> **Note**: When SAML SSO is enabled there is a session timeout for user API tokens, forcing users to periodically reauthenticate through the web UI in order to keep their tokens active. Refer to [API Token Expiration](/terraform/enterprise/saml/login#api-token-expiration) for details.
+
+
+### GitHub App OAuth Token
+
+Click **Tokens** in the sidebar to manage your GitHub App token. This token is required for tasks such as connecting workspaces to an available GitHub App installation.
+
+~> **Important:** Only a Terraform Cloud User can own a GitHub App token. Team and Organization API tokens are not able to own a GitHub App token.
+
+A GitHub App token is required for the following tasks:
+- Connecting workspaces, policy sets, and registry modules to a GitHub App installation with the [Terraform Cloud API](/terraform/cloud-docs/api-docs) and UI.
+- View available GitHub App installations with the [Terraform Cloud API](/terraform/cloud-docs/api-docs) and UI.
+
+After generating this token, you will be able to view information about your available installations for the Terraform Cloud GitHub App.
+
+#### Creating a GitHub App token
+
+To create a GitHub App token, click **Create a GitHub App token**. The **GitHub App authorization pop-up window** appears requesting authorization of the Terraform Cloud GitHub App.
+
+~> **Note:** This does not grant Terraform Cloud access to repositories.
+
+#### Revoking the GitHub App token
+
+To revoke the GitHub App token, click the **three dot context menu**. **The dropdown menu** appears. Click the **Delete Token** option. The token is revoked and you can no longer view GitHub App installations.
+
+#### Additional Resources
+
+- [GitHub App permissions in Terraform Cloud](/terraform/cloud-docs/vcs/github-app#github-permissions)
