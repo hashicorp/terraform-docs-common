@@ -42,7 +42,7 @@ GitHub App installations are created in Terraform Cloud UI by user interation. [
 
 ## List Installations
 
-This endpoint lists GitHub App installations accessible to the current User.
+This endpoint lists GitHub App installations available to the current User.
 
 `GET /github-app/installations`
 
@@ -50,15 +50,15 @@ This endpoint lists GitHub App installations accessible to the current User.
 
 | Parameter                               | Description                                                                                                                                             |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `filter[name]`                          | **Optional.** If present, returns a list of accessible GitHub App installations that match the GitHub organization or login                             |
-| `filter[installation_id]`               | **Optional.** If present, returns a list of accessible GitHub APp installations that match the installation id within GitHub. (**Not Terraform Cloud**) |
+| `filter[name]`                          | **Optional.** If present, returns a list of available GitHub App installations that match the GitHub organization or login.                             |
+| `filter[installation_id]`               | **Optional.** If present, returns a list of available GitHub APp installations that match the installation id within GitHub. (**Not Terraform Cloud**) |
 
 -> **Note:** Only GitHub App Installations the current user has access to within GitHub will return.
 
 ### Sample Request
 
 ```shell
-$ curl |
+$ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/github-app/installations
@@ -96,7 +96,7 @@ $ curl |
 ### Sample Request
 
 ```shell
-$ curl |
+$ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/github-app/installation/ghain-R4xmKTaxnhLFioUq
