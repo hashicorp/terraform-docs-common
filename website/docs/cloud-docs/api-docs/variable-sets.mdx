@@ -265,36 +265,73 @@ curl \
 ```json
 {
   "data": {
-      "id": "varset-fx2wP5purw37wbFz",
-      "type": "varsets",
-      "attributes": {
-          "name": "MyVarset",
-          "description": "Full of Terraform input variables (aka vars) and environment variables for reuse.",
-          "global": true,
-          "updated-at": "2022-07-08T18:38:17.380Z",
-          "var-count": 2,
-          "workspace-count": 0
+    "id": "varset-kjkN545LH2Sfercv",
+    "type": "varsets",
+    "attributes": {
+      "name": "MyVarset",
+      "description": "Full of vars and such for mass reuse",
+      "global": false,
+      "updated-at": "2023-03-06T21:48:33.588Z",
+      "var-count": 5,
+      "workspace-count": 2,
+      "project-count": 2
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        }
       },
-      "relationships": {
-          "organization": {
-              "data": {
-                  "id": "hashicorp",
-                  "type": "organizations"
-              }
+      "vars": {
+        "data": [
+          {
+            "id": "var-mMqadSCxZtrQJAv8",
+            "type": "vars"
           },
-          "vars": {
-              "data": [
-                  {
-                      "id": "var-kFW8M9gJ1pBYobSx",
-                      "type": "vars"
-                  },
-                  {
-                      "id": "var-XmEvinZu9nMxUoNt",
-                      "type": "vars"
-                  }
-              ]
+          {
+            "id": "var-hFxUUKSk35QMsRVH",
+            "type": "vars"
+          },
+          {
+            "id": "var-fkd6N48tXRmoaPxH",
+            "type": "vars"
+          },
+          {
+            "id": "var-abcbBMBMWcZw3WiV",
+            "type": "vars"
+          },
+          {
+            "id": "var-vqvRKK1ZoqQCiMwN",
+            "type": "vars"
           }
+        ]
+      },
+      "workspaces": {
+        "data": [
+          {
+            "id": "ws-UohFdKAHUGsQ8Dtf",
+            "type": "workspaces"
+          },
+          {
+            "id": "ws-XhGhaaCrsx9ATson",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "projects": {
+        "data": [
+          {
+            "id": "prj-1JMwvPHFsdpsPhnt",
+            "type": "projects"
+          },
+          {
+            "id": "prj-SLDGqbYqELXE1obp",
+            "type": "projects"
+          }
+        ]
       }
+    }
   }
 }
 ```
@@ -305,26 +342,35 @@ List all variable sets for an organization.
 
 `GET organizations/:organization_name/varsets`
 
-| Parameter            | Description                                            |
-| -------------------- | ------------------------------------------------------ |
-| `:organization_name` | The name of the organization the workspace belongs to. |
+| Parameter            | Description                                              |
+|----------------------|----------------------------------------------------------|
+| `:organization_name` | The name of the organization the variable sets belong to |
 
-List all variable sets for a workspace.
+List all variable sets for a project. This includes global variable sets from the project's organization.
+
+`GET projects/:project_id/varsets`
+
+| Parameter     | Description    |
+|---------------|----------------|
+| `:project_id` | The project ID |
+
+List all variable sets for a workspace. This includes global variable sets from the workspace's organization and variable sets
+attached to the workspace's parent project.
 
 `GET workspaces/:workspace_id/varsets`
 
 | Parameter       | Description      |
-| --------------- | ---------------- |
+|-----------------|------------------|
 | `:workspace_id` | The workspace ID |
 
 ### Query Parameters
 
-Both of the endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+All of the list endpoints support pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter                 | Description                                                                  |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `page[number]`            | **Optional.** If omitted, the endpoint returns the first page.           |
-| `page[size]`              | **Optional.** If omitted, the endpoint returns 20 varsets per page.       |
+| Parameter      | Description                                                         |
+|----------------|---------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint returns the first page.      |
+| `page[size]`   | **Optional.** If omitted, the endpoint returns 20 varsets per page. |
 
 ### Sample Response
 
@@ -332,59 +378,90 @@ Both of the endpoints support pagination [with standard URL query parameters](/t
 {
   "data": [
     {
-      "id": "varset-mio9UUFyFMjU33S4",
+      "id": "varset-kjkN545LH2Sfercv",
       "type": "varsets",
-      "attributes":  {
-         "name": "varset-b7af6a77",
-         "description": "Full of vars and such for mass reuse",
-         "global": false,
-         "updated-at": "2021-10-29T17:15:56.722Z",
-         "var-count":  5,
-         "workspace-count": 2
+      "attributes": {
+        "name": "MyVarset",
+        "description": "Full of vars and such for mass reuse",
+        "global": false,
+        "updated-at": "2023-03-06T21:48:33.588Z",
+        "var-count": 5,
+        "workspace-count": 2,
+        "project-count": 2
       },
       "relationships": {
         "organization": {
-          "data": {"id": "organization_1", "type": "organizations"}
+          "data": {
+            "id": "hashicorp",
+            "type": "organizations"
+          }
         },
         "vars": {
           "data": [
-           {"id": "var-abcd12345", "type": "vars"},
-           {"id": "var-abcd12346", "type": "vars"},
-           {"id": "var-abcd12347", "type": "vars"},
-           {"id": "var-abcd12348", "type": "vars"},
-           {"id": "var-abcd12349", "type": "vars"}
+            {
+              "id": "var-mMqadSCxZtrQJAv8",
+              "type": "vars"
+            },
+            {
+              "id": "var-hFxUUKSk35QMsRVH",
+              "type": "vars"
+            },
+            {
+              "id": "var-fkd6N48tXRmoaPxH",
+              "type": "vars"
+            },
+            {
+              "id": "var-abcbBMBMWcZw3WiV",
+              "type": "vars"
+            },
+            {
+              "id": "var-vqvRKK1ZoqQCiMwN",
+              "type": "vars"
+            }
           ]
         },
         "workspaces": {
           "data": [
-           {"id": "ws-abcd12345", "type": "workspaces"},
-           {"id": "ws-abcd12346", "type": "workspaces"}
+            {
+              "id": "ws-UohFdKAHUGsQ8Dtf",
+              "type": "workspaces"
+            },
+            {
+              "id": "ws-XhGhaaCrsx9ATson",
+              "type": "workspaces"
+            }
           ]
         },
         "projects": {
           "data": [
-           {"id": "prj-abcd12345", "type": "projects"},
-           {"id": "prj-abcd12346", "type": "projects"}
+            {
+              "id": "prj-1JMwvPHFsdpsPhnt",
+              "type": "projects"
+            },
+            {
+              "id": "prj-SLDGqbYqELXE1obp",
+              "type": "projects"
+            }
           ]
         }
       }
     }
   ],
   "links": {
-    "self": "app.terrafor.io/app/my_organization/varsets",
-    "first": "app.terrafor.io/app/my_organization/varsets?page=1",
+    "self": "https://app.terraform.io/api/v2/organizations/hashicorp/varsets?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/organizations/hashicorp/varsets?page%5Bnumber%5D=1&page%5Bsize%5D=20",
     "prev": null,
     "next": null,
-    "last": "app.terrafor.io/app/my_organization/varsets?page=1"
+    "last": "https://app.terraform.io/api/v2/organizations/hashicorp/varsets?page%5Bnumber%5D=1&page%5Bsize%5D=20"
   },
   "meta": {
     "pagination": {
       "current-page": 1,
-      "next-page": null,
       "page-size": 20,
       "prev-page": null,
-      "total-count": 1,
-      "total-pages": 1
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
     }
   }
 }
