@@ -37,9 +37,7 @@
         "path": "api-docs/cost-estimates"
       },
       { "title": "Feature Sets", "path": "api-docs/feature-sets" },
-      { "title": "GitHub App", "routes": [
-        { "title": "Installations", "path": "api-docs/github-app/installations" }
-      ] },
+      { "title": "GitHub App Installations", "path": "api-docs/github-app/installations"},
       { "title": "Invoices", "path": "api-docs/invoices" },
       { "title": "IP Ranges", "path": "api-docs/ip-ranges" },
       {
