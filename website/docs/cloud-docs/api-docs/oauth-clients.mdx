@@ -30,7 +30,7 @@ page_title: OAuth Clients - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -55,7 +55,7 @@ This endpoint allows you to list VCS connections between an organization and a V
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                   |
 | -------------- | ----------------------------------------------------------------------------- |
@@ -183,7 +183,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                                                                                          |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization that will be connected to the VCS provider. The organization must already exist in the system, and the user must have permission to manage VCS settings. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) |
+| `:organization_name` | The name of the organization that will be connected to the VCS provider. The organization must already exist in the system, and the user must have permission to manage VCS settings. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -412,7 +412,7 @@ curl \
 
 ### Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name  | Description                              |
 | -------------- | ---------------------------------------- |

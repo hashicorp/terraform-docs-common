@@ -6,13 +6,13 @@ page_title: Notifications - Workspaces - Terraform Cloud
 
 Terraform Cloud can use webhooks to notify external systems about run progress and other events. Each workspace has its own notification settings and can notify up to 20 destinations.
 
--> **Note:** Workspaces configured with `Local` [execution mode](/cloud-docs/workspaces/settings#execution-mode) do not support notifications.
+-> **Note:** Workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) do not support notifications.
 
-Configuring notifications requires admin access to the workspace. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
+Configuring notifications requires admin access to the workspace. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
--> **API:** Refer to [Notification Configuration APIs](/cloud-docs/api-docs/notification-configurations).
+-> **API:** Refer to [Notification Configuration APIs](/terraform/cloud-docs/api-docs/notification-configurations).
 
 ## Viewing and Managing Notification Settings
 
@@ -37,17 +37,17 @@ A notification configuration specifies a destination URL, a payload type, and th
 <!-- BEGIN: TFC:only name:health-assessments -->
 
 - **Workspace Events**: Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if you enable [health assessments](/cloud-docs/workspaces/health) for the workspace.
+  - **Drift**: Terraform Cloud detected configuration drift. This notification is only available if you enable [health assessments](/terraform/cloud-docs/workspaces/health) for the workspace.
   - **Check Failure:** Terraform Cloud detected one or more failed continuous validation checks. This notification is only available if you enable health assessments for the workspace.
-  - **Health Assessment Fail**: A health assessment failed. This notification is only available if you enable health assessments for the workspace. Health assessments fail when Terraform Cloud cannot perform drift detection, continuous validation, or both. The notification does not specify the cause of the failure, but you can use the [Assessment Result](/cloud-docs/api-docs/assessment-results) logs to help diagnose the issue.
+  - **Health Assessment Fail**: A health assessment failed. This notification is only available if you enable health assessments for the workspace. Health assessments fail when Terraform Cloud cannot perform drift detection, continuous validation, or both. The notification does not specify the cause of the failure, but you can use the [Assessment Result](/terraform/cloud-docs/api-docs/assessment-results) logs to help diagnose the issue.
 
 <!-- END:   TFC:only name:health-assessments -->
 
 - **Run Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
-  - **Created**: A run begins and enters the [Pending stage](/enterprise/run/states#the-pending-stage).
+  - **Created**: A run begins and enters the [Pending stage](/terraform/enterprise/run/states#the-pending-stage).
   - **Planning**: A run acquires the lock and starts to execute.
-  - **Needs Attention**: A plan has changes and Terraform requires user input to continue. This event may include approving the plan or a [policy override](/enterprise/run/states#the-policy-check-stage).
-  - **Applying**: A run enters the [Apply stage](/enterprise/run/states#the-apply-stage), where Terraform makes the infrastructure changes described in the plan.
+  - **Needs Attention**: A plan has changes and Terraform requires user input to continue. This event may include approving the plan or a [policy override](/terraform/enterprise/run/states#the-policy-check-stage).
+  - **Applying**: A run enters the [Apply stage](/terraform/enterprise/run/states#the-apply-stage), where Terraform makes the infrastructure changes described in the plan.
   - **Completed**: A run completed successfully.
   - **Errored**: A run terminated early due to error or cancellation.
 
@@ -99,13 +99,13 @@ Email notifications will contain the following information:
 
 A generic notification will contain information about a run and its state at the time the triggering event occurred. The complete generic notification payload is described in the [API documentation][generic-payload].
 
-[generic-payload]: /cloud-docs/api-docs/notification-configurations#notification-payload
+[generic-payload]: /terraform/cloud-docs/api-docs/notification-configurations#notification-payload
 
 Some of the values in the payload can be used to retrieve additional information through the API, such as:
 
-- The [run ID](/cloud-docs/api-docs/run#get-run-details)
-- The [workspace ID](/cloud-docs/api-docs/workspaces#list-workspaces)
-- The [organization name](/cloud-docs/api-docs/organizations#show-an-organization)
+- The [run ID](/terraform/cloud-docs/api-docs/run#get-run-details)
+- The [workspace ID](/terraform/cloud-docs/api-docs/workspaces#list-workspaces)
+- The [organization name](/terraform/cloud-docs/api-docs/organizations#show-an-organization)
 
 ## Notification Authenticity
 
@@ -113,4 +113,4 @@ Some of the values in the payload can be used to retrieve additional information
 
 Slack notifications use Slack's own protocols for verifying Terraform Cloud's webhook requests.
 
-Generic notifications can include a signature for verifying the request. For notification configurations that include a secret token, Terraform Cloud's webhook requests will include an `X-TFE-Notification-Signature` header, which contains an HMAC signature computed from the token using the SHA-512 digest algorithm. The receiving service is responsible for validating the signature. More information, as well as an example of how to validate the signature, can be found in the [API documentation](/cloud-docs/api-docs/notification-configurations#notification-authenticity).
+Generic notifications can include a signature for verifying the request. For notification configurations that include a secret token, Terraform Cloud's webhook requests will include an `X-TFE-Notification-Signature` header, which contains an HMAC signature computed from the token using the SHA-512 digest algorithm. The receiving service is responsible for validating the signature. More information, as well as an example of how to validate the signature, can be found in the [API documentation](/terraform/cloud-docs/api-docs/notification-configurations#notification-authenticity).

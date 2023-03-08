@@ -4,19 +4,19 @@ page_title: SSH Keys for Cloning Modules - Workspaces - Terraform Cloud
 
 # Using SSH Keys for Cloning Modules
 
-Terraform configurations can pull in Terraform modules from [a variety of different sources](/language/modules/sources), and private Git repositories are a common source for private modules.
+Terraform configurations can pull in Terraform modules from [a variety of different sources](/terraform/language/modules/sources), and private Git repositories are a common source for private modules.
 
--> **Note:** The [private module registry](/cloud-docs/registry) is an easier way to manage private Terraform modules in Terraform Cloud, and doesn't require setting SSH keys for workspaces. The rest of this page only applies to configurations that fetch modules directly from a private Git repository.
+-> **Note:** The [private module registry](/terraform/cloud-docs/registry) is an easier way to manage private Terraform modules in Terraform Cloud, and doesn't require setting SSH keys for workspaces. The rest of this page only applies to configurations that fetch modules directly from a private Git repository.
 
 To access a private Git repository, Terraform either needs login credentials (for HTTPS access) or an SSH key. Terraform Cloud can store private SSH keys centrally, and you can easily use them in any workspace that clones modules from a Git server.
 
--> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/cloud-docs/vcs#ssh-keys).
+-> **Note:** SSH keys for cloning Terraform modules from Git repos are only used during Terraform runs. They are managed separately from any [keys used for bringing VCS content into Terraform Cloud](/terraform/cloud-docs/vcs#ssh-keys).
 
 Terraform Cloud manages SSH keys used to clone Terraform modules at the organization level, and allows multiple keys to be added for the organization. You can add or delete keys via the organization's settings. Once a key is uploaded, the text of the key is not displayed to users.
 
 To assign a key to a workspace, go to its settings and choose a previously added key from the drop-down menu on Integrations under "SSH Key". Each workspace can only use one SSH key.
 
--> **API:** See the [SSH Keys API](/cloud-docs/api-docs/ssh-keys) and [Assign an SSH Key to a Workspace endpoint](/cloud-docs/api-docs/workspaces#assign-an-ssh-key-to-a-workspace). <br/>
+-> **API:** See the [SSH Keys API](/terraform/cloud-docs/api-docs/ssh-keys) and [Assign an SSH Key to a Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#assign-an-ssh-key-to-a-workspace). <br/>
 **Terraform:** See the `tfe` provider's [`tfe_ssh_key`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/ssh_key) resource.
 
 ## Adding Keys

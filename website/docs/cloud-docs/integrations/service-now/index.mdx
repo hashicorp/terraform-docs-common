@@ -16,7 +16,7 @@ Items, create workspaces, and perform Terraform runs using prepared Terraform
 configurations hosted in VCS repositories.
 
 -> **Note:** The v1.x integration is deprecated, but documentation for existing
-installations can be found [here](/cloud-docs/integrations/service-now/service-now-v1)
+installations can be found [here](/terraform/cloud-docs/integrations/service-now/service-now-v1)
 
 -> **Note:** The ServiceNow Catalog integration is supported with Terraform
 Enterprise or the Terraform Cloud Business Tier. This documentation uses
@@ -71,7 +71,7 @@ To start using Terraform with the ServiceNow Catalog Integration, you must have:
   Terraform Cloud organization.
 - An administrator account on your ServiceNow instance.
 - One or more [supported version control
-  systems](/cloud-docs/vcs#supported-vcs-providers) (VCSs) with read access
+  systems](/terraform/cloud-docs/vcs#supported-vcs-providers) (VCSs) with read access
   to repositories with Terraform configurations.
 
 You can use this integration on the following ServiceNow server versions:
@@ -93,20 +93,20 @@ perform the following steps to configure and gather information from Terraform
 Cloud.
 
 1. Either [create an
-   organization](/cloud-docs/users-teams-organizations/organizations#creating-organizations)
+   organization](/terraform/cloud-docs/users-teams-organizations/organizations#creating-organizations)
    or choose an existing organization where ServiceNow will create new
    workspaces.
    **Save the organization name for later.**
-1. [Create a team](/cloud-docs/users-teams-organizations/teams) for that
+1. [Create a team](/terraform/cloud-docs/users-teams-organizations/teams) for that
    organization called "ServiceNow", and ensure that it has [permission to
    manage
-   workspaces](/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only).
+   workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only).
    You do not need to add any users to this team.
    [permissions-citation]: #intentionally-unused---keep-for-maintainers
 1. On the "ServiceNow" team's settings page, generate a [team API
-   token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+   token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
    **Save the team API token for later.**
-1. If you haven't yet done so, [connect a VCS provider](/cloud-docs/vcs) to
+1. If you haven't yet done so, [connect a VCS provider](/terraform/cloud-docs/vcs) to
    this Terraform organization. This provider will include one or more
    repositories with Terraform configurations. Any repository that could be
    connected to a manually-created Terraform Cloud workspace can also be
@@ -213,21 +213,21 @@ Now that you have connected ServiceNow to Terraform Cloud, you are ready to
 create a Service Catalog using the VCS repositories provided by the Terraform
 Admin.
 
-Navigate to the [Service Catalog documentation](/cloud-docs/integrations/service-now/service-catalog) to
+Navigate to the [Service Catalog documentation](/terraform/cloud-docs/integrations/service-now/service-catalog) to
 begin. You can also refer to this documentation whenever you need to add or
 update request items.
 
 ### ServiceNow Developer Reference
 
 ServiceNow developers who wish to customize the Terraform integration can refer
-to the [developer documentation](/cloud-docs/integrations/service-now/developer-reference).
+to the [developer documentation](/terraform/cloud-docs/integrations/service-now/developer-reference).
 
 ### ServiceNow Administrator's Guide.
 
-Refer to the [ServiceNow Administrator documentation](/cloud-docs/integrations/service-now/admin-guide) for
+Refer to the [ServiceNow Administrator documentation](/terraform/cloud-docs/integrations/service-now/admin-guide) for
 information about configuring the integration.
 
 ### Example Customizations
 
 Once the ServiceNow integration is installed, you can consult the [example
-customizations documentation](/cloud-docs/integrations/service-now/example-customizations).
+customizations documentation](/terraform/cloud-docs/integrations/service-now/example-customizations).

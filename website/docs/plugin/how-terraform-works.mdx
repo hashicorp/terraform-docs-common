@@ -30,7 +30,7 @@ and hosted at github.com/hashicorp/terraform.
 - Infrastructure as code: reading and interpolating configuration files and
   modules
 - Resource state management
-- Construction of the [Resource Graph](/internals/graph)
+- Construction of the [Resource Graph](/terraform/internals/graph)
 - Plan execution
 - Communication with plugins over RPC
 
@@ -64,7 +64,7 @@ their type.
 
 ~> **Advanced topic:** This section describes Terraform's plugin discovery
 behavior at the level of detail a plugin developer might need. For instructions
-suited to normal Terraform use, see [Configuring Providers](/language/providers/configuration).
+suited to normal Terraform use, see [Configuring Providers](/terraform/language/providers/configuration).
 
 When `terraform init` is run, Terraform reads configuration files in the working
 directory to determine which plugins are necessary, searches for installed
@@ -76,16 +76,16 @@ again.
 ### Plugin Locations
 
 The [Terraform CLI
-docs](/cli/config/config-file#provider-installation)
+docs](/terraform/cli/config/config-file#provider-installation)
 have up-to-date and detailed information about where Terraform looks for plugin
 binaries as part of `terraform init`. Consult that documentation for
 [information on where to place binaries during
-development](/cli/config/config-file#development-overrides-for-provider-developers).
+development](/terraform/cli/config/config-file#development-overrides-for-provider-developers).
 
 ### Selecting Plugins
 
 After locating any installed plugins, `terraform init` compares them to the
-configuration's [version constraints](/language/providers/configuration#provider-versions)
+configuration's [version constraints](/terraform/language/providers/configuration#provider-versions)
 and chooses a version for each plugin as follows:
 
 - If any acceptable versions are installed, Terraform uses the newest
@@ -93,7 +93,7 @@ and chooses a version for each plugin as follows:
   [Terraform Registry](https://registry.terraform.io/)
   has a newer acceptable version).
 - If no acceptable versions are installed and the plugin is one of the
-  [providers distributed by HashiCorp](/language/providers), Terraform
+  [providers distributed by HashiCorp](/terraform/language/providers), Terraform
   downloads the newest acceptable version from the [Terraform Registry](https://registry.terraform.io/)
   and saves it in a subdirectory under `.terraform/providers/`.
 - If no acceptable versions are installed and the plugin is not distributed in

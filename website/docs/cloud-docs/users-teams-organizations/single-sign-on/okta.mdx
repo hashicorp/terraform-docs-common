@@ -45,15 +45,15 @@ Be sure to copy the metadata URL (from the final step of configuring Okta) befor
 
    ![sso-wizard-configure-settings-okta](/img/docs/wizard-configure-settings-okta.png)
 
-1. [Verify](/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
+1. [Verify](/terraform/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
 
-1. Your Okta SSO configuration is complete and ready to [use](/cloud-docs/users-teams-organizations/single-sign-on#signing-in-with-sso).
+1. Your Okta SSO configuration is complete and ready to [use](/terraform/cloud-docs/users-teams-organizations/single-sign-on#signing-in-with-sso).
 
    ![sso-settings](/img/docs/settings-okta.png)
 
 ## Team Mapping Configuration (Okta)
 
-Terraform Cloud can automatically add users to teams based on their SAML assertion, so you can manage team membership in your directory service. To do this, you must specify the `MemberOf` SAML attribute, and make sure the AttributeStatement in the SAML Response contains a list of AttributeValue items in the correct format (i.e., comma-separated list of team names). For additional details on this and other SSO concepts within the context of Terraform Cloud, please refer to [this](/cloud-docs/users-teams-organizations/single-sign-on) overview page.
+Terraform Cloud can automatically add users to teams based on their SAML assertion, so you can manage team membership in your directory service. To do this, you must specify the `MemberOf` SAML attribute, and make sure the AttributeStatement in the SAML Response contains a list of AttributeValue items in the correct format (i.e., comma-separated list of team names). For additional details on this and other SSO concepts within the context of Terraform Cloud, please refer to [this](/terraform/cloud-docs/users-teams-organizations/single-sign-on) overview page.
 
 If you haven't yet completed all steps outlined in the [Configuration (Okta)](#configuration-okta-) section above, please do so before proceeding.
 

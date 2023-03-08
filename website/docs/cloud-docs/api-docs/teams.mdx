@@ -30,7 +30,7 @@ page_title: Teams - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -38,15 +38,15 @@ page_title: Teams - API Docs - Terraform Cloud
 
 -> **Note:** Team management is a paid feature, available as part of the **Team** upgrade package. Single sign-on is also a paid feature, available as part of the **Business** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-The Teams API is used to create, edit, and destroy teams as well as manage a team's organization-level permissions. The [Team Membership API](/cloud-docs/api-docs/team-members) is used to add or remove users from a team. Use the [Team Access API](/cloud-docs/api-docs/team-access) to associate a team with privileges on an individual workspace.
+The Teams API is used to create, edit, and destroy teams as well as manage a team's organization-level permissions. The [Team Membership API](/terraform/cloud-docs/api-docs/team-members) is used to add or remove users from a team. Use the [Team Access API](/terraform/cloud-docs/api-docs/team-access) to associate a team with privileges on an individual workspace.
 
-Any member of an organization can view visible teams and any secret teams they are a member of. Only organization owners can modify teams or view the full set of secret teams. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Any member of an organization can view visible teams and any secret teams they are a member of. Only organization owners can modify teams or view the full set of secret teams. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Organization Membership
 
--> **Note:** Users must be invited to join organizations before they can be added to teams. See [the Organization Memberships API documentation](/cloud-docs/api-docs/organization-memberships) for more information. Invited users who have not yet accepted will not appear in Teams API responses.
+-> **Note:** Users must be invited to join organizations before they can be added to teams. See [the Organization Memberships API documentation](/terraform/cloud-docs/api-docs/organization-memberships) for more information. Invited users who have not yet accepted will not appear in Teams API responses.
 
 ## List teams
 
@@ -58,7 +58,7 @@ Any member of an organization can view visible teams and any secret teams they a
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter       | Description                                                                                                                                                                  |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -155,7 +155,7 @@ Properties without a default value are required.
 | `data.type`                             | string |            | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
 | `data.attributes.name`                  | string |            | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
 | `data.attributes.sso-team-id`           | string | (nothing)  | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                                                                                             |
-| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, and `read-workspaces` properties with boolean values. All properties default to `false`. |
+| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, and `manage-membership` properties with boolean values. All properties default to `false`. |
 | `data.attributes.visibility` **(beta)** | string | `"secret"` | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
 
 ### Sample Payload
@@ -206,7 +206,8 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-modules": false,
         "manage-projects": false,
         "read-projects": false,
-        "read-workspaces": true
+        "read-workspaces": true,
+        "manage-membership": false
       },
       "permissions": {
         "can-update-membership": true,
@@ -284,7 +285,8 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-modules": false,
         "manage-projects": false,
         "read-projects": false,
-        "read-workspaces": false
+        "read-workspaces": false,
+        "manage-membership": false
       }
     },
     "relationships": {
@@ -332,7 +334,7 @@ Properties without a default value are required.
 | `data.type`                             | string |                  | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
 | `data.attributes.name`                  | string | (previous value) | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
 | `data.attributes.sso-team-id`           | string | (previous value) | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or if the team belongs to an organization in the paid Terraform Cloud Business tier.                                                                                             |
-| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, and `read-workspaces` properties with boolean values. All properties default to `false`. |
+| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, and `manage-membership` properties with boolean values. All properties default to `false`. |
 | `data.attributes.visibility` **(beta)** | string | (previous value) | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
 
 ### Sample Payload
@@ -382,7 +384,8 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-modules": false,
         "manage-projects": false,
         "read-projects": false,
-        "read-workspaces": true
+        "read-workspaces": true,
+        "manage-membership": false
       },
       "visibility": "organization",
       "permissions": {
@@ -431,7 +434,7 @@ $ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 - `users` (`string`) - Returns the full user record for every member of a team.
 - `organization-memberships` (`string`) - Returns the full organization membership record for every member of a team.

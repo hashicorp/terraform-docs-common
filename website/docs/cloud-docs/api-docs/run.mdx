@@ -30,18 +30,18 @@ page_title: Runs - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Runs API
 
--> **Note:** Before working with the runs or configuration versions APIs, read the [API-driven run workflow](/cloud-docs/run/api) page, which includes both a full overview of this workflow and a walkthrough of a simple implementation of it.
+-> **Note:** Before working with the runs or configuration versions APIs, read the [API-driven run workflow](/terraform/cloud-docs/run/api) page, which includes both a full overview of this workflow and a walkthrough of a simple implementation of it.
 
 Performing a run on a new configuration is a multi-step process.
 
-1. [Create a configuration version on the workspace](/cloud-docs/api-docs/configuration-versions#create-a-configuration-version).
-1. [Upload configuration files to the configuration version](/cloud-docs/api-docs/configuration-versions#upload-configuration-files).
+1. [Create a configuration version on the workspace](/terraform/cloud-docs/api-docs/configuration-versions#create-a-configuration-version).
+1. [Upload configuration files to the configuration version](/terraform/cloud-docs/api-docs/configuration-versions#upload-configuration-files).
 1. [Create a run on the workspace](#create-a-run); this is done automatically when a configuration file is uploaded.
 1. [Create and queue an apply on the run](#apply-a-run); if the run can't be auto-applied.
 
@@ -84,19 +84,19 @@ The run state is found in `data.attributes.status`, and you can reference the fo
 
 ### Run Operations
 
-The run operation specifies the Terraform execution mode. You can reference the following list of possible operation modes and use them as [runs list](/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+The run operation specifies the Terraform execution mode. You can reference the following list of possible operation modes and use them as [runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
 
 | Operation        | Description                                                                                                                                                                |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `plan_only`      | Indicates the run completed without an apply phase. This is also called a [speculative plan](/cloud-docs/run/modes-and-options#plan-only-speculative-plan).                |
+| `plan_only`      | Indicates the run completed without an apply phase. This is also called a [speculative plan](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan).                |
 | `plan_and_apply` | Indicates the run completed with both plan and apply phases.                                                                                                               |
 | `refresh_only`   | Specifies the run was instructed to execute a plan to update Terraform state.                                                                                                |
 | `destroy`        | Specifies the run destroyed all objects, regardless of configuration changes.                                                                                              |
-| `empty_apply`    | Specifies the run performed an apply with no changes to resources. This is most commonly used to [upgrade terraform state versions](/cloud-docs/workspaces/state#upgrading-state). |
+| `empty_apply`    | Specifies the run performed an apply with no changes to resources. This is most commonly used to [upgrade terraform state versions](/terraform/cloud-docs/workspaces/state#upgrading-state). |
 
 ### Run Sources
 
-You can use the following sources as [runs list](/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+You can use the following sources as [runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
 
 | Source                      | Description                                                                             |
 |-----------------------------|-----------------------------------------------------------------------------------------|
@@ -110,9 +110,9 @@ You can use the following sources as [runs list](/cloud-docs/api-docs/run#list-r
 
 A run performs a plan and apply, using a configuration version and the workspace’s current variables. You can specify a configuration version when creating a run; if you don’t provide one, the run defaults to the workspace’s most recently used version. (A configuration version is “used” when it is created or used for a run in this workspace.)
 
-Creating a run requires permission to queue plans for the specified workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Creating a run requires permission to queue plans for the specified workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
-When creating a run, you may optionally provide a list of variable objects containing key and value attributes. These values apply to that run specifically and take precedence over variables with the same key applied to the workspace(e.g., variable sets). Refer to [Variable Precedence](/cloud-docs/workspaces/variables#precedence) for more information. All values must be expressed as an HCL literal in the same syntax you would use when writing Terraform code. Refer to [Types](/language/expressions/types#types) in the Terraform documentation for more details.
+When creating a run, you may optionally provide a list of variable objects containing key and value attributes. These values apply to that run specifically and take precedence over variables with the same key applied to the workspace(e.g., variable sets). Refer to [Variable Precedence](/terraform/cloud-docs/workspaces/variables#precedence) for more information. All values must be expressed as an HCL literal in the same syntax you would use when writing Terraform code. Refer to [Types](/terraform/language/expressions/types#types) in the Terraform documentation for more details.
 
 **Sample Run Variables:**
 
@@ -127,7 +127,7 @@ When creating a run, you may optionally provide a list of variable objects conta
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 ### Request Body
 
@@ -137,17 +137,17 @@ Properties without a default value are required.
 
 | Key path                                           | Type                 | Default                                            | Description                                                                                                                                                                                                                                   |
 |----------------------------------------------------|----------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.attributes.auto-apply`                       | bool                 | The current Auto Apply setting in the workspace    | Whether to automatically apply changes when a Terraform plan is successful. Defaults to the [Auto Apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) workspace setting.                                                      |
+| `data.attributes.auto-apply`                       | bool                 | The current Auto Apply setting in the workspace    | Whether to automatically apply changes when a Terraform plan is successful. Defaults to the [Auto Apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) workspace setting.                                                      |
 | `data.attributes.is-destroy`                       | bool                 | false                                              | Specifies whether this plan is a destroy plan that will destroy all provisioned resources. Mutually exclusive with `refresh-only`.                                                                                                            |
 | `data.attributes.message`                          | string               | "Queued manually via the Terraform Enterprise API" | Specifies the message associated with this run.                                                                                                                                                                                         |
 | `data.attributes.refresh`                          | bool                 | true                                               | Specifies whether or not to refresh the state before a plan.                                                                                                                                                                                  |
 | `data.attributes.refresh-only`                     | bool                 | false                                              | Whether this run should refresh the state without modifying any resources. Mutually exclusive with `is-destroy`.                                                                                   |
 | `data.attributes.replace-addrs`                    | array\[string]       |                                                    | Specifies an optional list of resource addresses to be passed to the `-replace` flag.                                                                                                                                                         |
 | `data.attributes.target-addrs`                     | array\[string]       |                                                    | Specifies an optional list of resource addresses to be passed to the `-target` flag.                                                                                                                                                          |
-| `data.attributes.variables`                        | array\[{key, value}] | (empty array)                                      | Specifies an optional list of run-specific variable values. Refer to [Run-Specific Variables](/cloud-docs/workspaces/variables/managing-variables#run-specific-variables) for details.    |
-| `data.attributes.plan-only`                        | bool                 | (from configuration version)                       | Specifies if this is a [speculative, plan-only](/cloud-docs/run/modes-and-options#plan-only-speculative-plan) run that Terraform cannot apply. Often used in conjunction with terraform-version in order to test whether an upgrade would succeed. |
+| `data.attributes.variables`                        | array\[{key, value}] | (empty array)                                      | Specifies an optional list of run-specific variable values. Refer to [Run-Specific Variables](/terraform/cloud-docs/workspaces/variables/managing-variables#run-specific-variables) for details.    |
+| `data.attributes.plan-only`                        | bool                 | (from configuration version)                       | Specifies if this is a [speculative, plan-only](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan) run that Terraform cannot apply. Often used in conjunction with terraform-version in order to test whether an upgrade would succeed. |
 | `data.attributes.terraform-version`                | string               |                                                    | Specifies the Terraform version to use in this run. Only valid for plan-only runs; must be a valid Terraform version available to the organization.                                                                                           |
-| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
+| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/terraform/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
 | `data.relationships.workspace.data.id`             | string               |                                                    | Specifies the workspace ID where the run will be executed.                                                                                                                                                                                    |
 | `data.relationships.configuration-version.data.id` | string               |                                                    | Specifies the configuration version to use for this run. If the `configuration-version` object is omitted, the run will be created using the workspace's latest configuration version.                                                        |
 
@@ -268,9 +268,9 @@ curl \
 
 Applies a run that is paused waiting for confirmation after a plan. This includes runs in the "needs confirmation" and "policy checked" states. This action is only required for runs that can't be auto-applied. Plans can be auto-applied if the auto-apply setting is enabled on the workspace and the plan was queued by a new VCS commit or by a user with permission to apply runs for the workspace.
 
--> **Note:** If the run has a soft failed sentinel policy, you will need to [override the policy check](/cloud-docs/api-docs/policy-checks#override-policy) before Terraform can apply the run. You can find policy check details in the `relationships` section of the [run details endpoint](#get-run-details) response.
+-> **Note:** If the run has a soft failed sentinel policy, you will need to [override the policy check](/terraform/cloud-docs/api-docs/policy-checks#override-policy) before Terraform can apply the run. You can find policy check details in the `relationships` section of the [run details endpoint](#get-run-details) response.
 
-Applying a run requires permission to apply runs for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Applying a run requires permission to apply runs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -278,7 +278,7 @@ This endpoint queues the request to perform an apply; the apply might not happen
 
 Since this endpoint represents an action (not a resource), it does not return any object in the response body.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason(s)                                               |
 |---------|---------------------------|---------------------------------------------------------|
@@ -328,15 +328,15 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter           | Description                                                                                                                                                                                                                    |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                             |
 | `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                                                                                                                                                           |
-| `filter[operation]` | **Optional.** A comma-separated list of run operations; the result will only include runs that perform one of these operations. Options are listed in [Run Operations](/cloud-docs/api-docs/run#run-operations).                                                                                                                                 |
-| `filter[status]`    | **Optional.** A comma-separated list of run statuses; the result will only include runs that are in one of these statuses. Options are listed in [Run States](/cloud-docs/api-docs/run#run-states).                                                                                                                                         |
-| `filter[source]`    | **Optional.** A comma-separated list of run sources; the result will only include runs that came from one of these sources. Options are listed in [Run Sources](/cloud-docs/api-docs/run#run-sources).                                                                                                                                       |
+| `filter[operation]` | **Optional.** A comma-separated list of run operations; the result will only include runs that perform one of these operations. Options are listed in [Run Operations](/terraform/cloud-docs/api-docs/run#run-operations).                                                                                                                                 |
+| `filter[status]`    | **Optional.** A comma-separated list of run statuses; the result will only include runs that are in one of these statuses. Options are listed in [Run States](/terraform/cloud-docs/api-docs/run#run-states).                                                                                                                                         |
+| `filter[source]`    | **Optional.** A comma-separated list of run sources; the result will only include runs that came from one of these sources. Options are listed in [Run Sources](/terraform/cloud-docs/api-docs/run#run-sources).                                                                                                                                       |
 | `search[user]`      | **Optional.** Searches runs that matches the supplied VCS username.                                                                                                                                                            |
 | `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                                                                                                                                              |
 | `search[basic]`     | **Optional.** Searches runs that matches the supplied VCS username, commit sha, run_id, and run message. The presence of search[commit] or search[user] takes priority over this parameter and will cause it to not be used.   |
@@ -513,7 +513,7 @@ curl \
 
 The `discard` action can be used to skip any remaining work on runs that are paused waiting for confirmation or priority. This includes runs in the "pending," "needs confirmation," "policy checked," and "policy override" states.
 
-Discarding a run requires permission to apply runs for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Discarding a run requires permission to apply runs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -521,7 +521,7 @@ This endpoint queues the request to perform a discard; the discard might not hap
 
 This endpoint represents an action as opposed to a resource. As such, it does not return any object in the response body.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason(s)                                                             |
 |---------|---------------------------|-----------------------------------------------------------------------|
@@ -567,7 +567,7 @@ curl \
 
 The `cancel` action can be used to interrupt a run that is currently planning or applying. Performing a cancel is roughly equivalent to hitting ctrl+c during a Terraform plan or apply on the CLI. The running Terraform process is sent an `INT` signal, which instructs Terraform to end its work and wrap up in the safest way possible.
 
-Canceling a run requires permission to apply runs for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Canceling a run requires permission to apply runs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -575,7 +575,7 @@ This endpoint queues the request to perform a cancel; the cancel might not happe
 
 This endpoint represents an action as opposed to a resource. As such, it does not return any object in the response body.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                  | Reason(s)                                             |
 |---------|---------------------------|-------------------------------------------------------|
@@ -620,7 +620,7 @@ curl \
 |-----------|----------------------|
 | `run_id`  | The run ID to cancel |
 
-The `force-cancel` action is like [cancel](#cancel-a-run), but ends the run immediately. Once invoked, the run is placed into a `canceled` state, and the running Terraform process is terminated. The workspace is immediately unlocked, allowing further runs to be queued. The `force-cancel` operation requires admin access to the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+The `force-cancel` action is like [cancel](#cancel-a-run), but ends the run immediately. Once invoked, the run is placed into a `canceled` state, and the running Terraform process is terminated. The workspace is immediately unlocked, allowing further runs to be queued. The `force-cancel` operation requires admin access to the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -628,7 +628,7 @@ This endpoint enforces a prerequisite that a [non-forceful cancel](#cancel-a-run
 
 This endpoint represents an action as opposed to a resource. As such, it does not return any object in the response body.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 ~> **Warning:** This endpoint has potentially dangerous side-effects, including loss of any in-flight state in the running Terraform process. Use this operation with extreme caution.
 
@@ -677,7 +677,7 @@ curl \
 
 The force-execute action cancels all prior runs that are not already complete, unlocking the run's workspace and allowing the run to be executed. (It initiates the same actions as the "Run this plan now" button at the top of the view of a pending run.)
 
-Force-executing a run requires permission to apply runs for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Force-executing a run requires permission to apply runs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -689,7 +689,7 @@ This endpoint enforces the following prerequisites:
 
 This endpoint represents an action as opposed to a resource. As such, it does not return any object in the response body.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 ~> **Note:** While useful at times, force-executing a run circumvents the typical workflow of applying runs using Terraform Cloud. It is not intended for regular use. If you find yourself using it frequently, please reach out to HashiCorp Support for help in developing an alternative approach.
 
@@ -716,7 +716,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 - `plan` - Additional information about plans.
 - `apply` - Additional information about applies.

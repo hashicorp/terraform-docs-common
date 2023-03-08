@@ -28,7 +28,7 @@ There are no special prerequisites for Splunk Cloud users.
 
 #### Networking Requirements
 
-In order for the Terraform Cloud for Splunk app to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the Terraform Cloud application APIs. This may require perimeter networking as well as container host networking changes, depending on your environment. The IP ranges are documented in the [Terraform Cloud IP Ranges documentation](/cloud-docs/architectural-details/ip-ranges). The services which run on these IP ranges are described in the table below.
+In order for the Terraform Cloud for Splunk app to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the Terraform Cloud application APIs. This may require perimeter networking as well as container host networking changes, depending on your environment. The IP ranges are documented in the [Terraform Cloud IP Ranges documentation](/terraform/cloud-docs/architectural-details/ip-ranges). The services which run on these IP ranges are described in the table below.
 
 | Hostname         | Port/Protocol  | Directionality | Purpose                                                      |
 | ---------------- | -------------- | -------------- | ------------------------------------------------------------ |
@@ -46,7 +46,7 @@ The current release of the Terraform Cloud for Splunk app supports the following
 * Install the [Terraform Cloud for Splunk app via Splunkbase](https://splunkbase.splunk.com/app/5141/)
   * Splunk Cloud users should consult the latest instructions on how to [use IDM with cloud-based add-ons](https://docs.splunk.com/Documentation/SplunkCloud/8.0.2007/Admin/IntroGDI#Use_IDM_with_cloud-based_add-ons) within the Splunk documentation.
 * Click "Configure the application"
-* Generate an [Organization token](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within Terraform Cloud
+* Generate an [Organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within Terraform Cloud
 * Click "complete setup"
 
 Once configured, you’ll be redirected to the Splunk search interface with the pre-configured Terraform Cloud dashboards. Splunk will begin importing and indexing the last 14 days of audit log information and populating the dashboards. This process may take a few minutes to complete.
