@@ -7,9 +7,9 @@ description: >-
 
 # Dynamic Credentials with the GCP Provider
 
--> **Note:** Dynamic Credentials are in beta.
+~> **Important:** If using self-managed agents, make sure you’re using **v1.7.0** or later.
 
-~> **Important:** If using self-managed agents, make sure you’re using **v1.5.0-rc.2** or later.
+!> **Warning:** Dynamic Credentials with the GCP provider do **_not_** work when your TFE instance is using a custom or self-signed certificate due to restrictions on GCP's end.
 
 You can use Terraform Cloud’s native OpenID Connect integration with GCP to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the GCP provider in your Terraform Cloud runs. Configuring the integration requires the following steps.
 
@@ -67,13 +67,32 @@ Once the service account has been created and granted IAM permissions, you will 
 ## Configure Terraform Cloud
 You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with GCP using dynamic credentials. You can set these as workspace variables, or if you’d like to share one GCP service account across multiple workspaces, you can use a variable set.
 ### Required Environment Variables
-| Variable                            | Value                                                       | Notes                                                                                          |
-|-------------------------------------|-------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| `TFC_GCP_PROVIDER_AUTH`             | `true`                                                      | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate to GCP. |
-| `TFC_GCP_RUN_SERVICE_ACCOUNT_EMAIL` | The service account email used when authenticating to GCP.  ||
-| `TFC_GCP_PROJECT_NUMBER`            | The project number where the pool and other resources live. | This is _not_ the project ID and is a separate number.                                         |
-| `TFC_GCP_WORKLOAD_POOL_ID`          | The workload pool ID.                                       ||
-| `TFC_GCP_WORKLOAD_PROVIDER_ID`      | The workload identity provider ID.                          ||
+| Variable                            | Value                                                                          | Notes                                                                                                                     |
+|-------------------------------------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `TFC_GCP_PROVIDER_AUTH`             | `true`                                                                         | Must be present and set to `true`, or Terraform Cloud will not attempt to use dynamic credentials to authenticate to GCP. |
+| `TFC_GCP_RUN_SERVICE_ACCOUNT_EMAIL` | The service account email Terraform Cloud will use when authenticating to GCP. ||
+
+You must also include information about the GCP Workload Identity Provider that Terraform Cloud will use when authenticating to GCP. You can supply this information in two different ways:
+
+1. By providing one unified variable containing the canonical name of the workload identity provider
+2. By providing the project number, pool ID, and provider ID as separate variables
+
+You should avoid setting both types of variables, but if you do, the unified version will take precedence.
+
+#### Unified Variable
+
+| Variable                         | Value                                                                                                                                                                                                                                                             | Notes                                                                                                                           |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_GCP_WORKLOAD_PROVIDER_NAME` | The canonical name of the workload identity provider. This must be in the form mentioned for the `name` attribute [here](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool_provider#attributes-reference) | This will take precedence over `TFC_GCP_PROJECT_NUMBER`, `TFC_GCP_WORKLOAD_POOL_ID`, and `TFC_GCP_WORKLOAD_PROVIDER_ID` if set. |
+
+#### Separate Variables
+
+| Variable                              | Value                                                                                                                                                                                                                                                       | Notes                                                                               |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| `TFC_GCP_PROJECT_NUMBER`              | The project number where the pool and other resources live.                                                                                                                                                                                                 | This is _not_ the project ID and is a separate number.                              |
+| `TFC_GCP_WORKLOAD_POOL_ID`            | The workload pool ID.                                                                                                                                                                                                                                       ||
+| `TFC_GCP_WORKLOAD_PROVIDER_ID`        | The workload identity provider ID.                                                                                                                                                                                                                          ||
+
 
 ### Optional Environment Variables
 You may need to set these variables, depending on your use case.

@@ -7,11 +7,11 @@ description: >-
 
 # Dynamic Credentials with the Azure Provider
 
--> **Note:** Dynamic Credentials are in beta.
-
 ~> **Important:** Ensure you are using version **3.25.0** or later of the **AzureRM provider** and version **2.29.0** or later of the **AzureAD provider** as required OIDC functionality was introduced in these provider versions.
 
-~> **Important:** If using self-managed agents, make sure you’re using **v1.5.0-rc.2** or later.
+~> **Important:** If using self-managed agents, make sure you’re using **v1.7.0** or later.
+
+!> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your TFE instance is using a custom or self-signed certificate due to restrictions on Azure's end.
 
 You can use Terraform Cloud’s native OpenID Connect integration with Azure to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AzureRM or AzureAD providers in your Terraform Cloud runs. Configuring the integration requires the following steps.
 
