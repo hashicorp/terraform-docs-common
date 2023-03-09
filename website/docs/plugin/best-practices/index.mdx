@@ -4,3 +4,29 @@ description: >-
   Patterns that ensure a consistent user experience, including naming,
   deprecation, beta features, and versioning.
 ---
+
+# Terraform Plugin Best Practices
+
+A key feature of Terraform is its plugin system, which separates the details of
+specific vendor APIs from the shared logic for managing state, managing configuration,
+and providing a safe plan and apply lifecycle. Plugins are responsible
+for the  implementation of functionality for provisioning resources for a
+specific cloud provider, allowing each provider to fully support its unique
+resources and lifecycles and not settling for the lowest common denominator
+across all provider resources of that type (virtual machines, networks,
+configuration management systems, et. al). While each provider is unique, over
+the years, we accumulated recommended patterns that help ensure a consistent user experience when using Terraform for any given provider. This page describes best practices that generally apply to most
+Providers, with a brief description of each, and link to read more. 
+
+This section is a work in progress, with more sections to come.
+
+## Versioning and Changelog
+
+Terraform development serves two distinct audiences: those writing plugin code
+and those implementing them. By clearly and consistently allowing operators to
+easily understand changes in plugin implementation via version numbering and
+documenting those changes, a trust is formed between the two audiences. In
+[Versioning and Changelog][versioning] we cover some guidelines when deciding
+release versions and how to relay changes through documentation.
+
+[versioning]: /terraform/plugin/best-practices/versioning

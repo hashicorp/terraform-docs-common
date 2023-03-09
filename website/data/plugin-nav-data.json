@@ -36,6 +36,10 @@
       {
         "title": "Provider Code Language",
         "path": "best-practices/other-languages"
+      },
+      {
+        "title": "Versioning and Changelog",
+        "path": "best-practices/versioning"
       }
     ]
   },
