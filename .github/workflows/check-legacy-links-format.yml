@@ -1,7 +1,7 @@
 name: Legacy Link Format Checker
 
 on:
-  push:
+  pull_request:
     paths:
       - "website/docs/**/*.mdx"
       - "website/data/*-nav-data.json"
