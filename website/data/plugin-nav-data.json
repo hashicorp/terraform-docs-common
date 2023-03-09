@@ -38,6 +38,10 @@
         "path": "best-practices/sensitive-state"
       },
       {
+        "title": "Interacting with Providers",
+        "path": "best-practices/interacting-with-providers"
+      },
+      {
         "title": "Provider Code Language",
         "path": "best-practices/other-languages"
       },
