@@ -30,6 +30,16 @@
     "path": "debugging"
   },
   {
+    "title": "Best Practices",
+    "routes": [
+      { "title": "Overview", "path": "best-practices" },
+      {
+        "title": "Provider Code Language",
+        "path": "best-practices/other-languages"
+      }
+    ]
+  },
+  {
     "heading": "Plugin SDKs and Libraries"
   },
   { "title": "SDKv2", "href": "sdkv2" },
