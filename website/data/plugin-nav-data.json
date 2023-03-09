@@ -42,6 +42,10 @@
         "path": "best-practices/interacting-with-providers"
       },
       {
+        "title": "Naming",
+        "path": "best-practices/naming"
+      },
+      {
         "title": "Provider Code Language",
         "path": "best-practices/other-languages"
       },
