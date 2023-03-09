@@ -34,6 +34,10 @@
     "routes": [
       { "title": "Overview", "path": "best-practices" },
       {
+        "title": "Handling Sensitive Data",
+        "path": "best-practices/sensitive-state"
+      },
+      {
         "title": "Provider Code Language",
         "path": "best-practices/other-languages"
       },
