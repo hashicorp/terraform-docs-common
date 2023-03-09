@@ -7,9 +7,7 @@ description: >-
 
 # Dynamic Credentials with the Vault Provider
 
--> **Note:** Dynamic Credentials are in beta.
-
-~> **Important:** If using self-managed agents, make sure you’re using **v1.5.0-rc.2** or later.
+~> **Important:** If using self-managed agents, make sure you’re using **v1.7.0** or later.
 
 You can use Terraform Cloud’s native OpenID Connect integration with Vault to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Vault provider in your Terraform Cloud runs. Configuring the integration requires the following steps.
 
@@ -104,11 +102,11 @@ We recommend setting token_ttl to a relatively short value. Terraform Cloud can 
 You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with Vault using dynamic credentials. You can set these as workspace variables, or if you’d like to share one Vault role across multiple workspaces, you can use a variable set.
 
 ### Required Environment Variables
-| Variable                  | Value                                                                           | Notes                                                                                            |
-|---------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| `TFC_VAULT_PROVIDER_AUTH` | `true`                                                                          | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate to Vault. |
-| `TFC_VAULT_ADDR`          | The address of the Vault instance to authenticate against.                      | Will also be used to set `VAULT_ADDR` in the run environment.                                    |
-| `TFC_VAULT_RUN_ROLE`      | The name of the Vault role to authenticate against (`tfc-role`, in our example) ||
+| Variable                  | Value                                                                           | Notes                                                                                                                                                                                                                                   |
+|---------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_PROVIDER_AUTH` | `true`                                                                          | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate to Vault.                                                                                                                                        |
+| `TFC_VAULT_ADDR`          | The address of the Vault instance to authenticate against.                      | Will also be used to set `VAULT_ADDR` in the run environment.                                                                                                                                                                           |
+| `TFC_VAULT_RUN_ROLE`      | The name of the Vault role to authenticate against (`tfc-role`, in our example) | Optional if `TFC_VAULT_PLAN_ROLE` and `TFC_VAULT_APPLY_ROLE` are both provided. These variables are described [below](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#optional-environment-variables) |
 
 ### Optional Environment Variables
 You may need to set these variables, depending on your Vault configuration and use case.
