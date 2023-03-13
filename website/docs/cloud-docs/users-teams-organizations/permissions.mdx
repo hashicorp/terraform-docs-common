@@ -198,37 +198,45 @@ Separate from project and workspace permissions, you can grant teams permissions
 
 The following organization permissions are available:
 
-### Projects & workspaces permissions
+### Project permissions
 
-You must select a level of access for projects and workspaces.
-
-#### Manage all projects & workspaces
-
-Allows members to create and manage all projects and workspaces within the organization. In addition to all the permissions granted by “Manage workspaces only”, this also lets users:
-- Manage other teams' access to all projects.
-- Create, edit, and delete projects (otherwise only available to organization owners).
-- Move workspaces between projects.
-
-#### Manage workspaces only
-
-Allows members to create and manage all workspaces within the organization. This lets users:
-- Manage all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
-- Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project". 
-- Create, update, and delete [Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets)
-
-#### View all projects & workspaces
-
-Allows members to view all workspaces and projects within the organization. In addition to all the permissions granted by “View workspaces only”, this also lets users:
-- View project names and see the workspaces in the projects.
-
-#### View workspaces only
-
-Allows members to view all workspaces within the organization. This lets users:
-- View information and features relevant to each workspaces (e.g. runs, state versions, variables).
+You must select a level of access for projects.
 
 #### No access
 
 Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+
+#### View all projects
+
+Allows members to view all projects within the organization. This lets users:
+- View project names in a given organization.
+
+#### Manage all projects
+
+Allows members to create and manage all projects and workspaces within the organization. In addition to all the permissions granted by “Manage all workspaces”, this also lets users:
+- Manage other teams' access to all projects.
+- Create, edit, and delete projects (otherwise only available to organization owners).
+- Move workspaces between projects.
+
+### Workspace permissions
+
+You must select a level of access for workspaces.
+
+#### No access
+
+Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+
+#### View all workspaces
+
+Allows members to view all workspaces within the organization. This lets users:
+- View information and features relevant to each workspaces (e.g. runs, state versions, variables).
+
+#### Manage all workspaces
+
+Allows members to create and manage all workspaces within the organization. This lets users:
+- Manage all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
+- Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project".
+- Create, update, and delete [Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets)
 
 ### Manage Policies
 
