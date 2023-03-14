@@ -10,10 +10,6 @@
     "path": "terraform-plugin-protocol"
   },
   {
-    "title": "Provider Design Principles",
-    "path": "hashicorp-provider-design-principles"
-  },
-  {
     "title": "Framework Benefits",
     "path": "framework-benefits"
   },
@@ -38,6 +34,10 @@
         "path": "best-practices/sensitive-state"
       },
       {
+        "title": "Provider Design Principles",
+        "path": "best-practices/hashicorp-provider-design-principles"
+      },
+      {
         "title": "Interacting with Providers",
         "path": "best-practices/interacting-with-providers"
       },
@@ -46,8 +46,8 @@
         "path": "best-practices/naming"
       },
       {
-        "title": "Provider Code Language",
-        "path": "best-practices/other-languages"
+        "title": "Provider Code",
+        "path": "best-practices/provider-code"
       },
       {
         "title": "Versioning and Changelog",
