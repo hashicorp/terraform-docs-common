@@ -91,7 +91,7 @@ Much like the owners team has full control over an organization, each workspace 
 
 Admin permissions include the highest level of general permissions for the workspace. There are also some permissions that are only available to workspace admins, which generally involve changing the workspace's settings or setting access levels for other teams.
 
-Workspace admins have all [General Workspace Permissions][], as well as the ability to do the following tasks:
+Workspace admins have all [General Workspace Permissions](#general-workspace-permissions), as well as the ability to do the following tasks:
 
 - Read and write workspace settings. This includes general settings, notification configurations, run triggers, and more.
 - Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
@@ -158,7 +158,7 @@ Fixed permission sets are bundles of specific permissions for a project, designe
 
 Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project.
 
-Members of teams with "admin" permissions for a project have [General Workspace Permissions][#general-workspace-permissions] for every workspace in the project,  and the ability to:
+Members of teams with "admin" permissions for a project have [General Workspace Permissions](#general-workspace-permissions) for every workspace in the project, and the ability to:
 
 - Read and update project settings.
 - Delete the project.
@@ -166,9 +166,29 @@ Members of teams with "admin" permissions for a project have [General Workspace 
 - Move workspaces into or out of the project. This also requires project admin permissions for the source or destination project.
 - Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
 
+#### Maintain
+
+The "maintain" permission is for people who need to manage existing infrastructure in a single project, while also granting the ability to create new workspaces in that project. Maintain access grants full control of everything in the project, including the following permissions:
+- Admin access for all workspaces in this project.
+- Create workspaces in this project.
+- Read the project name.
+- Lock and unlock all workspaces in this project.
+- Read and write variables for all workspaces in this project.
+- Accesss state for all workspaces in this project.
+- Approve runs for all workspaces in this project.
+
+#### Write
+
+The "write" permission set is for people who do most of the day-to-day work of provisioning and modifying managed infrastructure. Write access grants the following workspace permissions:
+- Read the project name.
+- Lock and unlock all workspaces in this project.
+- Read and write variables for all workspaces in this project.
+- Accesss state for all workspaces in this project.
+- Approve runs for all workspaces in this project.
+
 #### Read
 
-The "read" permission set is for users who need to view information about the status and configuration of managed infrastructure for their job function, but are not responsible for maintaining that infrastructure. Read access grants users the permissions to:
+The "read" permission set is for people who need to view information about the status and configuration of managed infrastructure for their job function, but are not responsible for maintaining that infrastructure. Read access grants the permissions to:
 - Read the project name.
 - Read the workspaces in the project.
 
