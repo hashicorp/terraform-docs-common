@@ -30,28 +30,28 @@
     "routes": [
       { "title": "Overview", "path": "best-practices" },
       {
-        "title": "Handling Sensitive Data",
-        "path": "best-practices/sensitive-state"
+        "title": "Interacting with Providers",
+        "path": "best-practices/interacting-with-providers"
       },
       {
         "title": "Provider Design Principles",
         "path": "best-practices/hashicorp-provider-design-principles"
       },
       {
-        "title": "Interacting with Providers",
-        "path": "best-practices/interacting-with-providers"
+        "title": "Provider Code",
+        "path": "best-practices/provider-code"
       },
       {
         "title": "Naming",
         "path": "best-practices/naming"
       },
       {
-        "title": "Provider Code",
-        "path": "best-practices/provider-code"
-      },
-      {
         "title": "Versioning and Changelog",
         "path": "best-practices/versioning"
+      },
+      {
+        "title": "Handling Sensitive Data",
+        "path": "best-practices/sensitive-state"
       }
     ]
   },
