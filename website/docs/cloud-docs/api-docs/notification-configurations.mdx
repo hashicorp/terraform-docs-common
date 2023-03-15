@@ -56,9 +56,9 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Applying           | `"run:applying"`        | A run enters the [Apply stage](/terraform/cloud-docs/run/states#the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
 | Completed          | `"run:completed"`       | A run completes successfully.                                     |
 | Errored            | `"run:errored"`         | A run terminates early due to error or cancellation.                                          |
-| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.  Not available in Terraform Enterprise.                                                   |
-| Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace.  Not available in Terraform Enterprise.  |
-| Health Assessment Failed | `"assessment:failed`"   | A health assessment failed. This option is only available if you enable health assessments for the workspace.  Not available in Terraform Enterprise.                                       |
+| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.                                                    |
+| Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace.   |
+| Health Assessment Failed | `"assessment:failed`"   | A health assessment failed. This option is only available if you enable health assessments for the workspace.                                        |
 
 ## Notification Payload
 
