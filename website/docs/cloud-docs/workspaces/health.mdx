@@ -30,7 +30,7 @@ Workspaces require the following settings to receive health assessments:
 - Terraform version 1.3.0+ for drift detection and continuous validation
 - [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for Terraform runs
 
-The latest Terraform run in the workspace must have been successful. If the most recent run ended in an errored state, Terraform Cloud pauses health assessments until there is a successful run.
+The latest Terraform run in the workspace must have been successful. If the most recent run ended in an errored, canceled, or discarded state, Terraform Cloud pauses health assessments until there is a successfully applied run.
 
 The workspace must also have at least one run in which Terraform successfully applies a configuration. Terraform Cloud does not perform health assessments in workspaces with no real-world infrastructure.
 
