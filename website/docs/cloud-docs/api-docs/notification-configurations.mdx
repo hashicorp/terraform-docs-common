@@ -57,7 +57,7 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Completed          | `"run:completed"`       | A run completes successfully.                                     |
 | Errored            | `"run:errored"`         | A run terminates early due to error or cancellation.                                          |
 | Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.                                                    |
-| Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace.   |
+| Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace. Continuous validation in beta. |
 | Health Assessment Failed | `"assessment:failed`"   | A health assessment failed. This option is only available if you enable health assessments for the workspace.                                        |
 
 ## Notification Payload
@@ -118,6 +118,8 @@ Run events include detailed information about a specific run, including the time
 ### Workspace Notification Payload
 
 Workspace events include detailed information about workspace-level validation events like [health assessments](/terraform/cloud-docs/workspaces/health) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/terraform/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
+
+-> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing) and Terraform Enterprise v202303 and newer. Continuous validation is in beta.
 
 | Name                                         | Type   | Description                                                                          |
 | -------------------------------------------- | ------ | ------------------------------------------------------------------------------------ |
