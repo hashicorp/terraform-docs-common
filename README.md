@@ -1,11 +1,10 @@
 # terraform-docs-common
+
 Content for Terraform's documentation.
 
 - https://terraform.io/cloud-docs
 - https://terraform.io/plugin
 - https://terraform.io/registry
-
-
 
 <!-- BEGIN: contributions -->
 <!-- Generated text, do not edit directly -->
@@ -18,25 +17,25 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 
 ## Where the Docs Live
 
-| Subpath | Repository |
-| :--- | :--- |
-| [`/cdktf`][cdktf]                         | [terraform-cdk] |
-| [`/cli`][cli]                             | [terraform] |
-| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common] |
-| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents] |
-| [`/configuration`][configuration]         | [terraform] |
-| [`/docs`][docs]                           | [terraform] |
-| [`/enterprise`][enterprise]               | Internal repository |
-| [`/guides`][guides]                       | [terraform] |
-| [`/internals`][internals]                 | [terraform] |
-| [`/intro`][intro]                         | [terraform] |
-| [`/language`][language]                   | [terraform] |
-| [`/plugin`][plugin]                       | [terraform-docs-common] |
+| Subpath                                   | Repository                   |
+| :---------------------------------------- | :--------------------------- |
+| [`/cdktf`][cdktf]                         | [terraform-cdk]              |
+| [`/cli`][cli]                             | [terraform]                  |
+| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common]      |
+| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents]      |
+| [`/configuration`][configuration]         | [terraform]                  |
+| [`/docs`][docs]                           | [terraform]                  |
+| [`/enterprise`][enterprise]               | Internal repository          |
+| [`/guides`][guides]                       | [terraform]                  |
+| [`/internals`][internals]                 | [terraform]                  |
+| [`/intro`][intro]                         | [terraform]                  |
+| [`/language`][language]                   | [terraform]                  |
+| [`/plugin`][plugin]                       | [terraform-docs-common]      |
 | [`/plugin/framework`][plugin/framework]   | [terraform-plugin-framework] |
-| [`/plugin/log`][plugin/log]               | [terraform-plugin-log] |
-| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux] |
-| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk] |
-| [`/registry`][registry]                   | [terraform-docs-common] |
+| [`/plugin/log`][plugin/log]               | [terraform-plugin-log]       |
+| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux]       |
+| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk]       |
+| [`/registry`][registry]                   | [terraform-docs-common]      |
 
 [cdktf]: https://www.terraform.io/cdktf
 [cli]: https://www.terraform.io/cli
@@ -55,7 +54,6 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 [plugin/mux]: https://www.terraform.io/plugin/mux
 [plugin/sdkv2]: https://www.terraform.io/plugin/sdkv2
 [registry]: https://www.terraform.io/registry
-
 [terraform-cdk]: https://github.com/hashicorp/terraform-cdk
 [terraform]: https://github.com/hashicorp/terraform
 [terraform-website]: https://github.com/hashicorp/terraform-website
@@ -101,10 +99,9 @@ This file can be standard Markdown and also supports [YAML frontmatter](https://
 
 ```yaml
 ---
-title: 'My Title'
+title: "My Title"
 description: "A thorough, yet succinct description of the page's contents"
 ---
-
 ```
 
 The significant keys in the YAML frontmatter are:
@@ -113,6 +110,16 @@ The significant keys in the YAML frontmatter are:
 - `description` `(string)` - This is a description of the page that will be set in the HTML description.
 
 > ⚠️ If there is a need for a `/api/*` url on this website, the url will be changed to `/api-docs/*`, as the `api` folder is reserved by next.js.
+
+### Validating Content
+
+Content changes are automatically validated against a set of rules as part of the pull request process. If you want to run these checks locally to validate your content before committing your changes, you can run the following command:
+
+```
+npm run content-check
+```
+
+If the validation fails, actionable error messages will be displayed to help you address detected issues.
 
 ### Creating New Pages
 
@@ -146,7 +153,6 @@ There are several custom markdown plugins that are available by default that enh
 ### Custom Components
 
 A number of custom [mdx components](https://mdxjs.com/) are available for use within any .mdx file. If you have questions about custom components, or have a request for a new custom component, please reach out to @hashicorp/digital-marketing.
-
 
 ### Syntax Highlighting
 
@@ -306,7 +312,6 @@ Sometimes you may have a need to include a link that is not directly to a file w
 If the link provided in the `href` property is external, it will display a small icon indicating this. If it's internal, it will appear the same way as any other direct file link.
 
 <!-- END: editing-docs-sidebars -->
-
 
 ## Content Images
 
