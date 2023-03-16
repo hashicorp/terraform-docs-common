@@ -75,10 +75,10 @@ We have a list of [recommend OS / architecture combinations](/terraform/registry
 
 To use GitHub Actions to publish new provider releases to the Terraform Registry:
 
-1. Ensure the [GitHub Organization settings for GitHub Actions](https://docs.github.com/en/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization) and [GitHub Repository settings for GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) allows running workflows and allows the actions specified in the [GitHub Actions workflow from the terraform-provider-scaffolding repository](https://github.com/hashicorp/terraform-provider-scaffolding/blob/main/.github/workflows/release.yml).
+1. Ensure the [GitHub Organization settings for GitHub Actions](https://docs.github.com/en/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization) and [GitHub Repository settings for GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) allows running workflows and allows the actions specified in the [GitHub Actions workflow from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.github/workflows/release.yml).
 1. Create and export a signing key that you plan on using to sign your provider releases. See [Preparing and Adding a Signing Key](#preparing-and-adding-a-signing-key) for more information.
-1. Copy the [GoReleaser configuration from the terraform-provider-scaffolding repository](https://github.com/hashicorp/terraform-provider-scaffolding/blob/main/.goreleaser.yml) to the root of your repository.
-1. Copy the [GitHub Actions workflow from the terraform-provider-scaffolding repository](https://github.com/hashicorp/terraform-provider-scaffolding/blob/main/.github/workflows/release.yml) to `.github/workflows/release.yml` in your repository.
+1. Copy the [GoReleaser configuration from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.goreleaser.yml) to the root of your repository.
+1. Copy the [GitHub Actions workflow from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.github/workflows/release.yml) to `.github/workflows/release.yml` in your repository.
 1. Go to _Settings > Secrets_ in your repository, and add the following secrets:
 
 - `GPG_PRIVATE_KEY` - Your ASCII-armored GPG private key. You can export this with `gpg --armor --export-secret-keys [key ID or email]`.
@@ -94,7 +94,7 @@ Once a release is created, you can move on to [Publishing to the Registry](#publ
 GoReleaser is a tool for building Go projects for multiple platforms, creating a checksums file, and signing the release. It can also upload your release to GitHub Releases.
 
 1. Install [GoReleaser](https://goreleaser.com) using the [installation instructions](https://goreleaser.com/install/).
-1. Copy the [.goreleaser.yml file](https://github.com/hashicorp/terraform-provider-scaffolding/blob/main/.goreleaser.yml) from the [hashicorp/terraform-provider-scaffolding](https://github.com/hashicorp/terraform-provider-scaffolding) repository.
+1. Copy the [.goreleaser.yml file](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.goreleaser.yml) from the [hashicorp/terraform-provider-scaffolding-framework](https://github.com/hashicorp/terraform-provider-scaffolding-framework) repository.
 1. Cache the password for your GPG private key with `gpg --armor --detach-sign` (see note below).
 1. Set your `GITHUB_TOKEN` to a [Personal Access Token](https://github.com/settings/tokens/new?scopes=public_repo) that has the **public_repo** scope.
 1. Ensure there is not a branch name with the expected version tag name (e.g. `v1.2.3`).
