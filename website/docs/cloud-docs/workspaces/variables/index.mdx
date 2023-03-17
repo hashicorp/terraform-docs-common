@@ -136,20 +136,20 @@ Consider an example workspace that has the following variables applied:
 | --------------------- | ---------------------- | ---------- | ---------- | ---- | ---- | ---- | ---- | -------- |
 | Command Line Argument | Run-Specific           |            |            |      |      |      |      | `9`      |
 | Local Environment     | Run-Specific           |            |            |      |      |      |      | `8`      |
-| Variables             | Workspace-Specific     | `g47fh474` | `874hf7u4` | `h`  |      |      |      | `1`      |
+| Variables             | Workspace-Specific     |            |            | `h`  |      |      |      | `1`      |
 | A_Variable_Set        | Workspace-Scoped       |            |            | `y`  | `x`  |      |      | `2`      |
-| B_Variable_Set        | Project-Scoped         |            |            |      | `b`  | `z`  |      | `3`      |
+| B_Variable_Set        | Project-Scoped         | `g47fh474` | `874hf7u4` |      | `b`  | `z`  |      | `3`      |
 | C_Variable_Set        | Global                 |            |            |      |      | `a`  | `c`  | `4`      |
 
 When you trigger a run through the command line, Terraform Cloud applies the following variables:
 
 - **Run-Specific:** `replicas` from the command line. That means `replicas` equals `9` for this run. Variables set from the command line take precedence over all other values, including the run-specific `TF_VAR_replicas` value set in your local environment.
 
-- **Workspace-Specific:** `ACCESS_KEY`, `ACCESS_ID`, and `VAR1`. That means `VAR1` equals `h` for this run, overwriting the value in A_Variable_Set.
+- **Workspace-Specific:** `VAR1`. That means `VAR1` equals `h` for this run, overwriting the value in A_Variable_Set.
 
 - **A_Variable_Set:** `KEY1`. That means `KEY1` equals `x` for this run, overwriting the value in B_Variable_Set.
 
-- **B_Variable_Set:** `VAR2`. That means `VAR2` equals `z` for this run, overwriting the value in C_Variable_Set.
+- **B_Variable_Set:** `ACCESS_KEY`, `ACCESS_ID`, and `VAR2`. That means `VAR2` equals `z` for this run, overwriting the value in C_Variable_Set.
 
 - **C_Variable_Set:** `KEY2`. That means `KEY2` equals `c` for this run. This is a global variable set with no overwritten values.
 
