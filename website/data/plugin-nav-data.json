@@ -10,10 +10,6 @@
     "path": "terraform-plugin-protocol"
   },
   {
-    "title": "Provider Design Principles",
-    "path": "hashicorp-provider-design-principles"
-  },
-  {
     "title": "Framework Benefits",
     "path": "framework-benefits"
   },
@@ -28,6 +24,36 @@
   {
     "title": "Debugging",
     "path": "debugging"
+  },
+  {
+    "title": "Best Practices",
+    "routes": [
+      { "title": "Overview", "path": "best-practices" },
+      {
+        "title": "Interacting with Providers",
+        "path": "best-practices/interacting-with-providers"
+      },
+      {
+        "title": "Provider Design Principles",
+        "path": "best-practices/hashicorp-provider-design-principles"
+      },
+      {
+        "title": "Provider Code",
+        "path": "best-practices/provider-code"
+      },
+      {
+        "title": "Naming",
+        "path": "best-practices/naming"
+      },
+      {
+        "title": "Versioning and Changelog",
+        "path": "best-practices/versioning"
+      },
+      {
+        "title": "Handling Sensitive Data",
+        "path": "best-practices/sensitive-state"
+      }
+    ]
   },
   {
     "heading": "Plugin SDKs and Libraries"
