@@ -134,17 +134,15 @@ Variable sets let you reuse the same variables across multiple workspaces in the
 
 Refer to the [variables overview](/terraform/cloud-docs/workspaces/variables) documentation for details about variable types, scope, and precedence. Refer to [managing variables](/terraform/cloud-docs/workspaces/variables/managing-variables) for details about how to create and manage variable sets.
 
-<!-- BEGIN: TFC:only name:health-assessments -->
 #### Health
 
--> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing), and continuous validation is in beta.
+-> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing) and Terraform Enterprise v202303 and newer. Continuous validation is in beta.
 
 Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
 - Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file. Drift detection requires Terraform version 0.15.4+.
 - Continuous validation determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure. Continuous validation requires Terraform version 1.3.0+.
 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.
-<!-- END: TFC:only name:health-assessments -->
 
 
 ### Integrations

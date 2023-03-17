@@ -1,5 +1,7 @@
 ---
 page_title: Organizations - API Docs - Terraform Cloud
+description: >-
+  Use the `/organizations` endpoint to interact with organizations. List organizations, entitlement sets, and module producers, and show, create, update, and destroy organizations using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -73,7 +75,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -290,7 +292,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -403,7 +405,7 @@ Properties without a default value are required.
 | `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
-| `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
+| `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.         |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
 
 ### Sample Payload
@@ -433,7 +435,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -575,7 +577,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
-| `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
+| `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.             |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
 
 ### Sample Payload

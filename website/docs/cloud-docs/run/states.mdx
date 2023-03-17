@@ -94,7 +94,6 @@ _Leaving this stage:_
 - If a single run has a combination of mandatory and advisory tasks, Terraform takes the most restrictive action. For example, if there are two advisory tasks that succeed and one mandatory task that failed, the run fails. If one mandatory task succeeds and two advisory tasks fail, the run succeeds with a warning.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
-<!-- BEGIN: TFC:only name:opa-policies -->
 ## The OPA Policy Check Stage
 
 This stage only occurs if you enabled [Open Policy Agent (OPA) policies](/terraform/cloud-docs/policy-enforcement/opa) and runs after a successful `terraform plan` and before Cost Estimation. In this stage, Terraform Cloud checks whether the plan adheres to the policies in the OPA policy sets for the workspace.
@@ -114,7 +113,6 @@ Once the run reaches the **Policy Checked** state, the run completes one of the 
 - The run proceeds to the **Apply** stage if Terraform can automatically apply the plan. An auto-apply requires that the **Auto apply** setting is enabled on the workspace.
 - If Terraform cannot automatically apply the plan, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. If the user approves the apply, the run proceeds to the **Apply** stage. If the user rejects the apply, the run stops and enters the **Discarded** state.
 
-<!-- END: TFC:only name:opa-policies -->
 
 ## The Cost Estimation Stage
 
