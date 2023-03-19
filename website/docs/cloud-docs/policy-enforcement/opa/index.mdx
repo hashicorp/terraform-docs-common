@@ -1,6 +1,6 @@
 ---
 page_title:  Defining Policies - Open Policy Agent - Terraform Cloud
-description: Use the Rego policy language to define Open Policy Agent (OPA) policies for Terraform Cloud. 
+description: Use the Rego policy language to define Open Policy Agent (OPA) policies for Terraform Cloud.
 
 ---
 
@@ -27,7 +27,7 @@ You must write a query to identify a specific policy rule within your Rego code.
 
 The result of each query must return an array, which Terraform Cloud uses to determine whether the policy has passed or failed. If the array is empty, Terraform Cloud reports that the policy has passed.
 
-The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`. 
+The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`.
 
 ### OPA Input
 
@@ -128,137 +128,31 @@ rule[msg] {
 
 You can write tests for your policies by mocking the input data the policies use during Terraform runs.
 
-The following example policy called `policy1` checks whether a workspace has provider tags.
+The following example policy called `block_auto_apply_runs` checks whether or not a Terraform Cloud workspace has been configured to automatically apply a successful Terraform plan.
 
 ```rego
-package terraform.policies.policy1
+package terraform.tfc.block_auto_apply_runs
 
-import input.plan as plan
 import input.run as run
 
-array_contains(arr, elem) {
-  arr[_] = elem
-}
-
-get_basename(path) = basename{
-    arr := split(path, "/")
-    basename:= arr[count(arr) - 1]
-}
-
-deny[reason] {
-    resource := plan.resource_changes[_]
-    action := resource.change.actions[count(resource.change.actions) - 1]
-    array_contains(["create", "update"], action)
-
-    cloud_tag := get_basename(resource.provider_name)
-
-    not run.workspace.tags[cloud_tag]
-
-    reason := sprintf("Workspace must be marked with '%s' tag to create resources in %s cloud",
-                      [cloud_tag, cloud_tag])
+deny[msg] {
+	run.workspace.auto_apply != false
+	msg := sprintf(
+		"Terraform Cloud workspace %s has been configured to automatically provision Terraform infrastructure. Change the workspace Apply Method settings to 'Manual Apply'",
+		[run.workspace.name],
+	)
 }
 ```
 
-The following example shows mock JSON input data from Terraform that you could use to write tests for `policy1`.
-
-```json
-{
-   "mock":{
-      "valid_tags":{
-         "plan":{
-            "resource_changes":[
-               {
-                  "address":"aws_instance.instance1",
-                  "mode":"managed",
-                  "type":"aws_instance",
-                  "name":"instance1",
-                  "provider_name":"registry.terraform.io/hashicorp/aws",
-                  "change":{
-                     "actions":[
-                        "create",
-                        "update"
-                     ]
-                  }
-               },
-               {
-                  "address":"google_compute_instance.instance2",
-                  "mode":"managed",
-                  "type":"google_compute_instance",
-                  "name":"instance2",
-                  "provider_name":"registry.terraform.io/hashicorp/google",
-                  "change":{
-                     "actions":[
-                        "create"
-                     ]
-                  }
-               }
-            ]
-         },
-         "run":{
-            "workspace":{
-               "tags":{
-                  "aws":"",
-                  "google":""
-               }
-            }
-         }
-      },
-      "missing_tag":{
-         "plan":{
-            "resource_changes":[
-               {
-                  "address":"aws_instance.instance1",
-                  "mode":"managed",
-                  "type":"aws_instance",
-                  "name":"instance1",
-                  "provider_name":"registry.terraform.io/hashicorp/aws",
-                  "change":{
-                     "actions":[
-                        "create",
-                        "update"
-                     ]
-                  }
-               },
-               {
-                  "address":"google_compute_instance.instance2",
-                  "mode":"managed",
-                  "type":"google_compute_instance",
-                  "name":"instance2",
-                  "provider_name":"registry.terraform.io/hashicorp/google",
-                  "change":{
-                     "actions":[
-                        "create"
-                     ]
-                  }
-               }
-            ]
-         },
-         "run":{
-            "workspace":{
-               "tags":{
-                  "google":""
-               }
-            }
-         }
-      }
-   }
-}
-```
-
-The following test validates `policy1`. The test checks for valid tags and missing tags in the workspace. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
-
+The following test validates `block_auto_apply_runs`. The test is written in rego and uses the OPA [test format](https://www.openpolicyagent.org/docs/latest/policy-testing/#test-format) to check that the workspace [apply method](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#apply-method) is not configured to auto apply. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
 
 ```rego
-package terraform.policies.policy1
+package terraform.tfc.block_auto_apply_runs
 
-test_workspace_tags_allowed {
-    result = deny with input as data.mock.valid_tags
-    count(result) == 0
-}
+import future.keywords
 
-test_workspace_tags_missing {
-    result = deny with input as data.mock.missing_tag
-    count(result) == 1
+test_run_workspace_auto_apply if {
+	deny with input as {"run": {"workspace": {"auto_apply": true}}}
 }
 ```
 
@@ -286,14 +180,14 @@ run
 ├── organization
 │   └── name (string)
 ├── workspace
-│   ├── id (string)
-│   ├── name (string)
-│   ├── created_at (string)
-│   ├── description (string)
-│   ├── auto_apply (bool)
-│   ├── tags (array of strings)
-│   ├── working_directory (string)
-│   └── vcs_repo (map of keys)
+    ├── id (string)
+    ├── name (string)
+    ├── created_at (string)
+    ├── description (string)
+    ├── auto_apply (bool)
+    ├── tags (array of strings)
+    ├── working_directory (string)
+    └── vcs_repo (map of keys)
 ```
 
 ### Properties
