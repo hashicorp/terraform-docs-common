@@ -144,7 +144,7 @@ deny[msg] {
 }
 ```
 
-The following test validates `block_auto_apply_runs`. The test is written in rego and uses the OPA [test format](https://www.openpolicyagent.org/docs/latest/policy-testing/#test-format) to check that the workspace [apply method](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#apply-method) is not configured to auto apply. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
+The following test validates `block_auto_apply_runs`. The test is written in rego and uses the OPA [test format](https://www.openpolicyagent.org/docs/latest/policy-testing/#test-format) to check that the workspace [apply method](/terraform/cloud-docs/workspaces/settings#apply-method) is not configured to auto apply. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
 
 ```rego
 package terraform.tfc.block_auto_apply_runs
