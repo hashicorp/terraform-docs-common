@@ -126,7 +126,7 @@ rule[msg] {
 
 ## Testing Policies
 
-You can write tests for your policies by mocking the input data the policies use during Terraform runs.
+You can write tests for your policies by [mocking](https://www.openpolicyagent.org/docs/latest/policy-testing/#data-and-function-mocking) the input data the policies use during Terraform runs.
 
 The following example policy called `block_auto_apply_runs` checks whether or not a Terraform Cloud workspace has been configured to automatically apply a successful Terraform plan.
 
