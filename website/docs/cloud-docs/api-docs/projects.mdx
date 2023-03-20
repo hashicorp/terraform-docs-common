@@ -195,13 +195,14 @@ This endpoint lists projects in the organization.
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter                               | Description                                                                                                |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------|
-| `page[number]`                          | **Optional.** If omitted, the endpoint will return the first page.                                         |
-| `page[size]`                            | **Optional.** If omitted, the endpoint will return 20 projects per page.                                   |
-| `q`                                     | **Optional.** Allows querying a list of projects by name. This search is case-insensitive.                 |
-| `filter[permissions][create-workspace]` | **Optional.** If present, returns a list of projects that the authenticated user can create workspaces in. |
-| `filter[permissions][update]`           | **Optional.** If present, returns a list of projects that the authenticated user can update.               |
+| Parameter                               | Description                                                                                                                                                                                                 |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]`                          | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                          |
+| `page[size]`                            | **Optional.** If omitted, the endpoint will return 20 projects per page.                                                                                                                                    |
+| `q`                                     | **Optional.** A search query string. This query searches projects by name. This search is case-insensitive. If both `q` and `filter[names]` are specified, `filter[names]` will be used.                    |
+| `filter[names]`                         | **Optional.** If specified, returns the project with the matching name. This filter is case-insensitive. If multiple comma separated values are specified, projects matching any of the names are returned. |
+| `filter[permissions][create-workspace]` | **Optional.** If present, returns a list of projects that the authenticated user can create workspaces in.                                                                                                  |
+| `filter[permissions][update]`           | **Optional.** If present, returns a list of projects that the authenticated user can update.                                                                                                                |
 
 
 ### Sample Request
