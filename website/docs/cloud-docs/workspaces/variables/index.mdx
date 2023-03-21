@@ -145,12 +145,12 @@ When you trigger a run through the command line, Terraform Cloud applies the fol
 
 - **Run-Specific:** `replicas` from the command line. That means `replicas` equals `9` for this run. Variables set from the command line take precedence over all other values, including the run-specific `TF_VAR_replicas` value set in your local environment.
 
-- **Workspace-Specific:** `VAR1`. That means `VAR1` equals `h` for this run, overwriting the value in A_Variable_Set.
+- **Workspace-Specific:** `VAR1`. For this run, `VAR1` equals `h`, overwriting the value in A_Variable_Set.
 
-- **A_Variable_Set:** `KEY1`. That means `KEY1` equals `x` for this run, overwriting the value in B_Variable_Set.
+- **A_Variable_Set:** `KEY1`. For this run, `KEY1` equals `x`, overwriting the value in B_Variable_Set.
 
-- **B_Variable_Set:** `ACCESS_KEY`, `ACCESS_ID`, and `VAR2`. That means `VAR2` equals `z` for this run, overwriting the value in C_Variable_Set.
+- **B_Variable_Set:** `ACCESS_KEY`, `ACCESS_ID`, and `VAR2`. For this run, `VAR2` equals `z`, overwriting the value in C_Variable_Set.
 
-- **C_Variable_Set:** `KEY2`. That means `KEY2` equals `c` for this run. This is a global variable set with no overwritten values.
+- **C_Variable_Set:** `KEY2`. For this run, `KEY2` equals `c`. This is a global variable set with no overwritten values.
 
 ![An example scenario demonstrating variable precedence in Terraform Cloud](/img/docs/variable-precedence-example.png)
