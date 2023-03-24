@@ -28,11 +28,11 @@ There are also some actions within an organization that are only available to ow
 Permissions for the owners team include:
 
 - Manage workspaces (refer to [Organization Permissions][] below; equivalent to admin permissions on every workspace)
+- Manage projects (refer to [Organization Permissions][] below; equivalent to admin permissions on every project and workspace)
 - Manage policies (refer to [Organization Permissions][] below)
 - Manage policy overrides (refer to [Organization Permissions][] below)
 - Manage VCS settings (refer to [Organization Permissions][] below)
 - Manage the private registry (refer to [Organization Permissions][] below)
-- Manage projects (refer to [Organization Permissions][] below; equivalent to admin permissions on every project and workspace)
 - Manage Membership (refer to [Organization Permissions][] below; invite or remove users from the organization itself, and manage the membership of its teams)
 - View all secret teams (owners only)
 - Manage organization permissions (owners only)
@@ -203,16 +203,16 @@ You must select a level of access for projects.
 
 #### None
 
-Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+Members do not have access to projects or workspaces. You can grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) or [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
 #### View all projects
 
-Allows members to view all projects within the organization. This lets users:
+Members can view all projects within the organization. This lets users:
 - View project names in a given organization.
 
 #### Manage all projects
 
-Allows members to create and manage all projects and workspaces within the organization. In addition to all the permissions granted by “Manage all workspaces”, this also lets users:
+Members can create and manage all projects and workspaces within the organization. In addition to the permissions granted by [“Manage all workspaces”](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces), this also lets users:
 - Manage other teams' access to all projects.
 - Create, edit, and delete projects (otherwise only available to organization owners).
 - Move workspaces between projects.
@@ -223,18 +223,18 @@ You must select a level of access for workspaces.
 
 #### None
 
-Does not grant members any explicit access to projects and workspaces. You can still grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) and [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+Members do not have access to projects or workspaces. You can grant permissions to individual projects or workspaces through [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) or [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
 
 #### View all workspaces
 
-Allows members to view all workspaces within the organization. This lets users:
+Members can view all workspaces within the organization. This lets users:
 - View information and features relevant to each workspaces (e.g. runs, state versions, variables).
 
 #### Manage all workspaces
 
-Allows members to create and manage all workspaces within the organization. This lets users:
-- Manage all workspaces. Any action that requires admin access is also available to teams with permission to manage workspaces.
-- Create new workspaces (otherwise only available to organization owners) that belong to the "Default Project".
+Members can create and manage all workspaces within the organization. This lets users:
+- Perform any action that requires admin permissions in those workspaces.
+- Create new workspaces within the organization's **Default Project**, an action that is otherwise only available to organization owners.
 - Create, update, and delete [Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
 
 ### Manage Policies
