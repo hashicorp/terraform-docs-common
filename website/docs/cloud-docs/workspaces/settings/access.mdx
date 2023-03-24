@@ -23,11 +23,16 @@ Terraform Cloud manages users' permissions to workspaces with teams.
 
 - [Workspace-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions) can be granted to an individual team on a particular workspace. These permissions can be managed on the workspace by anyone with admin access to the workspace.
 - In addition, some [organization-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) can be granted to a team which apply to every workspace in the organization. For example, the
-  [manage workspaces only](/terraform/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only) and [manage all projects & workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#manage-workspaces-only) permissions grant the workspace-level admin permission to every workspace in the organization. Organization-level permissions can only be managed by organization owners.
+  [manage all workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces) and [manage all projects](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) permissions grant the workspace-level admin permission to every workspace in the organization. Organization-level permissions can only be managed by organization owners.
 
 ## Managing Workspace Access Permissions
 
-When a user creates a workspace, only [the owners team](/terraform/cloud-docs/users-teams-organizations/teams#the-owners-team), teams with the "Manage Workspaces" or the “Manage Projects & Workspaces” [organization permission](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions), and teams with the “Project Admin” project permission can access a workspace with full admin permissions. You cannot override these teams' permissions through the workspace's specific permissions. 
+When a user creates a workspace, the following teams can access that workspace with full admin permissions:
+- [the owners team](/terraform/cloud-docs/users-teams-organizations/teams#the-owners-team)
+- teams with "Manage all workspaces" and/or “Manage all projects” [organization permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions)
+- teams with “Project Admin” project permissions
+
+You cannot override these teams' permissions through the workspace's specific permissions.
 
 To manage a team's access to a workspace, select "Team Access" from the workspace's "Settings" menu.
 
