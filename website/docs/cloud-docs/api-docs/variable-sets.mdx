@@ -22,14 +22,14 @@ You need [`read variables` permission](/terraform/cloud-docs/users-teams-organiz
 
 Properties without a default value are required.
 
-| Key path                        | Type    | Default | Description                                                                                                                             |
-| ------------------------------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.name`                     | string  |         | The name of the variable set.                                                                                                           |
-| `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                             |
-| `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization.             |
-| `data.relationships.workspaces` | array   | \[]     | Array of references to workspaces that the variable set should be assigned to. Sending an empty array clears all workspace assignments. |
-| `data.relationships.projects` | array   | \[]     | Array of references to projects that the variable set should be assigned to. Sending an empty array clears all project assignments. |
-| `data.relationships.vars`       | array   | \[]     | Array of complete variable definitions that comprise the variable set.                                                                  |
+| Key path                        | Type    | Default | Description                                                                                                                 |
+|---------------------------------|---------|---------|-----------------------------------------------------------------------------------------------------------------------------|
+| `data.name`                     | string  |         | The name of the variable set.                                                                                               |
+| `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                 |
+| `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization. |
+| `data.relationships.workspaces` | array   | \[]     | Array of references to workspaces that the variable set should be assigned to.                                              |
+| `data.relationships.projects`   | array   | \[]     | Array of references to projects that the variable set should be assigned to.                                                |
+| `data.relationships.vars`       | array   | \[]     | Array of complete variable definitions that comprise the variable set.                                                      |
 
 Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
@@ -144,6 +144,17 @@ curl \
 
 Terraform Cloud does not allow global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
+### Request Body
+
+| Key path                        | Type    | Default | Description                                                                                                                                          |
+|---------------------------------|---------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.name`                     | string  |         | The name of the variable set.                                                                                                                        |
+| `data.description`              | string  |         | Text displayed in the UI to contextualize the variable set and its purpose.                                                                          |
+| `data.global`                   | boolean |         | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization.                          |
+| `data.relationships.workspaces` | array   |         | **Optional** Array of references to workspaces that the variable set should be assigned to. Sending an empty array clears all workspace assignments. |
+| `data.relationships.projects`   | array   |         | **Optional** Array of references to projects that the variable set should be assigned to. Sending an empty array clears all project assignments.     |
+| `data.relationships.vars`       | array   |         | **Optional** Array of complete variable definitions to add to the variable set.                                                                      |
+
 | Status  | Response                  | Reason(s)                                                                      |
 | ------- | ------------------------- | ------------------------------------------------------------------------------ |
 | [200][] | [JSON API document][]     | Successfully updated variable set                                              |
@@ -162,6 +173,22 @@ Terraform Cloud does not allow global variable sets to contain conflicting varia
       "global": true
     },
     "relationships": {
+      "workspaces": {
+        "data": [
+          {
+            "id": "ws-FRFwkYoUoGn1e34b",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "projects": {
+        "data": [
+          {
+            "id": "prj-kFjgSzcZSr5c3imE",
+            "type": "projects"
+          }
+        ]
+      },
       "vars": {
         "data": [
           {
