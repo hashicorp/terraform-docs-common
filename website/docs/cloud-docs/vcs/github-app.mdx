@@ -98,12 +98,14 @@ If you disallow access to a repository that is currently connected to any Terraf
 
 ## Feature Limitations
 
-You can use the Terraform Cloud GitHub App to create workspaces and private registry modules from the Terraform Cloud UI, the API or the `tfe` Terraform provider. These features are only supported in the following releases:
+You can use the Terraform Cloud GitHub App to create workspaces and private registry modules from the Terraform Cloud UI, the API or the tfe Terraform provider. These features are only supported in the following releases:
 
-- TFE v202303-1 and later.
-- [go_tfe](https://github.com/hashicorp/go-tfe) version 1.19.0 and later.
-- [tfe_provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs) version v0.43.0 and later.
+- If using the UI, any version of TFC or TFE v202302-1 and later is required.
+- If using the API, Terraform Cloud or TFE v202303-1 and later is required.
+- If using [go_tfe](https://github.com/hashicorp/go-tfe), version 1.19.0 or later of go_tfe and either Terraform Cloud or TFE v202303-1 and later are required.
+- If using [tfe_provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs), version v0.43.0 or later of the tfe_provider and either Terraform Cloud or TFE v202303-1 and later are required.
 
 Once you decide to start using these other features, a user with permission to manage VCS settings can configure [GitHub OAuth access](/terraform/cloud-docs/vcs/github) for your organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
