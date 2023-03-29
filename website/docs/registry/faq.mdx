@@ -17,11 +17,15 @@ The Terraform Registry's version sorting is strictly SemVer compliant (see above
 
 For example, if your provider has a published version 1 (i.e. `1.0.0`), and then you create a new release for a version 2 prerelease (e.g. `2.0.0-preview`), the version 2 prerelease will be listed as the latest version in the Terraform Registry.
 
+Please note that terraform itself will never select a prerelease version during a `plan` or `apply`, unless the configuration files explicitly request one [using an exact version constraint](/terraform/language/expressions/version-constraints#version-constraint-behavior).
+
+### How can I correct a bug or typo in a version of my provider, module, or policy library once it has been published?
+
+If there is a problem with a certain version, the best resolution is to publish a new release with the issue fixed, incrementing the patch version (e.g. from `1.2.0` to `1.2.1`).
+
 ### How do I remove a version of my provider, module, or policy library that has already been published?
 
 If any users have already begun using a version of your provider, module, or policy library, removing the version from the Terraform Registry will break their Terraform configuration. They may be unable to work with their infrastructure until they can find a suitable replacement version of your integration. For this reason, **we recommend that you never remove previously published versions of providers, modules, or policy libraries**.
-
-If there is a bug in a certain version, it is usually better to publish another release, incrementing the patch version (i.e. from `1.2.0` to `1.2.1`), rather than to remove the bugged version.
 
 There may be situations where it is important that a version be removed from the Registry. Perhaps a version of a provider has a critical security vulnerability, or you may have extremely high confidence that no one is using a version of your module that doesn't work as you intended it to.
 
@@ -39,11 +43,21 @@ The Terraform Registry acts as a kind of index for Terraform-related content tha
 
 If you remove a file, or a tag, a release, or other content from GitHub, the Registry will not be made aware that you did so. The Registry may still host index records pointing to the now-removed files or content. As a result, someone using your provider or module may see their Terraform configuration break, since through the Registry it expects to find files on GitHub which are no longer available.
 
+If you find a typo, bug, or other issue with a published version of your provider, module, or policy library, [we recommend that you fix the issue and publish a new "patch" version of the integration](#how-can-i-correct-a-bug-or-typo-in-a-version-of-my-provider-module-or-policy-library-once-it-has-been-published).
+
 ### What does it mean to "resync" my provider, module, or policy library?
 
 Owners of any of these types of Terraform integrations can find a "resync" button on the webpage for the integrations they own. Triggering a resync instructs the Registry to analyze the integration's source repository on GitHub. During a resync, the registry will:
 
-- Ensure that there is a webhook established on the repository, so that new versions of the integration can be automatically published.
-- Create any versions of the integration that exist in the GitHub repository but do not yet exist in the Registry.
+- Make sure that there is a webhook established on the repository, so that new versions of the integration can be automatically published.
+- Look for any discrepancies between the versions of the integration that exist in the GitHub repository and those that exist in the Registry.
+
+If there are new versions available in GitHub that have not been published in the Registry, those new versions will be published.
+
+If there are versions that have been published in the Registry that no longer exist in GitHub, resync behavior diverges depending on the type of integration:
+
+- For modules, versions that are available in the Registry but no longer available in GitHub will be removed from the Registry. This may confuse any consumers who have come to rely on these versions of your module.
+
+- For providers and policy libraries, published versions in the Registry are not removed, even if they no longer exist in GitHub. This state can cause certain versions of the integrations to be unusable. [We recommend that you never delete files, tags, or releases from GitHub once they've been published to the Registry](#can-i-remove-a-version-of-a-provider-by-deleting-the-release-from-github).
 
 Please note that the resync procedure will not remove or update versions of the integration that have already been published.
