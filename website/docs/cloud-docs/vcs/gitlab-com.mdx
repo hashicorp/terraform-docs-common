@@ -41,11 +41,11 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. In a new browser tab, open [gitlab.com](https://gitlab.com) and log in as whichever account you want Terraform Cloud to act as. For most organizations this should be a dedicated service user, but a personal account will also work.
 
-   ~> **Important:** The account you use for connecting Terraform Cloud **must have admin (master) access** to any shared repositories of Terraform configurations, since creating webhooks requires admin permissions.
+   ~> **Important:** The account you use for connecting Terraform Cloud **must have Maintainer access** to any shared repositories of Terraform configurations, since creating webhooks requires Maintainer permissions. Refer to [the GitLab documentation](https://docs.gitlab.com/ee/user/permissions.html#project-members-permissions) for details.
 
-1. Navigate to GitLab's [User Settings > Applications](https://gitlab.com/profile/applications) page.
+1. Navigate to GitLab's [User Settings > Applications](https://gitlab.com/-/profile/applications) page.
 
-   This page is located at <https://gitlab.com/profile/applications>. You can also reach it through GitLab's menus:
+   This page is located at <https://gitlab.com/-/profile/applications>. You can also reach it through GitLab's menus:
 
    - Click your profile picture and choose "Settings."
    - Click "Applications."
