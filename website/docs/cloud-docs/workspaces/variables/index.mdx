@@ -108,7 +108,7 @@ For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same work
 
 Workspace-specific variables and workspace-scoped variable sets always take precedence over project-scoped variable sets that are applied to workspaces within a project. 
 
-Variables in project-scoped variable sets are only applied to the workspaces in the specified projects.
+Variables in project-scoped variable sets are only applied to the workspaces within the specified projects.
 
 When project-scoped variable sets have conflicting variables, Terraform Cloud compares the variable set names and uses values from the variable set with lexical precedence. Terraform and Terraform Cloud operate on UTF-8 strings, and Terraform Cloud sorts variable set names based the on lexical order of Unicode code points.
 
