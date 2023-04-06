@@ -46,9 +46,34 @@ Generates a new team token and overrides existing token if one exists.
 | :----- | :----------------------------------- |
 | POST   | /teams/:team_id/authentication-token |
 
+This endpoint returns the secret text of the created authentication token. A token value is only shown upon creation, and cannot be recovered later.
+
 ### Parameters
 
 - `:team_id` (`string: <required>`) - specifies the team ID for generating the team token
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+
+| Key path                      | Type   | Default | Description                                                                                                     |
+| ----------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `data.type`                   | string |         | Must be `"authentication-token"`.                                                                               |
+| `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Team Token will expire. If omitted or set to `null` the token will never expire. |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type": "authentication-token",
+    "attributes": {
+      "expired-at": "2023-04-06T12:00:00.000Z"
+    }
+  }
+}
+```
 
 ### Sample Request
 
@@ -57,6 +82,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
+  --data @payload.json \
   https://app.terraform.io/api/v2/teams/team-BUHBEM97xboT8TVz/authentication-token
 ```
 
@@ -71,7 +97,8 @@ curl \
       "created-at": "2017-11-29T19:18:09.976Z",
       "last-used-at": null,
       "description": null,
-      "token": "QnbSxjjhVMHJgw.atlasv1.gxZnWIjI5j752DGqdwEUVLOFf0mtyaQ00H9bA1j90qWb254lEkQyOdfqqcq9zZL7Sm0"
+      "token": "QnbSxjjhVMHJgw.atlasv1.gxZnWIjI5j752DGqdwEUVLOFf0mtyaQ00H9bA1j90qWb254lEkQyOdfqqcq9zZL7Sm0",
+      "expired-at": "2023-04-06T12:00:00.000Z"
     },
     "relationships": {
       "created-by": {
