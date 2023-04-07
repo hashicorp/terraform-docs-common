@@ -17,7 +17,7 @@ reporting the results back to ServiceNow.
 
 ## Prerequisites
 
-Before configuring a service catalog, you must install and configured the
+Before configuring a service catalog, you must install and configure the
 Terraform Cloud integration software on your ServiceNow instance. These steps
 are covered in the [installation documentation](/terraform/cloud-docs/integrations/service-now).
 
@@ -166,3 +166,18 @@ changes are merged to the associated VCS repositories. This is known as the
 [VCS-driven run workflow](/terraform/cloud-docs/run/ui). It is important to keep in mind
 that all of the ServiceNow workspaces connected to a given repository will be
 updated whenever changes are merged to the associated branch in that repository.
+
+## Execution Mode
+
+Starting from version 2.2.0, the Service Catalog app allows you to set the 
+[execution mode](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings#execution-mode) 
+for your Terraform Workspaces.
+
+The default value is "Remote", which performs runs on Terraform Cloud's infrastructure. 
+Changing the execution mode to "Local" allows you to execute Terraform runs locally using the CLI workflow. 
+Selecting "Agent" enables you to run Terraform operations on isolated, private, or on-premises infrastructure. 
+This option requires an Agent Pool to be created in your Terraform Organization beforehand. 
+Provide its ID in the "Agent Pool ID" field when you order a new Workspace through the Service Catalog.
+
+-> **Note:** [Terraform Cloud Agents](https://developer.hashicorp.com/terraform/cloud-docs/agents) are 
+available in the Terraform Cloud Business Tier.
