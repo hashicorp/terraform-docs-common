@@ -8,7 +8,7 @@ description: >-
 
 ~> **Important:** Make sure your agents are running version **v1.7.0** or later.
 
-If required for custom auth workflows or to perform auth with providers that are not natively supported by dynamic credentials, you can request that Terraform Cloud inject a [workload identity token](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens) into the run environment for usage in agent hooks.
+If required for custom auth workflows or to perform auth with providers that are not natively supported by dynamic credentials, you can request that Terraform Cloud inject a [workload identity token](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens) into the run environment for usage in agent hooks.
 ## Configure Terraform Cloud
 ### Required Environment Variables
 You’ll need to set the following environment variable in your Terraform Cloud workspace in order to have Terraform Cloud inject a workload identity token into the run environment. You can set this as a workspace variable, or if you’d like to inject tokens with the same audience value across multiple workspaces, you can use a variable set.
