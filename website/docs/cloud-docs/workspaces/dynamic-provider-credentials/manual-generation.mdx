@@ -18,6 +18,6 @@ You’ll need to set the following environment variable in your Terraform Cloud 
 | `TFC_WORKLOAD_IDENTITY_AUDIENCE` | The desired value for the token’s audience. | Must be present and set or Terraform Cloud will not inject a workload identity token into the run environment. |
 
 ## Configure Agent Hooks
-After you've set the `TFC_WORKLOAD_IDENTITY_AUDIENCE` variable, each plan and apply will have a `TFC_WORKLOAD_IDENTITY_TOKEN` variable available in the run environment, which contains a [workload identity token](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens).
+After you've set the `TFC_WORKLOAD_IDENTITY_AUDIENCE` variable, each plan and apply will have a `TFC_WORKLOAD_IDENTITY_TOKEN` variable available in the run environment, which contains a [workload identity token](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens).
 
 You can use this environment variable in custom agent hooks to enable custom auth workflows or to perform auth with providers which are not natively supported by dynamic credentials.
