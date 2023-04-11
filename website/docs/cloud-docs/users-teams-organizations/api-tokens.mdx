@@ -101,7 +101,7 @@ The following chart illustrates the various access levels for the supported API 
 
 ## Token Expiration
 
-User, team, and organization tokens may be created with an expiration date and time set. Once this time has passed, the token will no longer be treated as valid, and may not be used to authenticate to any API.
+User, team, and organization tokens may be created with an expiration date and time. Once this time has passed, the token will no longer be treated as valid, and may not be used to authenticate to any API. Any API requests made with an expired token will result in failure.
 
 HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens which will expire once they are no longer needed helps reduce the risk that valid tokens may be leaked, or that token owners will forget to delete tokens meant for delegated use once their intended purpose is complete.
 
