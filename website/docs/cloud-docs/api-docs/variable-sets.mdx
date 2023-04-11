@@ -6,7 +6,7 @@ description: >-
 
 # Variable Sets API
 
-A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces and projects. For example, you could define a variable set of provider credentials and automatically apply it to a set of assigned workspaces, all workspaces in a project, or all workspaces in an organization.
+A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces and projects. For example, you could define a variable set of provider credentials and automatically apply it to a selection of workspaces, all workspaces in a project, or all workspaces in an organization.
 
 You need [`read variables` permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in the owning organization. To create or edit variable sets, your team must have [`Manage Workspace` organization access](/terraform/cloud-docs/users-teams-organizations/teams#managing-organization-access).
 
@@ -27,9 +27,9 @@ Properties without a default value are required.
 | `data.name`                     | string  |         | The name of the variable set.                                                                                               |
 | `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                 |
 | `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization. |
-| `data.relationships.workspaces` | array   | \[]     | Array of references to workspaces that the variable set should be assigned to.                                              |
-| `data.relationships.projects`   | array   | \[]     | Array of references to projects that the variable set should be assigned to.                                                |
-| `data.relationships.vars`       | array   | \[]     | Array of complete variable definitions that comprise the variable set.                                                      |
+| `data.relationships.workspaces` | array   | \`[]`     | Array of references to workspaces that the variable set should be assigned to.                                              |
+| `data.relationships.projects`   | array   | \`[]`    | Array of references to projects that the variable set should be assigned to.                                                |
+| `data.relationships.vars`       | array   | \`[]`     | Array of complete variable definitions that comprise the variable set.                                                      |
 
 Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
@@ -382,7 +382,7 @@ List all variable sets for a project. This includes global variable sets from th
 | `:project_id` | The project ID |
 
 List all variable sets for a workspace. This includes global variable sets from the workspace's organization and variable sets
-attached to the workspace's parent project.
+attached to the project this workspace is contained within.
 
 `GET workspaces/:workspace_id/varsets`
 
@@ -808,7 +808,7 @@ curl \
 
 ## Apply Variable Set to Projects
 
-Accepts a list of projects to add the variable set to. When the variable set is applied to a project, all workspaces in the project will have the variable set applied to them.
+Accepts a list of projects to add the variable set to. When you apply a variable set to a project, all the workspaces in that project will have the variable set applied to them.
 
 `POST varsets/:varset_id/relationships/projects`
 
