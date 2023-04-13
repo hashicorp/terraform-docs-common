@@ -5,23 +5,11 @@ description: Troubleshooting common Terraform Registry problems
 
 ## Common publishing issues
 
-### How does the Registry identify the latest version of my provider, module, or policy library?
+### How can I fix a formatting issue in the documentation for my provider?
 
-Each version of an integration published in the Terraform Registry has a version identifier, which is a string like `1.2.3`. You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the integration's code lives.
+If your provider's documentation is not showing up in the registry the way you would like it to, you can use the [documentation preview tool](https://registry.terraform.io/tools/doc-preview) to see how the Terraform Registry will format your documentation _before_ you commit the documentation to a new provider release. [More information about how to build provider documentation is available here](/terraform/registry/providers/docs).
 
-The Registry requires that these version identifiers are [SemVer compliant](https://semver.org/). Versions are sorted using these identifiers, following [standard SemVer rules for precedence](https://semver.org/#spec-item-11). The version identifier with the greatest precedence is always listed as latest by the Terraform Registry.
-
-### Why are prerelease versions listed as the latest version of my integration?
-
-The Terraform Registry's version sorting is strictly SemVer compliant (see above). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
-
-For example, if your provider has a published version 1 (i.e. `1.0.0`), and then you create a new release for a version 2 prerelease (e.g. `2.0.0-preview`), the version 2 prerelease will be listed as the latest version in the Terraform Registry.
-
-Please note that terraform itself will never select a prerelease version during a `plan` or `apply`, unless the configuration files explicitly request one [using an exact version constraint](/terraform/language/expressions/version-constraints#version-constraint-behavior).
-
-### How can I correct a bug or typo in a version of my provider, module, or policy library once it has been published?
-
-If there is a problem with a certain version, the best resolution is to publish a new release with the issue fixed, incrementing the patch version (e.g. from `1.2.0` to `1.2.1`).
+If you have already released a version of your provider and you are unhappy with the appearance of it's documentation, [we recommend you fix the documentation issue and include it in a new release](#how-can-I-correct-a-bug-typo-or-documentation-error-in-a-version-of-my-provider-module-or-policy-library-once-it-has-been-published).
 
 ### How do I remove a version of my provider, module, or policy library that has already been published?
 
@@ -61,3 +49,21 @@ If there are versions that have been published in the Registry that no longer ex
 - For providers and policy libraries, published versions in the Registry are not removed, even if they no longer exist in GitHub. This state can cause certain versions of the integrations to be unusable. [We recommend that you never delete files, tags, or releases from GitHub once they've been published to the Registry](#can-i-remove-a-version-of-a-provider-by-deleting-the-release-from-github).
 
 Please note that the resync procedure will not remove or update versions of the integration that have already been published.
+
+### How does the Registry identify the latest version of my provider, module, or policy library?
+
+Each version of an integration published in the Terraform Registry has a version identifier, which is a string like `1.2.3`. You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the integration's code lives.
+
+The Registry requires that these version identifiers are [SemVer compliant](https://semver.org/). Versions are sorted using these identifiers, following [standard SemVer rules for precedence](https://semver.org/#spec-item-11). The version identifier with the greatest precedence is always listed as latest by the Terraform Registry.
+
+### Why are prerelease versions listed as the latest version of my provider, module, or policy library?
+
+The Terraform Registry's version sorting is strictly SemVer compliant (see above). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
+
+For example, if your provider has a published version 1 (i.e. `1.0.0`), and then you create a new release for a version 2 prerelease (e.g. `2.0.0-preview`), the version 2 prerelease will be listed as the latest version in the Terraform Registry.
+
+Please note that terraform itself will never select a prerelease version during a `plan` or `apply`, unless the configuration files explicitly request one [using an exact version constraint](/terraform/language/expressions/version-constraints#version-constraint-behavior).
+
+### How can I correct a bug, typo, or documentation error in a version of my provider, module, or policy library once it has been published?
+
+If there is a problem with a certain version, the best resolution is to publish a new release with the issue fixed, incrementing the patch version (e.g. from `1.2.0` to `1.2.1`).
