@@ -23,6 +23,10 @@ In these situations, your options for removing previously published versions var
 - **Providers**: There is no manual process for removing a version of a provider. Reach out to us via email if it is critical that a version be deleted.
 - **Policy Libraries**: The owner of a policy library can completely remove it from the Registry, through the website. [More details on this workflow can be found here](/terraform/registry/policy-libraries/publishing#removing-a-policy-library).
 
+### How can I correct a bug, typo, or documentation error in a version of my provider, module, or policy library once it has been published?
+
+If there is a problem with a certain version, the best resolution is to publish a new release with the issue fixed, incrementing the patch version (e.g. from `1.2.0` to `1.2.1`).
+
 ### Can I remove a version of a provider by deleting the release from GitHub?
 
 **We recommend you never remove content from a GitHub repository that has already been published to the Terraform Registry**.
@@ -38,7 +42,6 @@ If you find a typo, bug, or other issue with a published version of your provide
 ### I have renamed the GitHub user or organization that owns my provider, module, or policy library's GitHub repository. How can I update my integration in the Registry?
 
 ### I published a provider, module, or policy library by signing in to the Registry as a GitHub user that I no longer have access to. How can I regain ownership of my integration in the Registry?
-
 
 ### What does it mean to "resync" my provider, module, or policy library?
 
@@ -71,6 +74,8 @@ For example, if your provider has a published version 1 (i.e. `1.0.0`), and then
 
 Please note that terraform itself will never select a prerelease version during a `plan` or `apply`, unless the configuration files explicitly request one [using an exact version constraint](/terraform/language/expressions/version-constraints#version-constraint-behavior).
 
-### How can I correct a bug, typo, or documentation error in a version of my provider, module, or policy library once it has been published?
+### How do I change the GPG key that I use to sign my provider?
 
-If there is a problem with a certain version, the best resolution is to publish a new release with the issue fixed, incrementing the patch version (e.g. from `1.2.0` to `1.2.1`).
+### How do I remove a public GPG key from the Registry that has been used for publishing a provider?
+
+### My private GPG key and/or GitHub account was compromised in a security incident. How can I protect my Registry integrations?
