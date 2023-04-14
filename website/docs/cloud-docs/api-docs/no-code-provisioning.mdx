@@ -194,3 +194,304 @@ curl \
   }
 }
 ```
+
+## Update allowed variables for a No-Code Provisioning of a module.
+
+<!-- Header: "Verb a Noun" or "Verb Nouns." -->
+
+`PATCH /no-code-modules/:id`
+
+<!-- ^ The method and path are styled as a single code span, with global prefix (`/api/v2`) omitted and the method capitalized. -->
+
+Parameter | Description
+--- | ---
+`:id` | The unique identifier for a No-Code-Allowed module.
+
+The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
+
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+
+<!-- ^ Include a note like the above if the endpoint CANNOT be used with a given token type. Most endpoints don't need this. -->
+
+| Status  | Response                                     | Reason                                                         |
+| ------- | -------------------------------------------- | -------------------------------------------------------------- |
+| [200][] | [JSON API document][] (`type: "somethings"`) | Successfully created a team                                    |
+| [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
+| [404][] | [JSON API error object][]                    | Organization not found, or user unauthorized to perform action |
+| [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
+| [500][] | [JSON API error object][]                    | Failure during team creation                                   |
+
+<!-- ^ Include status codes even if they're plain 200/404.
+If a JSON API document is returned, specify the `type`.
+If the table includes links, use reference-style links to keep the table size small. The references should be included once per API page, at the very top.
+ -->
+
+### Request Body
+
+This PATCH endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+Key path | Type | Default | Description
+--- | --- | --- | ---
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type": "no-code-modules",
+    "attributes": {
+      "follow-latest-version": true,
+      "enabled": false
+    },
+    "relationships": {
+      "registry-module": {
+        "data": {
+          "id": "mod-zyai9dwH4VPPaVuC",
+          "type": "registry-module"
+        }
+      },
+      "variable-options": {
+        "data": [
+          {
+            "id": "ncvaropt-fcHDfnZ1EGdRzFNC",
+            "type": "variable-options",
+            "attributes": {
+              "variable-name": "Linux AMIs",
+              "variable-type": "array",
+              "options": [
+                "Xenial Xerus",
+                "Trusty Tahr"
+              ]
+            }
+          },
+          {
+            "id": "ncvaropt-dZMfdh9KBcwFjyv2",
+            "type": "variable-options",
+            "attributes": {
+              "variable-name": "region",
+              "variable-type": "array",
+              "options": [
+                "eu-north-1",
+                "us-east-2",
+                "us-west-1"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request PATCH \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2
+```
+
+<!-- In curl examples, you can use the `$TOKEN` environment variable. If it's a GET request with query parameters, you can use double-quotes to have curl handle the URL encoding for you.
+
+Make sure to test a query that's very nearly the same as the example, to avoid errors. -->
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "nocode-9HE91XDNY3faePn2",
+    "type": "no-code-modules",
+    "attributes": {
+      "enabled": true,
+      "version-pin": "1.0.1"
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        },
+        "links": {
+          "related": "/api/v2/organizations/hashicorp"
+        }
+      },
+      "registry-module": {
+        "data": {
+          "id": "mod-2aaFrmRPZs2N9epr",
+          "type": "registry-modules"
+        },
+        "links": {
+          "related": "/api/v2/registry-modules/mod-2aaFrmRPZs2N9epr"
+        }
+      },
+      "variable-options": {
+        "data": [
+          {
+            "id": "ncvaropt-fcHDfnZ1EGdRzFNC",
+            "type": "variable-options"
+          },
+          {
+            "id": "ncvaropt-dZMfdh9KBcwFjyv2",
+            "type": "variable-options"
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2"
+    }
+  }
+}
+```
+
+## Read a No-Code-enabled module's properties
+
+
+`GET /no-code-modules/:id`
+
+
+Parameter | Description
+--- | ---
+`:id` | The unique identifier for a No-Code-Allowed module.
+
+The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
+
+-> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+
+<!-- ^ Include a note like the above if the endpoint CANNOT be used with a given token type. Most endpoints don't need this. -->
+
+| Status  | Response                                     | Reason                                                         |
+| ------- | -------------------------------------------- | -------------------------------------------------------------- |
+| [200][] | [JSON API document][] (`type: "somethings"`) | Successfully created a team                                    |
+| [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
+| [404][] | [JSON API error object][]                    | Organization not found, or user unauthorized to perform action |
+| [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
+| [500][] | [JSON API error object][]                    | Failure during team creation                                   |
+
+### Query Parameters
+
+[These are standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+
+Parameter | Description
+--- | ---
+`include` | List related resource to include in the response.
+
+### Available Related Resources
+
+<!-- Omit this subheader and section if it's not applicable. -->
+
+This GET endpoint can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+
+Resource Name | Description
+--- | ---
+`variable_options`     | Module wariables with a pre-configured set of allowed values.
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "nocode-9HE91XDNY3faePn2",
+    "type": "no-code-modules",
+    "attributes": {
+      "enabled": true,
+      "version-pin": "1.0.1"
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        },
+        "links": {
+          "related": "/api/v2/organizations/hashicorp"
+        }
+      },
+      "registry-module": {
+        "data": {
+          "id": "mod-2aaFrmRPZs2N9epr",
+          "type": "registry-modules"
+        },
+        "links": {
+          "related": "/api/v2/registry-modules/mod-2aaFrmRPZs2N9epr"
+        }
+      },
+      "variable-options": {
+        "data": [
+          {
+            "id": "ncvaropt-fcHDfnZ1EGdRzFNC",
+            "type": "variable-options"
+          },
+          {
+            "id": "ncvaropt-dZMfdh9KBcwFjyv2",
+            "type": "variable-options"
+          }
+        ]
+      }
+    },
+    "links": {
+      "self": "/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2"
+    }
+  },
+  "included": [
+    {
+      "id": "ncvaropt-fcHDfnZ1EGdRzFNC",
+      "type": "variable-options",
+      "attributes": {
+        "variable-name": "Linux AMIs",
+        "variable-type": "array",
+        "options": [
+          "Xenial Xerus",
+          "Trusty Tahr"
+        ]
+      },
+      "relationships": {
+        "no-code-allowed-module": {
+          "data": {
+            "id": "nocode-9HE91XDNY3faePn2",
+            "type": "no-code-allowed-modules"
+          }
+        }
+      }
+    },
+    {
+      "id": "ncvaropt-dZMfdh9KBcwFjyv2",
+      "type": "variable-options",
+      "attributes": {
+        "variable-name": "region",
+        "variable-type": "array",
+        "options": [
+          "eu-north-1",
+          "us-east-2",
+          "us-west-1"
+        ]
+      },
+      "relationships": {
+        "no-code-allowed-module": {
+          "data": {
+            "id": "nocode-9HE91XDNY3faePn2",
+            "type": "no-code-allowed-modules"
+          }
+        }
+      }
+    }
+  ]
+}
+```
