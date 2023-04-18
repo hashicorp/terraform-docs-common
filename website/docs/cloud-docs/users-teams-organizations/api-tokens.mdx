@@ -105,4 +105,4 @@ User, team, and organization tokens may be created with an expiration date and t
 
 HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens with an expiration date helps reduce the risk that valid tokens may be leaked, or that token owners will forget to delete tokens meant for delegated use once their intended purpose is complete.
 
-Once a token has been created its expiration time may not be modified. The Terraform Cloud UI will display tokens relative to the timezone of the current user, but all tokens are expected to be passed and displayed in UTC through the Terraform Cloud API.
+Once a token has been created its expiration time may not be modified. The Terraform Cloud UI will display tokens relative to the timezone of the current user, but all tokens are expected to be passed and displayed in UTC in ISO 8601 format through the Terraform Cloud API.
