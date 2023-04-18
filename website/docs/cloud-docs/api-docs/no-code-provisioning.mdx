@@ -37,7 +37,7 @@ tfc_only: true
 
 [JSON API error object]: http://jsonapi.org/format/#error-objects
 
-## Allow No-Code Provisioning of a module for an organization
+## Allow No-Code Provisioning of a module within an organization
 
 `POST /organizations/:organization_name/no-code-modules`
 
@@ -50,20 +50,13 @@ Each Terraform Cloud organization has a list of modules that are allowed to be u
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
-<!-- ^ Include a note like the above if the endpoint CANNOT be used with a given token type. Most endpoints don't need this. -->
-
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
 | [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully enabled a module for No-Code Provisioning                                    |
-| [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
-| [404][] | [JSON API error object][]                    | Organization not found, or user unauthorized to perform action |
+| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
 | [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Failure during team creation                                   |
+| [500][] | [JSON API error object][]                    | Internal system failure                                   |
 
-<!-- ^ Include status codes even if they're plain 200/404.
-If a JSON API document is returned, specify the `type`.
-If the table includes links, use reference-style links to keep the table size small. The references should be included once per API page, at the very top.
- -->
 
 ### Request Body
 
@@ -80,8 +73,8 @@ Key path | Type   | Default | Description
 `data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`.
 `data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
 `data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module.
-`data.relationships.variable-options.data[].attributes.type` | string | | The data type for the variable.
-`data.relationships.variable-options.data[].attributes.options` | string[] | | A list of allowed values for the variable.
+`data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types).
+`data.relationships.variable-options.data[].attributes.options` | Any[] | | A list of allowed values for the variable.
 
 ### Sample Payload
 
@@ -195,36 +188,32 @@ curl \
 }
 ```
 
-## Update allowed variables for a No-Code Provisioning of a module.
-
-<!-- Header: "Verb a Noun" or "Verb Nouns." -->
+## Update No-Code Provisioning settings for a module.
 
 `PATCH /no-code-modules/:id`
-
-<!-- ^ The method and path are styled as a single code span, with global prefix (`/api/v2`) omitted and the method capitalized. -->
 
 Parameter | Description
 --- | ---
 `:id` | The unique identifier for a No-Code-Allowed module.
 
-The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
+Use this API to update the settings for No-Code Provisioning of a module. You can use this API to:
+
+- Enable or disable No-Code Provisioning using this module
+- Make adjustments to the set of allowed variable values
+- Change the version of the module used during provisioning
+- Change the module that is used during provisioning
+
+The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that initially enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
-<!-- ^ Include a note like the above if the endpoint CANNOT be used with a given token type. Most endpoints don't need this. -->
-
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "somethings"`) | Successfully created a team                                    |
-| [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
-| [404][] | [JSON API error object][]                    | Organization not found, or user unauthorized to perform action |
+| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully updated a no-code module                                    |
+| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
 | [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Failure during team creation                                   |
+| [500][] | [JSON API error object][]                    | Internal system failure                                   |
 
-<!-- ^ Include status codes even if they're plain 200/404.
-If a JSON API document is returned, specify the `type`.
-If the table includes links, use reference-style links to keep the table size small. The references should be included once per API page, at the very top.
- -->
 
 ### Request Body
 
@@ -234,6 +223,16 @@ Properties without a default value are required.
 
 Key path | Type | Default | Description
 --- | --- | --- | ---
+`data.type` | string | | Must be `"no-code-modules"`.
+`data.attributes.version-pin` | string   |  | The version of the module that should be used in No-Code Provisioning workflows.
+`data.attributes.enabled` | boolean   |  | Set to `true` in order to enable No-Code Provisioning workflows of `false` to disable.
+`data.relationships.registry-module.data.id` | string |  | The ID of a module in the organization's Private Registry.
+`data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`.
+`data.relationships.variable-options.data[].id` | string | | The ID of an existing variable-options set. If set, the existing options with this ID will be replaced. If unset, a new variable-option set will be created.
+`data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
+`data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module.
+`data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types).
+`data.relationships.variable-options.data[].attributes.options` | Any[] | | A list of allowed values for the variable.
 
 ### Sample Payload
 
@@ -242,7 +241,6 @@ Key path | Type | Default | Description
   "data": {
     "type": "no-code-modules",
     "attributes": {
-      "follow-latest-version": true,
       "enabled": false
     },
     "relationships": {
@@ -296,10 +294,6 @@ curl \
   --data @payload.json \
   https://app.terraform.io/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2
 ```
-
-<!-- In curl examples, you can use the `$TOKEN` environment variable. If it's a GET request with query parameters, you can use double-quotes to have curl handle the URL encoding for you.
-
-Make sure to test a query that's very nearly the same as the example, to avoid errors. -->
 
 ### Sample Response
 
@@ -361,19 +355,17 @@ Parameter | Description
 --- | ---
 `:id` | The unique identifier for a No-Code-Allowed module.
 
+Use this API to read the details of an existing No-Code-Allowed module.
+
 The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
-
--> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
-
-<!-- ^ Include a note like the above if the endpoint CANNOT be used with a given token type. Most endpoints don't need this. -->
 
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "somethings"`) | Successfully created a team                                    |
+| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully read the no-code module.
 | [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
-| [404][] | [JSON API error object][]                    | Organization not found, or user unauthorized to perform action |
+| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
 | [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Failure during team creation                                   |
+| [500][] | [JSON API error object][]                    | Internal system failure                                   |
 
 ### Query Parameters
 
@@ -386,13 +378,11 @@ Parameter | Description
 
 ### Available Related Resources
 
-<!-- Omit this subheader and section if it's not applicable. -->
-
 This GET endpoint can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 Resource Name | Description
 --- | ---
-`variable_options`     | Module wariables with a pre-configured set of allowed values.
+`variable_options`     | Module variables with a configured set of allowed values.
 
 ### Sample Request
 
