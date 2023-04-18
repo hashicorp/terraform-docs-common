@@ -67,7 +67,7 @@ This POST endpoint requires a JSON object with the following properties as a req
 | Key path                      | Type   | Default | Description                                                                                                             |
 | ----------------------------- | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `data.type`                   | string |         | Must be `"authentication-token"`.                                                                                       |
-| `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Organization Token will expire. If omitted or set to `null` the token will never expire. |
+| `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Organization Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
 ### Sample Payload
 
