@@ -74,6 +74,20 @@ If there are versions that have been published in the Registry that no longer ex
 
 Please note that the resync procedure will not remove or update versions of the integration that have already been published.
 
+### I created a new version of my provider, module, or policy library on GitHub and it didn't show up in the Registry. What should I do?
+
+The first thing to try is to [resync your integration with Github](what-does-it-mean-to-resync-my-provider-module-or-policy-library). While logged in to the Registry, browse to the page for your integration. You can find a button to resync in the "Manage Module" or "Manage Policy Library" dropdown menus for those types of assets, or in the "Settings" tab for a Terraform provider.
+
+If that doesn't work, or if publishing problems occur again _after_ you've done a resync, you should investigate the webhooks that have been established on your GitHub repository. You can locate these webhooks in your repository's settings page:
+
+```
+https://github.com/{your github username}/{your repository name}/settings/hooks
+```
+
+If there are multiple webhooks listed that point to the Registry's URL (`https://registry.terraform.io`), you should remove them all, and then try to resync your integration again using the above instructions.
+
+Finally, if you're still running into trouble, please [reach out to us via email](/terraform/registry#getting-help) for support. If you are a customer of HashiCorp, work with your enterprise support contact to escalate the issue.
+
 ### How does the Registry identify the latest version of my provider, module, or policy library?
 
 Each version of an integration published in the Terraform Registry has a version identifier, which is a string like `1.2.3`. You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the integration's code lives.
