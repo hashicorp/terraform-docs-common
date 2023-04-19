@@ -30,7 +30,7 @@ When module consumers follow the no-code workflow, Terraform Cloud automatically
 
 You can grant new no-code workspace provider credentials using one of the following methods:
 
-- Create a [global variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) that Terraform Cloud applies to all existing and future workspaces in the organization. This action automatically grants newly-created workspaces access to the required provider credentials.
+- Create a [project-scoped or global variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) that Terraform Cloud applies to all existing and future workspaces in the project or organization. This action automatically grants newly-created workspaces access to the required provider credentials.
 - Expose provider credentials as sensitive outputs in another workspace. You must add additional configuration to the module to access these values through [remote state data sources](/terraform/language/state/remote-state-data) and then reference them in provider configuration. This approach provides more control over access to these credentials than placing them in a global variable set.
 - Elect to let the first run in new no-code workspaces fail and have module users add credentials directly to the workspace after creation. This approach provides the most control over access to provider credentials, but requires manual intervention. Module users must manually start a new run to provision infrastructure after they configure the credentials.
 
@@ -48,4 +48,4 @@ For example, you could build modules that satisfy the following well-scoped use 
 
 ### Provide Variable Defaults When Possible
 
-The no-code provisioning workflow prompts users to set values for the module's input variables before creating the new workspace and deploying resources. We recommend setting reasonable defaults when possible to reduce the effort and expertise needed to deploy the module. Remember that the workspace can also access variable values set through global variable sets in your organization.
+The no-code provisioning workflow prompts users to set values for the module's input variables before creating the new workspace and deploying resources. We recommend setting reasonable defaults when possible to reduce the effort and expertise needed to deploy the module. Remember that the workspace can also access variable values set through [global or project-scoped variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) in your organization.
