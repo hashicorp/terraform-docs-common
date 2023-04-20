@@ -228,11 +228,11 @@ Properties without a default value are required.
 Key path | Type | Default | Description
 --- | --- | --- | ---
 `data.type` | string | | Must be `"no-code-modules"`.
-`data.attributes.version-pin` | string   |  | The version of the module that should be used in No-Code Provisioning workflows.
-`data.attributes.enabled` | boolean   |  | Set to `true` in order to enable No-Code Provisioning workflows of `false` to disable.
-`data.relationships.registry-module.data.id` | string |  | The ID of a module in the organization's Private Registry.
-`data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`.
-`data.relationships.variable-options.data[].id` | string | | The ID of an existing variable-options set. If set, the existing options with this ID will be replaced. If unset, a new variable-option set will be created.
+`data.attributes.version-pin` | string   | (previous value) | The version of the module that should be used in No-Code Provisioning workflows.
+`data.attributes.enabled` | boolean   | (previous value) | Set to `true` in order to enable No-Code Provisioning workflows of `false` to disable.
+`data.relationships.registry-module.data.id` | string | (previous value) | The ID of a module in the organization's Private Registry.
+`data.relationships.registry-module.data.type` | string | (previous value) | Must be `"registry-module"`.
+`data.relationships.variable-options.data[].id` | string | (new value) | The ID of an existing variable-options set. If set, the existing options with this ID will be replaced. If unset, a new variable-option set will be created.
 `data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
 `data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module.
 `data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types).
