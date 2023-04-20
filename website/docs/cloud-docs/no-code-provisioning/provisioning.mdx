@@ -6,9 +6,9 @@ tfc_only: true
 
 # Provisioning No-Code Infrastructure
 
--> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** No-code provisioning is available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
 
-No-code provisioning lets you deploy infrastructure resources in a new Terraform Cloud workspace without writing any Terraform configuration. You can create a no-code workspace from any module labeled **No-code Ready** in your organization's [private registry](/terraform/cloud-docs/registry).
+No-code provisioning lets you deploy infrastructure resources in a new Terraform Cloud workspace without writing any Terraform configuration. You can create a no-code workspace from any module version labeled **No-code Ready** in your organization's [private registry](/terraform/cloud-docs/registry).
 
 The no-code provisioning workflow is best for quickly deploying relatively static infrastructure. Beyond changing variable values, you cannot apply configuration changes to existing no-code workspaces. If you need to deploy updates to the no-code ready module's configuration, you must create new no-code workspaces with new resources. We recommend standard modules for use cases that require dynamic configuration and development.
 
@@ -36,7 +36,7 @@ To launch the no-code workflow:
 
      Terraform Cloud scans the module configuration for input variables and prompts for values for any variables without defaults or undefined in an existing global variable set. Terraform requires values for these variables to successfully complete runs in the workspace. Terraform Cloud performs type validation for the variable values if the module configuration specifies a type.
 
-1. (Optional) Set values for the input variables. You can choose to skip this step and configure the variables later. However, Terraform Cloud does not prompt you for these values again and your Terraform runs may fail.
+1. (Optional) Set values for the input variables. If your organization has defined variable input options, you will see them here as dropdown options. You can choose to skip this step and configure the variables later in your workspace. However, Terraform Cloud does not prompt you for these values again and your Terraform runs may fail.
 
 1. Cick **Next: Workspace settings**.
 
@@ -54,4 +54,11 @@ To launch the no-code workflow:
 
 No-code workspaces have a limited feature set because you cannot access the resource configuration. However, you can edit workspace variables and settings, including notifications, permissions, and run triggers. You can use run triggers to connect the workspace to one or more source workspaces, start new runs when you change workspace variables, or queue destroy runs.
 
-If the module’s configuration changes, you must destroy the workspace and create a new one to provision resources with the updated configuration.
+### Updating Variables
+In order to change variable inputs after provisioning, go to the Variables section in your workspace. There you will see the variables that have been applied. 
+1. Select **Edit** for the variables you want to update.
+2. Enter the desired value, or select it if dropdown options are present.
+3. **Plan** and **Apply**.
+
+### Module Upgrades
+Currently, if the module’s configuration changes and you want to upgrade to the new version, you must destroy the workspace and create a new one to provision resources with the updated configuration.
