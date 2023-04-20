@@ -71,8 +71,8 @@ Properties without a default value are required.
 Key path | Type   | Default | Description
 --- | --- | --- | ---
 `data.type` | string | | Must be `"no-code-modules"`.
-`data.attributes.version-pin` | string   |  | The version of the module that should be used in No-Code Provisioning workflows.
-`data.attributes.enabled` | boolean   |  | Set to `true` in order to enable No-Code Provisioning workflows.
+`data.attributes.version-pin` | string   |  (latest version of the module) | The version of the module that should be used in No-Code Provisioning workflows.
+`data.attributes.enabled` | boolean   |  `false`  | Set to `true` in order to enable No-Code Provisioning workflows.
 `data.relationships.registry-module.data.id` | string |  | The ID of a module in the organization's Private Registry.
 `data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`.
 `data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
