@@ -161,7 +161,16 @@
           { "title":  "AWS Configuration", "path":  "workspaces/dynamic-provider-credentials/aws-configuration" },
           { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
           { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
-          { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" }
+          { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          {
+            "title": "Vault-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/vault-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration" },
+              { "title":  "Azure Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/azure-configuration" }
+            ]
+          }
         ]
       },
       {

@@ -87,7 +87,7 @@ The following chart illustrates the various access levels for the supported API 
 | Modify organizations               |      🔶     |             |                     |
 | Manage organization tokens         |      🔶     |             |                     |
 | View audit trails                  |             |             |          🔵         |
-| Invite users to organiation        |      🔶     |      🔶     |          🔵         |
+| Invite users to organization       |      🔶     |      🔶     |          🔵         |
 | **Sentinel**                       |             |             |                     |
 | Manage Sentinel policies           |      🔶     |      🔶     |          🔵         |
 | Manage policy sets                 |      🔶     |      🔶     |          🔵         |
@@ -98,3 +98,11 @@ The following chart illustrates the various access levels for the supported API 
 | Manage run tasks                   |      🔶     |      🔶     |          🔵          |
 | **Modules**                        |             |             |                     |
 | Manage Terraform modules           |      🔶     | 🔵 (owners) |                     |
+
+## Token Expiration
+
+User, team, and organization tokens may be created with an expiration date and time. Once this time has passed, the token will no longer be treated as valid, and may not be used to authenticate to any API. Any API requests made with an expired token will result in failure.
+
+HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens with an expiration date helps reduce the risk that valid tokens may be leaked, or that token owners will forget to delete tokens meant for delegated use once their intended purpose is complete.
+
+Once a token has been created its expiration time may not be modified. The Terraform Cloud UI will display tokens relative to the timezone of the current user, but all tokens are expected to be passed and displayed in UTC in ISO 8601 format through the Terraform Cloud API.
