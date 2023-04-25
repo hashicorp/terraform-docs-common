@@ -93,9 +93,9 @@ module "vpc" {
 ```
 
 
-### Generic Hostname - Terraform Enterprise
+### Generic Hostname - Terraform Cloud and Terraform Enterprise
 
-You can use the generic hostname `localterraform.com` in module sources to reference modules without modifying the Terraform Enterprise instance. When you run Terraform, it automatically requests any `localterraform.com` modules from the Terraform Enterprise instance.
+You can use the generic hostname `localterraform.com` in module sources to reference modules without modifying the Terraform Cloud or Terraform Enterprise instance. When you run Terraform, it automatically requests any `localterraform.com` modules from the instance it runs on.
 
 ```hcl
 module "vpc" {
@@ -104,7 +104,7 @@ module "vpc" {
 }
 ```
 
-~> **Important:** The generic hostname only works within a Terraform Enterprise instance.
+~> **Important**: CLI-driven workflows require Terraform CLI v1.4.0 or above.
 
 To test configurations on a developer workstation without the remote backend configured, you must replace the generic hostname with a literal hostname in all module sources and then change them back before committing to VCS. We are working on making this workflow smoother, but we only recommend `localterraform.com` for large organizations that use multiple Terraform Enterprise instances.
 
