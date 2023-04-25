@@ -89,7 +89,8 @@ curl \
         "created-at": "2018-11-06T22:56:10.203Z",
         "last-used-at": null,
         "description": null,
-        "token": null
+        "token": null,
+        "expired-at": null
       },
       "relationships": {
         "created-by": {
@@ -104,7 +105,8 @@ curl \
         "created-at": "2018-11-25T22:31:30.624Z",
         "last-used-at": "2018-11-26T20:27:54.931Z",
         "description": "api",
-        "token": null
+        "token": null,
+        "expired-at": "2023-04-06T12:00:00.000Z"
       },
       "relationships": {
         "created-by": {
@@ -157,7 +159,8 @@ curl \
       "created-at": "2018-11-25T22:31:30.624Z",
       "last-used-at": "2018-11-26T20:34:59.487Z",
       "description": "api",
-      "token": null
+      "token": null,
+      "expired-at": "2023-04-06T12:00:00.000Z"
     },
     "relationships": {
       "created-by": {
@@ -198,10 +201,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                      | Type   | Default | Description                         |
-| ----------------------------- | ------ | ------- | ----------------------------------- |
-| `data.type`                   | string |         | Must be `"authentication-tokens"`.  |
-| `data.attributes.description` | string |         | The description for the User Token. |
+| Key path                      | Type   | Default | Description                                                                                                     |
+| ----------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `data.type`                   | string |         | Must be `"authentication-tokens"`.                                                                              |
+| `data.attributes.description` | string |         | The description for the User Token.                                                                             |
+| `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the User Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
 ### Sample Payload
 
@@ -210,7 +214,8 @@ Properties without a default value are required.
   "data": {
     "type": "authentication-tokens",
     "attributes": {
-      "description":"api"
+      "description":"api",
+      "expired-at": "2023-04-06T12:00:00.000Z"
     }
   }
 }
@@ -238,7 +243,8 @@ curl \
       "created-at": "2018-11-26T20:48:35.054Z",
       "last-used-at": null,
       "description": "api",
-      "token": "6tL24nM38M7XWQ.atlasv1.KmWckRfzeNmUVFNvpvwUEChKaLGznCSD6fPf3VPzqMMVzmSxFU0p2Ibzpo2h5eTGwPU"
+      "token": "6tL24nM38M7XWQ.atlasv1.KmWckRfzeNmUVFNvpvwUEChKaLGznCSD6fPf3VPzqMMVzmSxFU0p2Ibzpo2h5eTGwPU",
+      "expired-at": "2023-04-06T12:00:00.000Z"
     },
     "relationships": {
       "created-by": {
