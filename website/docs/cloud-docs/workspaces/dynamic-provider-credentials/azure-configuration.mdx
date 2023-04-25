@@ -13,7 +13,7 @@ description: >-
 
 !> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your TFE instance is using a custom or self-signed certificate due to restrictions on Azure's end.
 
-You can use Terraform Cloud’s native OpenID Connect integration with Azure to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AzureRM or AzureAD providers in your Terraform Cloud runs. Configuring the integration requires the following steps.
+You can use Terraform Cloud’s native OpenID Connect integration with Azure to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AzureRM or AzureAD providers in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
 1. **[Configure Azure](#configure-azure):** Set up a trust configuration between Azure and Terraform Cloud. Then, you must create Azure roles and policies for your Terraform Cloud workspaces.
 2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use Dynamic Credentials.
