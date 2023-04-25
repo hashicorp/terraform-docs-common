@@ -1,7 +1,7 @@
 ---
 page_title: No-Code Provisioning - API Docs - Terraform Cloud
 description: >-
-  Use these endpoints to control availability of no-code provisioning and appropriate variable values for your organization.
+  Use these endpoints to control availability of no-code provisioning and designate variable values for your organization.
 tfc_only: true
 ---
 
@@ -39,27 +39,27 @@ tfc_only: true
 
 # No-Code Provisioning API
 
-The No-Code Provisioning API allows you to establish and configure a list of Terraform Modules that can be used in No-Code Provisioning workflows within your Terraform Cloud organization. For more information, see our documentation on [designing no-code-ready modules](/terraform/cloud-docs/no-code-provisioning/module-design) and [provisioning no-code infrastructure](/terraform/cloud-docs/no-code-provisioning/provisioning).
+The No-Code Provisioning API allows you to establish and configure a list of Terraform modules that you can use in no-code provisioning workflows within Terraform Cloud. For more information on no-code modules, see [Designing No-Code Ready Modules](/terraform/cloud-docs/no-code-provisioning/module-design).
 
-## Allow No-Code Provisioning of a module within an organization
+## Allow No-Code Provisioning of a Module within an Organization
 
 `POST /organizations/:organization_name/no-code-modules`
 
 
 | Parameter            | Description                                                                                                                                                              |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization in which No-Code provisioning workflows should be allowed for this module.  |
+| `:organization_name` | The name of the organization where no-code provisioning workflows should be allowed for this module.  |
 
-Each Terraform Cloud organization has a list of modules that are allowed to be used to establish workspaces using No-Code Provisioning workflows. Use this API to enable No-Code Provisioning for a specific module. You can also use this API to set variable values that are allowed within the scope of your organization.
+Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to enable no-code provisioning for a specific module. You can also use this API to set variable values that are allowed within the scope of your organization.
 
--> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+-> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully enabled a module for No-Code Provisioning                                    |
-| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
-| [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Internal system failure                                   |
+| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully enabled a module for no-code provisioning.                                    |
+| [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action. |
+| [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][]                    | Internal system failure.                                   |
 
 
 ### Request Body
@@ -71,11 +71,11 @@ Properties without a default value are required.
 Key path | Type   | Default | Description
 --- | --- | --- | ---
 `data.type` | string | | Must be `"no-code-modules"`.
-`data.attributes.version-pin` | string   |  (latest version of the module) | The version of the module that should be used in No-Code Provisioning workflows.
-`data.attributes.enabled` | boolean   |  `false`  | Set to `true` in order to enable No-Code Provisioning workflows.
+`data.attributes.version-pin` | string   |  (latest version of the module) | The module version to use in no-code provisioning workflows.
+`data.attributes.enabled` | boolean   |  `false`  | Set to `true` to enable no-code provisioning workflows.
 `data.relationships.registry-module.data.id` | string |  | The ID of a module in the organization's Private Registry.
 `data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`.
-`data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
+`data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`.
 `data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module.
 `data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types).
 `data.relationships.variable-options.data[].attributes.options` | Any[] | | A list of allowed values for the variable.
@@ -192,7 +192,7 @@ curl \
 }
 ```
 
-## Update No-Code Provisioning settings for a module.
+## Update No-Code Provisioning Settings for a Module
 
 `PATCH /no-code-modules/:id`
 
@@ -200,12 +200,12 @@ Parameter | Description
 --- | ---
 `:id` | The unique identifier for a No-Code-Allowed module.
 
-Use this API to update the settings for No-Code Provisioning of a module. You can use this API to:
+Use this API to update the settings for the no-code provisioning of a module. You can use this API to:
 
-- Enable or disable No-Code Provisioning using this module
-- Make adjustments to the set of allowed variable values
-- Change the version of the module used during provisioning
-- Change the module that is used during provisioning
+- Enable or disable no-code provisioning
+- Adjust the set of options for allowed variable values
+- Change the module version being provisioned
+- Change the module being provisioned
 
 The unique identifier for the No-Code-Allowed module was returned in the response to [the API call that initially enabled the module for No-Code Provisioning](#allow-no-code-provisioning-of-a-module-for-an organization).
 
@@ -213,10 +213,10 @@ The unique identifier for the No-Code-Allowed module was returned in the respons
 
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully updated a no-code module                                    |
-| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
-| [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Internal system failure                                   |
+| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully updated a no-code module.                                    |
+| [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action. |
+| [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][]                    | Internal system failure.                                   |
 
 
 ### Request Body
@@ -228,12 +228,12 @@ Properties without a default value are required.
 Key path | Type | Default | Description
 --- | --- | --- | ---
 `data.type` | string | | Must be `"no-code-modules"`.
-`data.attributes.version-pin` | string   | (previous value) | The version of the module that should be used in No-Code Provisioning workflows.
-`data.attributes.enabled` | boolean   | (previous value) | Set to `true` in order to enable No-Code Provisioning workflows of `false` to disable.
+`data.attributes.version-pin` | string   | (previous value) | The module version to use in no-code provisioning workflows.
+`data.attributes.enabled` | boolean   | (previous value) | Set to `true` to enable no-code provisioning workflows, or `false` to disable them.
 `data.relationships.registry-module.data.id` | string | (previous value) | The ID of a module in the organization's Private Registry.
 `data.relationships.registry-module.data.type` | string | (previous value) | Must be `"registry-module"`.
-`data.relationships.variable-options.data[].id` | string | (new value) | The ID of an existing variable-options set. If set, the existing options with this ID will be replaced. If unset, a new variable-option set will be created.
-`data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`
+`data.relationships.variable-options.data[].id` | string | (new value) | The ID of an existing variable-options set. If provided, a new variable-options set replaces the set with this ID. If not provided, this creates a new variable-option set.
+`data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`.
 `data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module.
 `data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types).
 `data.relationships.variable-options.data[].attributes.options` | Any[] | | A list of allowed values for the variable.
@@ -349,7 +349,7 @@ curl \
 }
 ```
 
-## Read a No-Code-enabled module's properties
+## Read a No-Code Module's Properties
 
 
 `GET /no-code-modules/:id`
@@ -366,14 +366,14 @@ The unique identifier for the No-Code-Allowed module was returned in the respons
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
 | [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully read the no-code module.
-| [400][] | [JSON API error object][]                    | Invalid `include` parameter                                    |
-| [404][] | [JSON API error object][]                    | Not found, or user unauthorized to perform action |
-| [422][] | [JSON API error object][]                    | Malformed request body (missing attributes, wrong types, etc.) |
-| [500][] | [JSON API error object][]                    | Internal system failure                                   |
+| [400][] | [JSON API error object][]                    | Invalid `include` parameter.                                    |
+| [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action. |
+| [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][]                    | Internal system failure.                                   |
 
 ### Query Parameters
 
-[These are standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+[This endpoint uses our standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 
 Parameter | Description
