@@ -1,7 +1,7 @@
 ---
 page_title: No-Code Provisioning - API Docs - Terraform Cloud
 description: >-
-  Use these endpoints to control availability of no-code provisioning and designate variable values for your organization.
+  Use these endpoints to control availability of no-code provisioning and designate variable values for a no-code module in your organization.
 tfc_only: true
 ---
 
@@ -50,7 +50,7 @@ The No-Code Provisioning API allows you to establish and configure a list of Ter
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization where no-code provisioning workflows should be allowed for this module.  |
 
-Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to enable no-code provisioning for a specific module. You can also use this API to set variable values that are allowed within the scope of your organization.
+Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to enable no-code provisioning for a specific module. You can also use this API to set options for the allowed values of a variable for a no-code module in your organization.
 
 -> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
@@ -207,7 +207,7 @@ Use this API to update the settings for the no-code provisioning of a module. Yo
 - Change the module version being provisioned
 - Change the module being provisioned
 
-The [API call that enables for no-code provisioning for a module](#allow-no-code-provisioning-of-a-module-within-an-organization) returns that module's unique identifier.
+The [API call that enables no-code provisioning for a module](#allow-no-code-provisioning-of-a-module-within-an-organization) returns that module's unique identifier.
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
@@ -361,7 +361,7 @@ Parameter | Description
 
 Use this API to read the details of an existing No-Code-Allowed module.
 
-The [API call that enables for no-code provisioning for a module](#allow-no-code-provisioning-of-a-module-within-an-organization) returns that module's unique identifier.
+The [API call that enables no-code provisioning for a module](#allow-no-code-provisioning-of-a-module-within-an-organization) returns that module's unique identifier.
 
 | Status  | Response                                     | Reason                                                         |
 | ------- | -------------------------------------------- | -------------------------------------------------------------- |
@@ -374,7 +374,6 @@ The [API call that enables for no-code provisioning for a module](#allow-no-code
 ### Query Parameters
 
 [This endpoint uses our standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
-
 
 Parameter | Description
 --- | ---
