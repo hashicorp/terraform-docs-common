@@ -40,6 +40,7 @@
       { "title": "GitHub App Installations", "path": "api-docs/github-app-installations"},
       { "title": "Invoices", "path": "api-docs/invoices" },
       { "title": "IP Ranges", "path": "api-docs/ip-ranges" },
+      { "title": "No-Code Provisioning", "path": "api-docs/no-code-provisioning"},
       {
         "title": "Notification Configurations",
         "path": "api-docs/notification-configurations"
