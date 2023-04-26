@@ -58,5 +58,5 @@ The no-code provisioning workflow prompts users to set values for the module ver
 
 For variables without defaults, you may still want to limit what the no-code user can input. Define these input options at the time of enabling the module for no-code provisioning. You can do this either from the Terraform Cloud UI, via the [No-Code Provisioing API](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/no-code-provisioning), or via the [TFE provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/no_code_module). The latter method is recommended for those that want to track these variable input options through a code approval process, keeping the configuration as code.
 
-Subsequent changes to the variable input options will be surfaced to new provisions of the module version. If you update the selected module version enabled for no-code provisioning, you may also want to revisit the variables and adjust the defined input values accordingly. 
+Terraform Cloud surfaces any subsequent changes to a variable’s input options when no-code users provision a new module version. If you update the selected module version enabled for no-code provisioning, consider revisiting the variables and adjusting the defined input values accordingly.
 
