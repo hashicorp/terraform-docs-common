@@ -48,7 +48,10 @@ For example, you could build modules that satisfy the following well-scoped use 
 - Deploying a database with constraints on resource allocation and deployment region
 
 ### Updating a Module's Version
-No-code provisioning designation is pinned to a selected version of a module. You must select the version at the time of enabling the module. If no selection is made, it will default to the latest version at the time of enablement. This ensures that you can define variable input options for the intended version and that no-code users provision the most appropriate version. When a newer version of the module becomes available, you may decide to update the pinned no-code version to the latest.
+
+When you enable no-code provisioning for a module, Terraform Cloud pins the **No-code Ready** designation to the specific module version of your choice. Terraform Cloud deploys that selected module version whenever a user provisions a workspace using that module, ensuring that no-code users always provision the correct version. Pinning the **No-code Ready** designation to a specific module version lets you set variable input options, which are tied to that specific module version.
+
+By default, a module selects the latest version available. If you pinned a specific module version and a newer one becomes available, you can always update your module's version.
 
 ### Provide Variable Defaults When Possible
 
