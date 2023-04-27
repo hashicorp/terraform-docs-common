@@ -9,7 +9,7 @@ description: >-
 
 ~> **Important:** If using self-managed agents, make sure you’re using **v1.7.0** or later.
 
-You can use Terraform Cloud’s native OpenID Connect integration with AWS to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AWS provider in your Terraform Cloud runs. Configuring the integration requires the following steps.
+You can use Terraform Cloud’s native OpenID Connect integration with AWS to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AWS provider in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
 1. **[Configure AWS](#configure-aws):** Set up a trust configuration between AWS and Terraform Cloud. Then, you must create AWS roles and policies for your Terraform Cloud workspaces.
 2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use Dynamic Credentials.
@@ -93,10 +93,10 @@ A permissions policy needs to be added to the role which defines what operations
 You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with AWS using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.
 
 ### Required Environment Variables
-| Variable                | Value                                               | Notes                                                                                                                                                                                                                                     |
-|-------------------------|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TFC_AWS_PROVIDER_AUTH` | `true`                                              | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate to AWS.                                                                                                                                            |
-| `TFC_AWS_RUN_ROLE_ARN`  | The arn of the AWS role arn to authenticate against | Optional if `TFC_AWS_PLAN_ROLE_ARN` and `TFC_AWS_APPLY_ROLE_ARN` are both provided. These variables are described [below](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/aws-configuration#optional-environment-variables) |
+| Variable                | Value                                 | Notes                                                                                                                                                                                                                                     |
+|-------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_AWS_PROVIDER_AUTH` | `true`                                | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate to AWS.                                                                                                                                            |
+| `TFC_AWS_RUN_ROLE_ARN`  | The ARN of the role to assume in AWS. | Optional if `TFC_AWS_PLAN_ROLE_ARN` and `TFC_AWS_APPLY_ROLE_ARN` are both provided. These variables are described [below](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/aws-configuration#optional-environment-variables) |
 
 ### Optional Environment Variables
 You may need to set these variables, depending on your use case.
@@ -104,8 +104,8 @@ You may need to set these variables, depending on your use case.
 | Variable                             | Value                                                                                        | Notes                                                                  |
 |--------------------------------------|----------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
 | `TFC_AWS_WORKLOAD_IDENTITY_AUDIENCE` | Will be used as the `aud` claim for the identity token. Defaults to `aws.workload.identity`. |
-| `TFC_AWS_PLAN_ROLE_ARN`              | The AWS role arn to use for the plan phase of a run.                                         | Will fall back to the value of `TFC_AWS_RUN_ROLE_ARN` if not provided. |
-| `TFC_AWS_APPLY_ROLE_ARN`             | The AWS role arn to use for the apply phase of a run.                                        | Will fall back to the value of `TFC_AWS_RUN_ROLE_ARN` if not provided. |
+| `TFC_AWS_PLAN_ROLE_ARN`              | The ARN of the role to use for the plan phase of a run.                                      | Will fall back to the value of `TFC_AWS_RUN_ROLE_ARN` if not provided. |
+| `TFC_AWS_APPLY_ROLE_ARN`             | The ARN of the role to use for the apply phase of a run.                                     | Will fall back to the value of `TFC_AWS_RUN_ROLE_ARN` if not provided. |
 
 
 ## Configure the AWS Provider
