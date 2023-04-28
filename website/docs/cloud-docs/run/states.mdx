@@ -75,6 +75,8 @@ _Leaving this stage:_
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+Note, if you want to directly integrate third-party tools and services between your plan and apply stages, see [Run Tasks](/terraform/cloud-docs/workspaces/settings/run-tasks).
+
 ## The Post-Plan Stage
 
 The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) enabled
@@ -99,6 +101,7 @@ _Leaving this stage:_
 This stage only occurs if you enabled [Open Policy Agent (OPA) policies](/terraform/cloud-docs/policy-enforcement/opa) and runs after a successful `terraform plan` and before Cost Estimation. In this stage, Terraform Cloud checks whether the plan adheres to the policies in the OPA policy sets for the workspace.
 
 _States in this stage:_
+
 - **Policy Check:** Terraform Cloud is checking the plan against the OPA policy sets.
 - **Policy Override:** The policy check finished, but a mandatory policy failed. The run pauses, and Terraform cannot perform an apply unless a user manually overrides the policy check failure. Refer to [Policy Results](/terraform/cloud-docs/policy-enforcement/policy-results) for details.
 - **Policy Checked:** The policy check succeeded, and Terraform can apply the plan. The run may pause in this state if the workspace is not set up to auto-apply runs.
@@ -106,13 +109,14 @@ _States in this stage:_
 _Leaving this stage:_
 
 If any mandatory policies failed, the run pauses in the **Policy Override** state. The run completes one of the following workflows:
+
 - The run stops and enters the **Discarded** state when a user with [permission to apply runs](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions#manage-policy-overrides) discards the run.
-- The run proceeds to the **Policy Checked** state when a user with  [permission to manage policy overrides](/terraform/cloud-docs/users-teams-organizations/permissions) overrides the failed policy. The **Policy Checked** state means that no mandatory policies failed or that a user performed a manual override.
+- The run proceeds to the **Policy Checked** state when a user with [permission to manage policy overrides](/terraform/cloud-docs/users-teams-organizations/permissions) overrides the failed policy. The **Policy Checked** state means that no mandatory policies failed or that a user performed a manual override.
 
 Once the run reaches the **Policy Checked** state, the run completes one of the following workflows:
+
 - The run proceeds to the **Apply** stage if Terraform can automatically apply the plan. An auto-apply requires that the **Auto apply** setting is enabled on the workspace.
 - If Terraform cannot automatically apply the plan, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. If the user approves the apply, the run proceeds to the **Apply** stage. If the user rejects the apply, the run stops and enters the **Discarded** state.
-
 
 ## The Cost Estimation Stage
 
