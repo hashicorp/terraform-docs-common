@@ -125,13 +125,14 @@ You’ll need to set some environment variables in your Terraform Cloud workspac
 ### Optional Environment Variables
 You may need to set these variables, depending on your Vault configuration and use case.
 
-| Variable                               | Value                                                                                          | Notes                                                                |
-|----------------------------------------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| `TFC_VAULT_NAMESPACE`                  | The namespace to use when authenticating to Vault.                                             | Will also be used to set `VAULT_NAMESPACE` in the run environment.   |
+| Variable                               | Value                                                                                          | Notes                                                                                                                                                    |
+|----------------------------------------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_NAMESPACE`                  | The namespace to use when authenticating to Vault.                                             | Will also be used to set `VAULT_NAMESPACE` in the run environment.                                                                                       |
 | `TFC_VAULT_AUTH_PATH`                  | The path where the JWT auth backend is mounted in Vault. Defaults to jwt.                      ||
-| `TFC_VAULT_WORKLOAD_IDENTITY_AUDIENCE` | Will be used as the `aud` claim for the identity token. Defaults to `vault.workload.identity`. | Must match the `bound_audiences` configured for the role in Vault.   |
-| `TFC_VAULT_PLAN_ROLE`                  | The Vault role to use for the plan phase of a run.                                             | Will fall back to the value of `TFC_VAULT_RUN_ROLE` if not provided. |
-| `TFC_VAULT_APPLY_ROLE`                 | The Vault role to use for the apply phase of a run.                                            | Will fall back to the value of `TFC_VAULT_RUN_ROLE` if not provided. |
+| `TFC_VAULT_WORKLOAD_IDENTITY_AUDIENCE` | Will be used as the `aud` claim for the identity token. Defaults to `vault.workload.identity`. | Must match the `bound_audiences` configured for the role in Vault.                                                                                       |
+| `TFC_VAULT_PLAN_ROLE`                  | The Vault role to use for the plan phase of a run.                                             | Will fall back to the value of `TFC_VAULT_RUN_ROLE` if not provided.                                                                                     |
+| `TFC_VAULT_APPLY_ROLE`                 | The Vault role to use for the apply phase of a run.                                            | Will fall back to the value of `TFC_VAULT_RUN_ROLE` if not provided.                                                                                     |
+| `TFC_VAULT_ENCODED_CACERT`             | A PEM-encoded CA certificate that has been Base64 encoded.                                     | This certificate will be used when connecting to Vault. May be required when connecting to Vault instances that use a custom or self-signed certificate. |
 
 ## Vault Provider Configuration
 Once you set up dynamic credentials for a workspace, Terraform Cloud automatically authenticates to Vault for each run. Do not pass the `address`, `token`, or `namespace` arguments into the provider configuration block. Terraform Cloud sets these values as environment variables in the run environment.
