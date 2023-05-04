@@ -8,9 +8,9 @@ description: |-
 
 Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle.
 
-Each run task in a [workspace](/terraform/cloud-docs/workspaces) sends information to an external service at a specific run stage. The external service processes the information and returns a passed or failed status to Terraform Cloud. For example, you could add a run task that analyzes a plan's output before Terraform applies that plan.
+Each run task in a [workspace](/terraform/cloud-docs/workspaces) sends run data to an external service at a specific run stage. The external service processes the data and returns a passed or failed status to Terraform Cloud. For example, you could add a run task that checks configuration for any security vulnerabilities before Terraform applies that plan.
 
-Depending on the workspace’s configuration, failed run tasks can stop runs and prevent Terraform from provisioning infrastructure. For example, the [HCP Packer validation run task](/hcp/docs/packer/manage-image-use/terraform-cloud-run-tasks) checks the image artifacts within a Terraform configuration. The run task fails if the configuration references images marked as unusable.
+Depending on the enforcement level, failed run tasks can stop runs and prevent Terraform from provisioning infrastructure. For example, a run fails if a mandatory task fails, even if an advisory task succeeds. If an advisory task fails, but a mandatory task succeeds, the run succeeds and proceeds to the apply stage, where it can provision infrastructure.
 
 ## Finding Run Tasks in the Terraform Registry
 
