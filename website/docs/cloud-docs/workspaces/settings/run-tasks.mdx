@@ -8,9 +8,9 @@ description: >-
 
 -> **Note:** Run Tasks are a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-Terraform Cloud run tasks let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. You can use run tasks to validate Terraform configuration files, analyze plan outputs before applying them, scan for security vulnerabilities, or perform other custom actions.
+Terraform Cloud run tasks let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. You can use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
 
-Each run task in a workspace can send information to an external service at [specific run stages](#understanding-run-tasks-within-a-run). The external service processes the information and lets Terraform Cloud know if that task passed or failed. Terraform Cloud then uses this information to determine if a run should proceed.
+Run tasks send data about a run to an external service at [specific run stages](#understanding-run-tasks-within-a-run). The external service processes the data, evaluates whether the run passes or fails, and sends a response to Terraform Cloud. Terraform Cloud then uses this response and the run task enforcement level to determine if a run can proceed.
 
 You can manage run tasks through the Terraform Cloud UI or the [Run Tasks API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
 
@@ -24,7 +24,7 @@ You can manage run tasks through the Terraform Cloud UI or the [Run Tasks API](/
 
 ## Creating a Run Task
 
-When a run task is triggered, it sends an API payload to the specied external service. This payload contains a collection of run-related information, including a callback URL which the service uses to return a pass or fail status to Terraform Cloud. Terraform Cloud uses this status response to determine if a run should proceed, based on the run task's enforcement settings.
+Run tasks send an API payload to an external service. This payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to Terraform Cloud. 
 
 You can access a complete list of all run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks). These run tasks include the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) and run tasks that our HashiCorp Technology Partners develop and maintain.
 
