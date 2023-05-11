@@ -101,7 +101,7 @@ Remote runs in Terraform Cloud use:
 
 - Run-specific variables set through the command line or in your local environment. Terraform can use shell environment variables prefixed with `TF_VAR_` as input variables for the run, but you must still set all required environment variables, like provider credentials, inside the workspace.
 - Workspace-specific Terraform and environment variables set in the workspace.
-- Variable sets applied to the workspace.
+- Any variable sets applied globally, on the project containing the workspace, or on the workspace itself.
 - Terraform variables from any `*.auto.tfvars` files included in the configuration.
 
 Refer to [Variables](/terraform/cloud-docs/workspaces/variables) for more details about variable types, variable scopes, variable precedence, and how to set run-specific variables through the command line.

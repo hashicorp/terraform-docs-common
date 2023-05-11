@@ -6,21 +6,25 @@ description: >-
 
 # Run Tasks
 
--> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+-> **Note:** Run Tasks are a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-Run Tasks allow you to directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. When triggered, a run task sends an API payload to the external service. This payload contains a collection of run-related information, including a callback URL that the service uses to respond back to Terraform Cloud with a passed or failed status. Terraform Cloud uses this status response to determine if a run should proceed, based on the run task's enforcement settings that have been configured for the workspace.
+Terraform Cloud run tasks let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. You can use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
 
-You can manage run tasks through the UI or through the [Run Tasks APIs](/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
+Run tasks send data about a run to an external service at [specific run stages](#understanding-run-tasks-within-a-run). The external service processes the data, evaluates whether the run passes or fails, and sends a response to Terraform Cloud. Terraform Cloud then uses this response and the run task enforcement level to determine if a run can proceed.
+
+You can manage run tasks through the Terraform Cloud UI or the [Run Tasks API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks).
 
 > **Hands-on:** Try the [HCP Packer validation run task](/packer/tutorials/hcp/setup-tfc-run-task) tutorial.
 
 ## Requirements
 
-**Terraform Version** - You can only assign run tasks to workspaces that use a Terraform version of 1.1.9 and later. You can downgrade a workspace with existing runs to use a prior Terraform version without causing an error. However, Terraform Cloud no longer triggers the run tasks during plan and apply operations.
+**Terraform Version** - You can assign run tasks to workspaces that use a Terraform version of 1.1.9 and later. You can downgrade a workspace with existing runs to use a prior Terraform version without causing an error. However, Terraform Cloud no longer triggers the run tasks during plan and apply operations.
 
 **Permissions** - To create a run task, you must have a user account with the [Manage Run Tasks permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-run-tasks). To associate run tasks with a workspace, you need the [Manage Workspace Run Tasks permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) on that particular workspace.
 
 ## Creating a Run Task
+
+Run tasks send an API payload to an external service. This payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to Terraform Cloud. 
 
 You can access a complete list of all run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks). These run tasks include the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) and run tasks that our HashiCorp Technology Partners develop and maintain.
 
