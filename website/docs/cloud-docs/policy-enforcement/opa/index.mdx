@@ -168,6 +168,7 @@ The following code shows the schema for Terraform run data.
 run
 ├── id (string)
 ├── created_at (string)
+├── created_by (string)
 ├── message (string)
 ├── commit_sha (string)
 ├── is_destroy (boolean)
@@ -176,6 +177,9 @@ run
 ├── replace_addrs (array of strings)
 ├── speculative (boolean)
 ├── target_addrs (array of strings)
+└── project
+    ├── id (string)
+    ├── name (string)
 ├── variables (map of keys)
 ├── organization
 │   └── name (string)
@@ -184,6 +188,7 @@ run
     ├── name (string)
     ├── created_at (string)
     ├── description (string)
+    ├── execution_mode (string)
     ├── auto_apply (bool)
     ├── tags (array of strings)
     ├── working_directory (string)
@@ -202,6 +207,7 @@ The following table contains the attributes for the `run` namespace.
 |---------| ----------| ----------|
 |  `id`   | String | The ID associated with the current Terraform run |
 |  `created_at` | String | The time Terraform created the run. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
+|  `created_by` | String | A string that specifies the user name of the Terraform Cloud user for the specific run.|
 |  `message` |  String | The message associated with the Terraform run. The default value is "Queued manually via the Terraform Enterprise API". |
 |  `commit_sha` |  String |  The checksum hash (SHA) that identifies the commit |
 |  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
@@ -211,6 +217,16 @@ The following table contains the attributes for the `run` namespace.
 |  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) only |
 |  `target_addrs` |  An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing). | The targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
 |   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
+
+#### Project Namespace
+
+The following table contains the properties for the `project` namespace.
+
+| Property Name |  Type  | Description |
+|---------- | ------------ | -----------|
+| `id` | String | The ID associated with the Terraform project |
+|  `name` |  String | The name of the project, which can only include letters, numbers, spaces, -, and _.  |
+
 
 #### Organization Namespace
 
@@ -229,4 +245,5 @@ The following table contains the properties for the `workspace` namespace.
 |  `auto_apply` | Boolean | The workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#apply-method) setting |
 |  `tags` | Array of strings | The list of tag names for the workspace |
 |  `working_directory` |  String | The configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
+|  `execution_mode` |  String | The configured Terraform execution mode of the workspace. The default value is `remote`. |
 |  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation](/terraform/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
