@@ -5,10 +5,6 @@ description: Learn how to view and filter Sentinel JSON data.
 
 # Working With Sentinel JSON Result Data
 
--> **Note:** Sentinel policies are a paid feature, available as part of the
-**Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing
-here](https://www.hashicorp.com/products/terraform/pricing).
-
 When using the Terraform Cloud UI, Sentinel policy check results are available
 both in a human-readable log form, and in a more detailed, lower-level JSON
 form.  While the logs may suppress some output that would make the logs harder
@@ -17,6 +13,8 @@ able to parse this data in its entirety is especially important when working
 with [non-boolean rule
 data](https://docs.hashicorp.com/sentinel/language/rules#non-boolean-values) in
 a policy designed to work with Sentinel 0.17.0 and higher.
+
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 -> The JSON data exposed is the same as you would see when using the [policy
 checks API](/terraform/cloud-docs/api-docs/policy-checks), with the data starting at the

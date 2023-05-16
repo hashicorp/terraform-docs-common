@@ -38,11 +38,11 @@ description: >-
 
 # Policies API
 
--> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud Team & Governance tier](https://www.hashicorp.com/products/terraform/pricing).
-
 Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices. Terraform Cloud policy enforcement lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces. Refer to [Policy Enforcement]((/cloud-docs/policy-enforcement) for more details.
 
 You group policies into [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
+
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 This page documents the API endpoints to create, read, update, and delete policies in an organization. To manage policy sets, use the [Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets). To manage the policy results, use the [Runs API](/terraform/cloud-docs/api-docs/run).
 
