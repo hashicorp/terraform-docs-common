@@ -42,7 +42,7 @@ A notification configuration specifies a destination URL, a payload type, and th
   - **Check Failure:** Terraform Cloud detected one or more failed continuous validation checks. This notification is only available if you enable health assessments for the workspace.
   - **Health Assessment Fail**: A health assessment failed. This notification is only available if you enable health assessments for the workspace. Health assessments fail when Terraform Cloud cannot perform drift detection, continuous validation, or both. The notification does not specify the cause of the failure, but you can use the [Assessment Result](/terraform/cloud-docs/api-docs/assessment-results) logs to help diagnose the issue.
 
--> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing). Continuous validation is in beta and not available in Terraform Enterprise.
+-> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 - **Run Events:** Terraform Cloud can send notifications for all events or only for specific events. The following events are available:
   - **Created**: A run begins and enters the [Pending stage](/terraform/enterprise/run/states#the-pending-stage).

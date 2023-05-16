@@ -3,8 +3,6 @@ page_title: tfplan/v2 - Imports - Sentinel - Terraform Cloud
 description: The tfplan/v2 import provides access to a Terraform plan.
 ---
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
 -> **Note:** This is documentation for the next version of the `tfplan` Sentinel
 import, designed specifically for Terraform 0.12. This import requires
 Terraform 0.12 or higher, and must currently be loaded by path, using an alias,
@@ -18,6 +16,8 @@ A Terraform plan is the file created as a result of `terraform plan` and is the
 input to `terraform apply`. The plan represents the changes that Terraform needs
 to make to infrastructure to reach the desired state represented by the
 configuration.
+
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 In addition to the diff data available in the plan, there is a "planned state"
 that is available through this import, via the

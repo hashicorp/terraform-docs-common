@@ -38,11 +38,11 @@ description: >-
 
 # Policy Sets API
 
--> **Note:** Sentinel and OPA policies are available in the [Terraform Cloud Team & Governance tier](https://www.hashicorp.com/products/terraform/pricing). 
-
 [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces.
 
 Policy sets let you group related policies by attributes like environment or region. You can then apply each policy set to one or more workspaces. For these workspaces, Terraform Cloud checks every Terraform plan against each policy in the set.
+
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 This API provides endpoints to create, read, update, and delete policy sets in a Terraform Cloud organization. To view and manage individual policies, use the [Policies API](/terraform/cloud-docs/api-docs/policies).
 
