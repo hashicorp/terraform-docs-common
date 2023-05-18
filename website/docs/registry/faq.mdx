@@ -3,15 +3,17 @@ page_title: Terraform Registry FAQ
 description: Troubleshoot common issues as you attempt to publish to the Terraform Registry.
 ---
 
-## Common publishing issues
+# Terraform Registry publishing FAQ
 
-### How can I fix a formatting issue in the documentation for my provider?
+Below you'll find answers to some of the most common questions that arise when publishing a Terraform provider, module, or Sentinel policy library into the Registry.
+
+## How do I fix provider documentation issues?
 
 If you have issues formatting documentation, use the [documentation preview tool](https://registry.terraform.io/tools/doc-preview) to view how the Terraform Registry will format your documentation before you commit to a new provider release. [Learn more about creating provider documentation](/terraform/registry/providers/docs).
 
-If you have already released a version of your provider and are unhappy with its documentation, [fix the documentation issue in your repository and include it in a new release](#how-can-I-correct-a-bug-typo-or-documentation-error-in-a-version-of-my-provider-module-or-policy-library-once-it-has-been-published).
+If you have already released a version of your provider and are unhappy with its documentation, [fix the documentation issue in your repository and include it in a new release](#how-do-i-correct-bugs-in-published-versions).
 
-### How do I remove a version of my provider, module, or policy library that has already been published?
+## How do I remove a published version?
 
 If you remove a version of a provider, module, or policy library from the Terraform Registry, you will break the configuration of any individuals using that version. For this reason, _we never recommend removing previously published versions_ of providers, modules, or policy libraries.
 
@@ -23,11 +25,11 @@ In these situations, your options for removing previously published versions var
 - **Providers**: There is no manual process for removing a version of a provider. [Reach out to us via email](/terraform/registry#getting-help) if it is critical that a version be deleted.
 - **Policy Libraries**: The owner of a policy library can completely [remove it from the Registry through the website](/terraform/registry/policy-libraries/publishing#removing-a-policy-library).
 
-### How can I correct a bug, typo, or documentation error in a version of my provider, module, or policy library once it has been published?
+## How do I correct bugs in published versions?
 
 If there is a problem with a specific version, publish a new release with the issue fixed. Increment the patch version according to [standard Semantic Versioning practices](https://semver.org/#spec-item-6) (e.g., from `1.2.0` to `1.2.1`).
 
-### Can I remove a version of a provider, module, or policy library by deleting the release or tag from GitHub?
+## Can I delete a GitHub tag or release for a published version?
 
 We _do not recommend_ removing content from a GitHub repository you previously published to the Terraform Registry.
 
@@ -35,9 +37,9 @@ The Terraform Registry effectively acts as an index for Terraform-related conten
 
 The Terraform Registry is unaware if you remove a file, a tag, a release, or other content from GitHub. The Registry could still host index records pointing to now-removed content. As a result, someone using your provider or module may have their Terraform configuration break because the Registry is referencing GitHub files that are no longer available.
 
-If you find a typo, bug, or other issues with a published version of your provider, module, or policy library, [we recommend fixing the problem and publishing a new release](#how-can-i-correct-a-bug-or-typo-in-a-version-of-my-provider-module-or-policy-library-once-it-has-been-published).
+If you find a typo, bug, or other issues with a published version of your provider, module, or policy library, [we recommend fixing the problem and publishing a new release](#how-do-i-correct-bugs-in-published-versions).
 
-### I have moved the GitHub repository that hosts my provider, module, or policy library to a new GitHub user or organization. How can I update my integration in the Registry?
+## Can I change the name of my integration?
 
 Once consumers start using your integration, the name of the integration must remain constant. Otherwise,  you could break your consumer's Terraform configuration.
 
@@ -45,36 +47,32 @@ For this reason, we strongly recommend _against_ moving or renaming an existing 
 
 For further help, [reach out to us via email](/terraform/registry#getting-help).
 
-### I have renamed the GitHub user or organization that owns my provider, module, or policy library's GitHub repository. How can I update my integration in the Registry?
+## Can I rename the GitHub user or organization that owns my integration's repository?
 
-When you change the name of a GitHub user or organization, GitHub automatically redirects requests for the old user or organization to the new one. This means there is no interruption for your integration's consumers, who can continue using the old name. If you need to change the name of your integration, [see the above answer](#i-have-moved-the-github-repository-that-hosts-my-provider-module-or-policy-library-to-a-new-github-user-or-organization-how-can-i-update-my-integration-in-the-registry).
+When you change the name of a GitHub user or organization, GitHub automatically redirects requests for the old user or organization to the new one. This means there is no interruption for your integration's consumers, who can continue using the old name. If you need to change the name of your integration, [see the above answer](#can-i-change-the-name-of-my-integration).
 
 
 If you have changed your publishing Github user or organization name, we _recommend reclaiming_ any names you previously published from. If someone else claims your old user or organization name, they could build repositories that "capture" any redirected requests from the Registry. At that point, your consumers would be unable to download your integration.
 
-### I no longer have access to the GitHub user that I used to publish a provider, module, or policy library. How can I regain ownership of my integration in the Registry?
-
-For support, please [reach out to us via email](/terraform/registry#getting-help).
-
-### What does it mean to "resync" my provider, module, or policy library?
+## What does resyncing an integration do?
 
 Terraform integrations owners have access to a **Resync** button on their [providers](/terraform/registry/providers/publishing#publishing-to-the-registry), [modules](/terraform/registry/modules/publish#releasing-new-versions), and [policy libraries](/terraform/registry/policy-libraries/publishing#releasing-policy-library-versions). Clicking **Resync** instructs the Terraform Registry to check an integration's source repository on GitHub, so the Registry:
 
 - Ensures the repository has a webhook to publish new integration versions automatically.
 - Checks for discrepancies between the integration versions on GitHub and the versions within the Registry.
 
-The Terraform Registry will publish any versions in Github that the Registry hasn't published yet. 
+The Terraform Registry will publish any versions in Github that the Registry hasn't published yet.
 
 If a version you previously published to the Registry no longer exists in GitHub, the Registry responds differently depending on the type of integration:
 
 - Modules: if a version is available in the Registry but not in GitHub, the Registry removes that version. This might confuse your consumers that rely on specific module versions.
 
-- Providers and Policy Libraries: if a version is available in the Registry but not in GitHub, the Registry _keeps_ that published version. This state can cause certain versions of the integrations to be unusable. [We never recommend deleting files, tags, or releases from GitHub once you have published to the Registry](#can-i-remove-a-version-of-a-provider-module-or-policy-library-by-deleting-the-release-or-tag-from-github).
+- Providers and Policy Libraries: if a version is available in the Registry but not in GitHub, the Registry _keeps_ that published version. This state can cause certain versions of the integrations to be unusable. [We never recommend deleting files, tags, or releases from GitHub once you have published to the Registry](#can-i-delete-a-github-tag-or-release-for-a-published-version).
 
 
-### I created a new version of my provider, module, or policy library on GitHub and it didn't show up in the Registry. What should I do?
+## What can I do if new versions are not displaying in the Registry?
 
-If a new version is not showing up in the Terraform Registry, [try resyncing your integration with Github](#what-does-it-mean-to-resync-my-provider-module-or-policy-library). 
+If a new version you've published to GitHub is not showing up in the Terraform Registry, [try resyncing your integration with Github](#what-does-resyncing-an-integration-do).
 
 If resyncing does not work or publishing problems occur after resyncing, investigate your GitHub repository's webhooks. You can locate these webhooks in your repository's settings page by navigating to:
 
@@ -86,37 +84,39 @@ If multiple webhooks point to the Registry's URL (`https://registry.terraform.io
 
 If you are still running into trouble, please [reach out to us via email](/terraform/registry#getting-help) for support. If you are a customer of HashiCorp, work with your enterprise support contact to escalate the issue.
 
-### How does the Registry identify the latest version of my provider, module, or policy library?
+## How is the latest version of an integration selected?
 
 Each version of an integration published in the Terraform Registry has a string version identifier (e.g., `1.2.3`). You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the integration's code lives.
 
 The Terraform Registry requires that these version identifiers are [SemVer compliant](https://semver.org/). The Registry sorts versions using these identifiers, following [standard SemVer precedence rules](https://semver.org/#spec-item-11). The Registry lists the version identifier with the greatest precedence as the latest.
 
-### Why are prerelease versions listed as the latest version of my provider, module, or policy library?
+## Can I prevent prereleases from being the latest version?
 
-The Terraform Registry's version sorting is strictly SemVer compliant (see above). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
+No. The Terraform Registry's version sorting is strictly SemVer compliant ([see above](#how-is-the-latest-version-of-an-integration-selected)). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
 
 For example, if your provider has a published version (i.e., 1.0.0), and you create a new release for a version 2 prerelease (e.g., 2.0.0-preview). The Registry lists the version 2 prerelease as the latest version in the Terraform Registry.
 
 Note that Terraform never selects a prerelease version during a `plan` or `apply` unless the configuration files explicitly request one [using an exact version constraint](/terraform/language/expressions/version-constraints#version-constraint-behavior).
 
-### How do I change the GPG key that I use to sign my provider?
+## Can I change the GPG key I use to sign a provider?
 
 The public GPG keys that you upload to the Terraform Registry serve two purposes:
 
 1. When you publish a new provider version, the Registry uses the GPG key to verify the signature file you created. This lets the Registry confirm that you compiled the binary files.
 2. When someone downloads a version of your provider from the Registry, they can verify that the downloaded binary files have not been tampered with since you built them and generated the signature file.
 
-If you want to change to a new GPG key to sign and publish providers, you can upload a new one and use its private key to sign future provider releases.
+If you want to change to a new GPG key to sign and publish providers, you can upload a new one and use its private key to sign future provider releases. You do not need to remove any old GPG keys. Leaving the old key in place allows consumers of old versions of your provider to continue using those versions.
 
-You do not need to remove any old GPG keys. Leaving the old key in place allows consumers of old versions of your provider to continue using those versions.
-
-### How do I remove a public GPG key from the Registry that has been used for publishing a provider?
+## Can I remove public GPG keys that I previously published with?
 
 You should _never remove_ a public GPG key from the Registry, so we do not provide a way for you to do so.
 
 If you removed a public GPG key that you used to sign previous versions of a provider, consumers would be unable to use those versions because they could not verify the authenticity of the binary file they downloaded.
 
-### My private GPG key and/or GitHub account was compromised in a security incident. How can I protect my Registry integrations?
+## What can I do if my GPG Keys or GitHub account was compromised?
 
 If your GPG key or Github account has been compromised, please [reach out to us via email](/terraform/registry#getting-help). If you are a customer of HashiCorp, work with your enterprise support contact to escalate the issue.
+
+## Can I regain ownership of my integration after losing access to my GitHub account?
+
+For support, please [reach out to us via email](/terraform/registry#getting-help).
