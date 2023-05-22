@@ -36,7 +36,7 @@ The `oidc_discovery_url` and `bound_issuer` should both be the root address of T
 
 #### TFE Specific Requirements
 
-If you are using a custom or self-signed CA certificate you may need to specify the CA certificate or chain of certificates, in PEM format, via the [`oidc_discovery_ca_pem`](/vault/api-docs/auth/jwt#oidc_discovery_ca_pem) argument like in the following example command:
+If you are using a custom or self-signed CA certificate you may need to specify the CA certificate or chain of certificates, in PEM format, via the [`oidc_discovery_ca_pem`](/vault/api-docs/auth/jwt#oidc_discovery_ca_pem) argument as shown in the following example command:
 ```shell
 vault write auth/jwt/config \
     oidc_discovery_url="https://app.terraform.io" \
@@ -44,7 +44,7 @@ vault write auth/jwt/config \
     oidc_discovery_ca_pem=@my-cert.pem
 ```
 
-Where `my-cert.pem` is a PEM formatted file containing the certificate.
+In the example above, `my-cert.pem` is a PEM formatted file containing the certificate.
 
 ### Create a Vault Policy
 
