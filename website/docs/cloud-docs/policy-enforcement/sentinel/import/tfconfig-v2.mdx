@@ -3,8 +3,6 @@ page_title: tfconfig/v2 - Imports - Sentinel - Terraform Cloud
 description: The tfconfig/v2 import provides access to a Terraform configuration.
 ---
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
 -> **Note:** This is documentation for the next version of the `tfconfig`
 Sentinel import, designed specifically for Terraform 0.12. This import requires
 Terraform 0.12 or higher, and must currently be loaded by path, using an alias,
@@ -18,6 +16,8 @@ The Terraform configuration is the set of `*.tf` files that are used to
 describe the desired infrastructure state. Policies using the `tfconfig`
 import can access all aspects of the configuration: providers, resources,
 data sources, modules, and variables.
+
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Versioned policy sets are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Some use cases for `tfconfig` include:
 

@@ -42,7 +42,7 @@ Free organizations are limited to five active members.
 
 Some of Terraform Cloud's features are limited to particular paid upgrade plans.
 
-Each higher paid upgrade plan is a strict superset of any lower plans — for example, the **Team & Governance** plan includes all of the features of the **Team** plan. Paid feature callouts in the documentation indicate the _lowest_ tier at which the feature is available, but any higher plans also include that feature.
+Each higher paid upgrade plan is a strict superset of any lower plans — for example, the **Plus** edition includes all of the features of the **Standard** edition. Paid feature callouts in the documentation indicate the _lowest_ edition at which the feature is available, but any higher plans also include that feature.
 
 Terraform Enterprise generally includes all of Terraform Cloud's paid features, plus additional features geared toward large enterprises. However, some features are implemented differently due to the differences between self-hosted and SaaS environments, and some features might be absent due to being impractical or irrelevant in the types of organizations that need Terraform Enterprise. Cloud-only or Enterprise-only features are clearly indicated in documentation.
 
@@ -56,9 +56,6 @@ To change an organization's plan:
 1. Click **Plan and billing**. The **Plan and Billing** page appears showing your current plan and any available invoices.
 1. Click **Change plan**.
 1. Select a plan, enter your billing information, and click **Update plan**.
-
-
-
 
 ## Terraform Workflow
 
@@ -90,7 +87,8 @@ Terraform's local workflow manages a collection of infrastructure with a persist
 
 Terraform Cloud organizes infrastructure into projects and workspaces instead of directories. Each workspace contains everything necessary to manage a given collection of infrastructure, and Terraform uses that content when it runs in the context of that workspace.
 
-You can use projects to organize your workspaces into groups. Organizations with the [Team & Governance](https://www.hashicorp.com/products/terraform/pricing) tier can assign teams permissions for specific projects. 
+You can use projects to organize your workspaces into groups. Organizations with Terraform Cloud [Standard](https://www.hashicorp.com/products/terraform/pricing) Edition can assign teams permissions for specific projects. 
+
 This lets you grant access to collections of workspaces instead of using workspace-specific or organization-wide permissions, making it easier to limit access to only the resources required for a team member's job function. 
 
 Refer to [Workspaces](/terraform/cloud-docs/workspaces) and [Organizing Workspaces with Projects](/terraform/cloud-docs/workspaces/projects) for more details. 
@@ -183,7 +181,7 @@ With Terraform Cloud's team management, you can define groups of users that matc
 
 ### Policy Enforcement
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Versioned policy sets are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Policy-as-code lets you define and enforce granular policies for how your organization provisions infrastructure. You can limit the size of compute VMs, confine major updates to defined maintenance windows, and much more.
 

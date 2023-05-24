@@ -5,8 +5,6 @@ description: Configure an OPA policy set version control repository to use in Te
 
 # OPA Policy Set VCS Repositories
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
-
 To enable policy enforcement, you must group OPA policies into policy sets and apply those policy sets to one or more workspaces.
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorial.
@@ -15,6 +13,7 @@ One way to create policy sets is by connecting Terraform Cloud to a version cont
 
 An OPA policy set repository contains a HashiCorp Configuration Language (HCL) configuration file and policy files.
 
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Versioned policy sets are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 ## Configuration File
 

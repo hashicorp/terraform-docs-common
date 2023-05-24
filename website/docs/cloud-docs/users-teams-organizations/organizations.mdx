@@ -52,8 +52,6 @@ Terraform Cloud shows the new organization and prompts you to create a new works
 <!-- BEGIN: TFC:only name:managed-resources -->
 ## Managed Resources
 
--> **Note:** A managed resources count for each organization is available in the [Terraform Cloud Business tier](https://cloud.hashicorp.com/products/terraform/pricing).
-
 Your organization’s managed resource count helps you understand the number of infrastructure resources that Terraform Cloud manages across all your workspaces.
 
 Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) instance in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource created with the `count` or `for_each` meta-arguments. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. Refer to [Managed Resources Count](/terraform/cloud-docs/workspaces/state#managed-resources-count) in the workspace state documentation for more details.
@@ -103,7 +101,8 @@ Review a list of tags for all resources across the organization. When you delete
 
 #### Teams
 
--> **Note:** Team management is a paid feature, available as part of the **Team** upgrade plan. Free plan organizations only include an owners team that can include up to five members. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+-> **Note:** Team management is available in Terraform Cloud **Standard** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+
 
 All users in an organization can access the **Teams** page, which displays a list of [teams][] within the organization. This excludes [secret teams](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility) where you are not a member. You can also view team membership and manage team API tokens.
 
@@ -136,7 +135,7 @@ Refer to the [variables overview](/terraform/cloud-docs/workspaces/variables) do
 
 #### Health
 
--> **Note:** Health assessments are available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing). Continuous validation is in beta and not available in Terraform Enterprise.
+-> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
 - Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file. Drift detection requires Terraform version 0.15.4+.
@@ -149,19 +148,17 @@ You can enforce health assessments for all eligible workspaces or let each works
 
 #### Cost Estimation
 
--> **Note:** Cost estimation is a paid feature, available as part of the **Team & Governance** plan. Refer to [Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
-
 Enable and disable the [cost estimation](/terraform/cloud-docs/cost-estimation) feature for all workspaces.
 
 #### Policies
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Versioned policy sets are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Policies let you define and enforce rules for Terraform runs. You can write them using either the [Sentinel](/terraform/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/terraform/cloud-docs/policy-enforcement/opa) policy-as-code frameworks and then group them into policy sets that you can apply to workspaces in your organization. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
 
 #### Policy Sets
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. Versioned policy sets are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Create groups of policies and assign those policy sets to workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in Terraform Cloud. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
 
@@ -171,7 +168,7 @@ Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-
 
 #### Run Tasks
 
--> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+-> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Manage the run tasks that you can add to workspaces within the organization. [Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you integrate third-party tools and services at specific stages in the Terraform Cloud run lifecycle.
 
@@ -179,7 +176,7 @@ Manage the run tasks that you can add to workspaces within the organization. [Ru
 
 #### Agents
 
--> Note: Terraform Cloud Agents are a paid feature, available as part of the **Business** plan. Refer to [Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+-> **Note:** Terraform Cloud **Free** Edition includes one self-hosted agent. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Create and manage [Terraform Cloud agent pools](/terraform/cloud-docs/agents). Terraform Cloud Agents let Terraform Cloud communicate with isolated, private, or on-premises infrastructure. This is useful for on-premises infrastructure types such as vSphere, Nutanix, OpenStack, enterprise networking providers, and infrastructure within a protected enclave.
 
@@ -196,8 +193,6 @@ Organization owners can determine when users must reauthenticate and require [tw
 Manage [SSH keys for cloning Git-based modules](/terraform/cloud-docs/workspaces/settings/ssh-keys) during Terraform runs. This does not include keys to access a connected VCS provider.
 
 #### SSO
-
--> **Note:** Single sign-on is a paid feature, available as part of the **Business** plan. Refer to [Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
 Organization owners can set up an SSO provider for the organization.
 
