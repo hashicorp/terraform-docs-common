@@ -15,6 +15,7 @@ This import currently consists of run attributes, as well as namespaces for the 
 tfrun
 ├── id (string)
 ├── created_at (string)
+├── created_by (string)
 ├── message (string)
 ├── commit_sha (string)
 ├── is_destroy (boolean)
@@ -23,6 +24,9 @@ tfrun
 ├── replace_addrs (array of strings)
 ├── speculative (boolean)
 ├── target_addrs (array of strings)
+├── project
+│   ├── id (string)
+│   └── name (string)
 ├── variables (map of keys)
 ├── organization
 │   └── name (string)
@@ -31,6 +35,7 @@ tfrun
 │   ├── name (string)
 │   ├── created_at (string)
 │   ├── description (string)
+│   ├── execution_mode (string)
 │   ├── auto_apply (bool)
 │   ├── tags (array of strings)
 │   ├── working_directory (string)
@@ -73,6 +78,12 @@ Specifies the ID that is associated with the current Terraform run.
 The `created_at` value within the [root namespace](#namespace-root) specifies the time that the run was created. The timestamp returned follows the format outlined in [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339).
 
 Users can use the `time` import to [load](https://docs.hashicorp.com/sentinel/imports/time#time-load-timeish) a run timestamp and create a new timespace from the specified value. See the `time` import [documentation](https://docs.hashicorp.com/sentinel/imports/time#import-time) for available actions that can be performed on timespaces.
+
+### Value: `created_by`
+
+* **Value Type:** String.
+
+The `created_by` value within the [root namespace](#namespace-root) is string that specifies the user name of the Terraform Cloud user for the specific run.
 
 ### Value: `message`
 
@@ -144,6 +155,22 @@ variables (map of keys)
     └── category (string)
     └── sensitive (boolean)
 ```
+
+## Namespace: project
+
+The **project namespace** contains data associated with the current run's [projects](/terraform/cloud-docs/api-docs/projects).
+
+### Value: `id`
+
+* **Value Type:** String.
+
+Specifies the ID that is associated with the current Project.
+
+### Value: `name`
+
+* **Value Type:** String.
+
+Specifies the name assigned to the Terraform Cloud Project.
 
 ## Namespace: organization
 
@@ -222,6 +249,14 @@ Contains the list of tag names for the workspace.
 Contains the configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace.
 
 This value can be `null`.
+
+### Value: `execution_mode`
+
+* **Value Type:** String.
+
+Contains the configured [Terraform execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) of the workspace.
+
+The defaulf value is `remote`.
 
 ### Value: `vcs_repo`
 
