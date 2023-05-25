@@ -19,7 +19,7 @@ If you remove a version of a provider, module, or policy library from the Terraf
 
 There are a few situations where you may need to remove a version from the Terraform Registry. For example, if a version has a critical security vulnerability.
 
-In these situations, your options for removing previously published versions vary on the type of integration:
+In these situations, your options for removing previously published versions vary on the type of Terraform Registry artifact:
 
 - **Modules**: The module owner can use the Terraform Registry to [remove a specific version, all versions of a specific module provider, or the module entirely](/terraform/registry/modules/publish#removing-published-content).
 - **Providers**: There is no manual process for removing a version of a provider. [Reach out to us via email](/terraform/registry#getting-help) if it is critical that a version be deleted.
@@ -33,46 +33,46 @@ If there is a problem with a specific version, publish a new release with the is
 
 We _do not recommend_ removing content from a GitHub repository you previously published to the Terraform Registry.
 
-The Terraform Registry effectively acts as an index for Terraform-related content hosted on GitHub. When you make a new tag or release in the GitHub repository that holds your Terraform integration, the Registry automatically creates an index record for that content. Think of an index record as a pointer to those files in your GitHub repository.
+The Terraform Registry effectively acts as an index for Terraform-related content hosted on GitHub. When you make a new tag or release in the GitHub repository that holds your Terraform Registry artifact, the Registry automatically creates an index record for that content. Think of an index record as a pointer to those files in your GitHub repository.
 
 The Terraform Registry is unaware if you remove a file, a tag, a release, or other content from GitHub. The Registry could still host index records pointing to now-removed content. As a result, someone using your provider or module may have their Terraform configuration break because the Registry is referencing GitHub files that are no longer available.
 
 If you find a typo, bug, or other issues with a published version of your provider, module, or policy library, [we recommend fixing the problem and publishing a new release](#how-do-i-correct-bugs-in-published-versions).
 
-## Can I change the name of my integration?
+## Can I change the name of my artifact?
 
-Once consumers start using your integration, the name of the integration must remain constant. Otherwise,  you could break your consumer's Terraform configuration.
+Once consumers start using your provider, module, or policy library, the name of the artifact must remain constant. Otherwise,  you could break your consumer's Terraform configuration.
 
-For this reason, we strongly recommend _against_ moving or renaming an existing integration. Instead, it's often a better choice to create a new repository, representing the new name of your integration while leaving the old content in place.
+For this reason, we strongly recommend _against_ moving or renaming an existing artifact. Instead, it's often a better choice to create a new repository, representing the new name of your artifact while leaving the old content in place.
 
 For further help, [reach out to us via email](/terraform/registry#getting-help).
 
-## Can I rename the GitHub user or organization that owns my integration's repository?
+## Can I rename the GitHub user or organization that owns my artifact's repository?
 
-When you change the name of a GitHub user or organization, GitHub automatically redirects requests for the old user or organization to the new one. This means there is no interruption for your integration's consumers, who can continue using the old name. If you need to change the name of your integration, [see the above answer](#can-i-change-the-name-of-my-integration).
+When you change the name of a GitHub user or organization, GitHub automatically redirects requests for the old user or organization to the new one. This means there is no interruption for your artifact's consumers, who can continue using the old name. If you need to change the name of your artifact, [see the above answer](#can-i-change-the-name-of-my-artifact).
 
 
-If you have changed your publishing Github user or organization name, we _recommend reclaiming_ any names you previously published from. If someone else claims your old user or organization name, they could build repositories that "capture" any redirected requests from the Registry. At that point, your consumers would be unable to download your integration.
+If you have changed your publishing Github user or organization name, we _recommend reclaiming_ any names you previously published from. If someone else claims your old user or organization name, they could build repositories that "capture" any redirected requests from the Registry. At that point, your consumers would be unable to download your artifact.
 
-## What does resyncing an integration do?
+## What does resyncing an artifact do?
 
-Owners of Terraform integrations have access to a **Resync** button on their [providers](/terraform/registry/providers/publishing#publishing-to-the-registry), [modules](/terraform/registry/modules/publish#releasing-new-versions), and [policy libraries](/terraform/registry/policy-libraries/publishing#releasing-policy-library-versions). Clicking **Resync** instructs the Terraform Registry to check an integration's source repository on GitHub, so the Registry:
+Owners of Terraform Registry artifacts have access to a **Resync** button on their [providers](/terraform/registry/providers/publishing#publishing-to-the-registry), [modules](/terraform/registry/modules/publish#releasing-new-versions), and [policy libraries](/terraform/registry/policy-libraries/publishing#releasing-policy-library-versions). Clicking **Resync** instructs the Terraform Registry to check an artifact's source repository on GitHub, so the Registry:
 
-- Ensures the repository has a webhook to publish new integration versions automatically.
-- Checks for discrepancies between the integration versions on GitHub and the versions within the Registry.
+- Ensures the repository has a webhook to publish new versions automatically.
+- Checks for discrepancies between the versions on GitHub and the versions within the Registry.
 
 The Terraform Registry will publish any versions in Github that the Registry hasn't published yet.
 
-If a version you previously published to the Registry no longer exists in GitHub, the Registry responds differently depending on the type of integration:
+If a version you previously published to the Registry no longer exists in GitHub, the Registry responds differently depending on the type of artifact:
 
 - Modules: if a version is available in the Registry but not in GitHub, the Registry removes that version. This might confuse your consumers that rely on specific module versions.
 
-- Providers and Policy Libraries: if a version is available in the Registry but not in GitHub, the Registry _keeps_ that published version. This state can cause certain versions of the integrations to be unusable. [We never recommend deleting files, tags, or releases from GitHub once you have published to the Registry](#can-i-delete-a-github-tag-or-release-for-a-published-version).
+- Providers and Policy Libraries: if a version is available in the Registry but not in GitHub, the Registry _keeps_ that published version. This state can cause certain versions of the artifact to be unusable. [We never recommend deleting files, tags, or releases from GitHub once you have published to the Registry](#can-i-delete-a-github-tag-or-release-for-a-published-version).
 
 
 ## What can I do if new versions are not displaying in the Registry?
 
-If a new version you've published to GitHub is not showing up in the Terraform Registry, [try resyncing your integration with Github](#what-does-resyncing-an-integration-do).
+If a new version you've published to GitHub is not showing up in the Terraform Registry, [try resyncing your artifact with Github](#what-does-resyncing-an-artifact-do).
 
 If resyncing does not work or publishing problems occur after resyncing, investigate your GitHub repository's webhooks. You can locate these webhooks in your repository's settings page by navigating to:
 
@@ -80,19 +80,19 @@ If resyncing does not work or publishing problems occur after resyncing, investi
 https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/settings/hooks
 ```
 
-If multiple webhooks point to the Registry's URL (`https://registry.terraform.io`), remove them, then attempt to resync your integration again.
+If multiple webhooks point to the Registry's URL (`https://registry.terraform.io`), remove them, then attempt to resync your artifact again.
 
 If you are still running into trouble, please [reach out to us via email](/terraform/registry#getting-help) for support. If you are a customer of HashiCorp, work with your enterprise support contact to escalate the issue.
 
-## How is the latest version of an integration selected?
+## How is the latest version of an artifact selected?
 
-Each version of an integration published in the Terraform Registry has a string version identifier (e.g., `1.2.3`). You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the integration's code lives.
+Each version of an artifact published in the Terraform Registry has a string version identifier (e.g., `1.2.3`). You create the version identifier when you create a tag (for modules and policy libraries) or a release (for providers) in the GitHub repository where the artifact's code lives.
 
 The Terraform Registry requires that these version identifiers are [SemVer compliant](https://semver.org/). The Registry sorts versions using these identifiers, following [standard SemVer precedence rules](https://semver.org/#spec-item-11). The Registry lists the version identifier with the greatest precedence as the latest.
 
 ## Can I prevent prereleases from being the latest version?
 
-No. The Terraform Registry's version sorting is strictly SemVer compliant ([see above](#how-is-the-latest-version-of-an-integration-selected)). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
+No. The Terraform Registry's version sorting is strictly SemVer compliant ([see above](#how-is-the-latest-version-of-an-artifact-selected)). This means that "latest" in the Registry can be a prerelease version, if the prerelease's version identifier has the greatest precedence.
 
 For example, if your provider has a published version (i.e., 1.0.0), and you create a new release for a version 2 prerelease (e.g., 2.0.0-preview). The Registry lists the version 2 prerelease as the latest version in the Terraform Registry.
 
@@ -117,6 +117,6 @@ If you removed a public GPG key that you used to sign previous versions of a pro
 
 If your GPG key or Github account has been compromised, please [reach out to us via email](/terraform/registry#getting-help). If you are a customer of HashiCorp, work with your enterprise support contact to escalate the issue.
 
-## Can I regain ownership of my integration after losing access to my GitHub account?
+## Can I regain ownership of my artifact after losing access to my GitHub account?
 
 For support, please [reach out to us via email](/terraform/registry#getting-help).
