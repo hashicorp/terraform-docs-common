@@ -1,0 +1,64 @@
+---
+page_title: Overview - ServiceNow Service Graph Connector for Terraform Integration - Resource Coverage
+description: >-
+  ServiceNow Service Graph integration allows to import a limited set of resources into ServiceNow CMDB.
+---
+
+# Resource Mapping
+
+## AWS
+
+| AWS resource                                                                         | Terraform resource name    | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
+|--------------------------------------------------------------------------------------|----------------------------|---------------------------------|-------------------------------|
+| AWS account                                                                          | N/A                        | `cmdb_ci_cloud_service_account` | Cloud Service Account         |
+| AWS region                                                                           | N/A                        | `cmdb_ci_aws_datacenter`        | AWS Datacenter                |
+| EC2 Instance                                                                         | `aws_instance`             | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
+| S3 Bucket                                                                            | `aws_s3_bucket`            | `cmdb_ci_cloud_object_storage`  | Cloud Object Storage          |
+| ECS Cluster                                                                          | `aws_ecs_cluster`          | `cmdb_ci_cloud_ecs_cluster`     | AWS Cloud ECS Cluster         |
+| EKS Cluster                                                                          | `aws_eks_cluster`          | `cmdb_ci_kubernetes_cluster`    | Kubernetes Cluster            |
+| VPC                                                                                  | `aws_vpc`                  | `cmdb_ci_network`               | Cloud Network                 |
+| Database Instance (*non-Aurora databases: e.g., MySQL, PostgreSQL, SQL Server, etc.*)| `aws_db_instance`          | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| RDS Aurora Cluster                                                                   | `aws_rds_cluster`          | `cmdb_ci_cloud_db_cluster`      | Cloud DataBase Cluster        |
+| RDS Aurora Instance                                                                  | `aws_rds_cluster_instance` | `cmdb_ci_kubernetes_cluster`    | Cloud DataBase                |
+| DynamoDB Global Table                                                                | `aws_dynamodb_global_table`| `cmdb_ci_dynamodb_global_table` | DynamoDB Global Table         |
+| DynamoDB Table                                                                       | `aws_dynamodb_table`       | `cmdb_ci_dynamodb_table`        | DynamoDB Table                |
+| Security Group                                                                       | `aws_security_group`       | `cmdb_ci_compute_security_group`| Compute Security Group        |
+| Lambda                                                                               | `aws_lambda_function`      | `cmdb_ci_cloud_function`        | Cloud Function                |
+| Load Balancer                                                                        | `aws_lb`                   | `cmdb_ci_cloud_load_balancer`   | Cloud Load Balancer           |
+| Tags                                                                                 | N/A                        | `cmdb_key_value`                | Key Value                     |
+
+## Microsoft Azure
+
+| Azure resource             | Terraform resource name            | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
+|----------------------------|------------------------------------|---------------------------------|-------------------------------|
+| Azure account              | N/A                                | `cmdb_ci_cloud_service_account` | Cloud Service Account         |
+| Azure region               | N/A                                | `cmdb_ci_azure_datacenter`      | Azure Datacenter              |
+| Resource Group             | `azurerm_resource_group`           | `cmdb_ci_resource_group`        | Resource Group                |
+| Windows VM                 | `azurerm_windows_virtual_machine`  | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
+| Linux VM                   | `azurerm_linux_virtual_machine`    | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
+| AKS Cluster                | `azurerm_kubernetes_cluster`       | `cmdb_ci_kubernetes_cluster`    | Kubernetes Cluster            |
+| Storage Container          | `azurerm_storage_container`        | `cmdb_ci_network`               | Cloud Storage Account         |
+| MariaDB Database           | `azurerm_mariadb_server`           | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| MS SQL Database            | `azurerm_mssql_server`             | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| MySQL Database             | `azurerm_mysql_server`             | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| PostgreSQL Database        | `azurerm_postgresql_server`        | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| Network security group     | `azurerm_network_security_group`   | `cmdb_ci_dynamodb_table`        | DynamoDB Table                |
+| Linux Function App         | `azurerm_linux_function_app`       | `cmdb_ci_compute_security_group`| Compute Security Group        |
+| Windows Function App       | `azurerm_windows_function_app`     | `cmdb_ci_cloud_function`        | Cloud Function                |
+| Virtual Network            | `azurerm_virtual_network`          | `cmdb_ci_cloud_load_balancer`   | Cloud Load Balancer           |
+| Tags                       | N/A                                | `cmdb_key_value`                | Key Value                     |
+
+## Google Cloud Platform
+
+| Terraform resource | ServiceNow CMDB CI Class| Field Mappings | Hierarchical relationships
+|--------------------|-------------------------|----------------|---------------------------|
+| Row 1, Column 1    | Row 1, Column 2         | Row 1, Column 3|                           |
+| Row 2, Column 1    | Row 2, Column 2         | Row 2, Column 3|                           |
+| Row 3, Column 1    | Row 3, Column 2         | Row 3, Column 3|                           |
+
+## VMware vSphere
+| Terraform resource | ServiceNow CMDB CI Class| Field Mappings | Hierarchical relationships
+|--------------------|-------------------------|----------------|---------------------------|
+| Row 1, Column 1    | Row 1, Column 2         | Row 1, Column 3|                           |
+| Row 2, Column 1    | Row 2, Column 2         | Row 2, Column 3|                           |
+| Row 3, Column 1    | Row 3, Column 2         | Row 3, Column 3|                           |
