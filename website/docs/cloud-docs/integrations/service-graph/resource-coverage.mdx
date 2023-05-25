@@ -1,12 +1,16 @@
 ---
 page_title: Overview - ServiceNow Service Graph Connector for Terraform Integration - Resource Coverage
 description: >-
-  ServiceNow Service Graph integration allows to import a limited set of resources into ServiceNow CMDB.
+  ServiceNow Service Graph integration allows to import a selected resources into ServiceNow CMDB.
 ---
 
 # Resource Mapping
 
+The following table outlines how resources from the Terraform state are mapped to the ServiceNow CMDB CI classes.
+
 ## AWS
+
+### Resource Mapping
 
 | AWS resource                                                                         | Terraform resource name    | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
 |--------------------------------------------------------------------------------------|----------------------------|---------------------------------|-------------------------------|
@@ -19,7 +23,7 @@ description: >-
 | VPC                                                                                  | `aws_vpc`                  | `cmdb_ci_network`               | Cloud Network                 |
 | Database Instance (*non-Aurora databases: e.g., MySQL, PostgreSQL, SQL Server, etc.*)| `aws_db_instance`          | `cmdb_ci_cloud_database`        | Cloud DataBase                |
 | RDS Aurora Cluster                                                                   | `aws_rds_cluster`          | `cmdb_ci_cloud_db_cluster`      | Cloud DataBase Cluster        |
-| RDS Aurora Instance                                                                  | `aws_rds_cluster_instance` | `cmdb_ci_kubernetes_cluster`    | Cloud DataBase                |
+| RDS Aurora Instance                                                                  | `aws_rds_cluster_instance` | `cmdb_ci_cloud_database`        | Cloud DataBase                |
 | DynamoDB Global Table                                                                | `aws_dynamodb_global_table`| `cmdb_ci_dynamodb_global_table` | DynamoDB Global Table         |
 | DynamoDB Table                                                                       | `aws_dynamodb_table`       | `cmdb_ci_dynamodb_table`        | DynamoDB Table                |
 | Security Group                                                                       | `aws_security_group`       | `cmdb_ci_compute_security_group`| Compute Security Group        |
@@ -37,28 +41,42 @@ description: >-
 | Windows VM                 | `azurerm_windows_virtual_machine`  | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
 | Linux VM                   | `azurerm_linux_virtual_machine`    | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
 | AKS Cluster                | `azurerm_kubernetes_cluster`       | `cmdb_ci_kubernetes_cluster`    | Kubernetes Cluster            |
-| Storage Container          | `azurerm_storage_container`        | `cmdb_ci_network`               | Cloud Storage Account         |
+| Storage Container          | `azurerm_storage_container`        | `cmdb_ci_cloud_storage_account` | Cloud Storage Account         |
 | MariaDB Database           | `azurerm_mariadb_server`           | `cmdb_ci_cloud_database`        | Cloud DataBase                |
 | MS SQL Database            | `azurerm_mssql_server`             | `cmdb_ci_cloud_database`        | Cloud DataBase                |
 | MySQL Database             | `azurerm_mysql_server`             | `cmdb_ci_cloud_database`        | Cloud DataBase                |
 | PostgreSQL Database        | `azurerm_postgresql_server`        | `cmdb_ci_cloud_database`        | Cloud DataBase                |
-| Network security group     | `azurerm_network_security_group`   | `cmdb_ci_dynamodb_table`        | DynamoDB Table                |
-| Linux Function App         | `azurerm_linux_function_app`       | `cmdb_ci_compute_security_group`| Compute Security Group        |
+| Network security group     | `azurerm_network_security_group`   | `cmdb_ci_compute_security_group`| Compute Security Group        |
+| Linux Function App         | `azurerm_linux_function_app`       | `cmdb_ci_cloud_function`        | Cloud Function                |
 | Windows Function App       | `azurerm_windows_function_app`     | `cmdb_ci_cloud_function`        | Cloud Function                |
-| Virtual Network            | `azurerm_virtual_network`          | `cmdb_ci_cloud_load_balancer`   | Cloud Load Balancer           |
+| Virtual Network            | `azurerm_virtual_network`          | `cmdb_ci_network`               | Cloud Network                 |
 | Tags                       | N/A                                | `cmdb_key_value`                | Key Value                     |
 
 ## Google Cloud Platform
 
-| Terraform resource | ServiceNow CMDB CI Class| Field Mappings | Hierarchical relationships
-|--------------------|-------------------------|----------------|---------------------------|
-| Row 1, Column 1    | Row 1, Column 2         | Row 1, Column 3|                           |
-| Row 2, Column 1    | Row 2, Column 2         | Row 2, Column 3|                           |
-| Row 3, Column 1    | Row 3, Column 2         | Row 3, Column 3|                           |
+| Google resource            | Terraform resource name                                               | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
+|----------------------------|-----------------------------------------------------------------------|---------------------------------|-------------------------------|
+| Project ID                 | N/A                                                                   | `cmdb_ci_cloud_service_account` | Cloud Service Account         |
+| Region (location)          | N/A                                                                   | `cmdb_ci_google_datacenter`     | Google Datacenter             |
+| Virtual Machine Instance   | `google_compute_instance`                                             | `cmdb_ci_vm_instance`           | Virtual Machine Instance      |
+| Kubernetes Cluster         | `google_container_cluster`                                            | `cmdb_ci_kubernetes_cluster`    | Kubernetes Cluster            |
+| Google Storage             | `google_storage_bucket`                                               | `cmdb_ci_cloud_storage_account` | Cloud Storage Account         |
+| Google BigQuery            | `google_bigquery_table`                                               | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| Google SQL                 | `google_sql_database`                                                 | `cmdb_ci_cloud_database`        | Cloud DataBase                |
+| Google Compute Firewall    | `google_compute_firewall`                                             | `cmdb_ci_compute_security_group`| Compute Security Group        |
+| Cloud Function             | `google_cloudfunctions_function` or `google_cloudfunctions2_function` | `cmdb_ci_cloud_function`        | Cloud Function                |
+| Load Balancer              | `google_compute_forwarding_rule`                                      | `cmdb_ci_cloud_load_balancer`   | Cloud Load Balancer           |
+| VPC                        | `google_compute_network`                                              | `cmdb_ci_network`               | Cloud Network                 |
+| Tags                       | N/A                                                                   | `cmdb_key_value`                | Key Value                     |
 
 ## VMware vSphere
-| Terraform resource | ServiceNow CMDB CI Class| Field Mappings | Hierarchical relationships
-|--------------------|-------------------------|----------------|---------------------------|
-| Row 1, Column 1    | Row 1, Column 2         | Row 1, Column 3|                           |
-| Row 2, Column 1    | Row 2, Column 2         | Row 2, Column 3|                           |
-| Row 3, Column 1    | Row 3, Column 2         | Row 3, Column 3|                           |
+
+| vSphere resource           | Terraform resource name            | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name  |
+|----------------------------|------------------------------------|---------------------------------|--------------------------------|
+| vCenter server             | N/A                                | `cmdb_ci_cloud_service_account` | Cloud Service Account          |
+| vSphere Datacenter         | `vsphere_datacenter`               | `cmdb_ci_vcenter_datacenter`    | VMware vCenter Datacenter      |
+| vSphere Virtual Machine    | `vsphere_virtual_machine`          | `cmdb_ci_vmware_instance`       | VMware Virtual Machine Instance|
+| vSphere Datastore Cluster  | `vsphere_datastore_cluster`        | `cmdb_ci_vcenter_datastore`     | VMware vCenter Datastore       |
+| vSphere Network            | `vsphere_network`                  | `cmdb_ci_vcenter_network`       | VMware vCenter Network         |
+| Tags                       | N/A                                | `cmdb_key_value`                | Key Value                      |
+
