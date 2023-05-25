@@ -70,17 +70,20 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                                | Type           | Default                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                              |
-| --------------------------------------- | -------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                             | string         |                                               | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `data.attributes.name`                  | string         |                                               | The name of the policy, which can include letters, numbers, `-`, and `_`. You cannot modify this name after creation.                                                                                                                                                                                                                                                                                                    |
-| `data.attributes.description`           | string         | `null`                                        | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                |
-| `data.attributes.kind`                  | string         | `sentinel`                                    | The policy-as-code framework for the policy. Valid values are `"sentinel"` and `"opa"`.                                                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.query`                 | string         |                                               | The OPA query to run. Only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                       |
-| `data.attributes.enforce`               | array\[object] |                                               | An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`. |
-| `data.attributes.enforce[].path`        | string         |                                               | For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                    |
-| `data.attributes.enforce[].mode`        | string         |                                               | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                                         |
-| `data.relationships.policy-sets.data[]` | array\[object] | `[]`                                          | A list of resource identifier objects to define which policy sets include the new policy. These objects must contain `id` and `type` properties, and the `type` property must be `policy-sets`. For example,`{ "id": "polset-3yVQZvHzf5j3WRJ1","type": "policy-sets" }`.                                                                                                                                                 |
+|                Key path                 |      Type      |  Default   |                                                                                                                                                                                                                               Description                                                                                                                                                                                                                                |
+| --------------------------------------- | -------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.type`                             | string         |            | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.name`                  | string         |            | The name of the policy, which can include letters, numbers, `-`, and `_`. You cannot modify this name after creation.                                                                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.description`           | string         | `null`     | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                                                                |
+| `data.attributes.kind`                  | string         | `sentinel` | The policy-as-code framework for the policy. Valid values are `"sentinel"` and `"opa"`.                                                                                                                                                                                                                                                                                                                                                                                  |
+| `data.attributes.query`                 | string         |            | The OPA query to run. Only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `data.attributes.enforcement-level`     | string         |            | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                                                                            |
+| `data.attributes.enforce`               | array\[object] |            | **DEPRECATED** Use `enforcement-level` instead. An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`. |
+| `data.attributes.enforce[].path`        | string         |            | **DEPRECATED** For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.enforce[].mode`        | string         |            | **DEPRECATED** Use `enforcement-level` instead. The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                            |
+| `data.relationships.policy-sets.data[]` | array\[object] | `[]`       | A list of resource identifier objects to define which policy sets include the new policy. These objects must contain `id` and `type` properties, and the `type` property must be `policy-sets`. For example,`{ "id": "polset-3yVQZvHzf5j3WRJ1","type": "policy-sets" }`.                                                                                                                                                                                                 |
+
+-> **Note**: The `enforce` property is also deprecated in the response, and is provided for backwards compatibility.
 
 ### Sample Payload (Sentinel)
 
@@ -88,12 +91,7 @@ Properties without a default value are required.
 {
   "data": {
     "attributes": {
-      "enforce": [
-        {
-          "path": "my-example-policy.sentinel",
-          "mode": "hard-mandatory"
-        }
-      ],
+      "enforcement-level": "hard-mandatory",
       "name": "my-example-policy",
       "description": "An example policy.",
       "kind": "sentinel"
@@ -111,6 +109,8 @@ Properties without a default value are required.
 ```
 
 ### Sample Payload (OPA)
+
+-> **Note**: This sample is using the deprecated `enforce` property.
 
 ```json
 {
@@ -160,6 +160,7 @@ curl \
     "attributes": {
       "name":"my-example-policy",
       "description":"An example policy.",
+      "enforcement-level":"advisory",
       "enforce": [
         {
           "path":"my-example-policy.sentinel",
@@ -199,6 +200,7 @@ curl \
       "description":"An example policy.",
       "kind": "opa",
       "query": "terraform.main",
+      "enforcement-level": "advisory",
       "enforce": [
         {
           "path":"my-example-policy.rego",
@@ -259,6 +261,7 @@ curl --request GET \
       "name": "my-example-policy",
       "description":"An example policy.",
       "kind": "sentinel",
+      "enforcement-level": "soft-mandatory",
       "enforce": [
         {
           "path": "my-example-policy.sentinel",
@@ -347,14 +350,15 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                         | Type           | Default                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------------------------- | -------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                      | string         |                                               | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                     |
-| `data.attributes.description`    | string         | `null`                                        | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                 |
-| `data.attributes.query`          | string         |                                               | The OPA query to run. This is only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                |
-| `data.attributes.enforce`        | array\[object] |                                               | An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`.  |
-| `data.attributes.enforce[].path` | string         |                                               | For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                     |
-| `data.attributes.enforce[].mode` | string         | `hard-mandatory`(Sentinel) , `advisory` (OPA) | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                                          |
+|              Key path               |      Type      | Default |                                                                                                                                                                                                                               Description                                                                                                                                                                                                                                |
+| ----------------------------------- | -------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.type`                         | string         |         | Must be `"policies"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `data.attributes.description`       | string         | `null`  | Text describing the policy's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                                                                |
+| `data.attributes.query`             | string         |         | The OPA query to run. This is only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `data.attributes.enforcement-level` | string         |         | The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                                                                            |
+| `data.attributes.enforce`           | array\[object] |         | **DEPRECATED** Use `enforcement-level` instead. An array of enforcement configurations that map policy file paths to their enforcement modes. Policies support a single file, so this array should consist of a single element. For Sentinel, if the path in the enforcement map does not match the Sentinel policy (`<NAME>.sentinel`), then Terraform Cloud uses the default `hard-mandatory` enforcement level. For OPA, the default enforcement level is `advisory`. |
+| `data.attributes.enforce[].path`    | string         |         | **DEPRECATED** For Sentinel, must be `<NAME>.sentinel`, where `<NAME>` has the same value as `data.attributes.name`. For OPA, must be `<NAME>.rego`.                                                                                                                                                                                                                                                                                                                     |
+| `data.attributes.enforce[].mode`    | string         |         | **DEPRECATED** Use `enforcement-level` instead. The enforcement level of the policy. For Sentinel, valid values are `"hard-mandatory"`, `"soft-mandatory"`, and `"advisory"`. For OPA, Valid values are `"mandatory"`and `"advisory"`. Refer to [Managing Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.                                                                                                                            |
 
 ### Sample Payload
 
@@ -362,12 +366,7 @@ Properties without a default value are required.
 {
   "data": {
     "attributes": {
-      "enforce": [
-        {
-          "path": "my-example-policy.sentinel",
-          "mode": "soft-mandatory"
-        }
-      ],
+      "enforcement-level": "soft-mandatory"
     },
     "type":"policies"
   }
@@ -396,6 +395,7 @@ curl \
       "name":"my-example-policy",
       "description":"An example policy.",
       "kind": "sentinel",
+      "enforcement-level": "soft-mandatory",
       "enforce": [
         {
           "path":"my-example-policy.sentinel",
@@ -459,6 +459,7 @@ curl \
   "data": [
     {
       "attributes": {
+        "enforcement-level": "advisory",
         "enforce": [
           {
             "mode": "advisory",
@@ -485,43 +486,44 @@ curl \
       "type": "policies"
     },
     {
-       "id":"pol-vM2rBfj7V2Faq8By",
-       "type":"policies",
-       "attributes":{
-       "name":"policy1",
-       "description":null,
-       "enforce":[
-         {
-            "path":"policy1.rego",
-            "mode":"advisory"
-         }
-       ],
-       "policy-set-count":1,
-       "updated-at":"2022-09-13T04:57:43.516Z",
-       "kind":"opa",
-       "query":"data.terraform.rules.policy1.rule"
-       },
-       "relationships":{
-          "organization":{
-            "data":{
-              "id":"hashicorp",
-              "type":"organizations"
-            }
-          },
-          "policy-sets":{
-            "data":[
-              {
-                "id":"polset-FYu3k5WY5eecwwdt",
-                "type":"policy-sets"
-              }
-            ]
+      "id":"pol-vM2rBfj7V2Faq8By",
+      "type":"policies",
+      "attributes":{
+      "name":"policy1",
+      "description":null,
+      "enforcement-level": "advisory",
+      "enforce":[
+        {
+          "path":"policy1.rego",
+          "mode":"advisory"
+        }
+      ],
+      "policy-set-count":1,
+      "updated-at":"2022-09-13T04:57:43.516Z",
+      "kind":"opa",
+      "query":"data.terraform.rules.policy1.rule"
+      },
+      "relationships":{
+        "organization":{
+          "data":{
+            "id":"hashicorp",
+            "type":"organizations"
           }
-       },
-       "links":{
-         "self":"/api/v2/policies/pol-vM2rBfj7V2Faq8By",
-         "upload":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/upload",
-         "download":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/download"
-       }
+        },
+        "policy-sets":{
+          "data":[
+            {
+              "id":"polset-FYu3k5WY5eecwwdt",
+              "type":"policy-sets"
+            }
+          ]
+        }
+      },
+      "links":{
+        "self":"/api/v2/policies/pol-vM2rBfj7V2Faq8By",
+        "upload":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/upload",
+        "download":"/api/v2/policies/pol-vM2rBfj7V2Faq8By/download"
+      }
     }
   ]
 }
