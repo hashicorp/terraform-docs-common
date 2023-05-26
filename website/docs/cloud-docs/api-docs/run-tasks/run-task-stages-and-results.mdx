@@ -20,7 +20,9 @@ description: >-
 
 Terraform Cloud uses run task stages and run task results to track [run task](/terraform/cloud-docs/workspaces/settings/run-tasks) execution.
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
 -> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+<!-- END: TFC:only name:pnp-callout -->
 
 When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/terraform/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/terraform/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage) and [Pre-Apply Stage](/terraform/cloud-docs/run/states#the-pre-apply-stage).
 
