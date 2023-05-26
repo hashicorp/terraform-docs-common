@@ -8,6 +8,10 @@
         "path": "overview" 
       },
       {
+        "title": "Estimating Cost",
+        "path": "overview/estimating-cost"
+      },
+      {
         "title": "Changing Plans",
         "path": "overview/change-plan"
       }
