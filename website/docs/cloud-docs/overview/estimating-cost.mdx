@@ -34,9 +34,9 @@ Per Hour Price: 1000 Managed Resources - 500 Free) x $0.0001359 = **$0.07**
 Per Month Price: (Per Hour Price x 24 x 30) = **$48.92**
 
 Another example over a 3-hour billing period that incorporates the concepts of:
-- Billable Managed Resource Counts (Resource Counts following a successful apply)
+- Billable Managed Resource Counts (Resource count following a successful apply)
 - Partial Hour Billing (Resources provisioned mid-hour)
-- Peak managed resources  (Resources provisioned mid-hour that net-net are greater than the previous peak managed resource count)
+- Peak managed resources  (The greatest count of managed resources at any point in the current hour)
 
 ![Screenshot: A timeline showing the lifecycle of resources created and destroyed over a three-hour time window. The first hour, 1000 resources are created, calculated to cost $0.07 per hour. Over the next hour, 1000 new resources are added, 500 are changed, and then 500 are destroyed for a peak managed resource count of 2000, billing that previous hour for $0.27. There are no changes in the third hour, for a peak managed resource count of 1500, billed for $0.14.](/img/docs/tfc-payg-example.png)
 
