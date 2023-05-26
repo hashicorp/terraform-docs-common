@@ -8,12 +8,14 @@ description: >-
 # Workspace Settings
 
 You can change a workspace’s settings after creation. Workspace settings are separated into several pages.
+
 - [General](#general): Settings that determine how the workspace functions, including its name, description, associated project, Terraform version, and execution mode.
 - [Health](/terraform/cloud-docs/workspaces/health): Settings that let you configure health assessments, including drift detection and continuous validation.
 - [Locking](#locking): Locking a workspace temporarily prevents new plans and applies.
 - [Notifications](#notifications): Settings that let you configure run notifications.
+- [Policies](#policies): Settings that let you toggle between Sentinel policy evaluation experiences.
 - [Run Triggers](#run-triggers): Settings that let you configure run triggers. Run triggers allow runs to queue automatically in your workspace when runs in other workspaces are successful.
-- [SSH Key](#ssh-key): Set a private SSH key for downloading Terraform modules from Git-based module sources. 
+- [SSH Key](#ssh-key): Set a private SSH key for downloading Terraform modules from Git-based module sources.
 - [Team Access](#team-access): Settings that let you manage which teams can view the workspace and use it to provision infrastructure.
 - [Version Control](#version-control): Manage the workspace’s VCS integration.
 - [Destruction and Deletion](#destruction-and-deletion): Remove a workspace and the infrastructure it manages.
@@ -42,7 +44,7 @@ The display name of the workspace.
 
 ### Project
 
-The [project](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) that this workspace belongs to. Changing the workspace’s project can change the read and write permissions for the workspace and which users can access it. Refer to [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for  more detail on workspace access. 
+The [project](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) that this workspace belongs to. Changing the workspace’s project can change the read and write permissions for the workspace and which users can access it. Refer to [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for more detail on workspace access.
 
 ### Description (Optional)
 
@@ -98,7 +100,7 @@ The directory where Terraform will execute, specified as a relative path from th
 
 Terraform Cloud will change to this directory before starting a Terraform run, and will report an error if the directory does not exist.
 
-Setting a working directory creates a default filter for automatic run triggering, and  sometimes causes CLI-driven runs to upload additional configuration content.
+Setting a working directory creates a default filter for automatic run triggering, and sometimes causes CLI-driven runs to upload additional configuration content.
 
 #### Default Run Trigger Filtering
 
@@ -162,6 +164,12 @@ The "Notifications" page allows Terraform Cloud to send webhooks to external ser
 
 See [Run Notifications](/terraform/cloud-docs/workspaces/settings/notifications) for detailed information about configuring notifications.
 
+## Policies
+
+Terraform Cloud offers two experiences for Sentinel policy evaluations. On the "Policies" page, you can adjust your **Sentinel Experience** settings to your preferred experience. By default, Terraform Cloud enables the newest policy evaluation experience.
+
+To toggle between the two Sentinel policy evaluation experiences, click the **Enable the new Sentinel policy experience** toggle under the **Sentinel Experience** heading. Terraform Cloud persists your changes automatically. If Terraform Cloud is performing a run on a different page, you must refresh that page to see changes to your policy evaluation experience.
+
 ## Run Triggers
 
 The "Run Triggers" page configures connections between a workspace and one or more source workspaces. These connections, called "run triggers", allow runs to queue automatically in a workspace on successful apply of runs in any of the source workspaces.
@@ -201,7 +209,7 @@ Before queueing a destroy plan, you must enable the 'Allow destroy plans' settin
 
 ### Deleting a Workspace With Resources Under Management
 
-Terraform does not automatically destroy managed infrastructure when you delete a workspace. 
+Terraform does not automatically destroy managed infrastructure when you delete a workspace.
 
 After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/terraform/cli/commands/import) them into another Terraform workspace.
 
