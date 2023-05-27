@@ -1,7 +1,7 @@
 ---
-page_title: Estimating Costs - Plans and Features - Terraform Cloud
+page_title: Estimate Terraform Cloud Costs - Plans and Features - Terraform Cloud
 description: >-
-   estimate and manage your costs on Terraform Cloud 
+   Estimate and manage your costs on Terraform Cloud 
    using Managed Resource pricing on pay-as-you-go billing
 ---
 
@@ -11,13 +11,13 @@ Terraform Cloud offers a flat rate per managed resource per hour for **Standard 
 
 ## What is a Managed Resource?
 
-A “Managed Resource” or “Resources Under Management (RUM)” is a resource in a Terraform Cloud-managed state file where `mode = "managed"`. Terraform Cloud counts a resource as part of this count starting from the first `terraform plan` or `terraform apply` operation on the resource. Terraform Cloud does not include resources defined as a `null_resource` or `terraform_data` resource in the total managed resource count.
+A “Managed Resource” or “Resources Under Management (RUM)” is a resource in a Terraform-Cloud-managed state file where `mode = "managed"`. Terraform Cloud counts a resource as part of this count starting from the first `terraform plan` or `terraform apply` operation on the resource. Terraform Cloud does not include resources defined as a `null_resource` or `terraform_data` resource in the total managed resource count.
 
 Examples of managed resources include resources provisioned by a Terraform provider (e.g. an AWS VPC), by [count](/terraform/language/meta-arguments/count) and [for_each](/terraform/language/meta-arguments/for_each) meta-arguments, and resources provisioned by [modules](/terraform/language/modules) and [no-code ready modules](/terraform/cloud-docs/no-code-provisioning/module-design).  
 
 ## Standard Edition Cost on Pay-As-You-Go Billing
 
-Each managed resource is charged on a per-hour basis, from the time a managed resource is provisioned until it is destroyed. Each partial hour is billed as a full hour.  Thus, the peak number of managed resources in a given hour is used for billing purposes. 
+HashiCorp charges for each managed resource on a per-hour basis, from the time a managed resource is provisioned until it is destroyed. Each partial hour is billed as a full hour.  Thus, the peak number of managed resources in a given hour is used for billing purposes. 
 
 For Terraform Cloud **Standard Edition**, the first 500 managed resources are free every month. Your organization's **Usage** page reports the total number of managed resources, which you can use to determine the number of billable managed resources in use at any given time.  Total consumption in monetary terms is also reported in the [HashiCorp Cloud Platform portal](/hcp/docs/hcp/admin/billing#hcp-usage) and refreshed every hour.
 
