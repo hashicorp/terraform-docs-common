@@ -10,4 +10,47 @@ The ServiceNow Service Graph for Terraform is a certified scoped application ava
 
 -> **ServiceNow roles:** `admin`, `x_hashi_service_gr.terraform_user`
 
-Once the integration is installed, ...
+Once the integration is installed, proceed to the guided setup form to enter your Terraform credentials and set up a secure connection between Terraform Cloud and your ServiceNow instance.
+
+### Create and scope Terraform API token
+
+In order for ServiceNow to interact with Terraform Cloud, you must give it a Terraform Cloud API token. The permissions of this token determine what resources the service graph connector will import into the CMDB. While you could use a user API token, it could import resources from multiple organizations. By providing a team API token, you can scope permissions to only import resources from specified workspaces within a single organization. 
+
+Visit your organization’s **Settings** > **Teams** page. Scroll down to the **Team API Token** section and click **Create a team token**.
+Save this token in a safe place; Terraform Cloud only displays it once. You will use it to configure ServiceNow later in this tutorial.
+
+![](/img/terraform/snow-sgc/team-token-gen.png)
+
+### Configure Service Graph Connector for Terraform API token
+
+In the top navigation of your ServiceNow instance's control panel, click on **All**, search for **Service Graph Connector for Terraform**, and click **SG-Setup**. Next, click **Get Started**.
+
+Next, in the **Configure the Terraform connection** section, click **Get Started**.
+
+In the **Configure Terraform authentication credentials** section, click **Configure**. Set the **API Key** to the Terraform Cloud team API token that you created earlier in this tutorial and click **Update**.
+
+![ServiceNow Service Graph Connector API Key Credentials configuration screen. The API key is provided, then saved by clicking the Update button](/img/terraform/snow-sgc/apikey.png)
+
+In the **Configure Terraform authentication credentials** section, click **Mark as Complete**.
+
+### Configure Terraform Webhook Notification token
+
+The next section is optional. Skip it if you plan to use only the scheduled import. If you want to take advantage of the Terraform Cloud webhooks and import resources as soon as a Terraform run is successfully completed in a workspace, use this portion of the guided setup to provide a webhook token. Since this tutorial goes through the webhook configuration, proceed to the **Configure Terraform Webhook token** section and click **Configure**. In the **Token** field, enter a secret key that will be shared between the Terraform Cloud and your ServiceNow instance and click **Update**. You will use the same key when you set up a webhook notification in Terraform Cloud.
+
+![ServiceNow Service Graph Connector Webhook token configuration screen. The Token is provided, then saved by clicking the Update button](/img/terraform/snow-sgc/webhook-token.png)
+
+In the **Configure Terraform Webhook token** section, click **Mark as Complete**.
+
+## Configure Terraform connection
+
+By default, the Service Graph Connector is configured to connect to Terraform Cloud. If you are using Terraform Enterprise, complete the following steps to connect to your Terraform Enterprise server. If you are using Terraform Cloud, skip this section and proceed to the next section.
+
+In the **Configure Terraform connection** section, click **Configure**.
+
+Set the **Connection URL** to the URL of your Terraform Enterprise instance and click **Update**.
+
+![ServiceNow Service Graph Connector HTTP Connection configuration screen. A Terraform Enterprise URL may be provided in the Connection URL field, the saved by clicking the Update button](/img/terraform/snow-sgc/tfconn.png)
+
+In the **Configure Terraform connection** section, click **Mark as Complete**.
+
+## Import Resources

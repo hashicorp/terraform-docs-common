@@ -13,6 +13,10 @@ description: >-
 
 Use the Service Graph Connector for Terraform to securely import Terraform Cloud resources into your ServiceNow instance. The ServiceNow Service Graph for Terraform is a certified scoped application available in the [ServiceNow Store]().
 
+<!--
+<TODO: Include a Store link and a screenshot of the plugin to install> 
+-->
+
 The integration is based on the [Service Graph Connector](https://www.servicenow.com/products/service-graph-connectors.html) technology that provides a framework for discovering and mapping relationships between the organization's infrastructure and the ServiceNow configuration items (CIs), and then automatically updating the [ServiceNow CMDB (Configuration Management Database)](https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html) with this information, enabling platform teams to gain a comprehensive view of the resources they support. CMDB is a central repository within the ServiceNow platform, which provides a single source of truth for your infrastructure and offers configurable dashboards for monitoring and reporting.
 
 The diagram below shows how the application connects Terraform Cloud to your ServiceNow instance. 
@@ -29,11 +33,15 @@ The Service Graph Connector for Terraform can be scheduled to periodically poll 
 
 The scheduled job makes a request to your Terraform Cloud to obtain all organizations corresponding to the Terraform Cloud API token provided to the application. It will attempt to import all relevant resources from all workspaces within each of those organizations. 
 
+Access the scheduler by searching for **Service Graph Connector for Terraform** in the top navigation menu and selecting **SG-Import Schedule**. You can change the polling settings and view all previous import sets pulled into your ServiceNow instance using this method.
+
 #### Terraform Cloud Webhook Notifications
 
 As a more lightweight alternative to the scheduled import, you can configure [webhook notifications](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications) in your Terraform Cloud workspaces. Webhooks offer an event-based approach to importing your resources. The import is triggered as soon as a Terraform run is successfully completed in the Terraform Cloud.
 
 Webhook POST requests are sent to an API endpoint exposed by the Service Graph Connector for Terraform in your ServiceNow instance. Each webhook request includes an HMAC token, and the endpoint validates the signature using the secret you provide. Learn more about [Terraform Cloud notification authenticity](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications).
+
+Internally, the application uses a scheduled job as a helper to keep track of the incoming webhook requests. You can activate, configure it, and view the history of all webhook imports by navigating to **Scheduled Imports** and selecting **SG-Terraform Scheduled Process State**. By default, the job is set to run every minute. You can change it to run more frequently if you wish to process the webhook requests even faster.
 
 -> **Tip:** Both import options may be enabled, or you may choose to configure only the webhooks or the scheduled import. 
 
@@ -41,7 +49,9 @@ The [setup page](/terraform/cloud-docs/integrations/service-graph-setup) provide
 
 ### ETL (Extract, Transform, Load)
 
-After the application successfully imports the resources, they are temporarily stored in a staging database table. Subsequently, the import set records are transferred to the ETL (Extract, Transform, Load) pipeline. The ETL rules can be configured in the ServiceNow IntegrationHub interface, which is accessible for user updates.
+After the application successfully imports the resources, they are temporarily stored in a staging database table. Subsequently, the import set records are transferred to the ETL (Extract, Transform, Load) pipeline. Search for **IntegrationHub ETL** in the top navigation menu to view and edit the default ETL rules of the Service Graph Connector for Terraform. The application's ETL Transform Map is called **SG-Terraform**.
+
+-> **Tip:** Run an import before you open the ETL map as the interface requires at least one import set stored in the memory to be able to display the rules correctly. 
 
 ## Get started with the Service Graph Connector for Terraform
 
