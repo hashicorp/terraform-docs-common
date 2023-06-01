@@ -9,7 +9,7 @@ tfc_only: true
 Terraform [modules](/terraform/language/modules) let you define standardized collections of infrastructure resources that downstream users can more easily deploy. No-code ready modules build on these advantages by letting users deploy a module's resources without writing any Terraform configuration. This practice is called no-code provisioning.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** No-code provisioning is available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/nocode.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 No-code provisioning enables a self-service workflow that lets users provision approved collections of resources without learning Terraform or infrastructure best practices. You can enable no-code provisioning for any public or private module in your [private registry](/terraform/cloud-docs/registry). Users can then [provision no-code infrastructure](/terraform/cloud-docs/no-code-provisioning/provisioning), set the module's input variables, and deploy its resources.

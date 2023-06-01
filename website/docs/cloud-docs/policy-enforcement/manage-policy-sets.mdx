@@ -9,7 +9,7 @@ description: >-
 Policies are rules that Terraform Cloud enforces on Terraform runs. You can define policies using either the [Sentinel](/terraform/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/terraform/cloud-docs/policy-enforcement/opa) policy-as-code frameworks.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 You group individual policies into policy sets and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set. Depending on the [enforcement level](#policy-enforcement-levels), failed policies can stop the run.
