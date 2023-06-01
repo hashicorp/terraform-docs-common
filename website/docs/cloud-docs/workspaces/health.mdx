@@ -107,11 +107,19 @@ You can use one of the following approaches to correct workspace drift:
 
 ## Continuous Validation
 
-The Terraform configuration language provides `precondition` and `postcondition` blocks to create custom rules for resources, data sources, and outputs. These rules help validate your configuration.
+The Terraform configuration language provides `check`, `precondition`, and
+`postcondition` blocks to create custom rules that can be applied to resources,
+data sources, outputs, and the overall configuration. These rules help validate your configuration.
 
-Continuous validation lets Terraform Cloud regularly check whether the preconditions and postconditions in a workspace’s configuration continue to pass, validating the real-world infrastructure. For example, you can write a `postcondition` to check whether an API gateway certificate is valid. Continuous validation alerts you when the condition fails, so you can update the certificate and avoid errors the next time you want to update your infrastructure.
+Continuous validation lets Terraform Cloud regularly check whether the custom
+assertions in a workspace’s configuration continue to pass, validating the real-world infrastructure. For example, you can write a `postcondition` to check whether an API gateway certificate is valid. Continuous validation alerts you when the condition fails, so you can update the certificate and avoid errors the next time you want to update your infrastructure.
 
-Refer to [Preconditions and Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) for more details about adding custom conditions in your Terraform configuration.
+Refer to [Checks] or [Preconditions and
+Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions)
+for more details about adding custom conditions in your Terraform configuration.
+[Choosing Checks or other Custom
+Conditions](/terraform/language/checks#choosing-checks-or-other-custom-conditions)
+can help you evaluate which condition type is best for your use case.
 
 ### Example Use Cases
 
@@ -153,9 +161,29 @@ resource "vault_pki_secret_backend_cert" "app" {
 }
 ```
 
+The following example uses the [HTTP
+provider](https://registry.terraform.io/providers/hashicorp/http/latest/docs)
+data source within a [check block](/terraform/language/checks) to create an
+assertion that verifies the Terraform website is healthy.
+
+```hcl
+check "health_check" {
+  data "http" "terraform_io" {
+    url = "https://www.terraform.io"
+  }
+  assert {
+    condition = data.http.terraform_io.status_code == 200
+    error_message = "${data.http.terraform_io.url} returned an unhealthy status code"
+  }
+}
+```
+
 ### View Continuous Validation Checks
 
 To view the continuous validation results from the latest health assessment, go to the workspace and click **Health > Continuous validation**.
 The page shows all of the resources, outputs, and data sources with custom conditions that Terraform Cloud checked. Next to each object, Terraform Cloud reports whether the checks passed or failed. If one or more checks failed, Terraform Cloud displays the error messages for those conditions.
 
-A single resource, output, or data source may have multiple preconditions or postconditions. Terraform Cloud does not show the results from individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed.
+It is possible to use multiple [Preconditions and
+Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions)
+within a single resource, output, or data source. When doing so, Terraform
+Cloud will not show the results from individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed.
