@@ -26,7 +26,7 @@ You can manage run tasks through the Terraform Cloud UI or the [Run Tasks API](/
 
 ## Creating a Run Task
 
-Run tasks send an API payload to an external service. This payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to Terraform Cloud. 
+Run tasks send an API payload to an external service. This payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to Terraform Cloud.
 
 You can access a complete list of all run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks). These run tasks include the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) and run tasks that our HashiCorp Technology Partners develop and maintain.
 
@@ -69,7 +69,7 @@ To create a new run task:
 
 ## Understanding Run Tasks Within a Run
 
-Run tasks perform actions between the [plan](/terraform/cloud-docs/run/states#the-plan-stage) and [apply](/terraform/cloud-docs/run/states#the-apply-stage) stages of a [Terraform run](/terraform/cloud-docs/run/remote-operations). Once all run tasks complete, the run ends based on the most restrictive enforcement level in each associated run task.
+Run tasks perform actions before and after, the [plan](/terraform/cloud-docs/run/states#the-plan-stage) and [apply](/terraform/cloud-docs/run/states#the-apply-stage) stages of a [Terraform run](/terraform/cloud-docs/run/remote-operations). Once all run tasks complete, the run ends based on the most restrictive enforcement level in each associated run task.
 
 For example, if a mandatory task fails and an advisory task succeeds, the run fails. If an advisory task fails, but a mandatory task succeeds, the run succeeds and proceeds to the apply stage. Regardless of the exit status of a task, Terraform Cloud displays the status and any related message data in the UI.
 
