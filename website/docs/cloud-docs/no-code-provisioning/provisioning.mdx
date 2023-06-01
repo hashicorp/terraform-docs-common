@@ -9,7 +9,7 @@ tfc_only: true
 No-code provisioning lets you deploy infrastructure resources in a new Terraform Cloud workspace without writing any Terraform configuration. You can create a no-code workspace from any module version labeled **No-code Ready** in your organization's [private registry](/terraform/cloud-docs/registry).
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** No-code provisioning is available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/nocode.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 The no-code provisioning workflow is best for quickly deploying relatively static infrastructure. Beyond changing variable values, you cannot apply configuration changes to existing no-code workspaces. If you need to deploy updates to the no-code ready module's configuration, you must create new no-code workspaces with new resources. We recommend standard modules for use cases that require dynamic configuration and development.
