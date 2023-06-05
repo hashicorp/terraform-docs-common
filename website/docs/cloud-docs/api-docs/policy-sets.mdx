@@ -43,7 +43,7 @@ description: >-
 Policy sets let you group related policies by attributes like environment or region. You can then apply each policy set to one or more workspaces. For these workspaces, Terraform Cloud checks every Terraform plan against each policy in the set.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
-@include 'tfc-package-callouts/policies.mdx'
+-> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 <!-- END: TFC:only name:pnp-callout -->
 
 This API provides endpoints to create, read, update, and delete policy sets in a Terraform Cloud organization. To view and manage individual policies, use the [Policies API](/terraform/cloud-docs/api-docs/policies).
