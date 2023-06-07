@@ -17,7 +17,7 @@ This page describes how to prepare a [Terraform provider](/terraform/language/pr
 
 Providers published to the Terraform Registry are written and built in the same way as other Terraform providers. A variety of resources are available to help our contributors build a quality integration:
 
-> **Hands-on:** Try the [Call APIs with Terraform Providers](/terraform/tutorials/providers?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials to create a custom Terraform provider, complete with authentication and create/read/update/delete/import functionality.
+> **Hands-on:** Try the [Call APIs with Terraform Providers](/terraform/tutorials/providers-plugin-framework?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials to create a custom Terraform provider, complete with authentication and create/read/update/delete/import functionality.
 
 - [How to build a provider – Video](https://www.youtube.com/watch?v=2BvpqmFpchI)
 - [Sample provider developed by a HashiCorp partner](https://blog.container-solutions.com/write-terraform-provider-part-1)
@@ -56,8 +56,6 @@ It supports the following fields:
 | `metadata`                   | Object containing additional data to be associated with a release.                                                                                                                                                                                                                                                             |
 | `metadata.protocol_versions` | List of strings with supported Terraform protocol versions of the provider. Providers developed using [Terraform Plugin SDK version 2](/terraform/plugin/sdkv2) should set this field to `["5.0"]`. Providers developed using [Terraform Plugin Framework](/terraform/plugin/framework) should set this field to `["6.0"]` unless the Framework is [explicitly configured for protocol version 5](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-framework/providerserver#ServeOpts.ProtocolVersion). Defaults to `["5.0"]`. |
 | `version`                    | Numeric version of the manifest format, not the version of your provider. Set this to `1`.                                                                                                                                                                                                                                     |
-
-~> **Important:** If developing a provider using [Terraform Plugin Framework](/terraform/plugin/framework), ensure the protocol versions are set to `["6.0"]` or practitioners will receive errors when attempting to use the provider.
 
 ### Creating a GitHub Release
 
