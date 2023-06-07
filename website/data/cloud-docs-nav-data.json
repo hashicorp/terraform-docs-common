@@ -488,10 +488,21 @@
           {
             "title": "Service Graph Connector for Terraform",
             "routes": [
-              { "title": "Overview", "path": "integrations/service-graph" },
               {
-                "title": "Admin Guide",
+                "title": "Overview", 
+                "path": "integrations/service-graph"
+              },
+              {
+                "title": "Setup",
+                "path": "integrations/service-graph/service-graph-setup"
+              },
+              {
+                "title": "Resource Coverage",
                 "path": "integrations/service-graph/resource-coverage"
+              },
+              {
+                "title": "Customizations",
+                "path": "integrations/service-graph/customizations"
               }
             ]
           }
