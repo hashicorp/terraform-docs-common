@@ -65,6 +65,8 @@ Although the default ETL map offered by the application can be used as-is, you c
 
 ## Microsoft Azure
 
+### Mapping of Terraform resources to CMDB CI Classes
+
 | Azure resource             | Terraform resource name            | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
 |----------------------------|------------------------------------|---------------------------------|-------------------------------|
 | Azure account              | N/A                                | `cmdb_ci_cloud_service_account` | Cloud Service Account         |
@@ -83,6 +85,29 @@ Although the default ETL map offered by the application can be used as-is, you c
 | Windows Function App       | `azurerm_windows_function_app`     | `cmdb_ci_cloud_function`        | Cloud Function                |
 | Virtual Network            | `azurerm_virtual_network`          | `cmdb_ci_network`               | Cloud Network                 |
 | Tags                       | N/A                                | `cmdb_key_value`                | Key Value                     |
+
+### Resource relationships
+
+| Child CI Class                                             | Relationship type      | Parent CI Class                                           |
+|------------------------------------------------------------|------------------------|-----------------------------------------------------------|
+| Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)            | Hosted On::Hosts       | Cloud Service Account 2 (`cmdb_ci_cloud_service_account`) |
+| Azure Datacenter 2 (`cmdb_ci_azure_datacenter`)            | Hosted On::Hosts       | Cloud Service Account 3 (`cmdb_ci_cloud_service_account`) |
+| Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)            | Contains::Contained by | Resource Group 1 (`cmdb_ci_resource_group`)               |
+| Cloud Storage Account 1 (`cmdb_ci_cloud_storage_account`)  | Hosted On::Hosts       | Azure Datacenter 2 (`cmdb_ci_azure_datacenter`)           |
+| Virtual Machine Instance 2 (`cmdb_ci_vm_instance`)         | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Virtual Machine Instance 2 (`cmdb_ci_vm_instance`)         | Reference              | Key Value 14 (`cmdb_key_value`)                           |
+| Virtual Machine Instance 3 (`cmdb_ci_vm_instance`)         | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Virtual Machine Instance 3 (`cmdb_ci_vm_instance`)         | Reference              | Key Value 15 (`cmdb_key_value`)                           |
+| Kubernetes Cluster 2 (`cmdb_ci_kubernetes_cluster`)        | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Kubernetes Cluster 2 (`cmdb_ci_kubernetes_cluster`)        | Reference              | Key Value 16 (`cmdb_key_value`)                           |
+| Cloud DataBase 2 (`cmdb_ci_cloud_database` )               | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Cloud DataBase 2 (`cmdb_ci_cloud_database` )               | Reference              | Key Value 9 (`cmdb_key_value`)                            |
+| Compute Security Group 2 (`cmdb_ci_compute_security_group`)| Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Compute Security Group 2 (`cmdb_ci_compute_security_group`)| Reference              | Key Value 17 (`cmdb_key_value`)                           |
+| Cloud Function 2 (`cmdb_ci_cloud_function`)                | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Cloud Function 2 (`cmdb_ci_cloud_function`)                | Reference              | Key Value 19 (`cmdb_key_value`)                           |
+| Cloud Network 2 (`cmdb_ci_network`)                        | Hosted On::Hosts       | Azure Datacenter 1 (`cmdb_ci_azure_datacenter`)           |
+| Cloud Network 2 (`cmdb_ci_network`)                        | Reference              | Key Value 20 (`cmdb_key_value`)                           |
 
 ## Google Cloud Platform
 
