@@ -38,7 +38,7 @@ Although the default ETL map offered by the application can be used as-is, you c
 | Child CI Class                                             | Relationship type| Parent CI Class                                           |
 |------------------------------------------------------------|------------------|-----------------------------------------------------------|
 | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)                | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
-| AWS Datacenter 2 (`cmdb_ci_aws_datacenter`)                | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
+| AWS Datacenter 2 (`cmdb_ci_aws_datacenter`)                | Hosted On::Hosts | Cloud Service Account 6 (`cmdb_ci_cloud_service_account`) |
 | Virtual Machine Instance 1 (`cmdb_ci_vm_instance`)         | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
 | Virtual Machine Instance 1 (`cmdb_ci_vm_instance`)         | Reference        | Key Value 1 (`cmdb_key_value`)                            |
 | AWS Cloud ECS Cluster 1 (`cmdb_ci_cloud_ecs_cluster`)      | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
@@ -50,7 +50,7 @@ Although the default ETL map offered by the application can be used as-is, you c
 | Cloud Network 1 (`cmdb_ci_network`)                        | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
 | Cloud Network 1 (`cmdb_ci_network`)                        | Reference        | Key Value 5 (`cmdb_key_value`)                            |
 | Cloud DataBase 1 (`cmdb_ci_cloud_database` )               | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
-| Cloud DataBase 1 (`cmdb_ci_cloud_database` )               | Reference        | Key Value (`cmdb_key_value`)                              |
+| Cloud DataBase 1 (`cmdb_ci_cloud_database` )               | Reference        | Key Value 6 (`cmdb_key_value`)                            |
 | Cloud DataBase Cluster 1 (`cmdb_ci_cloud_db_cluster`)      | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
 | Cloud DataBase Cluster 1 (`cmdb_ci_cloud_db_cluster`)      | Reference        | Key Value 7 (`cmdb_key_value`)                            |
 | DynamoDB Global Table 1 (`cmdb_ci_dynamodb_global_table`)  | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
@@ -111,6 +111,8 @@ Although the default ETL map offered by the application can be used as-is, you c
 
 ## Google Cloud Platform
 
+### Mapping of Terraform resources to CMDB CI Classes
+
 | Google resource            | Terraform resource name                                               | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
 |----------------------------|-----------------------------------------------------------------------|---------------------------------|-------------------------------|
 | Project ID                 | N/A                                                                   | `cmdb_ci_cloud_service_account` | Cloud Service Account         |
@@ -126,7 +128,32 @@ Although the default ETL map offered by the application can be used as-is, you c
 | VPC                        | `google_compute_network`                                              | `cmdb_ci_network`               | Cloud Network                 |
 | Tags                       | N/A                                                                   | `cmdb_key_value`                | Key Value                     |
 
+### Resource relationships
+
+| Child CI Class                                             | Relationship type      | Parent CI Class                                           |
+|------------------------------------------------------------|------------------------|-----------------------------------------------------------|
+| Google Datacenter 1 (`cmdb_ci_google_datacenter`)          | Hosted On::Hosts       | Cloud Service Account 4 (`cmdb_ci_cloud_service_account`) |
+| Google Datacenter 2 (`cmdb_ci_google_datacenter`)          | Hosted On::Hosts       | Cloud Service Account 4 (`cmdb_ci_cloud_service_account`) |
+| Virtual Machine Instance 4 (`cmdb_ci_vm_instance`)         | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Virtual Machine Instance 4 (`cmdb_ci_vm_instance`)         | Reference              | Key Value 13 (`cmdb_key_value`)                           |
+| Cloud Network 3 (`cmdb_ci_network`)                        | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Cloud Network 3 (`cmdb_ci_network`)                        | Reference              | Key Value 18 (`cmdb_key_value`)                           |
+| Compute Security Group 3 (`cmdb_ci_compute_security_group`)| Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Compute Security Group 3 (`cmdb_ci_compute_security_group`)| Reference              | Key Value 21 (`cmdb_key_value`)                           |
+| Kubernetes Cluster 3 (`cmdb_ci_kubernetes_cluster`)        | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Kubernetes Cluster 3 (`cmdb_ci_kubernetes_cluster`)        | Reference              | Key Value 22 (`cmdb_key_value`)                           |
+| Cloud DataBase 3 (`cmdb_ci_cloud_database` )               | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Cloud DataBase 2 (`cmdb_ci_cloud_database` )               | Reference              | Key Value 24 (`cmdb_key_value`)                           |
+| Cloud Function 3 (`cmdb_ci_cloud_function`)                | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Cloud Function 3 (`cmdb_ci_cloud_function`)                | Reference              | Key Value 25 (`cmdb_key_value`)                           |
+| Cloud Load Balancer 2 (`cmdb_ci_cloud_load_balancer`)      | Hosted On::Hosts       | Google Datacenter 1 (`cmdb_ci_google_datacenter`)         |
+| Cloud Load Balancer 2 (`cmdb_ci_cloud_load_balancer`)      | Reference              | Key Value 26 (`cmdb_key_value`)                           |
+| Cloud Storage Account 2 (`cmdb_ci_cloud_storage_account`)  | Hosted On::Hosts       | Google Datacenter 2 (`cmdb_ci_google_datacenter`)         |
+| Cloud Storage Account 2 (`cmdb_ci_cloud_storage_account`)  | Reference              | Key Value 23 (`cmdb_key_value`)                           |
+
 ## VMware vSphere
+
+### Mapping of Terraform resources to CMDB CI Classes
 
 | vSphere resource           | Terraform resource name            | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name  |
 |----------------------------|------------------------------------|---------------------------------|--------------------------------|
@@ -137,9 +164,21 @@ Although the default ETL map offered by the application can be used as-is, you c
 | vSphere Network            | `vsphere_network`                  | `cmdb_ci_vcenter_network`       | VMware vCenter Network         |
 | Tags                       | N/A                                | `cmdb_key_value`                | Key Value                      |
 
+### Resource relationships
+
+| Child CI Class                                               | Relationship type      | Parent CI Class                                           |
+|--------------------------------------------------------------|------------------------|-----------------------------------------------------------|
+| VMware vCenter Datacenter 1 (`cmdb_ci_vcenter_datacenter`)   | Hosted On::Hosts       | Cloud Service Account 5 (`cmdb_ci_cloud_service_account`) |
+| VMware Virtual Machine Instance 1 (`cmdb_ci_vmware_instance`)| Hosted On::Hosts       | VMware vCenter Datacenter 1 (`cmdb_ci_vcenter_datacenter`)|
+| VMware Virtual Machine Instance 1 (`cmdb_ci_vmware_instance`)| Reference              | Key Value 27 (`cmdb_key_value`)                           |
+| VMware vCenter Network 1 (`cmdb_ci_vcenter_network`)         | Hosted On::Hosts       | VMware vCenter Datacenter 1 (`cmdb_ci_vcenter_datacenter`)|
+| VMware vCenter Network 1 (`cmdb_ci_vcenter_network`)         | Reference              | Key Value 28 (`cmdb_key_value`)                           |
+| VMware vCenter Datastore 1 (`cmdb_ci_vcenter_datastore`)     | Hosted On::Hosts       | VMware vCenter Datacenter 1 (`cmdb_ci_vcenter_datacenter`)|
+| VMware vCenter Datastore 1 (`cmdb_ci_vcenter_datastore`)     | Reference              | Key Value 29 (`cmdb_key_value`)                           |
+
 ## Importing Tags
 
-The Service Graph Connector for Terraform imports the Terraform tags associated with your resource into CMDB. 
+The Service Graph Connector for Terraform imports the Terraform tags associated with your resource into CMDB. Tags are mapped to the **Key Value** CI Class.
 Along with the tags assigned in your Terraform code, the integration also includes `tf_organization` and `tf_workspace` tags. These tags are used to indicate the Terraform Cloud organization and workspace where the resource was provisioned.
 
 The visibility of the **Tags** tab in CMDB varies for different configuration items. By default, not every configuration item has this tab enabled. For instance, the **Virtual Machine Instance** class page includes the **Tags** tab, whereas the **AWS Cloud ECS Cluster** page does not.
