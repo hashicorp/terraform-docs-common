@@ -6,9 +6,13 @@ description: >-
 
 # Resource Mapping
 
-The following table outlines how Service Graph Connector for Terraform maps resources from the Terraform state to the ServiceNow CMDB configuration items (CIs).
+The following tables outline how Service Graph Connector for Terraform maps resources from the Terraform state to the ServiceNow CMDB configuration items (CIs).
+
+Although the default ETL map offered by the application can be used as-is, you can customize it based on your organization's needs. Check [ETL Mapping Customizations](/terraform/cloud-docs/integrations/service-graph/customizations) for more details.
 
 ## AWS
+
+### Mapping of Terraform resources to CMDB CI Classes
 
 | AWS resource                                                                         | Terraform resource name    | ServiceNow CMDB CI Class        | ServiceNow CMDB Category Name |
 |--------------------------------------------------------------------------------------|----------------------------|---------------------------------|-------------------------------|
@@ -28,6 +32,36 @@ The following table outlines how Service Graph Connector for Terraform maps reso
 | Lambda                                                                               | `aws_lambda_function`      | `cmdb_ci_cloud_function`        | Cloud Function                |
 | Load Balancer                                                                        | `aws_lb`                   | `cmdb_ci_cloud_load_balancer`   | Cloud Load Balancer           |
 | Tags                                                                                 | N/A                        | `cmdb_key_value`                | Key Value                     |
+
+### Resource relationships
+
+| Child CI Class                                             | Relationship type| Parent CI Class                                           |
+|------------------------------------------------------------|------------------|-----------------------------------------------------------|
+| AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)                | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
+| AWS Datacenter 2 (`cmdb_ci_aws_datacenter`)                | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
+| Virtual Machine Instance 1 (`cmdb_ci_vm_instance`)         | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Virtual Machine Instance 1 (`cmdb_ci_vm_instance`)         | Reference        | Key Value 1 (`cmdb_key_value`)                            |
+| AWS Cloud ECS Cluster 1 (`cmdb_ci_cloud_ecs_cluster`)      | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| AWS Cloud ECS Cluster 1 (`cmdb_ci_cloud_ecs_cluster`)      | Reference        | Key Value 2 (`cmdb_key_value`)                            |
+| Cloud Object Storage 1 (`cmdb_ci_cloud_object_storage`)    | Hosted On::Hosts | AWS Datacenter 2 (`cmdb_ci_aws_datacenter`)               |
+| Cloud Object Storage 1 (`cmdb_ci_cloud_object_storage`)    | Reference        | Key Value 3 (`cmdb_key_value`)                            |
+| Kubernetes Cluster 1 (`cmdb_ci_kubernetes_cluster`)        | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Kubernetes Cluster 1 (`cmdb_ci_kubernetes_cluster`)        | Reference        | Key Value 4 (`cmdb_key_value`)                            |
+| Cloud Network 1 (`cmdb_ci_network`)                        | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Cloud Network 1 (`cmdb_ci_network`)                        | Reference        | Key Value 5 (`cmdb_key_value`)                            |
+| Cloud DataBase 1 (`cmdb_ci_cloud_database` )               | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Cloud DataBase 1 (`cmdb_ci_cloud_database` )               | Reference        | Key Value (`cmdb_key_value`)                              |
+| Cloud DataBase Cluster 1 (`cmdb_ci_cloud_db_cluster`)      | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Cloud DataBase Cluster 1 (`cmdb_ci_cloud_db_cluster`)      | Reference        | Key Value 7 (`cmdb_key_value`)                            |
+| DynamoDB Global Table 1 (`cmdb_ci_dynamodb_global_table`)  | Hosted On::Hosts | Cloud Service Account 1 (`cmdb_ci_cloud_service_account`) |
+| DynamoDB Table 1 (`cmdb_ci_dynamodb_table`)                | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| DynamoDB Table 1 (`cmdb_ci_dynamodb_table`)                | Reference        | Key Value 8 (`cmdb_key_value`)                            |
+| Compute Security Group 1 (`cmdb_ci_compute_security_group`)| Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Compute Security Group 1 (`cmdb_ci_compute_security_group`)| Reference        | Key Value 10 (`cmdb_key_value`)                           |
+| Cloud Function 1 (`cmdb_ci_cloud_function`)                | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Cloud Function 1 (`cmdb_ci_cloud_function`)                | Reference        | Key Value 11 (`cmdb_key_value`)                           |
+| Cloud Load Balancer 1 (`cmdb_ci_cloud_load_balancer`)      | Hosted On::Hosts | AWS Datacenter 1 (`cmdb_ci_aws_datacenter`)               |
+| Cloud Load Balancer 1 (`cmdb_ci_cloud_load_balancer`)      | Reference        | Key Value 12 (`cmdb_key_value`)                           |
 
 ## Microsoft Azure
 
