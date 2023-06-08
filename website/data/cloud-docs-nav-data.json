@@ -462,26 +462,26 @@
           {
             "title": "Service Catalog for Terraform",
             "routes": [
-              { "title": "Overview", "path": "integrations/service-now" },
+              { "title": "Overview", "path": "integrations/service-now/service-catalog" },
               {
                 "title": "Service Catalog",
-                "path": "integrations/service-now/service-catalog"
+                "path": "integrations/service-now/service-catalog/service-catalog"
               },
               {
                 "title": "Admin Guide",
-                "path": "integrations/service-now/admin-guide"
+                "path": "integrations/service-now/service-catalog/admin-guide"
               },
               {
                 "title": "Developer Reference",
-                "path": "integrations/service-now/developer-reference"
+                "path": "integrations/service-now/service-catalog/developer-reference"
               },
               {
                 "title": "Example Customizations",
-                "path": "integrations/service-now/example-customizations"
+                "path": "integrations/service-now/service-catalog/example-customizations"
               },
               {
                 "title": "V1 Setup Instructions",
-                "path": "integrations/service-now/service-now-v1"
+                "path": "integrations/service-now/service-catalog/service-now-v1"
               }
             ]
           },
@@ -490,19 +490,19 @@
             "routes": [
               {
                 "title": "Overview", 
-                "path": "integrations/service-graph"
+                "path": "integrations/service-now/service-graph"
               },
               {
                 "title": "Setup",
-                "path": "integrations/service-graph/service-graph-setup"
+                "path": "integrations/service-now/service-graph/service-graph-setup"
               },
               {
                 "title": "Resource Coverage",
-                "path": "integrations/service-graph/resource-coverage"
+                "path": "integrations/service-now/service-graph/resource-coverage"
               },
               {
                 "title": "Customizations",
-                "path": "integrations/service-graph/customizations"
+                "path": "integrations/service-now/service-graph/customizations"
               }
             ]
           }
