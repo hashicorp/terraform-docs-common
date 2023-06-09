@@ -530,6 +530,13 @@ curl \
         "policy-enforcement": false,
         "sentinel": false,
         "run-tasks": false,
+        "run-task-limit": null,
+        "run-task-workspace-limit": null,
+        "run-task-mandatory-enforcement-limit": null,
+        "policy-set-limit": null,
+        "policy-limit": null,
+        "policy-mandatory-enforcement-limit": null,
+        "versioned-policy-set-limit": null,
         "state-storage": true,
         "teams": false,
         "vcs-integrations": true,
@@ -765,7 +772,14 @@ curl \
       "self-serve-billing": true,
       "audit-logging": false,
       "agents": false,
-      "sso": false
+      "sso": false,
+      "run-task-limit": 1,
+      "run-task-workspace-limit": 10,
+      "run-task-mandatory-enforcement-limit": 1,
+      "policy-set-limit": 1,
+      "policy-limit": 5,
+      "policy-mandatory-enforcement-limit": null,
+      "versioned-policy-set-limit": null
     },
     "links": {
       "self": "/api/v2/entitlement-sets/org-Bzyc2JuegvVLAibn"

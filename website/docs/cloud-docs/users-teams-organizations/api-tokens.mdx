@@ -101,8 +101,8 @@ The following chart illustrates the various access levels for the supported API 
 
 ## Token Expiration
 
-User, team, and organization tokens may be created with an expiration date and time. Once this time has passed, the token will no longer be treated as valid, and may not be used to authenticate to any API. Any API requests made with an expired token will result in failure.
+You can create user, team, and organization tokens with an expiration date and time. Once the expiration time has passed, the token is longer treated as valid and may not be used to authenticate to any API. Any API requests made with an expired token will fail.
 
-HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens with an expiration date helps reduce the risk that valid tokens may be leaked, or that token owners will forget to delete tokens meant for delegated use once their intended purpose is complete.
+HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens with an expiration date helps reduce the risk of accidentally leaking valid tokens or forgetting to delete tokens meant for a delegated use once their intended purpose is complete.
 
-Once a token has been created its expiration time may not be modified. The Terraform Cloud UI will display tokens relative to the timezone of the current user, but all tokens are expected to be passed and displayed in UTC in ISO 8601 format through the Terraform Cloud API.
+You can not modify the expiration of a token once you have created it. The Terraform Cloud UI displays tokens relative to the current user's timezone, but all tokens are passed and displayed in UTC in ISO 8601 format through the Terraform Cloud API.

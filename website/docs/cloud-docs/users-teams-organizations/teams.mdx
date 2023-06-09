@@ -15,7 +15,9 @@ description: >-
 
 Teams are groups of Terraform Cloud [users][] within an [organization][organizations]. If a user belongs to at least one team in an organization, they are considered a member of that organization.
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
 -> **Note:** Team management is available in Terraform Cloud **Standard** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+<!-- END: TFC:only name:pnp-callout -->
 
 The organization can [grant workspace permissions to teams](#managing-workspace-access) that allow its members to start Terraform runs, create workspace variables, read and write state, etc. Teams can only have permissions on workspaces within their organization, although individual users can belong to teams in other organizations.
 

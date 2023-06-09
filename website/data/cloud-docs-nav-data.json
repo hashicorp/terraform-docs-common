@@ -8,6 +8,10 @@
         "path": "overview" 
       },
       {
+        "title": "Estimate Terraform Cloud Cost",
+        "path": "overview/estimate-terraform-cloud-cost"
+      },
+      {
         "title": "Changing Plans",
         "path": "overview/change-plan"
       }
