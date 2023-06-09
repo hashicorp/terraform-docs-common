@@ -465,7 +465,7 @@
               { "title": "Overview", "path": "integrations/service-now/service-catalog" },
               {
                 "title": "Service Catalog",
-                "path": "integrations/service-now/service-catalog/service-catalog"
+                "path": "integrations/service-now/service-catalog/service-catalog-config"
               },
               {
                 "title": "Admin Guide",
