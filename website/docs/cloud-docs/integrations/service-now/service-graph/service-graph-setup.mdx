@@ -18,7 +18,7 @@ The ServiceNow Service Graph for Terraform is a certified scoped application ava
 
 -> **ServiceNow roles:** `admin`, `x_hashi_service_gr.terraform_user`
 
-Once the integration is installed, proceed to the guided setup form to enter your Terraform credentials and set up a secure connection between Terraform Cloud and your ServiceNow instance.
+Once the integration is installed, you can proceed to the guided setup form where you will enter your Terraform credentials. This step will establish a secure connection between Terraform Cloud and your ServiceNow instance.
 
 ### Create and scope Terraform API token
 
@@ -39,7 +39,7 @@ In the **Configure Terraform authentication credentials** section, click **Confi
 
 If you want to route traffic between your Terraform Cloud and the ServiceNow instance through a MID server acting as a proxy, change **Applies to** dropdown to "Specific MID servers" and select your previously configured MID server name from the list. If you don't use MID servers, leave the default value.
 
-Set the **API Key** to the Terraform Cloud team API token that you created earlier in this tutorial and click **Update**.
+Set the **API Key** to the Terraform Cloud team API token that you created in the previous section and click **Update**.
 
 ![ServiceNow Service Graph Connector API Key Credentials configuration screen. The API key is provided, then saved by clicking the Update button](/img/docs/service-now-service-graph-apikey.png)
 
@@ -47,9 +47,9 @@ In the **Configure Terraform authentication credentials** section, click **Mark 
 
 ### Configure Terraform Webhook Notification token
 
-This section is optional and can be skipped if you plan to use only the scheduled import. Refer to the documentation explaining the [two modes of import](/terraform/cloud-docs/integrations/service-graph/index#two-modes-of-import) to decide which option works best for your environment.
+This section is optional and can be skipped if you plan to use only the scheduled import. Refer to the documentation explaining the [two modes of import](/terraform/cloud-docs/integrations/service-now/service-graph#two-modes-of-import) to decide which option works best for your environment.
 
-To improve security, Terraform Cloud includes an HMAC signature on all "generic" webhook notifications using a user-provided **token**. This token is an arbitrary secret string that Terraform Cloud uses to sign each webhook notification. ServiceNow uses the same token to verify the request authenticity. Refer to [Notification Authenticity](/terraform/cloud-docs/api-docs/notification-configurations#notification-authenticity) for more information.
+To improve security, Terraform Cloud includes an HMAC signature on all "generic" webhook notifications using a user-provided **token**. This token is an arbitrary secret string that Terraform Cloud uses to sign each webhook notification. ServiceNow uses the same token to verify the request authenticity. Refer to [Terraform Cloud notification authenticity](/terraform/cloud-docs/api-docs/notification-configurations#notification-authenticity) for more information.
 
 Create a token and save it in a safe place. This secret token can be any value but should be treated as sensitive.
 
@@ -123,10 +123,10 @@ Under the form, you will find a table containing all registered import sets. Loc
 
 Click on the **Import Set** field to open it and view its details. The **Outbound Http Requests** tab lists all requests made by your ServiceNow instance to Terraform Cloud in order to retrieve the latest Terraform state.
 
-Monitor the state of the import job. Wait for it to change to Complete, indicated by a green mark.
+Monitor the state of the import job. Wait for it to change to **Complete**, indicated by a green mark.
 Once the import job is complete, you can access the imported resources in the CMDB.
 
-![ServiceNow Service Graph Connector successful import set with completed state](/img/docs/service-now-service-graph-import-set.png)
+![ServiceNow Service Graph Connector: import set with successfully completed status](/img/docs/service-now-service-graph-import-set.png)
 
 You can also access all import sets, regardless of the import type, by navigating to **All** and selecting **Import Sets** under the **Advanced** category.
 

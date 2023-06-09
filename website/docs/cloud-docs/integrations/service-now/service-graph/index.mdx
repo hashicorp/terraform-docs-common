@@ -17,9 +17,9 @@ The integration is based on the [Service Graph Connector](https://www.servicenow
 
 The diagram below shows how the application connects Terraform Cloud to your ServiceNow instance. 
 
-![screenshot: ServiceNow Service Graph Connector for Terraform design diagram](/img/docs/service-now-service-graph-design.png)
+![ServiceNow Service Graph Connector for Terraform: design diagram](/img/docs/service-now-service-graph-design.png)
 
-The Service Graph Connector for Terraform integrates with Terraform Cloud in order to obtain the latest information about your deployments, with the Terraform state being the source of data. The application doesn't make any requests to your cloud provider, and therefore doesn't ask you to share any cloud credentials.
+The Service Graph Connector for Terraform integrates with Terraform Cloud to fetch up-to-date information about your deployments. It leverages the Terraform state as the primary data source. The application doesn't make any requests to your cloud provider or require you to share any cloud credentials.
 
 ### Two modes of import
 
@@ -35,13 +35,13 @@ Access the scheduler by searching for **Service Graph Connector for Terraform** 
 
 As a more lightweight alternative to the scheduled import, you can configure [webhook notifications](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications) for all relevant workspaces in your Terraform Cloud. Webhooks offer an event-based approach to importing your resources. The import is triggered as soon as a Terraform run is successfully completed in the Terraform Cloud.
 
-Webhook POST requests are sent to an API endpoint exposed by the Service Graph Connector for Terraform in your ServiceNow instance. Each webhook request includes an HMAC token, and the endpoint validates the signature using the secret you provide. Learn more about [Terraform Cloud notification authenticity](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications).
+Webhook POST requests are sent to an API endpoint exposed by the Service Graph Connector for Terraform in your ServiceNow instance. Each webhook request includes an HMAC token, and the endpoint validates the signature using the secret you provide. Learn more about [Terraform Cloud notification authenticity](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications#notification-authenticity).
 
 Internally, the application uses a scheduled job as a helper to keep track of the incoming webhook requests. You can activate, configure it, and view the history of all webhook imports by navigating to **Scheduled Imports** and selecting **SG-Terraform Scheduled Process State**. By default, the job is set to run every minute. You can change it to run more frequently if you wish to process the webhook requests even faster.
 
 -> **Tip:** Both import options may be enabled, or you may choose to configure only the webhooks or the scheduled import. 
 
-The [setup page](/terraform/cloud-docs/integrations/service-graph/service-graph-setup) provides configuration details for both import modes.
+The [setup page](/terraform/cloud-docs/integrations/service-now/service-graph/service-graph-setup) provides configuration details for both import modes.
 
 ### ETL (Extract, Transform, Load)
 
@@ -93,6 +93,4 @@ The [resource mapping](/terraform/cloud-docs/integrations/service-now/service-gr
 
 ### Destroyed resources
 
-The Service Graph Connector automatically marks the deleted resources as **Non-Operational** in the ServiceNow CMDB. After the destroy run is completed in Terraform Cloud and the application's import job is finished in your ServiceNow instance, the value of the **Operational Status** field will change to **Non-Operational** for all resources removed from the Terraform state as a result of the deletion.
-
-
+The Service Graph Connector automatically marks the deleted resources as **Non-Operational** in the ServiceNow CMDB. After the destroy run is completed in Terraform Cloud and the application's import job is finished in your ServiceNow instance, the **Operational Status** field of all resources removed from the Terraform state during the deletion process will be updated to **Non-Operational**.

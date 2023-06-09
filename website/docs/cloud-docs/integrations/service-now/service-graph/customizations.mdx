@@ -1,5 +1,5 @@
 ---
-page_title: Overview - ServiceNow Service Graph Connector for Terraform Integration - summary of the setup process
+page_title: Overview - ServiceNow Service Graph Connector for Terraform Integration - instructions on customizations for admins
 description: >-
   ServiceNow Service Graph Connector for Terraform allows you to edit ETL mapping and add more resources.
 ---
@@ -18,7 +18,7 @@ Any customizations should be done from the application's scope: **Service Graph 
 
 ## Clone the ETL map
 
-Navigate to the **IntegrationHub ETL** in the top menu. Check the **SG-Terraform** record and click **Duplicate**.
+Navigate to the **IntegrationHub ETL** in the top menu. Check the **SG-Terraform** record and click **Duplicate**. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/task/duplicate-cmdb-transform-map.html) on creating a duplicate of an existing ETL transform map.
 
 ## Build a resource in Terraform Cloud
 
@@ -44,7 +44,7 @@ Locate the resource in the state object. This JSON record will serve as a source
 
 ## Identify the CI target
 
-Pick a suitable Configuration Item (CI) target for your resource. For example, AWS virtual private network (VPC) is mapped to Cloud Network (`cmdb_ci_network`) in the Service Graph Connector for Terraform. Refer to the [ServiceNow CMDB documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html) for more details on available CI tables.
+Pick a suitable Configuration Item (CI) target for your resource. For instance, the AWS virtual private network (VPC) resource is mapped to Cloud Network (`cmdb_ci_network`) by the Service Graph Connector for Terraform. Refer to the [ServiceNow CMDB documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html) for more details on available CI tables.
 
 ## Consult the CI Class Manager
 
@@ -52,17 +52,17 @@ After selecting an appropriate CI target, it is important to consult the CI Clas
 
 In the top navigation, click on **All**, search for **CI Class Manager**, and click on **Open Hierarchy**. Search for your target CI Class and check **Dependent Relationships** tab to learn more about dependent mappings required by the resource.
 
-Example: according to the CI Class Manager, Cloud Network should be hosted on Logical Datacenter and Cloud Service Account.
+Example: according to the **CI Class Manager**, **Cloud Network** should be hosted on **Logical Datacenter** and **Cloud Service Account**.
 
 ## Set the mapping rules
 
-Open the **IntegrationHub ETL** from the top navigation menu and select your cloned ETL record prepared for customization. 
+Open the **IntegrationHub ETL** from the top navigation menu and select your cloned ETL map record prepared for customization. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/concept/create-etl-transform-map.html) for a more comprehensive instruction on creating an ETL transform map.
 
 Click on the first **Specify Basic Details** section of the ETL Transform Map Assistant. Select the import set number containing your resource from the **Sample Import Set** dropdown and click **Mark as Complete**.
 
 Open the **Preview and Prepare Data** section and review the imported rows. Click **Mark as Complete**.
 
-The third section provides the interface for mapping resource attributes. Click on **Select CMDB Classes to Map Source Data**. Click on **Add Conditional Class** button at the top. Set the rules that will identify your resource in the import set. Use the `type` field value from the Terraform state object to identify your resource (on the ServiceNow side field name are prefaced with `u_`). Set the target CMDB CI CLass name and click **Save**.
+The third section provides the interface for mapping resource attributes. Click on **Select CMDB Classes to Map Source Data**. Click on **Add Conditional Class** button at the top. Set the rules that will identify your resource in the import set. Use the `type` field value from the Terraform state object to identify your resource (on the ServiceNow side, field name are prefaced with `u_`). Set the target CMDB CI CLass name and click **Save**.
 
 ![ServiceNow Service Graph Connector: setting the Conditional Class rules in the ETL mapping](/img/docs/service-now-service-graph-conditional-class-mapping.png)
 
@@ -78,7 +78,7 @@ Click **Mark as Complete** to finalize the **Select CMDB Classes to Map Source D
 
 ## Set the required relationships
 
-Click **Add Relationships** to proceed to the next section. Click **Add Conditional Relationship** button at the top. The following configuration tells the ETL that when a record with `aws_vpc` type is found in the import set, it should be hosted on **AWS Datacenter 1**. Click **Save**.
+Click **Add Relationships** to proceed to the next section. Click **Add Conditional Relationship** button at the top of the page. The following configuration tells the ETL that when a record with `aws_vpc` type is found in the import set, it should be hosted on **AWS Datacenter 1**. Click **Save**.
 
 ![ServiceNow Service Graph Connector: setting dependent relationships in the ETL mapping interface](/img/docs/service-now-service-graph-etl-setting-relationship.png)
 
@@ -90,4 +90,4 @@ Click **Mark as Complete** to finalize the **Add Relationships** section.
 
 ## Run a test
 
-You can test the new resource mapping either by using the **Test and Rollback Integration Results** interface of the ETL Transform Map Assistant or initiating a new run in your Terraform Cloud workspace containing the resource deployment.
+To test the new resource mapping, you have two options. First, you can utilize the **Test and Rollback Integration Results** interface of the ETL Transform Map Assistant. Alternatively, you can initiate a new run in your Terraform Cloud workspace that includes the deployment of the resource.
