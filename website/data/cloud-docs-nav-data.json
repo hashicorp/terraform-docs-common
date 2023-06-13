@@ -458,28 +458,54 @@
     "title": "Integrations",
     "routes": [
       {
-        "title": "ServiceNow Integration",
+        "title": "ServiceNow Integrations",
         "routes": [
-          { "title": "Overview", "path": "integrations/service-now" },
           {
-            "title": "Service Catalog",
-            "path": "integrations/service-now/service-catalog"
+            "title": "Service Catalog for Terraform",
+            "routes": [
+              { "title": "Overview", "path": "integrations/service-now/service-catalog" },
+              {
+                "title": "Service Catalog",
+                "path": "integrations/service-now/service-catalog/service-catalog-config"
+              },
+              {
+                "title": "Admin Guide",
+                "path": "integrations/service-now/service-catalog/admin-guide"
+              },
+              {
+                "title": "Developer Reference",
+                "path": "integrations/service-now/service-catalog/developer-reference"
+              },
+              {
+                "title": "Example Customizations",
+                "path": "integrations/service-now/service-catalog/example-customizations"
+              },
+              {
+                "title": "V1 Setup Instructions",
+                "path": "integrations/service-now/service-catalog/service-now-v1"
+              }
+            ]
           },
           {
-            "title": "Admin Guide",
-            "path": "integrations/service-now/admin-guide"
-          },
-          {
-            "title": "Developer Reference",
-            "path": "integrations/service-now/developer-reference"
-          },
-          {
-            "title": "Example Customizations",
-            "path": "integrations/service-now/example-customizations"
-          },
-          {
-            "title": "V1 Setup Instructions",
-            "path": "integrations/service-now/service-now-v1"
+            "title": "Service Graph Connector for Terraform",
+            "routes": [
+              {
+                "title": "Overview", 
+                "path": "integrations/service-now/service-graph"
+              },
+              {
+                "title": "Setup",
+                "path": "integrations/service-now/service-graph/service-graph-setup"
+              },
+              {
+                "title": "Resource Coverage",
+                "path": "integrations/service-now/service-graph/resource-coverage"
+              },
+              {
+                "title": "Customizations",
+                "path": "integrations/service-now/service-graph/customizations"
+              }
+            ]
           }
         ]
       },
