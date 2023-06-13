@@ -227,7 +227,7 @@ Properties without a default value are required.
 | Key path                                                  | Type    | Default | Description                                                                                        |
 |-----------------------------------------------------------|-------- |---------|----------------------------------------------------------------------------------------------------|
 | `data.type`                                               | string  |         | Must be `"team-projects"`.                                                                         |
-| `data.attributes.access`                                  | string  |         | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`, or custom.     |
+| `data.attributes.access`                                  | string  |         | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`, or `custom`.     |
 | `data.relationships.project.data.type`                    | string  |         | Must be `projects`.                                                                                |
 | `data.relationships.project.data.id`                      | string  |         | The project ID to which the team is to be added.                                                   |
 | `data.relationships.team.data.type`                       | string  |         | Must be `teams`.                                                                                   |
@@ -354,8 +354,8 @@ $ curl \
       "access": "custom",
       "project-access": {
         "settings": "delete"
-        "teams: "manage",
-      }, 
+        "teams": "manage",
+      },
       "workspace-access" : {
         "runs": "apply",
         "sentinel-mocks": "read",
@@ -382,8 +382,8 @@ $ curl \
       "access": "custom",
       "project-access": {
         "settings": "delete"
-        "teams: "manage",
-      }, 
+        "teams": "manage",
+      },
       "workspace-access" : {
         "runs": "apply",
         "sentinel-mocks": "read",
@@ -448,19 +448,19 @@ $ curl \
 ## Implied Custom Permission Levels
 
 As mentioned above, when setting team access levels of `read`, `write`, `maintain`, or `admin`, the following permissions that can be set individually when using an access level of `custom`, are given values based on the access level.
-Below is each access level, and the implicitly granted custom permission. When using `custom` as the access levels, any permission not specified will be given the default level listed 
+Below is each access level, and the implicitly granted custom permission. When using `custom` as the access levels, any permission not specified will be given the default level listed
 
 
 
-| Permissions                         | read   | write   | maintain | admin    | custom default |
-|-------------------------------------|--------|---------|----------|----------|----------------|
-| project-access.settings             | "read" | "read"  | "read"   | "delete" | "read"         |
-| project-access.teams                | "none" | "none"  | "none"   | "manage" | "none"         |
-| workspace-access.runs               | "read" | "apply" | "apply"  | "apply"  | "none"         |
-| workspace-access.sentinel-mocks"    | "none" | "read"  | "read"   | "read"   | "none"         |
-| workspace-access.state-versions     | "read" | "write" | "write"  | "write"  | "none"         |
-| workspace-access.variables          | "read" | "write" | "write"  | "write"  | "none"         |
-| workspace-access.create             | false  | false   | true     | true     | false          |
-| workspace-access.locking            | false  | true    | true     | true     | false          |
-| workspace-access.move               | false  | false   | false    | true     | false          |
-| workspace-access.run-tasks          | false  | false   | true     | true     | false          |
+| Permissions                         | `read` | `write` | `maintain` | `admin `   | `custom` default |
+|-------------------------------------|--------|---------|------------|----------|--------------------|
+| project-access.settings             | "read" | "read"  | "read"     | "delete" | "read"             |
+| project-access.teams                | "none" | "none"  | "none"     | "manage" | "none"             |
+| workspace-access.runs               | "read" | "apply" | "apply"    | "apply"  | "none"             |
+| workspace-access.sentinel-mocks"    | "none" | "read"  | "read"     | "read"   | "none"             |
+| workspace-access.state-versions     | "read" | "write" | "write"    | "write"  | "none"             |
+| workspace-access.variables          | "read" | "write" | "write"    | "write"  | "none"             |
+| workspace-access.create             | false  | false   | true       | true     | false              |
+| workspace-access.locking            | false  | true    | true       | true     | false              |
+| workspace-access.move               | false  | false   | false      | true     | false              |
+| workspace-access.run-tasks          | false  | false   | true       | true     | false              |
