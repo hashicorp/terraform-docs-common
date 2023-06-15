@@ -12,9 +12,7 @@ All users in an organization can view the Terraform Cloud private registry and u
 - **Terraform version:** Terraform Cloud workspaces using version 0.11 and higher can automatically access your private modules during Terraform runs, and workspaces using version 0.13 and higher can also automatically access private providers.
 - **Authentication:** If you run Terraform on the command line, you must [authenticate](/terraform/cloud-docs/registry/using#authentication) to Terraform Cloud or your instance to use providers and modules in your organization’s private registry.
 
-<!-- BEGIN: TFC:only name:no-code -->
 Terraform Cloud supports using modules in written configuration or through the [no-code provisioning workflow](/terraform/cloud-docs/no-code-provisioning/provisioning).
-<!-- END: TFC:only name:no-code -->
 
 ## Finding Providers and Modules
 
@@ -34,12 +32,9 @@ Click a provider or module to view its details page. Use the **Versions** menu i
 
 Use the **Submodules** menu to navigate to the detail pages for any nested modules. Use the **Examples** menu to navigate to the detail pages for any available example modules.
 
-<!-- BEGIN: TFC:only name:no-code -->
-
 ## Provisioning Infrastructure from No-Code Ready Modules
 
 You can use modules marked **No-Code Ready** to create a new workspace and automatically provision the module's resources without writing any Terraform configuration. Refer to [Provisioning No-Code Infrastructure](/terraform/cloud-docs/no-code-provisioning/provisioning) for details.
-<!-- END: TFC:only name:no-code -->
 
 ## Using Public Providers and Modules in Configurations
 
