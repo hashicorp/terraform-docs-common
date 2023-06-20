@@ -12,10 +12,11 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ## 2023-06-09
 
 * The workspaces associated with a policy set can now be updated using the [Policy Sets PATCH endpoint](/terraform/cloud-docs/api-docs/policy-sets#update-a-policy-set)
+* Update the [Workspaces](/terraform/cloud-docs/api-docs/workspaces) API endpoints to include the associated [project](/terraform/cloud-docs/api-docs/projects).
 
 ## 2023-05-25
 
-* Terraform cloud now sets the `configuration_version_download_url`, `configuration_version_id`, and `workspace_working_directory` properties of the [Run Task Request](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#request-body) for all stages.
+* Terraform Cloud sets the `configuration_version_download_url`, `configuration_version_id`, and `workspace_working_directory` properties for all stages of the [Run Task Request](/terraform/enterprise/api-docs/run-tasks/run-tasks-integration#request-body).
 * Add the new `enforcement-level` property in the request and response of [Policies endpoints](/terraform/cloud-docs/api-docs/policies).
 * Deprecate the old `enforce` property in the request and response of [Policies endpoints](/terraform/cloud-docs/api-docs/policies).
 * Add new properties to limit run tasks and policies for the Terraform Cloud free tier. We updated the [entitlement set](/terraform/cloud-docs/api-docs/organizations#show-the-entitlement-set), [feature set](/terraform/cloud-docs/api-docs/feature-sets#sample-response), and [subscription](/terraform/cloud-docs/api-docs/subscriptions#sample-response) endpoints with the following properties:
