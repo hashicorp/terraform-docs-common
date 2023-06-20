@@ -534,30 +534,38 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                                      | Type    | Default          | Description                                                                                                                                                                                                                                                                                                  |
-| --------------------------------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                                   | string  |                  | Must be `"policy-sets"`.                                                                                                                                                                                                                                                                                     |
-| `data.attributes.name`                        | string  | (previous value) | The name of the policy set. Can include letters, numbers, `-`, and `_`.                                                                                                                                                                                                                                      |
-| `data.attributes.description`                 | string  | (previous value) | A description of the set's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                             |
-| `data.attributes.global`                      | boolean | (previous value) | Whether or not this policies in this set should be checked on all of the organization's workspaces, or only on workspaces directly attached to the set.                                                                                                                                                      |
-| `data.attributes.vcs-repo`                    | object  | (previous value) | VCS repository information. When present, the policies and configuration will be sourced from the specified VCS repository instead of being defined within Terraform Cloud. Note that this option and `policies` relationships are mutually exclusive and may not be used simultaneously.                    |
-| `data.attributes.vcs-repo.branch`             | string  | (previous value) | The branch of the VCS repo. If empty, the VCS provider's default branch value will be used.                                                                                                                                                                                                                  |
-| `data.attributes.vcs-repo.identifier`         | string  | (previous value) | The identifier of the VCS repository in the format `<namespace>/<repo>`. For example, on GitHub, this would be something like `hashicorp/my-policy-set`. The format for Azure DevOps is `<org>/<project>/_git/<repo>`.                                                                                       |
-| `data.attributes.vcs-repo.oauth-token-id`     | string  | (previous value) | The OAuth Token ID to use to connect to the VCS host.                                                                                                                                                                                                                                                        |
-| `data.attributes.vcs-repo.ingress-submodules` | boolean | (previous value) | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                    |
-| `data.attributes.policies-path`               | boolean | (previous value) | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present. |
+| Key path                                      | Type           | Default          | Description                                                                                                                                                                                                                                                                                                  |
+| --------------------------------------------- | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.type`                                   | string         |                  | Must be `"policy-sets"`.                                                                                                                                                                                                                                                                                     |
+| `data.attributes.name`                        | string         | (previous value) | The name of the policy set. Can include letters, numbers, `-`, and `_`.                                                                                                                                                                                                                                      |
+| `data.attributes.description`                 | string         | (previous value) | A description of the set's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                             |
+| `data.attributes.global`                      | boolean        | (previous value) | Whether or not this policies in this set should be checked on all of the organization's workspaces, or only on workspaces directly attached to the set.                                                                                                                                                      |
+| `data.attributes.vcs-repo`                    | object         | (previous value) | VCS repository information. When present, the policies and configuration will be sourced from the specified VCS repository instead of being defined within Terraform Cloud. Note that this option and `policies` relationships are mutually exclusive and may not be used simultaneously.                    |
+| `data.attributes.vcs-repo.branch`             | string         | (previous value) | The branch of the VCS repo. If empty, the VCS provider's default branch value will be used.                                                                                                                                                                                                                  |
+| `data.attributes.vcs-repo.identifier`         | string         | (previous value) | The identifier of the VCS repository in the format `<namespace>/<repo>`. For example, on GitHub, this would be something like `hashicorp/my-policy-set`. The format for Azure DevOps is `<org>/<project>/_git/<repo>`.                                                                                       |
+| `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The OAuth Token ID to use to connect to the VCS host.                                                                                                                                                                                                                                                        |
+| `data.attributes.vcs-repo.ingress-submodules` | boolean        | (previous value) | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                    |
+| `data.attributes.policies-path`               | boolean        | (previous value) | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present. |
+| `data.relationships.workspaces`               | array\[object] | (previous value) | An array of references to workspaces that the policy set should be assigned to. Sending an empty array clears all workspace assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                       |                                                                                                                                          |
 
 ### Sample Payload
 
 ```json
 {
   "data": {
-    "attributes": {
-      "name": "a-global-set",
-      "description": "**WARNING:** Any policies added to this set will be checked in _all_ workspaces!",
-      "global": true
-    },
     "type": "policy-sets"
+    "attributes": {
+      "name": "workspace-scoped-policy-set",
+      "description": "Policies added to this policy set will be enforced on specified workspaces",
+      "global": false
+    },
+    "relationships": {
+      "workspaces": {
+        "data": [
+          { "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }
+        ]
+      }
+    }
   }
 }
 ```
@@ -581,12 +589,12 @@ curl \
     "id":"polset-3yVQZvHzf5j3WRJ1",
     "type":"policy-sets",
     "attributes": {
-      "name": "a-global-set",
-      "description": "**WARNING:** Any policies added to this set will be checked in _all_ workspaces!",
-      "global": true,
+      "name": "workspace-scoped-policy-set",
+      "description": "Policies added to this policy set will be enforced on specified workspaces",
+      "global": false,
       "kind": "sentinel",
       "policy-count": 1,
-      "workspace-count": 4,
+      "workspace-count": 1,
       "versioned": false,
       "created-at": "2018-09-11T18:21:21.784Z",
       "updated-at": "2018-09-11T18:21:21.784Z"
@@ -598,6 +606,11 @@ curl \
       "policies": {
         "data": [
           { "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }
+        ]
+      },
+      "workspaces": {
+        "data": [
+          { "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }
         ]
       }
     },
