@@ -75,3 +75,16 @@ The usual caveats for targeting in local operations imply some additional limita
 - [Cost Estimation](/terraform/cloud-docs/cost-estimation) is disabled for any run created with `-target` set, to prevent producing a misleading underestimate of cost due to resource instances being excluded from the plan.
 
 You can disable or constrain use of targeting in a particular workspace using a Sentinel policy based on [the `tfrun.target_addrs` value](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs).
+
+## Generating Configuration
+
+-> **Version note:** Support for `import` blocks and generating configuration requires a workspace using at least Terraform CLI v1.5.0.
+
+When using [`import` blocks](/terraform/language/import) to import existing resources, Terraform can [automatically generate configuration](/terraform/language/import/generating-configuration) during the plan for any imported resources that don't have an existing `resource` block. This option is enabled by default for runs started from the UI or from a VCS webhook.
+
+- **CLI:** Use `terraform plan -generate-config-out=generated.tf`.
+- **API:** Use the `allow-config-generation` option.
+
+You can find generated configuration displayed in the plan UI. If you're using the CLI workflow, generated configuration will be written to the file you specify when running `terraform plan`.
+
+Once Terraform has generated configuration for you, you'll need to review it, incorporate it in your Terraform configuration (including committing it to version control), then run another plan. If you try to directly apply a plan with generated configuration, the run will error.

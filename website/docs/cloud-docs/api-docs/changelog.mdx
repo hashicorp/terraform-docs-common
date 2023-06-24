@@ -11,6 +11,10 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
 ## 2023-06-09
 
+* Introduce support for [`import` blocks](/terraform/language/import/generating-configuration).
+  * [Runs](/terraform/cloud-docs/api-docs/run#create-a-run) have a new `allow-config-generation` option.
+  * [Plans](/terraform/cloud-docs/api-docs/plans#show-a-plan) have new `resource-imports` and `generated-configuration` properties.
+  * [Applies](/terraform/cloud-docs/api-docs/applies#show-an-apply) have a new `resource-imports` property.
 * The workspaces associated with a policy set can now be updated using the [Policy Sets PATCH endpoint](/terraform/cloud-docs/api-docs/policy-sets#update-a-policy-set)
 * Update the [Workspaces](/terraform/cloud-docs/api-docs/workspaces) API endpoints to include the associated [project](/terraform/cloud-docs/api-docs/projects).
 
