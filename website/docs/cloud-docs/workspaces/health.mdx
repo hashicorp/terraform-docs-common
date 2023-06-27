@@ -109,19 +109,17 @@ You can use one of the following approaches to correct workspace drift:
 
 ## Continuous Validation
 
-You can use [`check`](/terraform/language/checks) or [`precondition` and `postcondition`](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
+You can use [`check`](/terraform/language/checks) blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
 
-Continuous validation lets Terraform Cloud regularly verify whether your workspace’s custom assertions continue to pass, validating your real-world infrastructure. For example, use a `check` block to monitor if your website returns an expected status code. Or use a `postcondition` block to monitor whether an API gateway certificate is valid, while also preventing an invalid certificate's proliferation into newly provisioned infrastructure.
+Continuous validation lets Terraform Cloud regularly verify whether your workspace’s custom assertions continue to pass, validating your real-world infrastructure. For example, you can monitor if your website returns an expected status code, or monitor whether an API gateway certificate is valid.
 
 Continuous validation alerts you whenever an assertion fails, so you can change your configuration and avoid errors the next time you update infrastructure.
-
-See [Custom Conditions](/terraform/language/expressions/custom-conditions) for details and examples of adding conditions to your Terraform configuration. For guidance on choosing which custom condition to use, see [Choosing Checks or other Custom Conditions](/terraform/language/checks#choosing-checks-or-other-custom-conditions).
 
 ### Example use cases
 
 Review the provider documentation for `check` block examples with [AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/continuous-validation-examples), [Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/tfc-check-blocks), and [GCP](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/google-continuous-validation).
 
-#### Monitoring the health of a provisioned website with `check`
+#### Monitoring the health of a provisioned website
 
 The following example uses the [HTTP](https://registry.terraform.io/providers/hashicorp/http/latest/docs) Terraform provider and a [scoped data source](/terraform/language/checks#scoped-data-sources) within a [`check` block](/terraform/language/checks) to assert the Terraform website returns a `200` status code, indicating it is healthy.
 
@@ -140,12 +138,18 @@ check "health_check" {
 
 Continuous Validation alerts you if the website returns any status code besides `200` while Terraform evaluates this assertion. You can also find failures in your workspace's [Continuous Validation Results](#view-continuous-validation-results) page. You can configure continuous validation alerts in your workspace's [notification settings](/terraform/cloud-docs/workspaces/settings/notifications).
 
-#### Asserting up-to-date AMIs for compute instances with `postcondition`
+#### Asserting up-to-date AMIs for compute instances
 
-[HCP Packer](/hcp/docs/packer) stores metadata about your
-[Packer](https://www.packer.io/) images. The following example postcondition
-fails when there is a newer AMI version available.
+[HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example postcondition fails when there is a newer AMI version available.
+
 ```hcl
+data "hcp_packer_image" "hashiapp_image" {
+  bucket_name     = "hashiapp"
+  channel         = "latest"
+  cloud_provider  = "aws"
+  region          = "us-west-2"
+}
+
 resource "aws_instance" "hashiapp" {
   ami                         = data.hcp_packer_image.hashiapp_image.cloud_image_id
   instance_type               = var.instance_type
@@ -153,20 +157,17 @@ resource "aws_instance" "hashiapp" {
   subnet_id                   = aws_subnet.hashiapp.id
   vpc_security_group_ids      = [aws_security_group.hashiapp.id]
   key_name                    = aws_key_pair.generated_key.key_name
+}
 
-  lifecycle {
-    postcondition {
-      condition     = self.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
-      error_message = "Must use the latest available AMI,
-        ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
-    }
+check "ami_version_check" {
+  assert {
+    condition = aws_instance.hashiapp.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
+    error_message = "Must use the latest available AMI, ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
   }
 }
 ```
 
-This example uses a `postcondition` block to ensure that Terraform can not provision any new infrastructure with an out-of-date AMI.
-
-#### Monitoring certificate expiration with `check`
+#### Monitoring certificate expiration
 
 [Vault](https://www.vaultproject.io/) lets you secure, store, and tightly control access to tokens, passwords, certificates, encryption keys, and other sensitive data. The following example uses a `check` block to monitor for the expiration of a Vault certificate.
 
@@ -191,8 +192,10 @@ To view the continuous validation results from the latest health assessment, go 
 
 The page shows all of the resources, outputs, and data sources with custom assertions that Terraform Cloud evaluated. Next to each object, Terraform Cloud reports whether the assertion passed or failed. If one or more assertions fail, Terraform Cloud displays the error messages for each assertion.
 
-The health assessment page displays each assertion by its [named value](/terraform/language/expressions/references). A `check` block's named value combines the prefix `check` with its configuration name. Preconditions and postconditions use the named values of their parent block.
+The health assessment page displays each assertion by its [named value](/terraform/language/expressions/references). A `check` block's named value combines the prefix `check` with its configuration name.
 
-#### Precondition and Postcondition roll-up
+#### Preconditions and Postconditions
+
+It is recommended that `check` blocks are used for post-apply monitoring. However, any [Preconditions and postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) defined in your configuration will also be evaluated by Continuous Validation. The results of these assertions will be displayed alongside the results of any assertions from `check` blocks, identified by the named values of their parent block.
 
 It is possible to use multiple [Preconditions and Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) within a single resource, output, or data source. When doing so, Terraform Cloud will not show the results from individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed.
