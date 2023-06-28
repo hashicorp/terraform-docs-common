@@ -15,6 +15,15 @@ Use the Service Graph Connector for Terraform to securely import Terraform Cloud
 
 The integration is based on the [Service Graph Connector](https://www.servicenow.com/products/service-graph-connectors.html) technology that provides a framework for discovering and mapping relationships between the organization's infrastructure and the ServiceNow configuration items (CIs), and then automatically updating the [ServiceNow CMDB (Configuration Management Database)](https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html) with this information, enabling platform teams to gain a comprehensive view of the resources they support. CMDB is a central repository within the ServiceNow platform, which provides a single source of truth for your infrastructure and offers configurable dashboards for monitoring and reporting.
 
+### Key benefits
+
+- **Enhanced visibility**: The Service Graph Connector for Terraform minimizes risk by updating CMDB dashboards with resources deployed in Terraform Cloud.
+- **Improved efficiency**: By connecting Terraform to ServiceNow CMDB, platform teams can manage and search Terraform-provisioned resources in CMDB alongside the rest of the company's infrastructure.
+- **Consistent management**: Terraform state file changes get automatically and securely updated in ServiceNow CMDB, capturing status changes for all technical resources in a timely manner. 
+- **Extensibility**: ServiceNow admins can customize mappings for additional resource types, potentially working with HashiCorp’s entire Terraform ecosystem made up of over 3,000 providers.
+
+### Technical design
+
 The diagram below shows how the application connects Terraform Cloud to your ServiceNow instance. 
 
 ![ServiceNow Service Graph Connector for Terraform: design diagram](/img/docs/service-now-service-graph-design.png)
