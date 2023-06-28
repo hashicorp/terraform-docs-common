@@ -109,7 +109,7 @@ You can use one of the following approaches to correct workspace drift:
 
 ## Continuous Validation
 
-You can use [`check`](/terraform/language/checks) blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
+Continuous validation will evaluate preconditions, postconditions, and check blocks as part of an assessment, but we recommend using [`check` blocks](/terraform/language/checks) for post-apply monitoring. Use `check` blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
 
 Continuous validation lets Terraform Cloud regularly verify whether your workspace’s custom assertions continue to pass, validating your real-world infrastructure. For example, you can monitor if your website returns an expected status code, or monitor whether an API gateway certificate is valid.
 
@@ -194,8 +194,4 @@ The page shows all of the resources, outputs, and data sources with custom asser
 
 The health assessment page displays each assertion by its [named value](/terraform/language/expressions/references). A `check` block's named value combines the prefix `check` with its configuration name.
 
-#### Preconditions and Postconditions
-
-It is recommended that `check` blocks are used for post-apply monitoring. However, any [Preconditions and postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) defined in your configuration will also be evaluated by Continuous Validation. The results of these assertions will be displayed alongside the results of any assertions from `check` blocks, identified by the named values of their parent block.
-
-It is possible to use multiple [Preconditions and Postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) within a single resource, output, or data source. When doing so, Terraform Cloud will not show the results from individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed.
+If your configuration contains multiple [preconditions and postconditions](/terraform/language/expressions/custom-conditions#preconditions-and-postconditions) within a single resource, output, or data source, Terraform Cloud will not show the results of individual conditions unless they fail. If all custom conditions on the object pass, Terraform Cloud reports that the entire check passed. The assessment results will display the results of any precondition and postconditions alongside the results of any assertions from `check` blocks, identified by the named values of their parent block.
