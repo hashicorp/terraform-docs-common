@@ -95,17 +95,17 @@ On the right of a workspace’s overview page, Terraform Cloud displays a **Heal
 
 ## Drift Detection
 
-Infrastructure drift means that your real-world infrastructure no longer matches your Terraform state file. Drift occurs when a user modifies resources outside of the Terraform workflow. For example, a colleague may update resource configuration directly in the cloud provider console to resolve a production incident. This action changes the real resource attributes from those tracked in the state file.
+Infrastructure drift means that your real-world infrastructure no longer matches your Terraform configuration. Drift typically occurs when actions outside of the Terraform workflow result in changes to your infrastructure. For example, a colleague may update resource configuration directly in the cloud provider console to resolve a production incident. This action changes the real resource attributes from those specified in your configuration.
 
 ### View Workspace Drift
 
-To view the continuous validation results from the latest health assessment, go to the workspace and click **Health > Drift**. If there is drift, Terraform Cloud shows how the real infrastructure differs from the latest version of the workspace’s state file.
+To view the drift detection results from the latest health assessment, go to the workspace and click **Health > Drift**. If there is drift, Terraform Cloud shows how the real infrastructure differs from the latest version of the workspace’s configuration.
 
 ### Resolve Drift
 
 You can use one of the following approaches to correct workspace drift:
-- **Overwrite drift**: Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
-- **Update Terraform state and configuration:** Queue a refresh-only plan to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply. Refer to our [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
+- **Overwrite drift**: If the drift is unwanted, queue a new plan and apply the changes to revert your real-world infrastructure to match your Terraform configuration.
+- **Update Terraform configuration:** If the drift contains changes that are desired, modify your Terraform configuration to include the changes. This will prevent Terraform from reverting the changes during the next apply. Refer to our [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
 
 ## Continuous Validation
 
