@@ -32,7 +32,7 @@ You can view a workspace's state versions from its **States** tab. Each state in
 
 Your organization’s managed resource count helps you understand the number of infrastructure resources that Terraform Cloud manages across all your workspaces.
 
-Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. For example, `"aws_instance" "servers" { count = 10 }` creates ten separate managed resources in state. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count. 
+Terraform Cloud reads all the workspaces’ state files to determine the total number of managed resources. Each [resource](/terraform/language/resources/syntax) in the state equals one managed resource. Terraform Cloud includes resources in modules and each resource instance created with the `count` or `for_each` meta-arguments. For example, `"aws_instance" "servers" { count = 10 }` creates ten separate managed resources in state. Terraform Cloud does not include [data sources](/terraform/language/data-sources) in the count.
 
 ### Examples - Managed Resources
 
@@ -175,7 +175,9 @@ The following Terraform state excerpt describes a `aws_availability_zones` data 
 
 ## State Manipulation
 
-Certain tasks (including importing resources, tainting resources, moving or renaming existing resources to match a changed configuration, and more) require modifying Terraform state outside the context of a run.
+Certain tasks (including importing resources, tainting resources, moving or renaming existing resources to match a changed configuration, and more) may require modifying Terraform state outside the context of a run, depending on which version of Terraform your Terraform Cloud workspace is configured to use.
+
+Newer Terraform features like [`moved` blocks](/terraform/language/modules/develop/refactoring), [`import` blocks](/terraform/language/import), and the [`replace` option](/terraform/cloud-docs/run/modes-and-options#replacing-selected-resources) allow you to accomplish these tasks using the usual plan and apply workflow. However, if the Terraform version you're using doesn't support these features, you may need to fall back to manual state manipulation.
 
 Manual state manipulation in Terraform Cloud workspaces, with the exception of [rolling back to a previous state version](#rolling-back-to-a-previous-state), requires the use of Terraform CLI, using the same commands as would be used in a local workflow (`terraform import`, `terraform taint`, etc.). To manipulate state, you must configure the [CLI integration](/terraform/cli/cloud) and authenticate with a user token that has permission to read and write state versions for the relevant workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
