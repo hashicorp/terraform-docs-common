@@ -489,7 +489,16 @@
       },
       {
         "title": "Kubernetes Integration",
-        "path": "integrations/kubernetes"
+        "routes": [
+          {
+            "title": "Terraform Cloud Operator for Kubernetes Setup Instructions",
+            "path": "integrations/kubernetes"
+          },
+          {
+            "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
+            "path": "integrations/kubernetes/k8s-ops-v2-migration"
+          }
+        ]
       },
       {
         "title": "Run Tasks Integration",
