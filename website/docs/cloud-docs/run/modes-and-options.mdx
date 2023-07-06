@@ -85,6 +85,6 @@ When using [`import` blocks](/terraform/language/import) to import existing reso
 - **CLI:** Use `terraform plan -generate-config-out=generated.tf`.
 - **API:** Use the `allow-config-generation` option.
 
-You can find generated configuration displayed in the plan UI. If you're using the CLI workflow, generated configuration will be written to the file you specify when running `terraform plan`.
+You can find generated configuration displayed in the plan UI. If you're using the CLI workflow, Terraform will write generated configuration to the file you specify when running `terraform plan`.
 
 Once Terraform has generated configuration for you, you'll need to review it, incorporate it in your Terraform configuration (including committing it to version control), then run another plan. If you try to directly apply a plan with generated configuration, the run will error.
