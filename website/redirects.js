@@ -83,4 +83,36 @@ module.exports = [
       "/terraform/plugin/best-practices/hashicorp-provider-design-principles",
     permanent: true,
   },
+  // Redirects for the ServiceNow Service Catalog for Terraform
+  // - https://github.com/hashicorp/terraform-docs-common/pull/375
+  {
+    source: "/cloud-docs/integrations/service-now",
+    destination: "/cloud-docs/integrations/service-now/service-catalog",
+    permanent: true,
+  },
+  {
+    source: "/cloud-docs/integrations/service-now/service-catalog",
+    destination: "/cloud-docs/integrations/service-now/service-catalog/service-catalog-config",
+    permanent: true,
+  },
+  {
+    source: "/cloud-docs/integrations/service-now/admin-guide",
+    destination: "cloud-docs/integrations/service-now/service-catalog/admin-guide",
+    permanent: true,
+  },
+  {
+    source: "/cloud-docs/integrations/service-now/developer-reference",
+    destination: "/cloud-docs/integrations/service-now/service-catalog/developer-reference",
+    permanent: true,
+  },
+  {
+    source: "/cloud-docs/integrations/service-now/example-customizations",
+    destination: "/cloud-docs/integrations/service-now/service-catalog/example-customizations",
+    permanent: true,
+  },
+  {
+    source: "/cloud-docs/integrations/service-now/service-now-v1",
+    destination: "/cloud-docs/integrations/service-now/service-catalog/service-now-v1",
+    permanent: true,
+  },
 ];
