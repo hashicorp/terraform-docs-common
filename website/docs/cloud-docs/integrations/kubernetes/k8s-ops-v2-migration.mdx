@@ -11,7 +11,11 @@ To upgrade the Terraform Cloud Kubernetes Operator from version 1 to version 2, 
 
 ## Prepare for the upgrade
 
-Before you migrate to `v2` of the operator, you must first [update `v1` of the operator to the latest version](/terraform/cloud-docs/integrations/kubernetes#upgrading), including the custom resource definitions.
+Before you migrate to Terraform Cloud Kubernetes Operator v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
+
+```shell-session
+$ helm upgrade --namespace ${RELEASE_NAMESPACE} ${RELEASE_NAME} hashicorp/terraform
+```
 
 Next, backup the workspace resources.
 
@@ -19,33 +23,46 @@ Next, backup the workspace resources.
 $ kubectl get workspace --all-namespaces -o yaml > backup_tfc_operator_v1.yaml
 ```
 
-Finally, we suggest that you set the `applyMethod` of each workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies running during the upgrade process.
+Finally, we suggest that you set the `applyMethod` of each workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies during the upgrade process.
 
 ```shell-session
 kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"applyMethod": "manual"}}'
 ```
 ## Upgrade the operator
 
-Validate the changes that **patch A** will apply to the workspace CRD.
+Clone the Terraform Cloud Kubernetes Operator repository.
 
 ```shell-session
-$ kubectl diff -f https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_a.yaml
+$ git clone https://github.com/hashicorp/terraform-cloud-operator.git
+```
+
+Change to the migration directory.
+
+```shell-session
+$ cd terraform-cloud-operator/docs/migration/crds
+```
+
+View the changes that **patch A** will apply to the workspace CRD.
+
+```shell-session
+$ kubectl diff -f workspaces_patch_a.yaml
 ```
 
 Patch the workspace CRD with **patch A**. This patch adds `app.terraform.io/v1alpha2` support, but excludes `.status.runStatus` because it has a different format in `app.terraform.io/v1alpha1` and causes JSON unmarshalling issues.
 
 ```shell-session
-$ kubectl patch crd workspaces.app.terraform.io --patch-file https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_a.yaml
+$ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_a.yaml
 ```
 
-Install `v2` following [Installation Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/installation.md) or the [Installation Guide for Beta](https://github.com/hashicorp/terraform-cloud-operator/tree/main#install-beta-version).
+Follow the [installation guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/installation.md) to install v2 of the operator.
 
-Next, create a Kubernetes secret to store the TFC API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for `v1` of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
+Next, create a Kubernetes secret to store the TFC API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
 
 ```shell-session
-$ kubectl get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
+$ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
 ```
-If `v2` of the operator pod fails to start, ensure that each `workspace` object has the `spec.token` value set. To do this, patch each `workspace` object using the `kubectl patch` command.
+
+If v2 of the operator pod fails to start, ensure that each `workspace` object has the `spec.token` value set. To do this, patch each `workspace` object using the `kubectl patch` command.
 
 ```shell-session
 $ kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"terraformVersion": "1.4.6", "token": {"secretKeyRef": {"key": "token", "name": "tfc-operator"}}}}'
@@ -57,19 +74,19 @@ Validate
 $ kubectl logs -f <POD_NAME>
 ```
 
-Validate the changes that **patch B** will apply to the workspace CRD:
+View the changes that **patch B** will apply to the workspace CRD:
 
 ```shell-session
-$ kubectl diff -f https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_b.yaml
+$ kubectl diff -f workspaces_patch_b.yaml
 ```
 
 Patch workspace CRD with **patch B**. This patch adds `.status.runStatus` support that was excluded in Patch A.
 
 ```shell-session
-$ kubectl patch crd workspaces.app.terraform.io --patch-file https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_b.yaml
+$ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_b.yaml
 ```
 
-The `v2` operator will fail to proceed if a custom resource has the `v1` finalizer `finalizer.workspace.app.terraform.io`. If you encounter an error, check the logs for more information.
+The v2 operator will fail to proceed if a custom resource has the v1 finalizer `finalizer.workspace.app.terraform.io`. If you encounter an error, check the logs for more information.
 
 ```shell-session
 $ kubectl logs -f <POD_NAME>
