@@ -24,7 +24,7 @@ Navigate to the **IntegrationHub ETL** in the top menu. Check the **SG-Terraform
 
 ## Build a resource in Terraform Cloud
 
-Create a new workspace in your Terraform Cloud and build a Terraform resource you would like to map. It helps to have a Terraform state record of the resource to ensure accurate mapping. 
+Create a new workspace in your Terraform Cloud organization and build a Terraform resource that you would like to map. It helps to have a Terraform state record of the resource to ensure accurate mapping. 
 
 [Configure a webhook](/terraform/cloud-docs/integrations/service-now/service-graph/service-graph-setup#configure-terraform-webhook) and initiate a Terraform run.
 
@@ -46,15 +46,15 @@ Locate the resource in the state object. This JSON record will serve as a source
 
 ## Identify the CI target
 
-Pick a suitable Configuration Item (CI) target for your resource. For instance, the AWS virtual private network (VPC) resource is mapped to Cloud Network (`cmdb_ci_network`) by the Service Graph Connector for Terraform. Refer to the [ServiceNow CMDB documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html) for more details on available CI tables.
+Pick a suitable Configuration Item (CI) target for your resource. For example, the AWS virtual private network (VPC) resource is mapped to Cloud Network (`cmdb_ci_network`) by the Service Graph Connector for Terraform. Refer to the [ServiceNow CMDB documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html) for more details on available CI tables.
 
 ## Consult the CI Class Manager
 
-After selecting an appropriate CI target, it is important to consult the CI Class Manager for guidance on dependent relationships. Numerous CMDB resources rely on other CI tables. If a related class is not properly mapped, the ETL job will generate errors or warnings, resulting in the failure of importing your resource into CMDB.
+After selecting an appropriate CI target, it is important to consult the CI Class Manager for guidance on dependent relationships. Many CMDB resources rely on other CI tables. If a related class is not properly mapped, the ETL job will generate errors or warnings, resulting in the failure of importing your resource into CMDB.
 
 In the top navigation, click on **All**, search for **CI Class Manager**, and click on **Open Hierarchy**. Search for your target CI Class and check **Dependent Relationships** tab to learn more about dependent mappings required by the resource.
 
-Example: according to the **CI Class Manager**, **Cloud Network** should be hosted on **Logical Datacenter** and **Cloud Service Account**.
+For example, according to the **CI Class Manager**, **Cloud Network** should be hosted on **Logical Datacenter** and **Cloud Service Account**.
 
 ## Set the mapping rules
 
@@ -64,7 +64,7 @@ Click on the first **Specify Basic Details** section of the ETL Transform Map As
 
 Open the **Preview and Prepare Data** section and review the imported rows. Click **Mark as Complete**.
 
-The third section provides the interface for mapping resource attributes. Click on **Select CMDB Classes to Map Source Data**. Click on **Add Conditional Class** button at the top. Set the rules that will identify your resource in the import set. Use the `type` field value from the Terraform state object to identify your resource (on the ServiceNow side, field name are prefaced with `u_`). Set the target CMDB CI CLass name and click **Save**.
+The third section provides the interface for mapping resource attributes. Click on **Select CMDB Classes to Map Source Data**. Click on **Add Conditional Class** button at the top. Set the rules that will identify your resource in the import set. Use the `type` field value from the Terraform state object to identify your resource (on the ServiceNow side, field name are prefaced with `u_`). Set the target CMDB CI Class name and click **Save**.
 
 ![ServiceNow Service Graph Connector: setting the Conditional Class rules in the ETL mapping](/img/docs/service-now-service-graph-conditional-class-mapping.png)
 
@@ -92,4 +92,4 @@ Click **Mark as Complete** to finalize the **Add Relationships** section.
 
 ## Run a test
 
-To test the new resource mapping, you have two options. First, you can utilize the **Test and Rollback Integration Results** interface of the ETL Transform Map Assistant. Alternatively, you can initiate a new run in your Terraform Cloud workspace that includes the deployment of the resource.
+There are two ways to test the new resource mapping. You can utilize the **Test and Rollback Integration Results** interface of the ETL Transform Map Assistant. Alternatively, you can initiate a new run in your Terraform Cloud workspace that includes the deployment of the resource.
