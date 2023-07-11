@@ -65,106 +65,161 @@ While the default ETL map provided by the application can be utilized without mo
 
 ### Field attributes mapping
 
-| CI Class                                                   | CMDB field        | Terraform state field                                          |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | Resource account number extracted from `arn`                   |
-|                                                            | Account Id        | Resource account number extracted from `arn`                   |
-|                                                            | Datacenter Type   | Resource cloud provider extracted from `arn`                   |
-|                                                            | Object ID         | Resource id extracted from `arn`                               |
-|                                                            | Name              | Resource name extracted from `arn`                             |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| AWS Datacenter (`cmdb_ci_aws_datacenter`)                  | Source Native Key | Concatenation of region and account number extracted from `arn`|
-|                                                            | Object Id         | Region extracted from `arn`                                    |
-|                                                            | Region            | Region extracted from `arn`                                    |
-|                                                            | Name              | Region extracted from `arn`                                    |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Virtual Machine Instance (`cmdb_ci_vm_instance`)           | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Placement Group ID| `placement_group`                                              |
-|                                                            | IP Address        | `public_ip`                                                    |
-|                                                            | Status            | `instance_state`                                               |
-|                                                            | VM Instance ID    | `id`                                                           |
-|                                                            | Name              | `id`                                                           |
-|                                                            | State             | `state`                                                        |
-|                                                            | CPU               | `cpu_core_count`                                               |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| AWS Cloud ECS Cluster (`cmdb_ci_cloud_ecs_cluster`)        | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Object Storage (`cmdb_ci_cloud_object_storage`)      | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Cloud Provider    | Resource cloud provider extracted from `arn`                   |
-|                                                            | Name              | `bucket`                                                       |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)          | Source Native Key | `arn`                                                          |
-|                                                            | IP Address        | `endpoint`                                                     |
-|                                                            | Port              | Defaults to "6443"                                             |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Network (`cmdb_ci_network`)                          | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud DataBase (`cmdb_ci_cloud_database`)                  | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Version           | `engine_version`                                               |
-|                                                            | Type              | `engine`                                                       |
-|                                                            | TCP port(s)       | `port`                                                         |
-|                                                            | Category          | `instance_class`                                               |
-|                                                            | Fully qualified domain name| `endpoint`                                            |
-|                                                            | Location          | Region extracted from `arn`                                    |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Vendor            | Resource cloud provider extracted from `arn`                   |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud DataBase Cluster (`cmdb_ci_cloud_db_cluster`)        | Source Native Key | `arn`                                                          |
-|                                                            | Cluster ID        | `cluster_resource_id`                                          |
-|                                                            | Name              | `name`                                                         |
-|                                                            | TCP port(s)       | `port`                                                         |
-|                                                            | Fully qualified domain name| `endpoint`                                            |
-|                                                            | Vendor            | Resource cloud provider extracted from `arn`                   |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| DynamoDB Table (`cmdb_ci_dynamodb_table`)                  | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `arn`                                                          |
-|                                                            | Location          | Region extracted from `arn`                                    |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| DynamoDB Global Table (`cmdb_ci_dynamodb_global_table`)    | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `arn`                                                          |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Compute Security Group (`cmdb_ci_compute_security_group`)  | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Location          | Region extracted from `arn`                                    |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Function (`cmdb_ci_cloud_function`)                  | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `arn`                                                          |
-|                                                            | Language          | `runtime`                                                      |
-|                                                            | Code Size         | `source_code_size`                                             |
-|                                                            | Location          | Region extracted from `arn`                                    |
-|                                                            | Name              | `function_name`                                                |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Load Balancer (`cmdb_ci_cloud_load_balancer`)        | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Canonical Hosted Zone Name| `dns_name`                                             |
-|                                                            | Canonical Hosted Zone ID| `zone_id`                                                |
-|                                                            | Location          | Region extracted from `arn`                                    |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+#### Cloud Service Account (`cmdb_ci_cloud_service_account`)
+
+|  CMDB field        | Terraform state field                         |
+|--------------------|-----------------------------------------------|
+| Source Native Key  | Resource account number extracted from `arn`  |
+| Account Id         | Resource account number extracted from `arn`  |
+| Datacenter Type    | Resource cloud provider extracted from `arn`  |
+| Object ID          | Resource id extracted from `arn`              |
+| Name               | Resource name extracted from `arn`            |
+| Operational Status | Defaults to "1" ("Operational")               |
+
+#### AWS Datacenter (`cmdb_ci_aws_datacenter`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | Concatenation of region and account number extracted from `arn`|
+| Object Id         | Region extracted from `arn`                                    |
+| Region            | Region extracted from `arn`                                    |
+| Name              | Region extracted from `arn`                                    |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+
+#### Virtual Machine Instance (`cmdb_ci_vm_instance`) 
+
+|  CMDB field        | Terraform state field                                         |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Placement Group ID| `placement_group`                                              |
+| IP Address        | `public_ip`                                                    |
+| Status            | `instance_state`                                               |
+| VM Instance ID    | `id`                                                           |
+| Name              | `id`                                                           |
+| State             | `state`                                                        |
+| CPU               | `cpu_core_count`                                               |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### AWS Cloud ECS Cluster (`cmdb_ci_cloud_ecs_cluster`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud Object Storage (`cmdb_ci_cloud_object_storage`) 
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Cloud Provider    | Resource cloud provider extracted from `arn`                   |
+| Name              | `bucket`                                                       |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| IP Address        | `endpoint`                                                     |
+| Port              | Defaults to "6443"                                             |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud Network (`cmdb_ci_network`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud DataBase (`cmdb_ci_cloud_database`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Version           | `engine_version`                                               |
+| Type              | `engine`                                                       |
+| TCP port(s)       | `port`                                                         |
+| Category          | `instance_class`                                               |
+| Fully qualified domain name| `endpoint`                                            |
+| Location          | Region extracted from `arn`                                    |
+| Name              | `name`                                                         |
+| Vendor            | Resource cloud provider extracted from `arn`                   |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud DataBase Cluster (`cmdb_ci_cloud_db_cluster`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Cluster ID        | `cluster_resource_id`                                          |
+| Name              | `name`                                                         |
+| TCP port(s)       | `port`                                                         |
+| Fully qualified domain name| `endpoint`                                            |
+| Vendor            | Resource cloud provider extracted from `arn`                   |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### DynamoDB Table (`cmdb_ci_dynamodb_table`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `arn`                                                          |
+| Location          | Region extracted from `arn`                                    |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### DynamoDB Global Table (`cmdb_ci_dynamodb_global_table`) 
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `arn`                                                          |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Compute Security Group (`cmdb_ci_compute_security_group`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Location          | Region extracted from `arn`                                    |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud Function (`cmdb_ci_cloud_function`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `arn`                                                          |
+| Language          | `runtime`                                                      |
+| Code Size         | `source_code_size`                                             |
+| Location          | Region extracted from `arn`                                    |
+| Name              | `function_name`                                                |
+| Operational Status| Defaults to "1" ("Operational")                                |
+
+#### Cloud Load Balancer (`cmdb_ci_cloud_load_balancer`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
+| Object Id         | `id`                                                           |
+| Canonical Hosted Zone Name| `dns_name`                                             |
+| Canonical Hosted Zone ID| `zone_id`                                                |
+| Location          | Region extracted from `arn`                                    |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 
 ## Microsoft Azure
 
@@ -217,65 +272,65 @@ While the default ETL map provided by the application can be utilized without mo
 | CI Class                                                   | CMDB field        | Terraform state field                                          |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | Subscription ID extracted from `id`                            |
-|                                                            | Account Id        | Subscription ID extracted from `id`                            |
-|                                                            | Datacenter Type   | Defaults to `azure`                                            |
-|                                                            | Object ID         | Subscription ID extracted from `id`                            |
-|                                                            | Name              | Subscription ID extracted from `id`                            |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Account Id        | Subscription ID extracted from `id`                            |
+| Datacenter Type   | Defaults to `azure`                                            |
+| Object ID         | Subscription ID extracted from `id`                            |
+| Name              | Subscription ID extracted from `id`                            |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Azure Datacenter (`cmdb_ci_azure_datacenter`)              | Source Native Key | Concatenation of `location` and Subscription ID                |
-|                                                            | Object Id         | `location`                                                     |
-|                                                            | Region            | `location`                                                     |
-|                                                            | Name              | `location`                                                     |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `location`                                                     |
+| Region            | `location`                                                     |
+| Name              | `location`                                                     |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Virtual Machine Instance (`cmdb_ci_vm_instance`)           | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Storage Account (`cmdb_ci_cloud_storage_account`)    | Source Native Key | `resource_manager_id`                                          |
-|                                                            | Object Id         | `resource_manager_id`                                          |
-|                                                            | Fully qualified domain name| `id`                                                  |
-|                                                            | Blob Service      | `storage_account_name`                                         |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `resource_manager_id`                                          |
+| Fully qualified domain name| `id`                                                  |
+| Blob Service      | `storage_account_name`                                         |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Resource Group (`cmdb_ci_resource_group`)                  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Location          | `location`                                                     |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Location          | `location`                                                     |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)          | Source Native Key | `id`                                                           |
-|                                                            | IP Address        | `fqdn`                                                         |
-|                                                            | Port              | Defaults to "6443"                                             |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Location          | `location`                                                     |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| IP Address        | `fqdn`                                                         |
+| Port              | Defaults to "6443"                                             |
+| Name              | `name`                                                         |
+| Location          | `location`                                                     |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud DataBase (`cmdb_ci_cloud_database`)                  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Version           | `engine_version`                                               |
-|                                                            | Fully qualified domain name| `fqdn`                                                |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Vendor            | Defaults to `azure`                                            |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Version           | `engine_version`                                               |
+| Fully qualified domain name| `fqdn`                                                |
+| Name              | `name`                                                         |
+| Vendor            | Defaults to `azure`                                            |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Compute Security Group (`cmdb_ci_compute_security_group`)  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Function (`cmdb_ci_cloud_function`)                  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Network (`cmdb_ci_network`)                          | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 
 ## Google Cloud Platform
 
@@ -324,66 +379,66 @@ While the default ETL map provided by the application can be utilized without mo
 | CI Class                                                   | CMDB field        | Terraform state field                                          |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | `project`                                                      |
-|                                                            | Account Id        | `project`                                                      |
-|                                                            | Datacenter Type   | Defaults to `google`                                           |
-|                                                            | Object ID         | `project`                                                      |
-|                                                            | Name              | `project`                                                      |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Account Id        | `project`                                                      |
+| Datacenter Type   | Defaults to `google`                                           |
+| Object ID         | `project`                                                      |
+| Name              | `project`                                                      |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Google Datacenter (`cmdb_ci_google_datacenter`)            | Source Native Key | Concatenation of `project` and region extracted from `id`      |
-|                                                            | Object Id         | Region extracted from `id`                                     |
-|                                                            | Region            | Region extracted from `id`                                     |
-|                                                            | Name              | Region extracted from `id`                                     |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | Region extracted from `id`                                     |
+| Region            | Region extracted from `id`                                     |
+| Name              | Region extracted from `id`                                     |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Virtual Machine Instance (`cmdb_ci_vm_instance`)           | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Category          | `machine_type`                                                 |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Category          | `machine_type`                                                 |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Network (`cmdb_ci_network`)                          | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Compute Security Group (`cmdb_ci_compute_security_group`)  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)          | Source Native Key | `arn`                                                          |
-|                                                            | IP Address        | `endpoint`                                                     |
-|                                                            | Port              | Defaults to "6443"                                             |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| IP Address        | `endpoint`                                                     |
+| Port              | Defaults to "6443"                                             |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Object Storage (`cmdb_ci_cloud_object_storage`)      | Source Native Key | `arn`                                                          |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Cloud Provider    | Resource cloud provider extracted from `arn`                   |
-|                                                            | Name              | `bucket`                                                       |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Cloud Provider    | Resource cloud provider extracted from `arn`                   |
+| Name              | `bucket`                                                       |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Storage Account (`cmdb_ci_cloud_storage_account`)    | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Name              | `location`                                                     |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Name              | `location`                                                     |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud DataBase (`cmdb_ci_cloud_database`)                  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | Name extracted from `id`                                       |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | Name extracted from `id`                                       |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Function (`cmdb_ci_cloud_function`)                  | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Load Balancer (`cmdb_ci_cloud_load_balancer`)        | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 
 ## VMware vSphere
 
@@ -415,32 +470,32 @@ While the default ETL map provided by the application can be utilized without mo
 | CI Class                                                   | CMDB field        | Terraform state field                                          |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | Defaults to "VMware_vCenter"                                   |
-|                                                            | Account Id        | Defaults to "VMware_vCenter"                                   |
-|                                                            | Datacenter Type   | Defaults to "VMware_vCenter"                                   |
-|                                                            | Object ID         | Defaults to "VMware_vCenter"                                   |
-|                                                            | Name              | Defaults to "VMware_vCenter"                                   |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Account Id        | Defaults to "VMware_vCenter"                                   |
+| Datacenter Type   | Defaults to "VMware_vCenter"                                   |
+| Object ID         | Defaults to "VMware_vCenter"                                   |
+| Name              | Defaults to "VMware_vCenter"                                   |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | VMware vCenter Datacenter (`cmdb_ci_vcenter_datacenter`)   | Source Native Key | `datacenter_id`                                                |
-|                                                            | Object Id         | `datacenter_id`                                                |
-|                                                            | Region            | `datacenter_id`                                                |
-|                                                            | Name              | `datacenter_id`                                                |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `datacenter_id`                                                |
+| Region            | `datacenter_id`                                                |
+| Name              | `datacenter_id`                                                |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | VMware Virtual Machine Instance (`cmdb_ci_vmware_instance`)| Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | VMware vCenter Network (`cmdb_ci_vcenter_network`)         | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 |------------------------------------------------------------|-------------------|----------------------------------------------------------------|
 | VMware vCenter Datastore (`cmdb_ci_vcenter_datastore`)     | Source Native Key | `id`                                                           |
-|                                                            | Object Id         | `id`                                                           |
-|                                                            | Name              | `name`                                                         |
-|                                                            | Operational Status| Defaults to "1" ("Operational")                                |
+| Object Id         | `id`                                                           |
+| Name              | `name`                                                         |
+| Operational Status| Defaults to "1" ("Operational")                                |
 
 ## Importing Tags
 
