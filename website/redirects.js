@@ -86,33 +86,33 @@ module.exports = [
   // Redirects for the ServiceNow Service Catalog for Terraform
   // - https://github.com/hashicorp/terraform-docs-common/pull/375
   {
-    source: "/cloud-docs/integrations/service-now",
-    destination: "/cloud-docs/integrations/service-now/service-catalog",
+    source: "/terraform/cloud-docs/integrations/service-now",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog",
     permanent: true,
   },
   {
-    source: "/cloud-docs/integrations/service-now/service-catalog",
-    destination: "/cloud-docs/integrations/service-now/service-catalog/service-catalog-config",
+    source: "/terraform/cloud-docs/integrations/service-now/service-catalog",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/service-catalog-config",
     permanent: true,
   },
   {
-    source: "/cloud-docs/integrations/service-now/admin-guide",
-    destination: "cloud-docs/integrations/service-now/service-catalog/admin-guide",
+    source: "/terraform/cloud-docs/integrations/service-now/admin-guide",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/admin-guide",
     permanent: true,
   },
   {
-    source: "/cloud-docs/integrations/service-now/developer-reference",
-    destination: "/cloud-docs/integrations/service-now/service-catalog/developer-reference",
+    source: "/terraform/cloud-docs/integrations/service-now/developer-reference",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/developer-reference",
     permanent: true,
   },
   {
-    source: "/cloud-docs/integrations/service-now/example-customizations",
-    destination: "/cloud-docs/integrations/service-now/service-catalog/example-customizations",
+    source: "/terraform/cloud-docs/integrations/service-now/example-customizations",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/example-customizations",
     permanent: true,
   },
   {
-    source: "/cloud-docs/integrations/service-now/service-now-v1",
-    destination: "/cloud-docs/integrations/service-now/service-catalog/service-now-v1",
+    source: "/terraform/cloud-docs/integrations/service-now/service-now-v1",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/service-now-v1",
     permanent: true,
   },
 ];
