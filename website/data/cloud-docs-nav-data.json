@@ -12,8 +12,12 @@
         "path": "overview/estimate-terraform-cloud-cost"
       },
       {
-        "title": "Changing Plans",
+        "title": "Activate Pay-As-You Go",
         "path": "overview/change-plan"
+      },
+      {
+        "title": "Activate HashiCorp Flex",
+        "path": "overview/activate-flex"
       }
     ]
   },
