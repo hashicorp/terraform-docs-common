@@ -111,7 +111,7 @@ To create a policy set:
    - For automated workflows, click **No VCS Connection**. Terraform Cloud shows a form to create an empty policy set. You can use the API to add policies to this empty policy set later.
 1. Choose a **Policy framework** for the policies you want to add. You can only create a policy set from policies written using the same framework. You cannot change the framework type after creation.
 1. Choose a policy set scope:
-   - **Policies enforced globally:** Terraform Cloud will automatically enforce this global policy set on all existing and future workspaces.
+   - **Policies enforced globally:** Terraform Cloud will automatically enforce this global policy set on all existing and future workspaces in the organization.
    - **Policies enforced on selected projects and workspaces:** Use the text fields to search for and select workspaces and/or projects to enforce this policy set on. This affects all current and future workspaces for any selected projects.
 1. **(OPA Only)** Allow **Overrides** where users with override policy permissions can let Terraform apply plans that have [mandatory policy](#policy-enforcement-levels) failures.
 1. **(VCS Only)** Specify the **VCS branch** within your VCS repository where Terraform Cloud should import new versions of policies. If you do not set this field, Terraform Cloud uses the default branch of the VCS repository you selected.
