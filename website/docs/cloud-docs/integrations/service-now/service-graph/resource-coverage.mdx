@@ -269,65 +269,103 @@ While the default ETL map provided by the application can be utilized without mo
 
 ### Field attributes mapping
 
-| CI Class                                                   | CMDB field        | Terraform state field                                          |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | Subscription ID extracted from `id`                            |
+#### Cloud Service Account (`cmdb_ci_cloud_service_account`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | Subscription ID extracted from `id`                            |
 | Account Id        | Subscription ID extracted from `id`                            |
 | Datacenter Type   | Defaults to `azure`                                            |
 | Object ID         | Subscription ID extracted from `id`                            |
 | Name              | Subscription ID extracted from `id`                            |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Azure Datacenter (`cmdb_ci_azure_datacenter`)              | Source Native Key | Concatenation of `location` and Subscription ID                |
+
+#### Azure Datacenter (`cmdb_ci_azure_datacenter`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | Concatenation of `location` and Subscription ID                |
 | Object Id         | `location`                                                     |
 | Region            | `location`                                                     |
 | Name              | `location`                                                     |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Virtual Machine Instance (`cmdb_ci_vm_instance`)           | Source Native Key | `id`                                                           |
+
+#### Virtual Machine Instance (`cmdb_ci_vm_instance`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Storage Account (`cmdb_ci_cloud_storage_account`)    | Source Native Key | `resource_manager_id`                                          |
+
+#### Cloud Storage Account (`cmdb_ci_cloud_storage_account`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `resource_manager_id`                                          |
 | Object Id         | `resource_manager_id`                                          |
 | Fully qualified domain name| `id`                                                  |
 | Blob Service      | `storage_account_name`                                         |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Resource Group (`cmdb_ci_resource_group`)                  | Source Native Key | `id`                                                           |
+
+#### Resource Group (`cmdb_ci_resource_group`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Location          | `location`                                                     |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)          | Source Native Key | `id`                                                           |
+
+#### Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | IP Address        | `fqdn`                                                         |
 | Port              | Defaults to "6443"                                             |
 | Name              | `name`                                                         |
 | Location          | `location`                                                     |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud DataBase (`cmdb_ci_cloud_database`)                  | Source Native Key | `id`                                                           |
+
+#### Cloud DataBase (`cmdb_ci_cloud_database`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Version           | `engine_version`                                               |
 | Fully qualified domain name| `fqdn`                                                |
 | Name              | `name`                                                         |
 | Vendor            | Defaults to `azure`                                            |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Compute Security Group (`cmdb_ci_compute_security_group`)  | Source Native Key | `id`                                                           |
+
+#### Compute Security Group (`cmdb_ci_compute_security_group`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Function (`cmdb_ci_cloud_function`)                  | Source Native Key | `id`                                                           |
+
+#### Cloud Function (`cmdb_ci_cloud_function`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Network (`cmdb_ci_network`)                          | Source Native Key | `id`                                                           |
+
+#### Cloud Network (`cmdb_ci_network`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
@@ -376,66 +414,108 @@ While the default ETL map provided by the application can be utilized without mo
 
 ### Field attributes mapping
 
-| CI Class                                                   | CMDB field        | Terraform state field                                          |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | `project`                                                      |
+#### Cloud Service Account (`cmdb_ci_cloud_service_account`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `project`                                                      |
 | Account Id        | `project`                                                      |
 | Datacenter Type   | Defaults to `google`                                           |
 | Object ID         | `project`                                                      |
 | Name              | `project`                                                      |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Google Datacenter (`cmdb_ci_google_datacenter`)            | Source Native Key | Concatenation of `project` and region extracted from `id`      |
+
+#### Google Datacenter (`cmdb_ci_google_datacenter`)  
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | Concatenation of `project` and region extracted from `id`      |
 | Object Id         | Region extracted from `id`                                     |
 | Region            | Region extracted from `id`                                     |
 | Name              | Region extracted from `id`                                     |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Virtual Machine Instance (`cmdb_ci_vm_instance`)           | Source Native Key | `id`                                                           |
+
+#### Virtual Machine Instance (`cmdb_ci_vm_instance`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Category          | `machine_type`                                                 |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Network (`cmdb_ci_network`)                          | Source Native Key | `id`                                                           |
+
+#### Cloud Network (`cmdb_ci_network`) 
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Compute Security Group (`cmdb_ci_compute_security_group`)  | Source Native Key | `id`                                                           |
+
+#### Compute Security Group (`cmdb_ci_compute_security_group`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)          | Source Native Key | `arn`                                                          |
+
+#### Kubernetes Cluster (`cmdb_ci_kubernetes_cluster`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
 | IP Address        | `endpoint`                                                     |
 | Port              | Defaults to "6443"                                             |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Object Storage (`cmdb_ci_cloud_object_storage`)      | Source Native Key | `arn`                                                          |
+
+#### Cloud Object Storage (`cmdb_ci_cloud_object_storage`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `arn`                                                          |
 | Object Id         | `id`                                                           |
 | Cloud Provider    | Resource cloud provider extracted from `arn`                   |
 | Name              | `bucket`                                                       |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Storage Account (`cmdb_ci_cloud_storage_account`)    | Source Native Key | `id`                                                           |
+
+#### Cloud Storage Account (`cmdb_ci_cloud_storage_account`) 
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Name              | `location`                                                     |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud DataBase (`cmdb_ci_cloud_database`)                  | Source Native Key | `id`                                                           |
+
+#### Cloud DataBase (`cmdb_ci_cloud_database`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | Name extracted from `id`                                       |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Function (`cmdb_ci_cloud_function`)                  | Source Native Key | `id`                                                           |
+
+#### Cloud Function (`cmdb_ci_cloud_function`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Load Balancer (`cmdb_ci_cloud_load_balancer`)        | Source Native Key | `id`                                                           |
+
+#### Cloud Load Balancer (`cmdb_ci_cloud_load_balancer`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
@@ -467,32 +547,50 @@ While the default ETL map provided by the application can be utilized without mo
 
 ### Field attributes mapping
 
-| CI Class                                                   | CMDB field        | Terraform state field                                          |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| Cloud Service Account (`cmdb_ci_cloud_service_account`)    | Source Native Key | Defaults to "VMware_vCenter"                                   |
+#### Cloud Service Account (`cmdb_ci_cloud_service_account`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | Defaults to "VMware_vCenter"                                   |
 | Account Id        | Defaults to "VMware_vCenter"                                   |
 | Datacenter Type   | Defaults to "VMware_vCenter"                                   |
 | Object ID         | Defaults to "VMware_vCenter"                                   |
 | Name              | Defaults to "VMware_vCenter"                                   |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| VMware vCenter Datacenter (`cmdb_ci_vcenter_datacenter`)   | Source Native Key | `datacenter_id`                                                |
+
+#### VMware vCenter Datacenter (`cmdb_ci_vcenter_datacenter`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `datacenter_id`                                                |
 | Object Id         | `datacenter_id`                                                |
 | Region            | `datacenter_id`                                                |
 | Name              | `datacenter_id`                                                |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| VMware Virtual Machine Instance (`cmdb_ci_vmware_instance`)| Source Native Key | `id`                                                           |
+
+#### VMware Virtual Machine Instance (`cmdb_ci_vmware_instance`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| VMware vCenter Network (`cmdb_ci_vcenter_network`)         | Source Native Key | `id`                                                           |
+
+#### VMware vCenter Network (`cmdb_ci_vcenter_network`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
-|------------------------------------------------------------|-------------------|----------------------------------------------------------------|
-| VMware vCenter Datastore (`cmdb_ci_vcenter_datastore`)     | Source Native Key | `id`                                                           |
+
+#### VMware vCenter Datastore (`cmdb_ci_vcenter_datastore`)
+
+| CMDB field        | Terraform state field                                          |
+|-------------------|----------------------------------------------------------------|
+| Source Native Key | `id`                                                           |
 | Object Id         | `id`                                                           |
 | Name              | `name`                                                         |
 | Operational Status| Defaults to "1" ("Operational")                                |
