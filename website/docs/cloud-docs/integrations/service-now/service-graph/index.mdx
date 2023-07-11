@@ -13,24 +13,24 @@ description: >-
 
 Use the Service Graph Connector for Terraform to securely import Terraform Cloud resources into your ServiceNow instance. The ServiceNow Service Graph for Terraform is a certified scoped application available in the [ServiceNow Store](TODO: paste a link to the Store when the app is published).
 
-The integration is based on the [Service Graph Connector](https://www.servicenow.com/products/service-graph-connectors.html) technology that provides a framework for discovering and mapping relationships between the organization's infrastructure and the ServiceNow configuration items (CIs), and then automatically updating the [ServiceNow CMDB (Configuration Management Database)](https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html) with this information, enabling platform teams to gain a comprehensive view of the resources they support. CMDB is a central repository within the ServiceNow platform, which provides a single source of truth for your infrastructure and offers configurable dashboards for monitoring and reporting.
+The integration is based on the [Service Graph Connector](https://www.servicenow.com/products/service-graph-connectors.html) technology that provides a framework for discovering and mapping relationships between the organization's infrastructure and the ServiceNow Configuration Items (CIs), and then automatically updating the [ServiceNow CMDB (Configuration Management Database)](https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html) with this information, enabling platform teams to gain a comprehensive view of the resources they support. The CMDB is a central repository within the ServiceNow platform, which provides a single source of truth for your infrastructure and offers configurable dashboards for monitoring and reporting.
 
 ### Key benefits
 
 - **Enhanced visibility**: The Service Graph Connector for Terraform minimizes risk by updating CMDB dashboards with resources deployed in Terraform Cloud.
 - **Improved efficiency**: By connecting Terraform to ServiceNow CMDB, platform teams can manage and search Terraform-provisioned resources in CMDB alongside the rest of the company's infrastructure.
 - **Consistent management**: Terraform state file changes get automatically and securely updated in ServiceNow CMDB, capturing status changes for all technical resources in a timely manner. 
-- **Extensibility**: ServiceNow admins can customize mappings for additional resource types, potentially working with HashiCorp’s entire Terraform ecosystem made up of over 3,000 providers.
+- **Extensibility**: ServiceNow admins can customize mappings for additional resource types, potentially working with HashiCorp’s entire Terraform ecosystem made up of thousands of providers.
 
 ### Technical design
 
-The diagram below shows how the application connects Terraform Cloud to your ServiceNow instance. 
+The diagram below shows how the Service Graph Connector for Terraform connects Terraform Cloud to your ServiceNow instance. 
 
 ![ServiceNow Service Graph Connector for Terraform: design diagram](/img/docs/service-now-service-graph-design.png)
 
 The Service Graph Connector for Terraform integrates with Terraform Cloud to fetch up-to-date information about your deployments. It leverages the Terraform state as the primary data source. The application doesn't make any requests to your cloud provider or require you to share any cloud credentials.
 
-### Two modes of import
+### Import methods
 
 #### Scheduled polling
 
@@ -46,7 +46,7 @@ As a more lightweight alternative to the scheduled import, you can configure [we
 
 Webhook POST requests are sent to an API endpoint exposed by the Service Graph Connector for Terraform in your ServiceNow instance. Each webhook request includes an HMAC token, and the endpoint validates the signature using the secret you provide. Learn more about [Terraform Cloud notification authenticity](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/notifications#notification-authenticity).
 
-Internally, the application uses a scheduled job as a helper to keep track of the incoming webhook requests. You can activate, configure it, and view the history of all webhook imports by navigating to **Scheduled Imports** and selecting **SG-Terraform Scheduled Process State**. By default, the job is set to run every minute. You can change it to run more frequently if you wish to process the webhook requests even faster.
+Internally, the application uses a scheduled job as a helper to keep track of the incoming webhook requests. You can activate, configure, and view the history of all webhook imports by navigating to **Scheduled Imports** and selecting **SG-Terraform Scheduled Process State**. By default, the job is set to run every minute. You can change it to run more frequently if you wish to process the webhook requests even faster.
 
 -> **Tip:** Both import options may be enabled, or you may choose to configure only the webhooks or the scheduled import. 
 
@@ -54,9 +54,9 @@ The [setup page](/terraform/cloud-docs/integrations/service-now/service-graph/se
 
 ### ETL (Extract, Transform, Load)
 
-After the application successfully imports the resources, they are temporarily stored in a staging database table. Subsequently, the import set records are transferred to the ETL (Extract, Transform, Load) pipeline. Search for **IntegrationHub ETL** in the top navigation menu to view and edit the default ETL rules of the Service Graph Connector for Terraform. The application's ETL Transform Map is called **SG-Terraform**.
+After the application successfully imports the resources, they are temporarily stored in a staging database table. The import set records are then transferred to the ETL (Extract, Transform, Load) pipeline. Search for **IntegrationHub ETL** in the top navigation menu to view and edit the default ETL rules of the Service Graph Connector for Terraform. The application's ETL Transform Map is called **SG-Terraform**.
 
-If you don't need some of the resources to be imported into CMDB, you can deactivate them in the **Select CMDB Classes to Map Source Data** section of the application's ETL record, and they will be ignored during import. Press the toggle switch button on the resource mapping record to deactivate or reactivate it.
+If you don't need some of the resources to be imported into CMDB, you can deactivate them in the **Select CMDB Classes to Map Source Data** section of the application's ETL record, and they will be ignored during import. Toggle the switch on the resource mapping record to deactivate or reactivate it.
 
 ![screenshot: ServiceNow Service Graph Connector for Terraform resource ETL deactivation button](/img/docs/service-now-service-graph-deactivate-etl.png)
 
@@ -71,13 +71,13 @@ To start using the Service Graph Connector for Terraform, you must have:
 - An administrator account on a Terraform Enterprise instance or within a Terraform Cloud organization.
 - An administrator account on your ServiceNow vendor instance.
 
-You can use this integration on the following ServiceNow server versions:
+The Service Graph Connector for Terraform supports the following ServiceNow server versions:
 
 - San Diego
 - Tokyo
 - Utah
 
-It requires the following ServiceNow plugins as dependencies:
+The following ServiceNow plugins are required dependencies:
 
 - ITOM Discovery License
 - Integration Commons for CMDB
@@ -94,7 +94,7 @@ Refer to the [setup page](/terraform/cloud-docs/integrations/service-now/service
 
 ### Supported resources
 
-The Service Graph Connector for Terraform is capable of discovering selected resourced from 4 cloud providers:
+The Service Graph Connector for Terraform supports selected resources from the following cloud providers:
 
 - AWS
 - Microsoft Azure
@@ -105,4 +105,4 @@ The [resource mapping](/terraform/cloud-docs/integrations/service-now/service-gr
 
 ### Destroyed resources
 
-The Service Graph Connector automatically marks the deleted resources as **Non-Operational** in the ServiceNow CMDB. After the destroy run is completed in Terraform Cloud and the application's import job is finished in your ServiceNow instance, the **Operational Status** field of all resources removed from the Terraform state during the deletion process will be updated to **Non-Operational**.
+The Service Graph Connector automatically marks the deleted resources as **Non-Operational** in the ServiceNow CMDB. After the destroy operation is completed in Terraform Cloud and the application's import job is finished in your ServiceNow instance, the **Operational Status** field of all resources removed from the Terraform state during the deletion process will be updated to **Non-Operational**.
