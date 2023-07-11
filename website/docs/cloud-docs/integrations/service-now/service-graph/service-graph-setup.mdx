@@ -47,9 +47,7 @@ In the **Configure Terraform authentication credentials** section, click **Mark 
 
 ### Configure Terraform Webhook Notification token
 
-This section is optional and can be skipped if you plan to use only the scheduled import. Refer to the documentation explaining the [two modes of import](/terraform/cloud-docs/integrations/service-now/service-graph#two-modes-of-import) to decide which option works best for your environment.
-
-To improve security, Terraform Cloud includes an HMAC signature on all "generic" webhook notifications using a user-provided **token**. This token is an arbitrary secret string that Terraform Cloud uses to sign each webhook notification. ServiceNow uses the same token to verify the request authenticity. Refer to [Terraform Cloud notification authenticity](/terraform/cloud-docs/api-docs/notification-configurations#notification-authenticity) for more information.
+To improve security, Terraform Cloud includes an HMAC signature on all "generic" webhook notifications using a user-provided **token**. This token is an arbitrary secret string that Terraform Cloud uses to sign each webhook notification. ServiceNow uses the same token to verify the request authenticity. Refer to [Notification Authenticity](/terraform/cloud-docs/api-docs/notification-configurations#notification-authenticity) for more information.
 
 Create a token and save it in a safe place. This secret token can be any value but should be treated as sensitive.
 
