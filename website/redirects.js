@@ -91,7 +91,7 @@ module.exports = [
     permanent: true,
   },
   {
-    source: "/terraform/cloud-docs/integrations/service-now/service-catalog",
+    source: "/terraform/cloud-docs/integrations/service-now/service-catalog-config",
     destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/service-catalog-config",
     permanent: true,
   },
