@@ -11,6 +11,7 @@ tfc_only: true
 Use this step-by-step procedure to activate a Terraform Cloud Organization onto Standard Edition or Plus Editions on HashiCorp Flex. 
 
 ## Prerequisites
+
 There are several prerequisites to be aware of:
 1. You must create an HCP Organization for the HashiCorp Flex balance to be allocated and the HCP organization ID must be provided to the HashiCorp Sales Team. 
 1. The person activating a Terraform Cloud organization to HashiCorp Flex must be (1) a Terraform Cloud organization owner (part of the “owners” team) and (2) have the HCP organization Admin or Org Owner role.
@@ -18,17 +19,16 @@ There are several prerequisites to be aware of:
 
 ## Step 1: Create the Required User Accounts
 
-There are two options to activate HashiCorp Flex. 
+There are two options to activate HashiCorp Flex. If you already use Terraform Cloud as well as HCP products, we recommend that you create a unified HCP user account. Otherwise, you may choose to create separate TFC and HCP accounts.
 
+### Create a Unified HCP User Account:
+
+Go to [Terraform Cloud](https://app.terraform.io) and click “Continue with HCP account.” Create a free HCP account or sign in using your HCP email. If you have an existing Terraform Cloud account, you will be prompted to [link it to your HCP account](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#linked-hcp-and-terraform-cloud-accounts). If you don't yet have a Terraform Cloud account, one will be generated for you and linked to your HCP account.  
 
 ### Create separate TFC and HCP user accounts
 
 1. Go to [Terraform Cloud](https://app.terraform.io) and create a free account or sign in using your Terraform Cloud username email.
 1. Go to [HashiCorp Cloud Platform](https://cloud.hashicorp.com) and create a free HCP account or sign in using your HCP email.  
-
-### Create a Unified HCP User Account:
-
-Go to [Terraform Cloud](https://app.terraform.io) and click “Continue with HCP account.” Create a free HCP account or sign in using your HCP email. If you have an existing Terraform Cloud account, you will be prompted to [link it to your HCP account](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/users#linked-hcp-and-terraform-cloud-accounts). If you don't yet have a Terraform Cloud account, one will be generated for you and linked to your HCP account.  
 
 ## Step 2: Provision the Required TFC Team and HCP Roles
 
@@ -36,16 +36,27 @@ After your user accounts have been created:
 1. **Become a TFC organization owner**: Ask another Terraform Cloud organization owner to invite you to the “owners” Team.  This is required for you to see the “Plan & Billing” page in the TFC Org Settings.
 1. **Become an HCP admin**: Ask another HCP organization admin or HCP organization owner to invite you to the same HCP organization where HashiCorp Flex is allocated. Additionally, ask them to invite you with the [admin](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/users#organization-role) role. 
 
+In many situations, you may be a TFC organization owner, but not an HCP admin, or you might be an HCP admin, but not a TFC organization owner.  Decide which security/privacy policy is best for your organization to safeguard access to your Flex balance By determining if the TFC organization owners should be invited to the HCP organization, or if the HCP admin should be invited to TFC.  
+
+**Example**: Managed Services (MSP)
+
+MSP is an HCP admin and manages the billing relationship with HashiCorp Cloud Platform.  The MSP services customers (tenants) of TFC.  The HCP admin should be invited to the TFC customer tenant organizations to activate Flex.
+
+**Example**: Multi-Tenant Enterprise
+
+The Enterprise is an HCP admin and manages the billing relationship with HashiCorp Cloud Platform, as well as owns all the TFC organizations.  The Enterprise can choose either approach to invite the HCP admin to TFC, or TFC organization owners to become HCP Admins.
+
+
 ## Step 3: Verify HashiCorp Flex Balance is Allocated
 
 Navigate to the **HCP Org > Billing**.  If HashiCorp Flex is allocated, you will see a **Contract Summary** with an available balance. In the event you don't see your available balance or you only see your credit card information or $50 Free Trial Credit, your HashiCorp Flex account may be scheduled to be allocated at a future date.  Please contact your **HashiCorp Sales Account Manager** for more information.
 
 
-~> **Note**: All New HashiCorp organizations are automatically allocated $50 in trial credits. In the event the HashiCorp Flex account is not yet allocated and can be used to temporarily activate Standard Edition at no cost for immediate access to TFC paid functionality like [Team Management](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/teams) or more concurrency.
+~> **Note**: All New HashiCorp organizations are automatically allocated $50 in trial credits. In the event the HashiCorp Flex account is not yet allocated, you can use the trial credits to temporarily activate **Standard Edition** for immediate access to TFC paid functionality like [Team Management](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/teams) or more concurrency.
 
 ![A view of the Terraform Cloud account summary showing billing summary and available balance](/img/docs/tfc-account-summary.png)
 
-## Step 4: Edit the Terraform Cloud Org Plan
+## Step 4: Edit the Terraform Cloud Organization Plan
 
 Navigate to the **TFC Org Settings > Plan & Billing** page. For TFC user accounts that are not unified with HCP user accounts, you will be asked to login to an HCP account that has the `admin` role in the HCP organization with HashiCorp Flex allocated.  This login is required to allow you to edit the TFC organization's plan.  
 
