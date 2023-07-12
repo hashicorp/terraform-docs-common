@@ -138,35 +138,6 @@ check "health_check" {
 
 Continuous Validation alerts you if the website returns any status code besides `200` while Terraform evaluates this assertion. You can also find failures in your workspace's [Continuous Validation Results](#view-continuous-validation-results) page. You can configure continuous validation alerts in your workspace's [notification settings](/terraform/cloud-docs/workspaces/settings/notifications).
 
-#### Asserting up-to-date AMIs for compute instances
-
-[HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example postcondition fails when there is a newer AMI version available.
-
-```hcl
-data "hcp_packer_image" "hashiapp_image" {
-  bucket_name     = "hashiapp"
-  channel         = "latest"
-  cloud_provider  = "aws"
-  region          = "us-west-2"
-}
-
-resource "aws_instance" "hashiapp" {
-  ami                         = data.hcp_packer_image.hashiapp_image.cloud_image_id
-  instance_type               = var.instance_type
-  associate_public_ip_address = true
-  subnet_id                   = aws_subnet.hashiapp.id
-  vpc_security_group_ids      = [aws_security_group.hashiapp.id]
-  key_name                    = aws_key_pair.generated_key.key_name
-}
-
-check "ami_version_check" {
-  assert {
-    condition = aws_instance.hashiapp.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
-    error_message = "Must use the latest available AMI, ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
-  }
-}
-```
-
 #### Monitoring certificate expiration
 
 [Vault](https://www.vaultproject.io/) lets you secure, store, and tightly control access to tokens, passwords, certificates, encryption keys, and other sensitive data. The following example uses a `check` block to monitor for the expiration of a Vault certificate.
@@ -185,6 +156,50 @@ check "certificate_valid" {
   }
 }
 ```
+
+#### Asserting up-to-date AMIs for compute instances
+
+[HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example check fails when there is a newer AMI version available.
+
+```hcl
+data "hcp_packer_image" "hashiapp_image" {
+  bucket_name     = "hashiapp"
+  channel         = "latest"
+  cloud_provider  = "aws"
+  region          = "us-west-2"
+}
+
+resource "aws_instance" "hashiapp" {
+  ami                         = data.hcp_packer_image.hashiapp_image.cloud_image_id
+  instance_type               = var.instance_type
+  associate_public_ip_address = true
+  subnet_id                   = aws_subnet.hashiapp.id
+  vpc_security_group_ids      = [aws_security_group.hashiapp.id]
+  key_name                    = aws_key_pair.generated_key.key_name
+
+  tags = {
+    Name = "hashiapp"
+  }
+}
+
+check "ami_version_check" {
+  data "aws_instance" "hashiapp_current" {
+    instance_tags = {
+      Name = "hashiapp"
+    }
+  }
+
+  assert {
+    condition = aws_instance.hashiapp.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
+    error_message = "Must use the latest available AMI, ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
+  }
+}
+```
+
+Check blocks execute as the last step of a plan or apply after Terraform has planned or provisioned your infrastructure. Each health assessment run performs a speculative plan in its normal course of operation. In practice, this means that check assertions are evaluated against a hypothetical future state where any planned changes have already been applied to the resources under management.
+
+To evaluate an assertion against the current state of a resource, use a nested data source that is independent from the other resources in your configuration. In the previous example, a data source is used to locate the image provisioned by the `aws_instance.hashiapp` resource. This allows the check to assert against the current image in use, rather than the image that will be used after another round of plan/apply is executed.
+
 
 ### View continuous validation results
 
