@@ -73,7 +73,19 @@ Patch the workspace CRD with **patch A**. This patch adds `app.terraform.io/v1al
 $ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_a.yaml
 ```
 
-Follow the [installation guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/installation.md) to install v2 of the operator.
+Install v2 the Helm chart with the `helm install` command. Be sure to set the `operator.watchedNamespaces` value to the list of namespaces your Workspace resources are deployed to.
+
+```shell-session
+$ helm install \
+  ${RELEASE_NAME} hashicorp/terraform-cloud-operator \
+  --version 2.0.0-beta7 \
+  --namespace ${RELEASE_NAMESPACE} \
+  --set operator.syncPeriod=10m \
+  --set 'operator.watchedNamespaces={white,blue,red}' \
+  --set controllers.agentPool.workers=5 \
+  --set controllers.module.workers=5 \
+  --set controllers.workspace.workers=5
+```
 
 Next, create a Kubernetes secret to store the TFC API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
 
