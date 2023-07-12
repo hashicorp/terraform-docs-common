@@ -9,7 +9,26 @@ tfc_only: false
 
 To upgrade the Terraform Cloud Kubernetes Operator from version 1 to version 2, there is a one-time process that you need to complete. This process will upgrade the operator to the newest version and migrate your custom resources. 
 
+## Prerequisites
+
+The migration process requires the following tools to be installed locally:
+
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [Helm](https://helm.sh/docs/intro/install/)
+
 ## Prepare for the upgrade
+
+Configure an environment variable named `RELEASE_NAMESPACE` with the value of the namespace that the Helm chart is installed in.
+
+```shell-session
+$ export RELEASE_NAMESPACE=<NAMESPACE>
+```
+
+Next, create an environment variable named `RELEASE_NAME` with the value of the name of the installation for your Helm chart.
+
+```shell-session
+$ export RELEASE_NAME=<INSTALLATION_NAME>
+```
 
 Before you migrate to Terraform Cloud Kubernetes Operator v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
 
@@ -23,7 +42,7 @@ Next, backup the workspace resources.
 $ kubectl get workspace --all-namespaces -o yaml > backup_tfc_operator_v1.yaml
 ```
 
-Finally, we suggest that you set the `applyMethod` of each workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies during the upgrade process.
+Finally, we suggest that you set the `applyMethod` of each Terraform Cloud workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies during the upgrade process. Run the following command for each Workspace resource.
 
 ```shell-session
 kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"applyMethod": "manual"}}'
@@ -62,13 +81,13 @@ Next, create a Kubernetes secret to store the TFC API token following the [Usage
 $ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
 ```
 
-If v2 of the operator pod fails to start, ensure that each `workspace` object has the `spec.token` value set. To do this, patch each `workspace` object using the `kubectl patch` command.
+If v2 of the operator pod fails to start, ensure that each `workspace` object has the `spec.token` value set. To do this, patch each `workspace` object using following command for each Workspace resource.
 
 ```shell-session
 $ kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"terraformVersion": "1.4.6", "token": {"secretKeyRef": {"key": "token", "name": "tfc-operator"}}}}'
 ```
 
-Validate
+Review the logs and verify that there are no error messaged reported.
 
 ```shell-session
 $ kubectl logs -f <POD_NAME>
