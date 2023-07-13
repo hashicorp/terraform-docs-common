@@ -139,6 +139,8 @@ Properties without a default value are required.
 
 | Key path                                           | Type                 | Default                                            | Description                                                                                                                                                                                                                                   |
 |----------------------------------------------------|----------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/terraform/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
+| `data.attributes.allow-config-generation`                | bool                 | false                                              | Specifies whether Terraform can [generate resource configuration](/terraform/language/import/generating-configuration) when planning to import new resources. If false, `import` blocks without a corresponding `resource` block will error.                                                               |
 | `data.attributes.auto-apply`                       | bool                 | The current Auto Apply setting in the workspace    | Whether to automatically apply changes when a Terraform plan is successful. Defaults to the [Auto Apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) workspace setting.                                                      |
 | `data.attributes.is-destroy`                       | bool                 | false                                              | Specifies whether this plan is a destroy plan that will destroy all provisioned resources. Mutually exclusive with `refresh-only`.                                                                                                            |
 | `data.attributes.message`                          | string               | "Queued manually via the Terraform Enterprise API" | Specifies the message associated with this run.                                                                                                                                                                                         |
@@ -149,7 +151,6 @@ Properties without a default value are required.
 | `data.attributes.variables`                        | array\[{key, value}] | (empty array)                                      | Specifies an optional list of run-specific variable values. Refer to [Run-Specific Variables](/terraform/cloud-docs/workspaces/variables/managing-variables#run-specific-variables) for details.    |
 | `data.attributes.plan-only`                        | bool                 | (from configuration version)                       | Specifies if this is a [speculative, plan-only](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan) run that Terraform cannot apply. Often used in conjunction with terraform-version in order to test whether an upgrade would succeed. |
 | `data.attributes.terraform-version`                | string               |                                                    | Specifies the Terraform version to use in this run. Only valid for plan-only runs; must be a valid Terraform version available to the organization.                                                                                           |
-| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/terraform/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
 | `data.relationships.workspace.data.id`             | string               |                                                    | Specifies the workspace ID where the run will be executed.                                                                                                                                                                                    |
 | `data.relationships.configuration-version.data.id` | string               |                                                    | Specifies the configuration version to use for this run. If the `configuration-version` object is omitted, the run will be created using the workspace's latest configuration version.                                                        |
 
@@ -216,6 +217,7 @@ curl \
       "has-changes": false,
       "auto-apply": false,
       "allow-empty-apply": false,
+      "allow-config-generation": false,
       "is-destroy": false,
       "message": "Custom message",
       "plan-only": false,
@@ -372,6 +374,7 @@ curl \
         "has-changes": false,
         "auto-apply": false,
         "allow-empty-apply": false,
+        "allow-config-generation": false,
         "is-destroy": false,
         "message": "Custom message",
         "plan-only": false,
@@ -460,6 +463,7 @@ curl \
       "has-changes": false,
       "auto-apply": false,
       "allow-empty-apply": false,
+      "allow-config-generation": false,
       "is-destroy": false,
       "message": "Custom message",
       "plan-only": false,
