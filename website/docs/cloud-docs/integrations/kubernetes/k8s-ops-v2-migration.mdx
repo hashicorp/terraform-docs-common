@@ -73,7 +73,7 @@ Patch the workspace CRD with **patch A**. This patch adds `app.terraform.io/v1al
 $ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_a.yaml
 ```
 
-Install v2 the Helm chart with the `helm install` command. Be sure to set the `operator.watchedNamespaces` value to the list of namespaces your Workspace resources are deployed to.
+Install v2 the Helm chart with the `helm install` command. Be sure to set the `operator.watchedNamespaces` value to the list of namespaces your Workspace resources are deployed to. If this value is not provided, the operator will watch all namespaces in the Kubernetes cluster.
 
 ```shell-session
 $ helm install \
@@ -99,10 +99,13 @@ If v2 of the operator pod fails to start, ensure that each `workspace` object ha
 $ kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"terraformVersion": "1.4.6", "token": {"secretKeyRef": {"key": "token", "name": "tfc-operator"}}}}'
 ```
 
-Review the logs and verify that there are no error messaged reported.
+Review the logs and verify that there are no `ERROR` messages reported. The logs will report when the operator begins and finishes reconciling each workspace.
 
 ```shell-session
 $ kubectl logs -f <POD_NAME>
+INFO	Workspace Controller	{"workspace": {"name":"<WORKSPACE_NAME>","namespace":"<NAMESPACE>"}, "msg": "new reconciliation event"}
+##...
+INFO	Workspace Controller	{"workspace": {"name":"<WORKSPACE_NAME>","namespace":"<NAMESPACE>"}, "msg": "successfully reconciled workspace"}
 ```
 
 View the changes that **patch B** will apply to the workspace CRD:
