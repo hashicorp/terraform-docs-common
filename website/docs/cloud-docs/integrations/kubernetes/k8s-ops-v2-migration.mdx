@@ -99,7 +99,7 @@ If v2 of the operator pod fails to start, ensure that each `workspace` object ha
 $ kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"terraformVersion": "1.4.6", "token": {"secretKeyRef": {"key": "token", "name": "tfc-operator"}}}}'
 ```
 
-Review the logs and verify that there are no `ERROR` messages reported. The logs will report when the operator begins and finishes reconciling each workspace.
+Review the logs and verify that there are no error messages reported. The logs will report when the operator begins and finishes reconciling each workspace.
 
 ```shell-session
 $ kubectl logs -f <POD_NAME>
@@ -135,4 +135,10 @@ The `finalizer` exists to provide greater control over the migration process. Ve
 
 ```shell-session
 $ kubectl patch workspace migration --type=merge --patch '{"metadata": {"finalizers": ["workspace.app.terraform.io/finalizer"]}}'
+```
+
+Finally, review the operator logs once more and verify there are no error messages reported.
+
+```shell-session
+$ kubectl logs -f <POD_NAME>
 ```
