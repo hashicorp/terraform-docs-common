@@ -9,8 +9,6 @@ description: >-
 
 ~> **Important:** If using self-managed agents, make sure you’re using **v1.8.0** or later.
 
-!> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your TFE instance is using a custom or self-signed certificate due to restrictions on Azure's end.
-
 You can use Terraform Cloud’s native OpenID Connect integration with Vault to use [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed) with the Azure provider in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
 1. **[Configure Vault Dynamic Provider Credentials](#configure-vault-dynamic-provider-credentials)**: Set up a trust configuration between Vault and Terraform Cloud, create Vault roles and policies for your Terraform Cloud workspaces, and add environment variables to those workspaces.
