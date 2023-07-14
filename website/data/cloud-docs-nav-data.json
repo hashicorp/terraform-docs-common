@@ -463,26 +463,26 @@
           {
             "title": "Service Catalog for Terraform",
             "routes": [
-              { "title": "Overview", "path": "integrations/service-now/service-catalog" },
+              { "title": "Overview", "path": "integrations/service-now/service-catalog-terraform" },
               {
                 "title": "Service Catalog",
-                "path": "integrations/service-now/service-catalog/service-catalog-config"
+                "path": "integrations/service-now/service-catalog-terraform/service-catalog-config"
               },
               {
                 "title": "Admin Guide",
-                "path": "integrations/service-now/service-catalog/admin-guide"
+                "path": "integrations/service-now/service-catalog-terraform/admin-guide"
               },
               {
                 "title": "Developer Reference",
-                "path": "integrations/service-now/service-catalog/developer-reference"
+                "path": "integrations/service-now/service-catalog-terraform/developer-reference"
               },
               {
                 "title": "Example Customizations",
-                "path": "integrations/service-now/service-catalog/example-customizations"
+                "path": "integrations/service-now/service-catalog-terraform/example-customizations"
               },
               {
                 "title": "V1 Setup Instructions",
-                "path": "integrations/service-now/service-catalog/service-now-v1"
+                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
               }
             ]
           },

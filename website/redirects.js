@@ -87,32 +87,32 @@ module.exports = [
   // - https://github.com/hashicorp/terraform-docs-common/pull/375
   {
     source: "/terraform/cloud-docs/integrations/service-now",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/service-catalog-config",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/service-catalog-config",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/admin-guide",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/admin-guide",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/admin-guide",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/developer-reference",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/developer-reference",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/example-customizations",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/example-customizations",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/example-customizations",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/service-now-v1",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog/service-now-v1",
+    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-now-v1",
     permanent: true,
   },
 ];
