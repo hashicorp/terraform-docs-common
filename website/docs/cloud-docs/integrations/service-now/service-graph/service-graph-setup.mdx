@@ -113,7 +113,7 @@ In the top navigation, click on **All**, search for **Scheduled Imports**, and c
 
 Select the **SG-Terraform Scheduled Process State** record, then click **To edit the record click here**.
 
-Click the **Active** checkbox to enable it. You can leave the default value of every 5 seconds the **Repeat Interval**, or reduce it to make the webhook request processing even faster. Click **Update**.
+Click the **Active** checkbox to enable it. Leave the default value for the **Repeat Interval** of 5 seconds. Click **Update**.
 
 ![ServiceNow Service Graph Connector scheduled import screen showing the Active checkbox enabled](/img/docs/service-now-service-graph-webhook-schedule.png)
 
@@ -121,7 +121,7 @@ Next, create the webhook in Terraform Cloud. Select a workspace and click **Sett
 
 Keep the **Destination** as the default option of **Webhook**. Choose a descriptive name **Name**.
 
-For the **Webhook URL** enter `https://<SERVICENOW_HOSTNAME>/api/x_hashi_service_gr/sg_terraform_webhook` and replace `<SERVICENOW_HOSTNAME>` with the hostname of your ServiceNow instance.
+Set the **Webhook URL** enter `https://<SERVICENOW_HOSTNAME>/api/x_hashi_service_gr/sg_terraform_webhook` and replace `<SERVICENOW_HOSTNAME>` with the hostname of your ServiceNow instance.
 
 In the **Token** field, enter the same string you provided in **Terraform Webhook token** section the of the Service Graph guided setup form.
 
