@@ -6,13 +6,35 @@ description: >-
 
 # ServiceNow Service Graph Connector for Terraform
 
-# Summary of the Setup Process
-
--> **Note:** Follow the tutorial for hands-on instructions on how to import an AWS resource deployed in your Terraform Cloud to the ServiceNow CMDB by using the Service Graph Connector for Terraform: [Configure ServiceNow Service Graph Connector for Terraform Cloud](https://developer.hashicorp.com/terraform/tutorials/it-saas/servicenow-sgc).
+-> **Note:** Follow the [Configure ServiceNow Service Graph Connector for Terraform Cloud](https://developer.hashicorp.com/terraform/tutorials/it-saas/servicenow-sgc) tutorial for hands-on instructions on how to import an AWS resource deployed in your Terraform Cloud organization to the ServiceNow CMDB by using the Service Graph Connector for Terraform.
 
 The ServiceNow Service Graph Connector for Terraform is a certified scoped application available in the ServiceNow Store. Search for ”Service Graph Connector for Terraform” published by ”HashiCorp Inc” and click **Install**.
 
 ![Screenshot: ServiceNow Store Page]("TODO: Screenshot of the ServiceNow Store listing for the Service Graph Connector for Terraform")
+
+## Prerequisites
+
+To start using the Service Graph Connector for Terraform, you must have:
+
+- An administrator account on a Terraform Enterprise instance or within a Terraform Cloud organization.
+- An administrator account on your ServiceNow vendor instance.
+
+The Service Graph Connector for Terraform supports the following ServiceNow server versions:
+
+- San Diego
+- Tokyo
+- Utah
+
+The following ServiceNow plugins are required dependencies:
+
+- ITOM Discovery License
+- Integration Commons for CMDB
+- Discovery and Service Mapping Patterns
+- ServiceNow IntegrationHub Standard Pack
+
+Additionally, you can install the IntegrationHub ETL application if you want to modify the default CMDB mappings.
+
+-> **Note:** Dependent plugins are installed on your ServiceNow instance automatically when the app is downloaded from the ServiceNow Store. Before installing the Service Graph Connector for Terraform, you must activate the ITOM Discovery License plugin in your production instance. 
 
 ## Connect ServiceNow to Terraform Cloud
 
@@ -22,10 +44,10 @@ Once the integration is installed, you can proceed to the guided setup form wher
 
 ### Create and scope Terraform API token
 
-In order for ServiceNow to interact with Terraform Cloud, you must give it a Terraform Cloud API token. The permissions of this token determine what resources the Service Graph Connector will import into the CMDB. While you could use a user API token, it could import resources from multiple organizations. By providing a team API token, you can scope permissions to only import resources from specified workspaces within a single organization. 
+In order for ServiceNow to connect to Terraform Cloud, you must give it a Terraform Cloud API token. The permissions of this token determine what resources the Service Graph Connector will import into the CMDB. While you could use a user API token, it could import resources from multiple organizations. By providing a team API token, you can scope permissions to only import resources from specified workspaces within a single organization. 
 
 Visit your organization’s **Settings** > **Teams** page. Scroll down to the **Team API Token** section and click **Create a team token**.
-Save this token in a safe place; Terraform Cloud only displays it once. You will use it to configure ServiceNow as described in the next section.
+Save this token in a safe place since Terraform Cloud only displays it once. You will use it to configure ServiceNow in the next section.
 
 ![ServiceNow Service Graph Connector Configure Team API token in Terraform Cloud](/img/docs/service-now-service-graph-team-token-gen.png)
 
@@ -37,7 +59,7 @@ Next, in the **Configure the Terraform connection** section, click **Get Started
 
 In the **Configure Terraform authentication credentials** section, click **Configure**. 
 
-If you want to route traffic between your Terraform Cloud and the ServiceNow instance through a MID server acting as a proxy, change **Applies to** dropdown to "Specific MID servers" and select your previously configured MID server name from the list. If you don't use MID servers, leave the default value.
+If you want to route traffic between your Terraform Cloud and the ServiceNow instance through a MID server acting as a proxy, change the **Applies to** dropdown to "Specific MID servers" and select your previously configured MID server name. If you don't use MID servers, leave the default value.
 
 Set the **API Key** to the Terraform Cloud team API token that you created in the previous section and click **Update**.
 
@@ -65,7 +87,7 @@ If you are using Terraform Enterprise, set the **Connection URL** to the URL of 
 
 ![ServiceNow Service Graph Connector HTTP Connection configuration screen. A Terraform Enterprise URL may be provided in the Connection URL field, the saved by clicking the Update button](/img/docs/service-now-service-graph-tfconn.png)
 
-If you want to use a MID server, check **Use MID server** box, change **MID Selection** dropdown to "Specific MID sever" and select your previously configured and validated MID server from the list.
+If you want to use a MID server, check **Use MID server** box, change **MID Selection** dropdown to "Specific MID sever" and select your previously configured and validated MID server.
 
 Click **Update** to save these settings. In the **Configure Terraform connection** section, click **Mark as Complete**.
 
