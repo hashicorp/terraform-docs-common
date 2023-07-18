@@ -14,17 +14,17 @@ You can update and customize the default ETL mapping rules offered by the Servic
 
 To ensure that your custom rules remain intact during future updates, you can clone the existing ETL record and maintain it separately from the default one.
 
-In this article, you will be guided through the process of mapping a resource using an example of an AWS virtual private network (VPC). Although this resource is already covered by the application, the principles discussed apply to any new potential resource mapping.
+This documentation guides you through the process of mapping a resource using an example of an AWS virtual private network (VPC). Although this resource is already covered by the application, the principles discussed apply to any new potential resource mapping.
 
 Any customizations should be done from the application's scope: **Service Graph Connector for Terraform**.
 
 ## Clone the ETL map
 
-Navigate to the **IntegrationHub ETL** in the top menu. Check the **SG-Terraform** record and click **Duplicate**. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/task/duplicate-cmdb-transform-map.html) on creating a duplicate of an existing ETL transform map.
+Navigate to the **IntegrationHub ETL** in the top menu. Check the **SG-Terraform** record and click **Duplicate**. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/task/duplicate-cmdb-transform-map.html) to create a duplicate of an existing ETL transform map.
 
 ## Build a resource in Terraform Cloud
 
-Create a new workspace in your Terraform Cloud organization and build a Terraform resource that you would like to map. It helps to have a Terraform state record of the resource to ensure accurate mapping. 
+Create a new workspace in your Terraform Cloud organization and create a Terraform resource that you would like to map. It helps to have a Terraform state record of the resource to ensure accurate mapping. 
 
 [Configure a webhook](/terraform/cloud-docs/integrations/service-now/service-graph/service-graph-setup#configure-terraform-webhook) and initiate a Terraform run.
 
@@ -32,15 +32,15 @@ Create a new workspace in your Terraform Cloud organization and build a Terrafor
 
 Once the run is successfully completed, open your ServiceNow instance, click on **All** and navigate to **Scheduled Imports**. 
 
-Open the **SG-Terraform Scheduled Process State** record, search for the import set corresponding to the latest webhook request. Open it by clicking on the **Import Set** field. Wait for the import set to be successfully processed. 
+Open the **SG-Terraform Scheduled Process State** record, search for the import set corresponding to the latest webhook request. Click the **Import Set** field to open the import set. Wait for the import set to be successfully processed. 
 
-Since there are no existing ETL rules configured for the new resource, it is expected to be ignored during the ETL process.
+Since there are no existing ETL rules configured for the new resource, it is ignored during the ETL process.
 
-Open the **Outbound Http Requests** tab, which lists the requests sent from your ServiceNow instance to Terraform Cloud in order to obtain the latest state of the workspace. 
+Open the **Outbound Http Requests** tab to list the requests sent from your ServiceNow instance to Terraform Cloud and get the latest state of the workspace. 
 
 ![ServiceNow Service Graph Connector Outbound Http Requests interface](/img/docs/service-now-service-graph-state-object-url.png)
 
-Open the record which starts from "http://archivist" by clicking on the timestamp. Copy the content of the URL field and open it you your browser of through tools like Postman, which will initiate the download of the Terraform state of your resource.
+Open the record that starts with "http://archivist.terraform.io" by clicking on the timestamp. Copy the content of the URL field and open it you your browser to download the Terraform state file.
 
 Locate the resource in the state object. This JSON record will serve as a source for the future mapping.
 
@@ -50,7 +50,7 @@ Pick a suitable Configuration Item (CI) target for your resource. For example, t
 
 ## Consult the CI Class Manager
 
-After selecting an appropriate CI target, it is important to consult the CI Class Manager for guidance on dependent relationships. Many CMDB resources rely on other CI tables. If a related class is not properly mapped, the ETL job will generate errors or warnings, resulting in the failure of importing your resource into CMDB.
+After selecting an appropriate CI target, it is important to consult the CI Class Manager for guidance on dependent relationships. Many CMDB resources rely on other CI tables. If a related class is not properly mapped, the ETL job will generate errors or warnings and fail to import your resource into the CMDB.
 
 In the top navigation, click on **All**, search for **CI Class Manager**, and click on **Open Hierarchy**. Search for your target CI Class and check **Dependent Relationships** tab to learn more about dependent mappings required by the resource.
 
@@ -58,7 +58,7 @@ For example, according to the **CI Class Manager**, **Cloud Network** should be 
 
 ## Set the mapping rules
 
-Open the **IntegrationHub ETL** from the top navigation menu and select your cloned ETL map record prepared for customization. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/concept/create-etl-transform-map.html) for a more comprehensive instruction on creating an ETL transform map.
+Open the **IntegrationHub ETL** from the top navigation menu and select your cloned ETL map record prepared for customization. Refer to the [ServiceNow documentation](https://docs.servicenow.com/en-US/bundle/utah-servicenow-platform/page/product/configuration-management/concept/create-etl-transform-map.html) for instructions to create an ETL transform map.
 
 Click on the first **Specify Basic Details** section of the ETL Transform Map Assistant. Select the import set number containing your resource from the **Sample Import Set** dropdown and click **Mark as Complete**.
 
@@ -80,7 +80,7 @@ Click **Mark as Complete** to finalize the **Select CMDB Classes to Map Source D
 
 ## Set the required relationships
 
-Click **Add Relationships** to proceed to the next section. Click **Add Conditional Relationship** button at the top of the page. The following configuration tells the ETL that when a record with `aws_vpc` type is found in the import set, it should be hosted on **AWS Datacenter 1**. Click **Save**.
+Click **Add Relationships** to continue to the next section. Click the **Add Conditional Relationship** button at the top of the page. The following configuration tells the ETL that when a record with `aws_vpc` type is found in the import set, it should be hosted on **AWS Datacenter 1**. Click **Save**.
 
 ![ServiceNow Service Graph Connector: setting dependent relationships in the ETL mapping interface](/img/docs/service-now-service-graph-etl-setting-relationship.png)
 
