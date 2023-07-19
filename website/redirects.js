@@ -83,4 +83,11 @@ module.exports = [
       "/terraform/plugin/best-practices/hashicorp-provider-design-principles",
     permanent: true,
   },
+  // Redirect to integrate both Flex and PAYG TFC documentation
+  // - https://github.com/hashicorp/terraform-docs-common/pull/399
+  {
+    source: "/terraform/cloud-docs/overview/change-plan",
+    destination: "/terraform/cloud-docs/overview/activate-payg",
+    permanent: true,
+  },
 ];
