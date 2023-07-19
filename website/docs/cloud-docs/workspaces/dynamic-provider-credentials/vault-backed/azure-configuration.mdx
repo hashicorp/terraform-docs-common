@@ -7,7 +7,7 @@ description: >-
 
 # Vault-Backed Dynamic Credentials with the Azure Provider
 
-~> **Important:** If using self-managed agents, make sure you’re using **v1.8.0** or later.
+~> **Important:** If using self-managed agents, make sure you’re using **v1.11.0** or later.
 
 You can use Terraform Cloud’s native OpenID Connect integration with Vault to use [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed) with the Azure provider in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
@@ -38,11 +38,12 @@ Next, you need to set certain environment variables in your Terraform Cloud work
 ### Optional Environment Variables
 You may need to set these variables, depending on your use case.
 
-| Variable                                  | Value                                                | Notes                                                                                   |
-|-------------------------------------------|------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| `TFC_VAULT_BACKED_AZURE_MOUNT_PATH`       | The mount path of the Azure secrets engine in Vault. | Defaults to `azure`.                                                                    |
-| `TFC_VAULT_BACKED_AZURE_PLAN_VAULT_ROLE`  | The Vault role to use the plan phase of a run.       | Will fall back to the value of `TFC_VAULT_BACKED_AZURE_RUN_VAULT_ROLE` if not provided. |
-| `TFC_VAULT_BACKED_AZURE_APPLY_VAULT_ROLE` | The Vault role to use for the apply phase of a run.  | Will fall back to the value of `TFC_VAULT_BACKED_AZURE_RUN_VAULT_ROLE` if not provided. |
+| Variable                                  | Value                                                                                                                | Notes                                                                                                                |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_BACKED_AZURE_MOUNT_PATH`       | The mount path of the Azure secrets engine in Vault.                                                                 | Defaults to `azure`.                                                                                                 |
+| `TFC_VAULT_BACKED_AZURE_PLAN_VAULT_ROLE`  | The Vault role to use the plan phase of a run.                                                                       | Will fall back to the value of `TFC_VAULT_BACKED_AZURE_RUN_VAULT_ROLE` if not provided.                              |
+| `TFC_VAULT_BACKED_AZURE_APPLY_VAULT_ROLE` | The Vault role to use for the apply phase of a run.                                                                  | Will fall back to the value of `TFC_VAULT_BACKED_AZURE_RUN_VAULT_ROLE` if not provided.                              |
+| `TFC_VAULT_BACKED_AZURE_SLEEP_SECONDS`    | The amount of time to wait, in seconds, after obtaining temporary credentials from Vault. e.g., `30` for 30 seconds. | Requires **v1.11.0** or later if self-managing agents. Can be used to mitigate eventual consistency issues in Azure. |
 
 ## Configure Terraform Providers
 The final step is to directly configure your Azure and Vault providers.
