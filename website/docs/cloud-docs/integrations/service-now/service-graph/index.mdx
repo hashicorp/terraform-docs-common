@@ -30,7 +30,7 @@ The Service Graph Connector for Terraform integrates with Terraform Cloud to fet
 
 ## Import methods
 
-There are two methods that the integration can import your Terraform resources into CMDB. You can configure the application to periodically pull all your resources in one batch. Alternatively, you can set up webhooks in your Terraform workspaces, which will notify your ServiceNow instance about new deployments.
+The integration offers two methods of importing your Terraform resources into CMDB. You can configure the application to periodically pull all your resources in one batch. Alternatively, you can set up webhooks in your Terraform workspaces, which will notify your ServiceNow instance about new deployments.
 
 ### Scheduled polling
 
@@ -56,7 +56,7 @@ The [setup page](/terraform/cloud-docs/integrations/service-now/service-graph/se
 
 After the application successfully imports the resources, they are temporarily stored in a staging database table. The import set records are then transferred to the ETL (Extract, Transform, Load) pipeline. Search for **IntegrationHub ETL** in the top navigation menu to view and edit the default ETL rules of the Service Graph Connector for Terraform. The application's ETL Transform Map is called **SG-Terraform**.
 
-To deactivate resources that you do no want imported into the CMDB, navigate to the **Select CMDB Classes to Map Source Data** section of the application's ETL record, and toggle the switch on the resource mapping record to deactivate it.
+To deactivate resources that you do not want imported into the CMDB, navigate to the **Select CMDB Classes to Map Source Data** section of the application's ETL record, and toggle the switch on the resource mapping record to deactivate it.
 
 ![screenshot: ServiceNow Service Graph Connector for Terraform resource ETL deactivation button](/img/docs/service-now-service-graph-deactivate-etl.png)
 
