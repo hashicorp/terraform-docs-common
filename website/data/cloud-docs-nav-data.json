@@ -503,7 +503,28 @@
               },
               {
                 "title": "Resource Coverage",
-                "path": "integrations/service-now/service-graph/resource-coverage"
+                "routes": [
+                  {
+                    "title": "Overview",
+                    "path": "integrations/service-now/service-graph/resource-coverage"
+                  },
+                  {
+                    "title": "AWS",
+                    "path": "integrations/service-now/service-graph/resource-coverage/aws"
+                  },
+                  {
+                    "title": "Azure",
+                    "path": "integrations/service-now/service-graph/resource-coverage/azure"
+                  },
+                  {
+                    "title": "GCP",
+                    "path": "integrations/service-now/service-graph/resource-coverage/gcp"
+                  },
+                  {
+                    "title": "vSphere",
+                    "path": "integrations/service-now/service-graph/resource-coverage/vsphere"
+                  }
+                ]
               },
               {
                 "title": "Customizations",
