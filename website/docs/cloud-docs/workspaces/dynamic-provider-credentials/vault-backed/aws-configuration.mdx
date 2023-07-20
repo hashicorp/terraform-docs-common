@@ -7,7 +7,7 @@ description: >-
 
 # Vault-Backed Dynamic Credentials with the AWS Provider
 
-~> **Important:** If using self-managed agents, make sure you’re using **v1.8.0** or later.
+~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can use Terraform Cloud’s native OpenID Connect integration with Vault to use [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed) with the AWS provider in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
@@ -34,36 +34,36 @@ Next, you need to set certain environment variables in your Terraform Cloud work
 The below variables apply to all AWS auth types.
 
 #### Required Common Environment Variables
-| Variable                              | Value                                                                                                                                      | Notes                                                                                                                                                                                            |
-|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TFC_VAULT_BACKED_AWS_AUTH`           | `true`                                                                                                                                     | Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate with AWS.                                                                                                 |
-| `TFC_VAULT_BACKED_AWS_AUTH_TYPE`      | Specifies the type of authentication to perform with AWS. Must be one of the following: `iam_user`, `assumed_role`, or `federation_token`. |
-| `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` | The role to use in Vault.                                                                                                                  | Optional if `TFC_VAULT_BACKED_AWS_PLAN_VAULT_ROLE` and `TFC_VAULT_BACKED_AWS_APPLY_VAULT_ROLE` are both provided. These variables are described [below](#optional-common-environment-variables). |
+| Variable                              | Value                                                                                                                                      | Notes                                                                                                                                                                                                                                                  |
+|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_BACKED_AWS_AUTH`           | `true`                                                                                                                                     | Requires **v1.8.0** or later if self-managing agents. Must be present and set to `true`, or Terraform Cloud will not attempt to authenticate with AWS.                                                                                                 |
+| `TFC_VAULT_BACKED_AWS_AUTH_TYPE`      | Specifies the type of authentication to perform with AWS. Must be one of the following: `iam_user`, `assumed_role`, or `federation_token`. | Requires **v1.8.0** or later if self-managing agents.                                                                                                                                                                                                  |
+| `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` | The role to use in Vault.                                                                                                                  | Requires **v1.8.0** or later if self-managing agents. Optional if `TFC_VAULT_BACKED_AWS_PLAN_VAULT_ROLE` and `TFC_VAULT_BACKED_AWS_APPLY_VAULT_ROLE` are both provided. These variables are described [below](#optional-common-environment-variables). |
 
 #### Optional Common Environment Variables
 You may need to set these variables, depending on your use case.
 
-| Variable                                | Value                                               | Notes                                                                                 |
-|-----------------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------|
-| `TFC_VAULT_BACKED_AWS_MOUNT_PATH`       | The mount path of the AWS secrets engine in Vault.  | Defaults to `aws`.                                                                    |
-| `TFC_VAULT_BACKED_AWS_PLAN_VAULT_ROLE`  | The Vault role to use the plan phase of a run.      | Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` if not provided. |
-| `TFC_VAULT_BACKED_AWS_APPLY_VAULT_ROLE` | The Vault role to use for the apply phase of a run. | Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` if not provided. |
+| Variable                                | Value                                               | Notes                                                                                                                                       |
+|-----------------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_BACKED_AWS_MOUNT_PATH`       | The mount path of the AWS secrets engine in Vault.  | Requires **v1.8.0** or later if self-managing agents. Defaults to `aws`.                                                                    |
+| `TFC_VAULT_BACKED_AWS_PLAN_VAULT_ROLE`  | The Vault role to use the plan phase of a run.      | Requires **v1.8.0** or later if self-managing agents. Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` if not provided. |
+| `TFC_VAULT_BACKED_AWS_APPLY_VAULT_ROLE` | The Vault role to use for the apply phase of a run. | Requires **v1.8.0** or later if self-managing agents. Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE` if not provided. |
 
 ### Assumed Role Specific Environment Variables
 These environment variables are only valid if the `TFC_VAULT_BACKED_AWS_AUTH_TYPE` is `assumed_role`.
 
 #### Required Assumed Role Specific Environment Variables
-| Variable                            | Value                                 | Notes                                                                                                                                                                                                      |
-|-------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` | The ARN of the role to assume in AWS. | Optional if `TFC_VAULT_BACKED_AWS_PLAN_ROLE_ARN` and `TFC_VAULT_BACKED_AWS_APPLY_ROLE_ARN` are both provided. These variables are described [below](#optional-assume-role-specific-environment-variables). |
+| Variable                            | Value                                 | Notes                                                                                                                                                                                                                                                            |
+|-------------------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` | The ARN of the role to assume in AWS. | Requires **v1.8.0** or later if self-managing agents. Optional if `TFC_VAULT_BACKED_AWS_PLAN_ROLE_ARN` and `TFC_VAULT_BACKED_AWS_APPLY_ROLE_ARN` are both provided. These variables are described [below](#optional-assume-role-specific-environment-variables). |
 
 #### Optional Assumed Role Specific Environment Variables
 You may need to set these variables, depending on your use case.
 
-| Variable                              | Value                                                    | Notes                                                                               |
-|---------------------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------------|
-| `TFC_VAULT_BACKED_AWS_PLAN_ROLE_ARN`  | The ARN of the role to use for the plan phase of a run.  | Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` if not provided. |
-| `TFC_VAULT_BACKED_AWS_APPLY_ROLE_ARN` | The ARN of the role to use for the apply phase of a run. | Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` if not provided. |
+| Variable                              | Value                                                    | Notes                                                                                                                                     |
+|---------------------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `TFC_VAULT_BACKED_AWS_PLAN_ROLE_ARN`  | The ARN of the role to use for the plan phase of a run.  | Requires **v1.8.0** or later if self-managing agents. Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` if not provided. |
+| `TFC_VAULT_BACKED_AWS_APPLY_ROLE_ARN` | The ARN of the role to use for the apply phase of a run. | Requires **v1.8.0** or later if self-managing agents. Will fall back to the value of `TFC_VAULT_BACKED_AWS_RUN_ROLE_ARN` if not provided. |
 
 ## Configure Terraform Providers
 The final step is to directly configure your AWS and Vault providers.
