@@ -73,7 +73,7 @@ Patch the workspace CRD with **patch A**. This patch adds `app.terraform.io/v1al
 $ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_a.yaml
 ```
 
-Install v2 the Helm chart with the `helm install` command. Be sure to set the `operator.watchedNamespaces` value to the list of namespaces your Workspace resources are deployed to. If this value is not provided, the operator will watch all namespaces in the Kubernetes cluster.
+Install the Operator v2 Helm chart with the `helm install` command. Be sure to set the `operator.watchedNamespaces` value to the list of namespaces your Workspace resources are deployed to. If this value is not provided, the operator will watch all namespaces in the Kubernetes cluster.
 
 ```shell-session
 $ helm install \
