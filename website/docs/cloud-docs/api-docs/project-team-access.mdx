@@ -262,7 +262,7 @@ Properties without a default value are required.
 | `data.relationships.team.data.id`                         | string  |         | The ID of the team to add to the project.                                                          |
 | `data.attributes.project-access.settings`                 | string  | "read"  | If `access` is `custom`, the permission to grant for the project's settings. Can only be used when `access` is `custom`. Valid values include `read`, `update`, or `delete`.                                                   |
 | `data.attributes.project-access.teams`                    | string  | "none"  | If `access` is `custom`, the permission to grant for the project's teams. Can only be used when `access` is `custom`. Valid values include `none`, `read`, or `manage`.                                                   |
-| `data.attributes.workspace-access.runs`                   | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces' runs. Can only be used when `access` is `custom`. Valid values include `none`, `read`, `plan`, or `apply`.                                                    |
+| `data.attributes.workspace-access.runs`                   | string  | "read"  | If `access` is `custom`, the permission to grant for the project's workspaces' runs. Can only be used when `access` is `custom`. Valid values include `read`, `plan`, or `apply`.                                                    |
 | `data.attributes.workspace-access.sentinel-mocks`         | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces' Sentinel mocks. Can only be used when `access` is `custom`. Valid values include `none`, or `read`.                                                     |
 | `data.attributes.workspace-access.state-versions`         | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces state versions. Can only be used when `access` is `custom`. Valid values include `none`, `read-outputs`, `read`, or `write`.                                                    |
 | `data.attributes.workspace-access.variables`              | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces' variables. Can only be used when `access` is `custom`. Valid values include `none`, `read`, or `write`.                                                    |
@@ -494,15 +494,15 @@ Below is each access level, and the implicitly granted custom permission. When u
 
 
 
-| Permissions                         | `read` | `write` | `maintain` | `admin `   | `custom` default |
-|-------------------------------------|--------|---------|------------|----------|--------------------|
-| project-access.settings             | "read" | "read"  | "read"     | "delete" | "read"             |
-| project-access.teams                | "none" | "none"  | "none"     | "manage" | "none"             |
-| workspace-access.runs               | "read" | "apply" | "apply"    | "apply"  | "none"             |
-| workspace-access.sentinel-mocks"    | "none" | "read"  | "read"     | "read"   | "none"             |
-| workspace-access.state-versions     | "read" | "write" | "write"    | "write"  | "none"             |
-| workspace-access.variables          | "read" | "write" | "write"    | "write"  | "none"             |
-| workspace-access.create             | false  | false   | true       | true     | false              |
-| workspace-access.locking            | false  | true    | true       | true     | false              |
-| workspace-access.move               | false  | false   | false      | true     | false              |
-| workspace-access.run-tasks          | false  | false   | true       | true     | false              |
+| Permissions                     | `read` | `write` | `maintain` | `admin ` | `custom` default |
+|---------------------------------|--------|---------|------------|----------|------------------|
+| project-access.settings         | "read" | "read"  | "read"     | "delete" | "read"           |
+| project-access.teams            | "none" | "none"  | "none"     | "manage" | "none"           |
+| workspace-access.runs           | "read" | "apply" | "apply"    | "apply"  | "read"           |
+| workspace-access.sentinel-mocks | "none" | "read"  | "read"     | "read"   | "none"           |
+| workspace-access.state-versions | "read" | "write" | "write"    | "write"  | "none"           |
+| workspace-access.variables      | "read" | "write" | "write"    | "write"  | "none"           |
+| workspace-access.create         | false  | false   | true       | true     | false            |
+| workspace-access.locking        | false  | true    | true       | true     | false            |
+| workspace-access.move           | false  | false   | false      | true     | false            |
+| workspace-access.run-tasks      | false  | false   | true       | true     | false            |
