@@ -72,28 +72,28 @@ The following workspace permissions can be granted to teams on a per-workspace b
   - **Plan:** — _Implies permission to read._ Allows users to queue Terraform plans in a workspace, including both speculative plans and normal plans. Normal plans must be approved by a user with permission to apply runs. This also allows users to comment on runs.
   - **Apply:** — _Implies permission to plan._ Allows users to approve and apply Terraform plans, causing changes to real infrastructure.
 - **Variable access:**
-  - **No access** - No access is granted to the values of Terraform variables and environment variables for the workspace.
+  - **No access:** — No access is granted to the values of Terraform variables and environment variables for the workspace.
   - **Read:** — Allows users to view the values of Terraform variables and environment variables for the workspace. Note that variables marked as sensitive are write-only, and can't be viewed by any user.
   - **Read and write:** — _Implies permission to read._ Allows users to edit the values of variables in the workspace.
 - **State access:**
-  - **No access** - No access is granted to the state file from the workspace.
+  - **No access:** — No access is granted to the state file from the workspace.
   - **Read outputs only:** — Allows users to access values in the workspace's most recent Terraform state that have been explicitly marked as public outputs. Output values are often used as an interface between separate workspaces that manage loosely coupled collections of infrastructure, so their contents can be relevant to people who have no direct responsibility for the managed infrastructure but still indirectly use some of its functions. This permission is required to access the [State Version Outputs](/terraform/cloud-docs/api-docs/state-version-outputs) API endpoint.
 
     -> **Note:** **Read state versions** permission is required to use the `terraform output` command or the `terraform_remote_state` data source against the workspace.
   - **Read:** — _Implies permission to read outputs only._ Allows users to read complete state files from the workspace. State files are useful for identifying infrastructure changes over time, but often contain sensitive information.
-  - **Read and write:** — _Implies permission to read._ Allows users to directly create new state versions in the workspace. Applying a remote Terraform run will create new state versions without this permission, but if the workspace's execution mode is set to "local", this permission is required for performing local runs. This permission is also required for using any of Terraform CLI's state manipulation and maintenance commands against this workspace, including `terraform import`, `terraform taint`, and the various `terraform state` subcommands.
+  - **Read and write:** — _Implies permission to read._ Allows users to directly create new state versions in the workspace. Applying a remote Terraform run creates new state versions without this permission, but if the workspace's execution mode is set to "local", this permission is required for performing local runs. This permission is also required to use any of the Terraform CLI's state manipulation and maintenance commands against this workspace, including `terraform import`, `terraform taint`, and the various `terraform state` subcommands.
 - **Other controls:**
   - **Download Sentinel mocks:** — Allows users to download data from runs in the workspace in a format that can be used for developing Sentinel policies. This run data is very detailed, and often contains unredacted sensitive information.
-  - **Manage Workspace Run Tasks:** - Allows users to associate or dissociate run tasks with the workspace. Run Tasks are created at the organization level, after which you can manually associate or dissociate them with specific workspaces.
-  - **Lock/unlock workspace:** — Allows users to manually lock the workspace to temporarily prevent runs. When a workspace's execution mode is set to "local", this permission is required for performing local CLI runs using this workspace's state.
+  - **Manage Workspace Run Tasks:** — Allows users to associate or dissociate run tasks with the workspace. Terraform Cloud creates Run Tasks at the organization level, where you can manually associate or dissociate them with specific workspaces.
+  - **Lock/unlock workspace:** — Allows users to manually lock the workspace to temporarily prevent runs. When a workspace's execution mode is set to "local", users must have this permission to perform local CLI runs using the workspace's state.
 
 ### Fixed Permission Sets
 
-Fixed permission sets are bundles of specific permissions on a workspace, designed for basic patterns of delegated access.
+Fixed permission sets are bundles of specific permissions for workspaces, which you can use to delegate access to workspaces easily.
 
-Each of these groups of permissions is designed around a target level of authority and responsibility for a given workspace's infrastructure. They can sometimes grant permissions that their recipients do not need, but they try to strike a balance of simplicity and utility.
+Each permissions set targets a level of authority and responsibility for a given workspace's infrastructure. A permission set can grant permissions that recipients do not require but offer a balance of simplicity and utility.
 
-### Workspace Admins
+#### Workspace Admins
 
 Much like the owners team has full control over an organization, each workspace has a special "admin" permissions level that grants full control over the workspace. Members of a team with admin permissions on a workspace are sometimes called "workspace admins" for that workspace.
 
@@ -130,7 +130,7 @@ See [General Workspace Permissions][] above for details about specific permissio
 
 #### Read
 
-The "read" permission set is for people who need to view information about the status and configuration of managed infrastructure in order to do their jobs, but who aren't responsible for maintaining that infrastructure. Read access grants the following workspace permissions:
+The "read" permission set is for people who need to view information about the status and configuration of managed infrastructure in order to do their jobs, but aren't responsible for maintaining that infrastructure. Read access grants the following workspace permissions:
 
 - Run access - Read
 - Variable access - Read
@@ -154,15 +154,15 @@ You can assign project-specific permissions to teams.
 
 ### Implied Permissions
 
-Some permissions imply other permissions; for example, the project access update permission also grants permission to read projects.
+Some permissions imply other permissions. For example, permission to update a project also grants permission to read a project.
 
-If documentation or UI text states that an action requires a specific permission, it is also available for any permission that implies that permission.
+If an action states that it requires a specific permission level, you can perform that action if your permissions _imply_ the stated permission level. 
 
 ### General Project Permissions
 
 [General Project Permissions]: #general-project-permissions
 
-The following project permissions can be granted to teams on a per-project basis. They can be granted via either fixed permission sets or custom project permissions.
+You can grant the following project permissions to teams on a per-project basis. You can grant these with either fixed permission sets or custom project permissions.
 
 -> **Note:** Throughout the documentation, we refer to the specific permission an action requires (like "requires permission to apply runs") rather than the fixed permission set that includes that permission (like "requires write access").
 
@@ -170,24 +170,24 @@ The following project permissions can be granted to teams on a per-project basis
   - **Read:** — Allows users to view information about the project including the name.
   - **Update:** — _Implies permission to read._ Allows users to update the project name.
   - **Delete:** — _Implies permission to update._ Allows users to delete the project.
-  - **Create Workspaces:** - Allow users to create workspaces in the project. Read access will be granted on all workspaces in the project.
-  - **Delete Workspaces:** - Allows users to delete workspaces in the project.
+  - **Create Workspaces:** — Allow users to create workspaces in the project. This grants read access to all workspaces in the project.
+  - **Delete Workspaces:** — Allows users to delete workspaces in the project.
     - Depending on the [organization's settings](/terraform/cloud-docs/users-teams-organizations/organizations#general), workspace admins may only be able to delete the workspace if it is not actively managing infrastructure. Refer to [Deleting a Workspace With Resources Under Management](/terraform/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) for details.
-  - **Move Workspaces:** - Allows users to move workspaces out of the project. Note: the user must have Move Workspaces permission on both the source and destination project in order to successfully move a workspace from one project to another.
+  - **Move Workspaces:** - Allows users to move workspaces out of the project. A user _must_ have this permission on both the source _and_ destination project to successfully move a workspace from one project to another.
 - **Team management:**
-  - **None** - No access to view teams assigned to the project.
+  - **None** — No access to view teams assigned to the project.
   - **Read:** — Allows users to see teams assigned to the project for visible teams.
-  - **Manaage:** — _Implies permission to read._ Allows users to set or remove project permissions for visible teams. Project admins cannot view or manage teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
+  - **Manage:** — _Implies permission to read._ Allows users to set or remove project permissions for visible teams. Project admins can not view or manage [secret teams](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility) unless they are also organization owners.
 
-See [General Workspace Permissions](#general-workspace-permissions) for the remainder of the custom permissions that can be granted for all workspaces in the project.
+See [General Workspace Permissions](#general-workspace-permissions)for the complete list of available permissions for a project's workspaces.
 
 ### Fixed Permission Sets
 
-Fixed permission sets are bundles of specific permissions for a project, designed for common usage patterns.
+Fixed permission sets are bundles of specific permissions for projects, which you can use to delegate access to a project's workspaces easily.
 
 #### Project Admin
 
-Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project. Members of a team with admin permissions on a project are sometimes called "project admins" for that project.
+Each project has an "admin" permissions level that grants permissions for both the project and the workspaces that belong to that project. Members with admin permissions on a project are dubbed that project's "project admins".
 
 Members of teams with "admin" permissions for a project have [General Workspace Permissions](#general-workspace-permissions) for every workspace in the project, and the ability to:
 
@@ -225,11 +225,11 @@ The "read" permission set is for people who need to view information about the s
 
 ### Custom Project Permissions
 
-Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide. This enables more task-focused permission sets and tighter control of sensitive information.
+Custom permissions enable you to assign specific and granular permissions to a team. You can use custom permission sets to create task-focused permission sets and control sensitive information.
 
-You can use custom permissions to assign any of the permissions listed above under [General Project Permissions](#general-project-permissions).
+You can create a set of custom permissions using any of the permissions listed under [General Project Permissions](#general-project-permissions).
 
-Some permissions - such as the project access permission - are tiered: you can assign one permission per category, since higher permissions include all of the capabilities of the lower ones.
+Some permissions, such as the project access permission, are tiered. You can only assign one permission per category because higher-level permissions include the capabilities of lower levels.
 
 ## Organization Permissions
 

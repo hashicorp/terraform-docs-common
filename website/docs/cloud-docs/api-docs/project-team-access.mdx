@@ -53,7 +53,7 @@ Any member of an organization can view team access relative to their own team me
 | `write`         | Read project and Write workspace access role on project workspaces                                                                                               |
 | `maintain`      | Read project and Admin workspace access role on project workspaces                                                                                               |
 | `admin`         | Admin project, Admin workspace access role on project workspaces, create workspaces within project, move workspaces between projects, manage project team access |
-| `custom`        | Custom access permissions on project and project's workspaces.                                                                                                    |
+| `custom`        | Custom access permissions on project and project's workspaces                                                                                                   |
 
 ## List Team Access to a Project
 
@@ -169,7 +169,11 @@ $ curl \
 |-----------|------------------------------------------------------------------------------------------------------------------------------------------|
 | `:id`     | The ID of the team/project relationship. Obtain this from the [list team access action](#list-team-access-to-a-project) described above. |
 
--> **Note:** As mentioned in [Add Team Access to a Project](#add-team-access-to-a-project) and [Update Team Access
+As mentioned in [Add Team Access to a Project](#add-team-access-to-a-project) and [Update to a Project](#update-team-access-to-a-project), several permission attributes are not editable unless you set `access` to `custom`. If you set `access` to `read`, `plan`, `write`, or `admin`, certain attributes are read-only and reflect the _implicit permissions_ granted to the current access level.
+
+For example, if you set `access` to `read`, the implicit permission level for project settings and workspace run is "read". Conversely, if you set the access level to `admin`, the implicit permission level for the project settings is "delete", while the workspace runs permission is "apply". 
+ 
+For details on the implied permissions of each access level, see [Implied Custom Permission Levels](#implied-custom-permission-levels)
 to a Project](#update-team-access-to-a-project), several permission attributes are not editable unless `access` is
 set to `custom`. When access is `read`, `plan`, `write`, or `admin`, these attributes are read-only and reflect the
 implicit permissions granted to the current access level. For example, when access is `read`, the implicit
@@ -489,8 +493,8 @@ $ curl \
 
 ## Implied Custom Permission Levels
 
-As mentioned above, when setting team access levels of `read`, `write`, `maintain`, or `admin`, the following permissions that can be set individually when using an access level of `custom`, are given values based on the access level.
-Below is each access level, and the implicitly granted custom permission. When using `custom` as the access levels, any permission not specified will be given the default level listed
+As mentioned above, when setting team access levels (`read`, `write`, `maintain`, or `admin`), you can individually set the following permissions if you use the `custom` access level.
+The below table lists each access level alongside its implicit custom permission level.  If you use the `custom` access level and do not specify a certain permission's level, that permission uses the default value listed below.
 
 
 
