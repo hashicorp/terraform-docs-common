@@ -371,3 +371,67 @@ $ curl \
   --request DELETE \
   https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v
 ```
+
+## Move workspaces into a project
+
+This endpoint allows you to move one or more workspaces into a project. You must have permission to move workspaces on
+the destination project as well as any source project(s). If you are not authorized to move any of the workspaces in the
+request, or if any workspaces in the request are not found, then no workspaces will be moved.
+
+`POST /projects/:project_id/relationships/workspaces`
+
+| Parameter     | Description                       |
+|---------------|-----------------------------------|
+| `:project_id` | The ID of the destination project |
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+| Key path      | Type   | Default | Description                                                |
+|---------------|--------|---------|------------------------------------------------------------|
+| `data[].type` | string |         | Must be `"workspaces"`                                     |
+| `data[].id`   | string |         | The ids of workspaces to move into the destination project |
+
+| Status  | Response                  | Reason(s)                                                                                                |
+|---------|---------------------------|----------------------------------------------------------------------------------------------------------|
+| [204][] | Nothing                   | Successfully moved workspace(s)                                                                          |
+| [403][] | [JSON API error object][] | Workspace(s) not found, or user is not authorized to move all workspaces out of their current project(s) |
+| [404][] | [JSON API error object][] | Project not found, or user unauthorized to move workspaces into project                                  |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "workspaces",
+      "id": "ws-AQEct2XFuH4HBsmS"
+    }
+  ]
+}
+
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/projects/prj-zXm4y2BjeGPgHtkp/relationships/workspaces
+```
+
+### Sample Error Response
+
+```json
+{
+  "errors": [
+    {
+      "status": "403",
+      "title": "forbidden",
+      "detail": "Workspace(s) not found, or you are not authorized to move them: ws-AQEct2XFuH4HBmS"
+    }
+  ]
+}
+```
