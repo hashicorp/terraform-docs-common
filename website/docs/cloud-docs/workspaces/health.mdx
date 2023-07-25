@@ -117,10 +117,7 @@ Continuous validation evaluates preconditions, postconditions, and check blocks 
 
 Health assessments create a speculative plan to access the current state of your infrastructure. Terraform evaluates any check blocks in your configuration as the last step of creating the speculative plan. If your configuration relies on data sources and the values queried by a data source change between the time of your last run and the assessment, the speculative plan will include those changes. Terraform Cloud will not modify your infrastructure as part of an assessment, but it can use those updated values to evaluate checks. This may lead to false positive results for alerts since your infrastructure did not yet change.
 
-To ensure your checks evaluate the current state of your configuration instead of against a possible future change, use nested data sources that query your actual resource configuration, rather than a computed latest value.
-Refer to the [AMI image
-scenario](#asserting-up-to-date-amis-for-compute-instances) below for an
-example.
+To ensure your checks evaluate the current state of your configuration instead of against a possible future change, use nested data sources that query your actual resource configuration, rather than a computed latest value. Refer to the [AMI image scenario](#asserting-up-to-date-amis-for-compute-instances) below for an example.
 
 Continuous validation alerts you whenever an assertion fails, so you can change your configuration and avoid errors the next time you update infrastructure.
 
@@ -204,13 +201,6 @@ check "ami_version_check" {
   }
 }
 ```
-
-In this example, the check block includes a data source that verifies the actual running instance's AMI, rather than the value of the `ami` field in the `aws_instance.hashiapp` resource. If your team publishes a new AMI between the time of the last run and an assessment, this still ensures that the check depends on the actual AMI your instance uses now.
-
-Check blocks execute as the last step of a plan or apply after Terraform has planned or provisioned your infrastructure. Each health assessment run performs a speculative plan in its normal course of operation. In practice, this means that check assertions are evaluated against a hypothetical future state where any planned changes have already been applied to the resources under management.
-
-To evaluate an assertion against the current state of a resource, use a nested data source that is independent from the other resources in your configuration. In the previous example, a data source is used to locate the image provisioned by the `aws_instance.hashiapp` resource. This allows the check to assert against the current image in use, rather than the image that will be used after another round of plan/apply is executed.
-
 
 ### View continuous validation results
 
