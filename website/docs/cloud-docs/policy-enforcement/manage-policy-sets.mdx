@@ -109,7 +109,7 @@ To create a policy set:
    - For managed policies, click **create a policy set with individually managed policies**. Terraform Cloud shows a form to create a policy set and add individually managed policies.
    - For version control policies, choose a version control provider and then select the repository with your policy set. Terraform Cloud shows a form to create a policy set connected to that repository.
    - For automated workflows, click **No VCS Connection**. Terraform Cloud shows a form to create an empty policy set. You can use the API to add policies to this empty policy set later.
-1. Choose a **Policy framework** for the policies you want to add. You can only create a policy set from policies written using the same framework. You cannot change the framework type after creation.
+1. Choose a **Policy framework** for the policies you want to add. A policy set can only contain policies that use the same framework (OPA or Sentinel). You cannot change the framework type after creation.
 1. Choose a policy set scope:
    - **Policies enforced globally:** Terraform Cloud will automatically enforce this global policy set on all existing and future workspaces in the organization.
    - **Policies enforced on selected projects and workspaces:** Use the text fields to search for and select workspaces and/or projects to enforce this policy set on. This affects all current and future workspaces for any selected projects.
