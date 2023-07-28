@@ -113,8 +113,6 @@ Continuous validation regularly verifies whether your configuration’s custom a
 
 Continuous validation evaluates preconditions, postconditions, and check blocks as part of an assessment, but we recommend using [check blocks](https://developer.hashicorp.com/terraform/language/checks) for post-apply monitoring. Use check blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
 
-Continuous validation alerts you whenever an assertion fails, so you can change your configuration and avoid errors the next time you update infrastructure.
-
 ### Preventing false positives
 
 Health assessments create a speculative plan to access the current state of your infrastructure. Terraform evaluates any check blocks in your configuration as the last step of creating the speculative plan. If your configuration relies on data sources and the values queried by a data source change between the time of your last run and the assessment, the speculative plan will include those changes. Terraform Cloud will not modify your infrastructure as part of an assessment, but it can use those updated values to evaluate checks. This may lead to false positive results for alerts since your infrastructure did not yet change.
