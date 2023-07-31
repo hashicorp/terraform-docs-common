@@ -183,6 +183,7 @@
           { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
           { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
           { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          { "title":  "Specifying Multiple Configurations", "path": "workspaces/dynamic-provider-credentials/specifying-multiple-configurations"},
           {
             "title": "Vault-Backed Dynamic Credentials",
             "routes": [

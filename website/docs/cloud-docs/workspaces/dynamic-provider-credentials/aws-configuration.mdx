@@ -112,3 +112,42 @@ You may need to set these variables, depending on your use case.
 Make sure that you’re passing a value for the `region` argument into the provider configuration block or setting the `AWS_REGION` variable in your workspace.
 
 Make sure that you’re not using any of the other arguments or methods mentioned in the [authentication and configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration) section of the provider documentation as these settings may interfere with dynamic provider credentials.
+
+### Specifying Multiple Configurations
+
+~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+
+You can add additional configurations to handle multiple distinct AWS setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.
+
+For more details, see [Specifying Multiple Configurations](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations).
+
+#### Required Terraform Variable
+
+To use additional configurations, add the following code to your Terraform configuration. This lets Terraform Cloud supply variable values that you can then use to map authentication and configuration details to the correct provider blocks.
+
+```hcl
+variable "tfc_aws_dynamic_credentials" {
+  description = "Object containing AWS dynamic credentials configuration"
+  type = object({
+    default = object({
+      shared_config_file = string
+    })
+    aliases = map(object({
+      shared_config_file = string
+    }))
+  })
+}
+```
+
+#### Example Usage
+
+```hcl
+provider "aws" {
+  shared_config_files = [var.tfc_aws_dynamic_credentials.default.shared_config_file]
+}
+
+provider "aws" {
+  alias = "ALIAS1"
+  shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["ALIAS1"].shared_config_file]
+}
+```
