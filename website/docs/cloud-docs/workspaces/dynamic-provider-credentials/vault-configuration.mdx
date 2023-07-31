@@ -141,3 +141,64 @@ You can use the Vault provider to read secrets from Vault and use them with othe
 
 ### Vault Dynamic Secrets Engines
 You can use Vault's dynamic secrets engines for AWS, GCP, and Azure by adding additional configurations. For more details, see [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed).
+
+### Specifying Multiple Configurations
+
+~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+
+~> **Important:** Ensure you are using version **3.18.0** or later of the **Vault provider** as the required [`auth_login_token_file`](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#token-file) block was introduced in this provider version.
+
+You can add additional configurations to handle multiple distinct Vault setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.
+
+For more details, see [Specifying Multiple Configurations](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations).
+
+#### Required Terraform Variable
+
+To use additional configurations, add the following code to your Terraform configuration. This lets Terraform Cloud supply variable values that you can then use to map authentication and configuration details to the correct provider blocks.
+
+```hcl
+variable "tfc_vault_dynamic_credentials" {
+  description = "Object containing Vault dynamic credentials configuration"
+  type = object({
+    default = object({
+      token_filename = string
+      address = string
+      namespace = string
+      ca_cert_file = string
+    })
+    aliases = map(object({
+      token_filename = string
+      address = string
+      namespace = string
+      ca_cert_file = string
+    }))
+  })
+}
+```
+
+#### Example Usage
+
+```hcl
+provider "vault" {
+  // Set this to true as TFC manages the token lifecycle
+  skip_child_token = true
+  address = var.tfc_vault_dynamic_credentials.default.address
+  namespace = var.tfc_vault_dynamic_credentials.default.namespace
+
+  auth_login_token_file {
+    filename = var.tfc_vault_dynamic_credentials.default.token_filename
+  }
+}
+
+provider "vault" {
+  // Set this to true as TFC manages the token lifecycle
+  skip_child_token = true
+  alias = "ALIAS1"
+  address = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].address
+  namespace = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].namespace
+
+  auth_login_token_file {
+    filename = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].token_filename
+  }
+}
+```
