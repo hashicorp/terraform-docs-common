@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "runtask-tag.json",
+  "title": "Run Task Result Tag",
+  "description": "A label heading with a value, or array of rich values",
+  "type": "object",
+  "properties": {
+    "label": {
+      "title": "Label",
+      "description": "The heading text to display to the user",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32
+    },
+    "value": {
+      "title": "Value",
+      "description": "The contents of the tag, to be rendered as one or more labels with optional colors and icons.",
+
+      "anyOf": [
+        { "$ref": "./runtask-rich-label.json" },
+        {
+          "type": "array",
+          "items": { "$ref": "./runtask-rich-label.json" },
+          "minItems": 1,
+          "maxItems": 10
+        }
+      ]
+    }
+  }
+}
