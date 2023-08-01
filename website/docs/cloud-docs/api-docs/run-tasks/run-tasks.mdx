@@ -400,7 +400,7 @@ curl \
 
 | Status  | Response                  | Reason                                                     |
 | ------- | ------------------------- | ---------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the run task                          |
+| [204][] | No Content                | Successfully deleted the run task                          |
 | [404][] | [JSON API error object][] | Run task not found, or user unauthorized to perform action |
 
 ### Sample Request
@@ -433,7 +433,7 @@ You may also configure the run task to begin during a specific [run stage](/terr
 
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
-| [204][] | Nothing                   | The request was successful                                             |
+| [204][] | No Content                | The request was successful                                             |
 | [404][] | [JSON API error object][] | Workspace or run task not found or user unauthorized to perform action |
 | [422][] | [JSON API error object][] | Malformed request body                                                 |
 
@@ -744,7 +744,7 @@ curl \
 
 | Status  | Response                  | Reason                                                               |
 | ------- | ------------------------- | -------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the workspace run task                          |
+| [204][] | No Content                | Successfully deleted the workspace run task                          |
 | [404][] | [JSON API error object][] | Workspace run task not found, or user unauthorized to perform action |
 
 ### Sample Request
