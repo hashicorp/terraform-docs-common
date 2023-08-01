@@ -34,6 +34,9 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
   "payload_version": 1,
   "stage": "post_plan",
   "access_token": "4QEuyyxug1f2rw.atlasv1.iDyxqhXGVZ0ykes53YdQyHyYtFOrdAWNBxcVUgWvzb64NFHjcquu8gJMEdUwoSLRu4Q",
+  "capabilities": {
+    "outcomes": true
+  },
   "configuration_version_download_url": "https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/download",
   "configuration_version_id": "cv-ntv3HbhJqvFzamy7",
   "is_speculative": false,
@@ -69,17 +72,30 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
       "attributes": {
         "status": "passed",
         "message": "Hello task",
-        "url": "https://example.com"
+        "url": "https://example.com",
+        "outcomes": []
       }
   }
 }
 ```
 
-Terraform Cloud expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in Terraform Cloud on the run details page. The status can be `passed` or `failed`.
+Terraform Cloud expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in Terraform Cloud on the run details page. The status can be `running`, `passed` or `failed`.
 
 Here's what the data flow looks like:
 
 ![Screenshot: a diagram of the user and data flow for a Terraform Cloud run task](/img/docs/terraform-cloud-run-tasks-diagram.png)
+
+## Streamlined Run Task Reviews 
+
+Streamlined Run Task Reviews are enabled when the integration payload contains a key `capabilities.outcomes` set to `true`. Enabling this feature allows integrations to progressively send multiple detailed outcomes per Run Task execution. This format allows for a rich display of Run Taks results and an enhanced user experience in Terraform Cloud. Integrations are able to return arbitrary sets of labels, optionally color coded by severity, as well as Markdown text, presented directly in the Run page.
+
+In addition to the usual documentation, a [JSON Schema](/terraform/schemas/structured-run-task-results-schema.json) is provided for code generation and payload validation.
+
+Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#structured-results) for the exact payload specification.
+
+### Legacy Run Tasks
+
+A Run Task is considered "legacy" when it does not return an `outcomes` collection, and will not benefit from the rich user experience gained by providing outcomes for Streamlined Run Task Reviews.
 
 ## Securing your Run Task
 
