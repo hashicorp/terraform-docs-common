@@ -51,6 +51,8 @@ All request payloads contain the following properties.
 | `payload_version`                    | integer | `1`                                  | Schema version of the payload. Only `1` is supported.                                                                                                                                                          |
 | `stage`                              | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/terraform/cloud-docs/run/states) when Terraform Cloud triggers the run task.                                                                                                                  |
 | `access_token`                       | string  |                                      | Bearer token to use when calling back to Terraform Cloud.                                                                                                                                                      |
+| `capabilitites`                      | object  |                                      | A map of the capabilities that the caller supports |
+| `capabilitites.outcomes`             | bool    |                                      | A flag indicating the caller accepts detailed run task outcomes |
 | `configuration_version_download_url` | string  |                                      | The URL to [download the configuration version](/terraform/cloud-docs/api-docs/configuration-versions#download-configuration-files). This is `null` if the configuration version is not available to download. |
 | `configuration_version_id`           | string  |                                      | The ID of the [configuration version](/terraform/cloud-docs/api-docs/configuration-versions) for the run.                                                                                                      |
 | `is_speculative`                     | bool    |                                      | Whether the task is part of a [speculative run](/terraform/cloud-docs/run/remote-operations#speculative-plans).                                                                                                |
@@ -87,6 +89,9 @@ Requests with `stage` set to `post_plan` or `pre_apply` contain the following ad
   "payload_version": 1,
   "stage": "post_plan",
   "access_token": "4QEuyyxug1f2rw.atlasv1.iDyxqhXGVZ0ykes53YdQyHyYtFOrdAWNBxcVUgWvzb64NFHjcquu8gJMEdUwoSLRu4Q",
+  "capabilities": {
+    "outcomes": true
+  },
   "configuration_version_download_url": "https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/download",
   "configuration_version_id": "cv-ntv3HbhJqvFzamy7",
   "is_speculative": false,
@@ -147,6 +152,7 @@ The PATCH request submits a JSON object with the following properties as a reque
 | `data.attributes.status`  | string | The current status of the task. Only `passed`, `failed` or `running` are allowed.               |
 | `data.attributes.message` | string | (Optional) A short message describing the status of the task.                                   |
 | `data.attributes.url`     | string | (Optional) A URL where users can obtain more information about the task.                        |
+| `relationships.outcomes.data`     | array | (Optional) A collection of detailed run task outcomes |
 
 Status values other than passed, failed, or running return an error. Both the passed and failed statuses represent a final state for a run task. The running status allows one or more partial updates until the task has reached a final state.
 
@@ -157,9 +163,60 @@ Status values other than passed, failed, or running return an error. Both the pa
     "attributes": {
       "status": "passed",
       "message": "4 passed, 0 skipped, 0 failed",
-      "url": "https://external.service.dev/terraform-plan-checker/run-i3Df5to9ELvibKpQ"
+      "url": "https://external.service.dev/terraform-plan-checker/run-i3Df5to9ELvibKpQ",
+    }
+  },
+  "relationships": {
+    "outcomes": {
+      "data": [...]
     }
   }
+}
+```
+
+#### Outcomes Payload Body
+
+A run task result may optionally contain up to 10 detailed results, which improve result visibility and content in the Terraform Cloud UI.
+
+|         Key path          |  Type  |                                           Description                                           |
+| ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
+| `outcome_id`     | string | A partner supplied identifier for this outcome. |
+| `description`     | string | A short, one-line, description of the result |
+| `body`     | string | (Optional)  A detailed message for the result in Markdown format. |
+| `url`     | string | (Optional) A URL that a user may browse to for more information about this result. |
+| `tags`     | array | (Optional) A list of tags, or multi-valued tags, for the result. |
+| `tags[].label`     | string |The name of the header tag. This should be a very short name ideally no more than two or three words. |
+| `tags[].level`     | enum string | (Optional) The error level for the tag. Defaults to `none`. Either `none`, `info`, `warning`, or `error`. For levels other than `none`, labels are rendered with color and icon for that level. |
+| `tags[].value`     | string or array | Either a single value object or a  list of value objects. |
+| `tags[].value[].value`     | string | The text value of the tag. |
+| `tags[].value[].level`     | enum string |(Optional) The error level for the tag. Defaults to `none`. Either `none`, `info`, `warning`, or `error`. |
+
+##### Severity and Status Tags
+
+When surfacing run task outcomes with tags labeled "severity", or "status", those tags will be used to enrich the list display of outcomes in Terraform Cloud, enabling earlier feedback of severity and statuses if desired.
+
+```json
+{
+  "outcome-id": "PRTNR-CC-TF-127",
+  "description": "ST-2942: S3 Bucket will not enforce MFA login on delete requests",
+  "tags": [
+    {
+      "label": "Status", 
+      "value":  [{"value": "Denied", "level": "error" }]
+    },
+    {
+      "label": "Severity", 
+      "value": [
+        {"value": "High", "level": "error" },
+        {"value": "Recoverable", "level": "info" },
+      ],
+    {
+      "label": "Cost Centre", 
+      "value": "IT-OPS" 
+    }
+  ],
+  "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- CUT FOR BREVITY —--",
+  "url": "https://external.service.dev/result/PRTNR-CC-TF-127"
 }
 ```
 
