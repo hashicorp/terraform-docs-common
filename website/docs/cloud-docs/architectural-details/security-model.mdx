@@ -154,3 +154,7 @@ Workspaces may be configured to share their state with other workspaces within t
 ### Treat Archivist URLs as Secrets
 
 Terraform Cloud uses a blob storage service called Archivist for storing various pieces of customer data. Archivist URLs (which have the origin <https://archivist.terraform.io>) are returned by various Terraform Cloud APIs, such as the [state versions API](/terraform/cloud-docs/api-docs/state-versions#fetch-the-current-state-version-for-a-workspace). Unlike the rest of Terraform Cloud’s API, Archivist’s API does not require the user to submit a Bearer Token with each request. Instead, Archivist URLs contain a signed short term authorization token that is used to perform authorization checks. For this reason, Archivist URLs must be treated as secrets and should not be logged or shared.
+
+### Consider Using Dynamic Provider Credentials
+
+Storing static credentials in Terraform Cloud comes with increased risk in the event that these credentials are compromised. This is due to their long-lived nature, and the need to revoke these credentials in potentially many locations upon exposure. Using [Dynamic Provider Credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/) eliminates the need to store credentials in Terraform Cloud and mitigates the aforementioned risks by generating new temporary credentials for each run.
