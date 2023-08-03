@@ -117,7 +117,9 @@ Run events include detailed information about a specific run, including the time
 
 ##### `Send a test` Payload
 
-This is a sample payload during a test notification. The payload will be void of a `run` or `workspace` context, resulting in null values.
+This is a sample payload you can send to test if notifications are working. The payload does not have a `run` or `workspace` context, resulting in null values.
+
+You can trigger a test notification from the workspace notifcation settings page. You can read more about verifying a [notificaton configuration](/terraform/enterprise/workspaces/settings/notifications#enabling-and-verifying-a-configuration).
 
 ```json
 {
