@@ -144,15 +144,15 @@ Once a run task request has been fulfilled by the external integration, the inte
 
 ### Request Body
 
-The PATCH request submits a JSON object with the following properties as a request payload.
+The PATCH request submits a JSON object with the following properties as a request payload. This payload is also described in the [JSON API schema for Run Task Results](/schema/run-tasks/runtask-result.json).
 
 |         Key path          |  Type  |                                           Description                                           |
 | ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
 | `data.type`               | string | Must be `"task-results"`.                                                                       |
 | `data.attributes.status`  | string | The current status of the task. Only `passed`, `failed` or `running` are allowed.               |
-| `data.attributes.message` | string | (Optional) A short message describing the status of the task.                                   |
+| `data.attributes.message` | string | (Recommended, optional) A short message describing the status of the task.                                   |
 | `data.attributes.url`     | string | (Optional) A URL where users can obtain more information about the task.                        |
-| `relationships.outcomes.data`     | array | (Optional) A collection of detailed run task outcomes |
+| `relationships.outcomes.data`     | array | (Recommended, optional) A collection of detailed run task outcomes |
 
 Status values other than passed, failed, or running return an error. Both the passed and failed statuses represent a final state for a run task. The running status allows one or more partial updates until the task has reached a final state.
 
@@ -193,7 +193,7 @@ A run task result may optionally contain up to 10 detailed results, which improv
 
 ##### Severity and Status Tags
 
-When surfacing run task outcomes with tags labeled "severity", or "status", those tags will be used to enrich the list display of outcomes in Terraform Cloud, enabling earlier feedback of severity and statuses if desired.
+When surfacing run task outcomes with tags labeled "severity", or "status", those tags will be used to enrich the list display of outcomes in Terraform Cloud, enabling earlier feedback of severity and statuses.
 
 ```json
 {
