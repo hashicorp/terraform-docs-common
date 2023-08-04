@@ -128,7 +128,11 @@ The POST request submits the following properties as the request headers.
 
 ## Run Task Callback
 
-Once a run task request has been fulfilled by the external integration, the integration must call back into Terraform Cloud with the result. Terraform expects this callback within 10 minutes, or the request will be considered to have errored.
+While a run task is running, it may send progressive updates to Terraform Cloud with a `running` status. When it is determined that outcomes is a supported capability, Integrators can send these outcomes by appending a relationship inside the callback payload.
+
+Once the request has been fulfilled by the external integration, the integration must call back into Terraform Cloud with the overall result, either `passed` or `failed`. Terraform expects this callback within 10 minutes, or the request will be considered to have errored.
+
+**Note:** while outcomes may be sent with status of `running`, `passed` or `failed`, it is good practice to only send outcomes when running.
 
 `PATCH :callback_url`
 
@@ -180,7 +184,7 @@ A run task result may optionally contain up to 10 detailed results, which improv
 
 |         Key path          |  Type  |                                           Description                                           |
 | ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
-| `outcome_id`     | string | A partner supplied identifier for this outcome. |
+| `outcome-id`     | string | A partner supplied identifier for this outcome. |
 | `description`     | string | A short, one-line, description of the result |
 | `body`     | string | (Optional)  A detailed message for the result in Markdown format. |
 | `url`     | string | (Optional) A URL that a user may browse to for more information about this result. |
