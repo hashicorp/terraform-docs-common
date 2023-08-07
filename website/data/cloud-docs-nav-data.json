@@ -548,7 +548,7 @@
           },
           {
             "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
-            "path": "integrations/kubernetes/k8s-ops-v2-migration"
+            "path": "integrations/kubernetes/ops-v2-migration"
           }
         ]
       },
