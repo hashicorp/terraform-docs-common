@@ -132,7 +132,7 @@ module.exports = [
     permanent: true,
   },
   // Fix K8s file format to match style guide
-  // TODO: insert link
+  // https://github.com/hashicorp/terraform-docs-common/pull/420/files
   {
     source:
       "/terraform/cloud-docs/integrations/kubernetes/k8s-ops-v2-migration",
