@@ -87,32 +87,41 @@ module.exports = [
   // - https://github.com/hashicorp/terraform-docs-common/pull/375
   {
     source: "/terraform/cloud-docs/integrations/service-now",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform",
     permanent: true,
   },
   {
-    source: "/terraform/cloud-docs/integrations/service-now/service-catalog-config",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config",
+    source:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-config",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/admin-guide",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/admin-guide",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/admin-guide",
     permanent: true,
   },
   {
-    source: "/terraform/cloud-docs/integrations/service-now/developer-reference",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference",
+    source:
+      "/terraform/cloud-docs/integrations/service-now/developer-reference",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference",
     permanent: true,
   },
   {
-    source: "/terraform/cloud-docs/integrations/service-now/example-customizations",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/example-customizations",
+    source:
+      "/terraform/cloud-docs/integrations/service-now/example-customizations",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/example-customizations",
     permanent: true,
   },
   {
     source: "/terraform/cloud-docs/integrations/service-now/service-now-v1",
-    destination: "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-now-v1",
+    destination:
+      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-now-v1",
     permanent: true,
   },
   // Redirect to integrate both Flex and PAYG TFC documentation
@@ -120,6 +129,15 @@ module.exports = [
   {
     source: "/terraform/cloud-docs/overview/change-plan",
     destination: "/terraform/cloud-docs/overview/activate-payg",
+    permanent: true,
+  },
+  // Fix K8s file format to match style guide
+  // https://github.com/hashicorp/terraform-docs-common/pull/420/files
+  {
+    source:
+      "/terraform/cloud-docs/integrations/kubernetes/k8s-ops-v2-migration",
+    destination:
+      "/terraform/cloud-docs/integrations/kubernetes/ops-v2-migration",
     permanent: true,
   },
 ];
