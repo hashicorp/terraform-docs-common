@@ -45,7 +45,9 @@ State version API objects represent an instance of Terraform state data, but do 
 Some of the information returned in a state version API object might be **populated asynchronously** by Terraform Cloud. This includes resources, modules, providers, and the [state version outputs](/terraform/cloud-docs/api-docs/state-version-outputs) associated with the state version. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the state version object indicates whether or not Terraform Cloud has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
 
 Attribute                        | Description
----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`hosted-json-state-upload-url`   | A URL to which you can upload the state data in a [stable format](/terraform/internals/json-format) appropriate for external integrations to consume. Only available if the state was created by Terraform 1.3+.
+`hosted-state-upload-url`        | A URL from which you can upload the raw state data, in the format used internally by Terraform.
 `hosted-json-state-download-url` | A URL from which you can download the state data in a [stable format](/terraform/internals/json-format) appropriate for external integrations to consume. Only available if the state was created by Terraform 1.3+.
 `hosted-state-download-url`      | A URL from which you can download the raw state data, in the format used internally by Terraform.
 `modules`                        | Extracted information about the Terraform modules in this state data. Populated asynchronously.
@@ -57,6 +59,18 @@ Attribute                        | Description
 `terraform-version`              | The Terraform version that created this state. Populated asynchronously.
 `vcs-commit-sha`                 | The SHA of the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
 `vcs-commit-url`                 | A link to the configuration commit used in the Terraform run that produced this state. Only present if the workspace is connected to a VCS repository.
+`status`                         | The status of the state version. See the table below for details.
+
+### State Version States
+
+The state version state is found in `data.attributes.status`, and you can reference the following list of possible states.
+
+A state version created through the API or CLI will only be listed in the UI if it is in the `finalized` state.
+
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `pending`    | The initial status of a state version after it has been created without encoding the state data within the request. Pending state versions do not contain state data and will not appear in the UI. The workspace cannot be unlocked normally until the latest state version has been finalized.                                     |
+| `finalized`  | The state version has been uploaded successfully to Terraform Cloud or if the state version was created with a valid `state` attribute.                                                                                                                                                                                                              |
 
 ## Create a State Version
 
@@ -99,9 +113,9 @@ Properties without a default value are required.
 | `data.type`                          | string  |           | Must be `"state-versions"`.                                                                                                                                                                                                                                                                |
 | `data.attributes.serial`             | integer |           | The serial of the state version. Must match the serial value extracted from the raw state file.                                                                                                                                                                                            |
 | `data.attributes.md5`                | string  |           | An MD5 hash of the raw state version                                                                                                                                                                                                                                                       |
-| `data.attributes.state`              | string  |           | Base64 encoded raw state file                                                                                                                                                                                                                                                              |
+| `data.attributes.state`              | string  | (nothing) | **Optional** Base64 encoded raw state file. If omitted, you must use the upload method below to complete the state version creation. The workspace may not be unlocked normally until the state version is uploaded.                                                                       |
 | `data.attributes.lineage`            | string  | (nothing) | **Optional** Lineage of the state version. Should match the lineage extracted from the raw state file. Early versions of terraform did not have the concept of lineage, so this is an optional attribute.                                                                                  |
-| `data.attributes.json-state`         | string  | (nothing) | **Optional** Base64 encoded json state, as expressed by `terraform show -json`. See [JSON Output Format](/terraform/internals/json-format) for more details                                                                                                                                          |
+| `data.attributes.json-state`         | string  | (nothing) | **Optional** Base64 encoded json state, as expressed by `terraform show -json`. See [JSON Output Format](/terraform/internals/json-format) for more details                                                                                                                                |
 | `data.attributes.json-state-outputs` | string  | (nothing) | **Optional** Base64 encoded output values as represented by `terraform show -json` (the contents of the values/outputs key). If provided, the workspace outputs populate immediately. If omitted, Terraform Cloud populates the workspace outputs from the given state after a short time. |
 | `data.relationships.run.data.id`     | string  | (nothing) | **Optional** The ID of the run to associate with the state version.                                                                                                                                                                                                                        |
 
@@ -155,6 +169,74 @@ curl \
             "created-at": "2018-07-12T20:32:01.490Z",
             "hosted-state-download-url": "https://archivist.terraform.io/v1/object/f55b739b-ff03-4716-b436-726466b96dc4",
             "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/4fde7951-93c0-4414-9a40-f3abc4bac490",
+            "serial": 1,
+            "status": "finalized"
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-DmoXecHePnNznaA4"
+        }
+    }
+}
+```
+
+## Upload a State Version
+
+Creates a state version but does not set it as the current state version for the given workspace until the data is uploaded to the corresponding `hosted-state-upload-url`. The workspace must be locked by the user creating a state version. The workspace may be locked with the API or with the UI. This method is useful for large amounts of state, transmitting over a slow network.
+
+-> **Note**: If the `state` attribute is omitted when creating a state version, the upload process must be completed to finalize the state version.
+
+### State Versions Upload URL
+
+Once a state version is created, use the `hosted-state-upload-url` attribute to [upload state versions](#upload-state-versions) associated with that version. The `hosted-state-upload-url` attribute is only provided in the response when creating state versions.
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type":"state-versions",
+    "attributes": {
+      "serial": 1,
+      "md5": "d41d8cd98f00b204e9800998ecf8427e",
+      "lineage": "871d1b4a-e579-fb7c-ffdb-f0c858a647a7",
+    },
+    "relationships": {
+      "run": {
+        "data": {
+          "type": "runs",
+          "id": "run-bWSq4YeYpfrW4mx7"
+        }
+      }
+    }
+  }
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/workspaces/ws-6fHMCom98SDXSQUv/state-versions
+```
+
+### Sample Response
+
+```json
+{
+    "data": {
+        "id": "sv-DmoXecHePnNznaA4",
+        "type": "state-versions",
+        "attributes": {
+            "vcs-commit-sha": null,
+            "vcs-commit-url": null,
+            "created-at": "2018-07-12T20:32:01.490Z",
+            "hosted-state-upload-url": "https://archivist.terraform.io/v1/object/f55b739b-ff03-4716-b436-726466b96dc4",
+            "hosted-json-state-upload-url": "https://archivist.terraform.io/v1/object/4fde7951-93c0-4414-9a40-f3abc4bac490",
+            "status": "pending",
             "serial": 1
         },
         "links": {
@@ -162,6 +244,22 @@ curl \
         }
     }
 }
+```
+
+`PUT https://archivist.terraform.io/v1/object/<UNIQUE OBJECT ID>`
+
+**The URL is provided in the `hosted-state-upload-url` attribute when creating a `state-versions` resource. After creation, the URL is hidden on the resource and no longer available.**
+
+### Sample Request
+
+**@filename is the name of state file containing the data you wish to upload.**
+
+```shell
+curl \
+  --header "Content-Type: application/octet-stream" \
+  --request PUT \
+  --data-binary @filename \
+  https://archivist.terraform.io/v1/object/4c44d964-eba7-4dd5-ad29-1ece7b99e8da
 ```
 
 ## List State Versions for a Workspace
