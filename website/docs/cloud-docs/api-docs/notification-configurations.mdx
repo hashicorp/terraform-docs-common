@@ -115,6 +115,36 @@ Run events include detailed information about a specific run, including the time
 }
 ```
 
+##### `Send a test` Payload
+
+This is a sample payload you can send to test if notifications are working. The payload does not have a `run` or `workspace` context, resulting in null values.
+
+You can trigger a test notification from the workspace notifcation settings page. You can read more about verifying a [notificaton configuration](/terraform/enterprise/workspaces/settings/notifications#enabling-and-verifying-a-configuration).
+
+```json
+{
+  "payload_version": 1,
+  "notification_configuration_id": "nc-jWvVsmp5VxsaCeXm",
+  "run_url": null,
+  "run_id": null,
+  "run_message": null,
+  "run_created_at": null,
+  "run_created_by": null,
+  "workspace_id": null,
+  "workspace_name": null,
+  "organization_name": null,
+  "notifications": [
+    {
+      "message": "Verification of test",
+      "trigger": "verification",
+      "run_status": null,
+      "run_updated_at": null,
+      "run_updated_by": null,
+    }
+  ]
+}
+```
+
 ### Workspace Notification Payload
 
 Workspace events include detailed information about workspace-level validation events like [health assessments](/terraform/cloud-docs/workspaces/health) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/terraform/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
