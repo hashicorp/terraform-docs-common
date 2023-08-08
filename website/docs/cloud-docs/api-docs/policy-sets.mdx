@@ -1,7 +1,7 @@
 ---
 page_title: Policy Sets - API Docs - Terraform Cloud
 description: >-
-  Use the `/policy-sets` endpoint to manage groupings of Sentinel and OPA policies. List, show, create, and update policy sets and policy set versions, and attach and detach policies from workspaces using the HTTP API.
+  Use the `/policy-sets` endpoint to manage groupings of Sentinel and OPA policies. List, show, create, and update policy sets and policy set versions, and attach and detach policies from workspaces and projects using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -40,7 +40,7 @@ description: >-
 
 [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces.
 
-Policy sets let you group related policies by attributes like environment or region. You can then apply each policy set to one or more workspaces. For these workspaces, Terraform Cloud checks every Terraform plan against each policy in the set.
+[Policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) are collections of policies that you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 -> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
@@ -93,6 +93,7 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.github-app-installation-id` | string |           | The VCS Connection GitHub App Installation to use. Find this ID on the user settings page. Requires previously authorizing the GitHub App and generating a user-to-server token. Manage the token from **User Settings** within Terraform Cloud. You can not specify this value if `oauth-token-id` is specified.                                                                                                                                                                                                               |
 | `data.attributes.vcs-repo.ingress-submodules` | boolean        | `false`   | Whether Terraform Cloud should instantiate repository submodules when retrieving the policy set.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `data.attributes.policies-path`               | string         | `null`    | The VCS repository subdirectory that contains the policies for this policy set. Terraform Cloud ignores files and directories outside of this sub-path and does not update the policy set when those files change. This attribute is only valid when you specify a VCS repository for the policy set.                                                                                                                                                                                                                                         |
+| `data.relationships.projects.data[]`          | array\[object] | `[]`      | A list of resource identifier objects that defines which projects are associated with the policy set. These objects must contain `id` and `type` properties, and the `type` property must be `projects`. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`.                                                                                                                                                                                                                                                                                     |
 | `data.relationships.workspaces.data[]`        | array\[object] | `[]`      | A list of resource identifier objects that defines which workspaces are associated with the policy set. These objects must contain `id` and `type` properties, and the `type` property must be `workspaces`. For example, `{ "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }`. Obtain workspace IDs from the [workspace's settings page](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#show-workspace). You can only specify this attribute when `data.attributes.global` is `false`. |
 | `data.relationships.policies.data[]`          | array\[object] | `[]`      | A list of resource identifier objects that defines which policies are members of the policy set. These objects must contain `id` and `type` properties, and the `type` property must be `policies`. For example, `{ "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }`.                                                                                                                                                                                                                                                                      |
 
@@ -116,6 +117,11 @@ Properties without a default value are required.
       }
     },
     "relationships": {
+      "projects": {
+        "data": [
+          { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
+        ]
+      },
       "workspaces": {
         "data": [
           { "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }
@@ -193,6 +199,11 @@ curl \
       "organization": {
         "data": { "id": "my-organization", "type": "organizations" }
       },
+      "projects": {
+        "data": [
+          { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
+        ]
+      },
       "workspaces": {
         "data": [
           { "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }
@@ -267,7 +278,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `filter[versioned]` | **Optional.** Allows filtering policy sets based on whether they are versioned (VCS-managed or API-managed), or use individual policy relationships. Accepts a boolean true/false value. A `true` value returns versioned sets, and a `false` value returns sets with individual policy relationships. If omitted, all policy sets are returned. |
 | `filter[kind]`      | **Optional.** If specified, restricts results to those with the matching policy kind value. Valid values are `sentinel` and `opa`.                                                                                                                                                                                                               |                                                             |
-| `include`           | **Optional.** Allows including related resource data. Value must be a comma-separated list containing one or more of `workspaces`, `policies`, `newest_version`, or `current_version`. See the [relationships section](#relationships) for details.                                                                                              |
+| `include`           | **Optional.** Enables you to include related resource data. Value must be a comma-separated list containing one or more of `projects`, `workspaces`, `policies`, `newest_version`, or `current_version`. See the [relationships section](#relationships) for details.                                                                                              |
 | `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                                               |
 | `page[size]`        | **Optional.** If omitted, the endpoint will return 20 policy sets per page.                                                                                                                                                                                                                                                                      |
 | `search[name]`      | **Optional.** Allows searching the organization's policy sets by name.                                                                                                                                                                                                                                                                           |
@@ -308,6 +319,11 @@ curl \
       "relationships": {
         "organization": {
           "data": { "id": "my-organization", "type": "organizations" }
+        },
+        "projects": {
+          "data": [
+            { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
+          ]
         },
         "workspaces": {
           "data": [
@@ -380,7 +396,7 @@ curl \
 
 | Parameter | Description                                                                                                                                                                                                                                         |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `include` | **Optional.** Allows including related resource data. Value must be a comma-separated list containing one or more of `workspaces`, `policies`, `newest_version`, or `current_version`. See the [relationships section](#relationships) for details. |
+| `include` | **Optional.**  Enables you to include related resource data. Value must be a comma-separated list containing one or more of `projects`, `workspaces`, `policies`, `newest_version`, or `current_version`. See the [relationships section](#relationships) for details. |
 
 ### Sample Request
 
@@ -425,6 +441,11 @@ curl --request GET \
           "id": "polsetver-m4yhbUBCgyDVpDL4",
           "type": "policy-set-versions"
         }
+      },
+      "projects": {
+        "data": [
+          { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
+        ]
       },
       "workspaces": {
         "data": [
@@ -512,7 +533,7 @@ curl --request GET \
 }
 ```
 
--> **Note:** The `data.relationships.workspaces` object refers to workspaces directly attached to the policy set. This key is omitted for policy sets marked as global, which are implicitly related to all of the organization's workspaces.
+-> **Note:** The `data.relationships.projects` and `data.relationships.workspaces` objects refer to projects and workspaces directly attached to the policy set. These keys are omitted for policy sets marked as global, which are implicitly related to all of the organization's workspaces.
 
 ## Update a Policy Set
 
@@ -546,6 +567,7 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The OAuth Token ID to use to connect to the VCS host.                                                                                                                                                                                                                                                        |
 | `data.attributes.vcs-repo.ingress-submodules` | boolean        | (previous value) | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                    |
 | `data.attributes.policies-path`               | boolean        | (previous value) | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present. |
+| `data.relationships.projects`                 | array\[object] | (previous value) | An array of references to projects that the policy set should be assigned to. Sending an empty array clears all project assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                           |                                                                                                                                          |
 | `data.relationships.workspaces`               | array\[object] | (previous value) | An array of references to workspaces that the policy set should be assigned to. Sending an empty array clears all workspace assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                       |                                                                                                                                          |
 
 ### Sample Payload
@@ -560,6 +582,11 @@ Properties without a default value are required.
       "global": false
     },
     "relationships": {
+      "projects": {
+        "data": [
+          { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
+        ]
+      },
       "workspaces": {
         "data": [
           { "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }
@@ -606,6 +633,11 @@ curl \
       "policies": {
         "data": [
           { "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }
+        ]
+      },
+      "projects": {
+        "data": [
+          { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
         ]
       },
       "workspaces": {
@@ -667,6 +699,54 @@ curl \
   --request POST \
   --data @payload.json \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/policies
+```
+
+## Attach a Policy Set to projects
+
+`POST /policy-sets/:id/relationships/projects`
+
+| Parameter | Description                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| `:id`     | The ID of the policy set to attach to projects. Use the "List Policy Sets" endpoint to find IDs. |
+
+-> **Note:** You can not attach global policy sets to individual projects.
+
+| Status  | Response                  | Reason                                                                     |
+| ------- | ------------------------- | -------------------------------------------------------------------------- |
+| [204][] | Nothing                   | The request was successful                                                 |
+| [404][] | [JSON API error object][] | Policy set not found or user unauthorized to perform action                |
+| [422][] | [JSON API error object][] | Malformed request body (one or more projects not found, wrong types, etc.) |
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path | Type           | Default | Description                                                                                                                                                                                                                                                          |
+| -------- | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data[]` | array\[object] |         | A list of resource identifier objects that defines which projects to attach the policy set to. These objects must contain `id` and `type` properties, and the `type` property must be `projects` (e.g. `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`). |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" },
+    { "id": "prj-2HRvNs49EWPjDqT1", "type": "projects" }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/projects
 ```
 
 ## Attach a Policy Set to workspaces
@@ -763,6 +843,54 @@ curl \
   --request DELETE \
   --data @payload.json \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/policies
+```
+
+## Detach a Policy Set from projects
+
+`DELETE /policy-sets/:id/relationships/projects`
+
+| Parameter | Description                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| `:id`     | The ID of the policy set you want to detach from the specified projects. Use the "List Policy Sets" endpoint to find IDs. |
+
+-> **Note:** You can not attach global policy sets to individual projects.
+
+| Status  | Response                  | Reason                                                                     |
+| ------- | ------------------------- | -------------------------------------------------------------------------- |
+| [204][] | Nothing                   | The request was successful                                                 |
+| [404][] | [JSON API error object][] | Policy set not found or user unauthorized to perform action                |
+| [422][] | [JSON API error object][] | Malformed request body (one or more projects not found, wrong types, etc.) |
+
+### Request Body
+
+This DELETE endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path | Type           | Default | Description                                                                                                                                                                                                                                                            |
+| -------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data[]` | array\[object] |         | A list of resource identifier objects that defines the projects the policy set will be detached from. These objects must contain `id` and `type` properties, and the `type` property must be `projects`. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" },
+    { "id": "prj-2HRvNs49EWPjDqT1", "type": "projects" }
+  ]
+}
+```
+
+### Sample Request
+
+```shell
+curl \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/projects
 ```
 
 ## Detach the Policy Set from workspaces
@@ -995,6 +1123,7 @@ The following relationships may be present in various responses for policy sets:
 | `newest-version`  | The most recently created policy set version, regardless of status. Note that this relationship may include an errored and unusable version, and is intended to allow checking for VCS errors. |
 | `organization`    | The organization associated with the specified policy set.                                                                                                                                     |
 | `policies`        | Individually managed policies which are associated with the policy set.                                                                                                                        |
+| `projects`        | The project this policy set applies to.                                                                                                                                                  |
 | `workspaces`      | The workspaces to which the policy set applies.                                                                                                                                                |
 
 The following relationships may be present in various responses for policy set versions:
