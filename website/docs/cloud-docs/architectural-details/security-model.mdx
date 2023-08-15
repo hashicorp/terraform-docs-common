@@ -157,4 +157,6 @@ Terraform Cloud uses a blob storage service called Archivist for storing various
 
 ### Consider Using Dynamic Provider Credentials
 
-Storing static credentials in Terraform Cloud comes with increased risk in the event that these credentials are exposed by a malicious user or a compromised plan or apply operation. This is due to their long-lived nature, and the need to revoke these credentials in potentially many locations upon exposure. Using [Dynamic Provider Credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/) eliminates the need to store credentials in Terraform Cloud and reduces this potential risk and exposure by generating new temporary credentials for each run which expire after the run completes.
+Storing static credentials in Terraform Cloud increases the inherent risk of a malicious user or a compromised plan or apply operation exposing your credentials. Because static credentials are usually long-lived and exposed in many locations, they are troublesome to revoke and replace.
+
+Using [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/) eliminates the need to store static credentials in Terraform Cloud, reducing the risk of exposure. Dynamic provider credentials generate new temporary credentials for each operation and expire after that operation completes. 
