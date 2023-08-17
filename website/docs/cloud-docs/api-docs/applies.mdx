@@ -161,13 +161,13 @@ _Using Terraform Cloud Agents_
 | --------- | ----------------------------------------- |
 | `id`      | The ID of the apply to recover state for. |
 
-It is possible that during the course of a Run, Terraform may fail to upload
-a state file. This can happen for a variety of reasons, but should be an
-exceptionally rare occurance. Terraform Cloud Agent versions 1.5.1+ include a
-fallback mechanism which attempts to upload the state directly to Terraform
-Cloud's backend storage system in these cases. This endpoint then makes the
-raw data from these failed uploads available to users who are authorized to
-read the state contents.
+It is possible that during the course of a Run, Terraform may fail to upload a
+state file. This can happen for a variety of reasons, but should be an
+exceptionally rare occurance. Terraform Cloud Agent versions greater than 1.5.0
+include a fallback mechanism which attempts to upload the state directly to
+Terraform Cloud's backend storage system in these cases. This endpoint then
+makes the raw data from these failed uploads available to users who are
+authorized to read the state contents.
 
 | Status  | Response                                     | Reason                                                                              |
 | ------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
