@@ -2,6 +2,18 @@
  * Redirects in this file are intended to be for documentation content only. The redirects will be applied to developer.hashicorp.com.
  */
 module.exports = [
+  // Redirects for Terraform Plugin Framework data handling expansion
+  // - https://github.com/hashicorp/terraform-plugin-framework/pull/822
+  {
+    source: "/terraform/plugin/framework/handling-data/conversion-rules",
+    destination: "/terraform/plugin/framework/handling-data/types",
+    permanent: true,
+  },
+  {
+    source: "/terraform/plugin/framework/handling-data/custom-types",
+    destination: "/terraform/plugin/framework/handling-data/types/custom",
+    permanent: true,
+  },
   // Redirects for restructured Terraform Plugin Framework docs for GA release of the Framework
   // - https://github.com/hashicorp/terraform-plugin-framework/pull/554
   // - https://github.com/hashicorp/terraform-docs-common/pull/252
