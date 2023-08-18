@@ -95,11 +95,15 @@ On the right of a workspace’s overview page, Terraform Cloud displays a **Heal
 
 ## Drift Detection
 
-Infrastructure drift means that your real-world infrastructure no longer matches your Terraform configuration. Drift typically occurs when actions outside of the Terraform workflow result in changes to your infrastructure. For example, a colleague may update resource configuration directly in the cloud provider console to resolve a production incident. This action changes the real resource attributes from those specified in your configuration.
+Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration you've defined in Terraform. This deviation is known as configuration drift. Configuration drift occurs when changes are made outside of Terraform's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
+
+For instance, if a colleague makes direct updates to remote objects using your cloud provider's console to address a production issue, the changes they make might conflict with the intended configuration. In such cases, Drift Detection detects these differences and recommends steps to address and rectify the discrepancies.
+
+~> **NOTE:** Configuration drift is distinct from state drift, which is no longer detected by Drift Detection. Configuration drift arises when changes made externally affect remote objects in a manner that renders your infrastructure configuration invalid. State drift, on the other hand, emerges when modifications are applied to remote objects without invalidating your infrastructure configuration. See [Refresh-Only Mode](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode) for more information about the steps required to remediate state drift.
 
 ### View Workspace Drift
 
-To view the drift detection results from the latest health assessment, go to the workspace and click **Health > Drift**. If there is drift, Terraform Cloud shows how the real infrastructure differs from the latest version of the workspace’s configuration.
+To view the drift detection results from the latest health assessment, go to the workspace and click **Health > Drift**. If configuration drift occurs, Terraform Cloud shows how the real infrastructure differs from the latest version of the workspace’s configuration.
 
 ### Resolve Drift
 
