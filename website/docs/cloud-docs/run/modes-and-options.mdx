@@ -23,7 +23,7 @@ Terraform Cloud runs support many of the same modes and options available in the
 
 -> **Version note:** Refresh-only support requires a workspace using at least Terraform CLI v0.15.4.
 
-[Refresh-only mode](/terraform/cli/commands/plan#planning-modes) instructs Terraform to create a plan which updates the Terraform state to match changes made to remote objects outside of Terraform.
+[Refresh-only mode](/terraform/cli/commands/plan#planning-modes) instructs Terraform to create a plan that updates the Terraform state to match changes made to remote objects outside of Terraform. This can be useful if state drift has occurred and you would like to reconcile your state file to match the drifted remote objects. Applying a refresh-only runs will not result in further changes to remote objects.
 
 - **CLI:** Use `terraform plan -refresh-only` or `terraform apply -refresh-only`.
 - **API:** Use the `refresh-only` option.
