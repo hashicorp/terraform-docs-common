@@ -111,7 +111,7 @@ To view the drift detection results from the latest health assessment, go to the
 
 You can use one of the following approaches to correct configuration drift:
 - **Overwrite drift**: If you do not want the drift's changes, queue a new plan and apply the changes to revert your real-world infrastructure to match your Terraform configuration.
-- **Update Terraform configuration:** If the drift contains changes that are desired, modify your Terraform configuration to include the changes and push a new configuration version. This will prevent Terraform from reverting the drift during the next apply. Refer to our [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
+- **Update Terraform configuration:** If you want the drift's changes, modify your Terraform configuration to include the changes and push a new configuration version. This prevents Terraform from reverting the drift during the next apply. Refer to the [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
 
 ## Continuous Validation
 
