@@ -99,7 +99,9 @@ Drift detection helps you identify situations where your actual infrastructure n
 
 For instance, if a colleague makes direct updates to remote objects using your cloud provider's console to address a production issue, the changes they make might conflict with the intended configuration. In such cases, Drift Detection detects these differences and recommends steps to address and rectify the discrepancies.
 
-~> **NOTE:** Configuration drift is distinct from state drift, which is no longer detected by Drift Detection. Configuration drift arises when changes made externally affect remote objects in a manner that renders your infrastructure configuration invalid. State drift, on the other hand, emerges when modifications are applied to remote objects without invalidating your infrastructure configuration. See [Refresh-Only Mode](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode) for more information about the steps required to remediate state drift.
+Configuration drift differs from state drift.  Drift detection _does not detect_ state drift.
+
+Configuration drift happens when external changes affecting remote objects invalidate your infrastructure configuration. State drift occurs when external changes affecting remote objects _do not_ invalidate your infrastructure configuration. Refer to [Refresh-Only Mode](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode)  to learn more about remediating state drift.
 
 ### View Workspace Drift
 
