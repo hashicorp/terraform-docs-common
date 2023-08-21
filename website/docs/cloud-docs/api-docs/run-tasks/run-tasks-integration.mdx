@@ -34,9 +34,9 @@ The service receiving the run task request should respond with `200 OK`, or Terr
 |-----------|---------------------------------------------------------|
 | `:url`    | The URL configured in the run task to send requests to. |
 
-| Status  | Response | Reason                            |
-|---------|----------|-----------------------------------|
-| [200][] | Nothing  | Successfully submitted a run task |
+| Status  | Response   | Reason                            |
+|---------|------------|-----------------------------------|
+| [200][] | No Content | Successfully submitted a run task |
 
 ### Request Body
 
@@ -133,7 +133,7 @@ Once a run task request has been fulfilled by the external integration, the inte
 
 | Status  |         Response          |                  Reason                  |
 | ------- | ------------------------- | ---------------------------------------- |
-| [200][] | Nothing                   | Successfully submitted a run task result |
+| [200][] | No Content                | Successfully submitted a run task result |
 | [401][] | [JSON API error object][] | Not authorized to perform action         |
 | [422][] | [JSON API error object][] | Invalid response payload. This could be caused by invalid attributes, or sending a status that is not accepted. |
 

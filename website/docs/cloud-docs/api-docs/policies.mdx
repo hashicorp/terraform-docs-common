@@ -40,7 +40,7 @@ description: >-
 
 Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices. Terraform Cloud policy enforcement lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces. Refer to [Policy Enforcement]((/cloud-docs/policy-enforcement) for more details.
 
-You group policies into [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
+[Policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) are collections of policies that you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces, in your organization. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/policies.mdx'
@@ -539,7 +539,7 @@ curl \
 
 | Status  | Response                  | Reason                                                   |
 | ------- | ------------------------- | -------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the policy                          |
+| [204][] | No Content                | Successfully deleted the policy                          |
 | [404][] | [JSON API error object][] | Policy not found, or user unauthorized to perform action |
 
 ### Sample Request

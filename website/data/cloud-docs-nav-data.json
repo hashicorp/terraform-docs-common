@@ -12,8 +12,12 @@
         "path": "overview/estimate-terraform-cloud-cost"
       },
       {
-        "title": "Changing Plans",
-        "path": "overview/change-plan"
+        "title": "Activate Pay-As-You-Go",
+        "path": "overview/activate-payg"
+      },
+      {
+        "title": "Activate HashiCorp Flex",
+        "path": "overview/activate-flex"
       }
     ]
   },
@@ -179,6 +183,7 @@
           { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
           { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
           { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          { "title":  "Specifying Multiple Configurations", "path": "workspaces/dynamic-provider-credentials/specifying-multiple-configurations"},
           {
             "title": "Vault-Backed Dynamic Credentials",
             "routes": [
@@ -458,28 +463,75 @@
     "title": "Integrations",
     "routes": [
       {
-        "title": "ServiceNow Integration",
+        "title": "ServiceNow Integrations",
         "routes": [
-          { "title": "Overview", "path": "integrations/service-now" },
           {
-            "title": "Service Catalog",
-            "path": "integrations/service-now/service-catalog"
+            "title": "Service Catalog for Terraform",
+            "routes": [
+              { "title": "Overview", "path": "integrations/service-now/service-catalog-terraform" },
+              {
+                "title": "Service Catalog",
+                "path": "integrations/service-now/service-catalog-terraform/service-catalog-config"
+              },
+              {
+                "title": "Admin Guide",
+                "path": "integrations/service-now/service-catalog-terraform/admin-guide"
+              },
+              {
+                "title": "Developer Reference",
+                "path": "integrations/service-now/service-catalog-terraform/developer-reference"
+              },
+              {
+                "title": "Example Customizations",
+                "path": "integrations/service-now/service-catalog-terraform/example-customizations"
+              },
+              {
+                "title": "V1 Setup Instructions",
+                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
+              }
+            ]
           },
           {
-            "title": "Admin Guide",
-            "path": "integrations/service-now/admin-guide"
-          },
-          {
-            "title": "Developer Reference",
-            "path": "integrations/service-now/developer-reference"
-          },
-          {
-            "title": "Example Customizations",
-            "path": "integrations/service-now/example-customizations"
-          },
-          {
-            "title": "V1 Setup Instructions",
-            "path": "integrations/service-now/service-now-v1"
+            "title": "Service Graph Connector for Terraform",
+            "routes": [
+              {
+                "title": "Overview", 
+                "path": "integrations/service-now/service-graph"
+              },
+              {
+                "title": "Setup",
+                "path": "integrations/service-now/service-graph/service-graph-setup"
+              },
+              {
+                "title": "Resource Coverage",
+                "routes": [
+                  {
+                    "title": "Overview",
+                    "path": "integrations/service-now/service-graph/resource-coverage"
+                  },
+                  {
+                    "title": "AWS",
+                    "path": "integrations/service-now/service-graph/resource-coverage/aws"
+                  },
+                  {
+                    "title": "Azure",
+                    "path": "integrations/service-now/service-graph/resource-coverage/azure"
+                  },
+                  {
+                    "title": "GCP",
+                    "path": "integrations/service-now/service-graph/resource-coverage/gcp"
+                  },
+                  {
+                    "title": "vSphere",
+                    "path": "integrations/service-now/service-graph/resource-coverage/vsphere"
+                  }
+                ]
+              },
+              {
+                "title": "Customizations",
+                "path": "integrations/service-now/service-graph/customizations"
+              }
+            ]
           }
         ]
       },
@@ -489,7 +541,16 @@
       },
       {
         "title": "Kubernetes Integration",
-        "path": "integrations/kubernetes"
+        "routes": [
+          {
+            "title": "Terraform Cloud Operator for Kubernetes Setup Instructions",
+            "path": "integrations/kubernetes"
+          },
+          {
+            "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
+            "path": "integrations/kubernetes/ops-v2-migration"
+          }
+        ]
       },
       {
         "title": "Run Tasks Integration",
