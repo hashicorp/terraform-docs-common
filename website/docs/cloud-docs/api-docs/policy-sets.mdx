@@ -554,7 +554,7 @@ curl --request GET \
 }
 ```
 
--> **Note:** The `data.relationships.projects`, `data.relationships.workspaces`, and `data.relationships.exclusions` objects refer to projects, workspaces and exclusions directly attached to the policy set. These keys are omitted for policy sets marked as global, which are implicitly related to all of the organization's workspaces.
+-> **Note:** The `data.relationships.projects` and `data.relationships.workspaces` refer to the projects and workspaces attached to the policy set. The `data.relationships.exclusions` object refers to the attached workspaces that Terraform Cloud excludes from a policy set's rules. Terraform Clouds omits these keys for policy sets marked as global, which are implicitly related to all of the organization's workspaces.
 
 ## Update a Policy Set
 
