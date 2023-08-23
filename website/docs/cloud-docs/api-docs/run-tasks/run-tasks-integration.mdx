@@ -188,38 +188,28 @@ A run task result may optionally contain up to 10 detailed results, which improv
 | `description`     | string | A short, one-line, description of the result |
 | `body`     | string | (Optional)  A detailed message for the result in Markdown format. |
 | `url`     | string | (Optional) A URL that a user may browse to for more information about this result. |
-| `tags`     | array | (Optional) A list of tags, or multi-valued tags, for the result. |
-| `tags[].label`     | string |The name of the header tag. This should be a very short name ideally no more than two or three words. |
-| `tags[].level`     | enum string | (Optional) The error level for the tag. Defaults to `none`. Either `none`, `info`, `warning`, or `error`. For levels other than `none`, labels are rendered with color and icon for that level. |
-| `tags[].value`     | string or array | Either a single value object or a  list of value objects. |
-| `tags[].value[].value`     | string | The text value of the tag. |
-| `tags[].value[].level`     | enum string |(Optional) The error level for the tag. Defaults to `none`. Either `none`, `info`, `warning`, or `error`. |
+| `tags`     | object | (Optional) An object containing tag arrays, named by the property key. |
+| `tags.key`     | string |The name of the header tag. This should be a very short name ideally no more than two or three words. Special handling is given to `severity` and `status` keys. |
+| `tags.key[].label`     | string | The text value of the tag. |
+| `tags.key[].level`     | enum string | (Optional) The error level for the tag. Defaults to `none`. Either `none`, `info`, `warning`, or `error`. For levels other than `none`, labels are rendered with color and icon for that level. |
 
 ##### Severity and Status Tags
 
-When surfacing run task outcomes with tags labeled "severity", or "status", those tags will be used to enrich the list display of outcomes in Terraform Cloud, enabling earlier feedback of severity and statuses.
+When surfacing run task outcomes with tags "severity", or "status", those tags will be used to enrich the list display of outcomes in Terraform Cloud, enabling earlier feedback of severity and statuses.
 
 ```json
 {
   "outcome-id": "PRTNR-CC-TF-127",
   "description": "ST-2942: S3 Bucket will not enforce MFA login on delete requests",
-  "tags": [
-    {
-      "label": "Status", 
-      "value":  [{"value": "Denied", "level": "error" }]
-    },
-    {
-      "label": "Severity", 
-      "value": [
-        {"value": "High", "level": "error" },
-        {"value": "Recoverable", "level": "info" },
+  "tags": {
+    "Status":  [{"label": "Denied", "level": "error" }],
+    "Severity": [
+        {"label": "High", "level": "error" },
+        {"label": "Recoverable", "level": "info" },
       ],
-    {
-      "label": "Cost Centre", 
-      "value": "IT-OPS" 
-    }
-  ],
-  "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- CUT FOR BREVITY —--",
+    "Cost Centre": ["label": "IT-OPS" ]
+  },
+  "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- Payload truncated —--",
   "url": "https://external.service.dev/result/PRTNR-CC-TF-127"
 }
 ```

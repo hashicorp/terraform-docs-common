@@ -4,27 +4,18 @@
   "title": "Run Task Result Tag",
   "description": "A label heading with a value, or array of rich values",
   "type": "object",
-  "properties": {
-    "label": {
-      "title": "Label",
-      "description": "The heading text to display to the user",
-      "type": "string",
+  "propertyNames": {
+    "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+  },
+  "minProperties": 1,
+  "maxProperties": 10,
+  "patternProperties": {
+    "*": {
+      "title": "Tag labels with optional colours",
+      "type": "array",
+      "items": { "$ref": "./runtask-rich-label.json" },
       "minLength": 1,
       "maxLength": 32
-    },
-    "value": {
-      "title": "Value",
-      "description": "The contents of the tag, to be rendered as one or more labels with optional colors and icons.",
-
-      "anyOf": [
-        { "$ref": "./runtask-rich-label.json" },
-        {
-          "type": "array",
-          "items": { "$ref": "./runtask-rich-label.json" },
-          "minItems": 1,
-          "maxItems": 10
-        }
-      ]
     }
   }
 }

@@ -19,5 +19,5 @@
       "default": "none"
     }
   },
-  "required": ["value"]
+  "required": ["label"]
 }
