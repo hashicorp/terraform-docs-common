@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "runtask-tag.json",
   "title": "Run Task Result Tag",
-  "description": "A label heading with a value, or array of rich values",
+  "description": "An object whose properties map to headings, each with an array of rich labels.",
   "type": "object",
   "propertyNames": {
     "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"

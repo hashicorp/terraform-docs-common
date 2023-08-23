@@ -108,7 +108,7 @@
     },
     "RunTaskTag": {
       "title": "Run Task Result Tag",
-      "description": "A tag name with an array of rich labels.",
+      "description": "An object whose properties map to headings, each with an array of rich labels.",
       "type": "object",
       "propertyNames": {
         "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
