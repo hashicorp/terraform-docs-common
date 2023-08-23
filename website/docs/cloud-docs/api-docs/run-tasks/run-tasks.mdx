@@ -36,14 +36,12 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[JSON API Schema document]: /schema/run-tasks/runtask-results.json
-
 # Run Tasks API
 
 [Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/run-tasks.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Refer to [run tasks Integration](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) for the API endpoints related triggering run tasks and the expected integration response.
@@ -402,7 +400,7 @@ curl \
 
 | Status  | Response                  | Reason                                                     |
 | ------- | ------------------------- | ---------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the run task                          |
+| [204][] | No Content                | Successfully deleted the run task                          |
 | [404][] | [JSON API error object][] | Run task not found, or user unauthorized to perform action |
 
 ### Sample Request
@@ -435,7 +433,7 @@ You may also configure the run task to begin during a specific [run stage](/terr
 
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
-| [204][] | Nothing                   | The request was successful                                             |
+| [204][] | No Content                | The request was successful                                             |
 | [404][] | [JSON API error object][] | Workspace or run task not found or user unauthorized to perform action |
 | [422][] | [JSON API error object][] | Malformed request body                                                 |
 
@@ -746,7 +744,7 @@ curl \
 
 | Status  | Response                  | Reason                                                               |
 | ------- | ------------------------- | -------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the workspace run task                          |
+| [204][] | No Content                | Successfully deleted the workspace run task                          |
 | [404][] | [JSON API error object][] | Workspace run task not found, or user unauthorized to perform action |
 
 ### Sample Request
