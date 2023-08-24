@@ -17,11 +17,11 @@ Terraform Cloud's private registry works similarly to the [public Terraform Regi
 
 -> **Note:** Your Terraform Enterprise instance must allow access to `registry.terraform.io` and `https://yy0ffni7mf-dsn.algolia.net/`.
 
-## Private Providers and Modules
+## Hosted Providers and Modules
 
-[Private providers](/terraform/cloud-docs/registry/publish-providers) and [private modules](/terraform/cloud-docs/registry/publish-modules) are hosted on an organization's private registry and are only available to members of that organization. In Terraform Enterprise, private providers and modules are also available to other organizations that are [configured to share](/terraform/enterprise/admin/application/registry-sharing) with that organization.
+[Hosted providers](/terraform/cloud-docs/registry/publish-providers) and [hosted modules](/terraform/cloud-docs/registry/publish-modules) are stored in an organization's private registry and are only available to members of that organization. In Terraform Enterprise, hosted providers and modules are also available to other organizations that are [configured to share](/terraform/enterprise/admin/application/registry-sharing) with that organization.
 
 
 ## Managing Usage
 
-You can create [Sentinel policies](/terraform/cloud-docs/policy-enforcement) to manage how members of your organization can use modules from the private registry. For example, you can mandate that all non-root modules in Terraform configurations must be private or public modules from your own private registry. You can even require that all of those modules use recent versions with a policy like [this example on GitHub](https://github.com/hashicorp/terraform-guides/blob/master/governance/third-generation/cloud-agnostic/http-examples/use-recent-versions-from-pmr.sentinel).
+You can create [Sentinel policies](/terraform/cloud-docs/policy-enforcement) to manage how members of your organization can use modules from the private registry. For example, you can mandate that all non-root modules in Terraform configurations must be listed in your own private registry. You can even require that all of those modules use recent versions with a policy like [this example on GitHub](https://github.com/hashicorp/terraform-guides/blob/master/governance/third-generation/cloud-agnostic/http-examples/use-recent-versions-from-pmr.sentinel).

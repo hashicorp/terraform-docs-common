@@ -1,11 +1,11 @@
 [
   { "heading": "Terraform Cloud" },
   { "title": "Overview", "path": "" },
-  { "title": "Plans and Features", 
+  { "title": "Plans and Features",
     "routes": [
       {
         "title": "Overview",
-        "path": "overview" 
+        "path": "overview"
       },
       {
         "title": "Estimate Terraform Cloud Cost",
@@ -97,7 +97,7 @@
             "path": "api-docs/private-registry/providers"
           },
           {
-            "title": "Private Provider Versions and Platforms",
+            "title": "Hosted Provider Versions and Platforms",
             "path": "api-docs/private-registry/provider-versions-platforms"
           },
           { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
@@ -350,7 +350,7 @@
         "path": "registry/add"
       },
       {
-        "title": "Publishing Private Providers",
+        "title": "Publishing Hosted Providers",
         "path": "registry/publish-providers"
       },
       {
@@ -495,7 +495,7 @@
             "title": "Service Graph Connector for Terraform",
             "routes": [
               {
-                "title": "Overview", 
+                "title": "Overview",
                 "path": "integrations/service-now/service-graph"
               },
               {

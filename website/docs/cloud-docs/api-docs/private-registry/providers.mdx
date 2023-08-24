@@ -38,10 +38,10 @@ description: >-
 
 # Registry Providers API
 
-You can add publicly curated providers from the [Terraform Registry](https://registry.terraform.io/) and custom, private providers to your Terraform Cloud private registry. The private registry stores a pointer to public providers so that you can view their data from within Terraform Cloud. This lets you clearly designate all of the providers that are recommended for the organization and makes them centrally accessible.
+You can add publicly curated providers from the [Terraform Registry](https://registry.terraform.io/) and custom, hosted providers to your Terraform Cloud private registry. The private registry stores a pointer to public providers so that you can view their data from within Terraform Cloud. This lets you clearly designate all of the providers that are recommended for the organization and makes them centrally accessible.
 
 
-All members of an organization can view and use both public and private providers, but you need [owners team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete them them in private registry.
+All members of an organization can view and use both public and hosted providers, but you need [owners team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete them them in private registry.
 
 ## Terraform Cloud Registry Implementation
 
@@ -168,10 +168,10 @@ curl \
 
 `POST /organizations/:organization_name/registry-providers`
 
-Use this endpoint to create both public and private providers:
+Use this endpoint to create both public and hosted providers:
 
 - **Public providers:** The public provider record will be available in the organization's registry provider list immediately after creation. You cannot create versions for public providers; you must use the versions available on the Terraform Registry.
-- **Private providers:** The private provider record will be available in the organization's registry provider list immediately after creation, but you must [create a version and upload release assets](/terraform/cloud-docs/registry/publish-providers#publishing-a-provider-and-creating-a-version) before consumers can use it. The private registry does not automatically update private providers when you release new versions. You must add each new version with the [Create a Provider Version](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) endpoint.
+- **Hosted providers:** The hosted provider record will be available in the organization's registry provider list immediately after creation, but you must [create a version and upload release assets](/terraform/cloud-docs/registry/publish-providers#publishing-a-provider-and-creating-a-version) before consumers can use it. The private registry does not automatically update hosted providers when you release new versions. You must add each new version with the [Create a Provider Version](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) endpoint.
 
 
 ### Parameters
@@ -192,7 +192,7 @@ Use this endpoint to create both public and private providers:
 
 ### Request Body
 
-~> **Important:** For private providers, you must also create a version, a platform, and upload release assets before consumers can use the provider. Refer to [Publishing a Private Provider](/terraform/cloud-docs/registry/publish-providers) for more details.
+~> **Important:** For hosted providers, you must also create a version, a platform, and upload release assets before consumers can use the provider. Refer to [Publishing a Hosted Provider](/terraform/cloud-docs/registry/publish-providers) for more details.
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -202,10 +202,10 @@ Properties without a default value are required.
 | ------------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------ |
 | `data.type`                     | string |         | Must be `"registry-providers"`.                                                                              |
 | `data.attributes.name`          | string |         | The name of the provider.                                                                                    |
-| `data.attributes.namespace`     | string |         | The namespace of the provider. For private providers this is the same as the `:organization_name` parameter. |
+| `data.attributes.namespace`     | string |         | The namespace of the provider. For hosted providers this is the same as the `:organization_name` parameter. |
 | `data.attributes.registry-name` | string |         | Whether this is a publicly maintained provider or private. Must be either `public` or `private`.             |
 
-### Sample Payload (Private Provider)
+### Sample Payload (Hosted Provider)
 
 ```json
 {
@@ -246,7 +246,7 @@ curl \
   https://app.terraform.io/api/v2/organizations/my-organization/registry-providers
 ```
 
-### Sample Response (Private Provider)
+### Sample Response (Hosted Provider)
 
 ```json
 {
@@ -326,7 +326,7 @@ curl \
 | -------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization the provider belongs to.                                                        |
 | `:registry_name`     | Whether this is a publicly maintained provider or private. Must be either `public` or `private`.             |
-| `:namespace`         | The namespace of the provider. For private providers this is the same as the `:organization_name` parameter. |
+| `:namespace`         | The namespace of the provider. For hosted providers this is the same as the `:organization_name` parameter. |
 | `:name`              | The provider name.                                                                                           |
 
 | Status  | Response                                             | Reason                                                    |
@@ -335,7 +335,7 @@ curl \
 | [403][] | [JSON API error object][]                            | Forbidden - public provider curation disabled             |
 | [404][] | [JSON API error object][]                            | Provider not found or user unauthorized to perform action |
 
-### Sample Request (Private Provider)
+### Sample Request (Hosted Provider)
 
 ```shell
 curl \
@@ -354,7 +354,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/organizations/my-organization/registry-providers/public/hashicorp/aws
 ```
-### Sample Response (Private Provider)
+### Sample Response (Hosted Provider)
 
 ```json
 {
@@ -451,7 +451,7 @@ curl \
 | [404][] | [JSON API error object][] | Provider not found or user not authorized to perform action |
 
 
-### Sample Request (Private Provider)
+### Sample Request (Hosted Provider)
 
 ```shell
 curl \
