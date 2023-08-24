@@ -57,21 +57,20 @@ Server Development > Script Include.
 | `tf_util`             | Miscellaneous helper functions                             |
 | `tf_variable`         | Resources for Terraform Variable API Requests              |
 | `tf_vcs_record`       | Manage ServiceNow Terraform VCS Repositories Table Records |
-| `tf_workspace`        | Resources for Terraform Workspace API Requests             |
+| `tf_workspace`        | Resources for Terraform workspace API Requests             |
 
 ### Example Service Catalog Flows and Actions
 
--> The ServiceNow Service Catalog for Terraform provides sample Catalog Items that utilize both Flows 
-and Workflows as their primary process engines. To determine a specific engine used by an Item, open it 
-in the edit mode and navigate to the Proces Engine tab. For instance, Create Workspace uses a Workflow, 
-whereas Create Workspace Flow is built upon a Flow. Both can be accessed in the Studio. You can also 
-manage Flows in the Flow Designer. For Workflows, navigate to All > Workflow Editor. Flows are a newer 
-solution developed by ServiceNow and are generally preferred over Workflows.
+-> The ServiceNow Service Catalog for Terraform provides sample Catalog Items that utilize both **Flows** 
+and **Workflows** as their primary process engines. To determine a specific engine used by an Item, open it 
+in the edit mode and navigate to the **Proces Engine** tab. For instance, **Create Workspace** uses a **Workflow**, 
+whereas **Create Workspace Flow** is built upon a **Flow**. Both can be accessed in the **Studio**. You can also 
+manage **Flows** in the **Flow Designer**. For **Workflows**, navigate to **All > Workflow Editor**. **Flows** are 
+a newer solution developed by ServiceNow and are generally preferred over **Workflows**.
 
-The ServiceNow Example Flows can be found in the ServiceNow Studio > Flows (or All > Flow Designer). 
-By default, the flows execute upon submitting an order request for the various
-catalog items. Admins can modify the flows and Actions to wait on an approval
-action, include approval rules, and specify approver groups.
+The ServiceNow Example Flows can be found in the **ServiceNow Studio > Flows** (or **All > Flow Designer**). 
+By default, the Flows execute upon submitting an order request for the various Catalog Items. Admins can modify the 
+Flows and Actions to wait on an approval action, include approval rules, and specify approver groups.
 
 | Flow Name                     | Description                                                                                                                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
