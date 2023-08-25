@@ -25,7 +25,7 @@ You can use two policy-as-code frameworks to define fine-grained, logic-based po
 
 Policy sets are collections of policies you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces in your organization. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set.
 
-You can exclude workspaces from any global or project-scoped policy sets. A policy set's policies will not be enforced on any runs in an excluded workspace. Excluded workspaces override included workspaces, so even if a policy set is applied directly to a workspace, the workspace can still be excluded from the policy set at the project level.
+You can also exclude specific workspaces from global or project-scoped policy sets. Terraform Cloud won't enforce a policy set's policies on any runs in an excluded workspace. For example, if you attach a policy set to a project and then exclude one of the project's workspaces from that policy set, Terraform Cloud will not enforce the policy set on the excluded workspace.
 
 You can create policy sets using the [Terraform Cloud user interface](/terraform/cloud-docs/policy-enforcement/manage-policy-sets#create-policy-sets), the Terraform Cloud API, or by connecting Terraform Cloud to your version control system. A policy set can only contain policies written in a single policy framework (Sentinel or OPA). However, you can add Sentinel or OPA policy sets to the same workspace.
 
