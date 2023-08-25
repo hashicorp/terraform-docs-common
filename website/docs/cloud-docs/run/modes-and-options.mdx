@@ -26,6 +26,18 @@ The default run mode of Terraform Cloud is to perform a plan, then apply it. If 
 - **API:** Use the `is-destroy` option.
 - **UI:** Use a workspace's **Destruction and Deletion** settings page.
 
+## Plan Only/Speculative Plan
+
+This option creates a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it.
+
+You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
+
+Plan-only runs ignore the per-workspace run queue; they can proceed even if another run is in progress, they cannot become the workspace's current run, and they do not block progress on other runs in the workspace.
+
+- **API:** Set the `plan-only` option to `true` and specify an available terraform version using the `terraform-version` field.
+- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Plan only** as the run type.
+- **VCS:** When a workspace is connected to a VCS repository, Terraform Cloud automatically starts a speculative plan when a pull request (or merge request) is opened against the selected branch of that repository. The plan will be linked from the pull/merge request view in your VCS, and can also be found in the workspace's run list.
+
 ## Saved Plans
 
 -> **Version note:** Using saved plans from the CLI with Terraform Cloud requires at least Terraform CLI v1.6.0.
@@ -40,6 +52,17 @@ Saved plans are ideal for interactive CLI workflows (where you might perform man
 
 - **CLI:** Use `terraform plan -out <FILE>` to perform and save a plan, then use `terraform apply <FILE>` to apply the saved plan. Use `terraform show <FILE>` if you need to inspect a saved plan before applying it.
 - **API:** Use the `save-plan` option when creating a run. If you create a new configuration version for a saved plan run, use the `provisional` option so that it will not become the workspace's current configuration version until you decide to apply the run.
+
+## Allow Empty Apply
+
+A no-operation (empty) apply enables Terraform Cloud to apply a run from a plan that contains no infrastructure changes. During apply, Terraform can upgrade the state version if required. You can use this option to upgrade the state in your Terraform Cloud workspace to a new Terraform version. Only some Terraform versions require this, most notably 0.13.
+
+To make such upgrades easier, empty apply runs will always auto-apply if their plan contains no changes.
+
+~> **Warning:** Terraform Cloud cannot guarantee that a plan in this mode will produce no changes. We recommend checking the plan for drift before proceeding to the apply stage.
+
+- **API:** Set the `allow-empty-apply` field to `true`.
+- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Allow empty apply** as the run type.
 
 ## Refresh-Only Mode
 
@@ -68,29 +91,6 @@ The [replace option](/terraform/cli/commands/plan#replace-address) instructs Ter
 
 - **CLI:** Use `terraform plan -replace=ADDRESS` or `terraform apply -replace=ADDRESS`.
 - **API:** Use the `replace-addrs` option.
-
-## Allow Empty Apply
-
-A no-operation (empty) apply enables Terraform Cloud to apply a run from a plan that contains no infrastructure changes. During apply, Terraform can upgrade the state version if required. You can use this option to upgrade the state in your Terraform Cloud workspace to a new Terraform version. Only some Terraform versions require this, most notably 0.13.
-
-To make such upgrades easier, empty apply runs will always auto-apply if their plan contains no changes.
-
-~> **Warning:** Terraform Cloud cannot guarantee that a plan in this mode will produce no changes. We recommend checking the plan for drift before proceeding to the apply stage.
-
-- **API:** Set the `allow-empty-apply` field to `true`.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Allow empty apply** as the run type.
-
-## Plan Only/Speculative Plan
-
-This option creates a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans). The speculative plan shows a set of possible changes and checks them against Sentinel policies, but Terraform cannot apply it.
-
-You can create speculative plans with a Terraform version that is different from the one currently selected for the workspace. This lets you check whether your configuration is compatible with a newer Terraform version without changing the workspace settings.
-
-Plan-only runs ignore the per-workspace run queue; they can proceed even if another run is in progress, they cannot become the workspace's current run, and they do not block progress on other runs in the workspace.
-
-- **API:** Set the `plan-only` option to `true` and specify an available terraform version using the `terraform-version` field.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Plan only** as the run type.
-- **VCS:** When a workspace is connected to a VCS repository, Terraform Cloud automatically starts a speculative plan when a pull request (or merge request) is opened against the selected branch of that repository. The plan will be linked from the pull/merge request view in your VCS, and can also be found in the workspace's run list.
 
 ## Targeted Plan and Apply
 
