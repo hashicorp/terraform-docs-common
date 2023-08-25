@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Policy Sets API
+# Policy sets API
 
 [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces.
 
@@ -56,7 +56,7 @@ Interacting with policy sets requires permission to manage policies. ([More abou
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## Create a Policy Set
+## Create a policy set
 
 `POST /organizations/:organization_name/policy-sets`
 
@@ -268,7 +268,7 @@ curl \
 }
 ```
 
-## List Policy Sets
+## List policy sets
 
 `GET /organizations/:organization_name/policy-sets`
 
@@ -397,7 +397,7 @@ curl \
 }
 ```
 
-## Show a Policy Set
+## Show a policy set
 
 `GET /policy-sets/:id`
 
@@ -556,7 +556,7 @@ curl --request GET \
 
 -> **Note:** The `data.relationships.projects` and `data.relationships.workspaces` refer to the projects and workspaces attached to the policy set. The `data.relationships.exclusions` object refers to the attached workspaces that Terraform Cloud excludes from a policy set's rules. Terraform Clouds omits these keys for policy sets marked as global, which are implicitly related to all of the organization's workspaces.
 
-## Update a Policy Set
+## Update a policy set
 
 `PATCH /policy-sets/:id`
 
@@ -685,7 +685,7 @@ curl \
 }
 ```
 
-## Add Policies to the Policy Set
+## Add policies to the policy set
 
 `POST /policy-sets/:id/relationships/policies`
 
@@ -733,7 +733,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/policies
 ```
 
-## Attach a Policy Set to Projects
+## Attach a policy set to projects
 
 `POST /policy-sets/:id/relationships/projects`
 
@@ -781,7 +781,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/projects
 ```
 
-## Attach a Policy Set to Workspaces
+## Attach a policy set to workspaces
 
 `POST /policy-sets/:id/relationships/workspaces`
 
@@ -877,7 +877,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/exclusions
 ```
 
-## Remove Policies from the Policy Set
+## Remove policies from the policy set
 
 `DELETE /policy-sets/:id/relationships/policies`
 
@@ -925,7 +925,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/policies
 ```
 
-## Detach a Policy Set from Projects
+## Detach a policy set from projects
 
 `DELETE /policy-sets/:id/relationships/projects`
 
@@ -973,7 +973,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/projects
 ```
 
-## Detach the Policy Set from Workspaces
+## Detach the policy set from workspaces
 
 `DELETE /policy-sets/:id/relationships/workspaces`
 
@@ -1069,7 +1069,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1/relationships/exclusions
 ```
 
-## Delete a Policy Set
+## Delete a policy set
 
 `DELETE /policy-sets/:id`
 
@@ -1092,7 +1092,7 @@ curl \
   https://app.terraform.io/api/v2/policy-sets/polset-3yVQZvHzf5j3WRJ1
 ```
 
-## Create a Policy Set Version
+## Create a policy pet version
 
 For versioned policy sets which have no VCS repository attached, versions of policy code may be uploaded directly to the API by creating a new policy set version and, in a subsequent request, uploading a tarball (tar.gz) of data to it.
 
@@ -1151,7 +1151,7 @@ curl \
 
 The `upload` link URL in the above response is valid for one hour after creation. Make a `PUT` request to this URL directly, sending the policy set contents in `tar.gz` format as the request body. Once uploaded successfully, you can request the [Show Policy Set](#show-a-policy-set) endpoint again to verify that the status has changed from `pending` to `ready`.
 
-## Upload Policy Set Versions
+## Upload policy set versions
 
 `PUT https://archivist.terraform.io/v1/object/<UNIQUE OBJECT ID>`
 
@@ -1169,7 +1169,7 @@ curl \
   https://archivist.terraform.io/v1/object/dmF1bHQ6djE6NWJPbHQ4QjV4R1ox...
 ```
 
-## Show a Policy Set Version
+## Show a policy set version
 
 `GET /policy-set-versions/:id`
 
@@ -1224,7 +1224,7 @@ curl \
 
 The `upload` link URL in the above response is valid for one hour after the `created_at` timestamp of the policy set version. Make a `PUT` request to this URL directly, sending the policy set contents in `tar.gz` format as the request body. Once uploaded successfully, you can request the [Show Policy Set Version](#show-a-policy-set-version) endpoint again to verify that the status has changed from `pending` to `ready`.
 
-## Available Related Resources
+## Available related resources
 
 The GET endpoints above can optionally return related resources for policy sets, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
