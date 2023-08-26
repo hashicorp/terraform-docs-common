@@ -27,19 +27,23 @@ The [CLI integration](/terraform/cli/cloud) brings Terraform Cloud's collaborati
 
 You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud, use variables from the appropriate workspace, enforce any applicable [Sentinel or OPA policies](/terraform/cloud-docs/policy-enforcement), and can access Terraform Cloud's [private registry][private] and remote state inputs.
 
-Terraform Cloud offers two kinds of CLI-driven runs, to support different stages of your workflow:
+Terraform Cloud offers three kinds of CLI-driven runs, to support different stages of your workflow:
 
 - `terraform plan` starts a [speculative plan][] in a Terraform Cloud workspace, using configuration files from a local directory. You can quickly check the results of edits (including compliance with Sentinel policies) without needing to copy sensitive variables to your local machine.
 
   Speculative plans work with all workspaces, and can co-exist with the [VCS-driven workflow](/terraform/cloud-docs/run/ui).
 
-- `terraform apply` starts a normal plan and apply in a Terraform Cloud workspace, using configuration files from a local directory.
+- `terraform apply` starts a standard plan and apply in a Terraform Cloud workspace, using configuration files from a local directory.
 
   Remote `terraform apply` is for workspaces without a linked VCS repository. It replaces the VCS-driven workflow with a more traditional CLI workflow.
 
-To supplement these remote operations, you can also use the optional [Terraform Enterprise Provider][tfe-provider], which interacts with the resources supported by Terraform Cloud. It can be useful for editing variables and workspace settings through the Terraform CLI.
+- `terraform plan -out <FILE>` and `terraform apply <FILE>` perform a two-part [saved plan run](/terraform/cloud-docs/run/modes-and-options.mdx#saved-plans) in a Terraform Cloud workspace, using configuration files from a local directory; the first command performs and saves the plan, and the second command applies it. You can use `terraform show <FILE>` to inspect a saved plan.
 
--> **Note:** The [Structured Run Output](/terraform/cloud-docs/workspaces/settings#user-interface) user interface will not apply to runs executed using the CLI-driven workflow, regardless of the setting in the Terraform Cloud workspace.
+    Like remote `terraform apply`, remote saved plans are for workspaces without a linked VCS repository.
+
+    -> **Version note:** Saved plans require at least Terraform CLI v1.6.0.
+
+To supplement these remote operations, you can also use the optional [Terraform Enterprise Provider][tfe-provider], which interacts with the resources supported by Terraform Cloud. It can be useful for editing variables and workspace settings through the Terraform CLI.
 
 ## Configuration
 
@@ -205,6 +209,33 @@ If you prefer to use the CLI in a non-interactive environment, we recommend firs
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+## Remote Saved Plans
+
+-> **Version note:** Saved plans require at least Terraform CLI v1.6.0.
+
+In workspaces that support `terraform apply`, you also have the option of performing the plan and apply as separate steps, using the standard variations of the relevant Terraform commands:
+
+- `terraform plan -out <FILE>` will perform and save a plan.
+- `terraform apply <FILE>` will apply a previously saved plan.
+- `terraform show <FILE>` (and `terraform show -json <FILE>`) will inspect a previously saved plan.
+
+Saved plan runs are halfway between speculative plans and standard plan and apply runs. They allow you to:
+
+- Perform cheap exploratory plans, while retaining the option of applying a specific plan once you are satisfied with your work.
+- Perform other tasks in your terminal between the plan and apply stages.
+- Perform the plan and apply operations on separate machines (as is common in continuous integration workflows).
+
+Saved plans become _stale_ once the state they were planned against is no longer valid (usually due to a different run being applied). In Terraform Cloud, stale saved plan runs are automatically detected and discarded. When examining a remote saved plan, the `terraform show` command (without the `-json` option) will inform you if a plan has been discarded or is otherwise unable to be applied.
+
+### File Contents and Permissions
+
+In order to abide by Terraform Cloud's permissions model, remote saved plans do not use the same local file format as locally executed saved plans; instead, they are a thin reference to a remote run, and Terraform CLI relies on authenticated network requests to inspect and apply remote plans. This helps avoid the accidental exposure of credentials or other sensitive information.
+
+The `terraform show -json` command requires workspace admin permissions when performed with a remote saved plan; this is because the [machine-readable JSON plan format](/terraform/internals/json-format) contains unredacted sensitive information (alongside redaction hints for use by systems that consume the format). The human-readable version of `terraform show` receives pre-redacted information, so it only requires the read runs permission.
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+Locally executed saved plans cannot be applied in a remote Terraform Cloud workspace, and remote saved plans cannot be applied locally.
 
 ## Policy Enforcement
 
@@ -212,13 +243,13 @@ If you prefer to use the CLI in a non-interactive environment, we recommend firs
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Policies are rules that Terraform Cloud enforces on Terraform runs. You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA). 
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA).
 
 If the specified workspace uses policies, Terraform Cloud runs those policies against all speculative plans and remote applies in that workspace. Failed policies can pause or prevent an apply, depending on the enforcement level. Refer to [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) for details.
 
 For Sentinel, the Terraform CLI prints policy results for CLI-driven runs. CLI support for policy results is not available for OPA.
 
-The following example shows Sentinel policy output in the terminal.  
+The following example shows Sentinel policy output in the terminal.
 
 ```
 $ terraform apply
