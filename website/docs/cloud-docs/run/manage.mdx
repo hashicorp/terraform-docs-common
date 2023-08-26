@@ -61,9 +61,11 @@ Force-canceling requires admin access to the workspace because it can have dange
 
 ## Locking Workspaces (Preventing Runs)
 
-You can lock the workspace to temporarily stop runs from being queued. Locking a workspace requires [permission to lock and unlock the workspace](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions).
+You can lock the workspace to temporarily stop runs from proceeding. Locking a workspace requires [permission to lock and unlock the workspace](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions), and requires that the workspace is not currently locked by an in-progress run.
 
-A lock prevents Terraform Cloud from performing any plans or applies in the workspace. This lock includes automatic runs due to new commits in the VCS repository, manual runs queued via the UI, runs started on the command line with `terraform plan` and `terraform apply`, and runs created with the API. New runs remain in the **Pending** state until the workspace unlocks.
+A lock prevents Terraform Cloud from performing any applies in the workspace, and also prevents many kinds of plans. New runs remain in the **Pending** state until the workspace unlocks.
+
+Locking **does not** affect plan-only runs or the planning stages of saved plan runs. These actions are allowed because they cannot affect infrastructure resources, they do not attempt to lock the workspace themselves, and they might provide important information about tasks to perform before removing the lock. Note that saved-plan runs cannot be _applied_ while the workspace is locked, and will be automatically discarded if the workspace's state is changed before they can be applied.
 
 Terraform Cloud shows the lock status in the workspace's header, next to the **Actions** menu.
 
