@@ -10,6 +10,8 @@ description: >-
 
 ~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
+**Note:** This feature is also available in Terraform Enterprise under the Governance and Policy module.
+
 For most use cases, separately configuring [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) with different cloud providers works well. However, Vault-backed dynamic credentials are for those looking for a way to:
  1. Use Vault's secrets engines as a centralized way to manage and consolidate cloud credentials management.
  2. Generate short-lived credentials without exposing their Terraform Enterprise instance's OIDC metadata endpoints to the broader public internet.
