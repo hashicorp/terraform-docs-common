@@ -62,15 +62,16 @@ Server Development > Script Include.
 ### Example Service Catalog Flows and Actions
 
 The ServiceNow Service Catalog for Terraform provides sample catalog items that use **Flows** 
-and **Workflows** as their primary process engines. To see which engine an item is using, open it 
+and **Workflows** as their primary process engines.  **Flows** are a newer solution developed 
+by ServiceNow and are generally preferred over **Workflows**. To see which engine an item is using, open it 
 in the edit mode and navigate to the **Process Engine** tab. For example, **Create Workspace** uses a **Workflow**, 
 whereas **Create Workspace Flow** is built upon a **Flow**. You can access both in the **Studio**. You can also 
-manage **Flows** in the **Flow Designer**. To manage **Workflows**, navigate to **All > Workflow Editor**. **Flows** are 
-a newer solution developed by ServiceNow and are generally preferred over **Workflows**.
+manage **Flows** in the **Flow Designer**. To manage **Workflows**, navigate to **All > Workflow Editor**.
 
-You can find the ServiceNow Example Flows in the **ServiceNow Studio > Flows** (or **All > Flow Designer**). 
-By default, Flows execute when someone submits an order request for a catalog item. Admins can modify the 
-Flows and Actions to wait on an approval action, include approval rules, and specify approver groups.
+You can find the ServiceNow Example Flows for Terraform in the **ServiceNow Studio > Flows** (or **All > Flow Designer**). 
+Search for items that belong to the **Terraform** application. By default, Flows execute when someone submits an order request 
+for a catalog item based on a Flow. Admins can customize the Flows and Actions to add approval flows, set approval rules based 
+on certain conditions, and configure multiple users or roles as approvers for specific catalog items. 
 
 | Flow Name                     | Description                                                                                                                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
