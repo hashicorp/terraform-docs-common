@@ -50,26 +50,26 @@ Server Development > Script Include.
 | --------------------- | ---------------------------------------------------------- |
 | `tf_config`           | Helper to pull values from the SN Terraform Configs Table  |
 | `tf_get_workspace`    | Client-callable script to retrieve workspace data          |
-| `tf_http`             | ServiceNow HTTP REST Wrapper for requests to Terraform API |
-| `tf_run`              | Resources for Terraform Run API Requests                   |
+| `tf_http`             | ServiceNow HTTP REST wrapper for requests to the Terraform API |
+| `tf_run`              | Resources for Terraform run API requests                   |
 | `tf_terraform_record` | Manage ServiceNow Terraform Table Records                  |
 | `tf_test_config`      | Client-callable script to test Teraform connectivity       |
 | `tf_util`             | Miscellaneous helper functions                             |
-| `tf_variable`         | Resources for Terraform Variable API Requests              |
-| `tf_vcs_record`       | Manage ServiceNow Terraform VCS Repositories Table Records |
-| `tf_workspace`        | Resources for Terraform workspace API Requests             |
+| `tf_variable`         | Resources for Terraform variable API Requests              |
+| `tf_vcs_record`       | Manage ServiceNow Terraform VCS repositories table records |
+| `tf_workspace`        | Resources for Terraform workspace API requests             |
 
 ### Example Service Catalog Flows and Actions
 
--> The ServiceNow Service Catalog for Terraform provides sample Catalog Items that utilize both **Flows** 
-and **Workflows** as their primary process engines. To determine a specific engine used by an Item, open it 
-in the edit mode and navigate to the **Proces Engine** tab. For instance, **Create Workspace** uses a **Workflow**, 
-whereas **Create Workspace Flow** is built upon a **Flow**. Both can be accessed in the **Studio**. You can also 
-manage **Flows** in the **Flow Designer**. For **Workflows**, navigate to **All > Workflow Editor**. **Flows** are 
+The ServiceNow Service Catalog for Terraform provides sample catalog items that use **Flows** 
+and **Workflows** as their primary process engines. To see which engine an item is using, open it 
+in the edit mode and navigate to the **Process Engine** tab. For example, **Create Workspace** uses a **Workflow**, 
+whereas **Create Workspace Flow** is built upon a **Flow**. You can access both in the **Studio**. You can also 
+manage **Flows** in the **Flow Designer**. To manage **Workflows**, navigate to **All > Workflow Editor**. **Flows** are 
 a newer solution developed by ServiceNow and are generally preferred over **Workflows**.
 
-The ServiceNow Example Flows can be found in the **ServiceNow Studio > Flows** (or **All > Flow Designer**). 
-By default, the Flows execute upon submitting an order request for the various Catalog Items. Admins can modify the 
+You can find the ServiceNow Example Flows in the **ServiceNow Studio > Flows** (or **All > Flow Designer**). 
+By default, Flows execute when someone submits an order request for a catalog item. Admins can modify the 
 Flows and Actions to wait on an approval action, include approval rules, and specify approver groups.
 
 | Flow Name                     | Description                                                                                                                                                                  |
@@ -84,8 +84,8 @@ Flows and Actions to wait on an approval action, include approval rules, and spe
 | Worker Poll Run State         | Polls the Terraform Cloud API for the current run state of a workspace.                                                                                                      |
 | Worker Poll Apply Run         | Polls the Terraform Cloud API and applies any pending Terraform runs.                                                                                                        |
 | Worker Poll Destroy Workspace | Queries ServiceNow Terraform Records for resources marked `is_destroyable`, applies the destroy run to destroy resources, and deletes the corresponding Terraform workspace. |
-| Update Workspace              | Updates Terraform Cloud workspace configurations, such as VCS repository, description, project, execution mode, agent pool ID (if applicable).                               |
-| Update Workspace with Vars    | Allows you to change details about the Terraform Cloud workspace configurations and variable values attached to it.                                                          |
+| Update Workspace              | Updates Terraform Cloud workspace configurations, such as VCS repository, description, project, execution mode, and agent pool ID (if applicable).                               |
+| Update Workspace with Vars    | Allows you to change details about the Terraform Cloud workspace configurations and attached variable values.                                                          |
 | Update Resources              | Updates Terraform Cloud workspace details and starts a new Terraform run with these new values.                                                                              |
 | Update Resources with Vars    | Updates your existing Terraform Cloud workspace and its variables, then starts a Terraform run with these updated values.                                                    |
 
