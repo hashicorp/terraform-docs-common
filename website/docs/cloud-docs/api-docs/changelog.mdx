@@ -9,9 +9,31 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+## 2023-08-21
+* Add `save-plan` attribute, `planned_and_saved` status, and `save_plan` operation type to [Runs endpoints](/terraform/cloud-docs/api-docs/run).
+
+## 2023-08-10
+* Add `provisional` to `configuration-versions` endpoint.
+
+## 2023-08-08
+* Update Policy Sets API endpoints to create, update, and return projects associated with a policy set.
+* Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-projects) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-projects) from a project.
+
+## 2023-07-26
+* Add support for a `custom` option to the `team_project` access level along with various customizable permissions. The `project-access` permissions apply to the project itself, and `workspace-access` permissions apply to all workspaces within the project. For more information, see [Project Team Access](/terraform/cloud-docs/api-docs/project-team-access).
+
+## 2023-06-09
+
+* Introduce support for [`import` blocks](/terraform/language/import/generating-configuration).
+  * [Runs](/terraform/cloud-docs/api-docs/run#create-a-run) have a new `allow-config-generation` option.
+  * [Plans](/terraform/cloud-docs/api-docs/plans#show-a-plan) have new `resource-imports` and `generated-configuration` properties.
+  * [Applies](/terraform/cloud-docs/api-docs/applies#show-an-apply) have a new `resource-imports` property.
+* The workspaces associated with a policy set can now be updated using the [Policy Sets PATCH endpoint](/terraform/cloud-docs/api-docs/policy-sets#update-a-policy-set)
+* Update the [Workspaces](/terraform/cloud-docs/api-docs/workspaces) API endpoints to include the associated [project](/terraform/cloud-docs/api-docs/projects).
+
 ## 2023-05-25
 
-* Terraform cloud now sets the `configuration_version_download_url`, `configuration_version_id`, and `workspace_working_directory` properties of the [Run Task Request](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#request-body) for all stages.
+* Terraform Cloud sets the `configuration_version_download_url`, `configuration_version_id`, and `workspace_working_directory` properties for all stages of the [Run Task Request](/terraform/enterprise/api-docs/run-tasks/run-tasks-integration#request-body).
 * Add the new `enforcement-level` property in the request and response of [Policies endpoints](/terraform/cloud-docs/api-docs/policies).
 * Deprecate the old `enforce` property in the request and response of [Policies endpoints](/terraform/cloud-docs/api-docs/policies).
 * Add new properties to limit run tasks and policies for the Terraform Cloud free tier. We updated the [entitlement set](/terraform/cloud-docs/api-docs/organizations#show-the-entitlement-set), [feature set](/terraform/cloud-docs/api-docs/feature-sets#sample-response), and [subscription](/terraform/cloud-docs/api-docs/subscriptions#sample-response) endpoints with the following properties:

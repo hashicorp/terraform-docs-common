@@ -43,7 +43,7 @@ A workspace may be configured to use one of the organization's agent pools to ru
 private, or on-premises infrastructure.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one self-hosted agent. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/agents.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## List Agent Pools
@@ -373,7 +373,7 @@ curl \
 
 | Status  | Response                  | Reason                                                                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [204][] | Nothing                   | Success                                                                                                      |
+| [204][] | No Content                | Success                                                                                                      |
 | [412][] | [JSON API error object][] | Agent is not deletable. Agents must have a status of `unknown`, `errored`, or `exited` before being deleted. |
 | [404][] | [JSON API error object][] | Agent not found, or user unauthorized to perform action                                                      |
 

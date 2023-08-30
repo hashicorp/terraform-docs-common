@@ -261,7 +261,7 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.oauth-token-id`     | string  |         | The VCS Connection (OAuth Connection + Token) to use as identified. Get this ID from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint. You can not specify this value if `github-app-installation-id` is specified. |
 | `data.attributes.vcs-repo.github-app-installation-id` | string |  | The VCS Connection GitHub App Installation to use. Find this ID on the user settings page. Requires previously authorizing the GitHub App and generating a user-to-server token. Manage the token from **User Settings** within Terraform Cloud. You can not specify this value if `oauth-token-id` is specified.                                                                                                                                                      |
 | `data.attributes.vcs-repo.display_identifier` | string  |         | The display identifier for the repository. For most VCS providers outside of BitBucket Cloud, this identifier matches the `data.attributes.vcs-repo.identifier` string.  |
-| `data.attributes.no-code`                     | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module. Not available in Terraform Enterprise.
+| `data.attributes.no-code`                     | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module.
 
 A VCS repository identifier is a reference to a VCS repository in the format `:org/:repo`, where `:org` and `:repo` refer to the organization (or project key, for Bitbucket Server) and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.
 
@@ -381,7 +381,7 @@ Properties without a default value are required.
 | `data.attributes.provider`      | string  |         | Specifies the Terraform provider that this module is used for. May contain lowercase alphanumeric characters. Maximum length is 64 characters.                                                                   |
 | `data.attributes.namespace`     | string  |         | The namespace of this module. Cannot be set for private modules. May contain alphanumeric characters, with dashes and underscores allowed in non-leading or trailing positions. Maximum length is 64 characters. |
 | `data.attributes.registry-name` | string  |         | Indicates whether this is a publicly maintained module or private. Must be either `public` or `private`.                                                                                                         |
-| `data.attributes.no-code`       | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module. Not available in Terraform Enterprise.
+| `data.attributes.no-code`       | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module.
 
 ### Sample Payload (private module)
 
@@ -809,7 +809,7 @@ If a version deletion would leave a provider with no versions, the provider will
 
 | Status  | Response                  | Reason                                                        |
 | ------- | ------------------------- | ------------------------------------------------------------- |
-| [204][] | Nothing                   | Success                                                       |
+| [204][] | No Content                | Success                                                       |
 | [403][] | [JSON API error object][] | Forbidden - public module curation disabled                   |
 | [404][] | [JSON API error object][] | Module, provider, or version not found or user not authorized |
 

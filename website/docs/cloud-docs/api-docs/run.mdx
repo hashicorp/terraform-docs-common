@@ -76,6 +76,7 @@ The run state is found in `data.attributes.status`, and you can reference the fo
 | `post_plan_running`    | The post-plan phase of the run is in progress.                                                                                                                                                                                                                                                                                                                                                                                              |
 | `post_plan_completed`  | The post-plan phase of the run has completed.                                                                                                                                                                                                                                                                                                                                                                                               |
 | `planned_and_finished` | The run is completed. This status only exists for plan-only runs and runs that produce a plan with no changes to apply. This is a final state.                                                                                                                                                                                                                                                                                                              |
+| `planned_and_saved`    | The run has finished its planning, checks, and estimates, and can be confirmed for apply. This status is only used for saved plan runs.
 | `apply_queued`         | Once the changes in the plan have been confirmed, the run will transition to `apply_queued`. This status indicates that the run should start as soon as the backend services that run terraform have available capacity. In Terraform Cloud, you should seldom see this status, as our aim is to always have capacity. However, in Terraform Enterprise this status will be more common due to the self-hosted nature.                      |
 | `applying`             | Terraform is applying the changes specified in the plan.                                                                                                                                                                                                                                                                                                                                                                                               |
 | `applied`              | Terraform has applied the changes specified in the plan.                                                                                                                                                                                                                                                                                                                                                                                                  |
@@ -90,11 +91,12 @@ The run operation specifies the Terraform execution mode. You can reference the 
 
 | Operation        | Description                                                                                                                                                                |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `plan_only`      | Indicates the run completed without an apply phase. This is also called a [speculative plan](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan).                |
-| `plan_and_apply` | Indicates the run completed with both plan and apply phases.                                                                                                               |
-| `refresh_only`   | Specifies the run was instructed to execute a plan to update Terraform state.                                                                                                |
-| `destroy`        | Specifies the run destroyed all objects, regardless of configuration changes.                                                                                              |
-| `empty_apply`    | Specifies the run performed an apply with no changes to resources. This is most commonly used to [upgrade terraform state versions](/terraform/cloud-docs/workspaces/state#upgrading-state). |
+| `plan_only`      | The run does not have an apply phase. This is also called a [speculative plan](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan).                |
+| `plan_and_apply` | The run includes both plan and apply phases.                                                                                                               |
+| `save_plan`      | The run is a saved plan run. It can include both plan and apply phases, but will only become the workspace's current run if a user chooses to apply it.                     |
+| `refresh_only`   | The run should update Terraform state, but not make changes to resources.                                                                                                |
+| `destroy`        | The run should destroy all objects, regardless of configuration changes.                                                                                              |
+| `empty_apply`    | The run should perform an apply with no changes to resources. This is most commonly used to [upgrade terraform state versions](/terraform/cloud-docs/workspaces/state#upgrading-state). |
 
 ### Run Sources
 
@@ -139,6 +141,8 @@ Properties without a default value are required.
 
 | Key path                                           | Type                 | Default                                            | Description                                                                                                                                                                                                                                   |
 |----------------------------------------------------|----------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/terraform/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
+| `data.attributes.allow-config-generation`                | bool                 | false                                              | Specifies whether Terraform can [generate resource configuration](/terraform/language/import/generating-configuration) when planning to import new resources. If false, `import` blocks without a corresponding `resource` block will error.                                                               |
 | `data.attributes.auto-apply`                       | bool                 | The current Auto Apply setting in the workspace    | Whether to automatically apply changes when a Terraform plan is successful. Defaults to the [Auto Apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) workspace setting.                                                      |
 | `data.attributes.is-destroy`                       | bool                 | false                                              | Specifies whether this plan is a destroy plan that will destroy all provisioned resources. Mutually exclusive with `refresh-only`.                                                                                                            |
 | `data.attributes.message`                          | string               | "Queued manually via the Terraform Enterprise API" | Specifies the message associated with this run.                                                                                                                                                                                         |
@@ -148,8 +152,8 @@ Properties without a default value are required.
 | `data.attributes.target-addrs`                     | array\[string]       |                                                    | Specifies an optional list of resource addresses to be passed to the `-target` flag.                                                                                                                                                          |
 | `data.attributes.variables`                        | array\[{key, value}] | (empty array)                                      | Specifies an optional list of run-specific variable values. Refer to [Run-Specific Variables](/terraform/cloud-docs/workspaces/variables/managing-variables#run-specific-variables) for details.    |
 | `data.attributes.plan-only`                        | bool                 | (from configuration version)                       | Specifies if this is a [speculative, plan-only](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan) run that Terraform cannot apply. Often used in conjunction with terraform-version in order to test whether an upgrade would succeed. |
+| `data.attributes.save-plan`                        | bool                 | false                                              | Specifies if this should be a saved plan run. Terraform can apply saved plan runs, but they perform their plan and checks without becoming the workspace's current run (like a plan-only run), and will only become the current run if you confirm them for apply. When creating new [configuration versions](/terraform/cloud-docs/api-docs/configuration-versions) for saved plan runs, be sure to make them `provisional`. |
 | `data.attributes.terraform-version`                | string               |                                                    | Specifies the Terraform version to use in this run. Only valid for plan-only runs; must be a valid Terraform version available to the organization.                                                                                           |
-| `data.attributes.allow-empty-apply`                | bool                 |                                                    | Specifies whether Terraform can apply the run even when the plan [contains no changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply). Often used to [upgrade state](/terraform/cloud-docs/workspaces/state#upgrading-state) after upgrading a workspace to a new terraform version.                                                                     |
 | `data.relationships.workspace.data.id`             | string               |                                                    | Specifies the workspace ID where the run will be executed.                                                                                                                                                                                    |
 | `data.relationships.configuration-version.data.id` | string               |                                                    | Specifies the configuration version to use for this run. If the `configuration-version` object is omitted, the run will be created using the workspace's latest configuration version.                                                        |
 
@@ -216,6 +220,7 @@ curl \
       "has-changes": false,
       "auto-apply": false,
       "allow-empty-apply": false,
+      "allow-config-generation": false,
       "is-destroy": false,
       "message": "Custom message",
       "plan-only": false,
@@ -238,6 +243,7 @@ curl \
       "refresh": false,
       "refresh-only": false,
       "replace-addrs": null,
+      "save-plan": false,
       "variables": []
     },
     "relationships": {
@@ -372,6 +378,7 @@ curl \
         "has-changes": false,
         "auto-apply": false,
         "allow-empty-apply": false,
+        "allow-config-generation": false,
         "is-destroy": false,
         "message": "Custom message",
         "plan-only": false,
@@ -394,6 +401,7 @@ curl \
         "refresh": false,
         "refresh-only": false,
         "replace-addrs": null,
+        "save-plan": false,
         "variables": []
       },
       "relationships": {
@@ -460,6 +468,7 @@ curl \
       "has-changes": false,
       "auto-apply": false,
       "allow-empty-apply": false,
+      "allow-config-generation": false,
       "is-destroy": false,
       "message": "Custom message",
       "plan-only": false,
@@ -482,6 +491,7 @@ curl \
       "refresh": false,
       "refresh-only": false,
       "replace-addrs": null,
+      "save-plan": false,
       "variables": []
     },
     "relationships": {

@@ -53,6 +53,10 @@ Both Terraform Cloud and Terraform CLI have features called workspaces, but they
 
 ## Listing and Filtering Workspaces
 
+<!-- BEGIN: TFC:only name:explorer-callout -->
+-> **Note:**  The explorer for workspace visibility surfaces a wider range of valuable information from across your workspaces. [Learn more](/terraform/cloud-docs/workspaces/explorer).
+<!-- END: TFC:only name:explorer-callout -->
+
 Click **Projects & workspaces**. Terraform Cloud displays the workspaces the current user account has permission to read runs for. The project drawer lists any projects the user has access to. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -85,7 +89,11 @@ In Terraform Enterprise, administrators can use [Admin Settings](/terraform/ente
 
 ## Organize Workspaces with Projects
 
-Projects let you organize your workspaces into groups. Organizations with the [Standard](https://www.hashicorp.com/products/terraform/pricing) edition can assign project permissions to scope access to collections of workspaces based on business units and responsibilities.
+Projects let you organize your workspaces into groups. 
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+-> **Note:** On Terraform Cloud **Standard** Edition, you can assign project permissions to scope access to collections of workspaces based on business units and responsibilities. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+<!-- END: TFC:only name:pnp-callout -->
 
 Refer to [Organize Workspaces with Projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) for more details.
 
@@ -97,12 +105,12 @@ You can create workspaces through the [Terraform Cloud UI](/terraform/cloud-docs
 ## Workspace Health
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/health-assessments.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
 
-- Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file.
+- Drift detection determines whether your real-world infrastructure matches your Terraform configuration.
 - Continuous validation determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure.
 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.

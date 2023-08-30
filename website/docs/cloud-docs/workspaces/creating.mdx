@@ -14,10 +14,7 @@ Workspaces organize infrastructure into meaningful groups. Create new workspaces
 - **Terraform Cloud UI:** [Create a Workspace](#create-a-workspace)
 - **Workspaces API:** [Create a Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace)
 - **Terraform Enterprise Provider:** [`tfe_workspace` resource](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace)
-<!-- BEGIN: TFC:only name:no-code -->
 -   **No-Code Provisioning:** The no-code provisioning workflow creates a new workspace and deploys a [no-code ready module's](/terraform/cloud-docs/no-code-provisioning/provisioning) resources in it.
-
-<!-- END: TFC:only name:no-code -->
 
 ## Permissions
 
@@ -55,10 +52,14 @@ The workspace creation process varies depending on the workspace workflow you ch
 1. Click **Projects & workspaces** to view a list of the workspaces within your organization.
 1. Click **New**, then select **Workspace** from the dropdown menu.
 1. Choose a workflow type: **Version control**, **CLI-driven**, or **API-driven**.
-1. (Version control only) Choose an existing version control provider or configure a new one. Refer to [Connecting VCS Providers](/terraform/cloud-docs/vcs) for more details.
-1. (Version control only) Choose a repository from the filterable list. The **Configure settings** page appears.
+1. (Version control only) Choose an existing version control provider or
+   configure a new one. Refer to [Connecting VCS
+   Providers](/terraform/cloud-docs/vcs) for more details.
+1. (Version control only) Choose an organization (GitHub App only), and repository from the filterable list. The **Configure settings** page appears.
 
-  -> **Note:** Depending on your provider, you may need to change which account's repositories are shown. You can also scroll to the bottom of the list and enter the repository ID in the text field if it is not immediately visible.
+  -> **Tip:** If your repository is missing from the list, enter the
+  repository ID in the text field below the list. The list only displays the
+  first 100 repositories from your VCS provider.
 
 1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to the [workspace naming recommendations](#workspace-naming).
 1. If you have access to multiple projects, choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](https://terraform.io/workspaces/organize-workspaces-with-projects) for more details. 

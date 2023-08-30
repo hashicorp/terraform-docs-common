@@ -41,7 +41,7 @@ description: >-
 Terraform Cloud retains 14 days of audit log information. The audit trails API exposes a stream of audit events, which describe changes to the application entities (workspaces, runs, etc.) that belong to a Terraform Cloud organization. Unlike other APIs, the Audit Trails API does not use the [JSON API specification](/terraform/cloud-docs/api-docs#json-api-formatting).
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Audit trails are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details. The Audit Trails API is not available for Terraform Enterprise.
+@include 'tfc-package-callouts/audit-trails.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## List an organization's audit events

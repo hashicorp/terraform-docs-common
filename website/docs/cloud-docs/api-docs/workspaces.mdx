@@ -1294,7 +1294,7 @@ You can safe delete a workspace using two endpoints that behave identically. The
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | --------------------------| --------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [204][] | No Content                | Successfully deleted the workspace                                    |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
 | [409][] | [JSON API error object][] | Workspace is not safe to delete because it is managing resources                                       |
 
@@ -1323,7 +1323,7 @@ You can use two endpoints to force delete a workspace, which behave identically.
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | --------------------------| --------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the workspace                                    |
+| [204][] | No Content                | Successfully deleted the workspace                                    |
 | [403][] | [JSON API error object][] | Not authorized to perform a force delete on the workspace             |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
 
@@ -2421,7 +2421,7 @@ This endpoint can only be used by teams with permission to manage workspaces for
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully updated remote state consumers                           |
+| [204][] | No Content                | Successfully updated remote state consumers                           |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action           |
 | [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
 
@@ -2482,7 +2482,7 @@ This endpoint adds one or more remote state consumers to the workspace. It can o
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully updated remote state consumers                           |
+| [204][] | No Content                | Successfully updated remote state consumers                           |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action           |
 | [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
 
@@ -2542,7 +2542,7 @@ This endpoint removes one or more remote state consumers from a workspace, accor
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully updated remote state consumers                           |
+| [204][] | No Content                | Successfully updated remote state consumers                           |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action           |
 | [422][] | [JSON API error object][] | Problem with payload or request; details provided in the error object |
 
@@ -2672,7 +2672,7 @@ matching organization tag exists with such name, a new one will be created.
 
 | Status  | Response                  | Reason(s)                                                   |
 | ------- | ------------------------- | ----------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully added tags to workspace                        |
+| [204][] | No Content                | Successfully added tags to workspace                        |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action |
 
 ### Request Body
@@ -2740,7 +2740,7 @@ removed from the organization-wide list.
 
 | Status  | Response                  | Reason(s)                                                   |
 | ------- | ------------------------- | ----------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully removed tags to workspace                      |
+| [204][] | No Content                | Successfully removed tags to workspace                      |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform action |
 
 ### Request Body
@@ -2789,13 +2789,14 @@ Status code `204`.
 
 The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
-* `organization` - The full organization record.
 * `current_configuration_version` - The last configuration this workspace received, excluding plan-only configurations. Terraform uses this configuration for new runs, unless you provide a different one.
 * `current_configuration_version.ingress_attributes` - The commit information for the current configuration version.
 * `current_run` - Additional information about the current run.
-* `current_run.plan` - The plan used in the current run.
 * `current_run.configuration_version` - The configuration used in the current run.
 * `current_run.configuration_version.ingress_attributes` - The commit information used in the current run.
+* `current_run.plan` - The plan used in the current run.
 * `locked_by` - The user, team, or run responsible for locking the workspace, if the workspace is currently locked.
-* `readme` - The most recent workspace README.md
+* `organization` - The full organization record.
 * `outputs` - The outputs for the most recently applied run.
+* `project` - The full project record.
+* `readme` - The most recent workspace README.md.
