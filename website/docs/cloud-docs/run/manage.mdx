@@ -65,7 +65,7 @@ You can lock the workspace to temporarily stop runs from proceeding. Locking a w
 
 A lock prevents Terraform Cloud from performing any applies in the workspace, and also prevents many kinds of plans. New runs remain in the **Pending** state until the workspace unlocks.
 
-Locking **does not** affect plan-only runs or the planning stages of saved plan runs. These actions are allowed because they cannot affect infrastructure resources, they do not attempt to lock the workspace themselves, and they might provide important information about tasks to perform before removing the lock. Note that saved-plan runs cannot be _applied_ while the workspace is locked, and will be automatically discarded if the workspace's state is changed before they can be applied.
+Locking **does not** affect [plan-only runs](/terraform/cloud-docs/run/remote-operations#speculative-plans) or the planning stages of [saved plan runs](/terraform/cloud-docs/run/cli#remote-saved-plans). Terraform allows these types of runs because they can not affect infrastructure resources, do not attempt to lock the workspace themselves, and might provide important information about tasks to perform before removing the lock. Note that you can not _apply_ saved-plan runs while the workspace is locked, and Terraform Cloud automatically discards these runs if the workspace's state is changed before they can be applied.
 
 Terraform Cloud shows the lock status in the workspace's header, next to the **Actions** menu.
 

@@ -148,10 +148,10 @@ The Console UI experience is the traditional Terraform experience, where live te
 
 If you need to prevent Terraform runs for any reason, you can lock a workspace. This prevents all applies (and many kinds of plans) from proceeding, and affects runs created via UI, CLI, API, and automated systems. To enable runs again, a user must unlock the workspace.
 
-There are two kinds of run operation that can ignore workspace locking, since they cannot affect resources or state and do not attempt to lock the workspace themselves:
+Two kinds of run operations can ignore workspace locking because they cannot affect resources or state and do not attempt to lock the workspace themselves:
 
 - Plan-only runs.
-- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options.mdx#saved-plans). (Note that you can only _apply_ a saved plan if the workspace is unlocked, and the apply will lock the workspace like normal.)
+- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options.mdx#saved-plans). You can only _apply_ a saved plan if the workspace is unlocked, and applying that plan locks the workspace as usual.
 
 Locking a workspace also restricts state uploads. In order to upload state, the workspace must be locked by the user who is uploading state.
 
