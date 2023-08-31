@@ -126,12 +126,12 @@ variable "tfc_vault_backed_gcp_dynamic_credentials" {
 
 ```hcl
 provider "google" {
-  access_token = var.tfc_vault_backed_gcp_dynamic_credentials.access_token
+  access_token = var.tfc_vault_backed_gcp_dynamic_credentials.default.access_token
 }
 
 provider "google" {
   alias = "ALIAS1"
-  access_token = var.tfc_vault_backed_gcp_dynamic_credentials.access_token
+  access_token = var.tfc_vault_backed_gcp_dynamic_credentials.aliases["ALIAS1"].access_token
 }
 ```
 
@@ -139,11 +139,11 @@ provider "google" {
 
 ```hcl
 provider "google" {
-  credentials = var.tfc_vault_backed_gcp_dynamic_credentials.credentials
+  credentials = var.tfc_vault_backed_gcp_dynamic_credentials.default.credentials
 }
 
 provider "google" {
   alias = "ALIAS1"
-  credentials = var.tfc_vault_backed_gcp_dynamic_credentials.credentials
+  credentials = var.tfc_vault_backed_gcp_dynamic_credentials.aliases["ALIAS1"].credentials
 }
 ```
