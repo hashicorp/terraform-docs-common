@@ -229,13 +229,13 @@ Saved plans become _stale_ once the state Terraform planned them against is no l
 
 ### File Contents and Permissions
 
+You can only apply remote saved plans in the same remote Terraform Cloud workspace that performed the plan. Additionally, you can not apply locally executed saved plans in a remote workspace.
+
 In order to abide by Terraform Cloud's permissions model, remote saved plans do not use the same local file format as locally executed saved plans. Instead, remote saved plans are a thin reference to a remote run, and the Terraform CLI relies on authenticated network requests to inspect and apply remote plans. This helps avoid the accidental exposure of credentials or other sensitive information.
 
 The `terraform show -json` command requires [workspace admin permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) to inspect a remote saved plan; this is because the [machine-readable JSON plan format](/terraform/internals/json-format) contains unredacted sensitive information (alongside redaction hints for use by systems that consume the format). The human-readable version of `terraform show` only requires the read runs permission, because it uses pre-redacted information.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
-
-Locally executed saved plans cannot be applied in a remote Terraform Cloud workspace, and remote saved plans cannot be applied locally.
 
 ## Policy Enforcement
 
