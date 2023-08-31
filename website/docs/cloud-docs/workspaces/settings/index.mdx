@@ -58,7 +58,9 @@ Enter a brief description of the workspace's purpose or types of infrastructure.
 
 Whether to use Terraform Cloud as the Terraform execution platform for this workspace.
 
-The default value is "Remote", which instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment, and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
+The default value is "Default", which inherits from the workspace's organization's default execution mode.
+
+When "Remote" is selected, it instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment, and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
 To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/terraform/cli/cloud).
 
