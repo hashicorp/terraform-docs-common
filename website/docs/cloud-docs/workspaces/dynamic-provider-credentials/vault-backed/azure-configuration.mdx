@@ -91,15 +91,18 @@ variable "tfc_vault_backed_azure_dynamic_credentials" {
 ```hcl
 provider "azurerm" {
   features {}
-  client_id_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
+  client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_secret_file_path
+  subscription_id         = "00000000-0000-0000-0000-000000000000"
+  tenant_id               = "10000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
-  alias = "ALIAS1"
-  client_id_file_path = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
+  alias                   = "ALIAS1"
+  client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_secret_file_path
+  subscription_id         = "00000000-0000-0000-0000-000000000000"
+  tenant_id               = "20000000-0000-0000-0000-000000000000"
 }
-
 ```

@@ -105,18 +105,22 @@ variable "tfc_azure_dynamic_credentials" {
 ```hcl
 provider "azurerm" {
   features {}
-  // Set this to true as we are using OIDC
-  use_oidc = true
-  client_id_file_path = var.tfc_azure_dynamic_credentials.default.client_id_file_path
+  // use_oidc must be explicitly set to true when using multiple configurations.
+  use_oidc             = true
+  client_id_file_path  = var.tfc_azure_dynamic_credentials.default.client_id_file_path
   oidc_token_file_path = var.tfc_azure_dynamic_credentials.default.oidc_token_file_path
+  subscription_id      = "00000000-0000-0000-0000-000000000000"
+  tenant_id            = "10000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
-  // Set this to true as we are using OIDC
-  use_oidc = true
-  alias = "ALIAS1"
-  client_id_file_path = var.tfc_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
+  // use_oidc must be explicitly set to true when using multiple configurations.
+  use_oidc             = true
+  alias                = "ALIAS1"
+  client_id_file_path  = var.tfc_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
   oidc_token_file_path = var.tfc_azure_dynamic_credentials.aliases["ALIAS1"].oidc_token_file_path
+  subscription_id      = "00000000-0000-0000-0000-000000000000"
+  tenant_id            = "20000000-0000-0000-0000-000000000000"
 }
 ```
