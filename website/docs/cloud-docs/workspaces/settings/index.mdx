@@ -58,7 +58,7 @@ Enter a brief description of the workspace's purpose or types of infrastructure.
 
 Whether to use Terraform Cloud as the Terraform execution platform for this workspace.
 
-The default value is "Default", which inherits from the workspace's organization's default execution mode.
+By default, this will be configured to use the Organization's [default execution mode](/terraform/cloud-docs/users-teams-organizations/organizations#organization-settings). Alternatively, you may choose a Custom execution mode for this workspace instead.
 
 When "Remote" is selected, it instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment, and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
