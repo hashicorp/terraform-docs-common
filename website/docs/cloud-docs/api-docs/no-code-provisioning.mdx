@@ -392,7 +392,7 @@ Resource Name | Description
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2
+  https://app.terraform.io/api/v2/no-code-modules/nocode-9HE91XDNY3faePn2?include=variable_options
 ```
 
 ### Sample Response
@@ -486,4 +486,418 @@ curl \
     }
   ]
 }
+```
+
+## Create a Workspace and Deploy Resources
+
+This endpoint creates a Workspace for No-Code Provisioning. 
+
+`POST /no-code-modules/:id/workspaces`
+
+| Parameter            | Description                                                                                                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `:id`                | The id of the No-Code Module that should be used for provisioning. |
+
+Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to create a Workspace by selecting a No-Code module to enable a no-code provisioning workflow.
+
+-> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
+
+| Status  | Response                                     | Reason                                                         |
+| ------- | -------------------------------------------- | -------------------------------------------------------------- |
+| [200][] | [JSON API document][] (`type: "workspaces"`) | Successfully created a workspace from a No-Code module for no-code provisioning.|
+| [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action.                  |
+| [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.).           |
+| [500][] | [JSON API error object][]                    | Internal system failure.                                                        |
+
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+Key path | Type   | Default | Description
+--- | --- | --- | ---
+`data.type`                                             | string  |           | Must be `"workspaces"`.
+`data.attributes.name`                                  | string  |           | The name of the workspace, which can only include letters, numbers, -, and _. This will be used as an identifier and must be unique in the organization.
+`data.attributes.description`                           | string  | (nothing) | A description for the workspace. 
+`data.attributes.auto_apply`                            | boolean |  `false`  | Whether to automatically apply changes when a Terraform plan is successful, with some exceptions.
+`data.relationships.project.data.id`                    | string  |           | The ID of the project to create the workspace in. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project.
+`data.relationships.project.data.type`                  | string  |           | Must be `"project"`.
+`data.relationships.vars.data[].type`                   | string  |           | Must be `"vars"`.                                                                                                                                                                                                     |
+`data.relationships.vars.data[].attributes.key`         | string  |           | The name of the variable.                                                                                                                                                                                             |
+`data.relationships.vars.data[].attributes.value`       | string  | `""`      | The value of the variable.                                                                                                                                                                                            |
+`data.relationships.vars.data[].attributes.description` | string  |           | The description of the variable.                                                                                                                                                                                      |
+`data.relationships.vars.data[].attributes.category`    | string  |           | Whether this is a Terraform or environment variable. Valid values are `"terraform"` or `"env"`.                                                                                                                       |
+`data.relationships.vars.data[].attributes.hcl`         | boolean | `false`   | Whether to evaluate the value of the variable as a string of HCL code. Has no effect for environment variables.                                                                                                       |
+`data.relationships.vars.data[].attributes.sensitive`   | boolean | `false`   | Whether the value is sensitive. If true then the variable is written once and not visible thereafter.                                                                                                                 |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type": "workspaces",
+    "attributes": {
+      "name":  "no-code-workspace",
+      "description": "A workspace to enable the No-Code provisioning workflow."
+    },
+    "relationships": {
+      "project": {
+        "data": {
+          "id": "prj-yuEN6sJVra5t6XVy",
+          "type": "project"
+        }
+      },
+      "vars": {
+        "data": [
+          {
+            "type": "vars",
+            "attributes": {
+              "key": "region",
+              "value": "eu-central-1",
+              "category": "terraform",
+              "hcl": true,
+              "sensitive": false,
+            }
+          },
+          {
+            "type": "vars",
+            "attributes": {
+              "key": "ami",
+              "value": "ami‑077062",
+              "category": "terraform",
+              "hcl": true,
+              "sensitive": false,
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "ws-qACTToFUM5BvDKhC",
+    "type": "workspaces",
+    "attributes": {
+      "allow-destroy-plan": true,
+      "auto-apply": false,
+      "auto-destroy-at": null,
+      "auto-destroy-status": null,
+      "created-at": "2023-09-08T10:36:04.391Z",
+      "environment": "default",
+      "locked": false,
+      "name": "no-code-workspace",
+      "queue-all-runs": false,
+      "speculative-enabled": true,
+      "structured-run-output-enabled": true,
+      "terraform-version": "1.5.6",
+      "working-directory": null,
+      "global-remote-state": true,
+      "updated-at": "2023-09-08T10:36:04.427Z",
+      "resource-count": 0,
+      "apply-duration-average": null,
+      "plan-duration-average": null,
+      "policy-check-failures": null,
+      "run-failures": null,
+      "workspace-kpis-runs-count": null,
+      "latest-change-at": "2023-09-08T10:36:04.391Z",
+      "operations": true,
+      "execution-mode": "remote",
+      "vcs-repo": null,
+      "vcs-repo-identifier": null,
+      "permissions": {
+        "can-update": true,
+        "can-destroy": true,
+        "can-queue-run": true,
+        "can-read-variable": true,
+        "can-update-variable": true,
+        "can-read-state-versions": true,
+        "can-read-state-outputs": true,
+        "can-create-state-versions": true,
+        "can-queue-apply": true,
+        "can-lock": true,
+        "can-unlock": true,
+        "can-force-unlock": true,
+        "can-read-settings": true,
+        "can-manage-tags": true,
+        "can-manage-run-tasks": true,
+        "can-force-delete": true,
+        "can-manage-assessments": true,
+        "can-manage-ephemeral-workspaces": true,
+        "can-read-assessment-results": true,
+        "can-queue-destroy": true
+      },
+      "actions": {
+        "is-destroyable": true
+      },
+      "description": null,
+      "file-triggers-enabled": true,
+      "trigger-prefixes": [],
+      "trigger-patterns": [],
+      "assessments-enabled": false,
+      "last-assessment-result-at": null,
+      "source": "tfe-module",
+      "source-name": null,
+      "source-url": null,
+      "source-module-id": "private/hashicorp/lambda/aws/1.0.9",
+      "no-code-upgrade-available": false,
+      "tag-names": [],
+      "setting-overwrites": {
+        "execution-mode": false,
+        "agent-pool": false
+      }
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        }
+      },
+      "current-run": {
+        "data": null
+      },
+      "latest-run": {
+        "data": null
+      },
+      "outputs": {
+        "data": []
+      },
+      "remote-state-consumers": {
+        "links": {
+          "related": "/api/v2/workspaces/ws-qACTToFUM5BvDKhC/relationships/remote-state-consumers"
+        }
+      },
+      "current-state-version": {
+        "data": null
+      },
+      "current-configuration-version": {
+        "data": {
+          "id": "cv-vizi2p3mnrt3utgA",
+          "type": "configuration-versions"
+        },
+        "links": {
+          "related": "/api/v2/configuration-versions/cv-vizi2p3mnrt3utgA"
+        }
+      },
+      "agent-pool": {
+        "data": null
+      },
+      "readme": {
+        "data": null
+      },
+      "project": {
+        "data": {
+          "id": "prj-yuEN6sJVra5t6XVy",
+          "type": "projects"
+        }
+      },
+      "current-assessment-result": {
+        "data": null
+      },
+      "no-code-module-version": {
+        "data": {
+          "id": "nocodever-vFcQjZLs3ZHTe4TU",
+          "type": "no-code-module-versions"
+        }
+      },
+      "vars": {
+        "data": []
+      }
+    },
+    "links": {
+      "self": "/api/v2/organizations/hashicorp/workspaces/no-code-workspace",
+      "self-html": "/app/hashicorp/workspaces/no-code-workspace"
+    }
+  }
+}
+```
+
+## Update a Workspace to use a new No-Code module version
+
+These endpoints update a Workspace to a new No-Code module version. They form a multi-part update process. Once an update is initiated, Terraform Cloud starts a new plan, containing the resources that will be added, deleted, and updated. When the plan completes, perform a request to confirm and apply the changes of the updated module.
+
+`POST /no-code-modules/:no_code_module_id/workspaces/:id`
+
+
+| Parameter            | Description                    |
+| -------------------- | -------------------------------|
+| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:id`                | The ID of the workspace.       |
+
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+Key path | Type   | Default | Description
+--- | --- | --- | ---
+`data.type`                                             | string  |           | Must be `"workspaces"`.
+`data.relationships.vars.data[].type`                   | string  |           | Must be `"vars"`.                                                                                                                                                                                                     |
+`data.relationships.vars.data[].attributes.key`         | string  |           | The name of the variable.                                                                                                                                                                                             |
+`data.relationships.vars.data[].attributes.value`       | string  | `""`      | The value of the variable.                                                                                                                                                                                            |
+`data.relationships.vars.data[].attributes.description` | string  |           | The description of the variable.                                                                                                                                                                                      |
+`data.relationships.vars.data[].attributes.category`    | string  |           | Whether this is a Terraform or environment variable. Valid values are `"terraform"` or `"env"`.                                                                                                                       |
+`data.relationships.vars.data[].attributes.hcl`         | boolean | `false`   | Whether to evaluate the value of the variable as a string of HCL code. Has no effect for environment variables.                                                                                                       |
+`data.relationships.vars.data[].attributes.sensitive`   | boolean | `false`   | Whether the value is sensitive. If true then the variable is written once and not visible thereafter.                                                                                                                 |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type": "workspaces",
+    "relationships": {
+        "vars": {
+        "data": [
+          {
+            "type": "vars",
+            "attributes": {
+              "key": "region",
+              "value": "eu-central-1",
+              "category": "terraform",
+              "hcl": true,
+              "sensitive": false,
+            }
+          },
+          {
+            "type": "vars",
+            "attributes": {
+              "key": "ami",
+              "value": "ami‑077062",
+              "category": "terraform",
+              "hcl": true,
+              "sensitive": false,
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC
+```
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "run-Cyij8ctBHM1g5xdX",
+    "type": "workspace-upgrade",
+    "attributes": {
+      "status": "planned",
+      "plan-url": "https://app.terraform.io/app/hashicorp/no-code-workspace/runs/run-Cyij8ctBHM1g5xdX"
+    },
+    "relationships": {
+      "workspace": {
+        "data": {
+          "id": "ws-VvKtcfueHNkR6GqP",
+          "type": "workspaces"
+        }
+      }
+    }
+  }
+}
+```
+
+This endpoint returns the plan details and status for updating a workspace to a new No-Code module version.
+
+`GET /no-code-modules/:no_code_module_id/workspaces/:workspace_id/upgrade/:id`
+
+| Parameter            | Description                    |
+| -------------------- | -------------------------------|
+| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:workspace_id`      | The ID of workspace.           |
+| `:id`                | The ID of update.              |
+
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "run-Cyij8ctBHM1g5xdX",
+    "type": "workspace-upgrade",
+    "attributes": {
+      "status": "planned_and_finished",
+      "plan-url": "https://app.terraform.io/app/hashicorp/no-code-workspace/runs/run-Cyij8ctBHM1g5xdX"
+    },
+    "relationships": {
+      "workspace": {
+        "data": {
+          "id": "ws-VvKtcfueHNkR6GqP",
+          "type": "workspaces"
+        }
+      }
+    }
+  }
+}
+```
+
+This endpoint is used for confirming an update and finalizing the update for a workspace to a new No-Code module version.
+
+`POST /no-code-modules/:no_code_module_id/workspaces/:workspace_id/upgrade/:id`
+
+| Parameter            | Description                    |
+| -------------------- | -------------------------------|
+| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:workspace_id`      | The ID of workspace.           |
+| `:id`                | The ID of update.              |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
+```
+
+### Sample Response
+
+```json
+{ "Workspace update completed" }
 ```
