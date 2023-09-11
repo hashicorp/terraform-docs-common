@@ -587,7 +587,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces
+  https://app.terraform.io/api/v2/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces
 ```
 
 ### Sample Response
@@ -834,7 +834,7 @@ curl \
 }
 ```
 ## Read Workspace Upgrade Plan Status
-This endpoint returns the plan details and status for updating a workspace to a new No-Code module version.
+This endpoint returns the plan details and status for updating a workspace to new No-Code Provisioning Settings.
 
 `GET /no-code-modules/:no_code_module_id/workspaces/:workspace_id/upgrade/:id`
 
@@ -878,7 +878,7 @@ curl \
 }
 ```
 ## Confirm and Apply a Workspace Upgrade Plan
-This endpoint is used for confirming an update and finalizing the update for a workspace to a new No-Code module version.
+This endpoint is used for confirming an update and finalizing the update for a workspace to use new No-Code Provisioning Settings.
 
 `POST /no-code-modules/:no_code_module_id/workspaces/:workspace_id/upgrade/:id`
 
