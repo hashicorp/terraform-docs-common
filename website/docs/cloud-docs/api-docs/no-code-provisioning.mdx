@@ -734,7 +734,9 @@ curl \
 
 ## Initiate a Workspace Update to new No-Code provisioning settings
 
-These endpoints update a Workspace to a new No-Code module version. They form a multi-part update process. Once an update is initiated, Terraform Cloud starts a new plan, containing the resources that will be added, deleted, and updated. When the plan completes, perform a request to confirm and apply the changes of the updated module.
+Upgrading a workspace's No-code provisioning settings is a multi-step process. First, use this API to initiate the update. Terraform Cloud will start a new plan, which will describe the resources that will be added, updated, or removed from the workspace, should you choose to confirm the plan in a later step.
+
+After calling this API, the next step is to await the completion of the plan, by polling [the API which shows plan status](#read-workspace-upgrade-plan-status).
 
 `POST /no-code-modules/:no_code_module_id/workspaces/:id`
 
