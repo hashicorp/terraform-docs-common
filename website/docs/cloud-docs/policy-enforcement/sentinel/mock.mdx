@@ -7,11 +7,13 @@ description: >-
 
 # Mocking Terraform Sentinel Data
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
 We recommend that you test your Sentinel policies extensively before deploying
 them within Terraform Cloud. An important part of this process is mocking
 the data that you wish your policies to operate on.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 Due to the highly variable structure of data that can be produced by an
 individual Terraform configuration, Terraform Cloud provides the ability to
@@ -29,7 +31,7 @@ and all data within the configuration, plan, and state. Terraform attempts to
 scrub sensitive data from these mocks, but we do not guarantee 100% accuracy.
 Treat this data with care, and avoid generating mocks with live sensitive data
 when possible. Access to this information requires [permission to download
-Sentinel mocks](/cloud-docs/users-teams-organizations/permissions) for the
+Sentinel mocks](/terraform/cloud-docs/users-teams-organizations/permissions) for the
 workspace where the data was generated.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -42,7 +44,7 @@ the run page, and clicking on the **Download Sentinel mocks** button.
 ![sentinel mock generate ui](/img/docs/download-mocks.png)
 
 For more information on creating a run, see the
-[Terraform Runs and Remote Operations](/cloud-docs/run) section of the docs.
+[Terraform Runs and Remote Operations](/terraform/cloud-docs/run/remote-operations) section of the docs.
 
 If the button is not visible, then the plan is ineligible for mock generation or
 the user doesn't have the necessary permissions. See [Mock Data
@@ -51,24 +53,24 @@ Availability](#mock-data-availability) for more details.
 ## Generating Mock Data Using the API
 
 Mock data can also be created with the [Plan Export
-API](/cloud-docs/api-docs/plan-exports).
+API](/terraform/cloud-docs/api-docs/plan-exports).
 
 Multiple steps are required for mock generation. The export process is
 asynchronous, so you must monitor the request to know when the data is generated
 and available for download.
 
 1. Get the plan ID for the run that you want to generate the mock for by
-   [getting the run details](/cloud-docs/api-docs/run#get-run-details).
+   [getting the run details](/terraform/cloud-docs/api-docs/run#get-run-details).
    Look for the `id` of the `plan` object within the `relationships` section of
    the return data.
 1. [Request a plan
-   export](/cloud-docs/api-docs/plan-exports#create-a-plan-export) using the
+   export](/terraform/cloud-docs/api-docs/plan-exports#create-a-plan-export) using the
    discovered plan ID. Supply the Sentinel export type `sentinel-mock-bundle-v0`.
 1. Monitor the export request by [viewing the plan
-   export](/cloud-docs/api-docs/plan-exports#show-a-plan-export). When the
+   export](/terraform/cloud-docs/api-docs/plan-exports#show-a-plan-export). When the
    status is `finished`, the data is ready for download.
 1. Finally, [download the export
-   data](/cloud-docs/api-docs/plan-exports#download-exported-plan-data).
+   data](/terraform/cloud-docs/api-docs/plan-exports#download-exported-plan-data).
    You have up to an hour from the completion of the export request - after
    that, the mock data expires and must be re-generated.
 
@@ -262,7 +264,7 @@ test {
 The following factors can prevent you from generating mock data:
 
 * You do not have permission to download Sentinel mocks for the workspace.
-  ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+  ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
   Permission is required to protect the possibly sensitive data which can be
   produced via mock generation.
 * The run has not progressed past the planning stage, or did not create a plan

@@ -96,8 +96,8 @@ This page collects brief definitions of some of the technical terms used in the 
 
 ## API
 
-[api]: /docs/glossary#api
-[apis]: /docs/glossary#api
+[api]: /terraform/docs/glossary#api
+[apis]: /terraform/docs/glossary#api
 
 Acronym for "Application Programming Interface". Any interface designed to allow programmatic manipulation of some kind of software system. For most software developers today, the most common kinds of APIs are based on HTTP requests.
 
@@ -105,68 +105,68 @@ Terraform relies on cloud service provider APIs to manage resources; each servic
 
 Terraform Cloud also offers its own API, for managing resources like team membership, policies, and workspaces. That API, in turn, is used by the `tfe` Terraform provider, so you can use Terraform to manage the system that runs Terraform for you.
 
-- [Terraform Cloud docs: API](/cloud-docs/api-docs)
+- [Terraform Cloud docs: API](/terraform/cloud-docs/api-docs)
 - [Terraform providers: `tfe`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs)
 
 ## Apply (noun)
 
-[apply]: /docs/glossary#apply-noun-
-[applies]: /docs/glossary#apply-noun-
+[apply]: /terraform/docs/glossary#apply-noun-
+[applies]: /terraform/docs/glossary#apply-noun-
 
 One of the stages of a [run][], in which changes are made to real infrastructure resources in order to make them match their desired state. The counterpart of a [plan][].
 
 In Terraform's CLI, applies are performed with the `terraform apply` command. Terraform Cloud runs `terraform apply` using a [plan file][] as its input.
 
-- [Terraform docs: The `terraform apply` command](/cli/commands/apply)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform docs: The `terraform apply` command](/terraform/cli/commands/apply)
+- [Terraform Cloud docs: About Runs](/terraform/cloud-docs/run/remote-operations)
 
 ## Apply (verb)
 
-[apply-v]: /docs/glossary#apply-verb-
+[apply-v]: /terraform/docs/glossary#apply-verb-
 
 To make changes to real infrastructure in order to make it match the desired state (as specified by a Terraform [config][] and set of [variables][]).
 
 In conversation, it's common to refer to "applying a [plan][]" (usually in the context of Terraform Cloud's workflow) or "applying a [configuration][]" (usually in the context of the Terraform CLI workflow).
 
-- [Terraform docs: The `terraform apply` command](/cli/commands/apply)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform docs: The `terraform apply` command](/terraform/cli/commands/apply)
+- [Terraform Cloud docs: About Runs](/terraform/cloud-docs/run/remote-operations)
 
 ## Argument
 
-[argument]: /docs/glossary#argument
-[arguments]: /docs/glossary#argument
+[argument]: /terraform/docs/glossary#argument
+[arguments]: /terraform/docs/glossary#argument
 
 In Terraform's [configuration][] language: a syntax construct that assigns a value to a name. Arguments have the form `<IDENTIFIER> = <EXPRESSION>`, and they appear within blocks.
 
 Most of a Terraform configuration consists of using arguments to configure Terraform [resources][]. Each resource type defines the arguments its resources can use, the allowed values for each argument, and which arguments are required or optional. Information about a given resource type can be found in the docs for that resource's [provider][].
 
-- [Terraform Language docs: Syntax — Arguments and Blocks](/language/syntax/configuration#arguments-and-blocks)
+- [Terraform Language docs: Syntax — Arguments and Blocks](/terraform/language/syntax/configuration#arguments-and-blocks)
 
 ## Attribute
 
-[attribute]: /docs/glossary#attribute
-[attributes]: /docs/glossary#attribute
+[attribute]: /terraform/docs/glossary#attribute
+[attributes]: /terraform/docs/glossary#attribute
 
 In Terraform's [configuration][] language: a named piece of data that belongs to some kind of object. The value of an attribute can be referenced in [expressions][] using a dot-separated notation, like `aws_instance.example.id`.
 
 Terraform [resources][] and [data sources][] make all of their [arguments][] available as readable attributes, and also typically export additional read-only attributes.
 
-- [Terraform docs: Expressions — Indices and Attributes](/configuration/expressions#indices-and-attributes)
+- [Terraform docs: Expressions — Indices and Attributes](/terraform/language/expressions#indices-and-attributes)
 
 ## Backend
 
-[backend]: /docs/glossary#backend
-[backends]: /docs/glossary#backend
+[backend]: /terraform/docs/glossary#backend
+[backends]: /terraform/docs/glossary#backend
 
 The part of Terraform's core that determines how Terraform stores [state][] and performs [operations][remote operations] (like [plan][], [apply][], import, etc.). Terraform has multiple backends to choose from, which can be configured in a variety of ways. Backends are not plugins, so it is not possible to install additional backends.
 
 In a general computer science sense, a backend is any lower-level implementation that enables a higher-level feature. But in the context of Terraform, "backend" always means the built-in code that handles state and operations.
 
-- [Terraform docs: Backends](/language/settings/backends)
+- [Terraform docs: Backends](/terraform/language/settings/backends/configuration)
 
 ## Blob Storage
 
-[blob storage]: /docs/glossary#blob-storage
+[blob storage]: /terraform/docs/glossary#blob-storage
 
 -> Terraform Cloud
 
@@ -176,8 +176,8 @@ You do not need to be familiar with the properties and advantages of blob storag
 
 ## Block
 
-[block]: /docs/glossary#block
-[blocks]: /docs/glossary#block
+[block]: /terraform/docs/glossary#block
+[blocks]: /terraform/docs/glossary#block
 
 In Terraform's [configuration][] language: a container for other content which usually represents the configuration of some kind of object, like a [resource][]. Blocks have a _block type,_ can have zero or more _labels,_ and have a _body_ that contains any number of [arguments][] and nested blocks. Most of Terraform's features are controlled by top-level blocks in a configuration file.
 
@@ -192,12 +192,12 @@ resource "aws_vpc" "main" {
 }
 ```
 
-- [Terraform Language docs: Syntax — Arguments and Blocks](/language/syntax/configuration#arguments-and-blocks)
+- [Terraform Language docs: Syntax — Arguments and Blocks](/terraform/language/syntax/configuration#arguments-and-blocks)
 
 ## Branch
 
-[branch]: /docs/glossary#branch
-[branches]: /docs/glossary#branch
+[branch]: /terraform/docs/glossary#branch
+[branches]: /terraform/docs/glossary#branch
 
 In some [version control systems][vcs]: a semi-independent history of changes to content in a repository. A branch generally shares some history with other branches in the same repository, but eventually diverges to include changes that aren't yet present elsewhere.
 
@@ -205,25 +205,25 @@ A repository usually has a default branch (whose name, in [Git][], defaults to `
 
 ## CI/CD
 
-[ci-cd]: /docs/glossary#ci-cd
+[ci-cd]: /terraform/docs/glossary#ci-cd
 
 CI/CD (Continuous Integration/Continuous Delivery) platforms perform pre-defined tasks (like tests or builds) in response to trigger events (like new commits in a project). This helps make new releases more automated, predictable, and understandable. Infrastructure management, typically handled by operations teams, can also fit into an automated release workflow using infrastructure as code with Terraform.
 
 ## CLI
 
-[cli]: /docs/glossary#cli
+[cli]: /terraform/docs/glossary#cli
 
 Command-line interface. The `terraform` command expects to be run in a CLI (a Unix shell or the Windows command prompt), which it uses to accept instructions and return text output.
 
-We often use "Terraform CLI" to refer to the core open source Terraform binary when we need to distinguish it from other parts of the Terraform ecosystem (like Terraform Cloud or the Terraform GitHub Actions).
+We often use "Terraform CLI" to refer to the core Terraform Community edition binary when we need to distinguish it from other parts of the Terraform ecosystem (like Terraform Cloud or the Terraform GitHub Actions).
 
 - [Wikipedia: Command-line Interface](https://en.wikipedia.org/wiki/Command-line_interface)
-- [Terraform docs: Commands (CLI)](/cli/commands)
+- [Terraform docs: Commands (CLI)](/terraform/cli/commands)
 
 ## Commit
 
-[commit]: /docs/glossary#commit
-[commits]: /docs/glossary#commit
+[commit]: /terraform/docs/glossary#commit
+[commits]: /terraform/docs/glossary#commit
 
 In a [version control system][vcs]: A coherent set of changes saved to a repository's version history.
 
@@ -231,24 +231,24 @@ In Git, commits act like a complete snapshot of the contents of a repo, on a spe
 
 ## (Terraform) Configuration
 
-[configuration]: /docs/glossary#terraform-configuration
-[configurations]: /docs/glossary#terraform-configuration
-[config]: /docs/glossary#terraform-configuration
-[configs]: /docs/glossary#terraform-configuration
+[configuration]: /terraform/docs/glossary#terraform-configuration
+[configurations]: /terraform/docs/glossary#terraform-configuration
+[config]: /terraform/docs/glossary#terraform-configuration
+[configs]: /terraform/docs/glossary#terraform-configuration
 
 Also "config".
 
 Code written in [Terraform's configuration language][hcl] that declaratively describes the desired state of your infrastructure. A complete config consists of a [root module][], which can optionally call any number of child [modules][].
 
-- [Terraform docs: Configuration Language](/language)
-- [Introduction to Terraform](/intro)
+- [Terraform docs: Configuration Language](/terraform/language)
+- [Introduction to Terraform](/terraform/intro)
 
 ## Configuration Version
 
-[configuration version]: /docs/glossary#configuration-version
-[configuration versions]: /docs/glossary#configuration-version
-[config version]: /docs/glossary#configuration-version
-[config versions]: /docs/glossary#configuration-version
+[configuration version]: /terraform/docs/glossary#configuration-version
+[configuration versions]: /terraform/docs/glossary#configuration-version
+[config version]: /terraform/docs/glossary#configuration-version
+[config versions]: /terraform/docs/glossary#configuration-version
 
 -> Terraform Cloud
 
@@ -262,19 +262,19 @@ Config versions can be automatically imported when new commits are merged to a w
 
 ## Cost Estimation
 
-[cost estimation]: /docs/glossary#cost-estimation
-[cost estimations]: /docs/glossary#cost-estimation
+[cost estimation]: /terraform/docs/glossary#cost-estimation
+[cost estimations]: /terraform/docs/glossary#cost-estimation
 
 -> Terraform Cloud
 
 Part of a [run][]. After gathering the [plan file][] for a run, Terraform Cloud uses plan data to estimate costs for each resource found in the [plan][]. Previous and proposed resources are given estimated costs, providing an estimated delta cost between the two. The results can be used in [Sentinel policies][].
 
-- [Terraform Cloud docs: Run States and Stages](/cloud-docs/run/states)
+- [Terraform Cloud docs: Run States and Stages](/terraform/cloud-docs/run/states)
 
 ## Data Source
 
-[data source]: /docs/glossary#data-source
-[data sources]: /docs/glossary#data-source
+[data source]: /terraform/docs/glossary#data-source
+[data sources]: /terraform/docs/glossary#data-source
 
 A [resource][]-like object that can be configured in Terraform's [configuration][] language.
 
@@ -282,34 +282,34 @@ Unlike resources, data sources do not create or manage infrastructure. Instead, 
 
 Data sources are implemented by [providers][].
 
-- [Terraform docs: Data Sources](/language/data-sources)
+- [Terraform docs: Data Sources](/terraform/language/data-sources)
 
 ## Deposed
 
-[deposed]: /docs/glossary#deposed
-[deposed resource]: /docs/glossary#deposed
-[deposed resources]: /docs/glossary#deposed
+[deposed]: /terraform/docs/glossary#deposed
+[deposed resource]: /terraform/docs/glossary#deposed
+[deposed resources]: /terraform/docs/glossary#deposed
 
 This status tracks a [resource][] that was marked for deletion, but still remains in the Terraform [state][] and infrastructure due an error from a previous [apply][]. Terraform expected to replace the existing resource by creating a new resource, then destroying the existing resource, but an error occurred in the apply before the destruction. Existing references to the resource refer to the new resource. Terraform will destroy the `deposed` resource on the next apply. This only can occur in resource [configurations][] that have the `lifecycle` configuration block `create_before_destroy` [argument][] set to `true`.
 
-- [Terraform docs: Resources](/configuration/resources)
+- [Terraform docs: Resources](/terraform/language/resources)
 
 ## Expression
 
-[expression]: /docs/glossary#expression
-[expressions]: /docs/glossary#expression
+[expression]: /terraform/docs/glossary#expression
+[expressions]: /terraform/docs/glossary#expression
 
 In Terraform's [configuration][] language: a piece of syntax that represents a value, either literally or by referencing and combining other values. Expressions appear as values for [arguments][], or within other expressions.
 
 Prior to Terraform 0.12, \[interpolation]\[] was the only way to use non-literal expressions in Terraform configurations; in 0.12 and later, expressions can be used independently.
 
-- [Terraform docs: Expressions](/configuration/expressions)
+- [Terraform docs: Expressions](/terraform/language/expressions)
 
 ## Fork
 
-[fork]: /docs/glossary#fork
-[forks]: /docs/glossary#fork
-[forked]: /docs/glossary#fork
+[fork]: /terraform/docs/glossary#fork
+[forks]: /terraform/docs/glossary#fork
+[forked]: /terraform/docs/glossary#fork
 
 Also "forked repository" or "forked repo".
 
@@ -323,7 +323,7 @@ On [Terraform Enterprise][], [speculative plans][] on [pull requests][] from for
 
 ## Git
 
-[git]: /docs/glossary#git
+[git]: /terraform/docs/glossary#git
 
 A distributed [version control system][vcs] for tracking changes in source code during software development. It is designed for coordinating work among programmers, but it can be used to track changes in any set of files.
 
@@ -331,19 +331,19 @@ A distributed [version control system][vcs] for tracking changes in source code 
 
 ## HCL
 
-[hcl]: /docs/glossary#hcl
+[hcl]: /terraform/docs/glossary#hcl
 
 HashiCorp Configuration Language. The structured configuration syntax that serves as the basis for Terraform's [configuration][] language, as well as the configuration layer for several other HashiCorp products.
 
 HCL establishes the syntax Terraform uses for things like [arguments][], [blocks][], literal values, and [expressions][]. But what most people think of as the Terraform language extends beyond just the syntax; the built-in functions, Terraform-specific block types (like `resource` and `variable`), and Terraform-specific named values available in expressions are all implementation details of Terraform itself.
 
 - [GitHub: HCL](https://github.com/hashicorp/hcl)
-- [Terraform docs: Configuration Language](/language)
+- [Terraform docs: Configuration Language](/terraform/language)
 
 ## ID
 
-[id]: /docs/glossary#id
-[ids]: /docs/glossary#id
+[id]: /terraform/docs/glossary#id
+[ids]: /terraform/docs/glossary#id
 
 An identifier; an opaque string permanently associated with a specific object, which doesn't contain any information about the object but which can be used to retrieve information about it or perform actions on it via an [API][].
 
@@ -355,14 +355,14 @@ You can usually copy an external ID from the URL bar when viewing an object in T
 
 ## Infrastructure as Code
 
-[infrastructure-as-code]: /docs/glossary#infrastructure-as-code
+[infrastructure-as-code]: /terraform/docs/glossary#infrastructure-as-code
 
 Infrastructure-as-Code (IaC) is the practice of managing infrastructure in a file or files rather than manually configuring it via a user interface. Infrastructure resource types managed with IaC can include virtual machines, security groups, network interfaces, and many others.
 
 ## Ingress
 
-[ingress]: /docs/glossary#ingress
-[ingressing]: /docs/glossary#ingress
+[ingress]: /terraform/docs/glossary#ingress
+[ingressing]: /terraform/docs/glossary#ingress
 
 -> Terraform Cloud
 
@@ -388,23 +388,23 @@ Prior to Terraform 0.12, interpolation was the only way to use non-literal [expr
 
 Interpolation is a very common feature in programming languages; for example, Ruby uses `#{<EXPRESSION>}` placeholders in double-quoted strings, and JavaScript (ES6 and up) uses `${<EXPRESSION>}` placeholders in backtick-quoted strings.
 
-- [Terraform docs: Expressions - String Templates](/configuration/expressions#string-templates)
+- [Terraform docs: Expressions - String Templates](/terraform/language/expressions#string-templates)
 
 ## JSON
 
-[json]: /docs/glossary#json
+[json]: /terraform/docs/glossary#json
 
 Acronym for "JavaScript Object Notation". A popular text-based data interchange format, which can represent strings, numbers, booleans, null, arrays, and objects/maps.
 
 Terraform and Terraform Cloud often interact with JSON data in order to consume or provide APIs. Terraform also supports JSON as an alternate format for [configurations][].
 
 - [Wikipedia: JSON](https://en.wikipedia.org/wiki/Json)
-- [Terraform docs: JSON Configuration Syntax](/language/syntax/json)
+- [Terraform docs: JSON Configuration Syntax](/terraform/language/syntax/json)
 
 ## Locking
 
-[locking]: /docs/glossary#locking
-[lock]: /docs/glossary#locking
+[locking]: /terraform/docs/glossary#locking
+[lock]: /terraform/docs/glossary#locking
 
 -> Terraform Cloud
 
@@ -414,15 +414,15 @@ The [`remote` backend][remote backend] respects the lock status in Terraform Clo
 
 ## Log
 
-[log]: /docs/glossary#log
-[logs]: /docs/glossary#log
+[log]: /terraform/docs/glossary#log
+[logs]: /terraform/docs/glossary#log
 
 The text-based output of actions taken within a [run][]. For example, the output of running `terraform plan`.
 
 ## Module
 
-[module]: /docs/glossary#module
-[modules]: /docs/glossary#module
+[module]: /terraform/docs/glossary#module
+[modules]: /terraform/docs/glossary#module
 
 Also "Terraform module".
 
@@ -432,22 +432,22 @@ Other Terraform configurations can _call_ a module, which tells Terraform to man
 
 Modules define [input variables][] (which the calling module can set values for) and [output values][] (which the calling module can reference in [expressions][]).
 
-- [Terraform docs: Modules](/language/modules/develop)
+- [Terraform docs: Modules](/terraform/language/modules/develop)
 
 ## OAuth
 
-[oauth]: /docs/glossary#oauth
+[oauth]: /terraform/docs/glossary#oauth
 
 An open standard for token-based authorization between applications on the internet.
 
 Terraform Cloud uses OAuth to connect your organization to your [VCS provider][]. Generally takes an `id` and `secret` from your VCS provider to give access to Terraform Cloud and allow it to pull in configuration from the provider.
 
-- [Terraform Cloud docs: VCS Integration](/cloud-docs/vcs)
+- [Terraform Cloud docs: VCS Integration](/terraform/cloud-docs/vcs)
 
 ## OAuth Client
 
-[oauth client]: /docs/glossary#oauth-client
-[oauth clients]: /docs/glossary#oauth-client
+[oauth client]: /terraform/docs/glossary#oauth-client
+[oauth clients]: /terraform/docs/glossary#oauth-client
 
 -> Terraform Cloud
 
@@ -455,13 +455,13 @@ An entity collecting the configuration information that a Terraform Cloud organi
 
 An OAuth client needs an [OAuth token][] in order to actually access data belonging to a user or organization in that VCS provider. The client can be created with an existing token for that VCS provider (API-only, and not supported for some VCS providers), or it can be created with the details Terraform Cloud needs in order to request a token. Requesting a token requires a user to click through and approve access with their VCS provider account.
 
-- [Terraform Cloud docs: VCS Integration](/cloud-docs/vcs)
-- [Terraform Cloud API docs: OAuth Clients](/cloud-docs/api-docs/oauth-clients)
+- [Terraform Cloud docs: VCS Integration](/terraform/cloud-docs/vcs)
+- [Terraform Cloud API docs: OAuth Clients](/terraform/cloud-docs/api-docs/oauth-clients)
 
 ## OAuth Token
 
-[oauth token]: /docs/glossary#oauth-token
-[oauth tokens]: /docs/glossary#oauth-token
+[oauth token]: /terraform/docs/glossary#oauth-token
+[oauth tokens]: /terraform/docs/glossary#oauth-token
 
 -> Terraform Cloud
 
@@ -473,26 +473,26 @@ An `oauth-token` has a one-to-one relationship with an [OAuth client][], but the
 
 [Workspaces][] that are linked to a VCS [repo][] have a relationship with one `oauth-token`.
 
-- [Terraform Cloud docs: VCS Integration](/cloud-docs/vcs)
-- [Terraform Cloud API docs: OAuth Tokens](/cloud-docs/api-docs/oauth-tokens)
+- [Terraform Cloud docs: VCS Integration](/terraform/cloud-docs/vcs)
+- [Terraform Cloud API docs: OAuth Tokens](/terraform/cloud-docs/api-docs/oauth-tokens)
 
 ## Organization
 
-[organization]: /docs/glossary#organization
-[organizations]: /docs/glossary#organization
+[organization]: /terraform/docs/glossary#organization
+[organizations]: /terraform/docs/glossary#organization
 
 -> Terraform Cloud
 
 Terraform Cloud's fundamental unit for controlling access and grouping things together; meant to represent a company or a business unit within a company. An organization contains a group of [workspaces][], a group of [teams][], a group of [Sentinel policies][], and a variety of settings. Adding users to an organization is done via teams.
 
-- [Terraform Cloud docs: Organizations](/cloud-docs/users-teams-organizations/organizations)
+- [Terraform Cloud docs: Organizations](/terraform/cloud-docs/users-teams-organizations/organizations)
 
 ## Output Values
 
-[output value]: /docs/glossary#output-values
-[output values]: /docs/glossary#output-values
-[output]: /docs/glossary#output-values
-[outputs]: /docs/glossary#output-values
+[output value]: /terraform/docs/glossary#output-values
+[output values]: /terraform/docs/glossary#output-values
+[output]: /terraform/docs/glossary#output-values
+[outputs]: /terraform/docs/glossary#output-values
 
 Also "outputs".
 
@@ -500,37 +500,39 @@ Data exported by a Terraform [module][], which can be displayed to a user and/or
 
 ## OSS
 
-[oss]: /docs/glossary#oss
+[oss]: /terraform/docs/glossary#oss
 
-Acronym for "Open-Source Software". Terraform and the publicly available Terraform providers are open-source. Terraform Cloud and Terraform Enterprise are closed-source commercial software, but they make use of Terraform and the available Terraform providers.
+Acronym for "Open-Source Software". Publicly available Terraform providers are open-source. 
+
+Terraform and all other HashiCorp products are accessible through a source-available license that allows broad copying, modification, and redistribution. Terraform Cloud and Terraform Enterprise are closed-source commercial software, that make use of Terraform and the available Terraform providers.
 
 - [Wikipedia: Open-Source Software](https://en.wikipedia.org/wiki/Open-source_software)
 
 ## Permissions
 
-[permission]: /docs/glossary#permissions
-[permissions]: /docs/glossary#permissions
+[permission]: /terraform/docs/glossary#permissions
+[permissions]: /terraform/docs/glossary#permissions
 
 -> Terraform Cloud
 
 Specific levels of access allowed within Terraform Cloud. Can be managed at the [workspace][] and/or [organization][] level. For example, a user with "read" permissions for a workspace can see a list of runs but cannot approve a run like a user with "write" permissions can.
 
-- [Terraform Cloud docs: Permissions](/cloud-docs/users-teams-organizations/permissions)
+- [Terraform Cloud docs: Permissions](/terraform/cloud-docs/users-teams-organizations/permissions)
 
 ## Plan (verb)
 
-[plan-v]: /docs/glossary#plan-verb-
+[plan-v]: /terraform/docs/glossary#plan-verb-
 
 Also "queue plan".
 
 To start a new [run][], which begins by running a Terraform [plan (noun)][plan].
 
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform Cloud docs: About Runs](/terraform/cloud-docs/run/remote-operations)
 
 ## Plan (noun, 1)
 
-[plan]: /docs/glossary#plan-noun-1-
-[plans]: /docs/glossary#plan-noun-1-
+[plan]: /terraform/docs/glossary#plan-noun-1-
+[plans]: /terraform/docs/glossary#plan-noun-1-
 
 One of the stages of a [run][], in which Terraform compares the managed infrastructure's real state to the [configuration][] and [variables][], determines which changes are necessary to make the real state match the desired state, and presents a human-readable summary to the user. The counterpart of an [apply][].
 
@@ -544,13 +546,13 @@ In Terraform Cloud, plans are performed by committing changes to a workspace's c
 
 Terraform Cloud's workflow always creates a [plan file][], which can be auto-applied or can wait for a user's approval. Terraform Cloud also supports [speculative plans][], which are for informational purposes only and cannot be applied.
 
-- [Terraform docs: The `terraform plan` command](/cli/commands/plan)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Terraform docs: The `terraform plan` command](/terraform/cli/commands/plan)
+- [Terraform Cloud docs: About Runs](/terraform/cloud-docs/run/remote-operations)
 
 ## Plan File
 
-[plan file]: /docs/glossary#plan-file
-[plan files]: /docs/glossary#plan-file
+[plan file]: /terraform/docs/glossary#plan-file
+[plan files]: /terraform/docs/glossary#plan-file
 
 Also "`.tfplan`", "saved plan", or simply "plan" in contexts where it's clearly referring to an artifact.
 
@@ -560,46 +562,46 @@ Terraform Cloud always uses a saved plan as the input to an [apply][], so that a
 
 ## Policy
 
-[policy]: /docs/glossary#policy
-[policies]: /docs/glossary#policy
-[sentinel policy]: /docs/glossary#policy
-[sentinel policies]: /docs/glossary#policy
+[policy]: /terraform/docs/glossary#policy
+[policies]: /terraform/docs/glossary#policy
+[sentinel policy]: /terraform/docs/glossary#policy
+[sentinel policies]: /terraform/docs/glossary#policy
 
 -> Terraform Cloud
 
 [Sentinel][] code that can be enforced on runs. Combined into [policy sets][].
 
-- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/sentinel/manage-policies)
+- [Terraform Cloud docs: Managing Sentinel Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets)
 
 ## Policy Check
 
-[policy check]: /docs/glossary#policy-check
-[policy checks]: /docs/glossary#policy-check
+[policy check]: /terraform/docs/glossary#policy-check
+[policy checks]: /terraform/docs/glossary#policy-check
 
 -> Terraform Cloud
 
 Part of a [run][]. After gathering the [configuration][], [state][], and [plan file][] for a run, Terraform Cloud runs [Sentinel][] to check that data against the active [policies][]. Policy checks end in success or failure. If a failure occurs in a required policy, this can prevent the run from proceeding to the [apply][] stage.
 
-- [Terraform Cloud docs: Run States and Stages](/cloud-docs/run/states)
+- [Terraform Cloud docs: Run States and Stages](/terraform/cloud-docs/run/states)
 
 ## Policy Set
 
-[policy set]: /docs/glossary#policy-set
-[policy sets]: /docs/glossary#policy-set
+[policy set]: /terraform/docs/glossary#policy-set
+[policy sets]: /terraform/docs/glossary#policy-set
 
 -> Terraform Cloud
 
 A list of [Sentinel][] [policies][] to enforce globally or on specific workspaces.
 
-- [Terraform Cloud docs: Managing Sentinel Policies](/cloud-docs/sentinel/manage-policies)
+- [Terraform Cloud docs: Managing Sentinel Policies](/terraform/cloud-docs/policy-enforcement/manage-policy-sets)
 
 ## Private Terraform Registry
 
-[private terraform registry]: /docs/glossary#private-terraform-registry
-[private module registry]: /docs/glossary#private-terraform-registry
-[private registry]: /docs/glossary#private-terraform-registry
-[private module]: /docs/glossary#private-terraform-registry
-[private modules]: /docs/glossary#private-terraform-registry
+[private terraform registry]: /terraform/docs/glossary#private-terraform-registry
+[private module registry]: /terraform/docs/glossary#private-terraform-registry
+[private registry]: /terraform/docs/glossary#private-terraform-registry
+[private module]: /terraform/docs/glossary#private-terraform-registry
+[private modules]: /terraform/docs/glossary#private-terraform-registry
 
 -> Terraform Cloud
 
@@ -607,23 +609,23 @@ Also "private module registry".
 
 A version of the [Terraform Registry][] that is built-in to Terraform Cloud, to enable code sharing within an organization. It includes a configuration designer, which lets you combine and configure modules to generate a Terraform [configuration][] that uses them.
 
-- [Terraform Cloud docs: Private Registry](/cloud-docs/registry)
+- [Terraform Cloud docs: Private Registry](/terraform/cloud-docs/registry)
 
 ## Private Terraform Enterprise (PTFE)
 
-[private terraform enterprise]: /docs/glossary#private-terraform-enterprise-ptfe-
-[private installs]: /docs/glossary#private-terraform-enterprise-ptfe-
+[private terraform enterprise]: /terraform/docs/glossary#private-terraform-enterprise-ptfe-
+[private installs]: /terraform/docs/glossary#private-terraform-enterprise-ptfe-
 
 [Terraform Enterprise][].
 
 Prior to mid-2019, "Terraform Enterprise" (TFE) was the name of the Terraform Cloud application, and "Private Terraform Enterprise" (PTFE) was the name of the on-premises distribution.
 
-- [Terraform Enterprise docs](/enterprise)
+- [Terraform Enterprise docs](/terraform/enterprise)
 
 ## (Terraform) Provider
 
-[provider]: /docs/glossary#terraform-provider
-[providers]: /docs/glossary#terraform-provider
+[provider]: /terraform/docs/glossary#terraform-provider
+[providers]: /terraform/docs/glossary#terraform-provider
 
 A plugin for Terraform that makes a collection of related resources available. A provider plugin is responsible for understanding [API][] interactions with some kind of service and exposing [resources][] based on that API.
 
@@ -631,15 +633,15 @@ Terraform providers are generally tied to a specific _infrastructure provider,_ 
 
 There are many existing providers available, but providers can also be custom-built to work with any API.
 
-- [Terraform docs: Provider Use](/language/providers)
-- [Terraform docs: Plugin Development](/plugin)
+- [Terraform docs: Provider Use](/terraform/language/providers)
+- [Terraform docs: Plugin Development](/terraform/plugin)
 
 ## Pull Request (PR)
 
-[pull request]: /docs/glossary#pull-request-pr-
-[pull requests]: /docs/glossary#pull-request-pr-
-[pr]: /docs/glossary#pull-request-pr-
-[prs]: /docs/glossary#pull-request-pr-
+[pull request]: /terraform/docs/glossary#pull-request-pr-
+[pull requests]: /terraform/docs/glossary#pull-request-pr-
+[pr]: /terraform/docs/glossary#pull-request-pr-
+[prs]: /terraform/docs/glossary#pull-request-pr-
 
 A mechanism created by GitHub to review and discuss changes made to a [Git][] [repository][] [branch][] that a user wants to merge into another branch. Other collaborators can request changes, approve, or reject these changes.
 
@@ -647,8 +649,8 @@ Conversationally, people often say "pull request" to refer to this review-before
 
 ## Queue
 
-[queue]: /docs/glossary#queue
-[queues]: /docs/glossary#queue
+[queue]: /terraform/docs/glossary#queue
+[queues]: /terraform/docs/glossary#queue
 
 -> Terraform Cloud
 
@@ -656,17 +658,17 @@ The list of [runs][] waiting to be processed. Terraform Cloud uses several queue
 
 ## (Terraform) Registry
 
-[terraform registry]: /docs/glossary#terraform-registry
-[registry]: /docs/glossary#terraform-registry
+[terraform registry]: /terraform/docs/glossary#terraform-registry
+[registry]: /terraform/docs/glossary#terraform-registry
 
 A repository of [modules][] written by the Terraform community, which can be used as-is within a Terraform [configuration][] or [forked][] and modified. The registry can help you get started with Terraform more quickly, see examples of how Terraform is written, and find pre-made modules for infrastructure components you require.
 
-- [Terraform docs: The Terraform Registry](/registry)
+- [Terraform docs: The Terraform Registry](/terraform/registry)
 
 ## Remote Operations
 
-[remote operation]: /docs/glossary#remote-operations
-[remote operations]: /docs/glossary#remote-operations
+[remote operation]: /terraform/docs/glossary#remote-operations
+[remote operations]: /terraform/docs/glossary#remote-operations
 
 -> Terraform Cloud
 
@@ -674,24 +676,24 @@ The ability to start a [run][] (or perform a few other tasks) from your local [C
 
 Terraform Cloud performs Terraform runs in its own disposable VMs, where it can capture information, control access to secrets, etc., but many users are accustomed to running Terraform on their local machines. Remote operations exist to help split the difference.
 
-- [Terraform Cloud Docs: Terraform Runs and Remote Operations](/cloud-docs/run#remote-operations)
+- [Terraform Cloud Docs: Terraform Runs and Remote Operations](/terraform/cloud-docs/run/remote-operations#remote-operations)
 
 ## Remote Backend
 
-[remote backend]: /docs/glossary#remote-backend
+[remote backend]: /terraform/docs/glossary#remote-backend
 
-A Terraform CLI feature that lets Terraform connect to Terraform Cloud, by specifying in the Terraform [configuration][] which organization and workspace(s) to use. Used for [remote operations][] in Terraform Cloud workspaces, and used for [state][] storage in Terraform Cloud's free tier.
+A Terraform CLI feature that lets Terraform connect to Terraform Cloud, by specifying in the Terraform [configuration][] which organization and workspace(s) to use. Used for [remote operations][] in Terraform Cloud workspaces, and used for [state][] storage in Terraform Cloud's free edition.
 
 See also [backend][]. Older documentation sometimes refers to backends like `s3` or `consul` as "remote backends," since they store Terraform's state in a remote service instead of the local filesystem, but today this term usually means the specific backend whose name is `remote`.
 
-- [Terraform docs: The `remote` Backend](/language/settings/backends/remote)
+- [Terraform docs: The `remote` Backend](/terraform/language/settings/backends/remote)
 
 ## Repository
 
-[repository]: /docs/glossary#repository
-[repositories]: /docs/glossary#repository
-[repo]: /docs/glossary#repository
-[repos]: /docs/glossary#repository
+[repository]: /terraform/docs/glossary#repository
+[repositories]: /terraform/docs/glossary#repository
+[repo]: /terraform/docs/glossary#repository
+[repos]: /terraform/docs/glossary#repository
 
 Also "repo".
 
@@ -701,8 +703,8 @@ A collection of files and a history of the changes to them, managed by a [versio
 
 ## Resource
 
-[resource]: /docs/glossary#resource
-[resources]: /docs/glossary#resource
+[resource]: /terraform/docs/glossary#resource
+[resources]: /terraform/docs/glossary#resource
 
 Also "infrastructure resource".
 
@@ -714,12 +716,12 @@ A resource block in a configuration instructs Terraform to _manage_ the describe
 
 Terraform uses cloud provider [APIs][] to create, edit, and destroy resources. Terraform [providers][] are responsible for defining resource types and mapping transitions in a resource's state to a specific series of API calls that will carry out the necessary changes.
 
-- [Terraform docs: Resources](/configuration/resources)
+- [Terraform docs: Resources](/terraform/language/resources)
 
 ## Root Module
 
-[root module]: /docs/glossary#root-module
-[root modules]: /docs/glossary#root-module
+[root module]: /terraform/docs/glossary#root-module
+[root modules]: /terraform/docs/glossary#root-module
 
 The place where Terraform begins evaluating a [configuration][]. The root module consists of all of the configuration files in Terraform's [working directory][].
 
@@ -727,8 +729,8 @@ The root module's [variables][] and [outputs][] are handled directly by Terrafor
 
 ## Root Outputs
 
-[root output]: /docs/glossary#root-outputs
-[root outputs]: /docs/glossary#root-outputs
+[root output]: /terraform/docs/glossary#root-outputs
+[root outputs]: /terraform/docs/glossary#root-outputs
 
 Also "root-level outputs".
 
@@ -736,8 +738,8 @@ The [output values][] of a configuration's [root module][]. A [configuration][] 
 
 ## Run
 
-[run]: /docs/glossary#run
-[runs]: /docs/glossary#run
+[run]: /terraform/docs/glossary#run
+[runs]: /terraform/docs/glossary#run
 
 Also "Terraform Run".
 
@@ -745,22 +747,22 @@ The process of using Terraform to make real infrastructure match the desired sta
 
 In Terraform Cloud, runs are performed in a series of stages ([plan][], [policy check][], and [apply][]), though not every stage occurs in every run. Terraform Cloud saves information about historical runs.
 
-- [Learn Terraform: Get Started](https://learn.hashicorp.com/collections/terraform/aws-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS)
-- [Terraform Cloud docs: About Runs](/cloud-docs/run)
+- [Learn Terraform: Get Started](/terraform/tutorials/aws-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS)
+- [Terraform Cloud docs: About Runs](/terraform/cloud-docs/run/remote-operations)
 
 ## Run Triggers
 
-[run triggers]: /docs/glossary#run-triggers
+[run triggers]: /terraform/docs/glossary#run-triggers
 
 -> Terraform Cloud
 
 Terraform Cloud provides a way to connect a given workspace to one or more workspaces within an organization, known as "source workspaces". These connections, called run triggers, allow runs to queue automatically in your workspace on successful apply of runs in any of the source workspaces.
 
-- [Terraform Cloud docs: Runs Triggers](/cloud-docs/workspaces/settings/run-triggers)
+- [Terraform Cloud docs: Runs Triggers](/terraform/cloud-docs/workspaces/settings/run-triggers)
 
 ## S3
 
-[s3]: /docs/glossary#s3
+[s3]: /terraform/docs/glossary#s3
 
 Amazon Web Services' "Simple Storage Service", a service for storing and retrieving arbitrary blobs of data.
 
@@ -774,39 +776,39 @@ Terraform Enterprise can use an S3-compatible [blob storage][] service when conf
 
 ## SAML
 
-[saml]: /docs/glossary#saml
+[saml]: /terraform/docs/glossary#saml
 
 -> Terraform Enterprise
 
 SAML is an XML-based standard for authentication and authorization. Terraform Enterprise can act as a service provider (SP) (or Relying Party, RP) with your internal SAML identity provider (IdP). The SAML Single Sign On feature is only available on [Terraform Enterprise][]; the Terraform Cloud SaaS does not support it.
 
-- [Terraform Enterprise docs: SAML Single Sign-On](/enterprise/user-management/saml)
+- [Terraform Enterprise docs: SAML Single Sign-On](/terraform/enterprise/saml/configuration)
 
 ## Sentinel
 
-[sentinel]: /docs/glossary#sentinel
+[sentinel]: /terraform/docs/glossary#sentinel
 
 -> Terraform Cloud
 
 A language and runtime for managing policy as code. Allows you to define rules around operations in Terraform Cloud.
 
-- [Terraform Cloud docs: Sentinel](/cloud-docs/sentinel)
+- [Terraform Cloud docs: Sentinel](/terraform/cloud-docs/policy-enforcement)
 
 ## Site Admin
 
-[site admin]: /docs/glossary#site-admin
-[site admins]: /docs/glossary#site-admin
+[site admin]: /terraform/docs/glossary#site-admin
+[site admins]: /terraform/docs/glossary#site-admin
 
 -> Terraform Enterprise
 
 An administrator of a [Terraform Enterprise][] instance, who has access to application settings that affect all [organizations][] using the instance.
 
-- [Terraform Enterprise docs: Administration](/enterprise/admin)
+- [Terraform Enterprise docs: Administration](/terraform/enterprise/admin)
 
 ## Speculative Plan
 
-[speculative plan]: /docs/glossary#speculative-plan
-[speculative plans]: /docs/glossary#speculative-plan
+[speculative plan]: /terraform/docs/glossary#speculative-plan
+[speculative plans]: /terraform/docs/glossary#speculative-plan
 
 -> Terraform Cloud
 
@@ -814,8 +816,8 @@ A [run][] that is only intended to show possible changes to infrastructure, when
 
 ## SSH Key
 
-[ssh key]: /docs/glossary#ssh-key
-[ssh keys]: /docs/glossary#ssh-key
+[ssh key]: /terraform/docs/glossary#ssh-key
+[ssh keys]: /terraform/docs/glossary#ssh-key
 
 A type of access credential based on public key cryptography, used to log into servers.
 
@@ -827,22 +829,22 @@ Terraform Cloud uses SSH private keys for two kinds of operations:
 
 - [Wikipedia: SSH](https://en.wikipedia.org/wiki/Secure_Shell)
 
-- [Terraform Cloud docs: SSH Keys for Cloning Modules](/cloud-docs/workspaces/settings/ssh-keys)
+- [Terraform Cloud docs: SSH Keys for Cloning Modules](/terraform/cloud-docs/workspaces/settings/ssh-keys)
 
 ## State
 
-[state]: /docs/glossary#state
+[state]: /terraform/docs/glossary#state
 
 Terraform's cached information about your managed infrastructure and [configuration][]. This state is used to persistently map the same real world [resources][] to your configuration from run-to-run, keep track of metadata, and improve performance for large infrastructures.
 
 Without state, Terraform has no way to identify the real resources it created during previous runs. Thus, when multiple people are collaborating on shared infrastructure, it's important to store state in a shared location, like a free Terraform Cloud organization.
 
-- [Terraform docs: State](/language/state)
+- [Terraform docs: State](/terraform/language/state)
 
 ## State Version
 
-[state version]: /docs/glossary#state-version
-[state versions]: /docs/glossary#state-version
+[state version]: /terraform/docs/glossary#state-version
+[state versions]: /terraform/docs/glossary#state-version
 
 -> Terraform Cloud
 
@@ -852,26 +854,26 @@ Terraform CLI doesn't have any concept of historical state data; it only interac
 
 ## Team
 
-[team]: /docs/glossary#team
-[teams]: /docs/glossary#team
+[team]: /terraform/docs/glossary#team
+[teams]: /terraform/docs/glossary#team
 
 -> Terraform Cloud
 
 A group of Terraform Cloud users, which can be given permission to access and/or edit various objects ([workspaces][], [policies][], etc.) within an [organization][]. A team belongs to a single organization. Users can belong to any number of teams in any number of organizations.
 
-- [Terraform Cloud docs: Teams](/cloud-docs/users-teams-organizations/teams)
+- [Terraform Cloud docs: Teams](/terraform/cloud-docs/users-teams-organizations/teams)
 
 ## Terraform
 
-[terraform]: /docs/glossary#terraform
+[terraform]: /terraform/docs/glossary#terraform
 
 A tool for building, changing, and versioning infrastructure safely and efficiently. Terraform can manage existing and popular service providers as well as custom in-house solutions.
 
-- [Intro to Terraform](/intro)
+- [Intro to Terraform](/terraform/intro)
 
 ## Terraform Cloud
 
-[terraform cloud]: /docs/glossary#terraform-cloud
+[terraform cloud]: /terraform/docs/glossary#terraform-cloud
 
 An application that helps teams use Terraform together. Terraform Cloud provides a consistent environment for Terraform runs, as well as hosting Terraform [state][] and other shared information.
 
@@ -879,22 +881,22 @@ Terraform Cloud is available as a hosted service at <https://app.terraform.io>. 
 
 Prior to mid-2019, "Terraform Enterprise" (TFE) was the name of the Terraform Cloud application, and "Private Terraform Enterprise" (PTFE) was the name of the on-premises distribution.
 
-- [Terraform Cloud docs](/cloud)
+- [Terraform Cloud docs](https://cloud.hashicorp.com/products/terraform)
 
 ## Terraform Enterprise
 
-[terraform enterprise]: /docs/glossary#terraform-enterprise
+[terraform enterprise]: /terraform/docs/glossary#terraform-enterprise
 
 An on-premises distribution of Terraform Cloud, which enables large enterprises to host their own private instance of the application.
 
 Prior to mid-2019, "Terraform Enterprise" (TFE) was the name of the Terraform Cloud application, and "Private Terraform Enterprise" (PTFE) was the name of the on-premises distribution.
 
-- [Terraform Enterprise docs](/enterprise)
+- [Terraform Enterprise docs](/terraform/enterprise)
 
 ## Terraform Version
 
-[terraform version]: /docs/glossary#tool-version
-[terraform versions]: /docs/glossary#tool-version
+[terraform version]: /terraform/docs/glossary#tool-version
+[terraform versions]: /terraform/docs/glossary#tool-version
 
 -> Terraform Cloud
 
@@ -902,19 +904,19 @@ A particular version of the `terraform` binary available for use in Terraform Cl
 
 [Site admins][] can configure the available Terraform versions for a [Terraform Enterprise][] instance.
 
-- [Terraform Enterprise docs: Managing Terraform Versions](/enterprise/admin/application/resources#managing-terraform-versions)
+- [Terraform Enterprise docs: Managing Terraform Versions](/terraform/enterprise/admin/application/resources#managing-terraform-versions)
 
 ## TFE
 
-[tfe]: /docs/glossary#tfe
+[tfe]: /terraform/docs/glossary#tfe
 
 [Terraform Enterprise][].
 
-- [Terraform Enterprise docs](/enterprise)
+- [Terraform Enterprise docs](/terraform/enterprise)
 
 ## TFE Provider / Terraform Cloud Provider
 
-[tfe provider]: /docs/glossary#tfe-provider-terraform-cloud-provider
+[tfe provider]: /terraform/docs/glossary#tfe-provider-terraform-cloud-provider
 
 A Terraform provider that manages Terraform Cloud. Allows you to manage Terraform Cloud using a Terraform [configuration][].
 
@@ -922,8 +924,8 @@ A Terraform provider that manages Terraform Cloud. Allows you to manage Terrafor
 
 ## (API) Token
 
-[token]: /docs/glossary#api-token
-[tokens]: /docs/glossary#api-token
+[token]: /terraform/docs/glossary#api-token
+[tokens]: /terraform/docs/glossary#api-token
 
 -> Terraform Cloud
 
@@ -933,25 +935,25 @@ Different kinds of tokens grant different permissions. Tokens can be granted by 
 
 Many applications other than Terraform Cloud use token-based authentication, but within Terraform Cloud's documentation and UI, "token" without any other qualification generally means a Terraform Cloud API token.
 
-- [Terraform Cloud docs: User Tokens](/cloud-docs/users-teams-organizations/users#api-tokens)
-- [Terraform Cloud docs: Team Tokens](/cloud-docs/users-teams-organizations/teams#api-tokens)
-- [Terraform Cloud docs: Organization Tokens](/cloud-docs/users-teams-organizations/organizations#api-tokens)
+- [Terraform Cloud docs: User Tokens](/terraform/cloud-docs/users-teams-organizations/users#api-tokens)
+- [Terraform Cloud docs: Team Tokens](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens)
+- [Terraform Cloud docs: Organization Tokens](/terraform/cloud-docs/users-teams-organizations/organizations#api-tokens)
 
 ## Trigger
 
-[trigger]: /docs/glossary#trigger
-[triggers]: /docs/glossary#trigger
+[trigger]: /terraform/docs/glossary#trigger
+[triggers]: /terraform/docs/glossary#trigger
 
 -> Terraform Cloud
 
 Something that causes a new [run][] to queue. Runs can be UI/VCS-driven (in which case the trigger is a new VCS commit or a UI action), API-driven (in which case the trigger is an API call) or CLI-driven (in which case the trigger is a CLI command).
 
-- [Terraform Cloud docs: UI/VCS-based Run Workflow](/cloud-docs/run/ui)
+- [Terraform Cloud docs: UI/VCS-based Run Workflow](/terraform/cloud-docs/run/ui)
 
 ## Variables
 
-[variables]: /docs/glossary#variables
-[input variables]: /docs/glossary#variables
+[variables]: /terraform/docs/glossary#variables
+[input variables]: /terraform/docs/glossary#variables
 
 Also "input variables".
 
@@ -961,12 +963,12 @@ In Terraform, "variables" almost always refers to _input variables,_ which are k
 
 Terraform Cloud lets you set values for root input variables in a [workspace][], so all collaborators can use the same values. Variable values marked as "sensitive" become unreadable in the UI and API, and all variable values are protected by Vault.
 
-- [Terraform docs: Input Variables](/language/values/variables)
-- [Terraform Cloud docs: Variables](/cloud-docs/workspaces/variables)
+- [Terraform docs: Input Variables](/terraform/language/values/variables)
+- [Terraform Cloud docs: Variables](/terraform/cloud-docs/workspaces/variables)
 
 ## VCS
 
-[vcs]: /docs/glossary#vcs
+[vcs]: /terraform/docs/glossary#vcs
 
 Version Control System, like [Git][]. Software that tracks changes over time to a collection of files, making it possible to keep track of changes, undo changes, and combine changes made in parallel by different users. Usually used for any non-trivial code effort, including infrastructure as code.
 
@@ -976,19 +978,19 @@ Different VCSes use different models for history; Git models changes as a direct
 
 ## VCS Provider
 
-[vcs provider]: /docs/glossary#vcs-provider
-[vcs providers]: /docs/glossary#vcs-provider
+[vcs provider]: /terraform/docs/glossary#vcs-provider
+[vcs providers]: /terraform/docs/glossary#vcs-provider
 
 -> Terraform Cloud
 
 A specific service that provides [VCS][] features, with the goal of enabling teams to collaborate on code. Terraform Cloud can integrate with VCS providers to access your Terraform [configurations][] and [modules][], and currently supports GitHub, GitHub Enterprise, GitLab.com, GitLab EE and CE, Bitbucket Cloud, Bitbucket Server, Azure DevOps Server, and Azure DevOps Services.
 
-- [Terraform Cloud docs: Connecting VCS Providers](/cloud-docs/vcs)
+- [Terraform Cloud docs: Connecting VCS Providers](/terraform/cloud-docs/vcs)
 
 ## Webhook
 
-[webhook]: /docs/glossary#webhook
-[webhooks]: /docs/glossary#webhook
+[webhook]: /terraform/docs/glossary#webhook
+[webhooks]: /terraform/docs/glossary#webhook
 
 A server-to-server HTTP request, in which one system responds to a change in its internal state by sending information to another system.
 
@@ -996,13 +998,13 @@ The recipient of a webhook might return information to the requesting system, ca
 
 Terraform Cloud uses webhooks in multiple ways. Most notably:
 
-- Terraform Cloud creates webhook configurations on [VCS providers][], so that they send webhook requests to Terraform Cloud whenever linked [repositories][] receive [pull requests][] or new [commits][]. ([Terraform Cloud docs: UI/VCS-driven Runs](/cloud-docs/run/ui))
-- Users can create webhook configurations on Terraform Cloud [workspaces][], so that Terraform Cloud will send run notification webhooks to Slack or other external services. ([Terraform Cloud docs: Run Notifications](/cloud-docs/workspaces/settings/notifications))
+- Terraform Cloud creates webhook configurations on [VCS providers][], so that they send webhook requests to Terraform Cloud whenever linked [repositories][] receive [pull requests][] or new [commits][]. ([Terraform Cloud docs: UI/VCS-driven Runs](/terraform/cloud-docs/run/ui))
+- Users can create webhook configurations on Terraform Cloud [workspaces][], so that Terraform Cloud will send run notification webhooks to Slack or other external services. ([Terraform Cloud docs: Run Notifications](/terraform/cloud-docs/workspaces/settings/notifications))
 
 ## Working Directory
 
-[working directory]: /docs/glossary#working-directory
-[working directories]: /docs/glossary#working-directory
+[working directory]: /terraform/docs/glossary#working-directory
+[working directories]: /terraform/docs/glossary#working-directory
 
 The directory where `terraform init` runs, creating a `.terraform` subdirectory. All subsequent commands for the same [configuration][] should then be run from the same working directory.
 
@@ -1010,8 +1012,8 @@ The [root module][] consists of all of the configuration files in the top level 
 
 ## Workspace
 
-[workspace]: /docs/glossary#workspace
-[workspaces]: /docs/glossary#workspace
+[workspace]: /terraform/docs/glossary#workspace
+[workspaces]: /terraform/docs/glossary#workspace
 
 In Terraform CLI, a workspace is an isolated instance of [state][] data. Using multiple workspaces lets you manage multiple non-overlapping sets of infrastructure from a single [configuration][] in a single [working directory][].
 
@@ -1024,5 +1026,5 @@ In Terraform Cloud, a workspace is a complex object that represents everything n
 
 All Terraform Cloud runs occur in the context of a workspace — they use that workspace's config data, use that workspace's state to identify the real infrastructure being managed, and edit that workspace's state to match any infrastructure changes during the run. A workspace belongs to an [organization][].
 
-- [Terraform Cloud docs: Workspaces](/cloud-docs/workspaces)
-- [Terraform docs: Workspaces](/language/state/workspaces)
+- [Terraform Cloud docs: Workspaces](/terraform/cloud-docs/workspaces)
+- [Terraform docs: Workspaces](/terraform/language/state/workspaces)

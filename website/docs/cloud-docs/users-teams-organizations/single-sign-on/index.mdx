@@ -8,21 +8,17 @@ tfc_only: true
 
 # Single Sign-on
 
--> **Note:** Single sign-on is a paid feature, available as part of the **Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/terraform/enterprise/saml/configuration).
 
-~> **Important:** This page is about configuring single sign-on in Terraform Cloud. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/enterprise/user-management/saml/configuration).
-
-Terraform Cloud allows organizations to configure support for SAML 2.0 single sign-on (SSO), an alternative to traditional [user](/cloud-docs/users-teams-organizations/users) management. By using SSO, your organization can centralize management of users for Terraform Cloud and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
-
-Current users of Terraform Cloud can link their SSO identity to their existing account, providing a smooth transition when an organization enables SSO.
+Terraform Cloud allows organizations to configure SAML single sign-on (SSO), an alternative to traditional user management.  SSO gives owners more control to secure accessibility to your organization’s [Projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources). By using SSO, your organization can centralize management of users for Terraform Cloud and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
 
 ## Supported Identity Providers (IdPs)
 
 Select your preferred provider to learn more about what is supported for that provider and how to configure SSO for it.
 
-* [Microsoft Azure AD](/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
-* [Okta](/cloud-docs/users-teams-organizations/single-sign-on/okta)
-* [SAML](/cloud-docs/users-teams-organizations/single-sign-on/saml)
+* [Microsoft Azure AD](/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
+* [Okta](/terraform/cloud-docs/users-teams-organizations/single-sign-on/okta)
+* [SAML](/terraform/cloud-docs/users-teams-organizations/single-sign-on/saml)
 
 ## How SSO Works
 
@@ -32,11 +28,30 @@ Once SSO is enabled for an organization, all non-owner members must sign in thro
 
 ### SSO Identities and Terraform Cloud User Accounts
 
-SSO does not automatically provision Terraform Cloud user accounts. The first time you sign in with SSO, you must either provide a password to create a new Terraform Cloud user account (using your SSO email address as the username), or link your SSO identity to an existing Terraform Cloud user account. Once the SSO identity is linked, you can only log in to that organization using the linked account. You must [remove the SSO link](/cloud-docs/users-teams-organizations/single-sign-on/linking-user-account#remove-sso-identity-link) if you want to access the organization with a different user account.
+SSO does not automatically provision Terraform Cloud user accounts. The first time you sign in with SSO, you must either provide a password to create a new Terraform Cloud user account (using your SSO email address as the username), or link your SSO identity to an existing Terraform Cloud user account. Once the SSO identity is linked, you can only log in to that organization using the linked account. You must [remove the SSO link](/terraform/cloud-docs/users-teams-organizations/single-sign-on/linking-user-account#remove-sso-identity-link) if you want to access the organization with a different user account.
 
-The accounts of SSO users are normal Terraform Cloud user accounts. If logged in with username and password, these accounts can create, join, and interact with other Terraform Cloud organizations. However, they cannot interact with the SSO-enabled organization without signing in via SSO unless they belong to its owners team.
+If an organization's owners disable SSO, all members can continue to access the organization using their Terraform Cloud or HashiCorp Cloud Platform credentials.
 
-If an organization's owners disable SSO (or downgrade the organization's account from the Business tier), all members can continue to access the organization using their Terraform Cloud usernames and passwords.
+### Enforced Access Policy for Terraform Cloud Resources
+
+As a non-owner, when you attempt to access an organization that has SSO configured, you will be redirected to the organization's SAML IdP to authenticate and authorize access using your SAML IdP credentials before you can access the organization's [Projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources).
+
+Owners of an SSO-enabled organization can still access the organization's resources through their TFC credentials or their HCP credentials (if linked to their TFC account). This is to enable a workaround to problems such as your IdP becoming unavailable, lost access to your MFA or IdP credentials, or other authentication issues.
+
+<Note>
+
+Terraform Cloud users are able to use their single TFC account to access resources in different organizations, however, SAML SSO does not authorize access to:
+- User Settings (such as to manage 2FA or generate/revoke User API tokens)
+- Other organizations with SSO configured with a different SAML IdP.  You will need to authenticate to each configured IdP separately.
+- Other organizations where SSO is not configured.
+
+</Note>
+
+In order to access these resources, you may be asked to “step-up” authentication using your TFC or HCP credentials. In most situations, a step-up TFC or HCP authentication login prompt will be required immediately after SSO authentication so that TFC can establish a broad user [session](/terraform/cloud-docs/users-teams-organizations/users#sessions) and to check access and authorization to different resources in TFC.
+
+The below diagram explains the the access enforcement policy and the authentication required for a Terraform Cloud User account to access different resources in TFC:
+
+![Screenshot: a diagram of resource access in TFC with both SSO and non-SSO authentication](/img/docs/tfc-sso-auth.png)
 
 ## Signing in with SSO
 
@@ -44,9 +59,7 @@ If an organization's owners disable SSO (or downgrade the organization's account
 
 1. Click "Sign in via SSO".
 
-1. Provide your organization name and click "Next".
-
-   ![Screenshot: The Terraform Cloud SSO sign-in page, asking for an organization name.](/img/docs/sign-in.png)
+1. Provide your organization name and click **Next"**.
 
 1. If you've signed in to Terraform Cloud with SSO before, proceed to the next step.
 
@@ -55,6 +68,28 @@ If an organization's owners disable SSO (or downgrade the organization's account
 1. You will be redirected to your SSO identity provider. Authenticate your account as necessary.
 
 1. You are now signed in to Terraform Cloud.
+
+## Configuring SSO in Terraform Cloud Free Edition 
+
+SSO is available to all TFC organizations, but is configured and managed differently in Terraform Cloud Free Edition because Team Management is only available in Terraform Cloud Standard and Plus Editions.
+
+In Terraform Cloud Free Edition organizations, after you successfully configure SSO, Terraform Cloud automatically creates a team named `sso` and adds all current members of the `owners` team into it. In the Free Edition, you cannot modify the organization-level permissions for both the `owners` and `sso` teams. These teams grant every member full administrative access to the organization, projects, workspaces, and managed resources.  
+
+After configuring SSO access, review the `owners` team membership. Members of the `owners` team have permission to bypass SSO in the event that your Identity Provider (IDP) is unavailable to service authentication requests, for example due to an IDP service outage, an administrator forgot their SSO credentials, or lost access to their software authenticator. An owner can use their Terraform Cloud or HashiCorp Cloud Platform credentials (if linked) to bypass TFC SSO authentication at any time.
+
+To encourage least privilege practices, Terraform Cloud prompts the user who successfully configures SSO to optionally remove other users from the owners group.
+
+## Managing Owners and SSO Team Membership in the Free Edition
+
+The Team Management feature set is available in Terraform Cloud Standard and Plus Editions only. Inviting users to any Free Edition organization will add them to the `owners` team but not the `sso` team. Review the following to assign the proper team membership between the two teams.
+
+For new users new to Terraform Cloud
+- **Assign new users to the `owners` team** by inviting the user to the organization.
+- **Assign new users to the `sso` team** by asking the user to login directly to the TFC organization via the SSO authentication login.
+
+For managing existing users permissions:
+- **Assign existing users from the `sso` team to the `owners` team:** Remove the user from the organization. Re-invite the user.
+- **Assign existing users from the `owners` team to the `sso` team:** Remove the user from the organization.  Ask the user to sign in via SSO authentication login directly.
 
 ## Managing Team Membership Through SSO
 
@@ -65,8 +100,6 @@ To enable team membership mapping:
 1. Click **Settings** in the navigation bar and then click **SSO** in the sidebar. The SSO configuration page appears.
 1. Toggle the **Enable team management to customize your team attribute**.
 
-![Screenshot: the Terraform Cloud SAML team membership toggle](/img/docs/saml-team-membership-cloud.png)
-
 When team management is enabled, you can configure which SAML attribute in the SAMLResponse will control team membership. This defaults to the `MemberOf` attribute. The expected format of the corresponding `AttributeValue` in the SAMLResponse is a either a string containing a comma-separated list of teams, or separate `AttributeValue` items specifying teams.
 
 When users log in through SAML, Terraform automatically adds them to the teams included in their assertion and automatically removes them from teams that are not included in their assertion. This automatic mapping overrides any manually set team memberships. Each time the user logs in, their team membership is adjusted to match their SAML assertion.
@@ -74,7 +107,6 @@ When users log in through SAML, Terraform automatically adds them to the teams i
 Terraform Cloud ignores team names that do not exactly match existing teams and will not create new teams from those listed in the assertion. If the chosen SAML attribute is not provided in the SAMLResponse, Terraform assigns users to a default team named `sso` and does not remove them from any existing teams.
 
 It is not possible to assign users to the `owners` team through this attribute.
-
 
 ## Team Names and SSO Team IDs
 

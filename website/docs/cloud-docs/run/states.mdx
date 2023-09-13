@@ -37,11 +37,9 @@ _Leaving this stage:_
 
 ## The Pre-Plan Stage
 
-The pre-plan phase only occurs if there are enabled [run tasks](/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the plan. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
+The pre-plan phase only occurs if there are enabled [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) in the workspace that are configured to begin before Terraform creates the plan. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
--> **Note:** Pre-plan run tasks are in beta.
-
-All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans).
+All runs can enter this phase, including [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans).
 
 _States in this stage:_
 
@@ -72,17 +70,19 @@ _Leaving this stage:_
 - If the plan succeeded and requires changes:
   - If cost estimation is enabled, the run proceeds automatically to the cost estimation stage.
   - If cost estimation is disabled and [Sentinel policies][] are enabled, the run proceeds automatically to the policy check stage.
-  - If there are no Sentinel policies and the plan can be auto-applied, the run proceeds automatically to the apply stage. Plans can be auto-applied if the auto-apply setting is enabled on the workspace and the plan was queued by a new VCS commit or by a user with permission to apply runs. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
-  - If there are no Sentinel policies and Terraform Cloud cannot auto-apply the plan, the run pauses in the **Needs Confirmation** state until a user with permission to apply runs takes action. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) If an authorized user approves the apply, the run proceeds to the apply stage. If an authorized user rejects the apply, the run does not continue (**Discarded** state).
+  - If there are no Sentinel policies and the plan can be auto-applied, the run proceeds automatically to the apply stage. Plans can be auto-applied if the auto-apply setting is enabled on the workspace and the plan was queued by a new VCS commit or by a user with permission to apply runs. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+  - If there are no Sentinel policies and Terraform Cloud cannot auto-apply the plan, the run pauses in the **Needs Confirmation** state until a user with permission to apply runs takes action. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) If an authorized user approves the apply, the run proceeds to the apply stage. If an authorized user rejects the apply, the run does not continue (**Discarded** state).
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+Note, if you want to directly integrate third-party tools and services between your plan and apply stages, see [Run Tasks](/terraform/cloud-docs/workspaces/settings/run-tasks).
+
 ## The Post-Plan Stage
 
-The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/cloud-docs/workspaces/settings/run-tasks) enabled
-for the workspace. All runs can enter this phase, including [speculative plans](/cloud-docs/run/#speculative-plans). During this phase, Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
+The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) enabled
+for the workspace. All runs can enter this phase, including [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans). During this phase, Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
 
--> **Note:** The information sent to the configured external system includes the [JSON output](/internals/json-format) of the Terraform plan.
+-> **Note:** The information sent to the configured external system includes the [JSON output](/terraform/internals/json-format) of the Terraform plan.
 
 _States in this stage:_
 
@@ -96,29 +96,27 @@ _Leaving this stage:_
 - If a single run has a combination of mandatory and advisory tasks, Terraform takes the most restrictive action. For example, if there are two advisory tasks that succeed and one mandatory task that failed, the run fails. If one mandatory task succeeds and two advisory tasks fail, the run succeeds with a warning.
 - If a user canceled the run, the run ends in the **Canceled** state.
 
-<!-- BEGIN: TFC:only name:opa-policies -->
 ## The OPA Policy Check Stage
 
--> **Note:** OPA policies are in beta.
-
-This stage only occurs if you enabled [Open Policy Agent (OPA) policies](/cloud-docs/policy-enforcement/opa) and runs after a successful `terraform plan` and before Cost Estimation. In this stage, Terraform Cloud checks whether the plan adheres to the policies in the OPA policy sets for the workspace.
+This stage only occurs if you enabled [Open Policy Agent (OPA) policies](/terraform/cloud-docs/policy-enforcement/opa) and runs after a successful `terraform plan` and before Cost Estimation. In this stage, Terraform Cloud checks whether the plan adheres to the policies in the OPA policy sets for the workspace.
 
 _States in this stage:_
+
 - **Policy Check:** Terraform Cloud is checking the plan against the OPA policy sets.
-- **Policy Override:** The policy check finished, but a mandatory policy failed. The run pauses, and Terraform cannot perform an apply unless a user manually overrides the policy check failure. Refer to [Policy Results](/cloud-docs/policy-enforcement/policy-results) for details.
+- **Policy Override:** The policy check finished, but a mandatory policy failed. The run pauses, and Terraform cannot perform an apply unless a user manually overrides the policy check failure. Refer to [Policy Results](/terraform/cloud-docs/policy-enforcement/policy-results) for details.
 - **Policy Checked:** The policy check succeeded, and Terraform can apply the plan. The run may pause in this state if the workspace is not set up to auto-apply runs.
 
 _Leaving this stage:_
 
 If any mandatory policies failed, the run pauses in the **Policy Override** state. The run completes one of the following workflows:
-- The run stops and enters the **Discarded** state when a user with [permission to apply runs](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions#manage-policy-overrides) discards the run.
-- The run proceeds to the **Policy Checked** state when a user with  [permission to manage policy overrides](/cloud-docs/users-teams-organizations/permissions) overrides the failed policy. The **Policy Checked** state means that no mandatory policies failed or that a user performed a manual override.
+
+- The run stops and enters the **Discarded** state when a user with [permission to apply runs](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions#manage-policy-overrides) discards the run.
+- The run proceeds to the **Policy Checked** state when a user with [permission to manage policy overrides](/terraform/cloud-docs/users-teams-organizations/permissions) overrides the failed policy. The **Policy Checked** state means that no mandatory policies failed or that a user performed a manual override.
 
 Once the run reaches the **Policy Checked** state, the run completes one of the following workflows:
+
 - The run proceeds to the **Apply** stage if Terraform can automatically apply the plan. An auto-apply requires that the **Auto apply** setting is enabled on the workspace.
 - If Terraform cannot automatically apply the plan, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. If the user approves the apply, the run proceeds to the **Apply** stage. If the user rejects the apply, the run stops and enters the **Discarded** state.
-
-<!-- END: TFC:only name:opa-policies -->
 
 ## The Cost Estimation Stage
 
@@ -136,12 +134,12 @@ _Leaving this stage:_
 
 ## The Sentinel Policy Check Stage
 
-This stage only occurs if [Sentinel policies](/cloud-docs/policy-enforcement/sentinel) are enabled. After a successful `terraform plan`, Terraform Cloud checks whether the plan obeys policy to determine whether it can be applied.
+This stage only occurs if [Sentinel policies](/terraform/cloud-docs/policy-enforcement/sentinel) are enabled. After a successful `terraform plan`, Terraform Cloud checks whether the plan obeys policy to determine whether it can be applied.
 
 _States in this stage:_
 
 - **Policy Check:** Terraform Cloud is currently checking the plan against the organization's policies.
-- **Policy Override:** The policy check finished, but a soft-mandatory policy failed, so an apply cannot proceed without approval from a user with permission to manage policy overrides for the organization. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) The run pauses in this state.
+- **Policy Override:** The policy check finished, but a soft-mandatory policy failed, so an apply cannot proceed without approval from a user with permission to manage policy overrides for the organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) The run pauses in this state.
 - **Policy Checked:** The policy check succeeded, and Sentinel will allow an apply to proceed. The run sometimes pauses in this state, depending on workspace settings.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -150,19 +148,17 @@ _Leaving this stage:_
 
 - If any hard-mandatory policies failed, the run does not continue (**Plan Errored** state).
 - If any soft-mandatory policies failed, the run pauses in the **Policy Override** state.
-  - If a user with permission to manage policy overrides, overrides the failed policy, the run proceeds to the **Policy Checked** state. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
-  - If a user with permission to apply runs discards the run, the run does not continue (**Discarded** state). ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+  - If a user with permission to manage policy overrides, overrides the failed policy, the run proceeds to the **Policy Checked** state. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+  - If a user with permission to apply runs discards the run, the run does not continue (**Discarded** state). ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 - If the run reaches the **Policy Checked** state (no mandatory policies failed, or soft-mandatory policies were overridden):
-  - If the plan can be auto-applied, the run proceeds automatically to the apply stage. Plans can be auto-applied if the auto-apply setting is enabled on the workspace and the plan was queued by a new VCS commit or by a user with permission to apply runs. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
-  - If the plan can't be auto-applied, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions)) The run proceeds to the apply stage if they approve the apply, or does not continue (**Discarded** state) if they reject the apply.
+  - If the plan can be auto-applied, the run proceeds automatically to the apply stage. Plans can be auto-applied if the auto-apply setting is enabled on the workspace and the plan was queued by a new VCS commit or by a user with permission to apply runs. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+  - If the plan can't be auto-applied, the run pauses in the **Policy Checked** state until a user with permission to apply runs takes action. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) The run proceeds to the apply stage if they approve the apply, or does not continue (**Discarded** state) if they reject the apply.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## The Pre-Apply Stage
 
-The pre-apply phase only occurs if the workspace has [run tasks](/cloud-docs/workspaces/settings/run-tasks) configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
-
--> **Note:** Pre-apply run tasks are in beta.
+The pre-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin before Terraform creates the apply. Terraform Cloud sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue. The information sent to the external system includes the configuration version of the run.
 
 Only confirmed runs can enter this phase.
 

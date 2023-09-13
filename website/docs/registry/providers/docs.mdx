@@ -7,7 +7,7 @@ description: >-
 
 # Provider Documentation
 
-The [Terraform Registry][terraform-registry] displays documentation for the providers it hosts. This page describes the expected format for provider documentation.
+The [Terraform Registry][terraform-registry] displays documentation for the providers it hosts. This page describes the expected format for provider documentation. Provider documentation is _not_ supported in the private registry of [Terraform Cloud or Terraform Enterprise](/terraform/cloud-docs/registry/publish-providers#release-files).
 
 -> In order to test how documents will render in the Terraform Registry, you can use the [Terraform Registry Doc Preview Tool](https://registry.terraform.io/tools/doc-preview).
 
@@ -27,7 +27,7 @@ Each document can contain no more than 500KB of data. Documents which exceed thi
 
 The [tfplugindocs](https://github.com/hashicorp/terraform-plugin-docs) command can be used to automatically generate documentation for your provider in the format necessary for the Terraform Registry. It will read descriptions and schema from each resource and data source in your provider and generate the relevant markdown files for you.
 
-The [terraform-provider-scaffolding](https://github.com/hashicorp/terraform-provider-scaffolding) template repository includes example usage of the `tfplugindocs` command via `go generate`:
+The [terraform-provider-scaffolding-framework](https://github.com/hashicorp/terraform-provider-scaffolding-framework) template repository includes example usage of the `tfplugindocs` command via `go generate`:
 
 ```go
 //go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
@@ -266,4 +266,4 @@ If you want to publish docs on the Terraform Registry that are not available on 
 
 [terraform-registry-providers]: https://registry.terraform.io/browse/providers
 
-[terraform-io-providers]: /language/providers
+[terraform-io-providers]: /terraform/language/providers

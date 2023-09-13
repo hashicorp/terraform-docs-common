@@ -6,27 +6,33 @@ description: >-
 
 # Policy Enforcement
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA policies are not available in Terraform Enterprise.
-
 Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices.
 
-> **Hands-on:** Try the [Enforce Policy with Sentinel](https://learn.hashicorp.com/collections/terraform/policy) and [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorials.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
+
+> **Hands-on:** Try the [Enforce Policy with Sentinel](/terraform/tutorials/policy) and [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorials.
 
 ## Define Policies
 
 You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA). Depending on the settings, policies can act as advisory warnings or firm requirements that prevent Terraform from provisioning infrastructure.
 
-- **Sentinel:** You define policies with the [Sentinel policy language](https://docs.hashicorp.com/sentinel/concepts/language) and use imports to parse the Terraform plan, state, and configuration. Refer to [Defining Sentinel Policies](/cloud-docs/policy-enforcement/sentinel) for details.
-- **OPA:** You define policies with the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/). Refer to [Defining OPA Policies](/cloud-docs/policy-enforcement/opa) for details.
+- **Sentinel:** You define policies with the [Sentinel policy language](https://docs.hashicorp.com/sentinel/concepts/language) and use imports to parse the Terraform plan, state, and configuration. Refer to [Defining Sentinel Policies](/terraform/cloud-docs/policy-enforcement/sentinel) for details.
+- **OPA:** You define policies with the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/). Refer to [Defining OPA Policies](/terraform/cloud-docs/policy-enforcement/opa) for details.
 
-## Apply Policy Sets to Workspaces
+## Apply Policy Sets to Workspaces and Projects
 
-You group policies into policy sets and apply those policy sets to one or more workspaces in your organization. For each run in those workspaces, Terraform Cloud checks the Terraform plan against the policy set. You can create policy sets directly in the Terraform Cloud UI, by connecting Terraform Cloud to your version control system, or through the Terraform Cloud API. A policy set must only contain policies written in a single policy framework (Sentinel or OPA), but you can add both Sentinel and OPA policy sets to each workspace.
+Policy sets are collections of policies you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces in your organization. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set.
 
-Refer to [Managing Policy Sets](/cloud-docs/policy-enforcement/manage-policy-sets) for details.
+You can also exclude specific workspaces from global or project-scoped policy sets. Terraform Cloud won't enforce a policy set's policies on any runs in an excluded workspace. For example, if you attach a policy set to a project and then exclude one of the project's workspaces from that policy set, Terraform Cloud will not enforce the policy set on the excluded workspace.
+
+You can create policy sets using the [Terraform Cloud user interface](/terraform/cloud-docs/policy-enforcement/manage-policy-sets#create-policy-sets), the Terraform Cloud API, or by connecting Terraform Cloud to your version control system. A policy set can only contain policies written in a single policy framework (Sentinel or OPA). However, you can add Sentinel or OPA policy sets to the same workspace.
+
+Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.
 
 ## Review Policy Results
 
-The Terraform Cloud UI displays policy results for each policy set you apply to the workspace. Depending on their [enforcement level](/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), failed policies can stop the run. You can override failed policies with the right permissions.
+The Terraform Cloud UI displays policy results for each policy set you apply to the workspace. Depending on their [enforcement level](/terraform/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), failed policies can stop the run. You can override failed policies with the right permissions.
 
-Refer to [Policy Results](/cloud-docs/policy-enforcement/policy-results) for details.
+Refer to [Policy Results](/terraform/cloud-docs/policy-enforcement/policy-results) for details.

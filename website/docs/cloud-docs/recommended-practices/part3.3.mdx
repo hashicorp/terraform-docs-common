@@ -3,6 +3,8 @@ page_title: >-
   Part 3.3: From Infrastructure as Code to Collaborative Infrastructure as Code
   - Terraform Recommended Practices
 tfc_only: true
+description: >-
+  Move to collaborative infrastructure-as-code workflows. Learn about Terraform Cloud's run environment, create workspaces, plan and create teams, assign permissions, and restrict non-Terraform access.
 ---
 
 # Part 3.3: How to Move from Infrastructure as Code to Collaborative Infrastructure as Code
@@ -21,7 +23,7 @@ Note: If you aren’t already using mature Terraform code to manage a significan
 
 ## 1. Install or Sign Up for Terraform Cloud
 
-You have two options for using Terraform Cloud: the SaaS hosted by HashiCorp, or a private instance you manage with Terraform Enterprise. If you have chosen the SaaS version then you can skip this step; otherwise visit the [Terraform Enterprise documentation](/enterprise) to get started.
+You have two options for using Terraform Cloud: the SaaS hosted by HashiCorp, or a private instance you manage with Terraform Enterprise. If you have chosen the SaaS version then you can skip this step; otherwise visit the [Terraform Enterprise documentation](/terraform/enterprise) to get started.
 
 ## 2. Learn Terraform Cloud's Run Environment
 
@@ -29,7 +31,7 @@ Get familiar with how Terraform runs work in Terraform Cloud. With Terraform OSS
 
 Terraform Cloud does things differently: a workspace is associated directly with a VCS repo, and you use Terraform Cloud’s UI or API to start and monitor runs. To get familiar with this operating model:
 
-- Read the documentation on how to [perform and configure Terraform runs](/cloud-docs/run) in Terraform Cloud.
+- Read the documentation on how to [perform and configure Terraform runs](/terraform/cloud-docs/run/remote-operations) in Terraform Cloud.
 - Create a proof-of-concept workspace, associate it with Terraform code in a VCS repo, set variables as needed, and use Terraform Cloud to perform some Terraform runs with that code.
 
 ## 3. Design Your Organization’s Workspace Structure
@@ -68,17 +70,17 @@ Managing an accurate and complete map of how responsibilities are delegated is o
 
 When managing team membership, you have two options:
 
-- Manage user accounts with [SAML single sign-on](/enterprise/user-management/saml). SAML support is exclusive to Terraform Enterprise, and lets users log into Terraform Cloud via your organization's existing identity provider. If your organization is at a scale where you use a SAML-compatible identity provider, we recommend this option.
+- Manage user accounts with [SAML single sign-on](/terraform/enterprise/saml/configuration). SAML support is exclusive to Terraform Enterprise, and lets users log into Terraform Cloud via your organization's existing identity provider. If your organization is at a scale where you use a SAML-compatible identity provider, we recommend this option.
 
-  If your identity provider already has information about your colleagues' teams or groups, you can [manage team membership via your identity provider](/enterprise/user-management/saml/team-membership). Otherwise, you can add users to teams with the UI or with [the team membership API](/cloud-docs/api-docs/team-members).
+  If your identity provider already has information about your colleagues' teams or groups, you can [manage team membership via your identity provider](/terraform/enterprise/saml/team-membership). Otherwise, you can add users to teams with the UI or with [the team membership API](/terraform/cloud-docs/api-docs/team-members).
 
-- Manage user accounts in Terraform Cloud. Your colleagues must create their own Terraform Cloud user accounts, and you can add them to your organization by adding their username to at least one team. You can manage team membership with the UI or with [the team membership API](/cloud-docs/api-docs/team-members).
+- Manage user accounts in Terraform Cloud. Your colleagues must create their own Terraform Cloud user accounts, and you can add them to your organization by adding their username to at least one team. You can manage team membership with the UI or with [the team membership API](/terraform/cloud-docs/api-docs/team-members).
 
 ## 6. Assign Permissions
 
 Assign workspace ownership and permissions to teams.
 
-Terraform Cloud supports granular team permissions for each workspace. For complete information about the available permissions, see [the Terraform Cloud permissions documentation.](/cloud-docs/users-teams-organizations/permissions)
+Terraform Cloud supports granular team permissions for each workspace. For complete information about the available permissions, see [the Terraform Cloud permissions documentation.](/terraform/cloud-docs/users-teams-organizations/permissions)
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -101,4 +103,4 @@ As long as no one can bypass Terraform, your code review processes and your Terr
 
 At this point, you have successfully adopted a collaborative infrastructure as code workflow with Terraform Cloud. You can provision infrastructure across multiple providers using a single workflow, and you have a shared interface that helps manage your organization’s standards around access control and code promotion.
 
-Next, you can make additional improvements to your workflows and practices. Continue on to [Part 3.4: Advanced Improvements to Collaborative Infrastructure as Code](/cloud-docs/guides/recommended-practices/part3.4).
+Next, you can make additional improvements to your workflows and practices. Continue on to [Part 3.4: Advanced Improvements to Collaborative Infrastructure as Code](/terraform/cloud-docs/recommended-practices/part3.4).

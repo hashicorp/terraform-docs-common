@@ -1,5 +1,7 @@
 ---
 page_title: Run Tasks - API Docs - Terraform Cloud
+description: >-
+  Use the `/tasks` endpoint to manage run tasks. List, show, create, update, and delete run tasks, and list, show, update, delete and associate workspace run tasks using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,21 +32,23 @@ page_title: Run Tasks - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Run Tasks API
 
--> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+[Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
 
-[Run tasks](/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/run-tasks.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
-Refer to [run tasks Integration](/cloud-docs/api-docs/run-tasks-integration) for the API endpoints related triggering run tasks and the expected integration response.
+Refer to [run tasks Integration](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) for the API endpoints related triggering run tasks and the expected integration response.
 
 ## Required Permissions
 
-To interact with run tasks on an organization, you need the [Manage Run Tasks permission](/cloud-docs/users-teams-organizations/permissions#manage-run-tasks). To associate or dissociate run tasks in a workspace, you need the [Manage Workspace Run Tasks permission](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) on that particular workspace.
+To interact with run tasks on an organization, you need the [Manage Run Tasks permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-run-tasks). To associate or dissociate run tasks in a workspace, you need the [Manage Workspace Run Tasks permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) on that particular workspace.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -54,7 +58,7 @@ To interact with run tasks on an organization, you need the [Manage Run Tasks pe
 
 | Parameter            | Description                                                                                                                                                                                                                     |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The organization to create a run task in. The organization must already exist in Terraform Cloud, and the token authenticating the API request must have [owner permission](/cloud-docs/users-teams-organizations/permissions). |
+| `:organization_name` | The organization to create a run task in. The organization must already exist in Terraform Cloud, and the token authenticating the API request must have [owner permission](/terraform/cloud-docs/users-teams-organizations/permissions). |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -157,7 +161,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                                                                                                            |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -396,7 +400,7 @@ curl \
 
 | Status  | Response                  | Reason                                                     |
 | ------- | ------------------------- | ---------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the run task                          |
+| [204][] | No Content                | Successfully deleted the run task                          |
 | [404][] | [JSON API error object][] | Run task not found, or user unauthorized to perform action |
 
 ### Sample Request
@@ -425,13 +429,11 @@ This involves setting the run task enforcement level, which determines whether t
 
 - Mandatory run tasks block a run from completing. If the task fails (including a timeout or unexpected remote error condition), the run stops with an error.
 
-You may also configure the run task to begin during a specific [run stage](/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/cloud-docs/run/states#the-post-plan-stage) by default.
-
--> **Note:** Configuring the [run stage](/cloud-docs/run/states) for a run task is in beta.
+You may also configure the run task to begin during a specific [run stage](/terraform/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage) by default.
 
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
-| [204][] | Nothing                   | The request was successful                                             |
+| [204][] | No Content                | The request was successful                                             |
 | [404][] | [JSON API error object][] | Workspace or run task not found or user unauthorized to perform action |
 | [422][] | [JSON API error object][] | Malformed request body                                                 |
 
@@ -448,8 +450,6 @@ Properties without a default value are required.
 | `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, or `"pre_apply"`. |
 | `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
 | `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
-
--> **Note:** The `data.attributes.stage` key is in beta
 
 ### Sample Payload
 
@@ -531,7 +531,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                 |
 | -------------- | --------------------------------------------------------------------------- |
@@ -744,7 +744,7 @@ curl \
 
 | Status  | Response                  | Reason                                                               |
 | ------- | ------------------------- | -------------------------------------------------------------------- |
-| [204][] | Nothing                   | Successfully deleted the workspace run task                          |
+| [204][] | No Content                | Successfully deleted the workspace run task                          |
 | [404][] | [JSON API error object][] | Workspace run task not found, or user unauthorized to perform action |
 
 ### Sample Request

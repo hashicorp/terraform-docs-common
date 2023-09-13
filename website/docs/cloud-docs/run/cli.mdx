@@ -5,51 +5,53 @@ description: >-
   configuration for remote CLI runs.
 ---
 
-[sentinel]: /cloud-docs/sentinel
+[private]: /terraform/cloud-docs/registry
 
-[private]: /cloud-docs/registry
-
-[speculative plan]: /cloud-docs/run/#speculative-plans
+[speculative plan]: /terraform/cloud-docs/run/remote-operations#speculative-plans
 
 [tfe-provider]: https://registry.terraform.io/providers/hashicorp/tfe/latest/docs
 
 # The CLI-driven Run Workflow
 
-> **Hands-on:** Try the [Log in to Terraform Cloud from the CLI](https://learn.hashicorp.com/tutorials/terraform/cloud-login?in=terraform/0-13) tutorial.
+> **Hands-on:** Try the [Log in to Terraform Cloud from the CLI](/terraform/tutorials/0-13/cloud-login) tutorial.
 
 Terraform Cloud has three workflows for managing Terraform runs.
 
-- The [UI/VCS-driven run workflow](/cloud-docs/run/ui), which is the primary mode of operation.
-- The [API-driven run workflow](/cloud-docs/run/api), which is more flexible but requires you to create some tooling.
+- The [UI/VCS-driven run workflow](/terraform/cloud-docs/run/ui), which is the primary mode of operation.
+- The [API-driven run workflow](/terraform/cloud-docs/run/api), which is more flexible but requires you to create some tooling.
 - The CLI-driven run workflow described below, which uses Terraform's standard CLI tools to execute runs in Terraform Cloud.
 
 ## Summary
 
-The [CLI integration](/cli/cloud) brings Terraform Cloud's collaboration features into the familiar Terraform CLI workflow. It offers the best of both worlds to developers who are already comfortable with using the Terraform CLI, and it can work with existing CI/CD pipelines.
+The [CLI integration](/terraform/cli/cloud) brings Terraform Cloud's collaboration features into the familiar Terraform CLI workflow. It offers the best of both worlds to developers who are already comfortable with using the Terraform CLI, and it can work with existing CI/CD pipelines.
 
-You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud; they use variables from the appropriate workspace, enforce any applicable [Sentinel policies][sentinel], and can access Terraform Cloud's [private registry][private] and remote state inputs.
+You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud, use variables from the appropriate workspace, enforce any applicable [Sentinel or OPA policies](/terraform/cloud-docs/policy-enforcement), and can access Terraform Cloud's [private registry][private] and remote state inputs.
 
-Terraform Cloud offers two kinds of CLI-driven runs, to support different stages of your workflow:
+Terraform Cloud offers three kinds of CLI-driven runs, to support different stages of your workflow:
 
 - `terraform plan` starts a [speculative plan][] in a Terraform Cloud workspace, using configuration files from a local directory. You can quickly check the results of edits (including compliance with Sentinel policies) without needing to copy sensitive variables to your local machine.
 
-  Speculative plans work with all workspaces, and can co-exist with the [VCS-driven workflow](/cloud-docs/run/ui).
+  Speculative plans work with all workspaces, and can co-exist with the [VCS-driven workflow](/terraform/cloud-docs/run/ui).
 
-- `terraform apply` starts a normal plan and apply in a Terraform Cloud workspace, using configuration files from a local directory.
+- `terraform apply` starts a standard plan and apply in a Terraform Cloud workspace, using configuration files from a local directory.
 
   Remote `terraform apply` is for workspaces without a linked VCS repository. It replaces the VCS-driven workflow with a more traditional CLI workflow.
 
-To supplement these remote operations, you can also use the optional [Terraform Enterprise Provider][tfe-provider], which interacts with the resources supported by Terraform Cloud. It can be useful for editing variables and workspace settings through the Terraform CLI.
+- `terraform plan -out <FILE>` and `terraform apply <FILE>` perform a two-part [saved plan run](/terraform/cloud-docs/run/modes-and-options/#saved-plans) in a Terraform Cloud workspace, using configuration files from a local directory. The first command performs and saves the plan, and the second command applies it. You can use `terraform show <FILE>` to inspect a saved plan.
 
--> **Note:** The [Structured Run Output](/cloud-docs/workspaces/settings#user-interface) user interface will not apply to runs executed using the CLI-driven workflow, regardless of the setting in the Terraform Cloud workspace.
+    Like remote `terraform apply`, remote saved plans are for workspaces without a linked VCS repository.
+
+    Saved plans require at least Terraform CLI v1.6.0.
+
+To supplement these remote operations, you can also use the optional [Terraform Enterprise Provider][tfe-provider], which interacts with the Terraform Cloud-supported resources. This provider is useful for editing variables and workspace settings through the Terraform CLI.
 
 ## Configuration
 
 To enable the CLI-driven workflow, you must:
 
-1. Run `terraform login` to authenticate with Terraform Cloud. Alternatively, you can manually configure credentials in the CLI config file or through environment variables. Refer to [CLI Configuration](/cli/config/config-file#environment-variable-credentials) for details.
+1. Run `terraform login` to authenticate with Terraform Cloud. Alternatively, you can manually configure credentials in the CLI config file or through environment variables. Refer to [CLI Configuration](/terraform/cli/config/config-file#environment-variable-credentials) for details.
 
-1. Add the `cloud` block to your Terraform configuration. You can define its arguments directly in your configuration file or supply them through environment variables, which can be useful for [non-interactive workflows](#non-interactive-workflows). Refer to [Using Terraform Cloud](/cli/cloud) for configuration details.
+1. Add the `cloud` block to your Terraform configuration. You can define its arguments directly in your configuration file or supply them through environment variables, which can be useful for [non-interactive workflows](#non-interactive-workflows). Refer to [Using Terraform Cloud](/terraform/cli/cloud) for configuration details.
 
    The following example shows how to map CLI workspaces to Terraform Cloud workspaces with a specific tag.
 
@@ -64,7 +66,7 @@ To enable the CLI-driven workflow, you must:
    }
    ```
 
-   -> **Note:** The `cloud` block is available in Terraform v1.1 and later. Previous versions can use the [`remote` backend](/language/settings/backends/remote) to configure the CLI workflow and migrate state.
+   -> **Note:** The `cloud` block is available in Terraform v1.1 and later. Previous versions can use the [`remote` backend](/terraform/language/settings/backends/remote) to configure the CLI workflow and migrate state.
 
 1. Run `terraform init`.
 
@@ -92,7 +94,7 @@ If you configure the `cloud` block to use a workspace that doesn't yet exist in 
 
 Automatically created workspaces might not be immediately ready to use, so use Terraform Cloud's UI to check a workspace's settings and data before performing any runs. In particular, note that:
 
-- No Terraform variables or environment variables are created by default, unless your organization has configured one or more [global variable sets](/cloud-docs/workspaces/variables#scope). Terraform Cloud will use `*.auto.tfvars` files if they are present, but you will usually still need to set some workspace-specific variables.
+- No Terraform variables or environment variables are created by default, unless your organization has configured one or more [global variable sets](/terraform/cloud-docs/workspaces/variables#scope). Terraform Cloud will use `*.auto.tfvars` files if they are present, but you will usually still need to set some workspace-specific variables.
 - The execution mode defaults to "Remote," so that runs occur within Terraform Cloud's infrastructure instead of on your workstation.
 - New workspaces are not automatically connected to a VCS repository and do not have a working directory specified.
 - A new workspace's Terraform version defaults to the most recent release of Terraform at the time the workspace was created.
@@ -103,16 +105,16 @@ Remote runs in Terraform Cloud use:
 
 - Run-specific variables set through the command line or in your local environment. Terraform can use shell environment variables prefixed with `TF_VAR_` as input variables for the run, but you must still set all required environment variables, like provider credentials, inside the workspace.
 - Workspace-specific Terraform and environment variables set in the workspace.
-- Variable sets applied to the workspace.
+- Any variable sets applied globally, on the project containing the workspace, or on the workspace itself.
 - Terraform variables from any `*.auto.tfvars` files included in the configuration.
 
-Refer to [Variables](/cloud-docs/workspaces/variables) for more details about variable types, variable scopes, variable precedence, and how to set run-specific variables through the command line.
+Refer to [Variables](/terraform/cloud-docs/workspaces/variables) for more details about variable types, variable scopes, variable precedence, and how to set run-specific variables through the command line.
 
 ## Remote Working Directories
 
 If you manage your Terraform configurations in self-contained repositories, the remote working directory always has the same content as the local working directory.
 
-If you use a combined repository and [specify a working directory on workspaces](/cloud-docs/workspaces/settings#terraform-working-directory), you can run Terraform from either the real working directory or from the root of the combined configuration directory. In both cases, Terraform will upload the entire combined configuration directory.
+If you use a combined repository and [specify a working directory on workspaces](/terraform/cloud-docs/workspaces/settings#terraform-working-directory), you can run Terraform from either the real working directory or from the root of the combined configuration directory. In both cases, Terraform will upload the entire combined configuration directory.
 
 ## Excluding Files from Upload
 
@@ -120,11 +122,11 @@ If you use a combined repository and [specify a working directory on workspaces]
 
 CLI-driven runs upload an archive of your configuration directory
 to Terraform Cloud. If the directory contains files you want to exclude from upload,
-you can do so by defining a [`.terraformignore` file in your configuration directory](/cli/cloud/settings).
+you can do so by defining a [`.terraformignore` file in your configuration directory](/terraform/cli/cloud/settings).
 
 ## Remote Speculative Plans
 
-You can run speculative plans in any workspace where you have [permission to queue plans](/cloud-docs/users-teams-organizations/permissions). Speculative plans use the configuration code from the local working directory, but will use variable values from the specified workspace.
+You can run speculative plans in any workspace where you have [permission to queue plans](/terraform/cloud-docs/users-teams-organizations/permissions). Speculative plans use the configuration code from the local working directory, but will use variable values from the specified workspace.
 
 To run a [speculative plan][] on your configuration, use the `terraform plan` command. The plan will run in Terraform Cloud, and the logs will stream back to the command line along with a URL to view the plan in the Terraform Cloud UI.
 
@@ -154,7 +156,7 @@ Changes to Outputs:
 
 ## Remote Applies
 
-In workspaces that are not connected to a VCS repository, users with [permission to apply runs](/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) can use the CLI to trigger remote applies. Remote applies use the configuration code from the local working directory, but use the variable values from the specified workspace.
+In workspaces that are not connected to a VCS repository, users with [permission to apply runs](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) can use the CLI to trigger remote applies. Remote applies use the configuration code from the local working directory, but use the variable values from the specified workspace.
 
 ~> **Note:** You cannot run remote applies in workspaces that are linked to a VCS repository, since the repository serves as the workspace’s source of truth. To apply changes in a VCS-linked workspace, merge your changes to the designated branch.
 
@@ -194,11 +196,11 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ### Non-Interactive Workflows
 
-> **Hands On:** Try the [Deploy Infrastructure with Terraform Cloud and CircleCI](https://learn.hashicorp.com/tutorials/terraform/circle-ci) tutorial.
+> **Hands On:** Try the [Deploy Infrastructure with Terraform Cloud and CircleCI](/terraform/tutorials/automation/circle-ci) tutorial.
 
-External systems cannot run the traditional apply workflow because Terraform requires console input from the user to approve plans. We recommend using the [API-driven Run Workflow](/cloud-docs/run/api) for non-interactive workflows when possible.
+External systems cannot run the traditional apply workflow because Terraform requires console input from the user to approve plans. We recommend using the [API-driven Run Workflow](/terraform/cloud-docs/run/api) for non-interactive workflows when possible.
 
-If you prefer to use the CLI in a non-interactive environment, we recommend first running a [speculative plan](/cloud-docs/run#speculative-plans) to preview the changes Terraform will make to your infrastructure. Then, use one of the following approaches with the `-auto-approve` flag based on the [execution mode](/cloud-docs/workspaces/settings#execution-mode) of your workspace. The [`-auto-approve`](/cli/commands/apply#auto-approve) flag skips prompting you to approve the plan.
+If you prefer to use the CLI in a non-interactive environment, we recommend first running a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) to preview the changes Terraform will make to your infrastructure. Then, use one of the following approaches with the `-auto-approve` flag based on the [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) of your workspace. The [`-auto-approve`](/terraform/cli/commands/apply#auto-approve) flag skips prompting you to approve the plan.
 
 - **Local Execution:**  Save the approved speculative plan and then run `terraform apply -auto-approve` with the saved plan.
 - **Remote Execution:** Terraform Cloud does not support uploading saved plans for remote execution, so we recommend running `terraform apply -auto-approve` immediately after approving the speculative plan to prevent the plan from becoming stale.
@@ -207,17 +209,47 @@ If you prefer to use the CLI in a non-interactive environment, we recommend firs
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+## Remote Saved Plans
 
-## Sentinel Policies
+-> **Version note:** Saved plans require at least Terraform CLI v1.6.0.
 
-If the specified workspace uses Sentinel policies, those policies will run against all speculative plans and remote applies in that workspace. Policy output is shown in the terminal.
+In workspaces that support `terraform apply`, you also have the option of performing the plan and apply as separate steps, using the standard variations of the relevant Terraform commands:
 
-Failed policies can pause or prevent an apply, depending on the enforcement level:
+- `terraform plan -out <FILE>` performs and saves a plan.
+- `terraform apply <FILE>` applies a previously saved plan.
+- `terraform show <FILE>` (and `terraform show -json <FILE>`) inspect a plan you previously saved.
 
-- Hard mandatory checks cannot be overridden and they prevent `terraform apply` from applying changes.
-- Soft mandatory checks can be overridden by users with permission to [manage policy overrides](/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides). If your account can override a failed check, Terraform will prompt you to type "override" to confirm. (Note that typing "yes" will not work.) If you override the check, you will be prompted to apply the run (unless auto-apply is enabled).
+Saved plan runs are halfway between [speculative plans](#remote-speculative-plans) and standard [plan and apply runs](#remote-applies). They allow you to:
+
+- Perform cheap exploratory plans while retaining the option of applying a specific plan you are satisfied with.
+- Perform other tasks in your terminal between the plan and apply stages.
+- Perform the plan and apply operations on separate machines (as is common in continuous integration workflows).
+
+Saved plans become _stale_ once the state Terraform planned them against is no longer valid (usually due to someone applying a different run). In Terraform Cloud, stale saved plan runs are automatically detected and discarded. When examining a remote saved plan, the `terraform show` command (without the `-json` option) informs you if a plan has been discarded or is otherwise unable to be applied.
+
+### File Contents and Permissions
+
+You can only apply remote saved plans in the same remote Terraform Cloud workspace that performed the plan. Additionally, you can not apply locally executed saved plans in a remote workspace.
+
+In order to abide by Terraform Cloud's permissions model, remote saved plans do not use the same local file format as locally executed saved plans. Instead, remote saved plans are a thin reference to a remote run, and the Terraform CLI relies on authenticated network requests to inspect and apply remote plans. This helps avoid the accidental exposure of credentials or other sensitive information.
+
+The `terraform show -json` command requires [workspace admin permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) to inspect a remote saved plan; this is because the [machine-readable JSON plan format](/terraform/internals/json-format) contains unredacted sensitive information (alongside redaction hints for use by systems that consume the format). The human-readable version of `terraform show` only requires the read runs permission, because it uses pre-redacted information.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+## Policy Enforcement
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
+
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA).
+
+If the specified workspace uses policies, Terraform Cloud runs those policies against all speculative plans and remote applies in that workspace. Failed policies can pause or prevent an apply, depending on the enforcement level. Refer to [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) for details.
+
+For Sentinel, the Terraform CLI prints policy results for CLI-driven runs. CLI support for policy results is not available for OPA.
+
+The following example shows Sentinel policy output in the terminal.
 
 ```
 $ terraform apply
@@ -250,4 +282,18 @@ Do you want to override the soft failed policy check?
 
 ## Options for Plans and Applies
 
-[Run Modes and Options](/cloud-docs/run/modes-and-options) contains more details about the various options available for plans and applies when you use the CLI-driven workflow.
+[Run Modes and Options](/terraform/cloud-docs/run/modes-and-options) contains more details about the various options available for plans and applies when you use the CLI-driven workflow.
+
+## Networking/Connection Issues
+
+Sometimes during a CLI-driven run, errors relating to network connectivity issues arise. Examples of these kinds of errors include:
+
+* `Client.Timeout exceeded while awaiting headers`
+* `context deadline exceeded`
+* `TLS handshake timeout`
+
+Sometimes there are network problems beyond our control. If you have network errors, verify your network connection is operational. Then, check the following common configuration settings:
+
+* Determine if any firewall software on your system blocks the `terraform` command and explicitly approve it.
+* Verify that you have a valid DNS server IP address.
+* Remove any expired TLS certificates for your system.

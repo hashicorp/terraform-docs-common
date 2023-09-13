@@ -1,7 +1,26 @@
 [
   { "heading": "Terraform Cloud" },
   { "title": "Overview", "path": "" },
-  { "title": "Plans and Features", "path": "overview" },
+  { "title": "Plans and Features", 
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "overview" 
+      },
+      {
+        "title": "Estimate Terraform Cloud Cost",
+        "path": "overview/estimate-terraform-cloud-cost"
+      },
+      {
+        "title": "Activate Pay-As-You-Go",
+        "path": "overview/activate-payg"
+      },
+      {
+        "title": "Activate HashiCorp Flex",
+        "path": "overview/activate-flex"
+      }
+    ]
+  },
   {
     "title": "Getting Started",
     "href": "https://learn.hashicorp.com/collections/terraform/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS"
@@ -37,8 +56,10 @@
         "path": "api-docs/cost-estimates"
       },
       { "title": "Feature Sets", "path": "api-docs/feature-sets" },
+      { "title": "GitHub App Installations", "path": "api-docs/github-app-installations"},
       { "title": "Invoices", "path": "api-docs/invoices" },
       { "title": "IP Ranges", "path": "api-docs/ip-ranges" },
+      { "title": "No-Code Provisioning", "path": "api-docs/no-code-provisioning"},
       {
         "title": "Notification Configurations",
         "path": "api-docs/notification-configurations"
@@ -82,6 +103,8 @@
           { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
         ]
       },
+      { "title": "Projects", "path": "api-docs/projects" },
+      { "title": "Project Team Access", "path": "api-docs/project-team-access" },
       { "title": "Runs", "path": "api-docs/run" },
       {
         "title": "Run Tasks",
@@ -102,26 +125,26 @@
         "path": "api-docs/state-version-outputs"
       },
       { "title": "Subscriptions", "path": "api-docs/subscriptions" },
-      { "title": "Team Access", "path": "api-docs/team-access" },
       { "title": "Team Membership", "path": "api-docs/team-members" },
       { "title": "Team Tokens", "path": "api-docs/team-tokens" },
       { "title": "Teams", "path": "api-docs/teams" },
       { "title": "User Tokens", "path": "api-docs/user-tokens" },
       { "title": "Users", "path": "api-docs/users" },
       { "title": "Variables", "path": "api-docs/variables" },
+      {
+        "title": "Variable Sets",
+        "path": "api-docs/variable-sets"
+      },
       { "title": "VCS Events", "path": "api-docs/vcs-events" },
       { "title": "Workspaces", "path": "api-docs/workspaces" },
       {
         "title": "Workspace-Specific Variables",
         "path": "api-docs/workspace-variables"
       },
+      { "title": "Workspace Team Access", "path": "api-docs/team-access" },
       {
         "title": "Workspace Resources",
         "path": "api-docs/workspace-resources"
-      },
-      {
-        "title": "Variable Sets",
-        "path": "api-docs/variable-sets"
       },
       {
         "title": "Changelog",
@@ -138,13 +161,39 @@
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
+        "title": "Organizing Workspaces With Projects",
+        "path": "workspaces/organize-workspaces-with-projects"
+      },
+      {
         "title": "Creating Workspaces",
         "path": "workspaces/creating"
       },
-      { "title": "Naming", "path": "workspaces/naming" },
+      { "title": "Explorer", "path": "workspaces/explorer" },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
+      },
+      {
+        "title": "Dynamic Provider Credentials",
+        "routes": [
+          { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials" },
+          { "title":  "Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/workload-identity-tokens" },
+          { "title":  "Vault Configuration", "path":  "workspaces/dynamic-provider-credentials/vault-configuration" },
+          { "title":  "AWS Configuration", "path":  "workspaces/dynamic-provider-credentials/aws-configuration" },
+          { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
+          { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
+          { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          { "title":  "Specifying Multiple Configurations", "path": "workspaces/dynamic-provider-credentials/specifying-multiple-configurations"},
+          {
+            "title": "Vault-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/vault-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration" },
+              { "title":  "Azure Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/azure-configuration" }
+            ]
+          }
+        ]
       },
       {
         "title": "Variables",
@@ -318,13 +367,13 @@
   {
     "title": "No-Code Provisioning",
     "routes": [
-      { 
+      {
         "title": "Designing No-Code Ready Modules",
-        "path": "no-code-provisioning/module-design" 
+        "path": "no-code-provisioning/module-design"
       },
-      { 
+      {
         "title": "Provisioning No-Code Infrastructure",
-        "path": "no-code-provisioning/provisioning" 
+        "path": "no-code-provisioning/provisioning"
       }
     ]
   },
@@ -414,28 +463,75 @@
     "title": "Integrations",
     "routes": [
       {
-        "title": "ServiceNow Integration",
+        "title": "ServiceNow Integrations",
         "routes": [
-          { "title": "Overview", "path": "integrations/service-now" },
           {
-            "title": "Service Catalog",
-            "path": "integrations/service-now/service-catalog"
+            "title": "Service Catalog for Terraform",
+            "routes": [
+              { "title": "Overview", "path": "integrations/service-now/service-catalog-terraform" },
+              {
+                "title": "Service Catalog",
+                "path": "integrations/service-now/service-catalog-terraform/service-catalog-config"
+              },
+              {
+                "title": "Admin Guide",
+                "path": "integrations/service-now/service-catalog-terraform/admin-guide"
+              },
+              {
+                "title": "Developer Reference",
+                "path": "integrations/service-now/service-catalog-terraform/developer-reference"
+              },
+              {
+                "title": "Example Customizations",
+                "path": "integrations/service-now/service-catalog-terraform/example-customizations"
+              },
+              {
+                "title": "V1 Setup Instructions",
+                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
+              }
+            ]
           },
           {
-            "title": "Admin Guide",
-            "path": "integrations/service-now/admin-guide"
-          },
-          {
-            "title": "Developer Reference",
-            "path": "integrations/service-now/developer-reference"
-          },
-          {
-            "title": "Example Customizations",
-            "path": "integrations/service-now/example-customizations"
-          },
-          {
-            "title": "V1 Setup Instructions",
-            "path": "integrations/service-now/service-now-v1"
+            "title": "Service Graph Connector for Terraform",
+            "routes": [
+              {
+                "title": "Overview", 
+                "path": "integrations/service-now/service-graph"
+              },
+              {
+                "title": "Setup",
+                "path": "integrations/service-now/service-graph/service-graph-setup"
+              },
+              {
+                "title": "Resource Coverage",
+                "routes": [
+                  {
+                    "title": "Overview",
+                    "path": "integrations/service-now/service-graph/resource-coverage"
+                  },
+                  {
+                    "title": "AWS",
+                    "path": "integrations/service-now/service-graph/resource-coverage/aws"
+                  },
+                  {
+                    "title": "Azure",
+                    "path": "integrations/service-now/service-graph/resource-coverage/azure"
+                  },
+                  {
+                    "title": "GCP",
+                    "path": "integrations/service-now/service-graph/resource-coverage/gcp"
+                  },
+                  {
+                    "title": "vSphere",
+                    "path": "integrations/service-now/service-graph/resource-coverage/vsphere"
+                  }
+                ]
+              },
+              {
+                "title": "Customizations",
+                "path": "integrations/service-now/service-graph/customizations"
+              }
+            ]
           }
         ]
       },
@@ -445,7 +541,16 @@
       },
       {
         "title": "Kubernetes Integration",
-        "path": "integrations/kubernetes"
+        "routes": [
+          {
+            "title": "Terraform Cloud Operator for Kubernetes Setup Instructions",
+            "path": "integrations/kubernetes"
+          },
+          {
+            "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
+            "path": "integrations/kubernetes/ops-v2-migration"
+          }
+        ]
       },
       {
         "title": "Run Tasks Integration",

@@ -1,16 +1,20 @@
 ---
 page_title: GitHub.com (OAuth) - VCS Providers - Terraform Cloud
+description: >-
+  Learn how to use GitHub.com for VCS features, using a per-organization OAuth connection with the permissions of an individual GitHub user.
 ---
 
 # Configuring GitHub.com Access (OAuth)
 
-These instructions are for using GitHub.com for Terraform Cloud's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. [GitHub Enterprise has separate instructions,](/enterprise/vcs/github-enterprise) as do the [other supported VCS providers.](/enterprise/vcs)
+These instructions are for using GitHub.com for Terraform Cloud's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. [GitHub Enterprise has separate instructions,](/terraform/enterprise/vcs/github-enterprise) as do the [other supported VCS providers.](/terraform/enterprise/vcs)
 
 <!-- BEGIN: TFC:only -->
-For beginning users on Terraform Cloud, we recommend using our [configuration-free GitHub App](/enterprise/vcs/github-app) to access repositories instead.
+For beginning users on Terraform Cloud, we recommend using our [configuration-free GitHub App](/terraform/cloud-docs/vcs/github-app) to access repositories instead.
 <!-- END: TFC:only -->
 
-Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/enterprise/users-teams-organizations/permissions))
+For Terraform Enterprise site-admins, you can create your own [GitHub App](/terraform/enterprise/admin/application/github-app-integration) to access repositories.
+
+Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/terraform/enterprise/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -25,7 +29,7 @@ Connecting Terraform Cloud to your VCS involves four steps:
 
 The rest of this page explains the GitHub versions of these steps.
 
--> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using Terraform Cloud's API. For details, see [the OAuth Clients API page](/cloud-docs/api-docs/oauth-clients).
+-> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using Terraform Cloud's API. For details, see [the OAuth Clients API page](/terraform/cloud-docs/api-docs/oauth-clients).
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 

@@ -7,13 +7,15 @@ description: >-
 
 # Defining Sentinel Policies
 
--> **Note:** Sentinel policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing).
+Policies are rules that Terraform Cloud enforces on runs. You use the [Sentinel policy language](https://docs.hashicorp.com/sentinel/language) to define Sentinel policies. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce globally or on specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces.
 
-Policies are rules that Terraform Cloud enforces on runs. You use the [Sentinel policy language](https://docs.hashicorp.com/sentinel/language) to define Sentinel policies. After you define policies, you must add them to [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
-
-> **Hands-on:** Try the [Enforce Policy with Sentinel](https://learn.hashicorp.com/collections/terraform/policy?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
+> **Hands-on:** Try the [Enforce Policy with Sentinel](/terraform/tutorials/policy?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
 
 In addition to reviewing this page, you can refer to the [policy libraries on the Terraform Registry](https://registry.terraform.io/browse/policies) for examples.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 ## Sentinel Imports
 
@@ -21,13 +23,13 @@ A policy can include imports that enable a policy to access reusable libraries, 
 
 Terraform Cloud provides four imports to define policy rules for the plan, configuration, state, and run associated with a policy check.
 
-- [tfplan](/cloud-docs/policy-enforcement/sentinel/import/tfplan) - Access a Terraform plan, which is the file created as a result of the [`terraform plan` command](/cli/commands/plan). The plan represents the changes that Terraform must make to reach the desired infrastructure state described in the configuration.
-- [tfconfig](/cloud-docs/policy-enforcement/sentinel/import/tfconfig) - Access a Terraform configuration. The configuration is the set of `.tf` files that describe the desired infrastructure state.
-- [tfstate](/cloud-docs/policy-enforcement/sentinel/import/tfstate) - Access the Terraform [state](/language/state). Terraform uses state to map real-world resources to your configuration.
-- [tfrun](/cloud-docs/policy-enforcement/sentinel/import/tfrun) - Access data associated with a [run in Terraform Cloud](/cloud-docs/run/remote-operations). For example, you could retrieve the run's workspace.
+- [tfplan](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) - Access a Terraform plan, which is the file created as a result of the [`terraform plan` command](/terraform/cli/commands/plan). The plan represents the changes that Terraform must make to reach the desired infrastructure state described in the configuration.
+- [tfconfig](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig) - Access a Terraform configuration. The configuration is the set of `.tf` files that describe the desired infrastructure state.
+- [tfstate](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate) - Access the Terraform [state](/terraform/language/state). Terraform uses state to map real-world resources to your configuration.
+- [tfrun](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun) - Access data associated with a [run in Terraform Cloud](/terraform/cloud-docs/run/remote-operations). For example, you could retrieve the run's workspace.
 
 You can create mocks of these imports to use with the the [Sentinel
-CLI](https://docs.hashicorp.com/sentinel/commands) mocking and testing features. Refer to [Mocking Terraform Sentinel Data](/cloud-docs/sentinel/mock) for more details.
+CLI](https://docs.hashicorp.com/sentinel/commands) mocking and testing features. Refer to [Mocking Terraform Sentinel Data](/terraform/cloud-docs/policy-enforcement/sentinel/mock) for more details.
 
 -> **Note:** Terraform Cloud does not support custom imports.
 
@@ -89,7 +91,7 @@ This example function does several useful things while finding resources:
   `resources` namespace is more convenient, but it only reveals resources from
   the root module.
 - It iterates over the named resources and [resource
-  instances](/language/expressions/references#resources)
+  instances](/terraform/language/expressions/references#resources)
   found in each module, starting with `tfplan.module(path).resources[type]`
   which is a series of nested maps keyed by resource names and instance counts.
 - It uses the Sentinel [`else`
@@ -101,7 +103,7 @@ This example function does several useful things while finding resources:
   evaluate rules.
 - It computes an `address` variable for each resource instance and uses this as
   the key in the `resources` map. This allows writers of Sentinel policies to
-  print the full [address](/cli/state/resource-addressing) of each
+  print the full [address](/terraform/cli/state/resource-addressing) of each
   resource instance that violate a policy, using the same address format used in
   plan and apply logs. Doing this tells users who see violation messages exactly
   which resources they need to modify in their Terraform code to comply with the
@@ -161,7 +163,7 @@ Note that this function prints a warning message for **every** resource instance
 that violates the condition. This allows writers of Terraform code to fix all
 violations after just one policy check. It also prints warnings when the
 attribute being evaluated is
-[computed](/cloud-docs/sentinel/import/tfplan#value-computed) and does
+[computed](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-computed) and does
 not evaluate the condition in this case since the applied value will not be
 known.
 

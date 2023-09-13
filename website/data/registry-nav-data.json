@@ -47,6 +47,8 @@
       }
     ]
   },
+  { "title": "Run Tasks", "path": "run-tasks" },
   { "title": "Private Registries", "path": "private" },
-  { "title": "Registry API", "path": "api-docs" }
+  { "title": "Registry API", "path": "api-docs" },
+  { "title": "Publishing FAQ", "path": "faq"}
 ]
