@@ -31,7 +31,7 @@ Some use cases may benefit from allowing Terraform Cloud to schedule future infr
 
 You can automatically schedule Terraform Cloud to run a destroy at a specific future date and time.
 
-When Terraform Cloud performs the destroy run this setting will be automatically unset. You can re-enable it to schedule another future destroy run.
+This setting is automatically unset whenever Terraform Cloud performs a destroy run. You can re-enable it to schedule another future destroy run.
 
 !> **Note:** Unlike other runs, automatic destroy plans _do not_ prompt you for apply approval in the Terraform Cloud user interface. We recommend only using this setting for development environments.
 
