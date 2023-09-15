@@ -60,6 +60,8 @@ This includes the [`vault_azure_access_credentials`](https://registry.terraform.
 
 ### Specifying Multiple Configurations
 
+~> **Important:** Ensure you are using version **3.60.0** or later of the **AzureRM provider** and version **2.43.0** or later of the **AzureAD provider** as required functionality was introduced in these provider versions.
+
 ~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can add additional configurations to handle multiple distinct Vault-backed Azure setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.
@@ -88,9 +90,13 @@ variable "tfc_vault_backed_azure_dynamic_credentials" {
 
 #### Example Usage
 
+##### AzureRM Provider
+
 ```hcl
 provider "azurerm" {
   features {}
+  // use_cli should be set to false yield more accurate error messages on auth failure.
+  use_cli                 = false
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_secret_file_path
   subscription_id         = "00000000-0000-0000-0000-000000000000"
@@ -99,6 +105,33 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
+  // use_cli should be set to false yield more accurate error messages on auth failure.
+  use_cli                 = false
+  alias                   = "ALIAS1"
+  client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
+  client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_secret_file_path
+  subscription_id         = "00000000-0000-0000-0000-000000000000"
+  tenant_id               = "20000000-0000-0000-0000-000000000000"
+}
+```
+
+##### AzureAD Provider
+
+```hcl
+provider "azuread" {
+  features {}
+  // use_cli should be set to false yield more accurate error messages on auth failure.
+  use_cli                 = false
+  client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
+  client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_secret_file_path
+  subscription_id         = "00000000-0000-0000-0000-000000000000"
+  tenant_id               = "10000000-0000-0000-0000-000000000000"
+}
+
+provider "azuread" {
+  features {}
+  // use_cli should be set to false yield more accurate error messages on auth failure.
+  use_cli                 = false
   alias                   = "ALIAS1"
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_secret_file_path
