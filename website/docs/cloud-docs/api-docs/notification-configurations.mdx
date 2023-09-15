@@ -58,9 +58,9 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 | Errored            | `"run:errored"`         | A run terminates early due to error or cancellation.                                          |
 | Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.                                                    |
 | Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace. |
-| Health Assessment Errored | `"assessment:failed`"   | A health assessment failed. This option is only available if you enable health assessments for the workspace.                                        |
-| Auto Destroy Reminder | `"workspace:auto_destroy_reminder`"   | An automated workspace destroy run is imminent. |
-| Auto Destroy Results | `"workspace:auto_destroy_run_results`"   | An automated workspace destroy run was attempted. |
+| Health Assessment Failed | `"assessment:failed"`   | A health assessment failed. This option is only available if you enable health assessments for the workspace.                                        |
+| Auto Destroy Reminder | `"workspace:auto_destro_reminder"`   | An automated workspace destroy run is imminent. |
+| Auto Destroy Results | `"workspace:auto_destroy_run_results"`   | Terraform Cloud attempted an automated workspace destroy run. |
 
 ## Notification Payload
 
@@ -151,7 +151,7 @@ You can trigger a test notification from the workspace notifcation settings page
 
 Workspace events include detailed information about workspace-level validation events like [health assessments](/terraform/cloud-docs/workspaces/health) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/terraform/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation.
 
-The types of attributes returned in the payload details will vary depending on the type of `trigger_scope`.
+Terraform Cloud returns different types of attributes returned in the payload details, depending on the type of `trigger_scope`. There are two main values for `trigger_scope`: `assessment` and `workspace`, examples of which you can see below.
 
 #### Health Assessments
 
@@ -202,7 +202,7 @@ Health assessment notifications for workspace events contain the following infor
 
 ##### Sample Payload
 
-Health assessment payloads will have information about resource drift and continuous validation checks.
+Health assessment payloads have information about resource drift and continuous validation checks.
 
 ```json
 {
@@ -254,6 +254,8 @@ Health assessment payloads will have information about resource drift and contin
 @include 'tfc-package-callouts/ephemeral-workspaces.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
+Automatic destroy run notifications for workspace events contain the following information:
+
 | Name                                         | Type   | Description                                                                                                 |
 | -------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------|
 | `payload_version`                            | string | Always 2.                                                                                                   |
@@ -274,11 +276,11 @@ Health assessment payloads will have information about resource drift and contin
 
 ##### Sample Payload
 
-The shape of data in auto destroy notification payloads may differ depending on the success of the created run. Specific cases are called out below.
+The shape of data in auto destroy notification payloads may differ depending on the success of the run Terraform Cloud created. Refer to the specific examples below.
 
 ###### Reminder
 
-Reminders that a destroy run will be triggered at some point in the future.
+Reminders that Terraform Cloud will trigger a destroy run at some point in the future.
 
 ```json
 {
@@ -303,7 +305,7 @@ Reminders that a destroy run will be triggered at some point in the future.
 
 ###### Results
 
-The final result of the scheduled auto destroy run will include additional metadata about the run.
+The final result of the scheduled auto destroy run includes additional metadata about the run.
 
 ```json
 {
@@ -328,7 +330,7 @@ The final result of the scheduled auto destroy run will include additional metad
 
 ###### Failed Run Creation
 
-Run-specific values will be empty when Terraform Cloud was unable to create an auto destroy run.
+Run-specific values are empty when Terraform Cloud was unable to create an auto destroy run.
 
 ```json
 {

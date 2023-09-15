@@ -17,7 +17,7 @@ In general, you should perform both actions in the above order when destroying a
 
 Destroy plans delete the infrastructure managed by a workspace. We recommend destroying the infrastructure managed by a workspace _before_ deleting the workspace itself. Otherwise, the unmanaged infrastructure resources will continue to exist but will become unmanaged, and you must go into your infrastructure providers to delete the resources manually.
 
-Before queuing a destroy plan, you must enable the **Allow destroy plans** toggle setting on this page.
+Before queuing a destroy plan, enable the **Allow destroy plans** toggle setting on this page.
 
 ### Automatically Destroy
 
@@ -27,7 +27,7 @@ Before queuing a destroy plan, you must enable the **Allow destroy plans** toggl
 
 Automated destroy runs are available as part of the ephemeral workspaces feature.
 
-Some use cases may benefit from allowing Terraform Cloud to automatically schedule infrastructure deletion at some point in the future. For example, you may want to automatically destroy a workspace's resources used solely in a development environment after a certain period of time for cost savings purposes.
+Some use cases may benefit from allowing Terraform Cloud to schedule future infrastructure deletion automatically. For example, you can automatically destroy a workspace's resources used solely in a development environment after a certain period of time to save on cost.
 
 You can automatically schedule Terraform Cloud to run a destroy at a specific future date and time.
 
