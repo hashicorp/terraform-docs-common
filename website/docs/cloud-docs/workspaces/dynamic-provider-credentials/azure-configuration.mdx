@@ -109,7 +109,7 @@ variable "tfc_azure_dynamic_credentials" {
 ```hcl
 provider "azurerm" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true
@@ -121,7 +121,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true
@@ -138,7 +138,7 @@ provider "azurerm" {
 ```hcl
 provider "azuread" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true
@@ -150,7 +150,7 @@ provider "azuread" {
 
 provider "azuread" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true

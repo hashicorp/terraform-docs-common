@@ -95,7 +95,7 @@ variable "tfc_vault_backed_azure_dynamic_credentials" {
 ```hcl
 provider "azurerm" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli                 = false
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_secret_file_path
@@ -105,7 +105,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli                 = false
   alias                   = "ALIAS1"
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
@@ -120,7 +120,7 @@ provider "azurerm" {
 ```hcl
 provider "azuread" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli                 = false
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.default.client_id_file_path
   client_secret_file_path = var.tfc_vault_backed_azure_dynamic_credentials.default.client_secret_file_path
@@ -130,7 +130,7 @@ provider "azuread" {
 
 provider "azuread" {
   features {}
-  // use_cli should be set to false yield more accurate error messages on auth failure.
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
   use_cli                 = false
   alias                   = "ALIAS1"
   client_id_file_path     = var.tfc_vault_backed_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
