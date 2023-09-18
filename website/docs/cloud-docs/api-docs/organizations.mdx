@@ -131,9 +131,13 @@ curl \
         "saml-enabled": false,
         "owners-team-saml-role-id": null,
         "two-factor-conformant": false,
-        "assessments-enforced": false
+        "assessments-enforced": false,
+        "default-execution-mode": "remote"
       },
       "relationships": {
+        "default-agent-pool": {
+            "data": null
+        },
         "oauth-tokens": {
           "links": {
             "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -214,9 +218,13 @@ curl \
         "saml-enabled": false,
         "owners-team-saml-role-id": null,
         "two-factor-conformant": false,
-        "assessments-enforced": false
+        "assessments-enforced": false,
+        "default-execution-mode": "remote"
       },
       "relationships": {
+        "default-agent-pool": {
+          "data": null
+        },
         "oauth-tokens": {
           "links": {
             "related": "/api/v2/organizations/hashicorp-two/oauth-tokens"
@@ -343,9 +351,13 @@ curl \
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -407,6 +419,8 @@ Properties without a default value are required.
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.         |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.default-execution-mode`                                  | boolean | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use by default. Valid values are `remote`, `local`, and `agent`.                                                                                                                                                                           |
+| `data.attributes.default-agent-pool-id`                                   | string  | (previous value) | Required when `default-execution-mode` is set to `agent`. The ID of the agent pool belonging to the organization. Do _not_ specify this value if you set `execution-mode` to `remote` or `local`.                                                                                                                    |
 
 ### Sample Payload
 
@@ -486,9 +500,13 @@ curl \
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -586,6 +604,8 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.             |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.default-execution-mode`                                  | boolean | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use by default. Valid values are `remote`, `local`, and `agent`.                                                                                                                                                                           |
+| `data.attributes.default-agent-pool-id`                                   | string  | (previous value) | Required when `default-execution-mode` is set to `agent`. The ID of the agent pool belonging to the organization. Do _not_ specify this value if you set `execution-mode` to `remote` or `local`.                                                                                                                      |
 
 ### Sample Payload
 
@@ -663,9 +683,13 @@ curl \
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -878,3 +902,4 @@ The following relationships may be present in various responses.
 | `authentication-token`| The API token for an organization.                                                                                            |
 | `entitlement-set`     | The entitlement set that determines which Terraform Cloud features the organization can use.                                  |
 | `subscription`        | The current subscription for an organization.                                                                                 |
+| `default-agent-pool`  | An organization's default agent pool. Set this value if your `default-execution-mode` is `agent`.        |

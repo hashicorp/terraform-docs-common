@@ -58,7 +58,9 @@ Enter a brief description of the workspace's purpose or types of infrastructure.
 
 Whether to use Terraform Cloud as the Terraform execution platform for this workspace.
 
-The default value is "Remote", which instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment, and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
+By default, Terraform Cloud uses an organization's [default execution mode](/terraform/cloud-docs/users-teams-organizations/organizations#organization-settings) to choose the execution platform for a workspace. Alternatively, you can instead choose a custom execution mode for a workspace.
+
+Specifying the "Remote" execution mode instructs Terraform Cloud to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
 To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/terraform/cli/cloud).
 
@@ -201,21 +203,7 @@ See [VCS Connections](/terraform/cloud-docs/workspaces/settings/vcs) for detaile
 
 ## Destruction and Deletion
 
-This page includes two sections:
+The **Destruction and Deletion** page allows [admin users](/terraform/cloud-docs/users-teams-organizations/permissions) to delete a workspace's managed infrastructure or delete the workspace itself.
 
-- "Destroy Infrastructure"
-- "Delete Workspace"
+For details, refer to [Destruction and Deletion](/terraform/cloud-docs/workspaces/settings/deletion) for detailed information about this page.
 
-In almost all cases, you should perform both actions in that order when destroying a workspace.
-
-Queueing a destroy plan destroys the infrastructure managed by a workspace. If you don't do this, the infrastructure resources will continue to exist but will become unmanaged; you'll need to go into your infrastructure providers to delete the resources manually.
-
-Before queueing a destroy plan, you must enable the 'Allow destroy plans' setting and click the "Save settings" button.
-
-### Deleting a Workspace With Resources Under Management
-
-Terraform does not automatically destroy managed infrastructure when you delete a workspace.
-
-After you delete the workspace and its state file, Terraform can no longer track or manage the infrastructure. You must manually delete any remaining resources or [import](/terraform/cli/commands/import) them into another Terraform workspace.
-
-By default, [workspace administrators](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) can only delete unlocked workspaces that are not managing any infrastructure. Organization owners can force delete a workspace to override these protections. Organization owners can also configure the [organization's settings](/terraform/cloud-docs/users-teams-organizations/organizations#general) to let workspace administrators force delete their own workspaces.
