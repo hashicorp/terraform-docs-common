@@ -141,6 +141,23 @@ To delete a policy set:
 
 The policy set no longer appears on the UI and Terraform Cloud no longer applies it to any workspaces. For managed policy sets, all of the individual policies are still available in Terraform Cloud. You must delete each policy individually to remove it from your organization.
 
+### Pinning policy tool versions to policy sets
+
+-> **Note:** This feature is in beta.
+
+You can pin a policy set to a specific version of the tool. This provides control over the versioning of the policy-as-code runtime.
+
+#### OPA Policy sets
+
+For OPA Policy sets, a `Runtime version` drop-down selector is available that allows you to choose supported versions of OPA. All policies within this policy set will be evaluated against the chosen policy tool version.
+
+#### Sentinel Policy sets
+
+For Sentinel Policy sets, policy tool version pinning is available on an opt-in basis. Sentinel policy sets will default to using the policy check flow and you will be able to opt-in to the policy evaluation flow on a per-policy set basis through a radio button living on the Sentinel policy set configuration form.
+After opting in to the `enhanced` workflow, you can choose the Sentinel runtime version (via the a `Runtime version` drop-down selector) against which the policies in that particular policy set will be evaluated.
+Opting in also means that the policy sets are now evaluated in the [Terraform Cloud agent](/terraform/cloud-docs/agents). These policy sets will also not have access to the cost estimation data.
+
+-> **Note:** Only Sentinel tool version of 0.23.0 and above and Terraform Cloud agent version 1.14.0 and above support Sentinel tool version pinning
 
 ### (Sentinel Only) Sentinel Parameters
 
