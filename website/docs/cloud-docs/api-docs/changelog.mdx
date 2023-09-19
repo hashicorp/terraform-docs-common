@@ -9,8 +9,23 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
-## 2023-08-17
+## 2023-09-19
 * Add [failed state upload recovery](/terraform/cloud-docs/api-docs/applies#recover-a-failed-state-upload-after-applying) endpoint.
+
+## 2023-09-15
+* Add `auto-destroy-at` attribute to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces).
+* Update the [Notification Configurations API](/terraform/cloud-docs/api-docs/notification-configurations) to include [automatic destroy run](/terraform/cloud-docs/api-docs/notification-configurations#automatic-destroy-runs) details.
+
+## 2023-09-08
+* Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to include `default-execution-mode` and `default-agent-pool`.
+* Update the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) to add a `setting-overwrites` object to allow you to overwrite `default-execution-mode` and `default-agent-pool`.
+
+## 2023-09-06
+* Update Policy Sets API endpoints to create, update, and return excluded workspaces associated with a policy set.
+* Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-exclusions) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-exclusions) from excluded workspaces.
+
+## 2023-08-21
+* Add `save-plan` attribute, `planned_and_saved` status, and `save_plan` operation type to [Runs endpoints](/terraform/cloud-docs/api-docs/run).
 
 ## 2023-08-10
 * Add `provisional` to `configuration-versions` endpoint.

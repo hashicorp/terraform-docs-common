@@ -9,10 +9,10 @@ description: >-
 Policies are rules that Terraform Cloud enforces on Terraform runs. You can define policies using either the [Sentinel](/terraform/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/terraform/cloud-docs/policy-enforcement/opa) policy-as-code frameworks.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Policy sets are collections of policies you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces in your organization. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set. Depending on the [enforcement level](#policy-enforcement-levels), failed policies can stop a run in a workspace.
+Policy sets are collections of policies you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces in your organization. For each run in the applicable workspaces, Terraform Cloud checks the Terraform plan against the policy set. Depending on the [enforcement level](#policy-enforcement-levels), failed policies can stop a run in a workspace. If you do not want to enforce a policy set on a specific workspace, you can exclude the workspace from that set.
 
 ## Permissions
 
@@ -97,7 +97,7 @@ To view and manage policy sets, go to the **Policy Sets** section of your organi
 
 The way you set up and configure a new policy set depends on your workflow and where you store policies.
 - For [managed policies](#managed-policies), you use the UI to create a policy set and add managed policies.
-- For policy sets in a version control system, you use the UI to create a policy set connected to that repository. Terraform Cloud automatically refreshes the policy set when you change relevant files in that repository. Version control policy sets have specific organization and formatting requirements. Refer to [Sentinel VCS Repositories](/terraform/cloud-docs/policy-enforcement/sentinel/vcs) and [OPA VCS Repositories](/terraform/cloud-docs/policy-enforcement/sentinel/vcs) for details.
+- For policy sets in a version control system, you use the UI to create a policy set connected to that repository. Terraform Cloud automatically refreshes the policy set when you change relevant files in that repository. Version control policy sets have specific organization and formatting requirements. Refer to [Sentinel VCS Repositories](/terraform/cloud-docs/policy-enforcement/sentinel/vcs) and [OPA VCS Repositories](/terraform/cloud-docs/policy-enforcement/opa/vcs) for details.
 - For automated workflows like continuous deployment, you can use the UI to create an empty policy set and then use the [Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets) to add policies. You can also use the API or the [`tfe` provider (Sentinel Only)](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) to add an entire, packaged policy set.
 
 ### Create Policy Sets
@@ -113,6 +113,7 @@ To create a policy set:
 1. Choose a policy set scope:
    - **Policies enforced globally:** Terraform Cloud automatically enforces this global policy set on all of an organization's existing and future workspaces.
    - **Policies enforced on selected projects and workspaces:** Use the text fields to find and select the workspaces and projects to enforce this policy set on. This affects all current and future workspaces for any chosen projects.
+1. **(Optional)** Add **Policy exclusions** for this policy set. Specify any workspaces in the policy set's scope that Terraform Cloud will not enforce this policy set on.
 1. **(OPA Only)** Allow **Overrides**, which enables users with override policy permissions to apply plans that have [mandatory policy](#policy-enforcement-levels) failures.
 1. **(VCS Only)** Optionally specify the **VCS branch** within your VCS repository where Terraform Cloud should import new versions of policies. If you do not set this field, Terraform Cloud uses your selected VCS repository's default branch.
 1. **(VCS Only)** Specify where your policy set files live using the **Policies path**. This lets you maintain multiple policy sets within a single repository. Use a relative path from your root directory to the directory that contains either the `sentinel.hcl` (Sentinel) or `policies.hcl` (OPA) configuration files. If you do not set this field, Terraform Cloud uses the repository's root directory.
