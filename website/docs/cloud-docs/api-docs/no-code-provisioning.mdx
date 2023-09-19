@@ -844,6 +844,13 @@ This endpoint returns the plan details and status for updating a workspace to ne
 | `:workspace_id`      | The ID of workspace.           |
 | `:id`                | The ID of update.              |
 
+Returns the Run details for performing an upgrade. Status is the Run's status and can be in any of the Run's states, e.g. `pending`, `fetching`, `planning`, `planned`, `cost_estimated`.
+
+| Status  | Response                                                | Reason                                                              |
+| ------- | ------------------------------------------------------- | --------------------------------------------------------------------|
+| [200][] | [JSON API document][] (`type: "workspace-upgrade"`)     | Success                                                             |
+| [404][] | [JSON API error object][]                               | Workspace upgrade not found, or user unauthorized to perform action |
+
 
 ### Sample Request
 
