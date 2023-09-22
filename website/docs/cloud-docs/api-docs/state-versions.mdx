@@ -52,7 +52,7 @@ Attribute                        | Description
 `hosted-state-upload-url`        | A URL to which you can upload state data in the format used Terraform uses internally. You can upload state data once per state version.
 `modules`                        | Extracted information about the Terraform modules in this state data. Populated asynchronously.
 `providers`                      | Extracted information about the Terraform providers used for resources in this state data. Populated asynchronously.
-`provisional`                    | A boolean flag that indicating that Terraform Cloud created a state version, but that version is not the current versions for a workspace yet.
+`intermediate`                   | A boolean flag that indicates the state version is a snapshot and not yet set as the current state version for a workspace. The last intermediate state version becomes the current state version when the workspace is unlocked.
 `resources`                      | Extracted information about the resources in this state data. Populated asynchronously.
 `resources-processed`            | A Boolean flag indicating whether Terraform Cloud has finished asynchronously extracting outputs, resources, and other information about this state data.
 `serial`                         | The serial number of this state instance, which increases every time Terraform creates new state in the workspace.
@@ -67,9 +67,9 @@ The state version status is found in `data.attributes.status`, and you can refer
 A state version created through the API or CLI will only be listed in the UI if it is has a `finalized` status.
 | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `pending`    | The initial status of a state version after it has been created without encoding the state data within the request. Pending state versions do not contain state data and will not appear in the UI. The workspace cannot be unlocked normally until the latest state version has been finalized.                                     |
+| `pending`    | The initial status of a state version after it has been created without encoding the state data within the request. Pending state versions do not contain state data and will not appear in the UI. The workspace cannot be unlocked normally until the latest state version has been finalized.
 | `finalized`  | The state version has been uploaded successfully to Terraform Cloud or if the state version was created with a valid `state` attribute.                                                                                                                                                                                                              |
-| `discarded` | The state version has been discarded because it was provisional and not promoted to be the current state version of the workspace. |
+| `discarded`  | The state version has been discarded because it was superseded by a newer state version before it could be uploaded. |
 
 ## Create a State Version
 
@@ -171,7 +171,7 @@ curl \
             "hosted-state-upload-url": null,
             "hosted-json-state-upload-url": null,
             "status": "finalized",
-            "provisional": true,
+            "intermediate": true,
             "serial": 1
         },
         "links": {
@@ -246,7 +246,7 @@ curl \
                 "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
                 "hosted-json-state-upload-url": null,
                 "status": "finalized",
-                "provisional": false,
+                "intermediate": false,
                 "modules": {
                     "root": {
                         "null-resource": 1,
@@ -339,7 +339,7 @@ curl \
                 "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
                 "hosted-json-state-upload-url": null,
                 "status": "finalized",
-                "provisional": false,
+                "intermediate": false,
                 "modules": {
                     "root": {
                         "data.terraform-remote-state": 1
@@ -471,7 +471,7 @@ curl \
             "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
             "hosted-json-state-upload-url": null,
             "status": "finalized",
-            "provisional": false,
+            "intermediate": false,
             "modules": {
                 "root": {
                     "null-resource": 1,
@@ -597,7 +597,7 @@ curl \
             "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
             "hosted-json-state-upload-url": null,
             "status": "finalized",
-            "provisional": false,
+            "intermediate": false,
             "modules": {
                 "root": {
                     "null-resource": 1,

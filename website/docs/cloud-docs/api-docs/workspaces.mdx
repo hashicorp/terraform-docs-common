@@ -1580,7 +1580,7 @@ $ curl \
 
 ## Unlock a workspace
 
-This endpoint unlocks a workspace. Unlocking a workspace sets the current state version to the latest finalized provisional state version. If provisional state versions are available, but Terraform Cloud has not yet finalized the latest provisional state version, the unlock will fail.
+This endpoint unlocks a workspace. Unlocking a workspace sets the current state version to the latest finalized intermediate state version. If intermediate state versions are available, but Terraform Cloud has not yet finalized the latest intermediate state version, the unlock will fail with a 503 response. For this particular error, it's recommended to retry the unlock operation for a short period of time until the platform finalizes the state version. If you must force-unlock a workspace under these conditions, ensure that state was saved successfully by inspecting the latest state version using the [State Version List API](/terraform/cloud-docs/api-docs/state-versions#list-state-versions-for-a-workspace)
 
 `POST /workspaces/:workspace_id/actions/unlock`
 
@@ -1747,8 +1747,6 @@ $ curl \
 ## Force Unlock a workspace
 
 This endpoint force unlocks a workspace. Only users with admin access are authorized to force unlock a workspace.
-
-For a force unlock, Terraform Cloud attempts to find the latest finalized provisional state version and sets it as the current state version for a workspace. Terraform Cloud may select an earlier provisional state version as the current version for a workspace. This only occurs if Terraform Cloud has not yet finalized the latest provisional state version. Terraform Cloud will not prevent a force unlock if no finalized provisional state versions are available.
 
 `POST /workspaces/:workspace_id/actions/force-unlock`
 
