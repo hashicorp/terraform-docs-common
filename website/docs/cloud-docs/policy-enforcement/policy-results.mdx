@@ -14,8 +14,10 @@ When you add [policy sets](/terraform/cloud-docs/policy-enforcement/manage-polic
 ## Policy Evaluation Run Stages
 
 Terraform Cloud only evaluates policies for successful plans. Terraform Cloud evaluates Sentinel and OPA policy sets separately and at different points in the run.
-- Sentinel policy evaluations occur after Terraform completes the plan and after both [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](https://terraform.io/cloud-dodcs/cost-estimation). This order lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
-- OPA policy evaluations occur after Terraform completes the plan and after any run tasks. Unlike Sentinel policies, Terraform Cloud evaluates OPA policies immediately before cost estimation.
+- Sentinel policy checks occur after Terraform completes the plan and after both [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](https://terraform.io/cloud-dodcs/cost-estimation). This order lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
+-> **Note**: Sentinel policy evaluations are in beta
+- Sentinel policy evaluations occur after Terraform completes the plan and after any run tasks. Terraform Cloud evaluates Sentinel policy evaluations immediately before cost estimation.
+- OPA policy evaluations occur after Terraform completes the plan and after any run tasks. Terraform Cloud evaluates OPA policies immediately before cost estimation.
 
 Refer to [Run States and Stages](/terraform/cloud-docs/run/states) for more details.
 
@@ -40,7 +42,10 @@ To override failed policies, go to the run details page and click **Override and
 
 For Sentinel only, you can also override `soft-mandatory` policies with the Terraform CLI. Run the `terraform apply` command and then enter `override` when prompted.
 -> **Note:** Terraform Cloud does not allow policy overrides for [no-operation plans containing no infrastructure changes](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply), unless you choose the **Allow empty apply** option when starting the run. 
+
 ### Sentinel
+
+#### Policy checks
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
 
@@ -48,6 +53,13 @@ You can override `soft-mandatory` policies to allow the run to continue. Overrid
 
 You cannot override `hard-mandatory` policies, and all of these policies must pass for the run to continue.
 
+#### Policy evaluations
+-> **Note:** This feature is in beta.
+
+Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
+
+When Sentinel policies are run as policy evaluations (if opting in to the `enhanced` workflow), then internally both `soft-mandatory` as well as `hard-mandatory` enforcement_levels are converted to `mandatory` enforcement level (similar to OPA).
+You can override `mandatory` policies to allow the run to continue.
 
 ### OPA
 
