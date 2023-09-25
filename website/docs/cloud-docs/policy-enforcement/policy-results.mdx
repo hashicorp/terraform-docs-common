@@ -5,7 +5,7 @@ description: Learn when Terraform Cloud evaluates policies during a run, how to 
 
 # Policy Results
 
-When you add [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) to a workspace, Terraform Cloud enforces those policy sets on every Terraform run. Terraform Cloud displays the results of policy checks in the UI for each run. Depending on each policy’s [enforcement level](/terraform/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), policy failures can also stop the run and prevent Terraform from provisioning infrastructure.
+When you add [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) to a workspace, Terraform Cloud enforces those policy sets on every Terraform run. Terraform Cloud displays the policy enforcement results in the UI for each run. Depending on each policy’s [enforcement level](/terraform/cloud-docs/policy-enforcement/manage-policy-sets#policy-enforcement-levels), policy failures can also stop the run and prevent Terraform from provisioning infrastructure.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/policies.mdx'
@@ -15,7 +15,7 @@ When you add [policy sets](/terraform/cloud-docs/policy-enforcement/manage-polic
 
 Terraform Cloud only evaluates policies for successful plans. Terraform Cloud evaluates Sentinel and OPA policy sets separately and at different points in the run.
 - Sentinel policy checks occur after Terraform completes the plan and after both [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) and [cost estimation](https://terraform.io/cloud-dodcs/cost-estimation). This order lets you write Sentinel policies to restrict costs based on the data in the cost estimates.
--> **Note**: Sentinel policy evaluations are in beta
+-> **Note**: Sentinel policy evaluations are currently in beta
 - Sentinel policy evaluations occur after Terraform completes the plan and after any run tasks. Terraform Cloud evaluates Sentinel policy evaluations immediately before cost estimation.
 - OPA policy evaluations occur after Terraform completes the plan and after any run tasks. Terraform Cloud evaluates OPA policies immediately before cost estimation.
 
@@ -54,11 +54,11 @@ You can override `soft-mandatory` policies to allow the run to continue. Overrid
 You cannot override `hard-mandatory` policies, and all of these policies must pass for the run to continue.
 
 #### Policy evaluations
--> **Note:** This feature is in beta.
+-> **Note:** Sentinel policy evaluations are currently in beta
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
 
-When Sentinel policies are run as policy evaluations (if opting in to the `enhanced` workflow), then internally both `soft-mandatory` as well as `hard-mandatory` enforcement_levels are converted to `mandatory` enforcement level (similar to OPA).
+When running Sentinel policies as policy evaluations (if you opt into the `enhanced` workflow), both `soft-mandatory` and `hard-mandatory` enforcement levels are internally converted to `mandatory` enforcement level, similar to OPA.
 You can override `mandatory` policies to allow the run to continue.
 
 ### OPA
