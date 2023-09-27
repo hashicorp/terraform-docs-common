@@ -25,12 +25,12 @@ Though policy checks and policy evaluations seem like synonyms, there is a funda
 ### Policy Checks
 
 Sentinel policies are currently run as a policy check. This is the default workflow for Sentinel.
-Policy checks are pinned to a single runtime version of Sentinel and have access to cost estimation data.
+Policy checks use the latest version of the Sentinel runtime and have access to cost estimation data.
 
 ### Policy Evaluations
 
-Policy evaluations are run within the [Terraform Cloud Agent](/terraform/cloud-docs/agents).
-OPA policies run as policy evaluations. Policy evalutations do not have access to cost estimation data.
+Policy evaluations are run within the [Terraform Cloud Agent](/terraform/cloud-docs/agents) in Terraform Cloud's infrastructure.
+Policy evaluations do not have access to cost estimation data.
 
 -> **Note:** Sentinel policy evaluations is currently in beta.
 Sentinel policies can run as a policy evaluation on an opt-in basis.
@@ -191,4 +191,4 @@ All policy sets that are configured to use the `enhanced` workflows will run as 
 The Sentinel Policy sets will also have an `override` checkbox (similar to OPA). Failed policies stop the run, but any user with [Manage Policy Overrides permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides) can override these failures and allow the run to complete.
 Both soft-mandatory and hard-mandatory policies can be overriden.
 
--> **Note:** Sentinel runtime version pinning is supported only for Sentinel 0.23.0 and above, as well as Terraform Cloud agent versions 1.14.0 and above
+-> **Note:** Sentinel runtime version pinning is supported only for Sentinel 0.23.0 and above, as well as Terraform Cloud agent versions 1.13.0 and above
