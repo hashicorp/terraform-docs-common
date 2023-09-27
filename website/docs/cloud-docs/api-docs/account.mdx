@@ -195,7 +195,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | --------------------------------------- | ------ | ------- | --------------------------- |
 | `data.type`                             | string |         | Must be `"users"`           |
 | `data.attributes.current_password`      | string |         | Current password            |
-| `data.attributes.password`              | string |         | New password                |
+| `data.attributes.password`              | string |         | New password (must be at least 10 characters in length)               |
 | `data.attributes.password_confirmation` | string |         | New password (confirmation) |
 
 ### Sample Payload
