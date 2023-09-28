@@ -18,7 +18,7 @@ Policy sets are collections of policies you can apply globally or to specific [p
 
 To view and manage policies and policy sets, you must have [manage policy permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policies) for your organization.
 
-## Policy Checks vs Policy Evaluations
+## Differences between Policy Checks and Policy Evaluations
 
 Though policy checks and policy evaluations seem like synonyms, there is a fundamental difference between the policy check and policy evaluation workflow.
 
@@ -32,7 +32,7 @@ Policy checks use the latest version of the Sentinel runtime and have access to 
 Policy evaluations are run within the [Terraform Cloud Agent](/terraform/cloud-docs/agents) in Terraform Cloud's infrastructure.
 Policy evaluations do not have access to cost estimation data.
 
--> **Note:** Sentinel policy evaluations is currently in beta.
+-> **Note:** Sentinel policy evaluations are currently in beta.
 Sentinel policies can run as a policy evaluation on an opt-in basis.
 
 ## Management Workflows
@@ -131,8 +131,8 @@ To create a policy set:
    - **Policies enforced on selected projects and workspaces:** Use the text fields to find and select the workspaces and projects to enforce this policy set on. This affects all current and future workspaces for any chosen projects.
 
 1. **(Sentinel Only)** Choose a policy set type:
-   - **Standard:** This is the default workflow. Sentinel policy set is run as a policy check in Terraform Cloud.
-   - **Enhanced:** Sentinel policy set is run as a policy evaluation in Terraform Cloud.
+   - **Standard:** This is the default workflow. A Sentinel policy set uses a [policy check](#policy-checks) in Terraform Cloud.
+   - **Enhanced:** A Sentinel policy set uses a [policy evaluation](#policy-evaluations) in Terraform Cloud.
 
 1. **(Optional)** Add **Policy exclusions** for this policy set. Specify any workspaces in the policy set's scope that Terraform Cloud will not enforce this policy set on.
 1. **(OPA Only)** Allow **Overrides**, which enables users with override policy permissions to apply plans that have [mandatory policy](#policy-enforcement-levels) failures.

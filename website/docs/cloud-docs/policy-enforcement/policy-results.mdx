@@ -58,7 +58,7 @@ You cannot override `hard-mandatory` policies, and all of these policies must pa
 
 Policies with an `advisory` enforcement level never stop runs. If they fail, Terraform Cloud displays a warning in the policy results and the run continues.
 
-When running Sentinel policies as policy evaluations (if you opt into the `enhanced` workflow), both `soft-mandatory` and `hard-mandatory` enforcement levels are internally converted to `mandatory` enforcement level, similar to OPA.
+When running Sentinel policies as policy evaluations, `soft-mandatory` and `hard-mandatory` enforcement levels are internally converted to `mandatory` enforcement level.
 You can override `mandatory` policies to allow the run to continue.
 
 ### OPA
