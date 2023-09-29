@@ -128,7 +128,7 @@ The POST request submits the following properties as the request headers.
 
 ## Run Task Callback
 
-While a run task is running, it may send progressive updates to Terraform Cloud with a `running` status. When it is determined that outcomes is a supported capability, Integrators can send these outcomes by appending a relationship inside the callback payload.
+While a run task runs, it may send progressive updates to Terraform Cloud with a `running` status. Once an integrator determines that Terraform supports detailed run task outcomes, they can send these outcomes by appending to the run task's callback payload.
 
 Once the external integration fulfills the request, that integration must call back into Terraform Cloud with the overall result of either `passed` or `failed`. Terraform expects this callback within 10 minutes, or the request is considered errored.
 
