@@ -58,7 +58,7 @@
                       "type": "array",
                       "items": { "$ref": "#/$defs/RunTaskOutcome" },
                       "minItems": 1,
-                      "maxItems": 10 
+                      "maxItems": 250 
                     }
                   },
                   "required": ["data"]
