@@ -34,6 +34,9 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
   "payload_version": 1,
   "stage": "post_plan",
   "access_token": "4QEuyyxug1f2rw.atlasv1.iDyxqhXGVZ0ykes53YdQyHyYtFOrdAWNBxcVUgWvzb64NFHjcquu8gJMEdUwoSLRu4Q",
+  "capabilities": {
+    "outcomes": true
+  },
   "configuration_version_download_url": "https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/download",
   "configuration_version_id": "cv-ntv3HbhJqvFzamy7",
   "is_speculative": false,
@@ -60,26 +63,30 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
 
 Once your server receives this payload, Terraform Cloud expects you to callback to the supplied `task_result_callback_url` using the `access_token` as an [Authentication Header](/terraform/cloud-docs/api-docs#authentication) with a [jsonapi](/terraform/cloud-docs/api-docs#json-api-formatting) payload of the form:
 
-Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) for the exact callback specification.
 
 ```json
 {
   "data": {
     "type": "task-results",
       "attributes": {
-        "status": "passed",
+        "status": "running",
         "message": "Hello task",
-        "url": "https://example.com"
+        "url": "https://example.com",
+        "outcomes": [...]
       }
   }
 }
 ```
 
-Terraform Cloud expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in Terraform Cloud on the run details page. The status can be `passed` or `failed`.
+Terraform Cloud expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in Terraform Cloud on the run details page. The status can be `running`, `passed` or `failed`.
 
 Here's what the data flow looks like:
 
 ![Screenshot: a diagram of the user and data flow for a Terraform Cloud run task](/img/docs/terraform-cloud-run-tasks-diagram.png)
+
+
+Refer to the [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#structured-results) for the exact payload specifications, and the [run task JSON schema](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json) for code generation and payload validation.
+
 
 ## Securing your Run Task
 
