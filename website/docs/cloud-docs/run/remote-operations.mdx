@@ -49,13 +49,23 @@ Each workspace in Terraform Cloud maintains its own queue of runs, and processes
 
 Whenever a new run is initiated, it's added to the end of the queue. If there's already a run in progress, the new run won't start until the current one has completely finished — Terraform Cloud won't even plan the run yet, because the current run might change what a future run would do. Runs that are waiting for other runs to finish are in a _pending_ state, and a workspace might have any number of pending runs.
 
+There are two exceptions to the run queue, which can proceed at any time and do not block the progress of other runs:
+
+- Plan-only runs.
+- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options/#saved-plans). You can only _apply_ a saved plan if no other run is in progress, and applying that plan blocks the run queue as usual.
+
 When you initiate a run, Terraform Cloud locks the run to a particular configuration version and set of variable values. If you change variables or commit new code before the run finishes, it will only affect future runs, not runs that are already pending, planning, or awaiting apply.
 
 ### Workspace Locks
 
-When a workspace is _locked,_ new runs can be queued (automatically or manually) but no new runs can begin until the workspace is unlocked.
+When a workspace is _locked,_ Terraform Cloud can create new runs (automatically or manually), but those runs do not begin until you unlock the workspace.
 
 When a run is in progress, that run locks the workspace, as described above under "Ordering and Timing".
+
+There are two kinds of run operation that can ignore workspace locking:
+
+- Plan-only runs.
+- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options/#saved-plans). You can only _apply_ a saved plan if the workspace is unlocked, and applying that plan locks the workspace as usual.
 
 A user or team can also deliberately lock a workspace, to perform maintenance or for any other reason. For more details, see [Locking Workspaces (Preventing Runs)](/terraform/cloud-docs/run/manage#locking-workspaces-preventing-runs-).
 
@@ -71,11 +81,13 @@ You can initiate Terraform Cloud runs through the manual **Start new run** actio
 
 ## Plans and Applies
 
-Terraform Cloud enforces Terraform's division between _plan_ and _apply_ operations. It always plans first, saves the plan's output, and uses that output for the apply.
+Terraform Cloud enforces Terraform's division between _plan_ and _apply_ operations. It always plans first, then uses that plan's output for the apply.
 
 In the default configuration, Terraform Cloud waits for user approval before running an apply, but you can configure workspaces to [automatically apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) successful plans. Some plans can't be auto-applied, like plans queued by [run triggers](/terraform/cloud-docs/workspaces/settings/run-triggers) or by users without permission to apply runs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers)
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+If a plan contains no changes, Terraform Cloud does not attempt to apply it. Instead, the run ends with a status of "Planned and finished". The [allow empty apply](/terraform/cloud-docs/run/modes-and-options#allow-empty-apply) run mode can override this behavior.
 
 ### Speculative Plans
 
@@ -98,6 +110,14 @@ Retrying a plan requires permission to queue plans for that workspace. ([More ab
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 Retrying the run will create a new run with the same configuration version. If it is a VCS-backed workspace, the pull request interface will receive the status of the new run, along with a link to the new run.
+
+### Saved Plans
+
+-> **Version note:** Using saved plans from the CLI with Terraform Cloud requires at least Terraform CLI v1.6.0.
+
+Terraform Cloud also supports saved plan runs. If you have configured the [CLI integration](/terraform/cli/cloud) you can use `terraform plan -out <FILE>` to perform and save a plan, `terraform apply <FILE>` to apply a saved plan, and `terraform show <FILE>` to inspect a saved plan before applying it. You can also create saved plan runs via the API by using the `save-plan` option.
+
+Saved plan runs affect the run queue differently from normal runs, and can sometimes be automatically discarded. For more details, refer to [Run Modes and Options: Saved Plans](/terraform/cloud-docs/run/modes-and-options#saved-plans).
 
 ## Planning Modes and Options
 

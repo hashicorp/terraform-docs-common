@@ -18,7 +18,7 @@ description: >-
 This page lists the API endpoints used to trigger a run task and the expected response from the integration.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/run-tasks.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Refer to [run tasks](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) for the API endpoints to create and manage run tasks within Terraform Cloud. You can also access a complete list of all run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks).
@@ -34,9 +34,9 @@ The service receiving the run task request should respond with `200 OK`, or Terr
 |-----------|---------------------------------------------------------|
 | `:url`    | The URL configured in the run task to send requests to. |
 
-| Status  | Response | Reason                            |
-|---------|----------|-----------------------------------|
-| [200][] | Nothing  | Successfully submitted a run task |
+| Status  | Response   | Reason                            |
+|---------|------------|-----------------------------------|
+| [200][] | No Content | Successfully submitted a run task |
 
 ### Request Body
 
@@ -142,7 +142,7 @@ You can send outcomes with a status of `running`, `passed`, or `failed`, but it 
 
 | Status  |         Response          |                  Reason                  |
 | ------- | ------------------------- | ---------------------------------------- |
-| [200][] | Nothing                   | Successfully submitted a run task result |
+| [200][] | No Content                | Successfully submitted a run task result |
 | [401][] | [JSON API error object][] | Not authorized to perform action         |
 | [422][] | [JSON API error object][] | Invalid response payload. This could be caused by invalid attributes, or sending a status that is not accepted. |
 

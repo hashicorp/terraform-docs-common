@@ -38,7 +38,9 @@ description: >-
 
 # Project Team Access API
 
--> **Note:** Team management is available in Terraform Cloud **Standard** Edition. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+<!-- BEGIN: TFC:only name:pnp-callout -->
+-> **Note:** Team management is available in Terraform Cloud **Standard** Edition. [Learn more about Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing).
+<!-- END: TFC:only name:pnp-callout -->
 
 The team access APIs are used to associate a team to permissions on a project. A single `team-project` resource contains the relationship between the Team and Project, including the privileges the team has on the project.
 
@@ -174,11 +176,9 @@ As mentioned in [Add Team Access to a Project](#add-team-access-to-a-project) an
 
 For example, if you set `access` to `read`, the implicit permission level for project settings and workspace run is "read". Conversely, if you set the access level to `admin`, the implicit permission level for the project settings is "delete", while the workspace runs permission is "apply". 
  
-For details on the implied permissions of each access level, see [Implied Custom Permission Levels](#implied-custom-permission-levels)
-to a Project](#update-team-access-to-a-project), several permission attributes are not editable unless `access` is
-set to `custom`. When access is `read`, `plan`, `write`, or `admin`, these attributes are read-only and reflect the
-implicit permissions granted to the current access level. For example, when access is `read`, the implicit
-level for the project settings and workspace runs permissions are "read". Conversley when the access level is `admin`, the implicit level for the project settings is "delete" and the workspace runs permission is "apply". To see all of the implied permissions at the different access levels, see the [Implied Custom Permission Levels](#implied-custom-permission-levels)
+Several permission attributes are not editable unless `access` is set to `custom`. When access is `read`, `plan`, `write`, or `admin`, these attributes are read-only and reflect the implicit permissions granted to the current access level. 
+
+For example, when access is `read`, the implicit level for the project settings and workspace runs permissions are "read". Conversely, when the access level is `admin`, the implicit level for the project settings is "delete" and the workspace runs permission is "apply". To see all of the implied permissions at different access levels, see [Implied Custom Permission Levels](#implied-custom-permission-levels).
 
 ### Sample Request
 

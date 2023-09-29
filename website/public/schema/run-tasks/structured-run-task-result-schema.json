@@ -42,28 +42,28 @@
                 }
               },
               "required": ["status"]
-            }
-          }
-        },
-        "relationships": {
-          "type": "object",
-          "title": "Relationships",
-          "description": "The JSON:API relatated data records",
-          "properties": {
-            "outcomes": {
+            },
+            "relationships": {
               "type": "object",
-              "title": "Outcomes",
-              "attributes": {
-                "data": {
-                  "title": "Data",
-                  "description": "An array of Run Task Outcomes, providing details as to why a specific integration may have failed.",
-                  "type": "array",
-                  "items": { "$ref": "#/$defs/RunTaskOutcome" },
-                  "minItems": 1,
-                  "maxItems": 10 
+              "title": "Relationships",
+              "description": "The JSON:API relatated data records",
+              "properties": {
+                "outcomes": {
+                  "type": "object",
+                  "title": "Outcomes",
+                  "attributes": {
+                    "data": {
+                      "title": "Data",
+                      "description": "An array of Run Task Outcomes, providing details as to why a specific integration may have failed.",
+                      "type": "array",
+                      "items": { "$ref": "#/$defs/RunTaskOutcome" },
+                      "minItems": 1,
+                      "maxItems": 10 
+                    }
+                  },
+                  "required": ["data"]
                 }
-              },
-              "required": ["data"]
+              }
             }
           }
         }
@@ -89,13 +89,7 @@
           "minLength": 1,
           "maxLength": 1000
         },
-        "tags": {
-          "title": "Tags",
-          "description": "Up to 5 tags with labels, containing data or metadata of an outcome.",
-          "type": "array",
-          "maxItems": 5,
-          "items": { "$ref": "#/$defs/RunTaskTag" }
-        },
+        "tags": { "$ref": "#/$defs/RunTaskTag" },
         "body": {
           "title": "Body",
           "description": "Markdown text which will be rendered to the user in the Terraform Cloud Run UI.",
@@ -114,7 +108,7 @@
     },
     "RunTaskTag": {
       "title": "Run Task Result Tag",
-      "description": "A tag name with an array of rich labels.",
+      "description": "An object whose properties map to headings, each with an array of rich labels.",
       "type": "object",
       "propertyNames": {
         "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"

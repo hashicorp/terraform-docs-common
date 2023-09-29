@@ -183,6 +183,7 @@
           { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
           { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
           { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          { "title":  "Specifying Multiple Configurations", "path": "workspaces/dynamic-provider-credentials/specifying-multiple-configurations"},
           {
             "title": "Vault-Backed Dynamic Credentials",
             "routes": [
@@ -226,6 +227,10 @@
           {
             "title": "Run Tasks",
             "path": "workspaces/settings/run-tasks"
+          },
+          {
+            "title": "Destruction and Deletion",
+            "path": "workspaces/settings/deletion"
           }
         ]
       },
@@ -547,7 +552,7 @@
           },
           {
             "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
-            "path": "integrations/kubernetes/k8s-ops-v2-migration"
+            "path": "integrations/kubernetes/ops-v2-migration"
           }
         ]
       },

@@ -74,7 +74,7 @@ You may be able to manage the following organization permissions.
 
 #### General
 
-Review the organization name and contact email. Organization owners can also change the organization name and contact email or delete the organization.
+Review the organization name and contact email. Organization owners can choose to change the organization name, contact email, and the default execution mode, or delete the organization. When an organization owner updates the default execution mode, all workspaces configured to [inherit this value](/terraform/cloud-docs/workspaces/settings#execution-mode) will be affected.
 
 Organization owners can also choose whether [workspace administrators](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) can delete workspaces that are managing resources. Deleting a workspace with resources under management introduces risk because Terraform can no longer track or manage the infrastructure. The workspace's users must manually delete any remaining resources or [import](/terraform/cli/commands/import) them into another Terraform workspace.
 
@@ -102,7 +102,7 @@ Review a list of tags for all resources across the organization. When you delete
 #### Teams
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Team management is available in Terraform Cloud **Standard** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/team-management.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 
@@ -138,11 +138,11 @@ Refer to the [variables overview](/terraform/cloud-docs/workspaces/variables) do
 #### Health
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/health-assessments.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
-- Drift detection determines whether your real-world infrastructure matches the configuration in your Terraform state file. Drift detection requires Terraform version 0.15.4+.
+- Drift detection determines whether your real-world infrastructure matches your Terraform configuration. Drift detection requires Terraform version 0.15.4+.
 - Continuous validation determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure. Continuous validation requires Terraform version 1.3.0+.
 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.
@@ -157,7 +157,7 @@ Enable and disable the [cost estimation](/terraform/cloud-docs/cost-estimation) 
 #### Policies
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Policies let you define and enforce rules for Terraform runs. You can write them using either the [Sentinel](/terraform/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/terraform/cloud-docs/policy-enforcement/opa) policy-as-code frameworks and then group them into policy sets that you can apply to workspaces in your organization. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
@@ -165,10 +165,10 @@ Policies let you define and enforce rules for Terraform runs. You can write them
 #### Policy Sets
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one policy set of up to five policies. In Terraform Cloud **Plus** Edition, you can connect a policy set to a version control repository or create policy set versions via the API. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Create groups of policies and assign those policy sets to workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in Terraform Cloud. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
+Create groups of policies and enforce those policy sets globally or on specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in Terraform Cloud. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
 
 Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.
 
@@ -177,7 +177,7 @@ Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-
 #### Run Tasks
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/run-tasks.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Manage the run tasks that you can add to workspaces within the organization. [Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you integrate third-party tools and services at specific stages in the Terraform Cloud run lifecycle.
@@ -187,7 +187,7 @@ Manage the run tasks that you can add to workspaces within the organization. [Ru
 #### Agents
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one self-hosted agent. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/agents.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Create and manage [Terraform Cloud agent pools](/terraform/cloud-docs/agents). Terraform Cloud Agents let Terraform Cloud communicate with isolated, private, or on-premises infrastructure. This is useful for on-premises infrastructure types such as vSphere, Nutanix, OpenStack, enterprise networking providers, and infrastructure within a protected enclave.

@@ -8,13 +8,13 @@ description: |-
 
 Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Health assessments include the following types of evaluations:
 
-- [Drift detection](#drift-detection) determines whether your real-world infrastructure matches your Terraform state file.
+- [Drift detection](#drift-detection) determines whether your real-world infrastructure matches your Terraform configuration.
 - [Continuous validation](#continuous-validation) determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure.
 
 When enabled, Terraform Cloud automatically runs a health assessment for your workspace about every 24 hours. Refer to [Health Assessment Scheduling](#health-assessment-scheduling) for details.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/health-assessments.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## Permissions
@@ -95,25 +95,29 @@ On the right of a workspace’s overview page, Terraform Cloud displays a **Heal
 
 ## Drift Detection
 
-Infrastructure drift means that your real-world infrastructure no longer matches your Terraform state file. Drift occurs when a user modifies resources outside of the Terraform workflow. For example, a colleague may update resource configuration directly in the cloud provider console to resolve a production incident. This action changes the real resource attributes from those tracked in the state file.
+Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terraform's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
+
+For example, a teammate could create configuration drift by directly updating a storage bucket's settings with conflicting configuration settings using the cloud provider's console. Drift detection could detect these differences and recommend steps to address and rectify the discrepancies.
+
+Configuration drift differs from state drift.  Drift detection _does not detect_ state drift.
+
+Configuration drift happens when external changes affecting remote objects invalidate your infrastructure configuration. State drift occurs when external changes affecting remote objects _do not_ invalidate your infrastructure configuration. Refer to [Refresh-Only Mode](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode)  to learn more about remediating state drift.
 
 ### View Workspace Drift
 
-To view the continuous validation results from the latest health assessment, go to the workspace and click **Health > Drift**. If there is drift, Terraform Cloud shows how the real infrastructure differs from the latest version of the workspace’s state file.
+To view the drift detection results from the latest health assessment, go to the workspace and click **Health > Drift**. If there is configuration drift, Terraform Cloud proposes the necessary changes to bring the infrastructure back in sync with its configuration.
 
 ### Resolve Drift
 
-You can use one of the following approaches to correct workspace drift:
-- **Overwrite drift**: Queue a new plan to realign your real-world infrastructure with your Terraform configuration.
-- **Update Terraform state and configuration:** Queue a refresh-only plan to update your Terraform state to match your real-world infrastructure. We recommend also modifying your Terraform configuration to include any new or changed resources. Otherwise, Terraform will overwrite the updated state file during the next apply. Refer to our [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
+You can use one of the following approaches to correct configuration drift:
+- **Overwrite drift**: If you do not want the drift's changes, queue a new plan and apply the changes to revert your real-world infrastructure to match your Terraform configuration.
+- **Update Terraform configuration:** If you want the drift's changes, modify your Terraform configuration to include the changes and push a new configuration version. This prevents Terraform from reverting the drift during the next apply. Refer to the [Manage Resource Drift](/terraform/tutorials/state/resource-drift) tutorial for a detailed example.
 
 ## Continuous Validation
 
 Continuous validation regularly verifies whether your configuration’s custom assertions continue to pass, validating your infrastructure. For example, you can monitor whether your website returns an expected status code, or whether an API gateway certificate is valid. Identifying failed assertions helps you resolve the failure and prevent errors during your next time Terraform operation.
 
 Continuous validation evaluates preconditions, postconditions, and check blocks as part of an assessment, but we recommend using [check blocks](https://developer.hashicorp.com/terraform/language/checks) for post-apply monitoring. Use check blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
-
-Continuous validation alerts you whenever an assertion fails, so you can change your configuration and avoid errors the next time you update infrastructure.
 
 ### Preventing false positives
 
