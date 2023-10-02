@@ -9,6 +9,22 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+## 2023-09-29
+* Add support for [streamlined run task reviews](/terraform/cloud-docs/integrations/run-tasks), enabling run task integrations to return high fidelity results.
+  * Update the [Terraform cloud run task API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) to enable streamlined run task reviews.
+  * The [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) now guides integrations through sending rich results.
+  * Updated the run task payload [JSON Schema](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json).
+
+## 2023-09-25
+* Add `intermediate` boolean attribute to the [State Versions API](/terraform/cloud-docs/api-docs/state-versions).
+
+## 2023-09-19
+* Add [failed state upload recovery](/terraform/cloud-docs/api-docs/applies#recover-a-failed-state-upload-after-applying) endpoint.
+
+## 2023-09-15
+* Add `auto-destroy-at` attribute to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces).
+* Update the [Notification Configurations API](/terraform/cloud-docs/api-docs/notification-configurations) to include [automatic destroy run](/terraform/cloud-docs/api-docs/notification-configurations#automatic-destroy-runs) details.
+
 ## 2023-09-08
 * Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to include `default-execution-mode` and `default-agent-pool`.
 * Update the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) to add a `setting-overwrites` object to allow you to overwrite `default-execution-mode` and `default-agent-pool`.
@@ -23,11 +39,8 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ## 2023-08-10
 * Add `provisional` to `configuration-versions` endpoint.
 
-## 2023-08-08
-* Update Policy Sets API endpoints to create, update, and return projects associated with a policy set.
-* Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-projects) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-projects) from a project.
-
 ## 2023-07-26
+
 * Add support for a `custom` option to the `team_project` access level along with various customizable permissions. The `project-access` permissions apply to the project itself, and `workspace-access` permissions apply to all workspaces within the project. For more information, see [Project Team Access](/terraform/cloud-docs/api-docs/project-team-access).
 
 ## 2023-06-09

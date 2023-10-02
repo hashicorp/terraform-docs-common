@@ -75,6 +75,14 @@ The workspace creation process varies depending on the workspace workflow you ch
 
 For CLI and API-driven workspaces, the workspace overview page appears. For version control workspaces, the **Configure Terraform variables** page appears.
 
+### Workspace Tags
+
+After you create a workspace, you can create or assign tags to it. Tags are subject to the following rules:
+
+- Workspace tags or tags must be one or more characters, have a 255 character limit, and can include letters, numbers, colons, hyphens, and underscores.
+- You can create tags for a workspace using the user interface or the API. After you create a tag, you can assign it to other workspaces in the same organization.
+- You cannot create tags for a workspace using the CLI.
+- You cannot set tags at the project level, so there is no tag inheritance from projects to workspaces.
 
 ### Configure Terraform Variables (Version Control Only)
 

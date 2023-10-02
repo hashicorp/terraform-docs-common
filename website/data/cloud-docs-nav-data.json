@@ -228,6 +228,10 @@
           {
             "title": "Run Tasks",
             "path": "workspaces/settings/run-tasks"
+          },
+          {
+            "title": "Destruction and Deletion",
+            "path": "workspaces/settings/deletion"
           }
         ]
       },
