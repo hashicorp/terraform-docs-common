@@ -74,6 +74,8 @@ Make sure that you’re _not_ setting values for `client_id`, `use_oidc`, or `oi
 
 ### Specifying Multiple Configurations
 
+~> **Important:** Ensure you are using version **3.60.0** or later of the **AzureRM provider** and version **2.43.0** or later of the **AzureAD provider** as required functionality was introduced in these provider versions.
+
 ~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can add additional configurations to handle multiple distinct Azure setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.
@@ -102,9 +104,13 @@ variable "tfc_azure_dynamic_credentials" {
 
 #### Example Usage
 
+##### AzureRM Provider
+
 ```hcl
 provider "azurerm" {
   features {}
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
+  use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true
   client_id_file_path  = var.tfc_azure_dynamic_credentials.default.client_id_file_path
@@ -115,6 +121,37 @@ provider "azurerm" {
 
 provider "azurerm" {
   features {}
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
+  use_cli              = false
+  // use_oidc must be explicitly set to true when using multiple configurations.
+  use_oidc             = true
+  alias                = "ALIAS1"
+  client_id_file_path  = var.tfc_azure_dynamic_credentials.aliases["ALIAS1"].client_id_file_path
+  oidc_token_file_path = var.tfc_azure_dynamic_credentials.aliases["ALIAS1"].oidc_token_file_path
+  subscription_id      = "00000000-0000-0000-0000-000000000000"
+  tenant_id            = "20000000-0000-0000-0000-000000000000"
+}
+```
+
+##### AzureAD Provider
+
+```hcl
+provider "azuread" {
+  features {}
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
+  use_cli              = false
+  // use_oidc must be explicitly set to true when using multiple configurations.
+  use_oidc             = true
+  client_id_file_path  = var.tfc_azure_dynamic_credentials.default.client_id_file_path
+  oidc_token_file_path = var.tfc_azure_dynamic_credentials.default.oidc_token_file_path
+  subscription_id      = "00000000-0000-0000-0000-000000000000"
+  tenant_id            = "10000000-0000-0000-0000-000000000000"
+}
+
+provider "azuread" {
+  features {}
+  // use_cli should be set to false to yield more accurate error messages on auth failure.
+  use_cli              = false
   // use_oidc must be explicitly set to true when using multiple configurations.
   use_oidc             = true
   alias                = "ALIAS1"

@@ -42,27 +42,27 @@
                 }
               },
               "required": ["status"]
-            }
-          },
-          "relationships": {
-            "type": "object",
-            "title": "Relationships",
-            "description": "The JSON:API relatated data records",
-            "properties": {
-              "outcomes": {
-                "type": "object",
-                "title": "Outcomes",
-                "attributes": {
-                  "data": {
-                    "title": "Data",
-                    "description": "An array of Run Task Outcomes, providing details as to why a specific integration may have failed.",
-                    "type": "array",
-                    "items": { "$ref": "#/$defs/RunTaskOutcome" },
-                    "minItems": 1,
-                    "maxItems": 10 
-                  }
-                },
-                "required": ["data"]
+            },
+            "relationships": {
+              "type": "object",
+              "title": "Relationships",
+              "description": "The JSON:API relatated data records",
+              "properties": {
+                "outcomes": {
+                  "type": "object",
+                  "title": "Outcomes",
+                  "attributes": {
+                    "data": {
+                      "title": "Data",
+                      "description": "An array of Run Task Outcomes, providing details as to why a specific integration may have failed.",
+                      "type": "array",
+                      "items": { "$ref": "#/$defs/RunTaskOutcome" },
+                      "minItems": 1,
+                      "maxItems": 250 
+                    }
+                  },
+                  "required": ["data"]
+                }
               }
             }
           }

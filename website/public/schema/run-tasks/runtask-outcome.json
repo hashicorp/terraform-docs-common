@@ -19,7 +19,7 @@
       "minLength": 1,
       "maxLength": 1000
     },
-    "tags": { "$ref": "./runtask-tag.json#" },
+    "tags": { "$ref": "#/$defs/RunTaskTag" },
     "body": {
       "title": "Body",
       "description": "Markdown text which will be rendered to the user in the Terraform Cloud Run UI.",

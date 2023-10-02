@@ -137,10 +137,9 @@ You may need to set these variables, depending on your Vault configuration and u
 ## Vault Provider Configuration
 Once you set up dynamic credentials for a workspace, Terraform Cloud automatically authenticates to Vault for each run. Do not pass the `address`, `token`, or `namespace` arguments into the provider configuration block. Terraform Cloud sets these values as environment variables in the run environment.
 
-You can use the Vault provider to read secrets from Vault and use them with other Terraform resources. You can also access the other resources and data sources available in the [Vault provider documentation](https://registry.terraform.io/providers/hashicorp/vault/latest). You must adjust your [Vault policy](#create-a-vault-policy) to give your Terraform Cloud workspace access to all required Vault paths.
+You can use the Vault provider to read static secrets from Vault and use them with other Terraform resources. You can also access the other resources and data sources available in the [Vault provider documentation](https://registry.terraform.io/providers/hashicorp/vault/latest). You must adjust your [Vault policy](#create-a-vault-policy) to give your Terraform Cloud workspace access to all required Vault paths.
 
-### Vault Dynamic Secrets Engines
-You can use Vault's dynamic secrets engines for AWS, GCP, and Azure by adding additional configurations. For more details, see [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed).
+~> **Important:** data sources that use secrets engines to generate dynamic secrets must not be used with Vault dynamic credentials. You can use Vault's dynamic secrets engines for AWS, GCP, and Azure by adding additional configurations. For more details, see [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed).
 
 ### Specifying Multiple Configurations
 
@@ -180,10 +179,10 @@ variable "tfc_vault_dynamic_credentials" {
 
 ```hcl
 provider "vault" {
-  // Set this to true as TFC manages the token lifecycle
+  // skip_child_token must be explicitly set to true as TFC manages the token lifecycle
   skip_child_token = true
-  address = var.tfc_vault_dynamic_credentials.default.address
-  namespace = var.tfc_vault_dynamic_credentials.default.namespace
+  address          = var.tfc_vault_dynamic_credentials.default.address
+  namespace        = var.tfc_vault_dynamic_credentials.default.namespace
 
   auth_login_token_file {
     filename = var.tfc_vault_dynamic_credentials.default.token_filename
@@ -191,11 +190,11 @@ provider "vault" {
 }
 
 provider "vault" {
-  // Set this to true as TFC manages the token lifecycle
+  // skip_child_token must be explicitly set to true as TFC manages the token lifecycle
   skip_child_token = true
-  alias = "ALIAS1"
-  address = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].address
-  namespace = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].namespace
+  alias            = "ALIAS1"
+  address          = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].address
+  namespace        = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].namespace
 
   auth_login_token_file {
     filename = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].token_filename

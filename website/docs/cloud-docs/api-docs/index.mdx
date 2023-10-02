@@ -78,7 +78,9 @@ The [show entitlement set](/terraform/cloud-docs/api-docs/organizations#show-the
 The following entitlements are available:
 
 - `agents` — Allows isolated, private or on-premises infrastructure to communicate with an organization in Terraform Cloud. Affects the [agent pools][], [agents][], and [agent tokens][] endpoints.
+<!-- BEGIN: TFC:only name:tfc-audit-log -->
 - `audit-logging` — Allows an organization to access [audit trails][].
+<!-- END: TFC:only name:tfc-audit-log -->
 - `configuration-designer` — Allows an organization to use the [Configuration Designer][].
 - `cost-estimation` — Allows an organization to access [cost estimation][].
 - `operations` — Allows an organization to perform runs within Terraform Cloud. Affects the [runs][], [plans][], and [applies][] endpoints.
@@ -101,7 +103,9 @@ The following entitlements are available:
 
 [applies]: /terraform/cloud-docs/api-docs/applies
 
+<!-- BEGIN: TFC:only name:tfc-audit-log -->
 [audit trails]: /terraform/cloud-docs/api-docs/audit-trails
+<!-- END: TFC:only name:tfc-audit-log -->
 
 [Configuration Designer]: /terraform/cloud-docs/registry/design
 
