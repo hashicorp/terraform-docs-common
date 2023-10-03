@@ -18,6 +18,22 @@ Policy sets are collections of policies you can apply globally or to specific [p
 
 To view and manage policies and policy sets, you must have [manage policy permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policies) for your organization.
 
+## Differences between Policy Checks and Policy Evaluations
+
+Though policy checks and policy evaluations seem like synonyms, there is a fundamental difference between the policy check and policy evaluation workflow.
+
+### Policy Checks
+
+Sentinel policies are currently run as a policy check. This is the default workflow for Sentinel.
+Policy checks use the latest version of the Sentinel runtime and have access to cost estimation data.
+
+### Policy Evaluations
+
+Policy evaluations are run within the [Terraform Cloud Agent](/terraform/cloud-docs/agents) in Terraform Cloud's infrastructure.
+Policy evaluations do not have access to cost estimation data.
+
+-> **Note:** Sentinel policy evaluations are currently in beta.
+Sentinel policies can run as a policy evaluation on an opt-in basis.
 
 ## Management Workflows
 
@@ -113,6 +129,11 @@ To create a policy set:
 1. Choose a policy set scope:
    - **Policies enforced globally:** Terraform Cloud automatically enforces this global policy set on all of an organization's existing and future workspaces.
    - **Policies enforced on selected projects and workspaces:** Use the text fields to find and select the workspaces and projects to enforce this policy set on. This affects all current and future workspaces for any chosen projects.
+
+1. **(Sentinel Only)** Choose a policy set type:
+   - **Standard:** This is the default workflow. A Sentinel policy set uses a [policy check](#policy-checks) in Terraform Cloud.
+   - **Enhanced:** A Sentinel policy set uses a [policy evaluation](#policy-evaluations) in Terraform Cloud.
+
 1. **(Optional)** Add **Policy exclusions** for this policy set. Specify any workspaces in the policy set's scope that Terraform Cloud will not enforce this policy set on.
 1. **(OPA Only)** Allow **Overrides**, which enables users with override policy permissions to apply plans that have [mandatory policy](#policy-enforcement-levels) failures.
 1. **(VCS Only)** Optionally specify the **VCS branch** within your VCS repository where Terraform Cloud should import new versions of policies. If you do not set this field, Terraform Cloud uses your selected VCS repository's default branch.
@@ -141,7 +162,6 @@ To delete a policy set:
 
 The policy set no longer appears on the UI and Terraform Cloud no longer applies it to any workspaces. For managed policy sets, all of the individual policies are still available in Terraform Cloud. You must delete each policy individually to remove it from your organization.
 
-
 ### (Sentinel Only) Sentinel Parameters
 
 [Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that Terraform Cloud sends to the Sentinel runtime when performing policy checks on workspaces. If the value parses as JSON, Terraform Cloud sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, Terraform Cloud sends it as a string.
@@ -149,3 +169,26 @@ The policy set no longer appears on the UI and Terraform Cloud no longer applies
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
 
 You can only set parameters for existing policy sets that you added through the `tfe` provider, API, or a connected VCS repository. Parameters are not available for managed policy sets.
+
+## Pinning policy runtime versions to policy sets
+
+-> **Note:** Policy runtime version management is currently in beta.
+
+You can pin a policy set to a specific runtime version. This provides control over the versioning of the policy-as-code runtime.
+
+#### OPA Policy sets
+
+For OPA Policy sets, a `Runtime version` drop-down selector is available that allows you to choose supported versions of OPA. All policies within this policy set will be evaluated against the chosen policy runtime version.
+
+#### Sentinel Policy sets
+
+For Sentinel Policy sets, policy runtime version selection is available on an opt-in basis. Sentinel policy sets will default to using the policy check flow, and you can opt in to the policy evaluation flow for each policy set individually through a radio button located in the Sentinel policy set configuration form.
+
+After opting in to the `enhanced` workflow, you can select the Sentinel runtime version (via the `Runtime version` drop-down selector) against which the policies in the policy set will be evaluated.
+
+All policy sets that are configured to use the `enhanced` workflows will run as a policy evaluation.
+
+The Sentinel Policy sets will also have an `override` checkbox (similar to OPA). Failed policies stop the run, but any user with [Manage Policy Overrides permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides) can override these failures and allow the run to complete.
+Both soft-mandatory and hard-mandatory policies can be overriden.
+
+-> **Note:** Sentinel runtime version pinning is supported only for Sentinel 0.23.0 and above, as well as Terraform Cloud agent versions 1.13.0 and above
