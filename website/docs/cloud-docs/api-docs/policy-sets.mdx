@@ -85,7 +85,7 @@ Properties without a default value are required.
 | `data.attributes.description`                         | string         | `null`    | Text describing the policy set's purpose. This field supports Markdown and appears in the Terraform Cloud UI.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `data.attributes.global`                              | boolean        | `false`   | Whether Terraform Cloud should automatically apply this policy set to all of an organization's workspaces.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `data.attributes.kind`                                | string         | `sentinel`| The policy-as-code framework associated with the policy. Valid values are `sentinel` and `opa`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `data.attributes.overridable`                         | boolean        | `false`   | Whether or not users can override this policy when it fails during a run. Only valid for OPA policies.                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `data.attributes.overridable`                         | boolean        | `false`   | Whether or not users can override this policy when it fails during a run. Valid for sentinel policies only if `agent-enabled` is set to `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `data.attributes.vcs-repo`                            | object         | `null`    | VCS repository information. When present, Terraform Cloud sources the policies and configuration from the specified VCS repository. This attribute and `policies` relationships are mutually exclusive, and you cannot use them simultaneously.                                                                                                                                                                                                                                                                                                                   |
 | `data.attributes.vcs-repo.branch`                     | string         | `null`    | The branch of the VCS repository where Terraform Cloud should retrieve the policy set. If empty, Terraform Cloud uses the default branch.                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `data.attributes.vcs-repo.identifier`                 | string         |           | The VCS repository identifier in the format `<namespace>/<repo>`. For example, `hashicorp/my-policy-set`. The format for Azure DevOps is `<org>/<project>/_git/<repo>`.                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -97,6 +97,9 @@ Properties without a default value are required.
 | `data.relationships.workspaces.data[]`                | array\[object] | `[]`      | A list of resource identifier objects that defines which workspaces are associated with the policy set. These objects must contain `id` and `type` properties, and the `type` property must be `workspaces`. For example, `{ "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }`. Obtain workspace IDs from the [workspace's settings page](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#show-workspace). You can only specify this attribute when `data.attributes.global` is `false`. |
 | `data.relationships.workspace-exclusions.data[]`      | array\[object] | `[]`      | A list of resource identifier objects specifying which workspaces Terraform Cloud excludes from a policy set's enforcement. These objects must contain `id` and `type` properties, and the `type` property must be `workspaces`. For example, `{ "id": "ws-FVVvzCDaykN1oHiw", "type": "workspaces" }`.                                                                                                                                                                                                                                                            |
 | `data.relationships.policies.data[]`                  | array\[object] | `[]`      | A list of resource identifier objects that defines which policies are members of the policy set. These objects must contain `id` and `type` properties, and the `type` property must be `policies`. For example, `{ "id": "pol-u3S5p2Uwk21keu1s", "type": "policies" }`.                                                                                                                                                                                                                                                                                          |
+| `data.relationships.agent-enabled`  **(beta)**        | boolean        | `false`   | Only valid for `sentinel` policy sets. Whether this policy set should run as a policy evaluation in the terraform cloud agent                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `data.relationships.policy-tool-version`  **(beta)**  | string         | `latest`  | The policy tool version against which the policies will be evaluated. For `sentinel` policy sets, the policy tool version can be set only if `agent-enabled` is set to `true`                                                                                                                                                                                                                                                                                                                                                                                       |
+
 
 ### Sample Payload
 
@@ -109,6 +112,9 @@ Properties without a default value are required.
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "global": false,
       "kind": "sentinel",
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "policies-path": "/policy-sets/foo",
       "vcs-repo": {
         "branch": "master",
@@ -148,7 +154,10 @@ Properties without a default value are required.
       "name": "production",
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "kind": "sentinel",
-      "global": false
+      "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true
     },
     "relationships": {
       "policies": {
@@ -189,6 +198,9 @@ curl \
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "kind": "sentinel",
       "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "workspace-count": 1,
       "policies-path": "/policy-sets/foo",
       "versioned": true,
@@ -240,6 +252,9 @@ curl \
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "kind": "sentinel",
       "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "policy-count": 1,
       "workspace-count": 1,
       "versioned": false,
@@ -315,6 +330,9 @@ curl \
         "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
         "kind": "sentinel",
         "global": false,
+        "agent-enabled": true,
+        "policy-tool-version": "0.23.0",
+        "overridable": true,
         "workspace-count": 1,
         "policies-path": "/policy-sets/foo",
         "versioned": true,
@@ -368,6 +386,9 @@ curl \
         "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
         "kind": "sentinel",
         "global": false,
+        "agent-enabled": true,
+        "policy-tool-version": "0.23.0",
+        "overridable": true,
         "policy-count": 1,
         "workspace-count": 1,
         "versioned": false,
@@ -435,6 +456,9 @@ curl --request GET \
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "kind": "sentinel",
       "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "policy-count": 0,
       "workspace-count": 1,
       "policies-path": "/policy-sets/foo",
@@ -526,6 +550,9 @@ curl --request GET \
       "description": "This set contains policies that should be checked on all production infrastructure workspaces.",
       "kind": "sentinel",
       "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "policy-count": 1,
       "workspace-count": 1,
       "versioned": false,
@@ -576,32 +603,36 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                                      | Type           | Default          | Description                                                                                                                                                                                                                                                                                                  |
-| --------------------------------------------- | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data.type`                                   | string         |                  | Must be `"policy-sets"`.                                                                                                                                                                                                                                                                                     |
-| `data.attributes.name`                        | string         | (previous value) | The name of the policy set. Can include letters, numbers, `-`, and `_`.                                                                                                                                                                                                                                      |
-| `data.attributes.description`                 | string         | (previous value) | A description of the set's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                             |
-| `data.attributes.global`                      | boolean        | (previous value) | Whether or not this policies in this set should be checked on all of the organization's workspaces, or only on workspaces directly attached to the set.                                                                                                                                                      |
-| `data.attributes.vcs-repo`                    | object         | (previous value) | VCS repository information. When present, the policies and configuration will be sourced from the specified VCS repository instead of being defined within Terraform Cloud. Note that this option and `policies` relationships are mutually exclusive and may not be used simultaneously.                    |
-| `data.attributes.vcs-repo.branch`             | string         | (previous value) | The branch of the VCS repo. If empty, the VCS provider's default branch value will be used.                                                                                                                                                                                                                  |
-| `data.attributes.vcs-repo.identifier`         | string         | (previous value) | The identifier of the VCS repository in the format `<namespace>/<repo>`. For example, on GitHub, this would be something like `hashicorp/my-policy-set`. The format for Azure DevOps is `<org>/<project>/_git/<repo>`.                                                                                       |
-| `data.attributes.vcs-repo.oauth-token-id`     | string         | (previous value) | The OAuth Token ID to use to connect to the VCS host.                                                                                                                                                                                                                                                        |
-| `data.attributes.vcs-repo.ingress-submodules` | boolean        | (previous value) | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                    |
-| `data.attributes.policies-path`               | boolean        | (previous value) | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present. |
-| `data.relationships.projects`                 | array\[object] | (previous value) | An array of references to projects that the policy set should be assigned to. Sending an empty array clears all project assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                           |                                                                                                                                          |
-| `data.relationships.workspaces`               | array\[object] | (previous value) | An array of references to workspaces that the policy set should be assigned to. Sending an empty array clears all workspace assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                       |
-| `data.relationships.workspace-exclusions`     | array\[object] | (previous value) | An array of references to excluded workspaces that Terraform Cloud will not enforce this policy set upon. Sending an empty array clears all exclusions assignments.                                                                                                                                          |                                                                                                                                 |
+| Key path                                              | Type           | Default          | Description                                                                                                                                                                                                                                                                                                  |
+| ----------------------------------------------------- | -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.type`                                           | string         |                  | Must be `"policy-sets"`.                                                                                                                                                                                                                                                                                     |
+| `data.attributes.name`                                | string         | (previous value) | The name of the policy set. Can include letters, numbers, `-`, and `_`.                                                                                                                                                                                                                                      |
+| `data.attributes.description`                         | string         | (previous value) | A description of the set's purpose. This field supports Markdown and will be rendered in the Terraform Cloud UI.                                                                                                                                                                                             |
+| `data.attributes.global`                              | boolean        | (previous value) | Whether or not this policies in this set should be checked on all of the organization's workspaces, or only on workspaces directly attached to the set.                                                                                                                                                      |
+| `data.attributes.vcs-repo`                            | object         | (previous value) | VCS repository information. When present, the policies and configuration will be sourced from the specified VCS repository instead of being defined within Terraform Cloud. Note that this option and `policies` relationships are mutually exclusive and may not be used simultaneously.                    |
+| `data.attributes.vcs-repo.branch`                     | string         | (previous value) | The branch of the VCS repo. If empty, the VCS provider's default branch value will be used.                                                                                                                                                                                                                  |
+| `data.attributes.vcs-repo.identifier`                 | string         | (previous value) | The identifier of the VCS repository in the format `<namespace>/<repo>`. For example, on GitHub, this would be something like `hashicorp/my-policy-set`. The format for Azure DevOps is `<org>/<project>/_git/<repo>`.                                                                                       |
+| `data.attributes.vcs-repo.oauth-token-id`             | string         | (previous value) | The OAuth Token ID to use to connect to the VCS host.                                                                                                                                                                                                                                                        |
+| `data.attributes.vcs-repo.ingress-submodules`         | boolean        | (previous value) | Determines whether repository submodules will be instantiated during the clone operation.                                                                                                                                                                                                                    |
+| `data.attributes.policies-path`                       | boolean        | (previous value) | The subdirectory of the attached VCS repository that contains the policies for this policy set. Files and directories outside of this sub-path will be ignored, and changes to those unrelated files won't cause the policy set to be updated. This option may only be specified when a VCS repo is present. |
+| `data.relationships.projects`                         | array\[object] | (previous value) | An array of references to projects that the policy set should be assigned to. Sending an empty array clears all project assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                           |
+| `data.relationships.workspaces`                       | array\[object] | (previous value) | An array of references to workspaces that the policy set should be assigned to. Sending an empty array clears all workspace assignments. You can only specify this attribute when `data.attributes.global` is `false`.                                                                                       |
+| `data.relationships.workspace-exclusions`             | array\[object] | (previous value) | An array of references to excluded workspaces that Terraform Cloud will not enforce this policy set upon. Sending an empty array clears all exclusions assignments.                                                                                                                                          |
+| `data.relationships.agent-enabled`  **(beta)**        | boolean        | `false`   | Only valid for `sentinel` policy sets. Whether this policy set should run as a policy evaluation in the terraform cloud agent                                                                                                                                                                                       |
+| `data.relationships.policy-tool-version`  **(beta)**  | string         | `latest`  | The policy tool version against which the policies will be evaluated. For `sentinel` policy sets, the policy tool version can be set only if `agent-enabled` is set to `true`                                                                                                                                       |
 
 ### Sample Payload
 
 ```json
 {
   "data": {
-    "type": "policy-sets"
+    "type": "policy-sets",
     "attributes": {
       "name": "workspace-scoped-policy-set",
       "description": "Policies added to this policy set will be enforced on specified workspaces",
-      "global": false
+      "global": false,
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0"
     },
     "relationships": {
       "projects": {
@@ -647,6 +678,9 @@ curl \
       "description": "Policies added to this policy set will be enforced on specified workspaces",
       "global": false,
       "kind": "sentinel",
+      "agent-enabled": true,
+      "policy-tool-version": "0.23.0",
+      "overridable": true,
       "policy-count": 1,
       "workspace-count": 1,
       "versioned": false,
