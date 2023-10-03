@@ -83,6 +83,7 @@
       { "title": "Plans", "path": "api-docs/plans" },
       { "title": "Policies", "path": "api-docs/policies" },
       { "title": "Policy Checks", "path": "api-docs/policy-checks" },
+      { "title": "Policy Evaluations", "path": "api-docs/policy-evaluations" },
       { "title": "Policy Sets", "path": "api-docs/policy-sets" },
       {
         "title": "Policy Set Parameters",
