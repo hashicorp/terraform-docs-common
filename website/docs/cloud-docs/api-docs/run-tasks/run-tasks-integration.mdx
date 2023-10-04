@@ -180,7 +180,7 @@ Status values other than passed, failed, or running return an error. Both the pa
 
 #### Outcomes Payload Body
 
-A run task result may optionally contain one or more detailed outcomes, which improves result visibility and content in the Terraform Cloud user interface.
+A run task result may optionally contain one or more detailed outcomes, which improves result visibility and content in the Terraform Cloud user interface. In addition to the usual JSON:API fields (see the payload example below), the following attributes define the outcome payload.
 
 |         Key path          |  Type  |                                           Description                                           |
 | ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
@@ -199,18 +199,21 @@ Run task outcomes with tags named "severity" or "status" are enriched within the
 
 ```json
 {
-  "outcome-id": "PRTNR-CC-TF-127",
-  "description": "ST-2942: S3 Bucket will not enforce MFA login on delete requests",
-  "tags": {
-    "Status":  [{"label": "Denied", "level": "error" }],
-    "Severity": [
-      {"label": "High", "level": "error" },
-      {"label": "Recoverable", "level": "info" },
-    ],
-    "Cost Centre": [{"label": "IT-OPS"}]
-  },
-  "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- Payload truncated —--",
-  "url": "https://external.service.dev/result/PRTNR-CC-TF-127"
+  "type": "task-result-outcomes",
+  "attributes": {
+    "outcome-id": "PRTNR-CC-TF-127",
+    "description": "ST-2942: S3 Bucket will not enforce MFA login on delete requests",
+    "tags": {
+      "Status":  [{"label": "Denied", "level": "error" }],
+      "Severity": [
+        {"label": "High", "level": "error" },
+        {"label": "Recoverable", "level": "info" },
+      ],
+      "Cost Centre": [{"label": "IT-OPS"}]
+    },
+    "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- Payload truncated —--",
+    "url": "https://external.service.dev/result/PRTNR-CC-TF-127"
+  }
 }
 ```
 
