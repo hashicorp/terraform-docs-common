@@ -6,31 +6,7 @@ description: >-
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
-[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
-
-[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
-
-[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
-
-[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
-
-[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
-
-[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
-
 [404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
-
-[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
-
-[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
-
-[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
-
-[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
-
-[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
-
-[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
 [JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
@@ -53,7 +29,6 @@ This endpoint allows you to list policy evaluations that are part of the task st
 | Parameter                   | Description                                 |
 | --------------------------- | ------------------------------------------- |
 | `:task_stage_id`            | The task stage ID to get.                   |
-
 
 | Status  | Response                                      | Reason                                              |
 | ------- | --------------------------------------------- | --------------------------------------------------- |
@@ -126,7 +101,6 @@ curl \
 }
 ```
 
-
 ## List Policy Outcomes
 
 `GET /policy-evaluations/:policy_evaluation_id/policy-set-outcomes`
@@ -177,7 +151,6 @@ curl \
   https://app.terraform.io/api/v2/policy-evaluations/poleval-8Jj9Hfoz892D9WMX/policy-set-outcomes?filter[0][status]=errored&filter[1][status]=failed&filter[1][enforcementLevel]=mandatory
 ```
 
-
 ### Sample Response
 
 ```json
@@ -205,7 +178,8 @@ curl \
                "errored":0,
                "mandatory-failed":0,
                "passed":0
-            }
+            },
+            "policy-tool-version": "0.54.0"
          },
          "relationships":{
             "policy-evaluation":{
@@ -285,7 +259,8 @@ curl --request GET \
             "errored":0,
             "mandatory-failed":0,
             "passed":0
-         }
+         },
+         "policy-tool-version": "0.54.0"
       },
       "relationships":{
          "policy-evaluation":{
@@ -298,4 +273,3 @@ curl --request GET \
    }
 }
 ```
-
