@@ -15,7 +15,7 @@ The default run mode of Terraform Cloud is to perform a plan and then apply it. 
 
 - **CLI:** Use `terraform apply` (without providing a saved plan file).
 - **API:** Create a run without specifying any options that select a different mode.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Plan and apply (standard)** as the run type.
+- **UI:** From the workspace's overview page, click **+ New run**, and then choose **Plan and apply (standard)** as the run type.
 - **VCS:** When a workspace is connected to a VCS repository, Terraform Cloud automatically starts a standard plan and apply when you add new commits to the selected branch of that repository.
 
 ## Destroy Mode
@@ -35,7 +35,7 @@ You can create speculative plans with a different Terraform version than the one
 Plan-only runs ignore the per-workspace run queue. Plan-only runs can proceed even if another run is in progress, can not become the workspace's current run, and do not block progress on a workspace's other runs.
 
 - **API:** Set the `plan-only` option to `true` and specify an available terraform version using the `terraform-version` field.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Plan only** as the run type.
+- **UI:** From the workspace's overview page, click **+ New run**, and then choose **Plan only** as the run type.
 - **VCS:** When a workspace is connected to a VCS repository, Terraform Cloud automatically starts a speculative plan when someone opens a pull request (or merge request) against the selected branch of that repository.  The pull/merge request view in your VCS links to the speculative plan, and you can also find it in the workspace's run list.
 
 ## Saved Plans
@@ -62,7 +62,7 @@ To make such upgrades easier, empty apply runs will always auto-apply if their p
 ~> **Warning:** Terraform Cloud cannot guarantee that a plan in this mode will produce no changes. We recommend checking the plan for drift before proceeding to the apply stage.
 
 - **API:** Set the `allow-empty-apply` field to `true`.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Allow empty apply** as the run type.
+- **UI:** From the workspace's overview page, click **+ New run**, and then choose **Allow empty apply** as the run type.
 
 ## Refresh-Only Mode
 
@@ -74,7 +74,7 @@ To make such upgrades easier, empty apply runs will always auto-apply if their p
 
 - **CLI:** Use `terraform plan -refresh-only` or `terraform apply -refresh-only`.
 - **API:** Use the `refresh-only` option.
-- **UI:** Open the workspace's **Actions** menu, select **Start new run**, and then choose **Refresh state** as the run type.
+- **UI:** From the workspace's overview page, click **+ New run**, and then choose **Refresh state** as the run type.
 
 ## Skipping Automatic State Refresh
 
