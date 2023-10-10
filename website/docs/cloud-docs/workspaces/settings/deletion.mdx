@@ -26,13 +26,11 @@ Before queuing a destroy plan, enable the **Allow destroy plans** toggle setting
 <!-- END: TFC:only name:pnp-callout -->
 
 You can schedule a run to destroy all resources in a workspace at a specific
-date and time. This ephemeral workspace option reduces your infrastructure
+date and time. This ephemeral workspace entitlement reduces your infrastructure
 spend by helping you automatically destroy resources that you only need
 temporarily, such as development environments.
 
-If you perform a destroy operation in the workspace before the scheduled auto
-destroy, Terraform Cloud will cancel the scheduled run. You can re-enable it to
-schedule another future auto destroy run. 
+After Terraform Cloud performs an auto destroy run, it unsets the `auto-destroy` flag on the workspace. If you continue using the workspace, you can schedule another future auto destroy run to remove any new resources. 
 
 !> **Note:** Automatic destroy plans _do not_ prompt you for apply approval in the Terraform Cloud user interface. We recommend only using this setting for development environments.
 
