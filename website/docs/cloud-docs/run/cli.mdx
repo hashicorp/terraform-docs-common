@@ -27,7 +27,7 @@ The [CLI integration](/terraform/cli/cloud) brings Terraform Cloud's collaborati
 
 You can start runs with the standard `terraform plan` and `terraform apply` commands and then watch the progress of the run from your terminal. These runs execute remotely in Terraform Cloud, use variables from the appropriate workspace, enforce any applicable [Sentinel or OPA policies](/terraform/cloud-docs/policy-enforcement), and can access Terraform Cloud's [private registry][private] and remote state inputs.
 
-Terraform Cloud offers three kinds of CLI-driven runs, to support different stages of your workflow:
+Terraform Cloud offers a few types of CLI-driven runs, to support different stages of your workflow:
 
 - `terraform plan` starts a [speculative plan][] in a Terraform Cloud workspace, using configuration files from a local directory. You can quickly check the results of edits (including compliance with Sentinel policies) without needing to copy sensitive variables to your local machine.
 
@@ -37,11 +37,15 @@ Terraform Cloud offers three kinds of CLI-driven runs, to support different stag
 
   Remote `terraform apply` is for workspaces without a linked VCS repository. It replaces the VCS-driven workflow with a more traditional CLI workflow.
 
+<!-- BEGIN: TFC:only name:save-plan -->
+
 - `terraform plan -out <FILE>` and `terraform apply <FILE>` perform a two-part [saved plan run](/terraform/cloud-docs/run/modes-and-options/#saved-plans) in a Terraform Cloud workspace, using configuration files from a local directory. The first command performs and saves the plan, and the second command applies it. You can use `terraform show <FILE>` to inspect a saved plan.
 
     Like remote `terraform apply`, remote saved plans are for workspaces without a linked VCS repository.
 
     Saved plans require at least Terraform CLI v1.6.0.
+
+<!-- END: TFC:only name:save-plan -->
 
 To supplement these remote operations, you can also use the optional [Terraform Enterprise Provider][tfe-provider], which interacts with the Terraform Cloud-supported resources. This provider is useful for editing variables and workspace settings through the Terraform CLI.
 
@@ -209,6 +213,8 @@ If you prefer to use the CLI in a non-interactive environment, we recommend firs
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
+<!-- BEGIN: TFC:only name:save-plan -->
+
 ## Remote Saved Plans
 
 -> **Version note:** Saved plans require at least Terraform CLI v1.6.0.
@@ -236,6 +242,8 @@ In order to abide by Terraform Cloud's permissions model, remote saved plans do 
 The `terraform show -json` command requires [workspace admin permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) to inspect a remote saved plan; this is because the [machine-readable JSON plan format](/terraform/internals/json-format) contains unredacted sensitive information (alongside redaction hints for use by systems that consume the format). The human-readable version of `terraform show` only requires the read runs permission, because it uses pre-redacted information.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+<!-- END: TFC:only name:save-plan -->
 
 ## Policy Enforcement
 
