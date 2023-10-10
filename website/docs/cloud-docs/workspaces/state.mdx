@@ -17,11 +17,15 @@ In [remote runs](/terraform/cloud-docs/run/remote-operations), Terraform Cloud a
 
 In local runs (available for workspaces whose execution mode setting is set to "local"), you can use a workspace's state by configuring the [CLI integration](/terraform/cli/cloud) and authenticating with a user token that has permission to read and write state versions for the relevant workspace. When using a Terraform configuration that references outputs from another workspace, the authentication token must also have permission to read state outputs for that workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
+<!-- BEGIN: TFC:only name:intermediate-state -->
+
 During a Terraform Cloud run, Terraform incrementally creates intermediate state versions and marks them as finalized once it uploads the state content.
 
 When a workspace is unlocked, Terraform Cloud selects the latest state and sets it as the current state version, deletes all other intermediate state versions that were saved as recovery snapshots for the duration of the lock, and discards all pending intermediate state versions that were superseded by newer state versions.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+<!-- END: TFC:only name:intermediate-state -->
 
 ## State Versions
 
