@@ -765,6 +765,110 @@ curl \
   }
 }
 ```
+## Update a Private Registry Module
+`PATCH /organizations/:organization_name/registry-modules/private/:namespace/:name/:provider/`
+
+### Parameters
+
+| Parameter            | Description                                                                                                                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `:organization_name` | The name of the organization to update a module from. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The module namespace that the update will affect. For private modules this is the name of the organization that owns the module.                                                                         |
+| `:name`              | The module name that the update will affect.                                                                                                                                                             |
+| `:provider`          | The name of the provider of the module that is being updated.                                                                                                                                  |
+
+### Request Body
+
+These PATCH endpoints require a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path                                      | Type           | Default          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|-----------------------------------------------|----------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                                   | string         |                  | Must be `"registry-modules"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `data.attributes.vcs-repo.branch`                        | string         | (previous value) | The repository branch that Terraform will execute tests and publish new versions from. This cannot be used with the `data.attributes.vcs-repo.tags` key.                                                                                                                                                                                     |
+| `data.attributes.vcs-repo.tags`               | boolean         | (previous value) | Whether the registry module should be tag-based. This cannot be used with the `data.attributes.vcs-repo.branch` key.                                                                                                                                                                                                                                  |
+| `data.attributes.test-config.tests-enabled`               | boolean         | (previous value) | Allows you to enable or disable tests for the module.                                                                                                                                                                                                                               |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "attributes": {
+      "vcs-repo": {
+        "branch": "main",
+        "tags": false
+      },
+      "test-config": {
+        "tests-enabled": true
+      }
+    },
+    "type": "registry-modules"
+  }
+}
+```
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request PATCH \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/organizations/my-organization/registry-modules/private/my-organization/registry-name/registry-provider/
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "mod-fZn7uHu99ZCpAKZJ",
+    "type": "registry-modules",
+    "attributes": {
+      "name": "my-module",
+      "namespace": "my-organization",
+      "registry-name": "private",
+      "provider": "aws",
+      "status": "pending",
+      "version-statuses": [],
+      "created-at": "2020-07-09T19:36:56.288Z",
+      "updated-at": "2020-07-09T19:36:56.288Z",
+      "vcs-repo": {
+        "branch": "main",
+        "ingress-submodules": true,
+        "identifier": "lafentres/terraform-aws-my-module",
+        "display-identifier": "lafentres/terraform-aws-my-module",
+        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
+        "webhook-url": "https://app.terraform.io/webhooks/vcs/a12b3456..."
+      },
+      "permissions": {
+        "can-delete": true,
+        "can-resync": true,
+        "can-retry": true
+      },
+      "test-config": {
+        "id": "tc-tcR6bxV5zE75Zb3B",
+        "tests-enabled": true
+      }
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "my-organization",
+          "type": "organizations"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/organizations/my-organization/registry-modules/private/my-organization/my-module/aws"
+    }
+  }
+}
+```
+
 
 ## Delete a Module
 
