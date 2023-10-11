@@ -363,6 +363,10 @@
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
       },
+      {
+        "title": "Test-Integrated Modules",
+        "path": "registry/test"
+      },
       { "title": "Using Providers and Modules", "path": "registry/using" },
       {
         "title": "Configuration Designer",
