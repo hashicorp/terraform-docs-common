@@ -101,7 +101,8 @@
             "title": "Private Provider Versions and Platforms",
             "path": "api-docs/private-registry/provider-versions-platforms"
           },
-          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
+          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" },
+          { "title":  "Tests", "path":  "api-docs/private-registry/tests" }
         ]
       },
       { "title": "Projects", "path": "api-docs/projects" },
@@ -361,6 +362,10 @@
       {
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
+      },
+      {
+        "title": "Test-Integrated Modules",
+        "path": "registry/test"
       },
       { "title": "Using Providers and Modules", "path": "registry/using" },
       {

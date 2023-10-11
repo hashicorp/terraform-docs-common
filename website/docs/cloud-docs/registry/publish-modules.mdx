@@ -45,26 +45,23 @@ A module repository must meet all of the following requirements before you can a
   This allows the registry to inspect your module and generate documentation,
   track resource usage, and more.
 
-- **`x.y.z` tags for releases:** At least one release tag must be present for you to publish a module. The registry uses release tags to identify module
-  versions. Release tag names must be a [semantic version](http://semver.org),
-  which you can optionally prefix with a `v`. For example, `v1.0.4` and `0.9.2`. The registry ignores tags that do not look like version numbers.
-
 ## Publishing a New Module
 
 You can publish modules through the UI as shown below or with the [Registry Modules API](/terraform/cloud-docs/api-docs/private-registry/modules). The API also supports publishing modules without a VCS repo as the source, which is not possible in the UI.
 
 To publish a new module:
 
-
   1. Click **Registry**. The **Registry** page appears.
 
-  1.  Click **Publish** and select **Module**.
+  1. Click **Publish** and select **Module**.
     
     The **Add Module** page appears with a list of available repositories.
 
   1. Select the repository containing the module you want to publish.
 
     You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
+
+  1. If presented, select either the **Tag** or **Branch** module publishing type.
 
   1.  (Optional) If this module is a [no-code ready module](/terraform/cloud-docs/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
 
@@ -76,11 +73,49 @@ To publish a new module:
 @include 'tfc-package-callouts/nocode.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-## Releasing New Versions of a Module
+### Tag-based publishing considerations
 
-To release a new version of a module, push a new release tag to its VCS repository. The registry automatically imports the new version.
+When using the **Tag** module publishing type, the registry uses `x.y.z` formatted release tags to identify module versions. Your repository must contain at least one release tag for you to publish a module. Release tag names must be a [semantic version](http://semver.org), which you can optionally prefix with a `v`. For example, `v1.0.4` and `0.9.2`. The registry ignores tags that do not match these formats.
+
+<!-- BEGIN: TFC:only name:branch-based-publishing -->
+
+### Branch-based publishing considerations
+
+When using the **Branch** module publishing type, you must provide the name of an existing branch in your VCS repository and give the module a **Module version**. Your VCS repository does not need to contain a matching tag or release.
+
+You can only enable testing on modules published using branch-based publishing. Refer to the [test-integrated modules](/terraform/cloud-docs/registry/test) documentation for more information.
+
+<!-- END: TFC:only name:branch-based-publishing -->
+
+## Releasing New Versions of a Module 
+
+<!-- BEGIN: TFC:only name:branch-based-publishing -->
+
+The process to release a new module version differs between the tag-based and branch-based publishing workflows.
+
+### Tag-Based Publishing Workflow
+
+<!-- END: TFC:only name:branch-based-publishing -->
+
+To release a new version of a module in the tag-based publishing workflow, push a new release tag to its VCS repository. The registry automatically imports the new version. 
 
 Refer to [Preparing a Module Repository](#preparing-a-module-repository) for details about release tag requirements.
+
+<!-- BEGIN: TFC:only name:branch-based-publishing -->
+
+### Branch-Based Publishing Workflow
+
+To release a new version of a module using the branch-based publishing workflow, navigate to the module overview screen, then click the **Publish New Version** button. Select the commit SHA that the new version will point to, and assign a new module version. You cannot re-use an existing module version.
+
+## Update Publish Settings
+
+After publishing your module, you can change between tag-based and branch-based publishing. To update your module's publish settings, navigate to the the module overview page, click the **Manage Module for Organization** dropdown, and then click **Publish Settings**.
+
+- To change from tag-based to branch-based publishing, you must configure a **Module branch** and [create a new module version](#branch-based-publishing-workflow), as Terraform Could will not automatically create one.
+
+- To change from branch-based publishing to tag-based publishing, you must create at least one tag in your VCS repository.
+
+<!-- END: TFC:only name:branch-based-publishing -->
 
 ## Deleting Versions and Modules
 
