@@ -8,6 +8,17 @@ description: >-
 
 This page collects solutions to the most common problems our users encounter with VCS integration in Terraform Cloud.
 
+## Azure Devops
+
+### Required status checks not sending
+
+When configuring status checks with Azure Devops the web interface may auto populate Genre and Name fields (beneath "Status to check") with incorrect values that do not reflect what Terraform Cloud is sending.
+To function correctly as required checks the Genre must be populated with "Terraform Cloud" (or the first segment for a Terraform Enterprise install), and the remainder of the status check goes in the Name field. This requires using the "Enter genre/name separately" checkbox to not use the default configuration.
+
+In the example below the status check is named `Terraform Cloud/paul-hcp/paul-test-1` and needs to be configured with Genre `Terraform Cloud` and Name `paul-hcp/paul-test-1`.
+
+![Azure Devops screenshot: configuring required status checks correctly](/img/docs/ado-required-status-check-after.png)
+
 ## Bitbucket Server
 
 ### Clicking "Connect organization `<X>`" with Bitbucket Server raises an error message in Terraform Cloud
@@ -66,17 +77,6 @@ This usually happens when an SSH key isn't associated with the VCS provider's OA
 - Check the settings page for affected workspaces and ensure that "Include submodules on clone" is enabled.
 
 Note that the "SSH Key" section in a workspace's settings is only used for mid-run operations like cloning Terraform modules. It isn't used when cloning the linked repository before a run.
-
-## Azure Devops
-
-### Required status checks not sending
-
-When configuring status checks with Azure Devops the web interface may auto populate Genre and Name fields (beneath "Status to check") with incorrect values that do not reflect what Terraform Cloud is sending.
-To function correctly as required checks the Genre must be populated with "Terraform Cloud" (or the first segment for a Terraform Enterprise install), and the remainder of the status check goes in the Name field. This requires using the "Enter genre/name separately" checkbox to not use the default configuration.
-
-In the example below the status check is named `Terraform Cloud/paul-hcp/paul-test-1` and needs to be configured with Genre `Terraform Cloud` and Name `paul-hcp/paul-test-1`.
-
-![Azure Devops screenshot: configuring required status checks correctly](/img/docs/ado-required-status-check-after.png)
 
 ## General
 
