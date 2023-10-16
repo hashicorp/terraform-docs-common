@@ -62,5 +62,34 @@
   { "title": "Framework", "href": "framework" },
   { "title": "Logging", "href": "log" },
   { "title": "Combining and Translating", "href": "mux" },
-  { "title": "Testing", "href": "testing" }
+  { "title": "Testing", "href": "testing" },
+  {
+    "title": "Code Generation",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "code-generation"
+      },
+      {
+        "title": "Design",
+        "path": "code-generation/design"
+      },
+      {
+        "title": "Specification",
+        "path": "code-generation/specification"
+      },
+      {
+        "title": "OpenAPI Provider Spec Generator",
+        "path": "code-generation/openapi-generator"
+      },
+      {
+        "title": "Framework Code Generator",
+        "path": "code-generation/framework-generator"
+      },
+      {
+        "title": "Workflow Example",
+        "path": "code-generation/workflow-example"
+      }
+    ]
+  }
 ]
