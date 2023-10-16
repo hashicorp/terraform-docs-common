@@ -137,8 +137,7 @@ We recommend protecting your tokens by creating them with an expiration date and
 
 To revoke a token, click the **trash can** next to it. That token will no longer be able to authenticate as your user account.
 
--> **Note**: When SAML SSO is enabled there is a session timeout for user API tokens, forcing users to periodically reauthenticate through the web UI in order to keep their tokens active. Refer to [API Token Expiration](/terraform/enterprise/saml/login#api-token-expiration) for details.
-
+-> **Note**: A user API token's access to an organization is not revoked when the user is removed from an SSO Identity Provider as the user may still be a member of the organization. To remove access to a user's API token, remove the user from the organization in the UI or with the [Terraform Enterprise provider](https://registry.terraform.io/providers/hashicorp/tfe/latest).
 
 ### GitHub App OAuth Token
 
