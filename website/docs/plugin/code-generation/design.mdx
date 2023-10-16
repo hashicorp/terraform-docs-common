@@ -51,13 +51,13 @@ This solution aims to provide scalable code generation that meets provider devel
 
 The solution can be summarized as **creating an interface**. The high level components introduced in this solution can be represented by the following workflow:
 
-![Code Generation - High Level Overview](/img/docs/tfcodegen-overview.png)
+![diagram: Code Generation - High Level Overview](/img/docs/tfcodegen-overview.png)
 
 On one end, you have various [sources](#sources) of information, and on the other end you have Terraform Provider code. In the middle is our [generic interface](#provider-code-generation-specification), which is surrounded by specialized tooling based on that interface.
 
 Here is an expanded example of how components in this design could operate:
 
-![Code Generation - Expanded Overview](/img/docs/tfcodegen-expanded-overview.png)
+![diagram: Code Generation - Expanded Overview](/img/docs/tfcodegen-expanded-overview.png)
 
 Here, a provider spec generator may accept API specification and/or API SDK information and on the other side, a provider code generator is based on a Terraform SDK.
 
@@ -92,7 +92,7 @@ The specification information can be handled by one or more consumers, example u
 ### Example using OpenAPI
 
 An example of implementing this [code generation design](#high-level-components) was created for OpenAPI generating Terraform Plugin Framework code:
-![Code Generation - OpenAPI Overview](/img/docs/tfcodegen-openapi-overview.png)
+![diagram: Code Generation - OpenAPI Overview](/img/docs/tfcodegen-openapi-overview.png)
 
 For this example, you can read more about each tool in it's linked section below:
 - The [source](#sources) is an OpenAPI 3.x specification
@@ -107,7 +107,7 @@ The [design principles](#principles) and [solution](#solution) were influenced b
 
 A Terraform provider acts as a bridge between Terraform and an API, containing a collection of Terraform managed resources and data sources. A developer building a resource or data source for a provider utilizes a combination of a Terraform SDK and an API SDK for implementation.
 
-![Provider Development - Manual developer workflow](/img/docs/tfcodegen-manual-dev.png)
+![diagram: Provider Development - Manual developer workflow](/img/docs/tfcodegen-manual-dev.png)
 
 #### Terraform SDK
 
@@ -135,7 +135,7 @@ Most API developers offer a native programming language interface to the API, ra
 
 Some APIs are built using an API specification, potentially utilizing an Interface Definition Language (IDL), such as [OpenAPI](https://www.openapis.org/),  [Protocol Buffers](https://protobuf.dev/), or [Smithy](https://smithy.io/2.0/index.html). These API specifications may influence a provider developer's workflow:
 
-![Provider Development - Manual developer workflow with API spec](/img/docs/tfcodegen-manual-dev-w-spec.png)
+![diagram: Provider Development - Manual developer workflow with API spec](/img/docs/tfcodegen-manual-dev-w-spec.png)
 
 API developers may use tooling which can take definition file(s) and can perform automation for their APIs. This generally includes:
 - **Abstractions**: Wrapping of multiple API concepts, such as defining a resource with a consistent data model and API behaviors.
