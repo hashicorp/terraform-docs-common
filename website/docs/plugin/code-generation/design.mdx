@@ -73,7 +73,7 @@ The versioned interface between source(s) and provider code; this interface crea
 - Necessarily tailored for general API and specific Terraform concepts
 - Focused initially on code generation, but extensible for other use-cases
 
-You can read more details in the [Specification](/terraform/plugin/code-generation/specification) section.
+Read more details in the [Specification](/terraform/plugin/code-generation/specification) section.
 
 #### Sources
 
@@ -94,7 +94,7 @@ The specification information can be handled by one or more consumers, example u
 An example of implementing this [code generation design](#high-level-components) was created for OpenAPI generating Terraform Plugin Framework code:
 ![diagram: Code Generation - OpenAPI Overview](/img/docs/tfcodegen-openapi-overview.png)
 
-For this example, you can read more about each tool in it's linked section below:
+For this example, read more about each tool in it's linked section below:
 - The [source](#sources) is an OpenAPI 3.x specification
 - The provider spec generator is the [OpenAPI Provider Spec Generator](/terraform/plugin/code-generation/openapi-generator) which creates a [Provider Code Specification](/terraform/plugin/code-generation/specification).
 - The [consumer](#consumers) is a [Framework Code Generator](/terraform/plugin/code-generation/framework-generator) which produces [Terraform Plugin Framework](/terraform/plugin/framework) Go code.

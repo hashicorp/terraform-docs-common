@@ -245,7 +245,7 @@ In an OAS, it's possible for `path` or `query` parameters to have slightly diffe
 	},
 ```
 
-You can merge `petId` with `Pet.id` in the resulting schema with the `schema.aliases` option in a [resource](#resources) or [data source](#data-sources):
+Merging `petId` with `Pet.id` can be achieved by using the `schema.aliases` option in a [resource](#resources) or [data source](#data-sources):
 ```yaml
 resources:
   pet:
