@@ -15,7 +15,7 @@ This page collects solutions to the most common problems our users encounter wit
 When configuring [status checks with Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/repos/git/pr-status-policy) the web interface may auto populate Genre and Name fields (beneath "Status to check") with incorrect values that do not reflect what Terraform Cloud is sending.
 To function correctly as required checks the Genre must be populated with "Terraform Cloud" (or the first segment for a Terraform Enterprise install), and the remainder of the status check goes in the Name field. This requires using the "Enter genre/name separately" checkbox to not use the default configuration.
 
-In the example below the status check is named `Terraform Cloud/paul-hcp/paul-test-1` and needs to be configured with Genre `Terraform Cloud` and Name `paul-hcp/paul-test-1`.
+In the example below the status check is named `Terraform Cloud/paul-hcp/gianni-test-1` and needs to be configured with Genre `Terraform Cloud` and Name `paul-hcp/gianni-test-1`.
 
 ![Azure DevOps screenshot: configuring required status checks correctly](/img/docs/ado-required-status-check.png)
 
