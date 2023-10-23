@@ -39,16 +39,10 @@ After you create your user accounts:
 1. **Become a Terraform Cloud organization owner**: A Terraform Cloud organization owner must invite you to the "owners" team. You must be an owner to see the **Plan & Billing** page in the Terraform Cloud organization settings.
 1. **Become an HCP admin**: An HCP admin or organization owner must invite you to the HCP organization that HashiCorp Flex is allocated to and grant you the [admin](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/users#organization-role) role. 
 
-Organization members may be owners or admins in only the Terraform Cloud or HCP organization. To safeguard access to your Flex balance, determine whether to invite Terraform Cloud organization owners to the HCP organization, or whether to invite HCP admins to Terraform Cloud.  
+Organization members may be owners or admins in only the Terraform Cloud or HCP organization. To safeguard access to your Flex balance, determine whether to invite Terraform Cloud organization owners to the HCP organization, or whether to invite HCP admins to Terraform Cloud. Consider the following as examples to decide which approach is right for your organization.
 
-**Example**: Multi-Tenant (i.e. Managed Services)
-
-MSP is an HCP admin and manages the billing relationship with HashiCorp Cloud Platform and services customers of Terraform Cloud.  The HCP admin should be invited to the Terraform Cloud customer organizations to activate Flex.
-
-**Example**: Single Tenant (i.e. Organization/Enterprise)
-
-The enterprise is an HCP admin who manages the billing relationship with HashiCorp Cloud Platform and owns all the Terraform Cloud organizations. They can use either approach and invite HCP admins to Terraform Cloud organizations or make Terraform Cloud organization owners into HCP admins.
-
+- The HCP admin offers Terraform Cloud as a multi-tenant managed service. They manage the billing relationship with HashiCorp Cloud Platform and services customers of Terraform Cloud.  The HCP admin should be invited to the Terraform Cloud customer organizations to activate Flex.
+- The HCP admin manages the billing relationship with HashiCorp Cloud Platform and owns all the Terraform Cloud organizations. They can use either approach and invite HCP admins to Terraform Cloud organizations or make Terraform Cloud organization owners into HCP admins.
 
 ## Step 3: Verify HashiCorp Flex balance allocation
 
