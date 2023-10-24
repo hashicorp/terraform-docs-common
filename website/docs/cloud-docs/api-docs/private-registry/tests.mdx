@@ -48,7 +48,7 @@ Alternatively, you can create a test with a pre-existing configuration version, 
 
 ## Attributes
 
-### Test States
+### test run States
 
 The state of the test operation is found in `data.attributes.status`, and you can reference the following list of possible states.
 
@@ -61,7 +61,7 @@ The state of the test operation is found in `data.attributes.status`, and you ca
 | `canceled`             | The test has been canceled. This is a final state.                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `finished`       | The test has completed. This is a final state.
 
-### Test Status
+### test run Status
 
 The final test status is found in `data.attributes.test-status`, and you can reference the following list of possible states.
 
@@ -69,6 +69,13 @@ The final test status is found in `data.attributes.test-status`, and you can ref
 |------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `pass`              | The given tests have passed.                                                                                                                                                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                                                                                                                                           |
 | `fail`              | The given tests have failed.
+
+### test run Status
+
+The test results can be found via the following attributes
+
+| Status                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.attributes.tests-passed`              | The number of tests that have passed.                                                                                                                                                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                                                                                                                                           |
 | `data.attributes.tests-failed`              | The number of tests that have failed.
 | `data.attributes.tests-errored`              | The number of tests that have errored out.
