@@ -18,6 +18,10 @@
       {
         "title": "Activate HashiCorp Flex",
         "path": "overview/activate-flex"
+      },
+      {
+        "title": "Migrate from Teams to Standard",
+        "path": "overview/migrate-teams-standard"
       }
     ]
   },
