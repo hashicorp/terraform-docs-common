@@ -87,10 +87,10 @@ The test results can be found via the following attributes
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the test is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the test is being created.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the test is being created.                                                                                                                                         |
 
 
 A test run executes tests against a registry module, using a configuration version and the modules’s current environment variables.
@@ -217,10 +217,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the configuration version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the configuration version is being created.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the configuration version is being created.                                                                                                                                         |
 
 ### Sample Request
 
@@ -291,10 +291,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module which the tests have executed against. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module which the tests have executed against.                                                                                                                                           |
+| `:provider`          | The name of the provider which the tests have executed against.                                                                                                                                         |
 
 ### Query Parameters
 
@@ -384,10 +384,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module which the test was executed against. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module which the test was executed against.                                                                                                                                           |
+| `:provider`          | The name of the provider which the test was executed against.                                                                                                                                         |
 | `:test_run_id`       | The test ID to get.                                                                                                                                                                                      |
 
 ### Sample Request
@@ -466,10 +466,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization to create a test in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the test is being canceled. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the test is being canceled.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the test is being canceled.                                                                                                                                         |
 | `:test_run_id`       | The test ID to cancel. 
 
 The `cancel` action can be used to interrupt a test that is currently running. Performing a cancel is roughly equivalent to hitting ctrl+c during a Terraform test on the CLI. The running Terraform process is sent an `INT` signal, which instructs Terraform to safely end the tests and attempt to teardown any infrastructure that your tests create.
@@ -495,10 +495,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the test is being force-canceled. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the test is being force-canceled.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the test is being force-canceled.                                                                                                                                         |
 | `:test_run_id`       | The test ID to cancel. 
 
 The `force-cancel` action is like [cancel](#cancel-a-test), but ends the test immediately. Once invoked, the test is placed into a `canceled` state, and the running Terraform process is terminated. 
@@ -527,10 +527,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization of the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the testing environment variable is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the testing environment variable is being created.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the testing environment variable is being created.                                                                                                                                         |
 
 ### Request Body
 
@@ -603,10 +603,10 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module which the test environment variables were created for. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module which the test environment variables were created for.                                                                                                                                           |
+| `:provider`          | The name of the provider which the test environment variables were created for.                                                                                                                                         |
 
 ### Sample Request
 
@@ -648,10 +648,10 @@ $ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the test environment variable is being updated. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the test environment variable is being updated.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the test environment variable is being updated.                                                                                                                                         |
 | `:variable_id`       | The ID of the variable to update. |
 
 ### Request Body
@@ -717,10 +717,10 @@ $ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| `:organization_name` | The name of the organization for the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the test environment variable is being deleted. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the test environment variable is being deleted.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the test environment variable is being deleted.                                                                                                                                         |
 | `:variable_id`       | The ID of the variable to delete. |
 
 ### Sample Request
