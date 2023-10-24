@@ -170,7 +170,7 @@ When you trigger a run through the command line, Terraform Cloud applies the fol
 You can select to prioritize all values of the variables in a variable set.
 When a variable set is priority, the values take precedence over any variables with the same key set at a more specific scope.
 
-For example, variables in a priority global variable set would take precedence over all variables with the same key in a priority project or workspace scoped variable set. Variables in a priority variable set will take precedence over any variables with the same key set through the CLI on a run.
+For example, variables in a priority global variable set would take precedence over all variables with the same key.
 
 If two priority variable sets with the same scope include the same variable key, Terraform Cloud will determine precedence by the alphabetical order of the variable sets' names.
 
