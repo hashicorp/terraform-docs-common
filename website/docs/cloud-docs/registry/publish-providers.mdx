@@ -30,7 +30,7 @@ Private providers do not currently support documentation.
 
 GPG signing is required for private providers, and you must upload the public key of the GPG keypair used to sign the release. Refer to [Preparing and Adding a Signing Key](/terraform/registry/providers/publishing#preparing-and-adding-a-signing-key) for more details. Unlike the public Terraform Registry, the private registry does not automatically upload new releases. You must manually add new provider versions and the associated release files.
 
--> **NOTE**: If you are using the API to upload a public provider into your private registry, use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). You do not need to upload this public key, and it is automatically included in Terraform Enterprise version v202309-1 and newer.
+-> **NOTE**: If you are using the API to upload an official HashiCorp public provider into your private registry, use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). You do not need to upload this public key, and it is automatically included in Terraform Enterprise version v202309-1 and newer.
 
 ## Publishing a provider
 
@@ -69,7 +69,7 @@ The provider is now available in your organization’s Terraform Cloud private r
 
 ### Add your public key
 
--> **NOTE**: If you are uploading a public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). To retrieve the `key-id` of HashiCorp's public PGP key, TODO
+-> **NOTE**: If you are uploading an official HashiCorp public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt) in the the [create a version](#create-a-version) step. The key ID for HashiCorp's public ID is `34365D9472D7468F`, and you can verify the ID by [importing the public key locally](/terraform/tutorials/cli/verify-archive#download-and-import-hashicorp-s-public-key).
 
 Create a file named `key.json` with the following contents. Replace `ORG_NAME` with the name of your organization and supply your public key in the `ascii-armor` field.
 
