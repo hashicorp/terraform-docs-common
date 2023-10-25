@@ -38,7 +38,7 @@ Before consumers can use a private provider, you must create the provider, uploa
 
 ### Create the provider
 
-Create a file named `provider.json`. Replace `PROVIDER_NAME` with the name of the provider you are uploading and replace `ORG_NAME` with the name of your organization.
+Create a file named `provider.json` with the following contents. Replace `PROVIDER_NAME` with the name of your provider and replace `ORG_NAME` with the name of your organization.
 
 ```json
 {
@@ -64,14 +64,14 @@ $ curl \
   https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers
 ```
 
-The provider is available in your organization’s Terraform Cloud private registry, but consumers cannot use it until you add a version and a platform. Confirm that you can access the provider binaries, public GPG signing key, `SHA256SUMS` file, and `SHA256SUMS.sig` file from at least one release.
+The provider is now available in your organization’s Terraform Cloud private registry, but consumers cannot use it until you add a version and a platform. To create them, you will will need the provider binaries, public GPG signing key, `SHA256SUMS` file, and `SHA256SUMS.sig` file from at least one release.
 
 
 ### Add your public key
 
 -> **NOTE**: If you are uploading a public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). To retrieve the `key-id` of HashiCorp's public PGP key, TODO
 
-Create a file named `key.json`. Replace `ORG_NAME` with the name of your organization and supply your public key in the `ascii-armor` field.
+Create a file named `key.json` with the following contents. Replace `ORG_NAME` with the name of your organization and supply your public key in the `ascii-armor` field.
 
 ```hcl
 {
@@ -103,7 +103,7 @@ The response contains a `key-id` that you will use to create a provider version.
 
 ### Create a version
 
-Create a file named `version.json`. Replace the `version` field with the version that you would like to give your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step.
+Create a file named `version.json` with the following contents. Replace the value of the `version` field with the version of your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step.
 
 ```hcl
 {
@@ -118,7 +118,7 @@ Create a file named `version.json`. Replace the `version` field with the version
 }
 ```
 
-Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your Terraform Cloud API token and replace `ORG_NAME` with the name of your organization.
+Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your Terraform Cloud API token and replace both instances of `ORG_NAME` with the name of your organization.
 
 ```shell-session
 $ curl \
@@ -140,7 +140,7 @@ $ curl \
 
 ### Upload signatures
 
-Upload the `SHA256SUMS` and `SHA256SUMS.sig` files to the URLs returned in the previous step. The example command below uploads the files from a local machine. First upload the `SHA256SUMS` file to the URL returned in the `shasums-upload` field.
+Upload the `SHA256SUMS` and `SHA256SUMS.sig` files to the URLs returned in the previous step. The example command below uploads the files from your local machine. First upload the `SHA256SUMS` file to the URL returned in the `shasums-upload` field.
 
 ```shell-session
 $ curl \
@@ -181,11 +181,11 @@ Next, create a file named `platform.json`. Replace the `os`, `arch`, `filename`,
 }
 ```
 
-Use the [Create a Provider Platform endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-platform) to create a platform for the version. Platforms are binaries that allow the provider to run on a particular operating system and architecture combination (e.g., Linux and AMD64).  Replace both instances of `ORG_NAME` with the name of your organization.
+Use the [Create a Provider Platform endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-platform) to create a platform for the version. Platforms are binaries that allow the provider to run on a particular operating system and architecture combination (e.g., Linux and AMD64).  Replace `TOKEN` in the `Authorization` header with your Terraform Cloud API token and replace both instances of `ORG_NAME` with the name of your organization.
 
 ```shell-session
 $ curl \
-  --header "Authorization: Bearer $TOKEN" \
+  --header "Authorization: Bearer TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
@@ -202,7 +202,7 @@ The response includes a `provider-binary-upload` URL that you will use to upload
 
 ### Upload provider binary
 
-Upload the platform binary file to the `provider-binary-upload` URL returned in the previous step. The example command below uploads the binary from a local machine.
+Upload the platform binary file to the `provider-binary-upload` URL returned in the previous step. The example command below uploads the binary from your local machine.
 
 ```shell-session
 $ curl -T local-example/terraform-provider-random_5.14.0_linux_amd64.zip
