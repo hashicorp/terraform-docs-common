@@ -554,14 +554,22 @@
         "path": "integrations/splunk"
       },
       {
-        "title": "Kubernetes Integration",
+        "title": "Terraform Cloud Operator for Kubernetes",
         "routes": [
           {
-            "title": "Terraform Cloud Operator for Kubernetes Setup Instructions",
+            "title": "Overview",
             "path": "integrations/kubernetes"
           },
           {
-            "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
+            "title": "Setup",
+            "path": "integrations/kubernetes/setup"
+          },
+          {
+            "title": "API Reference",
+            "path": "integrations/kubernetes/api-reference"
+          },
+          {
+            "title": "Migration Guide",
             "path": "integrations/kubernetes/ops-v2-migration"
           }
         ]
