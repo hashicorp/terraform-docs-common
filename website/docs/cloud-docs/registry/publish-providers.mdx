@@ -103,7 +103,7 @@ The response contains a `key-id` that you will use to create a provider version.
 
 ### Create a version
 
-Create a file named `version.json` with the following contents. Replace the value of the `version` field with the version of your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step.
+Create a file named `version.json` with the following contents. Replace the value of the `version` field with the version of your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step. If you are uploading a  official HashiCorp public provider, use the value `34365D9472D7468F` for your `key-id`.
 
 ```hcl
 {
@@ -156,7 +156,7 @@ $ curl \
   https://archivist.terraform.io/v1/object/dmF1b37dj37dh33d...
 ```
 
-### Create a provider platform endpoint
+### Create a provider platform
 
 First, calculate the SHA256 hash of the provider binary that you will upload. This should match the SHA256 hash of the file listed in the `SHA256SUMS` file.
 
