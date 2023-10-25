@@ -82,19 +82,31 @@ There may be cases when a workspace contains conflicting variables of the same t
 
 Terraform Cloud prioritizes and overwrites conflicting variables according to the following precedence:
 
-### 1. Command Line Argument Variables
+### 1. Priority Global Variable Sets
+
+If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a global variable set have precedence over all other variables with the same key.
+
+### 2. Priority Project Variable Sets
+
+If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
+
+### 3. Priority Workspace Variable Sets
+
+If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a priority workspace-scoped variable set have precedence over variables with the same key set at a more specific scope.
+
+### 4. Command Line Argument Variables
 
 When using a CLI workflow, variables applied to a run with either `-var` or `-var-file` overwrite workspace-specific and variable set variables that have the same key.
 
-### 2. Local Environment Variables Prefixed with `TF_VAR_`
+### 5. Local Environment Variables Prefixed with `TF_VAR_`
 
 When using a CLI workflow, local environment variables prefixed with `TF_VAR_` (e.g., `TF_VAR_replicas`) overwrite workspace-specific, variable set, and `.auto.tfvars` file variables that have the same key.
 
-### 3. Workspace-Specific Variables
+### 6. Workspace-Specific Variables
 
 Workspace-specific variables always overwrite variables from variable sets that have the same key. Refer to [overwrite variables from variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#overwrite-variable-sets) for details.
 
-### 4. Workspace-Scoped Variable Sets
+### 7. Workspace-Scoped Variable Sets
 
 Variables in workspace-scoped variable sets are only applied to a subset of workspaces in an organization.
 
@@ -102,9 +114,7 @@ When workspace-scoped variable sets have conflicting variables, Terraform Cloud 
 
 For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same workspace, Terraform Cloud will use any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. Terraform Cloud only considers the lexical ordering of variable set names when determining precedence.
 
-If [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a workspace variable set have precedence over workspace or run applied variables with the same key.
-
-### 5. Project-Scoped Variable Sets
+### 8. Project-Scoped Variable Sets
 
 Workspace-specific variables and workspace-scoped variable sets always take precedence over project-scoped variable sets that are applied to workspaces within a project. 
 
@@ -114,19 +124,15 @@ When project-scoped variable sets have conflicting variables, Terraform Cloud co
 
 For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same project, Terraform Cloud uses any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. Terraform Cloud only considers the lexical ordering of variable set names when determining precedence.
 
-If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a project variable set have precedence over project and workspace scoped variable sets, workspace applied, and run applied variables with the same key.
-
-### 6. Global Variable Sets
+### 9. Global Variable Sets
 
 Workspace and project-scoped variable sets always take precedence over global variable sets that are applied to all workspaces within an organization. Terraform does not allow global variable sets to contain variables with the same key, so they cannot conflict.
 
-If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a global variable set have precedence over all other variables with the same key.
-
-### 7. `*.auto.tfvars` Variable Files
+### 10. `*.auto.tfvars` Variable Files
 
 Variables in the Terraform Cloud workspace and variables provided through the command line always overwrite variables with the same key from files ending in `.auto.tfvars`.
 
-### 8. `terraform.tfvars` Variable File
+### 11. `terraform.tfvars` Variable File
 
 Variables in the `.auto.tfvars` files take precedence over variables in the `terraform.tfvars` file.
 
