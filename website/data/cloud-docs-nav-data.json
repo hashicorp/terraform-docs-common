@@ -565,6 +565,10 @@
             "path": "integrations/kubernetes/setup"
           },
           {
+            "title": "Features",
+            "path": "integrations/kubernetes/features"
+          },
+          {
             "title": "API Reference",
             "path": "integrations/kubernetes/api-reference"
           },
