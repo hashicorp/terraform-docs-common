@@ -56,10 +56,10 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default | Description                                                                                                                                                             |
-|------------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |         | Must be `"projects"`.                                                                                                                                                   |
-| `data.attributes.name` | string |         | The name of the project, which can only include letters, numbers, spaces, `-`, and `_`. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path               | Type   | Default | Description                                                                                                                                                                                           |
+|------------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`            | string |         | Must be `"projects"`.                                                                                                                                                                                 |
+| `data.attributes.name` | string |         | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
 
 ### Sample Payload
 
@@ -119,10 +119,10 @@ These PATCH endpoints require a JSON object with the following properties as a r
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default          | Description                                                                                                                                                                |
-|------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |                  | Must be `"projects"`.                                                                                                                                                      |
-| `data.attributes.name` | string | (previous value) | A new name for the project, which can only include letters, numbers, spaces, `-`, and `_`. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path               | Type   | Default          | Description                                                                                                                                                                                              |
+|------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`            | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
+| `data.attributes.name` | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
 
 ### Sample Payload
 
