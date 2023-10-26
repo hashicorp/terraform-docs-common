@@ -154,4 +154,8 @@ Terraform Enterprise administrators can configure [module sharing](/terraform/en
 
 ## Generating Module Tests (Beta)
 
-You will be able to generate tests for your module once a version has been published. Tests can only be generated once per module and are intended to be reviewed by the module's authors before being checked into version control. If the module's configuration files exceed 128KB in total size, Terraform Cloud will not be able to generate tests for that module. You must have [permission to manage registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) and the [module test generation setting enabled](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) in order to generate tests.
+You can generate tests for your module, and can run the resulting tests with [the `terraform test` command](/terraform/cli/commands/test).
+
+Before you can generate tests for a module, it must have at least one version published. Tests can only be generated once per module and are intended to be reviewed by the module's authors before being checked into version control and maintained with the rest of the module's content. If the module's configuration files exceed 128KB in total size, Terraform Cloud will not be able to generate tests for that module.
+
+You must have [permission to manage registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) and [permission to manage module test generation](/terraform/cloud-docs/users-teams-organizations/permissions#manage-module-test-generation-beta) in order to generate tests.
