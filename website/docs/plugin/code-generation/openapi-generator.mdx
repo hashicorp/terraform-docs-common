@@ -211,18 +211,18 @@ resources:
   pet:
     # create, read, update, delete configuration
     # ...
-	schema:
-	  ignores:
-		# Ignore the "id" property
-	    - id
-		# Ignore the entire nested object "category"
-		- category
-		# Ignore the "id" property of the nested object "category"
-		- category.id
-		# Ignore the entire nested list "tags"
-		- tags
-		# Ignore the "name" property of the nested list "tags"
-		- tags.name
+    schema:
+      ignores:
+        # Ignore the "id" property
+        - id
+        # Ignore the entire nested object "category"
+        - category
+        # Ignore the "id" property of the nested object "category"
+        - category.id
+        # Ignore the entire nested list "tags"
+        - tags
+        # Ignore the "name" property of the nested list "tags"
+        - tags.name
 ```
 
 <Note>
