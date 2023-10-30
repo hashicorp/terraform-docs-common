@@ -52,7 +52,7 @@ Attribute                        | Description
 `hosted-state-upload-url`        | A URL to which you can upload state data in the format used Terraform uses internally. You can upload state data once per state version.
 `modules`                        | Extracted information about the Terraform modules in this state data. Populated asynchronously.
 `providers`                      | Extracted information about the Terraform providers used for resources in this state data. Populated asynchronously.
-`intermediate`                   | A boolean flag that indicates the state version is a snapshot and not yet set as the current state version for a workspace. The last intermediate state version becomes the current state version when the workspace is unlocked.
+`intermediate`                   | A boolean flag that indicates the state version is a snapshot and not yet set as the current state version for a workspace. The last intermediate state version becomes the current state version when the workspace is unlocked. Not yet supported in Terraform Enterprise.
 `resources`                      | Extracted information about the resources in this state data. Populated asynchronously.
 `resources-processed`            | A Boolean flag indicating whether Terraform Cloud has finished asynchronously extracting outputs, resources, and other information about this state data.
 `serial`                         | The serial number of this state instance, which increases every time Terraform creates new state in the workspace.

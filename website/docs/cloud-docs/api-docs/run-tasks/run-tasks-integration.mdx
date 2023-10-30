@@ -51,6 +51,8 @@ All request payloads contain the following properties.
 | `payload_version`                    | integer | `1`                                  | Schema version of the payload. Only `1` is supported.                                                                                                                                                          |
 | `stage`                              | string  | `pre_plan`, `post_plan`, `pre_apply` | The [run stage](/terraform/cloud-docs/run/states) when Terraform Cloud triggers the run task.                                                                                                                  |
 | `access_token`                       | string  |                                      | Bearer token to use when calling back to Terraform Cloud.                                                                                                                                                      |
+| `capabilitites`                      | object  |                                      | A map of the capabilities that the caller supports. |
+| `capabilitites.outcomes`             | bool    |                                      | A flag indicating the caller accepts detailed run task outcomes. |
 | `configuration_version_download_url` | string  |                                      | The URL to [download the configuration version](/terraform/cloud-docs/api-docs/configuration-versions#download-configuration-files). This is `null` if the configuration version is not available to download. |
 | `configuration_version_id`           | string  |                                      | The ID of the [configuration version](/terraform/cloud-docs/api-docs/configuration-versions) for the run.                                                                                                      |
 | `is_speculative`                     | bool    |                                      | Whether the task is part of a [speculative run](/terraform/cloud-docs/run/remote-operations#speculative-plans).                                                                                                |
@@ -87,6 +89,9 @@ Requests with `stage` set to `post_plan` or `pre_apply` contain the following ad
   "payload_version": 1,
   "stage": "post_plan",
   "access_token": "4QEuyyxug1f2rw.atlasv1.iDyxqhXGVZ0ykes53YdQyHyYtFOrdAWNBxcVUgWvzb64NFHjcquu8gJMEdUwoSLRu4Q",
+  "capabilities": {
+    "outcomes": true
+  },
   "configuration_version_download_url": "https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/download",
   "configuration_version_id": "cv-ntv3HbhJqvFzamy7",
   "is_speculative": false,
@@ -123,7 +128,11 @@ The POST request submits the following properties as the request headers.
 
 ## Run Task Callback
 
-Once a run task request has been fulfilled by the external integration, the integration must call back into Terraform Cloud with the result. Terraform expects this callback within 10 minutes, or the request will be considered to have errored.
+While a run task runs, it may send progressive updates to Terraform Cloud with a `running` status. Once an integrator determines that Terraform supports detailed run task outcomes, they can send these outcomes by appending to the run task's callback payload.
+
+Once the external integration fulfills the request, that integration must call back into Terraform Cloud with the overall result of either `passed` or `failed`. Terraform expects this callback within 10 minutes, or the request is considered errored.
+
+You can send outcomes with a status of `running`, `passed`, or `failed`, but it is a good practice only to send outcomes when a run task is `running`.
 
 `PATCH :callback_url`
 
@@ -139,14 +148,15 @@ Once a run task request has been fulfilled by the external integration, the inte
 
 ### Request Body
 
-The PATCH request submits a JSON object with the following properties as a request payload.
+The PATCH request submits a JSON object with the following properties as a request payload. This payload is also described in the [JSON API schema for run task results](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json).
 
 |         Key path          |  Type  |                                           Description                                           |
 | ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
 | `data.type`               | string | Must be `"task-results"`.                                                                       |
 | `data.attributes.status`  | string | The current status of the task. Only `passed`, `failed` or `running` are allowed.               |
-| `data.attributes.message` | string | (Optional) A short message describing the status of the task.                                   |
+| `data.attributes.message` | string | (Recommended, but optional) A short message describing the status of the task.                                   |
 | `data.attributes.url`     | string | (Optional) A URL where users can obtain more information about the task.                        |
+| `relationships.outcomes.data`     | array | (Recommended, but optional) A collection of detailed run task outcomes.  |
 
 Status values other than passed, failed, or running return an error. Both the passed and failed statuses represent a final state for a run task. The running status allows one or more partial updates until the task has reached a final state.
 
@@ -157,8 +167,52 @@ Status values other than passed, failed, or running return an error. Both the pa
     "attributes": {
       "status": "passed",
       "message": "4 passed, 0 skipped, 0 failed",
-      "url": "https://external.service.dev/terraform-plan-checker/run-i3Df5to9ELvibKpQ"
+      "url": "https://external.service.dev/terraform-plan-checker/run-i3Df5to9ELvibKpQ",
+    },
+    "relationships": {
+      "outcomes": {
+        "data": [...]
+      }
     }
+  }
+}
+```
+
+#### Outcomes Payload Body
+
+A run task result may optionally contain one or more detailed outcomes, which improves result visibility and content in the Terraform Cloud user interface. The following attributes define the outcome.
+
+|         Key path          |  Type  |                                           Description                                           |
+| ------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
+| `outcome-id`     | string | A partner supplied identifier for this outcome. |
+| `description`     | string | A one-line description of the result. |
+| `body`     | string | (Optional)  A detailed message for the result in Markdown format. |
+| `url`     | string | (Optional) A URL that a user can navigate to for more information about this result. |
+| `tags`     | object | (Optional) An object containing tag arrays, named by the property key. |
+| `tags.key`     | string | The two or three word name of the header tag. [Special handling](#severity-and-status-tags) is given to `severity` and `status` keys. |
+| `tags.key[].label`     | string | The text value of the tag. |
+| `tags.key[].level`     | enum string | (Optional) The error level for the tag. Defaults to `none`, but accepts `none`, `info`, `warning`, or `error`. For levels other than `none`, labels render with a color and icon for that level. |
+
+##### Severity and Status Tags
+
+Run task outcomes with tags named "severity" or "status" are enriched within the outcomes display list in Terraform Cloud, enabling an earlier response to issues with severity and status.
+
+```json
+{
+  "type": "task-result-outcomes",
+  "attributes": {
+    "outcome-id": "PRTNR-CC-TF-127",
+    "description": "ST-2942: S3 Bucket will not enforce MFA login on delete requests",
+    "tags": {
+      "Status":  [{"label": "Denied", "level": "error" }],
+      "Severity": [
+        {"label": "High", "level": "error" },
+        {"label": "Recoverable", "level": "info" },
+      ],
+      "Cost Centre": [{"label": "IT-OPS"}]
+    },
+    "body": "# Resolution for issue ST-2942\n\n## Impact\n\nFollow instructions in the [AWS S3 docs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html) to manually configure the MFA setting.\n—-- Payload truncated —--",
+    "url": "https://external.service.dev/result/PRTNR-CC-TF-127"
   }
 }
 ```

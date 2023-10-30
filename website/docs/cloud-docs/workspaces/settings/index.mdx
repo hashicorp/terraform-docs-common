@@ -68,7 +68,7 @@ If you instead need to allow Terraform Cloud to communicate with isolated, priva
 
 Changing your workspace's execution mode after a run has already been planned will cause the run to error when it is applied.
 
-To minimize the number runs that error when changing your workspace's execution mode, you should:
+To minimize the number of runs that error when changing your workspace's execution mode, you should:
 
 1. Disable [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) if you have it enabled.
 1. Complete any runs that are no longer in the [pending stage](/terraform/cloud-docs/run/states#the-pending-stage).
@@ -153,7 +153,7 @@ If you need to prevent Terraform runs for any reason, you can lock a workspace. 
 Two kinds of run operations can ignore workspace locking because they cannot affect resources or state and do not attempt to lock the workspace themselves:
 
 - Plan-only runs.
-- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options.mdx#saved-plans). You can only _apply_ a saved plan if the workspace is unlocked, and applying that plan locks the workspace as usual.
+- The planning stages of [saved plan runs](/terraform/cloud-docs/run/modes-and-options.mdx#saved-plans). You can only _apply_ a saved plan if the workspace is unlocked, and applying that plan locks the workspace as usual. Terraform Enterprise does not yet support this workflow.
 
 Locking a workspace also restricts state uploads. In order to upload state, the workspace must be locked by the user who is uploading state.
 

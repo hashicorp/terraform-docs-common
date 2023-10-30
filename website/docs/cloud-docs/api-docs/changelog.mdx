@@ -9,8 +9,24 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
-## 2023-10-11
+## 2023-10-30
 * Add `priority` attribute to the [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets).
+* 
+## 2023-10-04
+* Updates to [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration)
+  * Fix invalid JSON in the example payload.
+  * Clarify the expected JSON:API payload fields.
+* Add `policy-tool-version` attribute to [Policy Set Outcomes](/terraform/cloud-docs/api-docs/policy-evaluations#list-policy-outcomes).
+
+## 2023-10-03
+* Update [Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets) to include `agent-enabled` and `policy-tool-version`.
+* Update [Policy Evaluations API](/terraform/cloud-docs/api-docs/policy-evaluations) to include `policy-tool-version`.
+
+## 2023-09-29
+* Add support for [streamlined run task reviews](/terraform/cloud-docs/integrations/run-tasks), enabling run task integrations to return high fidelity results.
+  * Update the [Terraform cloud run task API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) to enable streamlined run task reviews.
+  * The [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) now guides integrations through sending rich results.
+  * Updated the run task payload [JSON Schema](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json).
 
 ## 2023-09-25
 * Add `intermediate` boolean attribute to the [State Versions API](/terraform/cloud-docs/api-docs/state-versions).
@@ -30,17 +46,22 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 * Update Policy Sets API endpoints to create, update, and return excluded workspaces associated with a policy set.
 * Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-exclusions) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-exclusions) from excluded workspaces.
 
+<!-- BEGIN: TFC:only name:save-plan -->
+
 ## 2023-08-21
 * Add `save-plan` attribute, `planned_and_saved` status, and `save_plan` operation type to [Runs endpoints](/terraform/cloud-docs/api-docs/run).
+
+<!-- END: TFC:only name:save-plan -->
+
+<!-- BEGIN: TFC:only name:provisional -->
 
 ## 2023-08-10
 * Add `provisional` to `configuration-versions` endpoint.
 
-## 2023-08-08
-* Update Policy Sets API endpoints to create, update, and return projects associated with a policy set.
-* Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-projects) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-projects) from a project.
+<!-- END: TFC:only name:provisional -->
 
 ## 2023-07-26
+
 * Add support for a `custom` option to the `team_project` access level along with various customizable permissions. The `project-access` permissions apply to the project itself, and `workspace-access` permissions apply to all workspaces within the project. For more information, see [Project Team Access](/terraform/cloud-docs/api-docs/project-team-access).
 
 ## 2023-06-09

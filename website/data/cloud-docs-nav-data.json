@@ -18,6 +18,10 @@
       {
         "title": "Activate HashiCorp Flex",
         "path": "overview/activate-flex"
+      },
+      {
+        "title": "Migrate from Teams to Standard",
+        "path": "overview/migrate-teams-standard"
       }
     ]
   },
@@ -83,6 +87,7 @@
       { "title": "Plans", "path": "api-docs/plans" },
       { "title": "Policies", "path": "api-docs/policies" },
       { "title": "Policy Checks", "path": "api-docs/policy-checks" },
+      { "title": "Policy Evaluations", "path": "api-docs/policy-evaluations" },
       { "title": "Policy Sets", "path": "api-docs/policy-sets" },
       {
         "title": "Policy Set Parameters",
@@ -100,7 +105,8 @@
             "title": "Private Provider Versions and Platforms",
             "path": "api-docs/private-registry/provider-versions-platforms"
           },
-          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
+          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" },
+          { "title":  "Tests", "path":  "api-docs/private-registry/tests" }
         ]
       },
       { "title": "Projects", "path": "api-docs/projects" },
@@ -360,6 +366,10 @@
       {
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
+      },
+      {
+        "title": "Test-Integrated Modules",
+        "path": "registry/test"
       },
       { "title": "Using Providers and Modules", "path": "registry/using" },
       {

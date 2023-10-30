@@ -37,6 +37,8 @@ A workspace will not process a webhook if the workspace previously processed a w
 
 When you initially set up the workspace and add variables, or when the code in version control hasn't changed but you've modified some variables, you can manually start a run from the UI. Each workspace has an "Actions" menu in its header, which includes a "Start new plan" action for this purpose. When creating a new plan, you can optionally provide a message and can choose between normal and [refresh-only](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode) modes.
 
+When choosing a normal plan and apply, you can include the [replace](/terraform/cloud-docs/run/modes-and-options#replacing-selected-resources) planning option.
+
 Manually starting a run requires permission to queue plans for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -105,7 +107,7 @@ Speculative plans for pull requests use the contents of the head branch (the bra
 
 You can start a new [speculative plan][speculative plan] in the UI with the workspace's current configuration version and any Terraform version available to the organization.
 
-1. Click **Actions > Start New Run**. The **Start a new run** box appears.
+1. Click **+ New run**.
 1. Select **Plan only** as the run type.
 1. Select a version from the **Choose Terraform version** menu. The speculative plan will use this version without changing the workspace's settings.
 1. Click **Start run**.
