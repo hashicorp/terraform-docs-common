@@ -38,8 +38,6 @@ Plan-only runs ignore the per-workspace run queue. Plan-only runs can proceed ev
 - **UI:** From the workspace's overview page, click **+ New run**, and then choose **Plan only** as the run type.
 - **VCS:** When a workspace is connected to a VCS repository, Terraform Cloud automatically starts a speculative plan when someone opens a pull request (or merge request) against the selected branch of that repository.  The pull/merge request view in your VCS links to the speculative plan, and you can also find it in the workspace's run list.
 
-<!-- BEGIN: TFC:only name:save-plan -->
-
 ## Saved Plans
 
 -> **Version note:** Using saved plans from the CLI with Terraform Cloud requires at least Terraform CLI v1.6.0.
@@ -54,8 +52,6 @@ Saved plans are ideal for interactive CLI workflows, where you can perform many 
 
 - **CLI:** Use `terraform plan -out <FILE>` to perform and save a plan, then use `terraform apply <FILE>` to apply the saved plan. Use `terraform show <FILE>` to inspect a saved plan before applying it.
 - **API:** Use the `save-plan` option when creating a run. If you create a new configuration version for a saved plan run, use the `provisional` option so that it will not become the workspace's current configuration version until you decide to apply the run.
-
-<!-- END: TFC:only name:save-plan -->
 
 ## Allow Empty Apply
 
