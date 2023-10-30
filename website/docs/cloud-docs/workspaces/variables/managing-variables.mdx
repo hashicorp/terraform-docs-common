@@ -152,7 +152,7 @@ Variables within a variable set can also automatically overwrite variables with 
 
 The values in priority variable sets overwrite any variables with the same key set at more specific scopes. This includes variables set using command line flags, or through`.*auto.tfvars` and `terraform.tfvars` files.
 
-It is still possible for a user to directly modify the Terraform configuration and remove usage of a variable and replace it with a hard coded value. If you are looking for stricter enforcement than this, we recommend using policy checks or run tasks.
+It is still possible for a user to directly modify the Terraform configuration and remove usage of a variable and replace it with a hard coded value. For stricter enforcement, we recommend using policy checks or run tasks.
 Refer to [variable precedence](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets) for more details.
 
 ## Variable Values and Format
