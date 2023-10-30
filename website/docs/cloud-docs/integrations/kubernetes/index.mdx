@@ -7,7 +7,7 @@ description: >-
 
 # Terraform Cloud Operator for Kubernetes Overview
 
-HashiCorp Terraform Cloud customers can integrate with Kubernetes using the official [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-k8s) to provision infrastructure internal or external to the Kubernetes cluster directly from the Kubernetes control plane.  Using the Terraform Cloud Operator for Kubernetes' CustomResourceDefinition (CRD), users can dynamically create Terraform Cloud workspaces using a Terraform configuration from a git repository or from the [Terraform Registry](https://registry.terraform.io/), populate variables, and perform Terraform runs to provision infrastructure.
+HashiCorp Terraform Cloud customers can integrate with Kubernetes using the official [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) to provision infrastructure internal or external to the Kubernetes cluster directly from the Kubernetes control plane.  Using the Terraform Cloud Operator for Kubernetes' CustomResourceDefinition (CRD), users can dynamically create Terraform Cloud workspaces using a Terraform configuration from a git repository or from the [Terraform Registry](https://registry.terraform.io/), populate variables, and perform Terraform runs to provision infrastructure.
 
 ## Key benefits
 
@@ -32,7 +32,7 @@ The following example creates a new agent pool with the name `agent-pool-develop
 apiVersion: app.terraform.io/v1alpha2
 kind: AgentPool
 metadata:
-  name: this
+  name: my-agent-pool
 spec:
   organization: kubernetes-operator
   token:
@@ -44,7 +44,7 @@ spec:
     - name: token-red
 ```
 
-The operator stores `token-red` agent token in a Kubernetes secret named TODO.
+The operator stores `token-red` agent token in a Kubernetes secret named `my-agent-pool-token-red`.
 
 You can also enable agent autoscaling by providing a `.spec.autoscaling` configuration in your `AgentPool` specification.
 
