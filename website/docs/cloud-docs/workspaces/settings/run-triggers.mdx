@@ -30,13 +30,19 @@ Creating run triggers requires admin access to the workspace. You must also have
 
 Under the "Source Workspaces" section, select the workspace you would like to connect as your source and click "Add workspace". You now have a run trigger established with your source workspace. Any run from that source workspace which applies successfully will now cause a new run to be queued in your workspace.
 
--> **Note:** Runs initiated in your workspace as the result of a run trigger connection to a source workspace will not auto-apply, regardless of your [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting selection. You will need to manually apply these runs.
+<!-- BEGIN: TFC:only name:auto-apply-run-trigger -->
+
+## Run Triggers Auto-Apply Setting
+
+Runs initiated by a run trigger do not auto-apply unless you enable the **Auto-apply run triggers** setting. This setting operates independently of the primary workspace [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply) setting.
+
+<!-- END: TFC:only name:auto-apply-run-trigger -->
 
 ## Interacting with Run Triggers
 
 Runs which are queued in your workspace through a run trigger will include extra information in their run details section. This includes links to the source workspace and the successfully applied run that activated the run trigger.
 
-The source workspace includes a message in the [plan](/terraform/docs/glossary#plan-noun-1-) and [apply](/terraform/docs/glossary#apply-noun-) run details that specifies the workspaces where Terraform Cloud automatically starts a run. 
+The source workspace includes a message in the [plan](/terraform/docs/glossary#plan-noun-1-) and [apply](/terraform/docs/glossary#apply-noun-) run details that specifies the workspaces where Terraform Cloud automatically starts a run.
 
 ## Using a Remote State Data Source
 
