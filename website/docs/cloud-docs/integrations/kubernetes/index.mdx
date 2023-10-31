@@ -13,11 +13,14 @@ The Terraform Cloud Operator for Kubernetes' CustomResourceDefinitions (CRD) all
 
 ## Key benefits
 
-The Terraform Cloud Operator v2 offers several improvements over v1, such as:
+The Terraform Cloud Operator v2 offers several improvements over v1:
 
-- Newer TODO
-- Better
-- Faster
+- **Flexible resource management**: The operator now features multiple custom resources, each with separate controllers for different Terraform Cloud resources. This provides additional flexibility and the ability to manage more custom resources concurrently, significantly improving performance for large-scale deployments.
+
+- **Namespace management**: The `--namespace` option allows you to tailor the operator's watch scope to specific namespaces, which enables more fine-grained resource management.
+
+- **Configurable synchronization**: The `--sync-period` option allows you to configure the synchronization frequency between custom resources and Terraform Cloud, ensuring timely updates and smoother operations.
+
 
 ## Supported Terraform Cloud features
 
