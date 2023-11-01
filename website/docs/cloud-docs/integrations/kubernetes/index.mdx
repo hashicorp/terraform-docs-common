@@ -5,7 +5,7 @@ description: >-
   the Kubernetes control plane.
 ---
 
-# Terraform Cloud Operator for Kubernetes Overview
+# Terraform Cloud Operator for Kubernetes overview
 
 The [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) allows you to manage Terraform Cloud resources with Kubernetes custom resources. You can provision infrastructure internal or external to your Kubernetes cluster directly from the Kubernetes control plane. 
 
@@ -89,7 +89,7 @@ Refer to the [agent pool API reference](/terraform/cloud-docs/integrations/kuber
 
 ### Module
 
-The `Module` controller enforces an [API-driven Run workflow](/terraform/cloud-docs/run/api) and enables the deployment of Terraform modules within various workspaces as needed.
+The `Module` controller enforces an [API-driven Run workflow](/terraform/cloud-docs/run/api) and lets you deploy Terraform modules within workspaces.
 
 The following example deploys version `1.0.0` of the `hashicorp/module/random` module in the `workspace-name` workspace.
 
@@ -116,7 +116,7 @@ spec:
   - name: random_string
 ```
 
-The operator passes the workspace's `string_length` variable to the module and stores the `random_string` outputs as either a Kubernetes secret or a ConfigMap. If the workspace marks the output as "sensitive", the operator stores the `random_string` as a Kubernetes secret; otherwise, the operator stores it as a ConfigMap. The variables must be accessible within the workspace as a workspace variable, workspace variable set, or project variable set.
+The operator passes the workspace's `string_length` variable to the module and stores the `random_string` outputs as either a Kubernetes secret or a ConfigMap. If the workspace marks the output as `sensitive`, the operator stores the `random_string` as a Kubernetes secret; otherwise, the operator stores it as a ConfigMap. The variables must be accessible within the workspace as a workspace variable, workspace variable set, or project variable set.
 
 Refer to the [module API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#module) for the complete `Module` specification.
 
@@ -160,9 +160,9 @@ spec:
 
 In the above example, the `applyMethod` has the value of `auto`, so Terraform Cloud automatically applies any changes to this workspace. The specification also configures the workspace to use the `ap-us-west-development` agent pool and run the `rt-us-west-development` run task at the `pre_plan` stage.
 
-The operator stores the value of the workspace outputs as Kubernetes secrets or ConfigMaps. If the outputs are marked as "sensitive", they are stored as Kubernetes secrets, otherwise they are stored as ConfigMaps.
+The operator stores the value of the workspace outputs as Kubernetes secrets or ConfigMaps. If the outputs are marked as `sensitive`, they are stored as Kubernetes secrets, otherwise they are stored as ConfigMaps.
 
--> **NOTE**: The operator rolls back any external modifications made to the workspace to match the state specified in the custom resource definition.
+-> **Note**: The operator rolls back any external modifications made to the workspace to match the state specified in the custom resource definition.
 
 Refer to the [workspace API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#workspace) for the complete `Workspace` specification.
 
