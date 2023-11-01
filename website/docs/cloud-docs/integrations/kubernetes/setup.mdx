@@ -8,7 +8,7 @@ description: >-
 
 The Terraform Cloud Operator for Kubernetes' CustomResourceDefinitions (CRD) allow you to dynamically create Terraform Cloud workspaces using Terraform configuration from a git repository or the [Terraform Registry](https://registry.terraform.io/), populate variables, and provision infrastructure with Terraform runs. 
 
-You can install the operator with the official HashiCorp Helm chart.
+You can install the operator with the official [HashiCorp Helm chart](https://github.com/hashicorp/terraform-cloud-operator).
 
 ## Prerequisites
 
@@ -34,13 +34,25 @@ The Terraform Cloud Operator for Kubernetes supports the following versions:
 
 1. Generate an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within Terraform Cloud and save it to a file. These instructions assume you are using a file named `credentials`.
 
+1. Set the `NAMESPACE` environment variable. This will be the namespace that you will install the Helm chart to.
+
+   ```
+   export NAMESPACE=tfc-operator-system
+   ```
+
+1. Create the namespace.
+
+   ```
+   kubectl create namespace $NAMESPACE
+   ```
+
 1. Create a [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/) with the Terraform Cloud API credentials.
 
    ```
    kubectl -n $NAMESPACE create secret generic terraformrc --from-file=credentials
    ```
 
-1. Add sensitive variables, such as your cloud provider credentials, to the workspace.
+1. Add sensitive variables, such as your cloud provider credentials, to the namespace.
 
    ```
    kubectl -n $NAMESPACE create secret generic workspacesecrets --from-literal=secret_key=abc123
