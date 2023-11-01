@@ -554,7 +554,7 @@
         "path": "integrations/splunk"
       },
       {
-        "title": "Terraform Cloud Operator for Kubernetes",
+        "title": "Kubernetes Operator",
         "routes": [
           {
             "title": "Overview",

@@ -7,7 +7,9 @@ description: >-
 
 # Terraform Cloud Operator for Kubernetes Overview
 
-HashiCorp Terraform Cloud customers can integrate with Kubernetes using the official [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) to provision infrastructure internal or external to the Kubernetes cluster directly from the Kubernetes control plane.  Using the Terraform Cloud Operator for Kubernetes' CustomResourceDefinition (CRD), users can dynamically create Terraform Cloud workspaces using a Terraform configuration from a git repository or from the [Terraform Registry](https://registry.terraform.io/), populate variables, and perform Terraform runs to provision infrastructure.
+The [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) allows you to manage Terraform Cloud resources with Kubernetes custom resources. You can provision infrastructure internal or external to your Kubernetes cluster directly from the Kubernetes control plane. 
+
+The Terraform Cloud Operator for Kubernetes' CustomResourceDefinitions (CRD) allow you to dynamically create Terraform Cloud workspaces using Terraform configuration from a git repository or the [Terraform Registry](https://registry.terraform.io/), populate variables, and provision infrastructure with Terraform runs.
 
 ## Key benefits
 
@@ -17,11 +19,11 @@ The Terraform Cloud Operator v2 offers several improvements over v1, such as:
 - Better
 - Faster
 
-## Supported Terraform Cloud Features
+## Supported Terraform Cloud features
 
 The Terraform Cloud Operator for Kubernetes allows you to create agent pools, deploy modules, and manage workspaces through Kubernetes controllers. These controllers enable you to automate and manage Terraform Cloud resources using custom resources in Kubernetes.
 
-### Agent pool
+### Agent pools
 
 Agent pools in Terraform Cloud manage the execution environment for Terraform runs. The Terraform Cloud Operator allows you to create and manage agent pools as part of your Kubernetes infrastructure.
 
@@ -44,7 +46,7 @@ spec:
     - name: token-red
 ```
 
-The operator stores `token-red` agent token in a Kubernetes secret named `my-agent-pool-token-red`.
+The operator stores the `token-red` agent token in a Kubernetes secret named `my-agent-pool-token-red`.
 
 You can also enable agent autoscaling by providing a `.spec.autoscaling` configuration in your `AgentPool` specification.
 
@@ -78,9 +80,9 @@ spec:
 
 </CodeBlockConfig>
 
-In the above example, the operator ensures that at least one agent pod is continuously running, and dynamically scales the number of pods up to a maximum of three based on the workload or resource demand. To do this, the operator will monitor the resource demand by observing the load of the designated workspaces, which are specified by the `name`, `id`, or through `wildcardName` patterns. When the workload decreases, the operator will scale down the number of agent pods.
+In the above example, the operator ensures that at least one agent pod is continuously running and dynamically scales the number of pods up to a maximum of three based on the workload or resource demand. The operator then monitors resource demands by observing the load of the designated workspaces specified by the `name`, `id`, or `wildcardName` patterns. When the workload decreases, the operator downscales the number of agent pods.
 
-Refer to the [agent pool API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#agentpool) for complete documentation of the `AgentPool` specification.
+Refer to the [agent pool API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#agentpool) for the complete `AgentPool` specification.
 
 ### Module
 
@@ -111,15 +113,15 @@ spec:
   - name: random_string
 ```
 
-The operator passes the `string_length` variable that exists in the workspace to the module and stores the `random_string` outputs as either a Kubernetes secret or a ConfigMap. If the output is marked as "sensitive", it is stored as a Kubernetes secret, otherwise it is stored as a ConfigMap. The variables need to be accessible within the workspace as a workspace variable, workspace variable set, or project variable set.
+The operator passes the workspace's `string_length` variable to the module and stores the `random_string` outputs as either a Kubernetes secret or a ConfigMap. If the workspace marks the output as "sensitive", the operator stores the `random_string` as a Kubernetes secret; otherwise, the operator stores it as a ConfigMap. The variables must be accessible within the workspace as a workspace variable, workspace variable set, or project variable set.
 
-Refer to the [module API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#module) for complete documentation of the `Module` specification.
+Refer to the [module API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#module) for the complete `Module` specification.
 
 ### Workspace
 
-Workspaces in Terraform Cloud are used to organize and manage Terraform configurations. The Terraform Cloud Operator allows you to create, configure, and manage workspaces directly from Kubernetes.
+Terraform Cloud workspaces organize and manage Terraform configurations. The Terraform Cloud Operator for Kubernetes allows you to create, configure, and manage workspaces directly from Kubernetes.
 
-The following example creates a new workspace named `us-west-development` configured to use Terraform version `1.6.2`. This workspace has two variables, `nodes` and `rds-secret`. The variable `rds-secret` is treated as sensitive, and the operator will read the value for the variable from a Kubernetes secret named `us-west-development-secrets`.
+The following example creates a new workspace named `us-west-development` configured to use Terraform version `1.6.2`. This workspace has two variables, `nodes` and `rds-secret`. The variable `rds-secret` is treated as sensitive, and the operator reads the value for the variable from a Kubernetes secret named `us-west-development-secrets`.
 
 ```yaml
 ---
@@ -153,11 +155,11 @@ spec:
       stage: pre_plan
 ```
 
-In the above example, the `applyMethod` has the value of `auto`, so Terraform Cloud will automatically apply any changes to this workspace. The specification also configures the workspace to use the `ap-us-west-development` agent pool and run the `rt-us-west-development` run task at the `pre_plan` stage.
+In the above example, the `applyMethod` has the value of `auto`, so Terraform Cloud automatically applies any changes to this workspace. The specification also configures the workspace to use the `ap-us-west-development` agent pool and run the `rt-us-west-development` run task at the `pre_plan` stage.
 
-The operator will store the value of the workspace outputs as Kubernetes secrets or ConfigMaps. If the outputs are marked as "sensitive", they are stored as Kubernetes secrets, otherwise they are stored as ConfigMaps.
+The operator stores the value of the workspace outputs as Kubernetes secrets or ConfigMaps. If the outputs are marked as "sensitive", they are stored as Kubernetes secrets, otherwise they are stored as ConfigMaps.
 
--> **NOTE**: The operator will roll back any external modifications made to the workspace to match the state specified in the custom resource definition.
+-> **NOTE**: The operator rolls back any external modifications made to the workspace to match the state specified in the custom resource definition.
 
-Refer to the [workspace API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#workspace) for complete documentation of the `Workspace` specification.
+Refer to the [workspace API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#workspace) for the complete `Workspace` specification.
 
