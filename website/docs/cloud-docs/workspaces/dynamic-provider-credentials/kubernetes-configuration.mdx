@@ -1,0 +1,198 @@
+---
+page_title: Dynamic Credentials with the Kubernetes and Helm Provider - Workspaces - Terraform Cloud
+description: >-
+  Use OpenID Connect to get short-term credentials for the Kubernetes and Helm Terraform providers in
+  your Terraform Cloud runs.
+---
+
+# Dynamic Credentials with the Kubernetes and Helm providers
+
+~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.14.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+
+You can use Terraform Cloud’s native OpenID Connect integration with Kubernetes to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Kubernetes and Helm providers in your Terraform Cloud runs. Configuring the integration requires the following steps:
+
+1. **[Configure Kubernetes](#configure-kubernetes):** Set up a trust configuration between Kubernetes and Terraform Cloud. Then, you must create Kubernetes role bindings for your Terraform Cloud identities.
+2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use Dynamic Credentials.
+3. **[Configure the Kubernetes or Helm provider](#configure-the-provider)** Set the required attributes on the provider block.
+
+Once you complete the setup, Terraform Cloud automatically authenticates to Kubernetes during each run. The Kubernetes and Helm providers' authentication is valid for the length of the plan or apply.
+
+## Configure Kubernetes
+
+You must enable and configure an OIDC identity provider in the Kubernetes API. The details of how to do this depend on the platform that is hosting your Kubernetes cluster. Of the major cloud providers with hosted Kubernetes offerings, AWS and GCP support configuring external OIDC providers in their Kubernetes services. Azure's AKS does not support this at the time of writing, but they might in the future.
+
+### Configure an OIDC Identity Provider
+
+AWS documentation describes setting up an EKS cluster for OIDC authentication here: [Authenticating users for your cluster from an OpenID Connect identity provider](https://docs.aws.amazon.com/eks/latest/userguide/authenticate-oidc-identity-provider.html).
+An example of how to translate those instructions to Terraform configuration is available here: https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/eks/trust
+
+GCP documentation describes setting up a GKE cluster for OIDC authentication here: [Use external identity providers to authenticate to GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/oidc). An example of how to translate those instructions to Terraform configuration is available here: https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/gke/trust
+
+The value for "issuer URL" should be set to the address of Terraform Cloud (e.g., https://app.terraform.io **without** a trailing slash) or the URL of your Terraform Enterprise instance. The value for "client ID" is your audience in OIDC terminology and it should match the value of the `TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE` environment variable in your workspace.
+
+The OIDC indentity will resolve authentication to the Kubernetes API, but it requires authorization in order to perform any concrete actions. You need to bind RBAC Roles to the OIDC identity in Kubernetes. You can use both "User" and "Group" subjects in your role bindings. For OIDC identities coming from TFC, the User value will have a prescribed format of `organization:<MY-ORG-NAME>:project:<MY-PROJECT-NAME>:workspace:<MY-WORKSPACE-NAME>:run_phase:<plan|apply>`. The Group value is extracted form the token claim configued for this purpose in your cluster OIDC configuration (see above for cloud provider specifics). The complete structure of the TFC token is described here: [Workload Identity](http://localhost:3000/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens)
+
+A RoleBinding for the TFC OIDC indentity will looks like this:
+```hcl
+resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
+  metadata {
+    name = "odic-identity"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = var.rbac_group_cluster_role
+  }
+
+  // Option A - Bind RBAC roles to groups
+  //
+  // Groups are extracted from the token claim designated by 'rbac_group_oidc_claim'
+  //
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Group"
+    name      = var.tfc_organization_name
+  }
+
+  // Option B - Bind RBAC roles to user indentities
+  //
+  // Users are extracted from the 'sub' token claim.
+  // Plan and apply phases get assigned different users identities.
+  // For TFC tokens, the format of the user id is always the one described bellow.
+  //
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "User"
+    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
+  }
+
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "User"
+    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
+  }
+}
+```
+
+-> **Note:** When using User subjects for the binding, be aware that Plan and Apply phases get assinged different indentities and they each need specific bindings. This way you can taylor the permissions for each phase. Planning usualy only requires read-only permissions while appling also requires write access.
+
+!> **Warning**: While you can assign the value of any of the claims in the identity token as a Group, you must keep in mind that only Organization names are unique, while names of Workspaces and Projects can be identical across different organizations. Using anything but `terraform_organization_name` and `terraform_full_workspace` as the groups claim can lead to leaking permissions. It is, however, safe to use any of the ID claims like `terraform_organization_id`, `terraform_project_id`, `terraform_workspace_id`.
+
+## Configure Terraform Cloud
+
+You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with AWS using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.
+
+### Required Environment Variables
+| Variable                | Value                                 | Notes                                                                                                                                                                                                                                                                                           |
+|-------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TFC_KUBERNETES_PROVIDER_AUTH | `true` | Requires **v1.14.0** or later if self-managing agents. |
+| TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE | The audience of your choice | Should match the audience configured in your cluster OIDC configuration. Requires **v1.14.0** or later if self-managing agents. |
+
+You can also configure multiple identities within the same run, when using multiple provider aliases. For each configured alias, Terraform Cloud will issue a different identity token.
+
+To configure tokens for multiple aliases, append the alias name to the above variables, like this:
+
+| Variable                | Value                                 | Notes                                                                                                                                                                                                                                                                                           |
+|-------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TFC_KUBERNETES_PROVIDER_AUTH_ALIAS1 | `true` | Requires **v1.14.0** or later if self-managing agents. |
+| TFC_KUBERNETES_PROVIDER_AUTH_ALIAS2 | `true` | Requires **v1.14.0** or later if self-managing agents. |
+| TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE_ALIAS1 | The audience of your choice | Should match the audience configured in your cluster OIDC configuration. Requires **v1.14.0** or later if self-managing agents. |
+| TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE_ALIAS2 | The audience of your choice | Should match the audience configured in your cluster OIDC configuration. Requires **v1.14.0** or later if self-managing agents. |
+
+
+## Configure the provider
+
+The Kubernetes and Helm providers share the same schema of configuration attributes for the provider block. The example below illustrates using the Kubernetes provider but the same applies to the Helm one.
+
+~> **Important:** Make sure that you’re not using any of the other arguments or methods mentioned in the [authentication](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication) section of the provider documentation as these settings may interfere with dynamic provider credentials. The only allowed attributes of the provider are `host` and `cluster_ca_certificate`.
+
+### Single provider instance
+
+Terraform Cloud will automatically set the KUBE_TOKEN environment variable, passing in the workload identity token. The provider picks up on the KUBE_TOKEN environment variable automatically.
+
+The provider needs to be configured with the URL of the API endpoint using the `host` attribute (or KUBE_HOST environment variable). In most cases, the `cluster_ca_certificate` (or KUBE_CLUSTER_CA_CERT_DATA environment variable) is also required.
+
+The provider configuration would look like this:
+```hcl
+provider "kubernetes" {
+  host                   = var.cluster-endpoint-url
+  cluster_ca_certificate = base64decode(var.cluster-endpoint-ca)
+}
+```
+
+### Multiple aliases
+
+When using multiple provider aliases, the KUBE_TOKEN environment variable will not be set. Instead, the tokens will be injected in a specifc Terraform variable with the following structure:
+```hcl
+variable "tfc_kubernetes_dynamic_credentials" {
+  description = "Object containing Kubernetes dynamic credentials configuration"
+  type = object({
+    default = object({
+      token_path = string
+    })
+    aliases = map(object({
+      token_path = string
+    }))
+  })
+}
+```
+~> **Important:** This exact definition for the variable needs to be included in your configuration. Terraform will set a value for it at runtime via the `TF_VAR_tfc_kubernetes_dynamic_credentials` environment variable.
+
+You then get the values of provider attributes for each alias provider block by indexing into the `var.tfc_kubernetes_dynamic_credentials.aliases` map using the alias name.
+
+The providers' configurations will then look like this:
+```hcl
+/* ----------------
+   Alias "ALIAS1"
+------------------*/
+
+provider "kubernetes" {
+  alias                  = "ALIAS1"
+  host                   = var.alias1-endpoint-url
+  cluster_ca_certificate = base64decode(var.alias1-cluster-ca)
+  token                  = file(var.tfc_kubernetes_dynamic_credentials.aliases["ALIAS1"].token_path)
+}
+
+resource "kubernetes_config_map" "some_stuff" {
+  provider = kubernetes.ALIAS1
+
+  metadata {
+    name = "test-1"
+  }
+  data = {
+    "foo" = "bar"
+  }
+}
+
+/* ----------------
+   Alias "ALIAS2"
+------------------*/
+
+provider "kubernetes" {
+  alias                  = "ALIAS2"
+  host                   = var.alias1-endpoint-url
+  cluster_ca_certificate = base64decode(var.alias1-cluster-ca)
+  token                  = file(var.tfc_kubernetes_dynamic_credentials.aliases["ALIAS2"].token_path)
+}
+
+resource "kubernetes_config_map" "some_other_stuff" {
+  provider = kubernetes.ALIAS2
+
+  metadata {
+    name = "test-2"
+  }
+  data = {
+    "foo" = "bar"
+  }
+}
+```
+
+The tfc_kubernetes_dynamic_credentials variable is also available to use for single provider configurations, instead of KUBE_TOKEN. In that case, the path of the token is available under `var.tfc_kubernetes_dynamic_credentials.default.token_path` and the provider block would look like this:
+```hcl
+provider "kubernetes" {
+  host                   = var.cluster-endpoint-url
+  cluster_ca_certificate = base64decode(var.cluster-endpoint-ca)
+  token                  = file(var.tfc_kubernetes_dynamic_credentials.default.token_path)
+}
+```
