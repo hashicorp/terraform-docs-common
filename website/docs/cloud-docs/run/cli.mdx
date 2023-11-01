@@ -105,7 +105,7 @@ Automatically created workspaces might not be immediately ready to use, so use T
 
 ### Implicit Project Creation
 
-If you configure the [`workspaces` block](/terraform/cli/cloud/settings#workspaces) to use a [project](/terraform/cli/cloud/settings#project) that does not yet exist in your organization, Terraform Cloud will create a new project with that name when you run `terraform init` and notify you in the command output.
+If you configure the [`workspaces` block](/terraform/cli/cloud/settings#workspaces) to use a [project](/terraform/cli/cloud/settings#project) that does not yet exist in your organization, Terraform Cloud will attempt to create a new project with that name when you run `terraform init` and notify you in the command output.
 
 If you specify both the `project` argument and [`TF_CLOUD_PROJECT`](/terraform/cli/cloud/settings#tf_cloud_project) environment variable, the `project` argument takes precedence.
 
