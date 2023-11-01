@@ -25,8 +25,8 @@ Before queuing a destroy plan, enable the **Allow destroy plans** toggle setting
 @include 'tfc-package-callouts/ephemeral-workspaces.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-You can schedule a run to destroy all resources in a workspace at a specific
-date and time. This ephemeral workspace entitlement reduces your infrastructure
+There are two main ways of configuring auto destroy for a workspace. The first auto destroy method allows you to schedule a run to destroy all resources in a workspace at a specific
+date and time. The second allows you to configure the destruction of a workspace's infrastructure after a period of inactivity. This ephemeral workspace entitlement reduces your infrastructure
 spend by helping you automatically destroy resources that you only need
 temporarily, such as development environments.
 
@@ -36,7 +36,11 @@ After Terraform Cloud performs an auto destroy run, it unsets the `auto-destroy`
 
 You can schedule an auto destroy run using the Terraform Cloud web UI, or the [workspace API](/terraform/cloud-docs/api-docs/workspaces).
 
-To schedule an auto destroy run in Terraform Cloud:
+You can schedule [notifications](/terraform/cloud-docs/workspaces/settings/notifications) to alert you 12 and 24 hours before an auto destroy run, and to report auto destroy run results.
+
+#### Destroy at Specific Time
+
+To schedule an auto destroy run at a specific time in Terraform Cloud:
 1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
 1. Under **Automatically destroy**, click **Set up auto destroy**.
 1. Enter the desired date and time. Terraform Cloud defaults to your local time zone for scheduling and displays how long until the scheduled operation.
@@ -47,9 +51,20 @@ To cancel a scheduled auto destroy run in Terraform Cloud:
 1. Under **Automatically destroy**, click **Edit** next to your scheduled run's details.
 1. Click **Remove**.
 
-You can schedule [notifications](/terraform/cloud-docs/workspaces/settings/notifications) to alert you 12 and 24 hours before an auto destroy run, and to report auto destroy run results.
+#### Destroy if Inactive
 
-[execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) 
+You can configure Terraform Cloud to automatically destroy a workspace's infrastructure after a period of inactivity. Any runs that update Terraform state will push back the scheduled auto destroy time by the configured activity duration designated by the user.
+
+To schedule an auto destroy run after a period of inactivity in Terraform Cloud:
+1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
+1. Under **Automatically destroy**, click **Set up auto destroy**.
+1. Click the **Destroy if inactive** toggle.
+1. Enter the desired activity duration.
+1. Click **Confirm auto destroy**.
+
+When configured for the first time, the auto destroy setting will display a date and time on which an auto destroy run will next be queued. If nothing else changes, Terraform Cloud will trigger the auto destroy run and delete the workspace's infrastructure.
+This auto destroy date will be updated with subsequent runs, being pushed out by the length of time configured in the duration setting.
+After a manual or automatic destroy run is completed, Terraform Cloud will wait until the next apply to trigger a new auto destroy run.
 
 ## Delete Workspace
 
