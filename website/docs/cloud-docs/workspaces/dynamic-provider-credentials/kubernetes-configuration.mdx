@@ -59,7 +59,7 @@ resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
     name      = var.tfc_organization_name
   }
 
-  // Option B - Bind RBAC roles to user indentities
+  // Option B - Bind RBAC roles to user identities
   //
   // Users are extracted from the 'sub' token claim.
   // Plan and apply phases get assigned different users identities.
@@ -85,7 +85,7 @@ If binding with "User" subjects, be aware that plan and apply phases are assigne
 
 ## Configure Terraform Cloud
 
-You must set certain environment variables in your Terraform Cloud workspace to configure Terraform Cloud to authenticate with Kubernetes and Helm using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.
+You must set certain environment variables in your Terraform Cloud workspace to configure Terraform Cloud to authenticate with Kubernetes or Helm using dynamic credentials. You can set these as workspace variables, or if you’d like to share one Kubernetes role across multiple workspaces, you can use a variable set.
 
 ### Required Environment Variables
 | Variable                | Value                                 | Notes                                                                                                                                                                                                                                                                                           |
