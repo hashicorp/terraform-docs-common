@@ -9,29 +9,33 @@ description: >-
 
 ~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.14.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
-You can use Terraform Cloud’s native OpenID Connect integration with Kubernetes to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Kubernetes and Helm providers in your Terraform Cloud runs. Configuring the integration requires the following steps:
+You can use Terraform Cloud’s native OpenID Connect integration with Kubernetes to use [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Kubernetes and Helm providers in your Terraform Cloud runs. Configuring the integration requires the following steps:
 
-1. **[Configure Kubernetes](#configure-kubernetes):** Set up a trust configuration between Kubernetes and Terraform Cloud. Then, you must create Kubernetes role bindings for your Terraform Cloud identities.
-2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use Dynamic Credentials.
-3. **[Configure the Kubernetes or Helm provider](#configure-the-provider)** Set the required attributes on the provider block.
+1. **[Configure Kubernetes](#configure-kubernetes):** Set up a trust configuration between Kubernetes and Terraform Cloud. Next, create Kubernetes role bindings for your Terraform Cloud identities.
+2. **[Configure Terraform Cloud](#configure-terraform-cloud):** Add environment variables to the Terraform Cloud workspaces where you want to use dynamic credentials.
+3. **[Configure the Kubernetes or Helm provider](#configure-the-provider)**: Set the required attributes on the provider block.
 
-Once you complete the setup, Terraform Cloud automatically authenticates to Kubernetes during each run. The Kubernetes and Helm providers' authentication is valid for the length of the plan or apply.
+Once you complete the setup, Terraform Cloud automatically authenticates to Kubernetes during each run. The Kubernetes and Helm providers' authentication is valid for the length of a plan or apply operation.
 
 ## Configure Kubernetes
 
-You must enable and configure an OIDC identity provider in the Kubernetes API. The workflow to do this depend on the platform that is hosting your Kubernetes cluster. Dynamic provider credentials with Kubernetes is only supported in AWS and GCP.
+You must enable and configure an OIDC identity provider in the Kubernetes API. This workflow changes based on the platform hosting your Kubernetes cluster. Terraform Cloud only supports dynamic credentials with Kubernetes in AWS and GCP.
 
-### Configure an OIDC Identity Provider
+### Configure an OIDC identity provider
 
-AWS documentation describes setting up an EKS cluster for OIDC authentication here: [Authenticating users for your cluster from an OpenID Connect identity provider](https://docs.aws.amazon.com/eks/latest/userguide/authenticate-oidc-identity-provider.html). Refer to our [example Terraform configuration](https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/eks/trust).
+Refer to the AWS documentation for guidance on [setting up an EKS cluster for OIDC authentication](https://docs.aws.amazon.com/eks/latest/userguide/authenticate-oidc-identity-provider.html). You can also refer to our [example configuration](https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/eks/trust).
 
-GCP documentation describes setting up a GKE cluster for OIDC authentication here: [Use external identity providers to authenticate to GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/oidc). Refer to our [example Terraform configuration](https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/gke/trust).
+Refer to the GCP documentation for guidance on [setting up a GKE cluster for OIDC authentication](https://cloud.google.com/kubernetes-engine/docs/how-to/oidc). You can also refer to our [example configuration](https://github.com/hashicorp-education/learn-terraform-dynamic-credentials/tree/main/gke/trust).
 
-The value for "issuer URL" should be set to the address of Terraform Cloud (e.g., https://app.terraform.io **without** a trailing slash) or the URL of your Terraform Enterprise instance. The value for "client ID" is your audience in OIDC terminology and it should match the value of the `TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE` environment variable in your workspace.
+When inputting an "issuer URL", use the address of Terraform Cloud (`https://app.terraform.io` _without_ a trailing slash) or the URL of your Terraform Enterprise instance. The value of "client ID" is your audience in OIDC terminology, and it should match the value of the `TFC_KUBERNETES_WORKLOAD_IDENTITY_AUDIENCE` environment variable in your workspace.
 
-The OIDC identity will resolve authentication to the Kubernetes API, but it requires authorization in order to interact with the Kubernetes API. You must bind RBAC roles to the OIDC identity in Kubernetes. You can use both "User" and "Group" subjects in your role bindings. For OIDC identities coming from TFC, the User value will have a format of `organization:<MY-ORG-NAME>:project:<MY-PROJECT-NAME>:workspace:<MY-WORKSPACE-NAME>:run_phase:<plan|apply>`. The Group value is extracted form the token claim configured for this purpose in your cluster OIDC configuration. The complete structure of the TFC token is described here: [Workload Identity](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens)
+The OIDC identity resolves authentication to the Kubernetes API, but it first requires authorization to interact with that API. So, you must bind RBAC roles to the OIDC identity in Kubernetes.
 
-A `RoleBinding` for the Terraform Cloud OIDC identity will looks like this:
+You can use both "User" and "Group" subjects in your role bindings. For OIDC identities coming from TFC, the "User" value is formatted like so: `organization:<MY-ORG-NAME>:project:<MY-PROJECT-NAME>:workspace:<MY-WORKSPACE-NAME>:run_phase:<plan|apply>`. 
+
+You can extract the "Group" value from the token claim you configured in your cluster OIDC configuration. For details on the structure of the TFC token, refer to [Workload Identity](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens).
+
+Below, we show an example of a `RoleBinding` for the Terraform Cloud OIDC identity.
 
 ```hcl
 resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
@@ -75,13 +79,13 @@ resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
 }
 ```
 
-When using User subjects for the binding, be aware that Plan and Apply phases get assigned different identities and they each need specific bindings. This way you can tailor the permissions for each phase. Plans usually only requires read-only permissions while applies also requires write access.
+If binding with "User" subjects, be aware that plan and apply phases are assigned different identities, each requiring specific bindings. Meaning you can tailor permissions for each Terraform operation. Planning operations usually require "read-only" permissions, while apply operations also require "write" access.
 
-!> **Warning**: you should always check, at minimum, the audience and the name of the organization in order to prevent unauthorized access from other Terraform Cloud organizations!
+!> **Warning**:  Always check, at minimum, the audience and the organization's name to prevent unauthorized access from other Terraform Cloud organizations.
 
 ## Configure Terraform Cloud
 
-You’ll need to set some environment variables in your Terraform Cloud workspace in order to configure Terraform Cloud to authenticate with AWS using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.
+You must set certain environment variables in your Terraform Cloud workspace to configure Terraform Cloud to authenticate with Kubernetes and Helm using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.
 
 ### Required Environment Variables
 | Variable                | Value                                 | Notes                                                                                                                                                                                                                                                                                           |
@@ -93,11 +97,11 @@ You’ll need to set some environment variables in your Terraform Cloud workspac
 
 The Kubernetes and Helm providers share the same schema of configuration attributes for the provider block. The example below illustrates using the Kubernetes provider but the same configuration applies to the Helm provider.
 
-Make sure that you are not using any of the other arguments or methods listed in the [authentication](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication) section of the provider documentation as these settings may interfere with dynamic provider credentials. The only allowed provider attributes `host` and `cluster_ca_certificate`.
+Make sure that you are not using any of the other arguments or methods listed in the [authentication](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication) section of the provider documentation as these settings may interfere with dynamic provider credentials. The only allowed provider attributes are `host` and `cluster_ca_certificate`.
 
 ### Single provider instance
 
-Terraform Cloud will automatically set the `KUBE_TOKEN` environment variable and include the workload identity token.
+Terraform Cloud automatically sets the `KUBE_TOKEN` environment variable and includes the workload identity token.
 
 The provider needs to be configured with the URL of the API endpoint using the `host` attribute (or `KUBE_HOST` environment variable). In most cases, the `cluster_ca_certificate` (or `KUBE_CLUSTER_CA_CERT_DATA` environment variable) is also required.
 
