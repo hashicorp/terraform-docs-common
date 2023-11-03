@@ -59,7 +59,7 @@ To cancel a scheduled auto-destroy run in Terraform Cloud:
 You can configure Terraform Cloud to automatically destroy a workspace's infrastructure after a period of inactivity.
 A workspace is _inactive_ if the workspace's state has not changed within your designated time period.
 
-!> **Note:** As opposed to configuring an auto-destroy run for a specific date and time, this setting will _persist_ after queued auto-destroy runs.
+!> **Caution:** As opposed to configuring an auto-destroy run for a specific date and time, this setting _persists_ after queueing auto-destroy runs.
 
 If you configure a workspace to auto-destroy its infrastructure when inactive, any run that updates Terraform state further delays the scheduled auto-destroy time by the length of your designated timeframe.
 
