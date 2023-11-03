@@ -67,7 +67,7 @@ To schedule an auto-destroy run after a period of workspace inactivity:
 1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
 1. Under **Automatically destroy**, click **Set up auto destroy**.
 1. Click the **Destroy if inactive** toggle.
-1. Enter the desired activity duration.
+1. Select or customize a desired timeframe of inactivity.
 1. Click **Confirm auto destroy**.
 
 When configured for the first time, the auto-destroy duration setting displays the scheduled date and time that Terraform Cloud will perform the auto-destroy run.
@@ -75,7 +75,7 @@ Subsequent auto-destroy runs and Terraform runs that update state both update th
 
 After Terraform Cloud completes a manual or automatic destroy run, it waits until further state updates to schedule a new auto-destroy run.
 
-To remove an auto-destroy duration:
+To remove your workspace's auto-destroy based on inactivity:
 1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
 1. Under **Auto destroy settings**, click **Edit** to change the auto-destroy settings.
 1. Click **Remove**.
