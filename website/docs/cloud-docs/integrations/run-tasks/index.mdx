@@ -94,8 +94,15 @@ When creating your run task, you can supply an HMAC key which Terraform Cloud wi
 
 The signature is a sha512 sum of the webhook body using the provided HMAC key. The generation of the signature depends on your implementation, however an example of how to generate a signature in bash is provided below.
 
-```bash
-$ echo -n $WEBHOOK_BODY | openssl dgst -sha512 -hmac "$HMAC_KEY"
+payload.json
+```
+{"payload_version":1,"access_token":"aaaaaaaaaaaa.atlasv1.111111111111111111111111111aaaaaaaaaaaaaaaaaaa","stage":"pre_plan","is_speculative":true,"task_result_id":"taskrs-ogc2cody6o1ax6Wv","task_result_enforcement_level":"advisory","task_result_callback_url":"https://app.terraform.io/api/v2/task-results/af82c0ce-b0e1-4deb-a420-e6c55sdfefe7b4/callback","run_app_url":"https://app.terraform.io/app/hashicorp/example/runs/run-8GcqDzaLWZy4yZpe","run_id":"run-8GcqDzaLWZy4yZpe","run_message":"Triggered via UI","run_created_at":"2023-11-03T07:56:59.950Z","run_created_by":"hashicorp","workspace_id":"ws-vXoTsdm2Yj8MUeKtU","workspace_name":"example","workspace_app_url":"https://app.terraform.io/app/hashicorp/example","organization_name":"hashicorp","vcs_repo_url":"https://github.com/hashicorp/example","vcs_branch":"main","vcs_pull_request_url":null,"vcs_commit_url":"https://github.com/hashicorp/example/commit/9c1e0a44c2eba015c27cf87cbdda1aff5d9ce4e0","configuration_version_id":"cv-6dzKfWPVz9yY4wzo","configuration_version_download_url":"https://app.terraform.io/api/v2/configuration-versions/cv-6dzKfWPVz9yY4wzo/download","workspace_working_directory":"","capabilities":{"outcomes":true}}
+```
+- This has "double quotes"
+- No spaces
+
+```
+$ echo -n $(cat payload.json)  | openssl dgst -sha512 -hmac "$HMAC_KEY"
 ```
 
 ## HCP Packer Run Task
