@@ -71,7 +71,8 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.agent-pool-id`               | string  | (nothing) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                                                                                                                   |
 | `data.attributes.allow-destroy-plan`          | boolean | `true`    | Whether destroy plans can be queued on the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `data.attributes.assessments-enabled`         | boolean | `false`   | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Plus tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).                                                                                                                               |
-| `data.attributes.auto-apply`                  | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                                                      |
+| `data.attributes.auto-apply`                  | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by VCS, UI or CLI, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                      |
+| `data.attributes.auto-apply-run-trigger`      | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by run triggers. Not supported in Terraform Enterprise.                                                                                                                                                                                                                                                                                                   |
 | `data.attributes.auto-destroy-at`             | string  | (nothing) | Timestamp when the next scheduled destroy run will occur, refer to [Scheduled Destroy](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).                                                                                                                                                                                                                                                                                                                                               |
 | `data.attributes.description`                 | string  | (nothing) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `data.attributes.execution-mode`              | string  | (nothing) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value _must not_ be specified if `operations` is specified, and _must_ be specified if `setting-overwrites.execution-mode` is set to `true`.                                                                                                                                             |
@@ -294,6 +295,7 @@ _Without a VCS repository_
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T21:22:49.566Z",
       "description": null,
@@ -411,6 +413,7 @@ _With a VCS repository_
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T21:50:58.726Z",
       "description": null,
@@ -532,6 +535,7 @@ _With a project_
     "attributes": {
       "allow-destroy-plan": true,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2022-12-05T20:57:13.829Z",
       "environment": "default",
@@ -677,7 +681,8 @@ Properties without a default value are required.
 | `data.attributes.agent-pool-id`               | string         | (previous value) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                                                                                   |
 | `data.attributes.allow-destroy-plan`          | boolean        | (previous value) | Whether destroy plans can be queued on the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `data.attributes.assessments-enabled`         | boolean        | `false`          | (previously `drift-detection`) Whether or not Terraform Cloud performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Plus tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).                                                                                               |
-| `data.attributes.auto-apply`                  | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                      |
+| `data.attributes.auto-apply`                  | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by VCS, UI or CLI, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                      |
+| `data.attributes.auto-apply-run-trigger`      | boolean        | (previous value) | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by run triggers. Not supported in Terraform Enterprise.                                                                                                                                                                                                                                                                                                    |
 | `data.attributes.auto-destroy-at`             | string         | (previous value) | Timestamp when the next scheduled destroy run will occur, refer to [Scheduled Destroy](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).                                                                                                                                                                                                                                                                                                               |
 | `data.attributes.description`                 | string         | (previous value) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `data.attributes.execution-mode`              | string         | (previous value) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value _must not_ be specified if `operations` is specified, and _must_ be specified if `setting-overwrites.execution-mode` is set to `true`.                                                                                                                                                                                                |
@@ -754,6 +759,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T21:50:58.726Z",
       "description": null,
@@ -920,6 +926,7 @@ $ curl \
         "allow-destroy-plan": true,
         "apply-duration-average": null,
         "auto-apply": false,
+        "auto-apply-run-trigger": false,
         "auto-destroy-at": null,
         "created-at": "2021-08-16T21:50:58.726Z",
         "description": null,
@@ -1038,6 +1045,7 @@ $ curl \
         "allow-destroy-plan": true,
         "apply-duration-average": null,
         "auto-apply": false,
+        "auto-apply-run-trigger": false,
         "auto-destroy-at": null,
         "created-at": "2021-08-16T21:22:49.566Z",
         "description": null,
@@ -1190,6 +1198,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": 158000,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-06-03T17:50:20.307Z",
       "description": "An example workspace for documentation.",
@@ -1441,6 +1450,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T19:44:45.241Z",
       "description": "Example workspace for documentation.",
@@ -1616,6 +1626,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T19:44:45.241Z",
       "description": "Example workspace for documentation.",
@@ -1782,6 +1793,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T19:44:45.241Z",
       "description": "Example workspace for documentation.",
@@ -1967,6 +1979,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T19:44:45.241Z",
       "description": "Example workspace for documentation.",
@@ -2161,6 +2174,7 @@ $ curl \
       "allow-destroy-plan": true,
       "apply-duration-average": null,
       "auto-apply": false,
+      "auto-apply-run-trigger": false,
       "auto-destroy-at": null,
       "created-at": "2021-08-16T19:44:45.241Z",
       "description": "Example workspace for documentation.",
@@ -2336,6 +2350,7 @@ $ curl \
         "allow-destroy-plan": true,
         "apply-duration-average": null,
         "auto-apply": false,
+        "auto-apply-run-trigger": false,
         "auto-destroy-at": null,
         "created-at": "2021-08-16T21:50:58.726Z",
         "description": null,

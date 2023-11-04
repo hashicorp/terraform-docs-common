@@ -279,7 +279,7 @@ Properties without a default value are required.
 | --------------------------------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `data.attributes.auto-queue-runs` | boolean | true    | When true, runs are queued automatically when the configuration version is uploaded.                                                                                                                                          |
 | `data.attributes.speculative`     | boolean | false   | When true, this configuration version may only be used to create runs which are speculative, that is, can neither be confirmed nor applied.                                                                                   |
-| `data.attributes.provisional`     | boolean | false   | When true, this configuration version does not immediately become the workspace current configuration version. If the associated run is applied, it then becomes the current configuration version unless a newer one exists. Not yet supported in Terraform Enterprise.|
+| `data.attributes.provisional`     | boolean | false   | When true, this configuration version does not immediately become the workspace current configuration version. If the associated run is applied, it then becomes the current configuration version unless a newer one exists.|
 
 ### Sample Payload
 
