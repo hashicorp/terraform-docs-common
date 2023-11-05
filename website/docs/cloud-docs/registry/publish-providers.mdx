@@ -30,11 +30,16 @@ Private providers do not currently support documentation.
 
 GPG signing is required for private providers, and you must upload the public key of the GPG keypair used to sign the release. Refer to [Preparing and Adding a Signing Key](/terraform/registry/providers/publishing#preparing-and-adding-a-signing-key) for more details. Unlike the public Terraform Registry, the private registry does not automatically upload new releases. You must manually add new provider versions and the associated release files.
 
--> **NOTE**: If you are using the API to upload an official HashiCorp public provider into your private registry, use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). You do not need to upload this public key, and it is automatically included in Terraform Enterprise version v202309-1 and newer.
+-> **Note**: If you are using the [provider API](/terraform/cloud-docs/api-docs/private-registry/providers) to upload an official HashiCorp public provider into your private registry, use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt). You do not need to upload this public key, and it is automatically included in Terraform Enterprise version v202309-1 and newer.
 
 ## Publishing a provider
 
-Before consumers can use a private provider, you must create the provider, upload a GPG signing key, create at least one version, create at least one platform for that version, and upload release files.
+Before consumers can use a private provider, you must do the following:
+1. [Create the provider](#create-the-provider)
+2. [Upload a GPG signing key](#add-your-public-key)
+3. [Create at least one version](#create-a-version)
+4. [Create at least one platform for that version](#create-a-provider-platform)
+5. [Upload release files](#upload-provider-binary)
 
 ### Create the provider
 
@@ -64,12 +69,18 @@ $ curl \
   https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers
 ```
 
-The provider is now available in your organization’s Terraform Cloud private registry, but consumers cannot use it until you add a version and a platform. To create them, you will will need the provider binaries, public GPG signing key, `SHA256SUMS` file, and `SHA256SUMS.sig` file from at least one release.
+The provider is now available in your organization’s Terraform Cloud private registry, but consumers cannot use it until you add a version and a platform. 
+
+To create a version and a platform, you need the following resources:
+* The Provider binaries
+* A public GPG signing key
+* A `SHA256SUMS` file
+* A `SHA256SUMS.sig` file from at least one release
 
 
 ### Add your public key
 
--> **NOTE**: If you are uploading an official HashiCorp public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt) in the the [create a version](#create-a-version) step. The key ID for HashiCorp's public ID is `34365D9472D7468F`, and you can verify the ID by [importing the public key locally](/terraform/tutorials/cli/verify-archive#download-and-import-hashicorp-s-public-key).
+-> **Note**: If you are uploading an official HashiCorp public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt) in the the [create a version](#create-a-version) step. The key ID for HashiCorp's public ID is `34365D9472D7468F`, and you can verify the ID by [importing the public key locally](/terraform/tutorials/cli/verify-archive#download-and-import-hashicorp-s-public-key).
 
 Create a file named `key.json` with the following contents. Replace `ORG_NAME` with the name of your organization and supply your public key in the `ascii-armor` field.
 
@@ -103,7 +114,7 @@ The response contains a `key-id` that you will use to create a provider version.
 
 ### Create a version
 
-Create a file named `version.json` with the following contents. Replace the value of the `version` field with the version of your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step. If you are uploading a  official HashiCorp public provider, use the value `34365D9472D7468F` for your `key-id`.
+Create a file named `version.json` with the following contents. Replace the value of the `version` field with the version of your provider, and replace the `key-id` field with the id of the GPG key that you created in the [Add your public key](#add-your-public-key) step. If you are uploading an official HashiCorp public provider, use the value `34365D9472D7468F` for your `key-id`.
 
 ```hcl
 {
@@ -118,7 +129,7 @@ Create a file named `version.json` with the following contents. Replace the valu
 }
 ```
 
-Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your Terraform Cloud API token and replace both instances of `ORG_NAME` with the name of your organization.
+Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your Terraform Cloud API token, and replace both instances of `ORG_NAME` with the name of your organization.
 
 ```shell-session
 $ curl \
@@ -140,7 +151,7 @@ $ curl \
 
 ### Upload signatures
 
-Upload the `SHA256SUMS` and `SHA256SUMS.sig` files to the URLs returned in the previous step. The example command below uploads the files from your local machine. First upload the `SHA256SUMS` file to the URL returned in the `shasums-upload` field.
+Upload the `SHA256SUMS` and `SHA256SUMS.sig` files to the URLs [returned in the previous step](#create-a-version). The example command below uploads the files from your local machine. First upload the `SHA256SUMS` file to the URL returned in the `shasums-upload` field.
 
 ```shell-session
 $ curl \
@@ -158,14 +169,14 @@ $ curl \
 
 ### Create a provider platform
 
-First, calculate the SHA256 hash of the provider binary that you will upload. This should match the SHA256 hash of the file listed in the `SHA256SUMS` file.
+First, calculate the SHA256 hash of the provider binary that you intend to upload. This should match the SHA256 hash of the file listed in the `SHA256SUMS` file.
 
 ```shell-session
 $ shasum -a 256 terraform-provider-aws_5.14.0_linux_amd64.zip
 f1d83b3e5a29bae471f9841a4e0153eac5bccedbdece369e2f6186e9044db64e  terraform-provider-aws_5.14.0_linux_amd64.zip
 ```
 
-Next, create a file named `platform.json`. Replace the `os`, `arch`, `filename`, and `shasum` fields with the values that match the provider that you will upload. 
+Next, create a file named `platform.json`. Replace the `os`, `arch`, `filename`, and `shasum` fields with the values that match the provider you intend to upload. 
 
 ```json
 {
@@ -202,14 +213,14 @@ The response includes a `provider-binary-upload` URL that you will use to upload
 
 ### Upload provider binary
 
-Upload the platform binary file to the `provider-binary-upload` URL returned in the previous step. The example command below uploads the binary from your local machine.
+Upload the platform binary file to the `provider-binary-upload` URL returned in the [previous step](#create-a-version). The example command below uploads the binary from your local machine.
 
 ```shell-session
 $ curl -T local-example/terraform-provider-random_5.14.0_linux_amd64.zip
   https://archivist.terraform.io/v1/object/dmF1b45c367djh45nj78
 ```
 
-The version is available in the Terraform Cloud UI. Consumers can begin using this provider version in configurations. You can repeat these steps starting from the [Create a provider platform](#create-a-provider-platform) step to add additional platform binaries for the release.
+The version is available in the Terraform Cloud user interface. Consumers can now begin using this provider version in configurations. You can repeat these steps starting from [Create a provider platform](#create-a-provider-platform) to add additional platform binaries for the release.
 
 ## Checking Release Files
 
