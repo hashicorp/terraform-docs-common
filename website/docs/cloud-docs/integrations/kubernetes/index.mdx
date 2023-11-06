@@ -124,7 +124,7 @@ Refer to the [module API reference](/terraform/cloud-docs/integrations/kubernete
 
 Terraform Cloud workspaces organize and manage Terraform configurations. The Terraform Cloud Operator for Kubernetes allows you to create, configure, and manage workspaces directly from Kubernetes.
 
-The following example creates a new workspace named `us-west-development` configured to use Terraform version `1.6.2`. This workspace has two variables, `nodes` and `rds-secret`. The variable `rds-secret` is treated as sensitive, and the operator reads the value for the variable from a Kubernetes secret named `us-west-development-secrets`.
+The following example creates a new workspace named `us-west-development`, configured to use Terraform version `1.6.2`. This workspace has two variables, `nodes` and `rds-secret`. The variable `rds-secret` is treated as sensitive, and the operator reads the value for the variable from a Kubernetes secret named `us-west-development-secrets`.
 
 ```yaml
 ---
