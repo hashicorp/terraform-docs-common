@@ -478,6 +478,27 @@
     "title": "Integrations",
     "routes": [
       {
+        "title": "Kubernetes Operator",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "integrations/kubernetes"
+          },
+          {
+            "title": "Setup",
+            "path": "integrations/kubernetes/setup"
+          },
+          {
+            "title": "API Reference",
+            "path": "integrations/kubernetes/api-reference"
+          },
+          {
+            "title": "Migration Guide",
+            "path": "integrations/kubernetes/ops-v2-migration"
+          }
+        ]
+      },
+      {
         "title": "ServiceNow Integrations",
         "routes": [
           {
@@ -553,19 +574,6 @@
       {
         "title": "Splunk Integration",
         "path": "integrations/splunk"
-      },
-      {
-        "title": "Kubernetes Integration",
-        "routes": [
-          {
-            "title": "Terraform Cloud Operator for Kubernetes Setup Instructions",
-            "path": "integrations/kubernetes"
-          },
-          {
-            "title": "Terraform Cloud Kubernetes Operator v2 Migration Guide",
-            "path": "integrations/kubernetes/ops-v2-migration"
-          }
-        ]
       },
       {
         "title": "Run Tasks Integration",
