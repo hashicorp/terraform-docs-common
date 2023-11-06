@@ -158,7 +158,7 @@ You can assign project-specific permissions to teams.
 
 Some permissions imply other permissions. For example, permission to update a project also grants permission to read a project.
 
-If an action states that it requires a specific permission level, you can perform that action if your permissions _imply_ the stated permission level. 
+If an action states that it requires a specific permission level, you can perform that action if your permissions _imply_ the stated permission level.
 
 ### General Project Permissions
 
@@ -302,6 +302,10 @@ Allows members to manage the set of [VCS providers](/terraform/cloud-docs/vcs) a
 ### Manage Private Registry
 
 Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/terraform/cloud-docs/registry). These permissions are otherwise only available to organization owners.
+
+### Manage Module Test Generation (Beta)
+
+Allow members to generate module tests for private registry modules. Your organization must be on a Terraform Cloud Business or Plus subscription in order to enable this feature.
 
 ### Manage Membership
 

@@ -27,6 +27,7 @@ Properties without a default value are required.
 | `data.name`                     | string  |         | The name of the variable set.                                                                                               |
 | `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                 |
 | `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization. |
+| `data.priority`                 | boolean | `false` | When true, the variables in the set override any other variable values with a more specific scope, including values set on the command line. |
 | `data.relationships.workspaces` | array   | \`[]`     | Array of references to workspaces that the variable set should be assigned to.                                              |
 | `data.relationships.projects`   | array   | \`[]`    | Array of references to projects that the variable set should be assigned to.                                                |
 | `data.relationships.vars`       | array   | \`[]`     | Array of complete variable definitions that comprise the variable set.                                                      |
@@ -48,7 +49,8 @@ Terraform Cloud does not allow different global variable sets to contain conflic
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
-      "global": false
+      "global": false,
+      "priority": false,
     },
     "relationships": {
       "workspaces": {
@@ -97,7 +99,8 @@ curl \
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
-      "global": false
+      "global": false,
+      "priority": false,
     },
     "relationships": {
       "workspaces": {
@@ -151,6 +154,7 @@ Terraform Cloud does not allow global variable sets to contain conflicting varia
 | `data.name`                     | string  |         | The name of the variable set.                                                                                                                        |
 | `data.description`              | string  |         | Text displayed in the UI to contextualize the variable set and its purpose.                                                                          |
 | `data.global`                   | boolean |         | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization.                          |
+| `data.priority`                 | boolean | `false` | When true, the variables in the set override any other variable values set with a more specific scope, including values set on the command line. |
 | `data.relationships.workspaces` | array   |         | **Optional** Array of references to workspaces that the variable set should be assigned to. Sending an empty array clears all workspace assignments. |
 | `data.relationships.projects`   | array   |         | **Optional** Array of references to projects that the variable set should be assigned to. Sending an empty array clears all project assignments.     |
 | `data.relationships.vars`       | array   |         | **Optional** Array of complete variable definitions to add to the variable set.                                                                      |
@@ -170,7 +174,8 @@ Terraform Cloud does not allow global variable sets to contain conflicting varia
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse. Now global!",
-      "global": true
+      "global": true,
+      "priority": true,
     },
     "relationships": {
       "workspaces": {
@@ -226,7 +231,8 @@ curl \
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse. Now global!",
-      "global": true
+      "global": true,
+      "priority": true
     },
     "relationships": {
       "vars": {
@@ -298,6 +304,7 @@ curl \
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
       "global": false,
+      "priority": false,
       "updated-at": "2023-03-06T21:48:33.588Z",
       "var-count": 5,
       "workspace-count": 2,
@@ -411,6 +418,7 @@ All of the list endpoints support pagination [with standard URL query parameters
         "name": "MyVarset",
         "description": "Full of vars and such for mass reuse",
         "global": false,
+        "priority": false,
         "updated-at": "2023-03-06T21:48:33.588Z",
         "var-count": 5,
         "workspace-count": 2,

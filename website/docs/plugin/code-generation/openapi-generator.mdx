@@ -86,10 +86,11 @@ provider:
 
 The `provider` object has the following properties:
 
-| Property     | Type   | Required | Description                                                                                                                                                                       |
-|--------------|--------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`       | String | Yes      | The provider type name (e.g. `examplecloud`)                                                                                                                                      |
-| `schema_ref` | String | No       | [JSON schema reference](https://json-schema.org/understanding-json-schema/structuring.html#ref) to an existing schema in the OAS. This can be used to map to the provider schema. |
+| Property     | Type   | Required | Description                                                                                                                                                                                          |
+|--------------|--------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`       | String | Yes      | The provider type name (e.g. `examplecloud`)                                                                                                                                                         |
+| `schema_ref` | String | No       | [JSON schema reference](https://json-schema.org/understanding-json-schema/structuring.html#ref) to an existing schema in the OAS. This can be used to map to the provider schema.                    |
+| `ignores`    | Array  | No       | List of OAS properties to ignore during mapping. Each item is a string indicating the location of a property in an OAS schema, dot-separated. See [ignores section below](#ignoring-oas-properties). |
 
 For a detailed description of the schema mapping rules, see the [Mapping OAS to Provider Code Specification](https://github.com/hashicorp/terraform-plugin-codegen-openapi/blob/main/DESIGN.md#provider) section of the repo's design documentation.
 
@@ -184,10 +185,10 @@ data_sources:
 
 The `schema` object has the following properties:
 
-| Property     | Type   | Required? | Description                                                                                          |
-|--------------|--------|-----------|------------------------------------------------------------------------------------------------------|
-| `attributes` | Object | No        | Defines mapping options for [attributes](/terraform/plugin/code-generation/specification#attributes) |
-
+| Property     | Type   | Required? | Description                                                                                                                                                                                          |
+|--------------|--------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `attributes` | Object | No        | Defines mapping options for [attributes](/terraform/plugin/code-generation/specification#attributes)                                                                                                 |
+| `ignores`    | Array  | No        | List of OAS properties to ignore during mapping. Each item is a string indicating the location of a property in an OAS schema, dot-separated. See [ignores section below](#ignoring-oas-properties). |
 
 The `attributes` object has the following properties:
 
@@ -196,6 +197,37 @@ The `attributes` object has the following properties:
 | `aliases`   | Object | No        | Allows aliasing of path/query parameter names (e.g. `petId` -> `id` ), see [below](#aliasing-oas-operation-parameters)     |
 | `overrides` | Object | No        | Allows overriding attribute information after mapping, like `description`, see [below](#overriding-attribute-descriptions) |
 
+
+#### Ignoring OAS Properties
+
+A common scenario that can occur during mapping is having additional properties on an OAS schema that you want to exclude from the final Terraform schema. You may want to exclude properties because:
+- The property is needed for an API call, but unrelated to Terraform and not needed in the schema (pagination properties, duplicated properties, etc.)
+- The property is not supported by the OpenAPI Provider Spec generator (multi-type or dynamic type properties)
+
+The configuration for ignoring properties is an array of strings, each string representing a location of an OAS property to be ignored. A simple dot notation can be used to ignore child properties of objects. Using the [Pet OAS](https://github.com/hashicorp/terraform-plugin-codegen-openapi/blob/e61922cc72100086ad8a989ffbc090af44f0d4be/internal/cmd/testdata/petstore3/openapi_spec.json#L1105), some valid ignores could look like:
+
+```yaml
+resources:
+  pet:
+    # create, read, update, delete configuration
+    # ...
+    schema:
+      ignores:
+        # Ignore the "id" property
+        - id
+        # Ignore the entire nested object "category"
+        - category
+        # Ignore the "id" property of the nested object "category"
+        - category.id
+        # Ignore the entire nested list "tags"
+        - tags
+        # Ignore the "name" property of the nested list "tags"
+        - tags.name
+```
+
+<Note>
+The ignores apply to all OAS operation schemas (request/response bodies) and parameters.
+</Note>
 
 #### Aliasing OAS Operation Parameters
 

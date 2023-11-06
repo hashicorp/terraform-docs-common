@@ -111,8 +111,6 @@ Retrying a plan requires permission to queue plans for that workspace. ([More ab
 
 Retrying the run will create a new run with the same configuration version. If it is a VCS-backed workspace, the pull request interface will receive the status of the new run, along with a link to the new run.
 
-<!-- BEGIN: TFC:only name:save-plan -->
-
 ### Saved Plans
 
 -> **Version note:** Using saved plans from the CLI with Terraform Cloud requires at least Terraform CLI v1.6.0.
@@ -120,8 +118,6 @@ Retrying the run will create a new run with the same configuration version. If i
 Terraform Cloud also supports saved plan runs. If you have configured the [CLI integration](/terraform/cli/cloud) you can use `terraform plan -out <FILE>` to perform and save a plan, `terraform apply <FILE>` to apply a saved plan, and `terraform show <FILE>` to inspect a saved plan before applying it. You can also create saved plan runs via the API by using the `save-plan` option.
 
 Saved plan runs affect the run queue differently from normal runs, and can sometimes be automatically discarded. For more details, refer to [Run Modes and Options: Saved Plans](/terraform/cloud-docs/run/modes-and-options#saved-plans).
-
-<!-- END: TFC:only name:save-plan -->
 
 ## Planning Modes and Options
 
