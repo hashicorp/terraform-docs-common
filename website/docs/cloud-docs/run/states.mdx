@@ -188,6 +188,23 @@ After applying, the run proceeds automatically to completion.
 - If the apply failed, the run ends in the **Apply Errored** state.
 - If a user canceled the apply by pressing **Cancel Run**, the run ends in the **Canceled** state.
 
+## The Post-Apply Stage
+
+The post-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin after Terraform applies the apply. Terraform Cloud sends information about the run to the configured external system, but differently from the run-tasks configured for other stages, in this case, the `passed` or `failed` response is only informative, since the apply already happened and the infrastructure was provisioned. The information sent to the external system includes the configuration version of the run.
+
+Only confirmed runs can enter this phase.
+
+_States in this stage:_
+
+- **Post-apply running:** Terraform Cloud is waiting for a response from the configured external system(s).
+- External systems must respond initially with a `200 OK` acknowledging the request is in progress. After that, they have 10 minutes to return a status of `passed`, `running`, or `failed`. If the timeout expires, Terraform Cloud assumes that the run tasks is in the `failed` status.
+
+_Leaving this stage:_
+
+- There are only advisory tasks on this stage.
+- If any advisory tasks failed, the run proceeds to the **Applied** state, with a visible warning regarding the failed task.
+- If a user canceled the run, the run ends in the **Canceled** state.
+
 ## Completion
 
 A run is complete if it finishes applying, if any part of the run fails, if there is nothing to do, or if a user chooses not to continue. Once a run completes, the next run in the queue can enter the plan stage.
