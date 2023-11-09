@@ -74,9 +74,9 @@ All request payloads contain the following properties.
 | `workspace_name`                     | string  |                                      | Name of the workspace.                                                                                                                                                                                         |
 | `workspace_working_directory`        | string  |                                      | The working directory specified in the run's [workspace settings](/terraform/cloud-docs/workspaces/settings#terraform-working-directory).                                                                      |
 
-#### Post-Plan and Pre-Apply Properties
+#### Post-Plan, Pre-Apply and Post-Apply Properties
 
-Requests with `stage` set to `post_plan` or `pre_apply` contain the following additional properties.
+Requests with `stage` set to `post_plan`, `pre_apply` or `post_apply` contain the following additional properties.
 
 |      Key path       |  Type  | Values |                        Description                        |
 | ------------------- | ------ | ------ | --------------------------------------------------------- |
