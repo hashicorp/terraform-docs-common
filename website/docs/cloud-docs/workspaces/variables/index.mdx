@@ -84,15 +84,15 @@ Terraform Cloud prioritizes and overwrites conflicting variables according to th
 
 ### 1. Priority Global Variable Sets
 
-If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a global variable set have precedence over all other variables with the same key.
+If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a global variable set have precedence over all other variables with the same key.
 
 ### 2. Priority Project-Scoped Variable Sets
 
-If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
+If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
 
 ### 3. Priority Workspace-Scoped Variable Sets
 
-If prioritized [prioritized](/terraform/cloud-docs/workspaces/variables/index#precedence-with-priority-variable-sets), variables in a priority workspace-scoped variable set have precedence over variables with the same key set at a more specific scope.
+If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority workspace-scoped variable set have precedence over variables with the same key set at a more specific scope.
 
 ### 4. Command Line Argument Variables
 
@@ -169,7 +169,6 @@ When you trigger a run through the command line, Terraform Cloud applies the fol
 - **C_Variable_Set:** `KEY2`. For this run, `KEY2` equals `c`. This is a global variable set with no overwritten values.
 
 ![An example scenario demonstrating variable precedence in Terraform Cloud](/img/docs/variable-precedence-example.png)
-
 
 ## Precedence with Priority Variable Sets
 
