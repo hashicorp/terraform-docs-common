@@ -70,6 +70,9 @@ A state version created through the API or CLI will only be listed in the UI if 
 | `pending`    | The initial status of a state version after it has been created without encoding the state data within the request. Pending state versions do not contain state data and will not appear in the UI. The workspace cannot be unlocked normally until the latest state version has been finalized.
 | `finalized`  | The state version has been uploaded successfully to Terraform Cloud or if the state version was created with a valid `state` attribute.                                                                                                                                                                                                              |
 | `discarded`  | The state version has been discarded because it was superseded by a newer state version before it could be uploaded. |
+| `uploaded`  | The state version has been fully processed and can be used in runs. |
+| `backing_data_soft_deleted`  | The backing files associated with this state version have been soft-deleted by Terraform Enterprise. The backing data can be restored before it is permanently deleted if need be. |
+| `backing_data_permanently_deleted`  | The backing files associated with this state version have been permanently-deleted by Terraform Enterprise, and can no longer be restored. |
 
 ## Create a State Version
 
@@ -806,6 +809,387 @@ curl \
         },
         "links": {
             "self": "/api/v2/state-versions/sv-DmoXecHePnNznaA4"
+        }
+    }
+}
+```
+
+## Soft-Delete a State Version
+
+`POST /api/v2/state-versions/:external_id/actions/soft_delete_backing_data`
+
+Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+| Parameter           | Description                          |
+|---------------------|--------------------------------------|
+| `:external_id` | The external ID of the state version to soft-delete. |
+
+| Status  | Response                  | Reason                                                                                                        |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
+| [200][] | [JSON API document][]     | Successfully initiated the soft-delete process.                                                |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/state-versions/sv-ntv3HbhJqvFzamy7/actions/soft_delete_backing_data
+```
+
+### Sample Response
+
+```json
+{
+    "data": {
+        "id": "sv-g4rqST72reoHMM5a",
+        "type": "state-versions",
+        "attributes": {
+            "created-at": "2021-06-08T01:22:03.794Z",
+            "size": 940,
+            "hosted-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-state-upload-url": null,
+            "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-json-state-upload-url": null,
+            "status": "backing_data_soft_deleted",
+            "intermediate": false,
+            "modules": {
+                "root": {
+                    "null-resource": 1,
+                    "data.terraform-remote-state": 1
+                }
+            },
+            "providers": {
+                "provider[\"terraform.io/builtin/terraform\"]": {
+                    "data.terraform-remote-state": 1
+                },
+                "provider[\"registry.terraform.io/hashicorp/null\"]": {
+                    "null-resource": 1
+                }
+            },
+            "resources": [
+                {
+                    "name": "other_username",
+                    "type": "data.terraform_remote_state",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"terraform.io/builtin/terraform\"]"
+                },
+                {
+                    "name": "random",
+                    "type": "null_resource",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/null\"]"
+                }
+            ],
+            "resources-processed": true,
+            "serial": 9,
+            "state-version": 4,
+            "terraform-version": "0.15.4",
+            "vcs-commit-url": "https://gitlab.com/my-organization/terraform-test/-/commit/abcdef12345",
+            "vcs-commit-sha": "abcdef12345"
+        },
+        "relationships": {
+            "run": {
+                "data": {
+                    "id": "run-YfmFLWpgTv31VZsP",
+                    "type": "runs"
+                }
+            },
+            "created-by": {
+                "data": {
+                    "id": "user-onZs69ThPZjBK2wo",
+                    "type": "users"
+                },
+                "links": {
+                    "self": "/api/v2/users/user-onZs69ThPZjBK2wo",
+                    "related": "/api/v2/runs/run-YfmFLWpgTv31VZsP/created-by"
+                }
+            },
+            "workspace": {
+                "data": {
+                    "id": "ws-noZcaGXsac6aZSJR",
+                    "type": "workspaces"
+                }
+            },
+            "outputs": {
+                "data": [
+                    {
+                        "id": "wsout-V22qbeM92xb5mw9n",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-ymkuRnrNFeU5wGpV",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-v82BjkZnFEcscipg",
+                        "type": "state-version-outputs"
+                    }
+                ]
+            }
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-g4rqST72reoHMM5a"
+        }
+    }
+}
+```
+
+## Restore a Previously Soft-Deleted State Version
+
+`POST /api/v2/state-versions/:external_id/actions/restore_backing_data`
+
+Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+| Parameter           | Description                          |
+|---------------------|--------------------------------------|
+| `:external_id` | The external ID of the state version to restore. |
+
+| Status  | Response                  | Reason                                                                                                        |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
+| [200][] | [JSON API document][]     | Successfully initiated the restore process.                                                |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/state-versions/sv-ntv3HbhJqvFzamy7/actions/restore_backing_data
+```
+
+### Sample Response
+
+```json
+{
+    "data": {
+        "id": "sv-g4rqST72reoHMM5a",
+        "type": "state-versions",
+        "attributes": {
+            "created-at": "2021-06-08T01:22:03.794Z",
+            "size": 940,
+            "hosted-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-state-upload-url": null,
+            "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-json-state-upload-url": null,
+            "status": "uploaded",
+            "intermediate": false,
+            "modules": {
+                "root": {
+                    "null-resource": 1,
+                    "data.terraform-remote-state": 1
+                }
+            },
+            "providers": {
+                "provider[\"terraform.io/builtin/terraform\"]": {
+                    "data.terraform-remote-state": 1
+                },
+                "provider[\"registry.terraform.io/hashicorp/null\"]": {
+                    "null-resource": 1
+                }
+            },
+            "resources": [
+                {
+                    "name": "other_username",
+                    "type": "data.terraform_remote_state",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"terraform.io/builtin/terraform\"]"
+                },
+                {
+                    "name": "random",
+                    "type": "null_resource",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/null\"]"
+                }
+            ],
+            "resources-processed": true,
+            "serial": 9,
+            "state-version": 4,
+            "terraform-version": "0.15.4",
+            "vcs-commit-url": "https://gitlab.com/my-organization/terraform-test/-/commit/abcdef12345",
+            "vcs-commit-sha": "abcdef12345"
+        },
+        "relationships": {
+            "run": {
+                "data": {
+                    "id": "run-YfmFLWpgTv31VZsP",
+                    "type": "runs"
+                }
+            },
+            "created-by": {
+                "data": {
+                    "id": "user-onZs69ThPZjBK2wo",
+                    "type": "users"
+                },
+                "links": {
+                    "self": "/api/v2/users/user-onZs69ThPZjBK2wo",
+                    "related": "/api/v2/runs/run-YfmFLWpgTv31VZsP/created-by"
+                }
+            },
+            "workspace": {
+                "data": {
+                    "id": "ws-noZcaGXsac6aZSJR",
+                    "type": "workspaces"
+                }
+            },
+            "outputs": {
+                "data": [
+                    {
+                        "id": "wsout-V22qbeM92xb5mw9n",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-ymkuRnrNFeU5wGpV",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-v82BjkZnFEcscipg",
+                        "type": "state-version-outputs"
+                    }
+                ]
+            }
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-g4rqST72reoHMM5a"
+        }
+    }
+}
+```
+
+## Permanently Delete a State Version
+
+`POST /api/v2/state-versions/:external_id/actions/permanently_delete_backing_data`
+
+Viewing state versions requires permission to read state versions for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+| Parameter           | Description                          |
+|---------------------|--------------------------------------|
+| `:external_id` | The external ID of the state version to soft-delete. |
+
+| Status  | Response                  | Reason                                                                                                        |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
+| [200][] | [JSON API document][]     | Successfully initiated the permanently delete process.                                                |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/state-versions/sv-ntv3HbhJqvFzamy7/actions/permanently_delete_backing_data
+```
+
+### Sample Response
+
+```json
+{
+    "data": {
+        "id": "sv-g4rqST72reoHMM5a",
+        "type": "state-versions",
+        "attributes": {
+            "created-at": "2021-06-08T01:22:03.794Z",
+            "size": 940,
+            "hosted-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-state-upload-url": null,
+            "hosted-json-state-download-url": "https://archivist.terraform.io/v1/object/...",
+            "hosted-json-state-upload-url": null,
+            "status": "backing_data_permanently_deleted",
+            "intermediate": false,
+            "modules": {
+                "root": {
+                    "null-resource": 1,
+                    "data.terraform-remote-state": 1
+                }
+            },
+            "providers": {
+                "provider[\"terraform.io/builtin/terraform\"]": {
+                    "data.terraform-remote-state": 1
+                },
+                "provider[\"registry.terraform.io/hashicorp/null\"]": {
+                    "null-resource": 1
+                }
+            },
+            "resources": [
+                {
+                    "name": "other_username",
+                    "type": "data.terraform_remote_state",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"terraform.io/builtin/terraform\"]"
+                },
+                {
+                    "name": "random",
+                    "type": "null_resource",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/null\"]"
+                }
+            ],
+            "resources-processed": true,
+            "serial": 9,
+            "state-version": 4,
+            "terraform-version": "0.15.4",
+            "vcs-commit-url": "https://gitlab.com/my-organization/terraform-test/-/commit/abcdef12345",
+            "vcs-commit-sha": "abcdef12345"
+        },
+        "relationships": {
+            "run": {
+                "data": {
+                    "id": "run-YfmFLWpgTv31VZsP",
+                    "type": "runs"
+                }
+            },
+            "created-by": {
+                "data": {
+                    "id": "user-onZs69ThPZjBK2wo",
+                    "type": "users"
+                },
+                "links": {
+                    "self": "/api/v2/users/user-onZs69ThPZjBK2wo",
+                    "related": "/api/v2/runs/run-YfmFLWpgTv31VZsP/created-by"
+                }
+            },
+            "workspace": {
+                "data": {
+                    "id": "ws-noZcaGXsac6aZSJR",
+                    "type": "workspaces"
+                }
+            },
+            "outputs": {
+                "data": [
+                    {
+                        "id": "wsout-V22qbeM92xb5mw9n",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-ymkuRnrNFeU5wGpV",
+                        "type": "state-version-outputs"
+                    },
+                    {
+                        "id": "wsout-v82BjkZnFEcscipg",
+                        "type": "state-version-outputs"
+                    }
+                ]
+            }
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-g4rqST72reoHMM5a"
         }
     }
 }

@@ -63,6 +63,8 @@ A configuration version created through the API or CLI can only be used in runs 
 | `uploaded`             | The configuration version is fully processed and can be used in runs.                                                                                                                                                                                                                                    |
 | `archived`             | All immediate runs are complete and Terraform Cloud has discarded the files associated with this configuration version. If the configuration version was created through a connected VCS repository, it can still be used in new runs. In those cases, Terraform Cloud will re-fetch the files from VCS. |
 | `errored`              | Terraform Cloud could not process this configuration version, and it cannot be used to create new runs. You can try again by pushing a new commit to your linked VCS repository or creating a new configuration version with the API or CLI.                                                             |
+| `backing_data_soft_deleted`  | Terraform Enterprise has soft-deleted the backing files associated with this configuration version. You can restore the backing data associated with it before it is permanently deleted if need be. |
+| `backing_data_permanently_deleted`  | Terraform Enterprise has permanently-deleted the backing files associated with this configuration version, and can no longer be restored. |
 
 ## List Configuration Versions
 
@@ -434,3 +436,90 @@ The GET endpoints above can optionally return related resources, if requested wi
 | -------------------- | ------------------------------------------------- |
 | `ingress_attributes` | The commit information used in the configuration. |
 | `run`                | The run created by the configuration.             |
+
+## Soft-Delete a Configuration Version
+
+`POST /api/v2/configuration-versions/:external_id/actions/soft_delete_backing_data`
+
+| Parameter                   | Description                                    |
+| --------------------------- | ---------------------------------------------- |
+| `external_id`  | The external ID of the configuration version to soft-delete. |
+
+This endpoint notifies Terraform Enterprise to soft-delete backing files associated with this configuration version. This endpoint can only soft-delete configuration versions that were created with the API or CLI, are in an `uploaded` [state](#configuration-version-states), and are not the current configuration version. Otherwise, calling this endpoint will result in an error.
+
+| Status  | Response                  | Reason(s)                                                                                                                                     |
+| ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [200][] | none                      | Successfully initiated the soft-delete process.                                                                                                   |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+
+### Request Body
+
+This POST endpoint does not take a request body.
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/actions/soft_delete_backing_data
+```
+
+## Restore Previously Soft-Deleted Configuration Version
+
+`POST /api/v2/configuration-versions/:external_id/actions/restore_backing_data`
+
+| Parameter                   | Description                                    |
+| --------------------------- | ---------------------------------------------- |
+| `external_id`  | The external ID of the configuration version to restore back to its uploaded state if applicable. |
+
+This endpoint notifies Terraform Enterprise to restore backing files associated with this configuration version. This endpoint can only restore configuration versions that are not in a `backing_data_permanently_deleted` [state](#configuration-version-states), and applicable configuration versions will be restored back to their uploaded state. Otherwise, calling this endpoint will result in an error.
+
+| Status  | Response                  | Reason(s)                                                                                                                                     |
+| ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [200][] | none                      | Successfully initiated the restore process.                                                                                                   |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+
+### Request Body
+
+This POST endpoint does not take a request body.
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/actions/restore_backing_data
+```
+
+## Permanently Delete a Configuration Version
+
+`POST /api/v2/configuration-versions/:external_id/actions/permanently_delete_backing_data`
+
+| Parameter                   | Description                                    |
+| --------------------------- | ---------------------------------------------- |
+| `external_id`  | The external ID of the configuration version to permanently delete. |
+
+This endpoint notifies Terraform Enterprise to permanently delete backing files associated with this configuration version. This endpoint can only permanently delete configuration versions that were created with the API or CLI, are in an `backing_data_soft_deleted` [state](#configuration-version-states), and are not the current configuration version. Otherwise, calling this endpoint will result in an error.
+
+| Status  | Response                  | Reason(s)                                                                                                                                     |
+| ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [200][] | none                      | Successfully initiated the permanently delete process.                                                                                                   |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+
+### Request Body
+
+This POST endpoint does not take a request body.
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/actions/permanently_delete_backing_data
+```
