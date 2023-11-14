@@ -71,8 +71,8 @@ A state version created through the API or CLI will only be listed in the UI if 
 | `finalized`  | The state version has been uploaded successfully to Terraform Cloud or if the state version was created with a valid `state` attribute.                                                                                                                                                                                                              |
 | `discarded`  | The state version has been discarded because it was superseded by a newer state version before it could be uploaded. |
 | `uploaded`  | The state version has been fully processed and can be used in runs. |
-| `backing_data_soft_deleted`  | The backing files associated with this state version have been soft-deleted by Terraform Enterprise. The backing data can be restored before it is permanently deleted if need be. |
-| `backing_data_permanently_deleted`  | The backing files associated with this state version have been permanently-deleted by Terraform Enterprise, and can no longer be restored. |
+| `backing_data_soft_deleted`  | The backing files associated with this state version have been soft-deleted. The backing data can be restored before it is permanently deleted if need be. |
+| `backing_data_permanently_deleted`  | The backing files associated with this state version have been permanently deleted, and can no longer be restored. |
 
 ## Create a State Version
 
@@ -828,8 +828,9 @@ Viewing state versions requires permission to read state versions for the worksp
 
 | Status  | Response                  | Reason                                                                                                        |
 |---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
-| [200][] | [JSON API document][]     | Successfully initiated the soft-delete process.                                                |
-| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+| [200][] | [JSON API document][]     | Successfully initiated the soft-delete process.                                                               |
+| [400][] | [JSON API error object][] | Transitioning state to `backing_data_soft_deleted` was unsuccessful.                                          |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action.                                           |
 
 ### Sample Request
 
@@ -955,8 +956,9 @@ Viewing state versions requires permission to read state versions for the worksp
 
 | Status  | Response                  | Reason                                                                                                        |
 |---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
-| [200][] | [JSON API document][]     | Successfully initiated the restore process.                                                |
-| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+| [200][] | [JSON API document][]     | Successfully initiated the restore process.                                                                   |
+| [400][] | [JSON API error object][] | Transitioning state to `uploaded` was unsuccessful.                                                           |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action.                                           |
 
 ### Sample Request
 
@@ -1082,8 +1084,9 @@ Viewing state versions requires permission to read state versions for the worksp
 
 | Status  | Response                  | Reason                                                                                                        |
 |---------|---------------------------|---------------------------------------------------------------------------------------------------------------|
-| [200][] | [JSON API document][]     | Successfully initiated the permanently delete process.                                                |
-| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action. |
+| [200][] | [JSON API document][]     | Successfully initiated the permanently delete process.                                                        |
+| [400][] | [JSON API error object][] | Transitioning state to `backing_data_permanently_deleted` was unsuccessful.                                   |
+| [404][] | [JSON API error object][] | State version was not found or user unauthorized to perform action.                                           |
 
 ### Sample Request
 

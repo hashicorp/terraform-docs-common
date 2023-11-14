@@ -63,8 +63,8 @@ A configuration version created through the API or CLI can only be used in runs 
 | `uploaded`             | The configuration version is fully processed and can be used in runs.                                                                                                                                                                                                                                    |
 | `archived`             | All immediate runs are complete and Terraform Cloud has discarded the files associated with this configuration version. If the configuration version was created through a connected VCS repository, it can still be used in new runs. In those cases, Terraform Cloud will re-fetch the files from VCS. |
 | `errored`              | Terraform Cloud could not process this configuration version, and it cannot be used to create new runs. You can try again by pushing a new commit to your linked VCS repository or creating a new configuration version with the API or CLI.                                                             |
-| `backing_data_soft_deleted`  | Terraform Enterprise has soft-deleted the backing files associated with this configuration version. You can restore the backing data associated with it before it is permanently deleted if need be. |
-| `backing_data_permanently_deleted`  | Terraform Enterprise has permanently-deleted the backing files associated with this configuration version, and can no longer be restored. |
+| `backing_data_soft_deleted`  | The configuration version's backing data has been soft-deleted. You can restore the backing data associated with it before it is permanently deleted if need be. |
+| `backing_data_permanently_deleted`  | The configuration version's backing data has been permanently-deleted, and can no longer be restored. |
 
 ## List Configuration Versions
 
@@ -449,8 +449,9 @@ This endpoint notifies Terraform Enterprise to soft-delete backing files associa
 
 | Status  | Response                  | Reason(s)                                                                                                                                     |
 | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [200][] | none                      | Successfully initiated the soft-delete process.                                                                                                   |
-| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+| [200][] | none                      | Successfully initiated the soft-delete process.                                                                                               |
+| [400][] | [JSON API error object][] | Transitioning state to `backing_data_soft_deleted` was unsuccessful.                                                                          |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                    |
 
 ### Request Body
 
@@ -479,7 +480,8 @@ This endpoint notifies Terraform Enterprise to restore backing files associated 
 | Status  | Response                  | Reason(s)                                                                                                                                     |
 | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | [200][] | none                      | Successfully initiated the restore process.                                                                                                   |
-| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+| [400][] | [JSON API error object][] | Transitioning state to `uploaded` was unsuccessful.                                                                                           |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                    |
 
 ### Request Body
 
@@ -507,8 +509,9 @@ This endpoint notifies Terraform Enterprise to permanently delete backing files 
 
 | Status  | Response                  | Reason(s)                                                                                                                                     |
 | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [200][] | none                      | Successfully initiated the permanently delete process.                                                                                                   |
-| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                   |
+| [200][] | none                      | Successfully initiated the permanently delete process.                                                                                        |
+| [400][] | [JSON API error object][] | Transitioning state to `backing_data_permanently_deleted` was unsuccessful.                                                                   |
+| [404][] | [JSON API error object][] | Configuration version was not found or user not authorized.                                                                                    |
 
 ### Request Body
 
