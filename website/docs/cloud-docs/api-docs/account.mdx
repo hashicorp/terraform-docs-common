@@ -38,7 +38,10 @@ description: >-
 
 # Account API
 
-Account represents the current user interacting with Terraform. It returns the same type of object as the [Users](/terraform/cloud-docs/api-docs/users) API, but also includes an email address, which is hidden when viewing info about other users.
+Account represents the current user interacting with Terraform. It returns the same type of object as the [Users](/terraform/cloud-docs/api-docs/users) API, but also includes an email address, which is hidden when viewing info about other users. 
+
+For internal reasons, team tokens and organization tokens are associated with a synthetic user account called a "service user." For account requests authenticated by a team token or organization token, Terraform Cloud returns the associated service user. To access the underlying team or organization associated with the token, you may use the `authenticated-resource` relationship. (For user tokens,
+this will be the same as the user itself.)
 
 ## Get your account details
 
@@ -84,6 +87,15 @@ curl \
       "authentication-tokens": {
         "links": {
           "related": "/api/v2/users/user-V3R563qtJNcExAkN/authentication-tokens"
+        }
+      },
+      "authenticated-resource": {
+        "data": {
+          "id": "user-V3R563qtJNcExAkN",
+          "type": "users"
+        },
+        "links": {
+          "related": "/api/v2/users/user-V3R563qtJNcExAkN"
         }
       }
     },
