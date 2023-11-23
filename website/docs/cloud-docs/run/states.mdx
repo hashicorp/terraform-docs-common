@@ -190,7 +190,9 @@ After applying, the run proceeds automatically to completion.
 
 ## The Post-Apply Stage
 
-The post-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin after Terraform applies the apply. Terraform Cloud sends information about the run to the configured external system, but differently from the run-tasks configured for other stages, in this case, the `passed` or `failed` response is only informative, since the apply already happened and the infrastructure was provisioned. The information sent to the external system includes the configuration version of the run.
+The post-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin after Terraform complete the apply operation. 
+
+Unlike other run task stages, the post-apply stage gathers information about the resulting response of an apply operation because that operation has already occurred, and Terraform Cloud has already provisioned infrastructure. Terraform Cloud sends the information about the run to the configured external system with the `passed` or `failed` status along with the configuration version of the run.
 
 Only confirmed runs can enter this phase.
 
