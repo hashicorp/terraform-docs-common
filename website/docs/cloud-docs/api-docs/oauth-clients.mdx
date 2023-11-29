@@ -236,7 +236,7 @@ Properties without a default value are required.
 | `data.attributes.secret`             | string |         | The OAuth Client secret. For BitBucket Server, this secret is the the text of the SSH private key associated with your BitBucket Server Application Link.                                      |
 | `data.attributes.rsa-public-key`     | string |         | **Required for BitBucket Server in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your BitBucket Server Application Link.   |
 | `data.attributes.organization-scoped` | boolean |         | Whether or not the oauth client is scoped to all projects and workspaces in the organization. Defaults to `true`.
-| `data.relationships.projects.data[]` | array\[object] | `[]`      | A list of resource identifier objects that defines which projects are associated with the oauth client. These objects must contain `id` and `type` properties, and the `type` property must be `projects`. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
+| `data.relationships.projects.data[]` | array\[object] | `[]`      | A list of resource identifier objects that defines which projects are associated with the oauth client. This is only used when `data.attributes.organization-scoped` is set to false. These objects must contain `id` and `type` properties, and the `type` property must be `projects`. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
 
 ### Sample Payload
 
@@ -248,7 +248,8 @@ Properties without a default value are required.
       "service-provider": "github",
       "http-url": "https://github.com",
       "api-url": "https://api.github.com",
-      "oauth-token-string": "4306823352f0009d0ed81f1b654ac17a"
+      "oauth-token-string": "4306823352f0009d0ed81f1b654ac17a",
+      "organization-scoped": false
     },
     "relationships": {
       "projects": {
@@ -290,7 +291,7 @@ curl \
       "api-url": "https://api.github.com",
       "key": null,
       "rsa-public-key": null,
-      "organization-scoped": true
+      "organization-scoped": false
     },
     "relationships": {
       "organization": {
