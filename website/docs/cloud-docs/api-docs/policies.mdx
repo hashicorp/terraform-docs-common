@@ -234,7 +234,7 @@ curl \
 
 | Parameter    | Description                                                                 |
 | ------------ | --------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to show. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to show. Use the [List Policies](/terraform/enterprise/api-docs/policies#list-policies) endpoint to find IDs. |
 
 | Status  | Response                                   | Reason                                                  |
 | ------- | ------------------------------------------ | ------------------------------------------------------- |
@@ -296,7 +296,7 @@ curl --request GET \
 
 | Parameter    | Description                                                                                                                          |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `:policy_id` | The ID of the policy to upload code to. Use the "List Policies" endpoint (or the response to a "Create Policy" request) to find IDs. |
+| `:policy_id` | The ID of the policy to upload code to. Use the [List Policies](/terraform/enterprise/api-docs/policies#list-policies) endpoint (or the response to a "Create Policy" request) to find IDs. |
 
 This endpoint uploads code to an existing Sentinel or OPA policy.
 
@@ -334,7 +334,7 @@ curl \
 
 | Parameter    | Description                                                                   |
 | ------------ | ----------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to update. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to update. Use the [List Policies](/terraform/enterprise/api-docs/policies#list-policies) endpoint to find IDs. |
 
 This endpoint can update the enforcement mode of an existing policy. To update the policy code itself, use the upload endpoint.
 
@@ -535,7 +535,7 @@ curl \
 
 | Parameter    | Description                                                                   |
 | ------------ | ----------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to delete. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to delete. Use the [List Policies](/terraform/enterprise/api-docs/policies#list-policies) endpoint to find IDs. |
 
 | Status  | Response                  | Reason                                                   |
 | ------- | ------------------------- | -------------------------------------------------------- |
