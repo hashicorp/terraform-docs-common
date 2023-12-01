@@ -61,7 +61,7 @@ To publish a new module:
 
     You can search the list by typing part or all of a repository name into the filter field. Remember that VCS providers use `<NAMESPACE>/<REPO NAME>` strings to locate repositories. The namespace is an organization name for most providers, but Bitbucket Server (not Bitbucket Cloud) uses project keys, like `INFRA`.
 
-  1. If presented, select either the **Tag** or **Branch** module publishing type.
+  1. When prompted, choose either the **Tag** or **Branch** module publishing type.
 
   1.  (Optional) If this module is a [no-code ready module](/terraform/cloud-docs/no-code-provisioning/module-design), select the **Add Module to no-code provision allowlist** checkbox.
 
@@ -154,8 +154,8 @@ Terraform Enterprise administrators can configure [module sharing](/terraform/en
 
 ## Generating Module Tests (Beta)
 
-You can generate tests for your module, and can run the resulting tests with [the `terraform test` command](/terraform/cli/commands/test).
+You can generate and run generated tests for your module with [the `terraform test` command](/terraform/cli/commands/test).
 
 Before you can generate tests for a module, it must have at least one version published. Tests can only be generated once per module and are intended to be reviewed by the module's authors before being checked into version control and maintained with the rest of the module's content. If the module's configuration files exceed 128KB in total size, Terraform Cloud will not be able to generate tests for that module.
 
-You must have [permission to manage registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) and [permission to manage module test generation](/terraform/cloud-docs/users-teams-organizations/permissions#manage-module-test-generation-beta) in order to generate tests.
+You must have [permission to manage registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) and [permission to manage module test generation](/terraform/cloud-docs/users-teams-organizations/permissions#manage-module-test-generation-beta) to generate tests.
