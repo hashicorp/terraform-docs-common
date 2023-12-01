@@ -131,7 +131,11 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 
 ### Sample Request
 
+The following example requests demonstrate how to call the `policy-set-outcomes` endpoint using cuRL. 
+
 #### All Policy Outcomes
+
+The following example call returns all policy set outcomes.
 
 ```shell
 curl \
@@ -143,6 +147,8 @@ curl \
 
 #### Failed and Errored Policy Outcomes
 
+The following example call filters the response so that it only contains failed outcomes and errors.
+
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
@@ -152,6 +158,8 @@ curl \
 ```
 
 ### Sample Response
+
+The following example response shows that the `policyVCS` policy failed.
 
 ```json
 {
@@ -226,6 +234,8 @@ curl \
 
 ### Sample Request
 
+The following example request gets the outcomes for the `psout-cu8E9a97LBepZZXd` policy set.
+
 ```shell
 curl --request GET \
   -H "Authorization: Bearer $TOKEN" \
@@ -234,6 +244,8 @@ curl --request GET \
 ```
 
 ### Sample Response
+
+The following example response shows that the `policyVCS` policy failed.
 
 ```json
 {

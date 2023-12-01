@@ -391,6 +391,7 @@ curl \
 | `:namespace`         | The namespace of the module which the test was executed against. For private modules this is the same as the `:organization_name` parameter.                                                           |
 | `:name`              | The name of the module which the test was executed against.                                                                                                                                           |
 | `:provider`          | The name of the provider which the test was executed against.                                                                                                                                         |
+| `:test_run_id`       | The test ID to get.                                                                                                                                                                                      |
 
 ### Sample Request
 
@@ -504,7 +505,6 @@ curl \
 | `:name`              | The name of the module for which the test is being force-canceled.                                                                                                                                           |
 | `:provider`          | The name of the provider for which the test is being force-canceled.                                                                                                                                         |
 | `:test_run_id`       | The test ID to cancel. 
-| Parameter            | Description                                                                                                                                                                                       |
 
 The `force-cancel` action ends the test immediately. Once invoked, Terraform places the test into a `canceled` state and terminates the running Terraform process.
 
@@ -530,12 +530,12 @@ curl \
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/vars`
 
-| Parameter            | Description                                                                                                                                                                                      |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the `owners` team or a member of the `owners` team. |
-| `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter.                                                          |
-| `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
-| `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
+| Parameter            | Description                                                                                                                                                                                              |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `:organization_name` | The name of the organization of the module. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:namespace`         | The namespace of the module for which the testing environment variable is being created. For private modules this is the same as the `:organization_name` parameter.                                                           |
+| `:name`              | The name of the module for which the testing environment variable is being created.                                                                                                                                           |
+| `:provider`          | The name of the provider for which the testing environment variable is being created.                                                                                                                                         |
 
 ### Request Body
 
@@ -550,7 +550,7 @@ Properties without a default value are required.
 | `data.attributes.value`       | string | `""`    | The value of the variable.                                                                            |
 | `data.attributes.description` | string |         | The description of the variable.                                                                      |
 | `data.attributes.category`    | string |         | This must be `"env"`.                                                                                   |
-| `data.attributes.sensitive`   | bool   | `false` | Whether the value is sensitive. When set to `true`, Terraform write the variable once and is not visible thereafter. |
+| `data.attributes.sensitive`   | bool   | `false` | Whether the value is sensitive. When set to `true`, Terraform writes the variable once and is not visible thereafter. |
 
 ### Sample Payload
 
@@ -582,25 +582,27 @@ curl \
 
 ### Sample Response
 
-    {
-      "data": {
-        "id": "var-xSCUzCxdqMs2ygcg",
-        "type": "vars",
-        "attributes": {
-          "key": "keykey",
-          "value": "some_value",
-          "sensitive": false,
-          "category": "env",
-          "hcl": false,
-          "created-at": "2023-10-03T19:47:05.393Z",
-          "description": "some description",
-          "version-id": "699b14ea5d5e5c02f6352fac6bfd0a1424c21d32be14d1d9eb79f5e1f28f663a"
-        },
-        "links": {
-          "self": "/api/v2/vars/var-xSCUzCxdqMs2ygcg"
-        }
-      }
+```
+{
+  "data": {
+    "id": "var-xSCUzCxdqMs2ygcg",
+    "type": "vars",
+    "attributes": {
+      "key": "keykey",
+      "value": "some_value",
+      "sensitive": false,
+      "category": "env",
+      "hcl": false,
+      "created-at": "2023-10-03T19:47:05.393Z",
+      "description": "some description",
+      "version-id": "699b14ea5d5e5c02f6352fac6bfd0a1424c21d32be14d1d9eb79f5e1f28f663a"
+    },
+    "links": {
+      "self": "/api/v2/vars/var-xSCUzCxdqMs2ygcg"
     }
+  }
+}
+```
 
 ## List Test Variables for a Module
 
