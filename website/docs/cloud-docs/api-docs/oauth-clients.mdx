@@ -478,7 +478,7 @@ Properties without a default value are required.
 
 | Key path | Type           | Default | Description                                                                                                                                                                                                                                                          |
 | -------- | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data[]` | array\[object] |         | A list of resource identifier objects that defines which projects to attach the oauth client to. These objects must contain `id` and `type` properties, and the `type` property must be `projects` (e.g. `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`).    |
+| `data[]` | array\[object] |   `[]`  | A list of resource identifier objects that defines which projects to attach the oauth client to. These objects must contain `id` and `type` properties, and the `type` property must be `projects` (e.g. `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`).    |
 
 ### Sample Payload
 
@@ -524,7 +524,7 @@ Properties without a default value are required.
 
 | Key path | Type           | Default | Description                                                                                                                                                                                                                                                            |
 | -------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data[]` | array\[object] |         | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
+| `data[]` | array\[object] |  `[]`   | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
 
 ### Sample Payload
 
