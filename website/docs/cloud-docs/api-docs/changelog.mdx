@@ -9,8 +9,17 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
+
 ## 2023-11-17
-* Add `authenticated-resource` relationship to the [Account API](/terraform/cloud-docs/api-docs/account).
+
+-   Added the [`opa-versions` endpoint](/terraform/enterprise/api-docs/admin/opa-versions) to allow administrators to manage available Open Policy Agent (OPA) versions.
+-   Added the [`sentinel-versions` endpoint](/terraform/enterprise/api-docs/admin/sentinel-versions) to allow administrators to manage available Sentinel versions.
+-   Add `authenticated-resource` relationship to the [Account API](/terraform/enterprise/api-docs/account).
+
+## 2023-11-15
+
+- Introduce configurable data retention policies at the [organization](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies) and [workspace](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) levels.
+- Add data retention policy documentation to [State Versions](/terraform/enterprise/api-docs/state-versions), [Configuration Versions](/terraform/enterprise/api-docs/configuration-versions), [Organizations](/terraform/enterprise/users-teams-organizations/organizations#destruction-and-deletion), and [Workspaces](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies).
 
 ## 2023-11-07
 * Add `auto_destroy_activity_duration` to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces), which allows Terraform Cloud to schedule auto-destroy runs [based on workspace inactivity](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).
