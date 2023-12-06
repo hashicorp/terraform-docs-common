@@ -125,20 +125,4 @@ For support, please [reach out to us via email](/terraform/registry#getting-help
 
 ### Why is my documentation not rendered like it is in Github?
 
-We make every effort to support GitHub Markdown syntax, but there are some limitations. To ensure consistent rendering in the Public Registry, we recommend using generic Markdown syntax whenever possible.
-
-### Why are referenced links not rendered?
-
-Reference link definitions must not have leading spaces. Ensure that all link definitions are properly formatted without any leading spaces to enable proper rendering.
-
-*Invalid referenced link*
-```
-this is a [link to google][1]
-    [1]: www.google.com`
-```
-
-*Valid referenced link*
-```
-this is a [link to google][1]
-[1]: www.google.com`
-```
+We make every effort to support GitHub Markdown syntax in the registry documentation, but there may be instances where compatibility limitations arise. To ensure consistent rendering in the Public Registry, we recommend using Markdown syntax widely supported in different Markdown flavors. You can test out your documentation in the registry docs preview tool at https://registry.terraform.io/tools/doc-preview.
