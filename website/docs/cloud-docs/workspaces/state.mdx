@@ -245,8 +245,8 @@ data "tfe_outputs" "vpc" {
 }
 
 resource "aws_instance" "redis_server" {
-  # Terraform 0.12 and later: use the "outputs.<OUTPUT NAME>" attribute
-  subnet_id = data.tfe_outputs.vpc.outputs.subnet_id
+  # Terraform 0.12 and later: use the "values.<OUTPUT NAME>" attribute
+  subnet_id = data.tfe_outputs.vpc.values.subnet_id
 }
 ```
 -> **Note:** Remote state access controls do not apply when using the `tfe_outputs` data source.
