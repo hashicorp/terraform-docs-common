@@ -1,0 +1,242 @@
+---
+page_title: Explorer - API Docs - Terraform Cloud
+description: >-
+  Use the `/explorer` endpoint to explore your data. Query, filter, and sort data
+  from a variety of views using the HTTP API.
+---
+
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+
+[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+
+[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
+
+[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
+
+[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+
+[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
+
+[JSON API error object]: https://jsonapi.org/format/#error-objects
+
+[speculative plans]: /terraform/cloud-docs/run/remote-operations#speculative-plans
+
+# Explorer API
+
+Explorer allows you to query your Terraform Cloud data across workspaces.
+You can select from a variety of available views, optionally supplying sort and
+filter parameters to present your data in the format that best suits your needs.
+
+Queries are scoped to the organization level. Querying an organization's data
+requires organization owner permissions, or read access to workspaces and
+projects.
+
+## Execute a query
+
+`GET /organizations/:organization_name/explorer`
+
+| Parameter            | Description                                                                                                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+
+-> **Note:** Explorer is restricted to the owners team, teams with the "Read all
+workspaces" permission, teams with the "Read all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+
+### View Types
+
+Explorer queries are based on several available contextual views:
+
+| Type          | Description |
+| ------------- | ----------------------------------------------------------------------------- |
+| `workspaces`  | Information about the workspaces in the target organization and any current runs associated with them. Each row returned represents a single workspace. See [View Type: workspaces](#view-type-workspaces) for available fields. |
+| `tf_versions` | Information about the Terraform versions in use across this organization. Each row returned represents a Terraform version in use. See [View Type: tf_versions](#view-type-tf_versions) for available fields. |
+| `providers`   | Information about the Terraform providers in use across the target organization. Each row returned represents a Terraform provider in use. See [View Type: providers](#view-type-providers) for available fields. |
+| `modules`     | Information about the Terrraform modules in use across the target organization. Each row returned represents a Terraform module in use. See [View Type: modules](#view-type-modules) for available fields. |
+
+#### View Type: workspaces
+
+| Field                             | Type       | Description |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `all_checks_succeeded`            | `boolean`  | True if checks have succeeded for the workspace, false otherwise. |
+| `checks_errored`                  | `number`   | The number of checks that errored without completing. |
+| `checks_failed`                   | `number`   | The number of checks that completed and failed. |
+| `checks_passed`                   | `number`   | The number of checks that completed and passed. |
+| `checks_unknown`                  | `number`   | The number of checks that could not be assessed. |
+| `current_run_applied_at`          | `datetime` | Represents the time that this workspace's current run was applied. |
+| `current_run_external_id`         | `string`   | The external ID of this workspace's current run. |
+| `current_run_status`              | `string`   | The status of this workspace's current run. |
+| `drifted`                         | `boolean`  | True if drift has been detected for the workspace, false otherwise. |
+| `external_id`                     | `string`   | The external ID of this workspace. |
+| `module_count`                    | `number`   | The number of distinct modules used by this workspace. |
+| `modules`                         | `string`   | A comma separated list of modules used by this workspace. |
+| `organization_name`               | `string`   | The name of the organization this workspace belongs to. |
+| `project_external_id`             | `string`   | The external ID of the project this workspace belongs to. |
+| `project_name`                    | `string`   | The name of the project this workspace belongs to.
+| `provider_count`                  | `number`   | The number of distinct providers used in this workspace. |
+| `providers`                       | `string`   | A comma separated list of providers used in this workspace. |
+| `resources_drifted`               | `number`   | The count of resources that drift was detected for. |
+| `resources_undrifted`             | `number`   | The count of resources that drift was not detected for. |
+| `state_version_terraform_version` | `string`   | The Terraform version used to create the current run's state file. |
+| `vcs_repo_identifier`             | `string`   | The Terraform version used by this workspace. |
+| `workspace_created_at`            | `datetime` | The time this workspace was created. |
+| `workspace_name`                  | `string`   | The name of this workspace. |
+| `workspace_terraform_version`     | `string`   | The Terraform version currently configured for this workspace. |
+| `workspace_updated_at`            | `datetime` | The time this workspace was last updated. |
+| `workspace_resource_count`        | `number`   | The time this workspace was last updated. |
+
+#### View Type: tf_versions
+
+| Field                             | Type       | Description |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `version`                         | `string`   | The semantic version string for this Terraform version. |
+
+#### View Type: providers
+
+| Field                             | Type       | Description |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `name`            | `string`  | The name of this provider. |
+
+#### View Type: modules
+
+| Field                             | Type       | Description |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `name`            | `string`  | The name of this module. |
+
+### Query Parameters
+
+This GET endpoint requires a query string that supports the following properties.
+
+| Parameter      | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `type`         | **Required.** Must be one of the following available views: `workspaces`, `tf_versions`, `providers`, or `modules`. See the [View Types](#view-types) section for more information about each. |
+| `sort`         | Optionally sort the returned data by the specified field name. The field name must use snake case and exist within the supplied view type. The field name supplied can be prefixed with a hyphen (`-`) to perform a descending sort. |
+| `filter`       | Optionally specify one or more filters to limit the data returned. See [Filtering](#filtering) for more information. |
+| `fields`       | Optionally limit the data returned only to the specified fields. The field names supplied must use snake case and be submitted in comma-separated format. If omitted, all available fields will be returned for the requested view type. |
+| `page[number]` | Optional. If omitted, the endpoint will return the first page. |
+| `page[size]`   | Optional. If omitted, the endpoint will use a default page size. |
+
+#### Filtering
+TBD
+
+#### Pagination
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+### Sample Requests
+
+_Show data for all workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  https://app.terraform.io/api/v2/organizations/acme-corp/explorer?type=workspaces
+```
+
+### Sample Response
+
+_Show data for all workspaces_
+
+```json
+{
+  "data": [
+    {
+      "attributes": {
+        "all-checks-succeeded": true,
+        "checks-errored": 0,
+        "checks-failed": 0,
+        "checks-passed": 0,
+        "checks-unknown": 0,
+        "current-run-applied-at": null,
+        "current-run-external-id": "run-rdoEKh2Gy3K6SbCZ",
+        "current-run-status": "planned_and_finished",
+        "drifted": false,
+        "external-id": "ws-j2sAeWRxou1b5HYf",
+        "module-count": 0,
+        "modules": null,
+        "organization-name": "acme-corp",
+        "project-external-id": "prj-V61QLE8tvs4NvVZG",
+        "project-name": "Default Project",
+        "provider-count": 0,
+        "providers": null,
+        "resources-drifted": 0,
+        "resources-undrifted": 0,
+        "state-version-terraform-version": "1.5.7",
+        "vcs-repo-identifier": null,
+        "workspace-created-at": "2023-10-17T21:56:45.570+00:00",
+        "workspace-name": "payments-service",
+        "workspace-terraform-version": "1.5.7",
+        "workspace-updated-at": "2023-12-08T19:58:15.513+00:00"
+      },
+      "id": "ws-j2sAWeRxuo1b5HYf",
+      "type": "visibility-workspace"
+    },
+    {
+      "attributes": {
+        "all-checks-succeeded": true,
+        "checks-errored": 0,
+        "checks-failed": 0,
+        "checks-passed": 0,
+        "checks-unknown": 0,
+        "current-run-applied-at": "2023-08-18T16:24:59.000+00:00",
+        "current-run-external-id": "run-9MmJaoQTvDCh5wUa",
+        "current-run-status": "applied",
+        "drifted": true,
+        "external-id": "ws-igUVNQSYVXRkhYuo",
+        "module-count": 0,
+        "modules": null,
+        "organization-name": "acme-corp",
+        "project-external-id": "prj-uU2xNqGeG86U9WgT",
+        "project-name": "web",
+        "provider-count": 0,
+        "providers": null,
+        "resources-drifted": 3,
+        "resources-undrifted": 3,
+        "state-version-terraform-version": "1.4.5",
+        "vcs-repo-identifier": "acmecorp/api",
+        "workspace-created-at": "2023-04-25T17:09:14.960+00:00",
+        "workspace-name": "api-service",
+        "workspace-terraform-version": "1.4.5",
+        "workspace-updated-at": "2023-12-08T20:43:16.779+00:00"
+      },
+      "id": "ws-igUNVQSYXVRkhYuo",
+      "type": "visibility-workspace"
+    }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/organizations/acme-corp/explorer?page%5Bnumber%5D=1&page%5Bsize%5D=20&type=workspaces",
+    "first": "https://app.terraform.io/api/v2/organizations/acme-corp/explorer?page%5Bnumber%5D=1&page%5Bsize%5D=20&type=workspaces",
+    "last": "https://app.terraform.io/api/v2/organizations/acme-corp/explorer?page%5Bnumber%5D=1&page%5Bsize%5D=20&type=workspaces",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "next-page": null,
+      "prev-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
+
+```
