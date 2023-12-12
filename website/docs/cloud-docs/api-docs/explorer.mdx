@@ -53,18 +53,30 @@ projects.
 
 `GET /organizations/:organization_name/explorer`
 
-| Parameter            | Description                                                                                                                                                              |
+| Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 
 -> **Note:** Explorer is restricted to the owners team, teams with the "Read all
 workspaces" permission, teams with the "Read all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
+Explorer queries will time out after 60 seconds. If the desired query is timing
+out, try a simpler query that uses less filters.
+
+Requests to the explorer are subject to [rate
+limiting](/terraform/cloud-docs/api-docs#rate-limiting). Explorer will return a
+429 status code when rate limiting is active for the authenticated context.
+
+Data presented by the explorer is eventually consistent. Query results typically
+contain data that represents the current state of the system, but in some cases
+a small delay may be necessary before querying for data that has recently been
+updated.
+
 ### Query Parameters
 
 This GET endpoint requires a query string that supports the following properties.
 
-| Parameter      | Description                                                                   |
+| Parameter      | Description |
 | -------------- | ----------------------------------------------------------------------------- |
 | `type`         | **Required.** Must be one of the following available views: `workspaces`, `tf_versions`, `providers`, or `modules`. See the [View Types](#view-types) section for more information about each. |
 | `sort`         | Optionally sort the returned data by the specified field name. The field name must use snake case and exist within the supplied view type. The field name supplied can be prefixed with a hyphen (`-`) to perform a descending sort. |
@@ -83,6 +95,9 @@ Explorer queries are based on several available contextual views:
 | `tf_versions` | Information about the Terraform versions in use across this organization. Each row returned represents a Terraform version in use. See [View Type: tf_versions](#view-type-tf_versions) for available fields. |
 | `providers`   | Information about the Terraform providers in use across the target organization. Each row returned represents a Terraform provider in use. See [View Type: providers](#view-type-providers) for available fields. |
 | `modules`     | Information about the Terrraform modules in use across the target organization. Each row returned represents a Terraform module in use. See [View Type: modules](#view-type-modules) for available fields. |
+
+The fields returned by a given query are specific to the view type used. The
+fields available for each view type are detailed below:
 
 #### View Type: workspaces
 
@@ -117,44 +132,45 @@ Explorer queries are based on several available contextual views:
 
 #### View Type: tf_versions
 
-| Field              | Type       | Description |
-| ------------------ | ---------- | ----------------------------------------------------------------------------- |
-| `version`          | `string`   | The semantic version string for this Terraform version. |
-| `workspace_count`  | `number`   | The number of workspaces using this terraform version. |
-| `workspaces`       | `string`   | A comma-separated list of workspaces using this terraform version. |
+| Field              | Type     | Description |
+| ------------------ | -------- | ------------------------------------------------------------------ |
+| `version`          | `string` | The semantic version string for this Terraform version. |
+| `workspace_count`  | `number` | The number of workspaces using this terraform version. |
+| `workspaces`       | `string` | A comma-separated list of workspaces using this terraform version. |
 
 #### View Type: providers
 
-| Field             | Type       | Description |
-| ------------------| ---------- | ----------------------------------------------------------------------------- |
-| `name`            | `string`   | The name of this provider. |
-| `source`          | `string`   | The source of this provider. |
-| `version`         | `string`   | The semantic version string for this provider. |
-| `workspace_count` | `number`   | The number of workspaces using this provider. |
-| `workspaces`      | `string`   | A comma-separated list of workspaces using this provider. |
+| Field             | Type     | Description |
+| ------------------| -------- | --------------------------------------------------------- |
+| `name`            | `string` | The name of this provider. |
+| `source`          | `string` | The source of this provider. |
+| `version`         | `string` | The semantic version string for this provider. |
+| `workspace_count` | `number` | The number of workspaces using this provider. |
+| `workspaces`      | `string` | A comma-separated list of workspaces using this provider. |
 
 #### View Type: modules
 
-| Field             | Type       | Description |
-| ------------------| ---------- | ----------------------------------------------------------------------------- |
-| `name`            | `string`   | The name of this module. |
-| `source`          | `string`   | The source of this module. |
-| `version`         | `string`   | The semantic version string for this module. |
-| `workspace_count` | `number`   | The number of workspaces using this terraform version. |
-| `workspaces`      | `string`   | A comma-separated list of workspaces using this module. |
+| Field             | Type     | Description |
+| ------------------| -------- | ------------------------------------------------------- |
+| `name`            | `string` | The name of this module. |
+| `source`          | `string` | The source of this module. |
+| `version`         | `string` | The semantic version string for this module. |
+| `workspace_count` | `number` | The number of workspaces using this terraform version. |
+| `workspaces`      | `string` | A comma-separated list of workspaces using this module. |
 
-#### Filtering
+### Filtering
 
 The explorer can present filtered data from any view type using a variety of
 operators.
-
-Filters can be combined. When multiple filters are used, a logical AND is used
-to evaluate the results.
 
 Filter strings begin with the reserved string `filter`, and are passed as URL
 query string parameters using key-value pairs. The parameter key defines the
 filter's target field and operator, and the parameter value contains the filter
 value to be used during the query.
+
+Filters can be combined by providing multiple filter query string parameters
+separated with `&`. When multiple filters are used, a logical AND is used
+to evaluate the results.
 
 Each filter key string must use the following format:
 
@@ -169,7 +185,7 @@ filter[<FILTER_INDEX>][<FIELD_NAME>][<FIELD_OPERATOR>][FIELD_VALUE_INDEX]
   be a valid field for the view type being queried. See [View
   Types](#view-types) for a list of fields available for each type.
 - **FIELD_OPERATOR**: The operator to use when filtering. Must be a supported by
-the field type being filtered. See [Filter Operators] for the available operators and
+the field type being filtered. See [Filter Operators](#filter-operators) for the available operators and
 their supported field types.
 - **FIELD_VALUE_INDEX**: Must be `0`. This parameter is reserved for future use.
 - **FILTER_VALUE**: The filter value used by the filter during the query.
@@ -177,20 +193,33 @@ their supported field types.
 Once the desired filter strings have been added to a request URI, they should be
 percent-encoded along with the rest of the query string parameters.
 
-##### Sample Filter Strings
+#### Sample Filter Strings
 
 _Show workspaces that contain `test` in their name_
+(View Type: `workspace`)
 
 ```
 filter[0][workspace_name][contains][0]=test
 ```
 
-After percent-enconding:
+After percent-encoding:
 ```
 filter%5B0%5D%5Bworkspace_name%5D%5Bcontains%5D%5B0%5D=test
 ```
 
-##### Filter Operators
+_Show modules that contain `aws` in their name and version string equal to `1.1`_
+(View Type: `modules`)
+
+```
+filter[0][name][contains][0]=aws&filter[0][version][is][0]=1.1
+```
+
+After percent-encoding:
+```
+filter%5B0%5D%5Bname%5D%5Bcontains%5D%5B0%5D=aws&filter%5B0%5D%5Bversion%5D%5Bis%5D%5B0%5D=1.1
+```
+
+#### Filter Operators
 
 | Operator           | Supported Field Types         | Description |
 | ------------------ | ----------------------------- | ----------- |
@@ -204,23 +233,29 @@ filter%5B0%5D%5Bworkspace_name%5D%5Bcontains%5D%5B0%5D=test
 | `lt`               | `number`                      | Filters data to rows where the field value is less than the filter value. |
 | `gteq`             | `number`                      | Filters data to rows where the field value is greater than or equal to the filter value. |
 | `lteq`             | `number`                      | Filters data to rows where the field value is less than or equal to the filter value. |
-| `is_before`        | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates
-are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
-| `is_after`         | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates
-are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
+| `is_before`        | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
+| `is_after`         | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
 
-#### Pagination
+### Pagination
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 ### Sample Requests
 
-_Show data for all workspaces_
+_Show data for all workspaces_ (View Type: `workspace`)
 
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
   https://app.terraform.io/api/v2/organizations/acme-corp/explorer?type=workspaces
+```
+
+_Show data for all workspaces with `test` in their name _ (View Type: `workspace`)
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  https://app.terraform.io/api/v2/organizations/acme-corp/explorer?type=workspaces&filter[0][workspace_name][contains][0]=test
 ```
 
 ### Sample Response
