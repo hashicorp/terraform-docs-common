@@ -144,7 +144,70 @@ Explorer queries are based on several available contextual views:
 | `workspaces`      | `string`   | A comma-separated list of workspaces using this module. |
 
 #### Filtering
-TBD
+
+The explorer can present filtered data from any view type using a variety of
+operators.
+
+Filters can be combined. When multiple filters are used, a logical AND is used
+to evaluate the results.
+
+Filter strings begin with the reserved string `filter`, and are passed as URL
+query string parameters using key-value pairs. The parameter key defines the
+filter's target field and operator, and the parameter value contains the filter
+value to be used during the query.
+
+Each filter key string must use the following format:
+
+```
+filter[<FILTER_INDEX>][<FIELD_NAME>][<FIELD_OPERATOR>][FIELD_VALUE_INDEX]
+```
+
+- **FILTER_INDEX**: The index of the filter. Each filter requires a unique
+  index. The first filter should use a `0` and each additional filter should
+  use an index that is the previous filter's index incremented by 1.
+- **FIELD_NAME**: The name of the field to apply the filter to. The field must
+  be a valid field for the view type being queried. See [View
+  Types](#view-types) for a list of fields available for each type.
+- **FIELD_OPERATOR**: The operator to use when filtering. Must be a supported by
+the field type being filtered. See [Filter Operators] for the available operators and
+their supported field types.
+- **FIELD_VALUE_INDEX**: Must be `0`. This parameter is reserved for future use.
+- **FILTER_VALUE**: The filter value used by the filter during the query.
+
+Once the desired filter strings have been added to a request URI, they should be
+percent-encoded along with the rest of the query string parameters.
+
+##### Sample Filter Strings
+
+_Show workspaces that contain `test` in their name_
+
+```
+filter[0][workspace_name][contains][0]=test
+```
+
+After percent-enconding:
+```
+filter%5B0%5D%5Bworkspace_name%5D%5Bcontains%5D%5B0%5D=test
+```
+
+##### Filter Operators
+
+| Operator           | Supported Field Types         | Description |
+| ------------------ | ----------------------------- | ----------- |
+| `is`               | `boolean`, `number`, `string` | Filters data to rows where the field value is equivalent to the filter value. |
+| `is_not`           | `number`, `string`            | Filters data to rows where the field value is different from the filter value. |
+| `contains`         | `string`                      | Filters data to rows where the field value contains the filter value as a sub-string. |
+| `does not contain` | `string`                      | Filters data to rows where the field value does not contain the filter value as a sub-string. |
+| `is_empty`         | `boolean`, `number`, `string` | Filters data to rows where the field does not contain a value. |
+| `is_not_empty`     | `boolean`, `number`, `string` | Filters data to rows where the field contains any value. |
+| `gt`               | `number`                      | Filters data to rows where the field value is greater than the filter value. |
+| `lt`               | `number`                      | Filters data to rows where the field value is less than the filter value. |
+| `gteq`             | `number`                      | Filters data to rows where the field value is greater than or equal to the filter value. |
+| `lteq`             | `number`                      | Filters data to rows where the field value is less than or equal to the filter value. |
+| `is_before`        | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates
+are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
+| `is_after`         | `datetime`                    | Filters data to rows where the field value is earlier than the filter value. ISO 8601 formatted dates
+are recommended for filter values. If no time zone offset is provided, the filter value will be interpreted as UTC. |
 
 #### Pagination
 
