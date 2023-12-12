@@ -87,7 +87,8 @@ This GET endpoint requires a query string that supports the following properties
 
 ### View Types
 
-Explorer queries are based on several available contextual views:
+Explorer queries each require a view, specified by the `type` query string parameter.
+There are several contextual views available for querying:
 
 | Type          | Description |
 | ------------- | ----------------------------------------------------------------------------- |
@@ -99,7 +100,7 @@ Explorer queries are based on several available contextual views:
 The fields returned by a given query are specific to the view type used. The
 fields available for each view type are detailed below:
 
-#### View Type: workspaces
+#### View Type: `workspaces`
 
 | Field                             | Type       | Description |
 | --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
@@ -130,7 +131,7 @@ fields available for each view type are detailed below:
 | `workspace_updated_at`            | `datetime` | The time this workspace was last updated. |
 | `workspace_resource_count`        | `number`   | The time this workspace was last updated. |
 
-#### View Type: tf_versions
+#### View Type: `tf_versions`
 
 | Field              | Type     | Description |
 | ------------------ | -------- | ------------------------------------------------------------------ |
@@ -138,7 +139,7 @@ fields available for each view type are detailed below:
 | `workspace_count`  | `number` | The number of workspaces using this terraform version. |
 | `workspaces`       | `string` | A comma-separated list of workspaces using this terraform version. |
 
-#### View Type: providers
+#### View Type: `providers`
 
 | Field             | Type     | Description |
 | ------------------| -------- | --------------------------------------------------------- |
@@ -148,7 +149,7 @@ fields available for each view type are detailed below:
 | `workspace_count` | `number` | The number of workspaces using this provider. |
 | `workspaces`      | `string` | A comma-separated list of workspaces using this provider. |
 
-#### View Type: modules
+#### View Type: `modules`
 
 | Field             | Type     | Description |
 | ------------------| -------- | ------------------------------------------------------- |
@@ -164,19 +165,21 @@ The explorer can present filtered data from any view type using a variety of
 operators.
 
 Filter strings begin with the reserved string `filter`, and are passed as URL
-query string parameters using key-value pairs. The parameter key defines the
+query string parameters using key-value pairs. The parameter key contains the
 filter's target field and operator, and the parameter value contains the filter
 value to be used during the query.
 
-Filters can be combined by providing multiple filter query string parameters
-separated with `&`. When multiple filters are used, a logical AND is used
+Multiple filters can be used in a query by providing multiple filter query
+string parameters separated with `&`. When multiple filters are used, a logical AND is used
 to evaluate the results.
 
-Each filter key string must use the following format:
+Each filter string must use the following format:
 
 ```
-filter[<FILTER_INDEX>][<FIELD_NAME>][<FIELD_OPERATOR>][FIELD_VALUE_INDEX]
+filter[<FILTER_INDEX>][<FIELD_NAME>][<FIELD_OPERATOR>][FIELD_VALUE_INDEX]=<FILTER VALUE>
 ```
+
+**Filter string sub-parameters**
 
 - **FILTER_INDEX**: The index of the filter. Each filter requires a unique
   index. The first filter should use a `0` and each additional filter should
@@ -184,10 +187,10 @@ filter[<FILTER_INDEX>][<FIELD_NAME>][<FIELD_OPERATOR>][FIELD_VALUE_INDEX]
 - **FIELD_NAME**: The name of the field to apply the filter to. The field must
   be a valid field for the view type being queried. See [View
   Types](#view-types) for a list of fields available for each type.
-- **FIELD_OPERATOR**: The operator to use when filtering. Must be a supported by
-the field type being filtered. See [Filter Operators](#filter-operators) for the available operators and
-their supported field types.
-- **FIELD_VALUE_INDEX**: Must be `0`. This parameter is reserved for future use.
+- **FIELD_OPERATOR**: The operator to use when filtering. Must be supported by
+the field type being filtered. See [Filter Operators](#filter-operators) for the
+available operators and their supported field types.
+- **FIELD_VALUE_INDEX**: Must be `0`. This sub-parameter is reserved for future use.
 - **FILTER_VALUE**: The filter value used by the filter during the query.
 
 Once the desired filter strings have been added to a request URI, they should be
@@ -195,26 +198,28 @@ percent-encoded along with the rest of the query string parameters.
 
 #### Sample Filter Strings
 
-_Show workspaces that contain `test` in their name_
-(View Type: `workspace`)
+**View Type: `workspace`**
+
+_Show workspaces that contain `test` in their name:_
 
 ```
 filter[0][workspace_name][contains][0]=test
 ```
 
-After percent-encoding:
+_After encoding:_
 ```
 filter%5B0%5D%5Bworkspace_name%5D%5Bcontains%5D%5B0%5D=test
 ```
 
+**View Type: `modules`**
+
 _Show modules that contain `aws` in their name and version string equal to `1.1`_
-(View Type: `modules`)
 
 ```
 filter[0][name][contains][0]=aws&filter[0][version][is][0]=1.1
 ```
 
-After percent-encoding:
+_After encoding:_
 ```
 filter%5B0%5D%5Bname%5D%5Bcontains%5D%5B0%5D=aws&filter%5B0%5D%5Bversion%5D%5Bis%5D%5B0%5D=1.1
 ```
@@ -241,6 +246,8 @@ filter%5B0%5D%5Bname%5D%5Bcontains%5D%5B0%5D=aws&filter%5B0%5D%5Bversion%5D%5Bis
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 ### Sample Requests
+
+**View Type: `workspaces`**
 
 _Show data for all workspaces_ (View Type: `workspace`)
 
