@@ -218,6 +218,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request PATCH \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv
 ```
 
@@ -664,8 +665,7 @@ curl \
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  --request DELETE\
-  --data @payload.json \
+  --request DELETE \
   https://app.terraform.io/api/v2/varsets/varset-4q8f7H0NHG733bBH/relationships/vars/var-EavQ1LztoRTQHSNT
 ```
 
@@ -761,6 +761,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/workspaces
 ```
 
@@ -811,6 +812,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/workspaces
 ```
 
@@ -857,6 +859,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
 ```
 
@@ -907,6 +910,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
 ```
 
