@@ -170,7 +170,8 @@ To perform a policy evaluation:
 1. Select a **Workspace** to test the policy and upgraded version against.
 1. Click **Evaluate**.
 
-Terraform Cloud will execute the policy set using the specified version and the latest plan data for the selected workspace. It will display the evaluation results. If the evaluation returns a `Failed` status, inspect the JSON output to determine whether the issue is related to a non-compliant resource or is due to a syntax issue within a policy.
+Terraform Cloud will execute the policy set using the specified version and the latest plan data for the selected workspace. It will display the evaluation results. If the evaluation returns a `Failed` status, inspect the JSON output to determine whether the issue is related to a non-compliant resource or is due to a syntax issue.
+If the evaluation results in an error, check that the policy configuration is valid.
 
 ### Delete policy sets
 
