@@ -212,6 +212,24 @@ Organization owners can set up an SSO provider for the organization.
 
 #### General
 
+Organization owners can choose between Non-Aggregated (Default) and Aggregated status checks. This setting determines whether detailed information and links are accessed directly from the VCS Provider or Terraform Cloud.
+It also determines the quantity of status checks directly sent to the VCS Provider in response to actions such as Pull/Merge requests.
+
+##### Aggregated Status Checks
+
+Aggregated status checks offer a streamlined experience to customers with "monorepo" repositories, containing configuration for a large number of workspaces.
+
+When enabled, workspaces that are part of a shared repository will receive one status check that will aggregate all activity in response to an VCS event. This summary includes status checks that are scoped by organization and a configured VCS client connection.
+
+The aggregated status check will allow users to access additional information in Terraform Cloud by accessing the provided "details" link. This link leads users to a page in Terraform Cloud that offers a consolidated presentation across multiple Workspaces, highlighting details such as resource changes and possible issues that require user's attention.
+
+##### Non-aggregated Status Checks
+
+Default or legacy behavior where the VCS provider receives a status for each triggered Workspace and related Run stages (e.g. Plan, Policy Checks, Cost Estimation, Run Tasks, etc.) in response to a VCS event.
+
+###### Send passing commit statuses
+-> **Note:** Organization owners can enable **Send passing commit statuses** option if **Aggregated status checks** is disabled.
+
 Workspaces that use part of a shared repository do not typically run plans for changes that do not affect their files. This includes [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans) on pull requests. Since **pending** status checks can block pull requests, workspaces automatically send passing commit statuses for any PRs that do not affect their files.
 
 You can disable this behavior if it creates too many status checks to your VCS provider. You may want to do this if you have a large number of workspaces sharing one VCS repository.
