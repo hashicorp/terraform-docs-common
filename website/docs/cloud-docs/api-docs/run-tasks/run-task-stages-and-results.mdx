@@ -24,7 +24,7 @@ Terraform Cloud uses run task stages and run task results to track [run task](/t
 @include 'tfc-package-callouts/run-tasks.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/terraform/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/terraform/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage) and [Pre-Apply Stage](/terraform/cloud-docs/run/states#the-pre-apply-stage).
+When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/terraform/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/terraform/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage), [Pre-Apply Stage](/terraform/cloud-docs/run/states#the-pre-apply-stage) and [Post-Apply Stage](/terraform/cloud-docs/run/states#the-post-apply-stage).
 
 Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, Terraform Cloud creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
 
