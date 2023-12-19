@@ -249,20 +249,74 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 
 **View Type: `workspaces`**
 
-_Show data for all workspaces_ (View Type: `workspace`)
+_Show data for all workspaces_
 
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
-  https://app.terraform.io/api/v2/organizations/acme-corp/explorer?type=workspaces
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=workspaces'
 ```
 
-_Show data for all workspaces with `test` in their name _
+_Show data for all workspaces with `test` in their name_
 
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
-  https://app.terraform.io/api/v2/organizations/acme-corp/explorer?type=workspaces&filter[0][workspace_name][contains][0]=test
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=workspaces&&filter%5B0%5D%5Bworkspace_name%5D%5Bcontains%5D%5B0%5D=test'
+```
+
+**View Type: `modules`**
+
+_Show modules used across all workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=modules'
+```
+
+_Show public modules only_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=modules&filter%5B0%5D%5Bregistry_type%5D%5Bis%5D%5B0%5D=public'
+```
+
+**View Type: `provider`**
+
+_Show providers used across all workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=providers'
+```
+
+_Show most used providers across all workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=providers&sort=-workspace_count'
+```
+
+**View Type: `tf_versions`**
+
+_Show Terraform versions used across all workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=tf_versions'
+```
+
+_Show all Terraform versions used in more than 10 workspaces_
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=tf_versions&filter%5B0%5D%5Bworkspace_count%5D%5Bgt%5D%5B0%5D=10'
 ```
 
 ### Sample Response
@@ -393,7 +447,7 @@ _Show data for all workspaces_
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
-  https://app.terraform.io/api/v2/organizations/acme-corp/explorer/export/csv?type=workspaces
+  https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/export/csv?type=workspaces
 ```
 
 ### Sample Response
