@@ -228,7 +228,7 @@ The aggregated status check will allow users to access additional information in
 Default or legacy behavior where the VCS provider receives a status for each triggered Workspace and related Run stages (e.g. Plan, Policy Checks, Cost Estimation, Run Tasks, etc.) in response to a VCS event.
 
 ###### Send passing commit statuses
--> **Note:** Organization owners can enable **Send passing commit statuses** option if **Aggregated status checks** is disabled.
+-> **Note:** Organization owners can only enable **Send passing commit statuses** option if **Aggregated status checks** is disabled.
 
 Workspaces that use part of a shared repository do not typically run plans for changes that do not affect their files. This includes [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans) on pull requests. Since **pending** status checks can block pull requests, workspaces automatically send passing commit statuses for any PRs that do not affect their files.
 
