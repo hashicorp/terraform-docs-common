@@ -13,6 +13,10 @@ If you have issues formatting documentation, use the [documentation preview tool
 
 If you have already released a version of your provider and are unhappy with its documentation, [fix the documentation issue in your repository and include it in a new release](#how-do-i-correct-bugs-in-published-versions).
 
+### Why is my documentation not rendered like it is in Github?
+
+We make every effort to support GitHub Markdown syntax in the registry documentation, but there may be instances where compatibility limitations arise. To ensure consistent rendering in the Public Registry, we recommend using syntax widely supported across various Markdown flavors. You can test out your documentation in the registry docs preview tool at https://registry.terraform.io/tools/doc-preview.
+
 ## How do I remove a published version?
 
 If you remove a version of a provider, module, or policy library from the Terraform Registry, you will break the configuration of any individuals using that version. For this reason, _we never recommend removing previously published versions_ of providers, modules, or policy libraries.
@@ -120,9 +124,3 @@ If your GPG key or Github account has been compromised, please [reach out to us 
 ## Can I regain ownership of my artifact after losing access to my GitHub account?
 
 For support, please [reach out to us via email](/terraform/registry#getting-help).
-
-## Documentation Markdown Support
-
-### Why is my documentation not rendered like it is in Github?
-
-We make every effort to support GitHub Markdown syntax in the registry documentation, but there may be instances where compatibility limitations arise. To ensure consistent rendering in the Public Registry, we recommend using syntax widely supported across various Markdown flavors. You can test out your documentation in the registry docs preview tool at https://registry.terraform.io/tools/doc-preview.
