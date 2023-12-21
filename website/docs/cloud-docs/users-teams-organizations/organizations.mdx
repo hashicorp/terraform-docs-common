@@ -219,7 +219,7 @@ This setting also determines the number of status checks directly sent to the VC
 
 Aggregated status checks offer a streamlined experience if you have a single repository containing configuration for many workspaces (a.k.a., a monorepo).
 
-When enabled, Terraform Cloud will send one VCS status check for all runs triggered by a VCS event. If multiple workspaces are tied to a shared repository, status checks for these workspaces will be aggregated into one summary. This summary is unique to the workspace's organization and VCS client connection.
+When aggregated status checks are enabled, Terraform Cloud sends one VCS status check for all runs triggered by a VCS event. If multiple workspaces are tied to a shared repository, Terraform Cloud aggregates the status checks for these workspaces into one summary. This summary is unique to the workspace's organization and VCS client connection.
 
 The aggregated status check will allow users to access additional information in Terraform Cloud by accessing the provided "details" link. This link navigates users to a page in Terraform Cloud that offers a consolidated presentation across multiple Workspaces, highlighting details such as resource changes and possible issues that require user's attention.
 
