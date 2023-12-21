@@ -225,7 +225,7 @@ The aggregated status check will allow users to access additional information in
 
 ##### Non-aggregated Status Checks
 
-Default behavior where the VCS provider receives a status for each triggered Workspace and related Run stages (e.g. Plan, Policy Checks, Cost Estimation, Run Tasks, etc.) in response to a VCS event.
+The default behavior of VCS providers is that a provider receives a status for each triggered workspace and related run stage in response to a VCS event. For example, a VCS push triggers checks for each related workspace's run stages, including the plan operation, policy checks, cost estimation, run tasks, and more. 
 
 ###### Send passing commit statuses
 -> **Note:** Organization owners can only enable **Send passing commit statuses** option if **Aggregated status checks** is disabled.
