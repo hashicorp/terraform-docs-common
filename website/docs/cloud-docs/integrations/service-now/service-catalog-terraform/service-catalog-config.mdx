@@ -180,7 +180,7 @@ If using v2.2.0 or above, the Service Catalog app allows you to set an [executio
 
 ## Workspace Name
 
-Version 2.4.0 of the Service Catalog for Terraform introduces the ability to set custom names for your Terraform workspaces. Previously, workspace names defaulted to the ServiceNow RITM numbers without an option to change them. Now, you can choose a custom name that the RITM number will automatically append to, such as: `prod-us-east-1_RITM0010231`. If you leave the name blank, it will continue to default to the RITM number.
+Version 2.4.0 of the Service Catalog for Terraform introduces the ability to set custom names for your Terraform workspaces. You can choose a prefix for your workspace name that the Service Catalog app will append the ServiceNow RITM number to. If you do not define a workspace prefix, ServiceNow will use RITM number as the workspace name.
 
 Workspace names can include letters, numbers, dashes (`-`), and underscores (`_`), and should not exceed 90 characters.
 Refer to our [workspace naming recommendations](/terraform/cloud-docs/workspaces/creating#workspace-naming) for best practices.
