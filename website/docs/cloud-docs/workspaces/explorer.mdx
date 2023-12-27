@@ -56,3 +56,38 @@ The explorer for workspace visibility provides the following queries for specifi
 - **Latest updated workspaces** displays your most recently updated workspaces.
 - **Oldest applied workspaces** sorts workspaces by the date of the current applied run.
 
+## Custom filter conditions
+
+Explorer's query builder allows you to execute queries with custom filter
+conditions against any of the supported [**Types**](#types).
+
+To get started, select a [**Type**](#types) or [**Use Case**](#use-cases) from the
+Explorer home page. You can expand the "Modify conditions" section to show the
+filter conditions in use for the current query and to define new filter
+conditions.
+
+![Explorer Query Builder](/img/docs/query-builder.png)
+
+Each filter condition is represented by a row of inputs, each made up of a
+target field, operator, and value.
+
+The field dropdown allows you to select the target field for the condition. The
+options available will vary based on the [**Type**](#types) used.
+
+The operator dropdown allows you to select the operator for the condition. The
+options available will vary based on the target field's data type.
+
+Finally, the value field allows you to provide a value for the condition.
+
+-> **Tip:** Inspect the filter conditions used by the various pre-canned [**Use
+Cases**](#use-cases) to learn how they are constructed.
+
+Multiple filter conditions can be used within a query. When multiple conditions
+are provided, they are evaluated at query time with a logical AND. To add a new
+condition, use the "Add condition" button below the condition list. To remove a
+condition, use the trash bin button on the right hand side of the condition.
+
+While you stage updates to filter conditions using the query builder, query
+results will not be re-evaluated automatically. To execute the query once
+the desired filter conditions have been defined, press the "Run Query" button at
+the bottom of the query builder.
