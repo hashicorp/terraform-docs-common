@@ -217,6 +217,8 @@ This setting also determines the number of status checks directly sent to the VC
 
 ##### Non-aggregated Status Checks
 
+![Screenshot: Organization Non-aggregated status checks](/img/docs/organization-vcs-general-non-aggregated-status-checks.png)
+
 The default behavior of VCS providers is that a provider receives a status for each triggered workspace and related run stage in response to a VCS event. For example, a VCS push triggers checks for each related workspace's run stages, including the plan operation, policy checks, cost estimation, run tasks, and more.
 
 ###### Send passing commit statuses
@@ -227,6 +229,8 @@ Workspaces that use part of a shared repository do not typically run plans for c
 You can disable this behavior if it creates too many status checks to your VCS provider. You may want to do this if you have a large number of workspaces sharing one VCS repository.
 
 ##### Aggregated Status Checks
+
+![Screenshot: Organization Aggregated status checks](/img/docs/organization-vcs-general-aggregated-status-checks.png)
 
 Aggregated status checks offer a streamlined experience if you have a single repository containing configuration for many workspaces (a.k.a., a monorepo).
 
