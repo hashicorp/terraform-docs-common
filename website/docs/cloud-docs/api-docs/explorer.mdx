@@ -122,12 +122,13 @@ fields available for each view type are detailed below:
 | `resources_drifted`               | `number`   | The count of resources that drift was detected for. |
 | `resources_undrifted`             | `number`   | The count of resources that drift was not detected for. |
 | `state_version_terraform_version` | `string`   | The Terraform version used to create the current run's state file. |
-| `vcs_repo_identifier`             | `string`   | The Terraform version used by this workspace. |
+| `vcs_repo_identifier`             | `string`   | The name of the repository configured for this workspace, if available. |
 | `workspace_created_at`            | `datetime` | The time this workspace was created. |
 | `workspace_name`                  | `string`   | The name of this workspace. |
 | `workspace_terraform_version`     | `string`   | The Terraform version currently configured for this workspace. |
 | `workspace_updated_at`            | `datetime` | The time this workspace was last updated. |
-| `workspace_resource_count`        | `number`   | The time this workspace was last updated. |
+| `workspace_resource_count`        | `number`   | The count of resources in
+this workspace. |
 
 #### View Type: `tf_versions`
 
