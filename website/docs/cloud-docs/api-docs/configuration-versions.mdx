@@ -372,7 +372,7 @@ curl \
 | --------------------------- | ---------------------------------------------- |
 | `configuration_version_id`  | The ID of the configuration version to archive. |
 
-This endpoint notifies Terraform Cloud to discard the uploaded `.tar.gz` file associated with this configuration version. This endpoint can only archive configuration versions that were created with the API or CLI, are in an `uploaded` [state](#configuration-version-states), and have no runs in progress. Otherwise, calling this endpoint will result in an error.
+This endpoint notifies Terraform Cloud to discard the uploaded `.tar.gz` file associated with this configuration version. This endpoint can only archive configuration versions that were created with the API or CLI, are in an `uploaded` [state](#configuration-version-states), have no runs in progress, and are not the current configuration version for any workspace. Otherwise, calling this endpoint will result in an error.
 
 Terraform Cloud automatically archives configuration versions created through VCS when associated runs are complete and then re-fetches the files for subsequent runs.
 
