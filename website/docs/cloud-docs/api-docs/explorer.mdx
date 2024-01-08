@@ -41,13 +41,11 @@ description: >-
 
 # Explorer API
 
-Explorer allows you to query your Terraform Cloud data across workspaces.
-You can select from a variety of available views, optionally supplying sort and
+Explorer allows you to query your Terraform Cloud data across workspaces in an organization.
+You can select from a variety of available views and supply optional sort and
 filter parameters to present your data in the format that best suits your needs.
 
-Queries are scoped to the organization level. Querying an organization's data
-requires organization owner permissions, or read access to workspaces and
-projects.
+Queries are scoped to the organization level. You must have owner permissions in the organization, or read access to workspaces and projects.
 
 ## Execute a query
 
@@ -55,7 +53,7 @@ projects.
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. The organization must already exist and you must have permissions to read the organization's workspaces and projects. |
 
 -> **Note:** Explorer is restricted to the owners team, teams with the "Read all
 workspaces" permission, teams with the "Read all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
@@ -156,8 +154,8 @@ fields available for each view type are detailed below:
 | `name`            | `string` | The name of this module. |
 | `source`          | `string` | The source of this module. |
 | `version`         | `string` | The semantic version string for this module. |
-| `workspace_count` | `number` | The number of workspaces using this terraform version. |
-| `workspaces`      | `string` | A comma-separated list of workspaces using this module. |
+| `workspace_count` | `number` | The number of workspaces using this module version. |
+| `workspaces`      | `string` | A comma-separated list of workspaces using this module version. |
 
 ### Filtering
 
