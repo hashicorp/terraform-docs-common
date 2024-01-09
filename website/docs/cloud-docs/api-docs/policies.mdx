@@ -38,7 +38,7 @@ description: >-
 
 # Policies API
 
-Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices. Terraform Cloud policy enforcement lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces. Refer to [Policy Enforcement]((/cloud-docs/policy-enforcement) for more details.
+Policies are rules that Terraform Cloud enforces on Terraform runs. You can use policies to validate that the Terraform plan complies with security rules and best practices. Terraform Cloud policy enforcement lets you use the policy-as-code frameworks Sentinel and Open Policy Agent (OPA) to apply policy checks to Terraform Cloud workspaces. Refer to [Policy Enforcement](/terraform/cloud-docs/policy-enforcement) for more details.
 
 [Policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) are collections of policies that you can apply globally or to specific [projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) and workspaces, in your organization. For each run in the selected workspaces, Terraform Cloud checks the Terraform plan against the policy set and displays the results in the UI.
 
@@ -234,7 +234,7 @@ curl \
 
 | Parameter    | Description                                                                 |
 | ------------ | --------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to show. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to show. Refer to [List Policies](/terraform/cloud-docs/api-docs/policies#list-policies) for reference information about finding IDs. |
 
 | Status  | Response                                   | Reason                                                  |
 | ------- | ------------------------------------------ | ------------------------------------------------------- |
@@ -296,7 +296,7 @@ curl --request GET \
 
 | Parameter    | Description                                                                                                                          |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `:policy_id` | The ID of the policy to upload code to. Use the "List Policies" endpoint (or the response to a "Create Policy" request) to find IDs. |
+| `:policy_id` | The ID of the policy to upload code to. Refer to [List Policies](/terraform/cloud-docs/api-docs/policies#list-policies) for reference information about finding the policy ID. The ID also appears in the response when you create a policy.  |
 
 This endpoint uploads code to an existing Sentinel or OPA policy.
 
@@ -334,7 +334,7 @@ curl \
 
 | Parameter    | Description                                                                   |
 | ------------ | ----------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to update. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to update. Refer to [List Policies](/terraform/cloud-docs/api-docs/policies#list-policies) for reference information about finding IDs. |
 
 This endpoint can update the enforcement mode of an existing policy. To update the policy code itself, use the upload endpoint.
 
@@ -535,7 +535,7 @@ curl \
 
 | Parameter    | Description                                                                   |
 | ------------ | ----------------------------------------------------------------------------- |
-| `:policy_id` | The ID of the policy to delete. Use the "List Policies" endpoint to find IDs. |
+| `:policy_id` | The ID of the policy to delete. Refer to [List Policies](/terraform/cloud-docs/api-docs/policies#list-policies) for reference information about finding IDs. |
 
 | Status  | Response                  | Reason                                                   |
 | ------- | ------------------------- | -------------------------------------------------------- |
