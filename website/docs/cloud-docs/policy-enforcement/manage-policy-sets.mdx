@@ -20,9 +20,9 @@ Policy sets are collections of policies you can apply globally or to specific [p
 
 To view and manage policies and policy sets, you must have [manage policy permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policies) for your organization.
 
-## Differences between policy checks and policy evaluations
+## Policy checks versus policy evaluations
 
-Policy checks and policy evaluations serve the same purpose, but have different workflows for enforcing policies.
+Policy checks and policy evaluations serve the same purpose but have different workflows for enforcing policies.
 
 - _Policy checks_ run Sentinel policies. This is the default workflow for Sentinel. Policy checks use the latest version of the Sentinel runtime and have access to cost estimation data.
 - _Policy evaluations_ run in the [Terraform Cloud Agent](/terraform/cloud-docs/agents) in Terraform Cloud's infrastructure. Policy evaluations do not have access to cost estimation data.
@@ -37,7 +37,7 @@ You can use the following workflows to manage policies and policy sets for your 
 
 - **Individually Managed:** Add policies directly in the Terraform Cloud UI, and Terraform Cloud stores your policy code. This workflow is ideal for initial experimentation with policy enforcement, but we do not recommend it for organizations with large numbers of policies.
 - **Version Control:** Connect Terraform Cloud to a version control repository containing a policy set. When you push changes to the repository, Terraform Cloud automatically uses the updated policy set.
-- **Automated:** Push versions of policy sets to Terraform Cloud with the [Terraform Cloud Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets#create-a-policy-set-version). For Sentinel only, you can also use the `tfe` provider [`tfe_policy_set`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) resource. This workflow is ideal for automated Continuous Integration and Deployment (CI/CD) pipelines.
+- **Automated:** Push versions of policy sets to Terraform Cloud with the [Terraform Cloud policy sets API](/terraform/cloud-docs/api-docs/policy-sets#create-a-policy-set-version). For Sentinel only, you can also use the `tfe` provider [`tfe_policy_set`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) resource. This workflow is ideal for automated continuous integration and deployment (CI/CD) pipelines.
 
 ## Policy enforcement levels
 
@@ -142,9 +142,9 @@ To create a policy set:
 
 To edit a policy set:
 
-1.  Go to the **Policy Sets** section of your organization’s settings.
-2.  Click the policy set you want to edit to go to its settings page.
-3.  Adjust the settings and click **Update policy set**.
+1. Go to the **Policy Sets** section of your organization’s settings.
+1. Click the policy set you want to edit to go to its settings page.
+1. Adjust the settings and click **Update policy set**.
 
 ### Delete policy sets
 

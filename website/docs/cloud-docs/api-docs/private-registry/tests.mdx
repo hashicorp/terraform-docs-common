@@ -40,15 +40,15 @@ description: >-
 
 Performing a test on a new configuration is a multi-step process.
 
-1.  [Create a configuration version on the registry module](#create-a-configuration-version-for-a-test).
-2.  [Upload configuration files to the configuration version](#upload-configuration-files-for-a-test).
-3.  [Create a test on the module](#create-a-test-run); Terraform Cloud completes this step automatically when a configuration file is uploaded.
+1. [Create a configuration version on the registry module](#create-a-configuration-version-for-a-test).
+1. [Upload configuration files to the configuration version](#upload-configuration-files-for-a-test).
+1. [Create a test on the module](#create-a-test-run); Terraform Cloud completes this step automatically when you upload a configuration file.
 
 Alternatively, you can create a test with a pre-existing configuration version, even one from another module. This is useful for promoting known good code from one module to another.
 
 ## Attributes
 
-The tests API has the following attributes.
+The `tests` API endpoint has the following attributes.
 
 ### Test run states
 
@@ -119,11 +119,11 @@ Properties without a default value are required.
 
 | Key path                                           | Type                 | Default       | Description                                                                                        |
 | -------------------------------------------------- | -------------------- | ------------- | -------------------------------------------------------------------------------------------------- |
-| `data.attributes.verbose`                          | bool                 | false         | Specifies whether Terraform should print the plan or state for each test run block as it executes. |
-| `data.attributes.test-directory`                   | string               | "tests"       | Sets the directory where Terraform Cloud executes the tests.                                                  |
+| `data.attributes.verbose`                          | bool                 | `false`         | Specifies whether Terraform should print the plan or state for each test run block as it executes. |
+| `data.attributes.test-directory`                   | string               | `"tests"`       | Sets the directory where Terraform Cloud executes the tests.                                                  |
 | `data.attributes.filters`                          | array\[string]       | (empty array) | When specified, Terraform Cloud only executes the test files contained within this array.              |
 | `data.attributes.variables`                        | array\[{key, value}] | (empty array) | Specifies an optional list of test-specific environment variable values.                           |
-| `data.relationships.configuration-version.data.id` | string               |               | Specifies the configuration version that Terraform Cloud executes the test against.                            |
+| `data.relationships.configuration-version.data.id` | string               |  none   | Specifies the configuration version that Terraform Cloud executes the test against.                            |
 
 ### Sample Payload
 
@@ -302,10 +302,10 @@ curl \
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
-| Parameter      | Description                                                          |
-| -------------- | -------------------------------------------------------------------- |
-| `page[number]` | **Optional.** If omitted, the endpoint returns the first page.   |
-| `page[size]`   | **Optional.** If omitted, the endpoint returns 20 runs per page. |
+| Parameter | Description | Required |
+| --- | --- | --- |
+| `page[number]` | If omitted, the endpoint returns the first page.   |  Optional |
+| `page[size]`   | If omitted, the endpoint returns 20 runs per page. | Optional |
 
 ### Sample Request
 
@@ -476,7 +476,7 @@ curl \
 | `:provider`          | The name of the provider for which the test is being canceled.                                                                                                                                         |
 | `:test_run_id`       | The test ID to cancel. |
 
-Use the `cancel` action to interrupt a test that is currently running. The running Terraform process is sent an `INT` signal, which instructs Terraform to safely end the tests and attempt to teardown any infrastructure that your tests create.
+Use the `cancel` action to interrupt a test that is currently running. The action sends an `INT` signal to the running Terraform process, which instructs Terraform to safely end the tests and attempt to teardown any infrastructure that your tests create.
 
 | Status  | Response                  | Reason(s)                                  |
 | ------- | ------------------------- | ------------------------------------------ |
@@ -545,11 +545,11 @@ Properties without a default value are required.
 
 | Key path                      | Type   | Default | Description                                                                                           |
 | ----------------------------- | ------ | ------- | ----------------------------------------------------------------------------------------------------- |
-| `data.type`                   | string |         | Must be `"vars"`.                                                                                     |
-| `data.attributes.key`         | string |         | The name of the variable.                                                                             |
+| `data.type`                   | string | none | Must be `"vars"`.                                                                                     |
+| `data.attributes.key`         | string | none | The name of the variable.                                                                             |
 | `data.attributes.value`       | string | `""`    | The value of the variable.                                                                            |
-| `data.attributes.description` | string |         | The description of the variable.                                                                      |
-| `data.attributes.category`    | string |         | This must be `"env"`.                                                                                   |
+| `data.attributes.description` | string | none | The description of the variable.                                                                      |
+| `data.attributes.category`    | string | none | This must be `"env"`.                                                                                   |
 | `data.attributes.sensitive`   | bool   | `false` | Whether the value is sensitive. When set to `true`, Terraform writes the variable once and is not visible thereafter. |
 
 ### Sample Payload
@@ -671,7 +671,7 @@ Properties without a default value are required.
 | Key path          | Type   | Default | Description                                                                                                                                                                                                                                                                                                                 |
 | ----------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `data.type`       | string |         | Must be `"vars"`.                                                                                                                                                                                                                                                                                                           |
-| `data.attributes` | object |         | New attributes for the variable. This object can include `key`, `value`, `description`, `category`, and `sensitive` properties. Refer to [Create an Environment Variable for Module Tests](#create-an-environment-variable-for-module-tests) for additional information. All properties are optional. |
+| `data.attributes` | object | none | New attributes for the variable. This object can include `key`, `value`, `description`, `category`, and `sensitive` properties. Refer to [Create an Environment Variable for Module Tests](#create-an-environment-variable-for-module-tests) for additional information. All properties are optional. |
 
 ### Sample Payload
 
