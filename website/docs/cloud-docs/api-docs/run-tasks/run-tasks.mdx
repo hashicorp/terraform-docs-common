@@ -169,7 +169,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `include`      | **Optional.** Allows including related resource data. Value must be a comma-separated list containing one or more of `workspace_tasks` or `workspace_tasks.workspace`. |
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                                                                                                     |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page.                                                                                            |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 run tasks per page.                                                                                            |
 
 ### Sample Request
 
@@ -449,7 +449,7 @@ Properties without a default value are required.
 |-------------------------------------|--------|---------------|--------------------------------------------------------------------------------------------------------------------|
 | `data.type`                         | string |               | Must be `"workspace-tasks"`.                                                                                       |
 | `data.attributes.enforcement-level` | string |               | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                |
-| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, or `"pre_apply"`. |
+| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
 | `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
 | `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
 
@@ -538,7 +538,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | Parameter      | Description                                                                 |
 | -------------- | --------------------------------------------------------------------------- |
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 run tasks per page. |
 
 ### Sample Request
 

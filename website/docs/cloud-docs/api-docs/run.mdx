@@ -330,6 +330,8 @@ curl \
 |----------------|------------------------------------|
 | `workspace_id` | The workspace ID to list runs for. |
 
+By default, `plan_only` runs will be excluded from the results. To see all runs, use `filter[operation]` with all available operations included as a comma-separated list.
+
 | Status  | Response                                         | Reason                   |
 |---------|--------------------------------------------------|--------------------------|
 | [200][] | Array of [JSON API document][]s (`type: "runs"`) | Successfully listed runs |

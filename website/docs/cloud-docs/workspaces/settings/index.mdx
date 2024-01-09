@@ -50,10 +50,6 @@ The [project](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects
 
 Enter a brief description of the workspace's purpose or types of infrastructure.
 
-### Description (Optional)
-
-Enter a brief description of the workspace's purpose or types of infrastructure.
-
 ### Execution Mode
 
 Whether to use Terraform Cloud as the Terraform execution platform for this workspace.
@@ -84,11 +80,7 @@ To minimize the number of runs that error when changing your workspace's executi
 
 Whether or not Terraform Cloud should automatically apply a successful Terraform plan. If you choose manual apply, an operator must confirm a successful plan and choose to apply it.
 
-<!-- BEGIN: TFC:only name:auto-apply-run-trigger -->
-
 The main auto-apply setting affects runs created by the Terraform Cloud user interface, API, CLI, and version control webhooks. Terraform Cloud also has a separate setting for runs created by [run triggers](/terraform/cloud-docs/workspaces/settings/run-triggers) from another workspace.
-
-<!-- END: TFC:only name:auto-apply-run-trigger -->
 
 Auto-apply has the following exception:
 
@@ -98,11 +90,11 @@ Auto-apply has the following exception:
 
 ### Terraform Version
 
-The Terraform version to use for all operations in the workspace. The default value is whichever release was current when the workspace was created.
+The Terraform version to use for all operations in the workspace. The default value is whichever release was current when Terraform Cloud created the workspace. You can also update a workspace's Terraform version to an exact version or a valid [version constraint](/terraform/language/expressions/version-constraints).
 
 > **Hands-on:** Try the [Upgrade Terraform Version in Terraform Cloud](/terraform/tutorials/cloud/cloud-versions) tutorial.
 
--> **API:** You can specify a Terraform version when [creating a workspace](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace) via the API. The API also supports setting a valid [version constraint](/terraform/language/expressions/version-constraints) as the Terraform version.
+-> **API:** You can specify a Terraform version when you [create a workspace](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace) with the API.
 
 ### Terraform Working Directory
 

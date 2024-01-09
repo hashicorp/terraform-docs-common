@@ -210,7 +210,32 @@ Organization owners can set up an SSO provider for the organization.
 
 ### Version Control
 
-#### General
+#### Status Checks
+
+Status checks are notifications sent to your version control system VCS provider, providing details about specific commits, including the present status of the Terraform Cloud run. Please refer to your VCS provider's documentation regarding status checks (e.g., [GitHub Status Checks Documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks)).
+
+Organization owners can choose between _aggregated_ (default) and _non-aggregated_ status checks. This setting determines whether detailed information and links are accessed directly from the VCS provider or Terraform Cloud.
+This setting also determines the number of status checks directly sent to the VCS Provider in response to actions such as pull or merge requests.
+
+##### Aggregated Status Checks
+
+Aggregated status checks offer a streamlined experience if you have a single repository containing configuration for many workspaces (a.k.a., a monorepo).
+
+When aggregated status checks are enabled, Terraform Cloud sends one VCS status check for all runs triggered by a VCS event. If multiple workspaces are tied to a shared repository, Terraform Cloud aggregates the status checks for these workspaces into one summary. This summary is unique to the workspace's organization and VCS client connection.
+
+You can access additional information about an aggregated status check in Terraform Cloud by clicking the **Details** link that the status check provides. This link navigates you to a Terraform Cloud page that offers the consolidated status check results across multiple workspaces, highlighting details such as resource changes and issues that require attention.
+
+![Screenshot: Organization Aggregated status checks](/img/docs/organization-vcs-general-aggregated-status-checks.png)
+
+##### Non-aggregated Status Checks
+
+The alternative behavior of VCS providers is that a provider receives a status for each triggered workspace and related run stage in response to a VCS event. For example, a VCS push triggers checks for each related workspace's run stages, including the plan operation, policy checks, cost estimation, run tasks, and more.
+
+![Screenshot: Organization Non-aggregated status checks](/img/docs/organization-vcs-general-non-aggregated-status-checks.png)
+
+###### Send passing commit statuses
+
+-> **Note:** Organization owners can only enable the **Send passing commit statuses** setting if the **Aggregated status checks** setting is disabled.
 
 Workspaces that use part of a shared repository do not typically run plans for changes that do not affect their files. This includes [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans) on pull requests. Since **pending** status checks can block pull requests, workspaces automatically send passing commit statuses for any PRs that do not affect their files.
 
@@ -228,6 +253,21 @@ Configure [VCS providers](/terraform/cloud-docs/vcs) to use in the organization.
 
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+
+### Destruction and Deletion
+
+#### Data Retention Policies
+
+<EnterpriseAlert>
+Data retention policies are exclusive to Terraform Enterprise, and not available in Terraform Cloud. <a href="https://developer.hashicorp.com/terraform/enterprise">Learn more about Terraform Enterprise</a>.
+</EnterpriseAlert>
+
+By default, the **Do not auto-delete data** option is enabled for an organization. This option directs Terraform Enterprise to retain data associated with configuration and state versions, but organization owners can define configurable data retention policies that allow Terraform to _soft delete_ the backing data associated with configuration versions and state versions. Soft deleting refers to marking a data object for garbage collection so that Terraform can delete the object after a set number of days.
+
+Once an object is soft deleted, any attempts to read the object will fail. Until the garbage collection process begins, you can restore soft deleted objects using the APIs described in the [configuration version documentation](/terraform/enterprise/api-docs/configuration-versions) and the [state version documentation](/terraform/enterprise/api-docs/state-versions). Terraform permanently deletes the archivist storage after the garbage collection grace period elapses.
+
+The organization policy is the default policy applied to all workspaces, but members of individual workspaces can set overriding policies for their workspaces that take precedence over the organization policy
 
 ## Trial Expired Organizations
 
