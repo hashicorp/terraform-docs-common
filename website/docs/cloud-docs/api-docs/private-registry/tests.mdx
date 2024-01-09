@@ -54,36 +54,36 @@ The `tests` API endpoint has the following attributes.
 
 The state of the test operation is found in `data.attributes.status`, and you can reference the following list of possible states.
 
-| State      | Description                                             |   |
-| ---------- | ------------------------------------------------------- | - |
-| `pending`  | The initial status of a run after creation.             |   |
-| `queued`   | Terraform Cloud has queued the test operation to start. |   |
-| `running`  | Terraform Cloud is executing the test.                  |   |
-| `errored`  | The test has errored. This is a final state.            |   |
-| `canceled` | The test has been canceled. This is a final state.      |   |
-| `finished` | The test has completed. This is a final state.          |   |
+| State      | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| `pending`  | The initial status of a run after creation.             |
+| `queued`   | Terraform Cloud has queued the test operation to start. |
+| `running`  | Terraform Cloud is executing the test.                  |
+| `errored`  | The test has errored. This is a final state.            |
+| `canceled` | The test has been canceled. This is a final state.      |
+| `finished` | The test has completed. This is a final state.          |
 
 ### Test run status
 
 The final test status is found in `data.attributes.test-status`, and you can reference the following list of possible states.
 
-| Status | Description                  |   |
-| ------ | ---------------------------- | - |
-| `pass` | The given tests have passed. |   |
-| `fail` | The given tests have failed. |   |
+| Status | Description                  | 
+| ------ | ---------------------------- |
+| `pass` | The given tests have passed. | 
+| `fail` | The given tests have failed. |
 
 ### Detailed test status
 
 The test results can be found via the following attributes
 
 | Status                          | Description                                 |   |
-| ------------------------------- | ------------------------------------------- | - |
-| `data.attributes.tests-passed`  | The number of tests that have passed.       |   |
-| `data.attributes.tests-failed`  | The number of tests that have failed.       |   |
-| `data.attributes.tests-errored` | The number of tests that have errored out.  |   |
-| `data.attributes.tests-skipped` | The number of tests that have been skipped. |   |
+| ------------------------------- | ------------------------------------------- |
+| `data.attributes.tests-passed`  | The number of tests that have passed.       |
+| `data.attributes.tests-failed`  | The number of tests that have failed.       |
+| `data.attributes.tests-errored` | The number of tests that have errored out.  |
+| `data.attributes.tests-skipped` | The number of tests that have been skipped. |
 
-## Create a Test Run
+## Create a test Run
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/test-runs`
 
