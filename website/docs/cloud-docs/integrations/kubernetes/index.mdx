@@ -120,6 +120,56 @@ The operator passes the workspace's `string_length` variable to the module and s
 
 Refer to the [module API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#module) for the complete `Module` specification.
 
+### Project
+
+The `Project` controller allows managing Terraform Cloud [Projects](/terraform/tutorials/cloud/projects) via Kubernetes Custom Resources.
+
+The following example creates a new project named `testing`.
+
+```yaml
+---
+apiVersion: app.terraform.io/v1alpha2
+kind: Project
+metadata:
+  name: testing
+spec:
+  organization: kubernetes-operator
+  token:
+    secretKeyRef:
+      name: tfc-operator
+      key: token
+  name: project-demo
+```
+
+The `Project` controller allows managing the Team Access [permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
+
+<CodeBlockConfig highlight="13-16">
+
+```yaml
+---
+apiVersion: app.terraform.io/v1alpha2
+kind: Project
+metadata:
+  name: testing
+spec:
+  organization: kubernetes-operator
+  token:
+    secretKeyRef:
+      name: tfc-operator
+      key: token
+  name: project-demo
+  teamAccess:
+  - team:
+      name: qa
+    access: admin
+```
+
+</CodeBlockConfig>
+
+The above example extends the previous one by granting `admin` access permissions to the `qa` team for managing this project.
+
+Refer to the [project API reference](/terraform/cloud-docs/integrations/kubernetes/api-reference#project) for the complete `Project` specification.
+
 ### Workspace
 
 Terraform Cloud workspaces organize and manage Terraform configurations. The Terraform Cloud Operator for Kubernetes allows you to create, configure, and manage workspaces directly from Kubernetes.
