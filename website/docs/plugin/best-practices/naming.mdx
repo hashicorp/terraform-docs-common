@@ -30,6 +30,10 @@ those cases be plural. For example the data source
 [`aws_availability_zones`](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones)
 in the AWS provider returns a list of availability zones.
 
+### Function Names
+
+Function names are verbs, since they encapsulate computational logic for usage in practitioner configurations. Unlike resource and data source naming, function names should _NOT_ include the provider name since the configuration language syntax for calling the function must already specify the provider name separately. For example, a `time` provider-defined function that parses RFC3339 timestamp strings should be named `parse_rfc3339` since it would be called via `provider::time::parse_rfc3339`.
+
 ### Attribute Names
 
 Below is an example of a resource configuration block which illustrates some
