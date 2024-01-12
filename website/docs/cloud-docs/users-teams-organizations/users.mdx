@@ -29,13 +29,13 @@ Terraform Cloud user sessions are automatically terminated if there has been no 
 - Standalone Terraform Cloud accounts can remain idle and valid for up to 14 days by default
 - Terraform Cloud accounts linked to an HCP account follow the HCP defaults and can remain idle for 1 hour by default
 
-After a session is terminated, a user can resume their session by logging back in through accessing the Terraform Cloud TFC portal.  This is a security measure to prevent unauthorized access of unmonitored devices.
+After your session is terminated, you can resume your session by logging back in through accessing the Terraform Cloud TFC portal.  This is a security measure to prevent unauthorized access of unmonitored devices.
 
 -> **Note:** Terraform Cloud organization owners can reduce the idle session timeout for an organization in the authentication settings for standalone Terraform Cloud accounts, but cannot modify settings for Terraform Cloud accounts linked to HCP accounts.
 
 ### Forced re-authentication
 
-Forced re-authentication (e.g. “remember for”) forces a user to re-authenticate, regardless of activity.  This is a security measure to force a new identity verification to access sensitive IT and data managed by Terraform Cloud.  In this case, a user must re-authenticate their credentials and may be asked to verify 2FA/MFA again.
+Forced re-authentication (e.g. “remember for”) forces a user to re-authenticate, regardless of activity.  This is a security measure to force a new identity verification to access sensitive IT and data managed by Terraform Cloud.  In this case, the user must re-authenticate their credentials and may be asked to verify 2FA/MFA again.
 
 - By default, standalone Terraform Cloud accounts are forced to re-authenticate every 14 days 
 - By default, Terraform Cloud accounts linked to an HCP account follow the HCP defaults and are forced to re-authenticate every 48 hours
