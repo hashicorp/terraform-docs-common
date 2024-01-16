@@ -2,7 +2,6 @@
 page_title: Testing Private Modules - Private Registry - Terraform Cloud
 description: >-
   Enable automated module testing in the private registry
-tfc_only: true
 ---
 
 # Test-integrated modules in the Terraform Cloud private registry
@@ -44,7 +43,7 @@ To add environment variables to your module's tests:
 1. In the **Variables** section on the **Tests Settings** screen, click **+ Add variable**. 
 1. Provide a **Key** and **Value** for your environment variable, and if you want to protect the variable's value, click the **Sensitive** checkbox. 
 1. Click **Add variable** to save it.
-
+<!-- BEGIN: TFC:only -->
 ## Generated module tests
 
 ~> **Note**: Generated module tests are available in Terraform Cloud **Plus** Edition and are in public beta. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
@@ -58,3 +57,4 @@ To generate tests for your module:
 1. Terraform Cloud displays generated configuration. To download all of the test files, click **Download generated tests**.
 1. Create a `tests` directory in your configuration.
 1. Unzip the downloaded files into the new `tests` directory.
+<!-- END: TFC:only -->
