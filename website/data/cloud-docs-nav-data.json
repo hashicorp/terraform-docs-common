@@ -275,7 +275,10 @@
       { "title": "Teams", "path": "users-teams-organizations/teams" },
       {
         "title": "Organizations",
-        "path": "users-teams-organizations/organizations"
+        "routes": [
+          {"title": "Overview","path": "users-teams-organizations/organizations"},
+          { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" }
+        ]
       },
       {
         "title": "Permissions",
