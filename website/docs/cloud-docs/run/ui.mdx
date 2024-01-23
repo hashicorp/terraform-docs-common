@@ -27,7 +27,7 @@ The Terraform code for a normal run always comes from version control, and is al
 
 In a workspace linked to a VCS repository, runs start automatically when you merge or commit changes to version control.
 
--> **Note:** If you're using GitHub as your VCS provider and 300 files are reported as changed by the GitHub API when your PR is merged, Terraform Cloud will trigger all connected workspaces for that given repository. This is due to the fact that GitHub limits the number of changed files that it reports for a PR merge at 300, therefore necessitating the need for Terraform Cloud to proactively trigger workspaces to ensure that changes are not missed.
+If you use GitHub as your VCS provider and merge a PR changing 300 or more files, Terraform Cloud automatically triggers runs for every workspace connected to that repository. The GitHub API has a limit of 300 reported changed files for a PR merge. To address this, Terraform Cloud initiates workspace runs proactively, preventing oversight of file changes beyond this limit.
 
 A workspace is linked to one branch of a VCS repository and ignores changes to other branches. You can specify which files and directories within your repository trigger runs. Terraform Cloud can also automatically trigger runs when you create Git tags. Refer to [Automatic Run Triggering](/terraform/cloud-docs/workspaces/settings/vcs#automatic-run-triggering) for details.
 
