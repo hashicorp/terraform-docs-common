@@ -127,7 +127,7 @@ Every audit log event in the response array includes the following standard fiel
 | `resource.id`          | string            | The ID of resource (for example,`run-FwnENkvDnrpyFC7M`)            |
 | `resource.type`        | string       | Type of resource (for example, `run`)                               |
 | `resource.action`      | string       | Action audited (for example, `applied`)                             |
-| `resource.meta`        | -            | Key-value metadata about this audited event                 |
+| `resource.meta`        | map            | Key-value metadata about this audited event (defaults to `null`)                 |
 
 
 The following audit trail events _only_ contain these standard fields:
@@ -161,7 +161,7 @@ The following audit trail events _only_ contain these standard fields:
 | `state_version`            | `index`, `show`, `create`, `soft_delete_backing_data`, `restore_backing_data`, `permanently_delete_backing_data` | Events related to state versions.                         |
 | `task_stage`                  | `override`              | Events related to an overriden task stage.                                |
 | `user`                  | `index`              | Events related to indexing users.                                |
-| `var`                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to variables.                             |
+| `var` (enviornment variables)                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to enviornment variables.                             |
 | `vcs_repo`                 | `create`                                                    | Events related to creating a connection to a VCS repo.                     |
 
 The following sections list the audit log events containing both the standard response schema and a specific payload for each action.
@@ -270,74 +270,8 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 
 ### Run task events
 
-Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. 
+Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle.
 
-#### Callback
-
-A Terraform Cloud organization emits this event when a [run task](/terraform/cloud-docs/workspaces/settings/run-tasks) result's (`task_result`) callback action occurs. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
-
-| Key                          | Data Type          | Description                                               |
-| ---                          | ---                | ---                                                       |
-| `task_result_status`         | string             | The status of the task result.                            |
-| `task_result_url`            | string             | The URL associated with the task result.                 |
-| `task_result_message`        | string             | A message associated with the task result.               |
-| `workspace`                  | string             | The workspace related to the task result.                |
-| `workspace_id`               | string             | The ID of the workspace related to the task result.       |
-| `run_id`                     | string             | The ID of the run associated with the task result.        |
-| `run_created_at`             | date (iso8601)     | The timestamp when the run was created.                   |
-| `run_created_by`             | string             | The user who created the run.                            |
-| `run_message`                | string             | The message associated with the run.                     |
-| `run_is_speculative`         | boolean            | Indicates whether the run is speculative or not.         |
-| `workspace_task_id`          | string             | The ID of the workspace task associated with the result.  |
-| `workspace_task_stage`       | string             | The stage of the workspace task.                          |
-| `workspace_task_enforcement` | string             | The enforcement level of the workspace task.             |
-| `organization_task`          | string             | The organization task related to the task result.        |
-| `organization_task_id`       | string             | The ID of the organization task related to the result.    |
-| `organization_task_url`      | string             | The URL associated with the organization task.           |
-
-
-#### Create
-
-A Terraform Cloud organization emits this event when someone in your organization creates a run task for a workspace (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
-
-| Key                      | Data Type    | Description                     |
-| ---                      | ---          | ---                             |
-| `task_enforcement_level` | string       | The task's enforcement level.    |
-| `task_stage`             | string       | The stage of the task.           |
-| `workspace`              | string       | The workspace associated with the task. |
-| `workspace_id`           | string       | The ID of the workspace.         |
-| `organization_task`      | string       | The organization's task.         |
-| `organization_task_id`   | string       | The ID of the organization's task.|
-
-#### Update
-
-A Terraform Cloud organization emits this event when someone in your organization updates a run task for a workspace (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
-
-| Key                      | Data Type    | Description                     |
-| ---                      | ---          | ---                             |
-| `task_enforcement_level` | string       | The task's enforcement level.    |
-| `task_stage`             | string       | The stage of the task.           |
-| `workspace`              | string       | The workspace associated with the task. |
-| `workspace_id`           | string       | The ID of the workspace.         |
-| `organization_task`      | string       | The organization's task.         |
-| `organization_task_id`   | string       | The ID of the organization's task.|
-
-#### Destroy
-
-A Terraform Cloud organization emits this event when someone in your organization destroys a run task for a workspace (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
-
-| Key                      | Data Type    | Description                     |
-| ---                      | ---          | ---                             |
-| `task_enforcement_level` | string       | The task's enforcement level.    |
-| `task_stage`             | string       | The stage of the task.           |
-| `workspace`              | string       | The workspace associated with the task. |
-| `workspace_id`           | string       | The ID of the workspace.         |
-| `organization_task`      | string       | The organization's task.         |
-| `organization_task_id`   | string       | The ID of the organization's task.|
-
-### Task events
-
-TODO: Description of what a task is.
 
 #### Create
 
@@ -377,6 +311,71 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 | `task_enabled`        | boolean      | Indicates whether the task is enabled after the update.  |
 | `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the updated task. |
 | `task_hmac_key_changed` | boolean    | Indicates whether the HMAC key for the task has changed during the update. |
+
+
+#### Callback
+
+A Terraform Cloud organization emits this event when a [run task](/terraform/cloud-docs/workspaces/settings/run-tasks) result's (`task_result`) callback action occurs. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                          | Data Type          | Description                                               |
+| ---                          | ---                | ---                                                       |
+| `task_result_status`         | string             | The status of the task result.                            |
+| `task_result_url`            | string             | The URL associated with the task result.                 |
+| `task_result_message`        | string             | A message associated with the task result.               |
+| `workspace`                  | string             | The workspace related to the task result.                |
+| `workspace_id`               | string             | The ID of the workspace related to the task result.       |
+| `run_id`                     | string             | The ID of the run associated with the task result.        |
+| `run_created_at`             | date (iso8601)     | The timestamp when the run was created.                   |
+| `run_created_by`             | string             | The user who created the run.                            |
+| `run_message`                | string             | The message associated with the run.                     |
+| `run_is_speculative`         | boolean            | Indicates whether the run is speculative or not.         |
+| `workspace_task_id`          | string             | The ID of the workspace task associated with the result.  |
+| `workspace_task_stage`       | string             | The stage of the workspace task.                          |
+| `workspace_task_enforcement` | string             | The enforcement level of the workspace task.             |
+| `organization_task`          | string             | The organization task related to the task result.        |
+| `organization_task_id`       | string             | The ID of the organization task related to the result.    |
+| `organization_task_url`      | string             | The URL associated with the organization task.           |
+
+
+#### Create
+
+A Terraform Cloud organization emits this event when someone in your organization creates a new run task for a workspace (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
+#### Update
+
+A Terraform Cloud organization emits this event when someone in your organization updates a workspace's run task (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
+#### Destroy
+
+A Terraform Cloud organization emits this event when someone in your organization destroys a workspace's run task (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
 
 ### Team events
 
