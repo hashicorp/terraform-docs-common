@@ -129,7 +129,6 @@ Every audit log event in the response array includes the following standard fiel
 | `resource.action`      | string       | Action audited (for example, `applied`)                             |
 | `resource.meta`        | map            | Key-value metadata about this audited event (defaults to `null`)                 |
 
-
 The following audit trail events _only_ contain these standard fields:
 
 | Event                      | Action                                                       | Description                                                |
@@ -272,7 +271,6 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 
 Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle.
 
-
 #### Create
 
 A Terraform Cloud organization emits this event when someone in your organization creates a task. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
@@ -284,7 +282,6 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 | `task_url`            | string       | The task's URL.                         |
 | `task_enabled`        | boolean      | Indicates whether the task is enabled or not.            |
 | `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the task.         |
-
 
 #### Destroy
 
@@ -298,7 +295,6 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 | `task_enabled`        | boolean      | Indicates whether the task to be destroyed is enabled.   |
 | `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the task to be destroyed. |
 
-
 #### Update
 
 A Terraform Cloud organization emits this event when someone in your organization updates a task. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
@@ -311,7 +307,6 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 | `task_enabled`        | boolean      | Indicates whether the task is enabled after the update.  |
 | `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the updated task. |
 | `task_hmac_key_changed` | boolean    | Indicates whether the HMAC key for the task has changed during the update. |
-
 
 #### Callback
 
@@ -335,7 +330,6 @@ A Terraform Cloud organization emits this event when a [run task](/terraform/clo
 | `organization_task`          | string             | The organization task related to the task result.        |
 | `organization_task_id`       | string             | The ID of the organization task related to the result.    |
 | `organization_task_url`      | string             | The URL associated with the organization task.           |
-
 
 #### Create
 
