@@ -230,7 +230,13 @@ Configure [VCS providers](/terraform/cloud-docs/vcs) to use in the organization.
 Data retention policies are exclusive to Terraform Enterprise, and not available in Terraform Cloud. <a href="https://developer.hashicorp.com/terraform/enterprise">Learn more about Terraform Enterprise</a>.
 </EnterpriseAlert>
 
-There are three types of data retention policies that an organization owner has the ability to set or override: the admin default policy, do not auto-delete, and auto-delete data.
+An organization owner can set or override the following data retention policies:
+
+- **Admin default policy**
+- **Do not auto-delete**
+- **Auto-delete data**
+
+Setting the data retention policy to **Admin default policy** disables the other data retention policy settings.
 
 If the admin default policy is selected, all other selections will be disabled by default until the admin default policy checkbox is unchecked.
 
