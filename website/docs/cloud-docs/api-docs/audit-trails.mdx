@@ -210,7 +210,16 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 
 ## Policy checks
 
-[Policy checks run Sentinel policies](/terraform/enterprise/policy-enforcement/manage-policy-sets). 
+[Policy checks run Sentinel policies](/terraform/enterprise/policy-enforcement/manage-policy-sets). Policy checks have a lifecycle that includes the following events:
+  * `passed`
+  * `queued`
+  * `passed`
+  * `soft_failed`
+  * `hard_failed`
+  * `overridden`
+  * `canceled`
+  * `force_canceled`
+  * `errored`
 
 Every policy check event in the response array includes the following standard fields:
 
@@ -247,7 +256,15 @@ Alongside the [standard audit trail fields](#standard-response-fields) and [stan
 
 ## Policy evaluation
 
-[Policy evaluations](/terraform/enterprise/policy-enforcement/manage-policy-sets) run in the Terraform Cloud Agent in Terraform Cloud's infrastructure.
+[Policy evaluations](/terraform/enterprise/policy-enforcement/manage-policy-sets) run in the Terraform Cloud Agent in Terraform Cloud's infrastructure. Policy evaluartions have a lifecycle that includes the following events:
+  * `queue`
+  * `run`
+  * `pass`
+  * `fail`
+  * `override`
+  * `error`
+  * `cancel`
+  * `force_cancel`
 
 Every policy evaluation event in the response array includes the following standard fields:
 
