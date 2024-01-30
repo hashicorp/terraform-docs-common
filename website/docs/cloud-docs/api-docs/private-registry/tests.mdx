@@ -83,6 +83,17 @@ The test results can be found via the following attributes
 | `data.attributes.tests-errored` | The number of tests that have errored out.  |
 | `data.attributes.tests-skipped` | The number of tests that have been skipped. |
 
+### Test Sources
+List tests for a module
+You can use the following sources as [tests list](/terraform/cloud-docs/api-docs/private-registry/tests#list-tests-for-a-module) query parameters.
+
+| Source                      | Description                                                                              |
+|-----------------------------|------------------------------------------------------------------------------------------|
+| `terraform`                 | Indicates a test was queued from Terraform Cloud CLI.                                    |
+| `tfe-api`                   | Indicates a test was queued from Terraform Cloud API.                                    |
+| `tfe-configuration-version` | Indicates a test was queued from a Configuration Version, triggered from a VCS provider. |
+
+
 ## Create a test Run
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/test-runs`
@@ -306,6 +317,8 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | --- | --- | --- |
 | `page[number]` | If omitted, the endpoint returns the first page.   |  Optional |
 | `page[size]`   | If omitted, the endpoint returns 20 runs per page. | Optional |
+| `filter[source]`    | **Optional.** A comma-separated list of test sources; the result will only include tests that came from one of these sources. Options are listed in [Test Sources](/terraform/cloud-docs/api-docs/private-registry/tests#test-sources).                                                                                                                                       |
+
 
 ### Sample Request
 
