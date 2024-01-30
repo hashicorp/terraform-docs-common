@@ -211,15 +211,7 @@ A Terraform Cloud organization emits this event when someone in your organizatio
 ## Policy checks
 
 [Policy checks run Sentinel policies](/terraform/enterprise/policy-enforcement/manage-policy-sets). Policy checks have a lifecycle that includes the following events:
-  * `passed`
-  * `queued`
-  * `passed`
-  * `soft_failed`
-  * `hard_failed`
-  * `overridden`
-  * `canceled`
-  * `force_canceled`
-  * `errored`
+  * passed, queued, passed, soft_failed, hard_failed, overridden, canceled, force_canceled, errored
 
 Every policy check event in the response array includes the following standard fields:
 
@@ -231,7 +223,7 @@ Every policy check event in the response array includes the following standard f
 | `workspace.id`        | string       | The ID of the associated workspace.             |
 | `workspace.name`      | string       | The name of the associated workspace.           |
 
-### Passed, soft failed, hard failed, and errored
+### Passed, soft failed, hard failed and errored
 
 Alongside the [standard audit trail fields](#standard-response-fields) and [standard policy check fields](#policy-checks), certain policy check events include a result (`includes_result`) and return the following fields:
 
@@ -246,7 +238,7 @@ Alongside the [standard audit trail fields](#standard-response-fields) and [stan
 | `duration_ms`         | integer         | Duration of the policy check in milliseconds.   |
 | `sentinel`            | string          | The Sentinel policy associated with the check.  |
 
-### Overriden, canceled, and force cancelled
+### Overriden, canceled and force cancelled
 
 Alongside the [standard audit trail fields](#standard-response-fields) and [standard policy check fields](#policy-checks), certain event responses include the following fields:
 
@@ -256,15 +248,8 @@ Alongside the [standard audit trail fields](#standard-response-fields) and [stan
 
 ## Policy evaluation
 
-[Policy evaluations](/terraform/enterprise/policy-enforcement/manage-policy-sets) run in the Terraform Cloud Agent in Terraform Cloud's infrastructure. Policy evaluartions have a lifecycle that includes the following events:
-  * `queue`
-  * `run`
-  * `pass`
-  * `fail`
-  * `override`
-  * `error`
-  * `cancel`
-  * `force_cancel`
+[Policy evaluations](/terraform/enterprise/policy-enforcement/policy-results#view-policy-results) run in the Terraform Cloud Agent in Terraform Cloud's infrastructure. Policy evaluations have a lifecycle that includes the following events:
+  * queue, run, pass, fail, override, error, cancel, force_cancel
 
 Every policy evaluation event in the response array includes the following standard fields:
 
@@ -277,6 +262,7 @@ Every policy evaluation event in the response array includes the following stand
 | `payload.run.message` | string       | The message associated with the run.            |
 | `actor`               | string       | The policy owner.              |
 
+Policy checks and policy evaluations serve the same purpose, but have different workflows for enforcing policies. For more information please access [Differences between policy checks and policy evaluations](/terraform/enterprise/policy-enforcement/manage-policy-sets#differences-between-policy-checks-and-policy-evaluations).
 
 ## Registry module events
 
