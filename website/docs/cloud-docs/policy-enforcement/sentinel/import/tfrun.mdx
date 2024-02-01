@@ -123,7 +123,7 @@ Specifies whether the plan is in refresh-only mode, which ignores configuration 
 
 * **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-replace`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-replace`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be null if no resource targets are specified.
 
 ### Value: `speculative`
 
@@ -135,14 +135,14 @@ Specifies whether the plan associated with the run is a [speculative plan](/terr
 
 * **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be null if no resource targets are specified.
 
-To prohibit targeted runs altogether, make sure the `target_addrs` value is undefined or empty:
+To prohibit targeted runs altogether, make sure the `target_addrs` value is null or empty:
 
 ```
 import "tfrun"
 
-main = (length(tfrun.target_addrs) else 0) == 0
+main = tfrun.target_addrs is null or tfrun.target_addrs is empty
 ```
 
 ### Value: `variables`
