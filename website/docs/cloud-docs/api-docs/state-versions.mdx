@@ -848,6 +848,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   https://app.terraform.io/api/v2/state-versions/sv-ntv3HbhJqvFzamy7/actions/soft_delete_backing_data
+  --data {"data": {"attributes": {"delete-older-than-n-days": 23}}}
 ```
 
 ### Sample Response
@@ -866,6 +867,7 @@ curl \
             "hosted-json-state-upload-url": null,
             "status": "backing_data_soft_deleted",
             "intermediate": false,
+            "delete-older-than-n-days": 23,
             "modules": {
                 "root": {
                     "null-resource": 1,
