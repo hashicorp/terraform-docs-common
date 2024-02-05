@@ -19,6 +19,8 @@ Terraform Cloud's access model is team-based. In order to perform an action with
 
 The permissions model is split into organization-level, project-level, and workspace-level permissions. Additionally, every organization has a special team named "owners", whose members have maximal permissions within the organization.
 
+There is a full [authorization matrix](terraform/cloud-docs/architectural-details/security-model#authorization-model) available within the architectural security model documentation.
+
 ## Organization Owners
 
 Every organization has a special "owners" team. Members of this team are often referred to as "organization owners".
@@ -44,6 +46,8 @@ Permissions for the owners team include:
 - Manage agents (owners only)
 
 This list is not necessarily exhaustive.
+
+If the organization has enabled Single Sign On, these permissions will also be applied to the built-in team "sso" that is provisioned upon Single Sign On being successfully implemented. The only difference between the "sso" and "owners" teams is their method of login; "sso" team members must login via the configured Single Sign On process, and "owners" team members must log in with Terraform Cloud native credentials. Members of both teams may log in with either method.
 
 [Organization Permissions]: #organization-permissions
 
