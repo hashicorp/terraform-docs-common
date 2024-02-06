@@ -82,6 +82,16 @@ Note that the "SSH Key" section in a workspace's settings is only used for mid-r
 
 ## General
 
+### Failure to retrieve configuration version
+
+If Terraform Cloud displays an error about configuration version retrieval, the VCS provider is likely not responding to Terraform Cloud's requests. 
+
+```
+Error: failed to retrieve configuration
+Retrieving the configuration version failed with the error: Timed out while fetching the configuration version..
+```
+This can happen if there is a network problem between Terraform Cloud and the VCS provider. Push a new commit with any content to a branch in the problem repository to trigger a new configuration version. New commits trigger the repository's associated webhook, creating a new run and configuration version in Terraform Cloud.
+
 ### Terraform Cloud returns 500 after authenticating with the VCS provider (other than Bitbucket Server)
 
 The Callback URL in the OAuth application configuration in the VCS provider probably wasn't updated in the last step of the instructions and still points to the default "/" path (or an example.com link) instead of the full callback url.
