@@ -93,7 +93,7 @@ There are several contextual views available for querying:
 | `workspaces`  | Information about the workspaces in the target organization and any current runs associated with them. Each row returned represents a single workspace. See [View Type: workspaces](#view-type-workspaces) for available fields. |
 | `tf_versions` | Information about the Terraform versions in use across this organization. Each row returned represents a Terraform version in use. See [View Type: tf_versions](#view-type-tf_versions) for available fields. |
 | `providers`   | Information about the Terraform providers in use across the target organization. Each row returned represents a Terraform provider in use. See [View Type: providers](#view-type-providers) for available fields. |
-| `modules`     | Information about the Terrraform modules in use across the target organization. Each row returned represents a Terraform module in use. See [View Type: modules](#view-type-modules) for available fields. |
+| `modules`     | Information about the Terraform modules in use across the target organization. Each row returned represents a Terraform module in use. See [View Type: modules](#view-type-modules) for available fields. |
 
 The fields returned by a given query are specific to the view type used. The
 fields available for each view type are detailed below:
@@ -127,8 +127,6 @@ fields available for each view type are detailed below:
 | `workspace_name`                  | `string`   | The name of this workspace. |
 | `workspace_terraform_version`     | `string`   | The Terraform version currently configured for this workspace. |
 | `workspace_updated_at`            | `datetime` | The time this workspace was last updated. |
-| `workspace_resource_count`        | `number`   | The count of resources in
-this workspace. |
 
 #### View Type: `tf_versions`
 
@@ -419,8 +417,8 @@ _Show data for all workspaces_
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 
-This endpoint can be used to download a full, unpaged export of the query results
-in CSV format.
+This endpoint can be used to download a full, unpaged export (with the filters 
+and sorts applied)of the query results in CSV format.
 
 Explorer queries will time out after 60 seconds. If the desired query is timing
 out, try a simpler query that uses less filters.
