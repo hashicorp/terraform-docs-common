@@ -59,6 +59,7 @@
         "title": "Cost Estimates",
         "path": "api-docs/cost-estimates"
       },
+      { "title": "Explorer", "path": "api-docs/explorer" },
       { "title": "Feature Sets", "path": "api-docs/feature-sets" },
       { "title": "GitHub App Installations", "path": "api-docs/github-app-installations"},
       { "title": "Invoices", "path": "api-docs/invoices" },
