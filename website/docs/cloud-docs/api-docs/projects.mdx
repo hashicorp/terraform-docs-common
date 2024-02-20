@@ -56,10 +56,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default | Description                                                                                                                                                                                           |
-|------------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |         | Must be `"projects"`.                                                                                                                                                                                 |
-| `data.attributes.name` | string |         | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path                      | Type   | Default   | Description                                                                                                                                                                                           |
+|-------------------------------|--------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                   | string |           | Must be `"projects"`.                                                                                                                                                                                 |
+| `data.attributes.name`        | string |           | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
+| `data.attributes.description` | string | (nothing) | **Optional.** The description of the project. It must be no more than 256 characters long.                                                                                                            |
 
 ### Sample Payload
 
@@ -68,6 +69,7 @@ Properties without a default value are required.
   "data": {
     "attributes": {
       "name": "Test Project"
+      "description": "An example project for documentation."
     },
     "type": "projects"
   }
@@ -83,6 +85,7 @@ Properties without a default value are required.
     "type": "projects",
     "attributes": {
       "name": "Test Project",
+      "description": "An example project for documentation.",
       "permissions": {
         "can-update": true
       }
@@ -119,10 +122,12 @@ These PATCH endpoints require a JSON object with the following properties as a r
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default          | Description                                                                                                                                                                                              |
-|------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
-| `data.attributes.name` | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path                      | Type   | Default          | Description                                                                                                                                                                                              |
+|-------------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                   | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
+| `data.attributes.name`        | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 36 characters long. |
+| `data.attributes.description` | string | (previous value) | The new description for the project. It must be no more than 256 characters long.                                                                                                                        |
+
 
 ### Sample Payload
 
@@ -157,6 +162,7 @@ $ curl \
     "type": "projects",
     "attributes": {
       "name": "Infrastructure Project",
+      "description": null,
       "permissions": {
         "can-update": true,
         "can-destroy": true,
@@ -224,6 +230,7 @@ $ curl \
       "type": "projects",
       "attributes": {
         "name": "Default Project",
+        "description": null,
         "permissions": {
           "can-update": true,
           "can-destroy": true,
@@ -250,6 +257,7 @@ $ curl \
       "type": "projects",
       "attributes": {
         "name": "Infrastructure Project",
+        "description": null,
         "permissions": {
           "can-update": true,
           "can-destroy": true,
@@ -322,6 +330,7 @@ $ curl \
     "type": "projects",
     "attributes": {
       "name": "Infrastructure Project",
+      "description": null,
       "permissions": {
         "can-update": true,
         "can-destroy": true,
