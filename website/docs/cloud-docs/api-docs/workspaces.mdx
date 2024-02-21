@@ -2896,7 +2896,7 @@ Status code `204`.
 ## Show data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise, and not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
 </EnterpriseAlert>
 
 `GET /workspaces/:workspace_id/relationships/data-retention-policy`
@@ -2909,12 +2909,12 @@ This endpoint is exclusive to Terraform Enterprise, and not available in Terrafo
 This endpoint shows the data retention policy set explicitly on the workspace.
 When no data retention policy is set for the workspace, the endpoint returns the default policy configured for the organization. Refer to [Data Retention Policies](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) for instructions on configuring data retention policies for workspaces.
 
-See [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#show-data-retention-policy) for details.
+Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#show-data-retention-policy) in the Terraform Enterprise documentation for details.
 
 ## Create or update data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise, and not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
 </EnterpriseAlert>
 
 `POST /workspaces/:workspace_id/relationships/data-retention-policy`
@@ -2926,12 +2926,12 @@ This endpoint is exclusive to Terraform Enterprise, and not available in Terrafo
 This endpoint creates a data retention policy for a workspace or updates the existing policy. 
 Refer to [Data Retention Policies](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) for additional information.
 
-See [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#create-or-update-data-retention-policy) for details.
+Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#create-or-update-data-retention-policy) in the Terraform Enterprise documentation for details.
 
 ## Remove data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise, and not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
 </EnterpriseAlert>
 
 `DELETE /workspaces/:workspace_id/relationships/data-retention-policy`
@@ -2945,7 +2945,7 @@ When no data retention policy is set for the workspace, the endpoint returns the
 
 Read more about [workspace data retention policies](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies).
 
-See [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#remove-data-retention-policy) for details.
+Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#remove-data-retention-policy) in the Terraform Enterprise documentation for details.
 
 ## Available Related Resources
 
