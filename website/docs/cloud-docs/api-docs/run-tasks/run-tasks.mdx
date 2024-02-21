@@ -431,7 +431,7 @@ This involves setting the run task enforcement level, which determines whether t
 
 - Mandatory run tasks block a run from completing. If the task fails (including a timeout or unexpected remote error condition), the run stops with an error.
 
-You may also configure the run task to begin during a specific [run stage](/terraform/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage) by default.
+You may also configure the run task to begin during specific [run stages](/terraform/cloud-docs/run/states). Run tasks use the [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage) by default.
 
 | Status  | Response                  | Reason                                                                 |
 | ------- | ------------------------- | ---------------------------------------------------------------------- |
@@ -445,13 +445,13 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                            | Type   | Default       | Description                                                                                                        |
-|-------------------------------------|--------|---------------|--------------------------------------------------------------------------------------------------------------------|
-| `data.type`                         | string |               | Must be `"workspace-tasks"`.                                                                                       |
-| `data.attributes.enforcement-level` | string |               | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                |
-| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
-| `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
-| `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
+| Key path                            | Type            | Default         | Description                                                                                                                                           |
+|-------------------------------------|-----------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                         | string          |                 | Must be `"workspace-tasks"`.                                                                                                                          |
+| `data.attributes.enforcement-level` | string          |                 | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                   |
+| `data.attributes.stages`            | array of string | `["post_plan"]` | The stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
+| `data.relationships.task.data.id`   | string          |                 | The ID of the run task.                                                                                                                               |
+| `data.relationships.task.data.type` | string          |                 | Must be `"tasks"`.                                                                                                                                    |
 
 ### Sample Payload
 
@@ -461,7 +461,7 @@ Properties without a default value are required.
     "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stages": ["post_plan", "post_apply"]
       },
       "relationships": {
         "task": {
@@ -495,7 +495,7 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stages": ["post_plan", "post_apply"]
       },
       "relationships": {
         "task": {
@@ -558,7 +558,7 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stages": ["post_plan", "post_apply"]
       },
       "relationships": {
         "task": {
@@ -630,7 +630,7 @@ curl --request GET \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stages": ["post_plan", "post_apply"]
       },
       "relationships": {
         "task": {
@@ -673,11 +673,11 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                            | Type   | Default          | Description                                                                                           |
-|-------------------------------------|--------|------------------|-------------------------------------------------------------------------------------------------------|
-| `data.type`                         | string | (previous value) | Must be `"workspace-tasks"`.                                                                          |
-| `data.attributes.enforcement-level` | string | (previous value) | The enforcement level of the workspace run task. Must be `"advisory"` or `"mandatory"`.               |
-| `data.attributes.stage`             | string | (previous value) | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"` or `"post_plan"`. |
+| Key path                            | Type            | Default          | Description                                                                                                                                           |
+|-------------------------------------|-----------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                         | string          | (previous value) | Must be `"workspace-tasks"`.                                                                                                                          |
+| `data.attributes.enforcement-level` | string          | (previous value) | The enforcement level of the workspace run task. Must be `"advisory"` or `"mandatory"`.                                                               |
+| `data.attributes.stages`            | array of string | (previous value) | The stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
 
 ### Sample Payload
 
@@ -687,7 +687,7 @@ Properties without a default value are required.
     "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "mandatory",
-        "stage": "post_plan"
+        "stages": ["post_plan"]
       }
   }
 }
@@ -713,7 +713,7 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "mandatory",
-        "stage": "post_plan"
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
