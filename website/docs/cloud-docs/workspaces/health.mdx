@@ -93,9 +93,17 @@ On the right of a workspace’s overview page, Terraform Cloud displays a **Heal
 - The **Drift** summary shows the total number of resources in the configuration and the number of resources that have drifted.
 - The **Checks** summary shows the number of passed, failed, and unknown statuses for objects with continuous validation checks.
 
+### View Workspace Health in Explorer
+
+With [Explorer](/terraform/cloud-docs/workspaces/explorer), you can produce a report that provides a condensed overview of the health status of the workspaces within your organization.
+
+You can see whether workspaces have enabled Workspace Health, the status of any configured Continuous Validation checks, and the count of drifted resources for each workspace. For additional details on the data available for reporting, refer to the [Explorer](/terraform/cloud-docs/workspaces/explorer) documentation.
+
+![Viewing Workspace Health in Explorer](/img/docs/tfc-explorer-health.png)
+
 ## Drift Detection
 
-Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terraform's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
+Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terrafoto's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
 
 For example, a teammate could create configuration drift by directly updating a storage bucket's settings with conflicting configuration settings using the cloud provider's console. Drift detection could detect these differences and recommend steps to address and rectify the discrepancies.
 

@@ -98,4 +98,12 @@ Define configurable data retention policies for workspaces to help reduce object
 
 Once an object is soft deleted, any attempts to read the object will fail. Until the garbage collection grace period elapses, you can still restore an object using the APIs described in the [configuration version documentation](/terraform/enterprise/api-docs/configuration-versions) and [state version documentation](/terraform/enterprise/api-docs/state-versions). After the garbage collection grace period elapses, Terraform permanently deletes the archivist storage.
 
-The [organization policy](/terraform/enterprise/users-teams-organizations/organizations#destruction-and-deletion) is the default policy applied to workspaces, but members of individual workspaces can override the policy for their workspaces. The workspace policy always overrides the organization policy.
+The [organization policy](/terraform/enterprise/users-teams-organizations/organizations#destruction-and-deletion) is the default policy applied to workspaces, but members of individual workspaces can override the policy for their workspaces.
+
+The workspace policy always overrides the organization policy. A workspace admin can set or override the following data retention policies:
+
+- **Organization default policy**
+- **Do not auto-delete**
+- **Auto-delete data**
+
+Setting the data retention policy to **Organization default policy** disables the other data retention policy settings.

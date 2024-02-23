@@ -468,6 +468,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/actions/soft_delete_backing_data
+  --data {"data": {"attributes": {"delete-older-than-n-days": 23}}}
 ```
 
 ## Restore Configuration Versions Marked for Garbage Collection
