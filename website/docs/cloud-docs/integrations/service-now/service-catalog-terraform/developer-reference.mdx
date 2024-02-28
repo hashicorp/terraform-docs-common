@@ -51,6 +51,7 @@ Server Development > Script Include.
 | `tf_config`           | Helper to pull values from the SN Terraform Configs Table  |
 | `tf_get_workspace`    | Client-callable script to retrieve workspace data          |
 | `tf_http`             | ServiceNow HTTP REST wrapper for requests to the Terraform API |
+| `tf_no_code_workspace`| Resources for Terraform no-code modules API requests       |
 | `tf_run`              | Resources for Terraform run API requests                   |
 | `tf_terraform_record` | Manage ServiceNow Terraform Table Records                  |
 | `tf_test_config`      | Client-callable script to test Teraform connectivity       |
@@ -80,11 +81,13 @@ on certain conditions, and configure multiple users or roles as approvers for sp
 | Create Run                    | Creates/queues a new run on the Terraform Cloud workspace.                                                                                                                   |
 | Apply Run                     | Applies a run on the Terraform Cloud workspace.                                                                                                                              |
 | Provision Resources           | Creates a Terraform Cloud workspace (with auto-apply), creates/queues a run, applies the run when ready.                                                                     |
-| Provision Resources with Vars | Creates a Terraform Cloud workspace (with auto-apply), creates any variables, creates/queues a run, applies the run when ready.                                              |
+| Provision Resources with Vars | Creates a Terraform Cloud workspace (with auto-apply), creates any variables, creates/queues a run, applies the run when ready.  
+| Provision No-Code Workspace and Deploy Resources | Creates a Terraform Cloud workspace based on a no-code module configured in the private registry (with auto-apply), creates any variables, creates/queues a run, applies the run when ready.                                                |
 | Delete Workspace              | Creates a destroy run plan.                                                                                                                                                  |
 | Worker Poll Run State         | Polls the Terraform Cloud API for the current run state of a workspace.                                                                                                      |
 | Worker Poll Apply Run         | Polls the Terraform Cloud API and applies any pending Terraform runs.                                                                                                        |
 | Worker Poll Destroy Workspace | Queries ServiceNow Terraform Records for resources marked `is_destroyable`, applies the destroy run to destroy resources, and deletes the corresponding Terraform workspace. |
+| Update No-Code Workspace and Deploy Resources| Updates a previously created no-code workspace to new no-code provisioning settings, when a new release of the no-code module is available. Updates variable values attached to the workspace and starts a new Terraform run.     
 | Update Workspace              | Updates Terraform Cloud workspace configurations, such as VCS repository, description, project, execution mode, and agent pool ID (if applicable).                               |
 | Update Workspace with Vars    | Allows you to change details about the Terraform Cloud workspace configurations and attached variable values.                                                          |
 | Update Resources              | Updates Terraform Cloud workspace details and starts a new Terraform run with these new values.                                                                              |

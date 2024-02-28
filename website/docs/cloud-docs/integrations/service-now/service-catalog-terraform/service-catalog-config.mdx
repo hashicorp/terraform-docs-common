@@ -9,7 +9,7 @@ description: |-
 
 When using ServiceNow with the Terraform Cloud integration, you will configure
 at least one service catalog. You will also configure one or more version
-control system (VCS) repositories containing the Terraform configurations which
+control system (VCS) repositories or no-code modules containing the Terraform configurations which
 will be used to provision that infrastructure. End users will request
 infrastructure from the service catalog, and Terraform Cloud will fulfill the
 request by creating a new workspace, applying the configuration, and then
@@ -23,18 +23,18 @@ are covered in the [installation documentation](/terraform/cloud-docs/integratio
 
 Additionally, you must have have the following information:
 
-1. The OAuth token ID and repository identifier for each VCS repository that
+1. The no-code module name or the OAuth token ID and repository identifier for each VCS repository that
    Terraform Cloud will use to provision infrastructure. Your Terraform Admin
    will provide these to you.
 1. Any Terraform or environment variables required by the configurations in the
-   given VCS repositories.
+   given VCS repositories or no-code modules.
 
 Once these steps are complete, in order for end users to provision
 infrastructure with ServiceNow and Terraform Cloud, the ServiceNow Admin will
 perform the following steps to make Service Items available to your end users.
 
 1. Add at least one service catalog for use with Terraform.
-1. Configure at least one one VCS repository in ServiceNow.
+1. If using the VCS flow, configure at least one one VCS repository in ServiceNow.
 1. Create variable sets to define Terraform and environment variables to be used
    by Terraform Cloud to provision infrastructure.
 
@@ -151,7 +151,7 @@ Cloud.
 
 These requests will be fulfilled by Terraform Cloud, which will:
 
-1. Create a new workspace using the VCS repository provided by ServiceNow.
+1. Create a new workspace and specifying the no-code module name or the VCS repository provided by ServiceNow.
 1. Configure variables for that workspace, also provided by ServiceNow.
 1. Plan and apply the change.
 1. Report the results, including any outputs from Terraform, to ServiceNow.
