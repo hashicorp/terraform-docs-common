@@ -327,7 +327,7 @@ $ curl \
 
 ## Rate Limiting
 
-You can make up to 30 requests per second to the API as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. A few endpoints relating to user authentication and runs list polling have lower limits to prevent certain spam and abuse scenarios. Typical uses of the API should not notice those limits. If you receive a rate limited response, the limit will be reflected in the `x-ratelimit-limit` header once triggered.
+You can make up to 30 requests per second to the API as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. Some endpoints have lower rate limits to prevent abuse, including endpoints that poll Terraform for a list of runs and endpoints related to user authentication. The adjusted limits are unnoticeable under normal use. If you receive a rate-limited response, the limit is reflected in the `x-ratelimit-limit` header once triggered.
 
 Authenticated requests are allocated to the user associated with the authentication token. This means that a user with multiple tokens will still be limited to 30 requests per second, additional tokens will not allow you to increase the requests per second permitted.
 
