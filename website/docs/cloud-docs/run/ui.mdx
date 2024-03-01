@@ -37,7 +37,7 @@ A workspace will not process a webhook if the workspace previously processed a w
 
 ## Manually Starting Runs
 
-When you initially set up the workspace and add variables, or when the code in version control hasn't changed but you've modified some variables, you can manually start a run from the UI. Each workspace has an "New run" button in its header, which opens a "Start a new run" dialog for this purpose. When creating a new run, you can optionally provide a message and can choose between several modes, including Plan and apply (standard), [refresh-only](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode), [plan-only (speculative)](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode).
+When you initially set up the workspace and add variables, or when the code in version control hasn't changed but you've modified some variables, you can manually start a run from the UI. Each workspace has an **+ New run** button in its header, which opens a **Start a new run** dialog for this purpose. When creating a new run, you can optionally provide a message and can choose between several modes, including Plan and apply (standard), [refresh-only](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode), [plan-only (speculative)](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode).
 
 For runs including a plan phase, debugging mode can be enabled with the "Enable debugging mode" option. This is equivalent to setting the `TF_LOG` environment variable to a value of `TRACE` for this run. See [Debugging Terraform](/terraform/internals/debugging) for more information.
 
