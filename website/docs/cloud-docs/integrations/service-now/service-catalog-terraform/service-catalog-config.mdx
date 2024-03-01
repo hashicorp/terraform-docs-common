@@ -8,12 +8,12 @@ description: |-
 # Service Catalog Configuration
 
 When using ServiceNow with the Terraform Cloud integration, you will configure
-at least one service catalog. You will also configure one or more version
-control system (VCS) repositories or no-code modules containing the Terraform configurations which
-will be used to provision that infrastructure. End users will request
-infrastructure from the service catalog, and Terraform Cloud will fulfill the
-request by creating a new workspace, applying the configuration, and then
-reporting the results back to ServiceNow.
+at least one service catalog item. You will also configure one or more version
+control system (VCS) repositories or no-code modules containing the Terraform
+configurations which will be used to provision that infrastructure. End users
+will request infrastructure from the service catalog, and Terraform Cloud will
+fulfill the request by creating a new workspace, applying the configuration, and
+then reporting the results back to ServiceNow.
 
 ## Prerequisites
 
@@ -23,9 +23,11 @@ are covered in the [installation documentation](/terraform/cloud-docs/integratio
 
 Additionally, you must have have the following information:
 
-1. The no-code module name or the OAuth token ID and repository identifier for each VCS repository that
-   Terraform Cloud will use to provision infrastructure. Your Terraform Admin
-   will provide these to you.
+1. The no-code module name or the OAuth token ID and repository identifier for
+   each VCS repository that Terraform Cloud will use to provision
+   infrastructure. Your Terraform Admin will provide these to you. Learn more in
+   [Configure VCS Repositories or No-Code
+   Modules](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#configure-vcs-repositories-or-no-code-modules).
 1. Any Terraform or environment variables required by the configurations in the
    given VCS repositories or no-code modules.
 
@@ -64,8 +66,9 @@ left-hand navigation.
 
 Terraform workspaces created through the ServiceNow Service Catalog for
 Terraform have two configuration options: they can be associated with a VCS
-provider repository or be backed by a [no-code module created in your
-organization's private registry](/terraform/cloud-docs/no-code-provisioning/provisioning). Administrators determine which workspace type
+provider repository or be backed by a [no-code
+module](/terraform/cloud-docs/no-code-provisioning/provisioning) created in your
+organization's private registry. Administrators determine which workspace type
 end users can request from the Terraform Catalog. Below we outline the key
 differences between the version control and no-code approaches to help guide
 this decision.
@@ -114,11 +117,11 @@ ordering new workspaces through the following items in the Terraform Catalog:
 
 ### No-Code Module Configuration
 
-New in version 2.5, application administrators gain the ability to configure
+New in version 2.5.0, ServiceNow Administrators gain the ability to configure
 Catalog Items using [no-code
 modules](/terraform/cloud-docs/no-code-provisioning/provisioning). This release
 introduces two new additions to the Terraform Catalog - no-code workspace
-request and update Items. Both utilize no-code modules from the private registry
+create and update Items. Both utilize no-code modules from the private registry
 in Terraform Cloud to enable end users to request infrastructure without writing
 code.
 
@@ -133,16 +136,16 @@ no-code modules:
   values, runs and applies Terraform.
 - **Update No-Code Workspace and Deploy Resources**: updates a previously
   created no-code workspace to new no-code provisioning settings, when a new
-  version of the module is released; supplies updates variable values, runs and
-  applies Terraform.
+  version of the module is released in the Terraform Cloud registry; supplies
+  updates variable values, runs and applies Terraform.
 
 Administrators can skip configuring VCS repositories in ServiceNow when using
-no-code modules flows. The only input needed in the Catalog request is the name
-of the no-code module. 
+no-code modules. The only input required in the no-code workspace request form
+is the name of the no-code module. 
 
 Before utilizing a no-code module, it must be set up in the private registry of
 your Terraform Cloud account. With this one-time configuration complete,
-administrators can then call the modules through Catalog requests without
+Administrators can then call the modules through Catalog requests without
 repository management, simplifying the use of infrastructure-as-code.
 
 > **Hands On:** Try the [Use No-Code Ready Modules in the ServiceNow Service Catalog for Terraform tutorial]().
@@ -199,9 +202,8 @@ variables within Terraform Cloud.
 
 ## Provision Infrastructure
 
-Once a Service Catalog and VCS repositories have been configured, ServiceNow
-users will be able to request infrastructure to be provisioned by Terraform
-Cloud.
+Once the Service Catalog for Terraform has been configured, ServiceNow users
+will be able to request infrastructure to be provisioned by Terraform Cloud.
 
 These requests will be fulfilled by Terraform Cloud, which will:
 

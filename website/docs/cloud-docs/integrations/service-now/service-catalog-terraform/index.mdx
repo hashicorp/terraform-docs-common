@@ -55,13 +55,13 @@ Terraform Admin.
 |                                                                              | Prepare an organization for use with the ServiceNow Catalog.                                                                               |
 |                                                                              | Create a team that can manage workspaces in that organization.                                                                             |
 |                                                                              | Create a team API token so the integration can use that team's permissions.                                                                |
-|                                                                              | If using VCS repositories, retrieve the OAuth token IDs and repository identifiers that Terraform Cloud uses to identify your VCS repositories. If using a no-code flow, [create a no-code ready module in your organization's private registry](/terraform/cloud-docs/no-code-provisioning/provisioning). Learn more in [Configure VCS Repositories or No-Code Modules](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#configure-vcs-repositories-or-no-code-modules).                     |
+|                                                                              | If using VCS repositories, retrieve the OAuth token IDs and repository identifiers that Terraform Cloud uses to identify your VCS repositories. If using a no-code flow, [create a no-code ready module](/terraform/cloud-docs/no-code-provisioning/provisioning) in your organization's private registry. Learn more in [Configure VCS Repositories or No-Code Modules](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#configure-vcs-repositories-or-no-code-modules).|
 |                                                                              | Provide the API token, OAuth token ID, repository identifiers, variable definitions, and Terraform Cloud hostname to the ServiceNow Admin. |
 | Install the Terraform integration application from the ServiceNow App Store. |                                                                                                                                            |
 | Connect the integration application with Terraform Cloud.                    |                                                                                                                                            |
 | Add the Terraform Service Catalog to ServiceNow.                             |                                                                                                                                            |
-| If using the VCS flow, configure the VCS repositories in ServiceNow.                                |                                                                                                                                            |
-| Configure variable sets for use with the VCS repositories or no-code modules.                   |                                                                                                                                            |
+| If using the VCS flow, configure the VCS repositories in ServiceNow.         |                                                                                                                                            |
+| Configure variable sets for use with the VCS repositories or no-code modules.|                                                                                                                                            |
 
 Once these steps are complete, self-serve infrastructure will be available
 through the ServiceNow Catalog. Terraform Cloud will provision and manage
@@ -77,10 +77,9 @@ To start using Terraform with the ServiceNow Catalog Integration, you must have:
 - If using the VCS flow, one or more [supported version control
   systems](/terraform/cloud-docs/vcs#supported-vcs-providers) (VCSs) with read
   access to repositories with Terraform configurations.
-- If using no-code provisioning, one or more [no-code modules created in your
-  organization's private
-  registry](/terraform/cloud-docs/no-code-provisioning/provisioning). Refer to
-the [no-code module configuration](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration)
+- If using no-code provisioning, one or more [no-code modules](/terraform/cloud-docs/no-code-provisioning/provisioning) created in
+  your organization's private registry. Refer to the [no-code module
+configuration](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration)
 for information about using no-code modules with the ServiceNow Service Catalog
 for Terraform.
 
@@ -211,8 +210,8 @@ the following steps.
 ## Create and Populate a Service Catalog
 
 Now that you have connected ServiceNow to Terraform Cloud, you are ready to
-create a Service Catalog using the VCS repositories provided by the Terraform
-Admin.
+create a Service Catalog using the VCS repositories or no-code modules provided
+by the Terraform Admin.
 
 Navigate to the [Service Catalog documentation](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config) to
 begin. You can also refer to this documentation whenever you need to add or
