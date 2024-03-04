@@ -15,7 +15,7 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 | Object                               | Storage      | Encrypted                |
 | :----------------------------------- | :----------- | :----------------------- |
 | Terraform Configuration (VCS data)   | Blob Storage | Vault Transit Encryption |
-| Private Registry modules             | Blob Storage | Vault Transit Encryption |
+| Private Registry Modules             | Blob Storage | Vault Transit Encryption |
 | Sentinel Policies                    | PostgreSQL   | Vault Transit Encryption |
 | Terraform/Environment Variables      | PostgreSQL   | Vault Transit Encryption |
 | Terraform/Provider Credentials       | PostgreSQL   | Vault Transit Encryption |
@@ -23,15 +23,6 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 | Terraform Plan Result                | Blob Storage | Vault Transit Encryption |
 | Terraform Audit Trails               | PostgreSQL   | No                       |
 | Organization/Workspace/Team Settings | PostgreSQL   | No                       |
-
-### Terraform Cloud Specific 
-
-| Object                               | Storage      | Encrypted                |
-| :----------------------------------- | :----------- | :----------------------- |
-| Terraform Cloud Application Logs     | Blob Storage | No                       |
-| Terraform Security Monitoring data   | Blob Storage | SSE-S3                   |
-| Cloud Data Backups                   | Blob Storage | SSE-S3                   |
-| Cloud Copy of Backups for DR         | Blob Storage | SSE-S3                   |
 
 ### Terraform Cloud and Enterprise Secrets 
 | Object                               | Storage      | Encrypted                |
@@ -42,6 +33,15 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 | User/Team/Organization Tokens        | PostgreSQL   | HMAC SHA512              |
 | OAuth Client ID + Secret             | PostgreSQL   | Vault Transit Encryption |
 | OAuth User Tokens                    | PostgreSQL   | Vault Transit Encryption |
+
+### Terraform Cloud Specific 
+
+| Object                               | Storage      | Encrypted                |
+| :----------------------------------- | :----------- | :----------------------- |
+| Terraform Cloud Application Logs     | Blob Storage | No                       |
+| Terraform Security Monitoring data   | Blob Storage | SSE-S3                   |
+| Cloud Data Backups                   | Blob Storage | SSE-S3                   |
+| Cloud Copy of Backups for DR         | Blob Storage | SSE-S3                   |
 
 ### Terraform Enterprise Specific
 
