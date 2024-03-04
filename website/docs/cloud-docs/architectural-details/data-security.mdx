@@ -14,7 +14,7 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 
 | Object                               | Storage      | Encrypted                |
 | :----------------------------------- | :----------- | :----------------------- |
-| Terraform Configuration              | Blob Storage | Vault Transit Encryption |
+| Terraform Configuration (VCS data)   | Blob Storage | Vault Transit Encryption |
 | Private Registry modules             | Blob Storage | Vault Transit Encryption |
 | Sentinel Policies                    | PostgreSQL   | Vault Transit Encryption |
 | Terraform/Environment Variables      | PostgreSQL   | Vault Transit Encryption |
@@ -23,10 +23,17 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 | Terraform Plan Result                | Blob Storage | Vault Transit Encryption |
 | Terraform Audit Trails               | PostgreSQL   | No                       |
 | Organization/Workspace/Team Settings | PostgreSQL   | No                       |
-| Cloud Data Backups                   | Blob Storage | SSE-S3 AES-256           |
-| Cloud Copy of Backups for DR         | Blob Storage | SSE-S3 AES-256           |
 
-### Terraform Cloud and Enterprise Keys 
+### Terraform Cloud Specific 
+
+| Object                               | Storage      | Encrypted                |
+| :----------------------------------- | :----------- | :----------------------- |
+| Terraform Cloud Application Logs     | Blob Storage | No                       |
+| Terraform Security Monitoring data   | Blob Storage | SSE-S3                   |
+| Cloud Data Backups                   | Blob Storage | SSE-S3                   |
+| Cloud Copy of Backups for DR         | Blob Storage | SSE-S3                   |
+
+### Terraform Cloud and Enterprise Secrets 
 | Object                               | Storage      | Encrypted                |
 | :----------------------------------- | :----------- | :----------------------- |
 | Account Password                     | PostgreSQL   | bcrypt                   |
