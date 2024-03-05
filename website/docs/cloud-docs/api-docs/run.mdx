@@ -331,7 +331,7 @@ curl \
 | `workspace_id` | The workspace ID to list runs for. |
 
 By default, `plan_only` runs will be excluded from the results. To see all runs, use `filter[operation]` with all available operations included as a comma-separated list.
-This endpoint has an adjusted rate limit of 30 requests per minute as opposed to the standard limit of 30 requests per second.
+This endpoint has an adjusted rate limit of 30 requests per minute. Note that most endpoints are limited to 30 requests per second.
 
 | Status  | Response                                         | Reason                   |
 |---------|--------------------------------------------------|--------------------------|
