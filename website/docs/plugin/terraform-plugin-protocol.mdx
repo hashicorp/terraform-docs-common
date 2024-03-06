@@ -46,6 +46,9 @@ The Terraform plugin protocol specifies the following RPCs:
 | Protocol Version 5           | Protocol Version 6           | Description                                                                                                                                                                                                                          |
 |------------------------------|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `GetSchema`                  | `GetProviderSchema`          | Returns provider schema, provider metaschema, all resource schemas and all data source schemas.                                                                                                                                      |
+| `GetMetadata` | `GetMetadata` | Returns data source, managed resource, and function metadata, such as names. |
+| `GetFunctions` | `GetFunctions` | Returns function definitions. |
+| `CallFunction` | `CallFunction` | Called when a practioner configuration contains a provider-defined function. |
 | `PrepareProviderConfig`      | `ValidateProviderConfig`     | Validates the practitioner supplied provider configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                    |
 | `ValidateResourceTypeConfig` | `ValidateResourceConfig`     | Validates the practitioner supplied resource configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                    |
 | `ValidateDataSourceConfig`   | `ValidateDataResourceConfig` | Validates the practitioner supplied data source configuration by verifying types conform to the schema and supports value validation diagnostics.                                                                                 |
@@ -74,6 +77,7 @@ Executing _terraform validate_ results in the following unique RPCs:
 The general sequence of RPCs is as follows:
 
 - GetProviderSchema
+- CallFunction
 - ValidateProviderConfig
 - ValidateResourceConfig
 - ValidateDataResourceConfig
@@ -87,6 +91,7 @@ Executing _terraform plan_ results in the following unique RPCs:
 The general sequence of RPCs is as follows:
 
 - GetProviderSchema
+- CallFunction
 - ValidateProviderConfig
 - ValidateResourceConfig
 - ValidateDataResourceConfig
@@ -103,6 +108,7 @@ Executing _terraform apply_ (with default -refresh=true and -auto-approve) resul
 The general sequence of RPCs is as follows:
 
 - GetProviderSchema
+- CallFunction
 - ValidateProviderConfig
 - ValidateResourceConfig
 - ValidateDataResourceConfig

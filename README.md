@@ -1,10 +1,10 @@
 # terraform-docs-common
 
-Content for Terraform's documentation.
+Documentation for Terraform Cloud and other Terraform-related documentation:
 
-- https://terraform.io/cloud-docs
-- https://terraform.io/plugin
-- https://terraform.io/registry
+- https://developer.hashicorp.com/terraform/cloud-docs
+- https://developer.hashicorp.com/terraform/plugin
+- https://developer.hashicorp.com/terraform/registry
 
 <!-- BEGIN: contributions -->
 <!-- Generated text, do not edit directly -->
@@ -381,3 +381,11 @@ As the majority of items in the side nav are internal links, the structure makes
 It's also worth noting that it is possible to do glob-based redirects, for example matching `/docs/*`, and you may see this pattern in the redirects file. This type of redirect is much higher risk and the behavior is a bit more nuanced, so if you need to add a glob redirect, please reach out to the website maintainers and ask about it first.
 
 <!-- END: redirects -->
+
+## Excluding content from Terraform Enterprise
+
+The Terraform Cloud documentation is copied over to the Terraform Enterprise documentation every Terraform Enterprise release cycle. If you are adding content to the Terraform Cloud documentation about a new feature, ensure you know when/if that feature is coming to Terraform Enterprise. If your new feature is _not_ coming to Terraform Enterprise in the next release, you need to _exclude_ that content from the Terraform Enterprise documentation. 
+
+> If you are adding content exclusive to either Terraform Cloud or Terraform Enterprise, refer to [our guidelines](https://github.com/hashicorp/ptfe-releases#excluding-tfc-specific-content) for guidance.
+
+[Learn more about writing content for Terraform Enterprise](https://github.com/hashicorp/ptfe-releases#maintaining-tfe-website-documentation).

@@ -14,8 +14,6 @@ description: >-
 
 # Policy Evaluations API
 
--> **Note**: Sentinel policy evaluations are in beta.
-
 Policy evaluations are run within the [Terraform Cloud Agents](/terraform/cloud-docs/api-docs/agents) in Terraform Cloud's infrastructure. Policy evaluations do not have access to cost estimation data.
 This set of APIs provides endpoints to list and get policy evaluations and policy outcomes.
 
@@ -131,7 +129,11 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 
 ### Sample Request
 
+The following example requests demonstrate how to call the `policy-set-outcomes` endpoint using cuRL. 
+
 #### All Policy Outcomes
+
+The following example call returns all policy set outcomes.
 
 ```shell
 curl \
@@ -143,6 +145,8 @@ curl \
 
 #### Failed and Errored Policy Outcomes
 
+The following example call filters the response so that it only contains failed outcomes and errors.
+
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
@@ -152,6 +156,8 @@ curl \
 ```
 
 ### Sample Response
+
+The following example response shows that the `policyVCS` policy failed.
 
 ```json
 {
@@ -217,7 +223,7 @@ curl \
 
 | Parameter                | Description                                                                                                             |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| `:policy_set_outcome_id` | The ID of the policy outcome to show. Use the "List the Policy Outcomes of the Policy Evaluation" endpoint to find IDs. |
+| `:policy_set_outcome_id` | The ID of the policy outcome to show. Refer to [List the Policy Outcomes](#list-policy-outcomes) for reference information about finding IDs. |
 
 | Status  | Response                                   | Reason                                                              |
 | ------- | ------------------------------------------ | ------------------------------------------------------------------- |
@@ -225,6 +231,8 @@ curl \
 | [404][] | [JSON API error object][]                  | Policy set outcome not found or user unauthorized to perform action |
 
 ### Sample Request
+
+The following example request gets the outcomes for the `psout-cu8E9a97LBepZZXd` policy set.
 
 ```shell
 curl --request GET \
@@ -234,6 +242,8 @@ curl --request GET \
 ```
 
 ### Sample Response
+
+The following example response shows that the `policyVCS` policy failed.
 
 ```json
 {

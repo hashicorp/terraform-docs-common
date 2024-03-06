@@ -108,23 +108,350 @@ $ curl \
 }
 ```
 
-### Response Schema
+## Standard response fields
 
-Each JSON object in the response data array will include the following details, if available:
+Every audit log event in the response array includes the following standard fields:
 
-| Key                    | Description                                                 |
-| ---------------------- | ----------------------------------------------------------- |
-| `id`                   | The ID of this audit trail (UUID format)                    |
-| `version`              | The audit trail schema version                              |
-| `type`                 | The type of audit trail (defaults to `Resource`)            |
-| `timestamp`            | UTC ISO8601 DateTime (e.g. `2020-06-16T20:26:58.000Z`)      |
-| `auth.accessor_id`     | The ID of audited actor (e.g. `user-V3R563qtJNcExAkN`)      |
-| `auth.description`     | Username of audited actor                                   |
-| `auth.type`            | Authentication Type (one of Client, Impersonated or System) |
-| `auth.impersonator_id` | The ID of impersonating actor (if available)                |
-| `auth.organization_id` | The ID of organization (e.g. `org-QpXoEnULx3r2r1CA`)        |
-| `request.id`           | The ID for request (if available) (UUID format)             |
-| `resource.id`          | The ID of resource (e.g. `run-FwnENkvDnrpyFC7M`)            |
-| `resource.type`        | Type of resource (e.g. `run`)                               |
-| `resource.action`      | Action audited (e.g. `applied`)                             |
-| `resource.meta`        | Key-value metadata about this audited event                 |
+| Key                    | Data Type or format   | Description                                                 |
+| ---------------------- | ------------ | ----------------------------------------------------------- |
+| `id`                   | UUID         | The ID of this audit trail                     |
+| `version`              | number            | The audit trail schema version                              |
+| `type`                 | string            | The type of audit trail (defaults to `Resource`)            |
+| `timestamp`            | string | UTC ISO8601 DateTime (for example,`2020-06-16T20:26:58.000Z`)      |
+| `auth.accessor_id`     | string            | The ID of audited actor (for example, `user-V3R563qtJNcExAkN`)      |
+| `auth.description`     | string       | Username of audited actor                                   |
+| `auth.type`            | string       | Authentication type, is either `Client`, `Impersonated`, or `System`. |
+| `auth.impersonator_id` | string            | The ID of impersonating actor (if available)                |
+| `auth.organization_id` | string            | The ID of organization (for example, `org-QpXoEnULx3r2r1CA`)        |
+| `request.id`           | UUID         | The ID for request (if available)             |
+| `resource.id`          | string            | The ID of resource (for example,`run-FwnENkvDnrpyFC7M`)            |
+| `resource.type`        | string       | Type of resource (for example, `run`)                               |
+| `resource.action`      | string       | Action audited (for example, `applied`)                             |
+| `resource.meta`        | map            | Key-value metadata about this audited event (defaults to `null`)                 |
+
+The following audit trail events _only_ contain these standard fields:
+
+| Event                      | Action                                                       | Description                                                |
+|----------------------------|--------------------------------------------------------------|------------------------------------------------------------|
+| `agent`                    | `destroy`                                                    | Logged when an agent is destroyed.                         |
+| `authentication_token`     | `create`, `show`, `destroy`                                 | Events related to authentication tokens.                  |
+| `configuration_version`    | `show`, `download`                                           | Events related to configuration versions.                 |
+| `notification_configuration` | `create`, `update`, `destroy`, `enable`                     | Events related to notification configurations.            |
+| `oauth_client`             | `create`, `update`, `destroy`                                | Events related to OAuth clients.                           |
+| `oauth_token`              | `index`, `show`, `update`, `destroy`                        | Events related to OAuth tokens.                            |
+| `organization`             | `create`, `update`, `destroy`                               | Events related to organizations.                           |
+| `organization_user`        | `create`, `update`, `destroy`                               | Events related to organization users.                      |
+| `policy`                   | `update`, `destroy`                                          | Events related to policies.                                |
+| `policy_check`             | `override`                                                   | Events related to policy checks.                           |
+| `policy_config`            | `create`                                                     | Events related to policy configurations.                  |
+| `policy_set`               | `destroy`                                                    | Events related to policy sets.                             |
+| `policy_version`           | `create`                                                     | Events related to policy versions.                         |
+| `project`                  | `create`, `update`, `destroy`                               | Events related to projects.                                |
+| `registry_module`          | `destroy`, `update`                                          | Events related to registry modules.                        |
+| `registry_provider`        | `create`, `destroy`                                          | Events related to registry providers.                      |
+| `registry_provider_platform` | `create`, `destroy`                                          | Events related to registry provider platforms.             |
+| `registry_provider_version` | `create`, `destroy`                                          | Events related to registry provider versions.             |
+| `run`                      | `apply`, `cancel`, `force_cancel`, `discard`, `force_execute`, `create` | Events related to runs.                                    |
+| `run_trigger`              | `create`, `destroy`                                          | Events related to run triggers.                            |
+| `saml_configuration`       | `create`, `update`, `destroy`, `enable`, `disable`          | Events related to SAML configurations.                    |
+| `ssh_key`                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to SSH keys.                                |
+| `stack`                     | `create`                                                    | Events related to creating stacks.                         |
+| `state_version`            | `index`, `show`, `create`, `soft_delete_backing_data`, `restore_backing_data`, `permanently_delete_backing_data` | Events related to state versions.                         |
+| `task_stage`                  | `override`              | Events related to an overriden task stage.                                |
+| `user`                  | `index`              | Events related to indexing users.                                |
+| `var`                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to variables.                             |
+| `vcs_repo`                 | `create`                                                    | Events related to creating a connection to a VCS repo.                     |
+
+The following sections list the audit log events containing both the standard response schema and a specific payload for each action.
+
+## Data retention policy events
+
+You can define [data retention policies](/terraform/cloud-docs/workspaces/settings/deletion#data-retention-policies) to help reduce object storage consumption. 
+
+### Destroy
+
+A Terraform Cloud organization emits this event when it destroys a data retention policy(`data_retention_policy`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                        | Data Type | Description                                             |
+| ---                        | ---       | ---                                                     |
+| `delete_older_than_n_days` | integer   | The number of days to retain data before deletion. Must be greater than 0. |
+| `organization`             | string    | The organization associated with the data retention policy. |
+| `organization_id`          | string    | The ID of the organization associated with the data retention policy. |
+
+## Project events
+
+[Projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) let you organize your workspaces and scope access to workspace resources.
+
+### Add Team
+
+A Terraform Cloud organization emits this event when someone in your organization adds a team(`add_team`) to a project. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.    |
+| `permissions` | string   | The permissions granted to the team.  |
+
+### Update Team Permissions
+
+A Terraform Cloud organization emits this event when someone in your organization updates the permissions(`update_team_permissions`) of a team on a project. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.    |
+| `permissions` | string   | The updated permissions for the team. |
+
+### Remove Team
+
+A Terraform Cloud organization emits this event when someone in your organization removes a team(`remove_team`) from a project. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.    |
+
+## Policy checks
+
+[Policy checks run Sentinel policies](/terraform/enterprise/policy-enforcement/manage-policy-sets). Policy checks have a lifecycle that includes the following events:
+  * `passed`
+  * `queued`
+  * `passed`
+  * `soft_failed`
+  * `hard_failed`
+  * `overridden`
+  * `canceled`
+  * `force_canceled`
+  * `errored`
+
+Every policy check event in the response array includes the following standard fields:
+
+| Key                   | Data Type    | Description                                     |
+| ---                   | ---          | ---                                             |
+| `comment`             | `null` or string       | The comment associated with the policy check. |
+| `run.id`              | string       | The ID of the associated run.                    |
+| `run.message`         | string       | The message associated with the run.            |
+| `workspace.id`        | string       | The ID of the associated workspace.             |
+| `workspace.name`      | string       | The name of the associated workspace.           |
+
+### Passed, soft failed, hard failed, and errored
+
+Alongside the [standard audit trail fields](#standard-response-fields) and [standard policy check fields](#policy-checks), certain policy check events include a result (`includes_result`) and return the following fields:
+
+| Key                   | Data Type       | Description                                     |
+| --------------------- | --------------- | ----------------------------------------------- |
+| `result`              | [Policy Result] | An array of policy results.                  |
+| `passed`              | integer         | Number of policy checks passed.                 |
+| `total_failed`        | integer         | Total number of failed policy checks.           |
+| `hard_failed`         | integer         | Number of policy checks with hard failures.     |
+| `soft_failed`         | integer         | Number of policy checks with soft failures.     |
+| `advisory_failed`     | integer         | Number of policy checks with advisory failures. |
+| `duration_ms`         | integer         | Duration of the policy check in milliseconds.   |
+| `sentinel`            | string          | The Sentinel policy associated with the check.  |
+
+### Overriden, canceled, and force canceled
+
+Alongside the [standard audit trail fields](#standard-response-fields) and [standard policy check fields](#policy-checks), certain event responses include the following fields:
+
+| Key                   | Data Type    | Description                                     |
+| ---                   | ---          | ---                                             |
+| `actor`               | string       | The user who performed the action.              |
+
+## Policy evaluation
+
+[Policy evaluations](/terraform/enterprise/policy-enforcement/policy-results#view-policy-results) run in the Terraform Cloud Agent in Terraform Cloud's infrastructure. Policy evaluations have a lifecycle that includes the following events:
+  * `queue`
+  * `run`
+  * `pass`
+  * `fail`
+  * `override`
+  * `error`
+  * `cancel`
+  * `force_cancel`
+
+Every policy evaluation event in the response array includes the following standard fields:
+
+| Key                   | Data Type    | Description                                     |
+| ---                   | ---          | ---                                             |
+| `comment`             | `null` or string       | The comment associated with policy evaluation. |
+| `payload.workspace.id` | string       | The ID of the associated workspace.             |
+| `payload.workspace.name` | string     | The name of the associated workspace.           |
+| `payload.run.id`      | string       | The ID of the associated run.                    |
+| `payload.run.message` | string       | The message associated with the run.            |
+| `actor`               | string       | The policy owner.              |
+
+Policy checks and policy evaluations serve the same purpose, but have different workflows for enforcing policies. For more information, refer to [Differences between policy checks and policy evaluations](/terraform/enterprise/policy-enforcement/manage-policy-sets#differences-between-policy-checks-and-policy-evaluations).
+
+## Registry module events
+
+[Terraform Cloud's private registry](/terraform/cloud-docs/registry) lets you share Terraform providers and Terraform modules across your organization.
+
+### Destroy version
+
+A Terraform Cloud organization emits this event when someone in your organization destroys a specific version of a registry module(`destroy_version`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key       | Data Type | Description                                      |
+| ---       | ---       | ---                                              |
+| `version` | integer   | The version number of the registry module to destroy. |
+
+## Run task events
+
+You can create Terraform Cloud [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) at an organization level to directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. You can use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
+
+### Create
+
+A Terraform Cloud organization emits this event when someone in your organization creates a task. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                   | Data Type    | Description                                               |
+| ---                   | ---          | ---                                                       |
+| `task_name`           | string       | The name of the task.                                     |
+| `task_category`       | string       | The task's category |
+| `task_url`            | string       | The task's URL.                         |
+| `task_enabled`        | boolean      | Indicates whether the task is enabled or not.            |
+| `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the task.         |
+
+### Destroy
+
+A Terraform Cloud organization emits this event when someone in your organization destroys a task. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                   | Data Type    | Description                                               |
+| ---                   | ---          | ---                                                       |
+| `task_name`           | string       | The name of the task to be destroyed.                    |
+| `task_category`       | string       | The category of the task to be destroyed.                |
+| `task_url`            | string       | The URL associated with the task to be destroyed.        |
+| `task_enabled`        | boolean      | Indicates whether the task to be destroyed is enabled.   |
+| `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the task to be destroyed. |
+
+### Update
+
+A Terraform Cloud organization emits this event when someone in your organization updates a task. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                   | Data Type    | Description                                               |
+| ---                   | ---          | ---                                                       |
+| `task_name`           | string       | The name of the task to be updated.                       |
+| `task_category`       | string       | The updated category of the task.                         |
+| `task_url`            | string       | The updated URL associated with the task.                |
+| `task_enabled`        | boolean      | Indicates whether the task is enabled after the update.  |
+| `task_hmac_key_present` | boolean    | Specifies if an HMAC key is present for the updated task. |
+| `task_hmac_key_changed` | boolean    | Indicates whether the HMAC key for the task has changed during the update. |
+
+### Callback
+
+A Terraform Cloud organization emits this event when a [run task](/terraform/cloud-docs/workspaces/settings/run-tasks) result's (`task_result`) callback action occurs. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                          | Data Type          | Description                                               |
+| ---                          | ---                | ---                                                       |
+| `task_result_status`         | string             | The status of the task result.                            |
+| `task_result_url`            | string             | The URL associated with the task result.                 |
+| `task_result_message`        | string             | A message associated with the task result.               |
+| `workspace`                  | string             | The workspace related to the task result.                |
+| `workspace_id`               | string             | The ID of the workspace related to the task result.       |
+| `run_id`                     | string             | The ID of the run associated with the task result.        |
+| `run_created_at`             | date (iso8601)     | The timestamp when the run was created.                   |
+| `run_created_by`             | string             | The user who created the run.                            |
+| `run_message`                | string             | The message associated with the run.                     |
+| `run_is_speculative`         | boolean            | Indicates whether the run is speculative or not.         |
+| `workspace_task_id`          | string             | The ID of the workspace task associated with the result.  |
+| `workspace_task_stage`       | string             | The stage of the workspace task.                          |
+| `workspace_task_enforcement` | string             | The enforcement level of the workspace task.             |
+| `organization_task`          | string             | The organization task related to the task result.        |
+| `organization_task_id`       | string             | The ID of the organization task related to the result.    |
+| `organization_task_url`      | string             | The URL associated with the organization task.           |
+
+### Create a workspace's run task 
+
+A Terraform Cloud organization emits this event when someone in your organization [associates a new run task with a workspace](/terraform/cloud-docs/workspaces/settings/run-tasks#associating-run-tasks-with-a-workspace) (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
+### Update a workspace's run task 
+
+A Terraform Cloud organization emits this event when someone in your organization updates a workspace's associated run task (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
+### Destroy a workspace's run task 
+
+A Terraform Cloud organization emits this event when someone in your organization destroys a workspace's associated run task (`workspace_task`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key                      | Data Type    | Description                     |
+| ---                      | ---          | ---                             |
+| `task_enforcement_level` | string       | The task's enforcement level.    |
+| `task_stage`             | string       | The stage of the task.           |
+| `workspace`              | string       | The workspace associated with the task. |
+| `workspace_id`           | string       | The ID of the workspace.         |
+| `organization_task`      | string       | The organization's task.         |
+| `organization_task_id`   | string       | The ID of the organization's task.|
+
+## Team events
+
+Teams are [groups of Terraform Cloud users within an organization](/terraform/cloud-docs/users-teams-organizations/teams). 
+
+### Add Member
+
+A Terraform Cloud organization emits this event when someone in your organization adds a member(`add_member`) to a team. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key      | Data Type | Description         |
+| ---      | ---       | ---                 |
+| `user`   | string    | The user being added to the team. |
+
+### Remove Member
+
+A Terraform Cloud organization emits this event when someone in your organization removes a member(`remove_member`) from a team. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key      | Data Type | Description         |
+| ---      | ---       | ---                 |
+| `user`   | string    | The user being removed from the team. |
+
+## Workspace comment events
+
+[Workspace comments](/terraform/cloud-docs/api-docs/comments) allow users to leave feedback or record decisions about a run.
+
+### Create
+
+A Terraform Cloud organization emits this event when someone in your organization creates a comment on a workspace(`workspace_comment`). Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key       | Data Type | Description             |
+| ---       | ---       | ---                     |
+| `resource`| string    | The resource associated with the comment. |
+
+## Workspace events
+
+Terraform Cloud manages infrastructure collections with [workspaces](/terraform/cloud-docs/workspaces).
+
+### Add Team
+
+A Terraform Cloud organization emits this event when someone in your organization adds a team(`add_team`) to a workspace. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.    |
+| `permissions` | string   | The permissions granted to the team.  |
+
+### Update Team Permissions
+
+A Terraform Cloud organization emits this event when someone in your organization updates the permissions(`update_team_permissions`) of a team on a workspace. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.    |
+| `permissions` | string   | The updated permissions for the team. |
+
+### Remove Team
+
+A Terraform Cloud organization emits this event when someone in your organization removes a team(`remove_team`) from a workspace. Alongside the [standard audit trail fields](#standard-response-fields), this event response includes the following fields:
+
+| Key          | Data Type | Description                           |
+| ---          | ---       | ---                                   |
+| `team`       | string    | The name or identifier of the team.   |

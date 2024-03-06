@@ -9,23 +9,51 @@ description: >-
 
 Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 
-## 2023-11-21
+## 2024-3-12
 * Update OAuth Client API endpoints to create, update, and return projects associated with an oauth client.
 * Add API endpoints to [Attach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#attach-an-oauth-client-to-projects) and [Detach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#detach-an-oauth-client-from-projects) from a project.
 * Add `organization-scoped` attribute to the [OAuth Clients API](/terraform/cloud-docs/api-docs/oauth-clients).
 
+## 2024-2-20
+* Add documentation for configuring organization and workspace data retention policies through the API and on the different [types of data retention policies](/terraform/enterprise/api-docs/data-retention-policies).
+
+## 2024-2-8
+* Add [Explorer API documentation](/terraform/cloud-docs/api-docs/explorer)
+
+## 2024-1-30
+* Update the [Audit trails](/terraform/cloud-docs/api-docs/audit-trails) documentation to expand on the payloads for each event.
+
+## 2024-1-24
+- Introduce configurable data retention policies at the site-wide level and extend data retention policies at the organization and workspace levels.
+- Added and/or updated data retention policy documentation to the following topics:
+    - [Admin Settings Documentation](/terraform/enterprise/application-administration/general#data-retention-policies)
+    - [Admin API Documentation](/terraform/enterprise/api-docs/admin/settings#data-retention-policies)
+    - [Organization Documentation](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies)
+    - [Workspace Documentation](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies)
+
+## 2024-1-4
+* Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to support the `aggregated-commit-status-enabled` attribute, which controls whether [Aggregated Status Checks](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-status-checks) are enabled.
+
 ## 2023-11-17
-* Add `authenticated-resource` relationship to the [Account API](/terraform/cloud-docs/api-docs/account)
+
+-   Added the [`opa-versions` endpoint](/terraform/enterprise/api-docs/admin/opa-versions) to allow administrators to manage available Open Policy Agent (OPA) versions.
+-   Added the [`sentinel-versions` endpoint](/terraform/enterprise/api-docs/admin/sentinel-versions) to allow administrators to manage available Sentinel versions.
+-   Add `authenticated-resource` relationship to the [`account` API](/terraform/enterprise/api-docs/account).
+
+## 2023-11-15
+
+- Introduce configurable data retention policies at the [organization](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies) and [workspace](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) levels.
+- Added data retention policy documentation to the following topics:
+   - [`state-versions` API documentation](/terraform/enterprise/api-docs/state-versions)
+   - [`configuration-versions` API documentation](/terraform/enterprise/api-docs/configuration-versions)
+   - [Organizations documentation](/terraform/enterprise/users-teams-organizations/organizations#destruction-and-deletion)
+   - [Workspaces documentation](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) 
 
 ## 2023-11-07
 * Add `auto_destroy_activity_duration` to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces), which allows Terraform Cloud to schedule auto-destroy runs [based on workspace inactivity](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).
 
-<!-- BEGIN: TFC:only name:auto-apply-run-trigger -->
-
 ## 2023-10-31
 * Update the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) to support the `auto-apply-run-trigger` attribute, which controls if run trigger runs are auto-applied.
-
-<!-- END: TFC:only name:auto-apply-run-trigger -->
 
 ## 2023-10-30
 * Add `priority` attribute to the [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets).

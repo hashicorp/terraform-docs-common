@@ -740,7 +740,7 @@ Upgrading a workspace's No-code provisioning settings is a multi-step process. F
 
 After calling this API, the next step is to await the completion of the plan, by polling [the API which shows plan status](#read-workspace-upgrade-plan-status).
 
-`POST /no-code-modules/:no_code_module_id/workspaces/:id`
+`POST /no-code-modules/:no_code_module_id/workspaces/:id/upgrade`
 
 
 | Parameter            | Description                    |
@@ -811,7 +811,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC
+  https://app.terraform.io/api/v2/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade
 ```
 ### Sample Response
 
@@ -861,7 +861,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request GET \
-  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
+  https://app.terraform.io/api/v2/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
 ```
 
 ### Sample Response
@@ -904,7 +904,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
-  https://app.terraform.io/api/v2/organizations/hashicorp/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
+  https://app.terraform.io/api/v2/no-code-modules/nocode-WGckovT2RQxupyt1/workspaces/ws-qACTToFUM5BvDKhC/upgrade/run-Cyij8ctBHM1g5xdX
 ```
 
 ### Sample Response
