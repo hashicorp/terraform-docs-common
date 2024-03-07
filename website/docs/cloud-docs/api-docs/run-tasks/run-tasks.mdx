@@ -86,7 +86,7 @@ Properties without a default value are required unless otherwise specified.
 | `data.attributes.hmac-key`                                          | string          |         | (Optional) HMAC key to verify run task.                                                                                                                          |
 | `data.attributes.enabled`                                           | bool            | true    | (Optional) Whether the task will be run.                                                                                                                         |
 | `data.attributes.global-configuration.enabled` **(beta)**           | bool            | false   | (Optional) Whether the task will be associated on all workspaces.                                                                                                |
-| `data.attributes.global-configuration.stages` **(beta)**            | array of string |         | (Optional) The stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
+| `data.attributes.global-configuration.stages` **(beta)**            | array |         | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
 | `data.attributes.global-configuration.enforcement-level` **(beta)** | string          |         | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                   |
 
 ### Sample Payload
