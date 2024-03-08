@@ -118,7 +118,7 @@ Creating a run requires permission to queue plans for the specified workspace. (
 
 When creating a run, you may optionally provide a list of variable objects containing key and value attributes. These values apply to that run specifically and take precedence over variables with the same key applied to the workspace(e.g., variable sets). Refer to [Variable Precedence](/terraform/cloud-docs/workspaces/variables#precedence) for more information. All values must be expressed as an HCL literal in the same syntax you would use when writing Terraform code. Refer to [Types](/terraform/language/expressions/types#types) in the Terraform documentation for more details.
 
-Creating a run with `debugging_mode: true` will queue the run in debugging mode. This is equivalent to setting the `TF_LOG` environment variable to a value of `TRACE` for this run. See [Debugging Terraform](/terraform/internals/debugging) for more information.
+Setting `debugging_mode: true` enables debugging mode for the queued run only. This is equivalent to setting the `TF_LOG` environment variable to `TRACE` for this run. See [Debugging Terraform](/terraform/internals/debugging) for more information.
 
 **Sample Run Variables:**
 
