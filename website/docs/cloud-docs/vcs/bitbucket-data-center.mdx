@@ -8,8 +8,6 @@ description: >-
 
 These instructions are for using **Bitbucket Data Center** for Terraform Cloud's VCS features.
 
-These instructions also apply to **Bitbucket Data Center,** which is a variant of Bitbucket Data Center that supports clustering. Terraform Cloud treats these two products identically, and Bitbucket Data Center users will select **Bitbucket Data Center** as their VCS Provider type. Unless stated otherwise, any reference to Bitbucket Data Center in this document also applies to Bitbucket Data Center.
-
 Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -18,33 +16,7 @@ Configuring a new VCS provider requires permission to manage VCS settings for th
 
 Note that Bitbucket Data Center requires both OAuth authentication and an SSH key, both of which are covered in the instructions.
 
--> **Version note:** Terraform Cloud supports Bitbucket Data Center and Bitbucket Data Center versions 5.4.0 and above. <br /><br />Support for Bitbucket Data Center versions between 4.9.1 and 5.3.7 is deprecated. Terraform Cloud currently works with these versions, but will stop supporting them in the near future. <br /><br />HashiCorp does not test older versions of Bitbucket Data Center with Terraform Cloud, and they might not work as expected. Also note that, although we do not proactively remove support for versions that have reached end of life (per the [Atlassian Support End of Life Policy](https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html)), our ability to resolve customer issues with end of life versions might be limited.
-
 ~> **Important:** Terraform Cloud needs to contact Bitbucket Data Center over both SSH and HTTP (or HTTPS) during setup and during normal operation. For the SaaS version of Terraform Cloud, this means Bitbucket Data Center must be internet-accessible on its SSH and HTTP(S) ports; for Terraform Enterprise, you must have network connectivity between your Terraform Enterprise and Bitbucket Data Center instances. <br /><br /> Note that [Bitbucket Data Center's default ports](https://confluence.atlassian.com/bitbucketserverkb/which-ports-does-bitbucket-server-listen-on-and-what-are-they-used-for-806029586.html) are 7999 for SSH and 7990 for HTTP; check your configuration to confirm your instance's real ports.
-
-## Before You Begin: Determine Your Bitbucket Data Center Version
-
-Terraform Cloud requires support for the delivery of webhooks to perform many operations, including tracking newly available configuration versions. When using Bitbucket Data Center version 5.3 or below (**deprecated**), Atlassian's webhooks plugin is required to be configured on Bitbucket Data Center. If using version 5.4 or above, no plugin is required, as webhooks are supported natively.
-
-1. Open your Bitbucket Data Center instance in your browser and log in as an admin user.
-
-1. In the footer of every page is a reference to the instance's current version. **If your version is greater than v5.4.0, you may skip all remaining steps in this section.**
-
-1. Go to the "Manage add-ons" page. You can click the gear icon and then use the "Manage add-ons" link or go directly to `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/upm`.
-
-1. Look for an add-on named "Web Post Hooks for Bitbucket Data Center", and make sure it is installed and enabled. The plugin is disabled by default. Clicking `Enabled` will toggle the plugin on.
-
-1. If the plugin isn't present, click "Find new add-ons". Search for the plugin by name and install it.
-
-   Make sure to install the correct plugin. Terraform Cloud is designed to work with [Web Post Hooks for Bitbucket Data Center by Atlassian ](https://marketplace.atlassian.com/apps/1211539/web-post-hooks-for-bitbucket-server?hosting=server&tab=overview).
-
-   ![Atlassian Marketplace screenshot: the Web Post Hooks for Bitbucket Data Center plugin, published by Atlassian](/img/docs/bitbucket-server-webhooks-plugin.png)
-
-1. Visit the repository's settings, click on `Hooks` and check that the plugin is _enabled_ there as well.
-
-There is an option to configure a `webhook URL` on the plugin. Leave this optional field blank. Terraform Cloud will dynamically update the `webhook URL` after the VCS connection is established.
-
-Leave the page open in a browser tab, and remain logged in as an admin user.
 
 ## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
 
