@@ -197,7 +197,7 @@ To learn how to generate one of these token strings for your VCS provider, you c
 * [GitLab, GitLab Community Edition, and GitLab Enterprise Edition](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token)
 * [Azure DevOps Server](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops-2019&tabs=preview-page)
 
-~> **Note:** This endpoint does not currently support creation of a Bitbucket Cloud, Bitbucket Server, or Azure DevOps Services OAuth Client.
+~> **Note:** This endpoint does not currently support creation of a Bitbucket Cloud, Bitbucket Data Center, or Azure DevOps Services OAuth Client.
 
 | Status  | Response                                        | Reason                                                         |
 | ------- | ----------------------------------------------- | -------------------------------------------------------------- |
@@ -221,8 +221,8 @@ Properties without a default value are required.
 | `data.attributes.api-url`            | string |         | The base URL as per your VCS provider's API documentation (e.g. `"https://api.github.com"`, `"https://ghe.example.com/api/v3"` or `"https://gitlab.com/api/v4"`).                            |
 | `data.attributes.oauth-token-string` | string |         | The token string you were given by your VCS provider                                                                                                                                           |
 | `data.attributes.private-key`        | string |         | **Required for Azure DevOps Server. Not used for any other providers.** The text of the SSH private key associated with your Azure DevOps Server account.                                      |
-| `data.attributes.secret`             | string |         | The OAuth Client secret. For BitBucket Server, this secret is the the text of the SSH private key associated with your BitBucket Server Application Link.                                      |
-| `data.attributes.rsa-public-key`     | string |         | **Required for BitBucket Server in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your BitBucket Server Application Link.   |
+| `data.attributes.secret`             | string |         | The OAuth Client secret. For Bitbucket Data Center, this secret is the the text of the SSH private key associated with your Bitbucket Data Center Application Link.                                      |
+| `data.attributes.rsa-public-key`     | string |         | **Required for Bitbucket Data Center in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your Bitbucket Data Center Application Link.   |
 
 ### Sample Payload
 
@@ -316,8 +316,8 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.type`                      | string |                  | Must be `"oauth-clients"`.                                                                                                                                                                   |
 | `data.attributes.name`           | string | (previous value) | An optional display name for the OAuth Client. If set to `null`, the UI will default to the display name of the VCS provider.                                                                |
 | `data.attributes.key`            | string | (previous value) | The OAuth Client key. It can refer to a Consumer Key, Application Key, or another type of client key for the VCS provider.                                                                   |
-| `data.attributes.secret`         | string | (previous value) | The OAuth Client secret. For BitBucket Server, this secret is the the text of the SSH private key associated with your BitBucket Server Application Link.                                    |
-| `data.attributes.rsa-public-key` | string | (previous value) | **Required for BitBucket Server in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your BitBucket Server Application Link. |
+| `data.attributes.secret`         | string | (previous value) | The OAuth Client secret. For Bitbucket Data Center, this secret is the the text of the SSH private key associated with your Bitbucket Data Center Application Link.                                    |
+| `data.attributes.rsa-public-key` | string | (previous value) | **Required for Bitbucket Data Center in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your Bitbucket Data Center Application Link. |
 
 ### Sample Payload
 

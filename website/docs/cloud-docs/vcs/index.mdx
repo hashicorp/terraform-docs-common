@@ -32,7 +32,7 @@ Terraform Cloud supports the following VCS providers:
 - [GitLab.com](/terraform/cloud-docs/vcs/gitlab-com)
 - [GitLab EE and CE](/terraform/cloud-docs/vcs/gitlab-eece)
 - [Bitbucket Cloud](/terraform/cloud-docs/vcs/bitbucket-cloud)
-- [Bitbucket Server](/terraform/cloud-docs/vcs/bitbucket-server)
+- [Bitbucket Data Center](/terraform/cloud-docs/vcs/bitbucket-data-center)
 - [Azure DevOps Server](/terraform/cloud-docs/vcs/azure-devops-server)
 - [Azure DevOps Services](/terraform/cloud-docs/vcs/azure-devops-services)
 
@@ -63,7 +63,7 @@ Terraform Cloud uses webhooks to monitor new commits and pull requests.
 
 ### SSH Keys
 
-For most supported VCS providers, Terraform Cloud does not need an SSH key — it can do everything it needs with the provider's API and an OAuth token. The exceptions are Azure DevOps Server and Bitbucket Server, which require an SSH key for downloading repository contents. The setup instructions for  [Azure DevOps Server](/terraform/cloud-docs/vcs/azure-devops-server) and [Bitbucket Server](/terraform/cloud-docs/vcs/bitbucket-server) include this step.
+For most supported VCS providers, Terraform Cloud does not need an SSH key — it can do everything it needs with the provider's API and an OAuth token. The exceptions are Azure DevOps Server and Bitbucket Data Center, which require an SSH key for downloading repository contents. The setup instructions for  [Azure DevOps Server](/terraform/cloud-docs/vcs/azure-devops-server) and [Bitbucket Data Center](/terraform/cloud-docs/vcs/bitbucket-data-center) include this step.
 
 For other VCS providers, most organizations will not need to add an SSH private key. However, if the organization repositories include Git submodules that can only be accessed via SSH, an SSH key can be added along with the OAuth credentials.
 
@@ -100,7 +100,7 @@ For complete details, click the link for your VCS provider:
 - [GitLab.com](/terraform/cloud-docs/vcs/gitlab-com)
 - [GitLab EE and CE](/terraform/cloud-docs/vcs/gitlab-eece)
 - [Bitbucket Cloud](/terraform/cloud-docs/vcs/bitbucket-cloud)
-- [Bitbucket Server](/terraform/cloud-docs/vcs/bitbucket-server)
+- [Bitbucket Data Center](/terraform/cloud-docs/vcs/bitbucket-data-center)
 - [Azure DevOps Server](/terraform/cloud-docs/vcs/azure-devops-server)
 - [Azure DevOps Services](/terraform/cloud-docs/vcs/azure-devops-services)
 
