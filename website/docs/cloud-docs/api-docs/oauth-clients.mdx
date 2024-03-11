@@ -235,7 +235,7 @@ Properties without a default value are required.
 | `data.attributes.private-key`        | string |         | **Required for Azure DevOps Server. Not used for any other providers.** The text of the SSH private key associated with your Azure DevOps Server account.                                      |
 | `data.attributes.secret`             | string |         | The OAuth Client secret. For BitBucket Server, this secret is the the text of the SSH private key associated with your BitBucket Server Application Link.                                      |
 | `data.attributes.rsa-public-key`     | string |         | **Required for BitBucket Server in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your BitBucket Server Application Link.   |
-| `data.attributes.organization-scoped` | boolean |         | Whether or not the oauth client is scoped to all projects and workspaces in the organization. Defaults to `true`.
+| `data.attributes.organization-scoped` | boolean |         | Whether or not the OAuth client is scoped to all projects and workspaces in the organization. Defaults to `true`.
 | `data.relationships.projects.data[]` | array\[object] | `[]`      | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
 
 ### Sample Payload
@@ -346,7 +346,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.key`            | string | (previous value) | The OAuth Client key. It can refer to a Consumer Key, Application Key, or another type of client key for the VCS provider.                                                                   |
 | `data.attributes.secret`         | string | (previous value) | The OAuth Client secret. For BitBucket Server, this secret is the the text of the SSH private key associated with your BitBucket Server Application Link.                                    |
 | `data.attributes.rsa-public-key` | string | (previous value) | **Required for BitBucket Server in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your BitBucket Server Application Link. |
-| `data.attributes.organization-scoped` | boolean | (previous value) | Whether or not the oauth client is available to all projects and workspaces in the organization.                                                                      |
+| `data.attributes.organization-scoped` | boolean | (previous value) | Whether or not the OAuth client is available to all projects and workspaces in the organization.                                                                      |
 | `data.relationships.projects`    | array\[object] | (previous value) | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. Sending an empty array clears all project assignments.                                               |
 
 ### Sample Payload
@@ -478,7 +478,7 @@ Properties without a default value are required.
 
 | Key path | Type           | Default | Description                                                                                                                                                                                                                                                          |
 | -------- | -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data[]` | array\[object] |   `[]`  | A list of resource identifier objects that defines which projects to attach the oauth client to. These objects must contain `id` and `type` properties, and the `type` property must be `projects` (e.g. `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`).    |
+| `data[]` | array\[object] |   `[]`  | A list of resource identifier objects that defines which projects to attach the OAuth client to. These objects must contain `id` and `type` properties, and the `type` property must be `projects` (e.g. `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`).    |
 
 ### Sample Payload
 

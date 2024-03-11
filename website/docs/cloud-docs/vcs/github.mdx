@@ -93,14 +93,14 @@ Leave the page open in a browser tab. In the next step you will copy values from
 ## Step 4: On Terraform Cloud, Configure Advanced Settings (Optional)
 
 The settings in this section are optional. The Advanced Settings you can configure are:
-- **Scope of VCS Provider** - You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is enabled to be used by all workspaces in the organization.
-- **Set up SSH Keypair** - Most organizations will not need to add an SSH private key. However, if the organization repositories include Git submodules that can only be accessed via SSH, an SSH key can be added along with the OAuth credentials. You can add or update the SSH private key at a later time.
+- **Scope of VCS Provider** - You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
+- **Set up SSH Keypair** - Most organizations will not need to add an SSH key. However, if the organization repositories include Git submodules that can only be accessed via SSH, an SSH key can be added along with the OAuth credentials. You can add or update the SSH key at a later time.
 
 ### If You Don't Need to Configure Advanced Settings
 
 1. Click the "Skip and Finish" button. This returns you to Terraform Cloud's VCS Provider page, which now includes your new GitHub client.
 
-### If You Do Need to Limit the Scope of this VCS Provider:
+### If You Need to Limit the Scope of this VCS Provider:
 
 1. Select the **Selected Projects** option and use the text field that appears to search for and select projects to enable. All current and future workspaces for any selected projects can use repositories from this VCS Provider. 
 
@@ -112,7 +112,7 @@ The settings in this section are optional. The Advanced Settings you can configu
 
 - SSH will only be used to clone Git submodules. All other Git operations will still use HTTPS.
 - Do not use your personal SSH key to connect Terraform Cloud and GitHub; generate a new one or use an existing key reserved for service access.
-- In the following steps, you must provide Terraform Cloud with the private key. Although Terraform Cloud does not display the text of the key to users after it is entered, it retains it and will use it for authenticating to GitHub.
+- In the following steps, you must provide Terraform Cloud with the private key. Although Terraform Cloud does not display the text of the key to users after it is entered, it retains it and will use it when authenticating to GitHub.
 - **Protect this private key carefully.** It can push code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
 
 1. On a secure workstation, create an SSH keypair that Terraform Cloud can use to connect to GitHub.com. The exact command depends on your OS, but is usually something like:
