@@ -342,8 +342,8 @@
       { "title": "GitLab EE and CE", "path": "vcs/gitlab-eece" },
       { "title": "Bitbucket Cloud", "path": "vcs/bitbucket-cloud" },
       {
-        "title": "Bitbucket Server and Data Center",
-        "path": "vcs/bitbucket-server"
+        "title": "Bitbucket Data Center",
+        "path": "vcs/bitbucket-data-center"
       },
       {
         "title": "Azure DevOps Services",
