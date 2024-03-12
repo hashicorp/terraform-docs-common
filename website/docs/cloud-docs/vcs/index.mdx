@@ -77,6 +77,10 @@ To add an SSH key to a VCS connection, finish configuring OAuth in the organizat
 
 If your infrastructure code is spread across multiple VCS providers, you can configure multiple VCS connections. You can choose which VCS connection to use whenever you create a new workspace.
 
+#### Scoping VCS Connections using Projects
+
+You can configure which projects can use repositories from a VCS connection. By default each VCS connection is enabled for all workspaces in the organization. If you need to limit which projects can use repositories from a given VCS connection, you can change this setting to enable the connection for only workspaces in the selected projects.
+
 ## Configuring VCS Access
 
 Terraform Cloud uses the OAuth protocol to authenticate with VCS providers.
