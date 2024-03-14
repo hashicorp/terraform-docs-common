@@ -37,9 +37,11 @@ A workspace will not process a webhook if the workspace previously processed a w
 
 ## Manually Starting Runs
 
-When you initially set up the workspace and add variables, or when the code in version control hasn't changed but you've modified some variables, you can manually start a run from the UI. Each workspace has an **+ New run** button in its header, which opens a **Start a new run** dialog for this purpose. When creating a new run, you can optionally provide a message and can choose between several modes, including Plan and apply (standard), [refresh-only](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode), [plan-only (speculative)](/terraform/cloud-docs/run/modes-and-options#refresh-only-mode).
+You can manually trigger a run using the UI. Manual runs let you apply configuration changes when you update variable values but the configuration in version control is unchanged. You must manually trigger an initial run in any new VCS-driven workspace.
 
-For runs including a plan phase, debugging mode can be enabled with the "Enable debugging mode" option. This is equivalent to setting the `TF_LOG` environment variable to a value of `TRACE` for this run. See [Debugging Terraform](/terraform/internals/debugging) for more information.
+To start a run, click the **+ New run** button on the workspace page. This opens a **Start a new run** dialog. Select the run mode and provide an optional message. Review the [run modes documentation](/terraform/cloud-docs/run/modes-and-options) for more detail on supported options.
+
+Run modes that have a plan phase support debugging mode. This is equivalent to setting the `TF_LOG` environment variable to `TRACE` for this run only. To enable debugging, click **Additional planning options** under the run mode and click **Enable debugging mode**.  See [Debugging Terraform](/terraform/internals/debugging) for more information.
 
 To [replace](/terraform/cloud-docs/run/modes-and-options#replacing-selected-resources) specific resources as part of a standard plan and apply run, expand the **Additional planning options** section and select the resources to replace.
 
