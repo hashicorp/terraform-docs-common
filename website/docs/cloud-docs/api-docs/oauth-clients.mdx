@@ -221,7 +221,7 @@ Properties without a default value are required.
 | `data.attributes.api-url`            | string |         | The base URL as per your VCS provider's API documentation (e.g. `"https://api.github.com"`, `"https://ghe.example.com/api/v3"` or `"https://gitlab.com/api/v4"`).                            |
 | `data.attributes.oauth-token-string` | string |         | The token string you were given by your VCS provider                                                                                                                                           |
 | `data.attributes.private-key`        | string |         | **Required for Azure DevOps Server. Not used for any other providers.** The text of the SSH private key associated with your Azure DevOps Server account.                                      |
-| `data.attributes.secret`             | string |         | The OAuth Client secret. For Bitbucket Data Center, this secret is the the text of the SSH private key associated with your Bitbucket Data Center Application Link.                                      |
+| `data.attributes.secret`             | string |         | The OAuth client secret. For Bitbucket Data Center, the secret is the text of the SSH private key associated with your Bitbucket Data Center application link.                                      |
 | `data.attributes.rsa-public-key`     | string |         | **Required for Bitbucket Data Center in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your Bitbucket Data Center Application Link.   |
 
 ### Sample Payload
