@@ -25,7 +25,7 @@ With an older version of Azure DevOps Server it may be that the web interface do
 
 ### Clicking "Connect organization `<X>`" with Bitbucket Data Center raises an error message in Terraform Cloud
 
-Terraform Cloud uses OAuth 1 to authenticate the user to Bitbucket Data Center. The first step in the authentication process is for Terraform Cloud to call Bitbucket Data Center to obtain a "request token". After the call completes, Terraform Cloud redirects you to Bitbucket Data Center with the request token.
+Terraform Cloud uses OAuth 1 to authenticate the user to Bitbucket Data Center. The first step in the authentication process is for Terraform Cloud to call Bitbucket Data Center to obtain a request token. After the call completes, Terraform Cloud redirects you to Bitbucket Data Center with the request token.
 
 An error occurs when Terraform Cloud calls to Bitbucket Data Center to obtain the request token but the request is rejected. Some common reasons for the request to be rejected are:
 
