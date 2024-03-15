@@ -86,11 +86,15 @@ The following steps provide an overview of how to connect Terraform Cloud and Te
 1. Click **Continue**. Bitbucket prompts you to authorize Terraform to make changes. Before you proceed, verify that you are logged in with the user account that Terraform Cloud will use to access Bitbucket and not as a Bitbucket administrator. If Bitbucket returns a 500 error instead of the authorization screen, Terraform may have been unable to reach your Bitbucket Data Center instance.
 1. Click **Allow**  and enter the SSH key when prompted.
 
-## Step 3: On Workstation: Create an SSH Key for Terraform Cloud
+## Create an SSH key for Terraform
 
-On a secure workstation, create an SSH keypair that Terraform Cloud can use to connect to Bitbucket Data Center. The exact command depends on your OS, but is usually something like `ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"`. This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key.
+On a secure workstation, create an SSH keypair that Terraform Cloud or Terraform Enterprise can use to connect to Bitbucket Data Center. The command for generating SSH keys depends on your OS. The following example for Linux creates a `service_terraform` file with the private key and a `service_terraform.pub` file with the public key:
 
-This SSH key **must have an empty passphrase.** Terraform Cloud cannot use SSH keys that require a passphrase.
+ \```shell-session
+ $ ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"
+ \```
+
+Do not specify a passphrase. The SSH key must have an empty passphrase, othewise Terraform cannot use SSH keys that require a passphrase.
 
 
 ## Add an SSH key to Bitbucket
