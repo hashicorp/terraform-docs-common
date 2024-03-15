@@ -84,7 +84,9 @@ Note that the "SSH Key" section in a workspace's settings is only used for mid-r
 
 ## General
 
-### Terraform Cloud returns 500 after authenticating with the VCS provider (other than Bitbucket Data Center)
+The following errors may occur for all VCS providers except Bitbucket Data Center.
+
+### Terraform Cloud returns 500 after authenticating with the VCS provider 
 
 The Callback URL in the OAuth application configuration in the VCS provider probably wasn't updated in the last step of the instructions and still points to the default "/" path (or an example.com link) instead of the full callback url.
 

@@ -6,27 +6,43 @@ description: >-
 
 # Configuring Bitbucket Data Center Access
 
-These instructions are for using **Bitbucket Data Center** for Terraform Cloud's VCS features.
+This topic describes how to connect Bitbucket Data Center to Terraform Cloud. For instructions on how to connect Bitbucket Cloud, refer to [Configuring Bitbucket Cloud Access](/terraform/cloud-docs/vcs/bitbucket-cloud). Refer to [Connecting VCS Providers to Terraform Cloud](/terraform/cloud-docs/vcs) for other supported VCS providers.
 
-Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+**Bitbucket Server is deprecated**.  Atlassian ended support for Bitbucket Server on February 15, 2024, and recommends using either Bitbucket Data Center or Bitbucket Cloud instead. Refer to the [Atlassian documentation](https://bitbucket.org/blog/cloud-migration-benefits) for additional information.
 
-[permissions-citation]: #intentionally-unused---keep-for-maintainers
+Terraform Cloud will end support Bitbucket Server on August 15, 2024. Terraform Enterprise will also end support for Bitbucket Server in Terraform Enterprise v202410. [Contact HashiCorp support](https://support.hashicorp.com/hc/en-us) if you have any questions regarding this change.
 
-[Bitbucket Cloud has separate instructions,](/terraform/cloud-docs/vcs/bitbucket-cloud) as do the [other supported VCS providers.](/terraform/cloud-docs/vcs)
 
-Note that Bitbucket Data Center requires both OAuth authentication and an SSH key, both of which are covered in the instructions.
 
--> **Bitbucket Server Deprecation Notice:** On February 15, 2024, Atlassian [ended support for Bitbucket Server](https://bitbucket.org/blog/cloud-migration-benefits), and are advising Bitbucket Server users to migrate to either Bitbucket Data Center or Bitbucket Cloud. As a result of this change, Bitbucket Data Center has been added as an officially supported VCS provider within TFC and TFE, and Bitbucket Server will be removed from TFC on August 15, 2024, and from TFE in the the v202410 release. If you have any questions regarding this change, please reach out to our [support team](https://support.hashicorp.com/hc/en-us).
+## Overview
 
-~> **Important:** Terraform Cloud needs to contact Bitbucket Data Center over both SSH and HTTP (or HTTPS) during setup and during normal operation. For the SaaS version of Terraform Cloud, this means Bitbucket Data Center must be internet-accessible on its SSH and HTTP(S) ports; for Terraform Enterprise, you must have network connectivity between your Terraform Enterprise and Bitbucket Data Center instances. <br /><br /> Note that [Bitbucket Data Center's default ports](https://confluence.atlassian.com/bitbucketserverkb/which-ports-does-bitbucket-server-listen-on-and-what-are-they-used-for-806029586.html) are 7999 for SSH and 7990 for HTTP; check your configuration to confirm your instance's real ports.
+The following steps provide an overview of how to connect Terraform Cloud and Terraform Enterprise to Bitbucket Data Center:
 
-## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
+1. Add a new VCS provider to Terraform Cloud or Enterprise.
+1. Create a new application link in Bitbucket.
+1. Create an SSH key pair. SSH key must have an empty passphrase because Terraform Cloud cannot use SSH keys that require a passphrase.
+1. Add an SSH key to Bitbucket. You must complete this step as a non-administrator user in Bitbucket.
+1. Add the private SSH key to Terraform. 
+
+## Requirements
+
+- You must have permission to manage VCS settings for the organization. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) for additional information. [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+- You must have OAuth authentication credentials and an SSH key. Refer to []().
+
+- Your instance of Bitbucket Data Center must be internet-accessible on its SSH and HTTP(S) ports. This is because Terraform Cloud must be able to contact Bitbucket Data Center over both SSH and HTTP or HTTPS during setup and during normal operation. 
+
+### Terrafrom Enterprise requirements
+
+- Terraform Enterprise must have network connectivity to Bitbucket Data Center instances. Note that [Bitbucket Data Center's default ports](https://confluence.atlassian.com/bitbucketserverkb/which-ports-does-bitbucket-server-listen-on-and-what-are-they-used-for-806029586.html) are `7999` for SSH and `7990` for HTTP. Check your configuration to confirm your instance's real ports.
+
+## Add a new VCS provider to Terraform
 
 1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
 
 1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
-1. Select **Bitbucket** and then select **Bitbucket Data Center** from the menu. The page moves to the next step.
+1. Choose **Bitbucket Data Center** from the **Bitbucket** drop-down menu. 
 
 1. (Optional) Enter a **Name** for this VCS connection.
 
@@ -41,50 +57,34 @@ Note that Bitbucket Data Center requires both OAuth authentication and an SSH ke
    1. Set the **HTTP URL** to the URL of your Bitbucket Data Center instance with the context path included, `https://<BITBUCKET INSTANCE HOSTNAME>/<CONTEXT PATH>`.
    1. Set the **API URL** to the URL of your Bitbucket Data Center instance **without** the context path, `https://<BITBUCKET INSTANCE HOSTNAME>`.
 
-   ~> **Important:** If Bitbucket Data Center isn't accessible on the standard ports (for example, if it's using its default ports of 7990 or 8443 and is not behind a reverse proxy), make sure to specify the port in the URL. If you omit the port in the URL, Terraform Cloud uses the standard port for the protocol (80 for HTTP, 443 for HTTPS).
+   By default, Terraform Cloud uses port `80` for HTTP and  `443` for HTTPS. If Bitbucket Data Center is configured to use non-standard ports or is behind a reverse proxy, you must include the port number in the URL. 
 
-1. Click "Continue" to view the generated **Consumer Key** and **Public Key** you can use to create a new Application Link in Bitbucket Data Center. Leave this page open so you can copy and paste these values in Step 2.
+1. You can either generate new consumer and public keys that you can use to create a new application link in Bitbucket Data Center described in [Create an application link](#create-an-application-link) or use keys from an existing application link:
+    - To generate new keys, click **Continue**. Do not leave this screen until you have copied the key values. 
+    - To use existing keys, enable the **Use Custom Keys** option and enter them into the fields. 
 
-    To use keys from an existing Application Link, toggle "Use Custom Keys" and enter them into the page.
 
-## Step 2: On Bitbucket Data Center, Create a New Application Link
+## Create an application link
 
-1. While logged in as an admin user, go to Bitbucket Data Center's "Application Links" administration page. Navigate to the admin pages or go directly to `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/applinks/listApplicationLinks`.
+1. Log into Bitbucket Data Center as an admin.
+1. Open the **Application Links** administration page using the navigation or by entering `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/applinks/listApplicationLinks` in your browser's address bar.
 
-   This page has a text field for creating a new application link, followed by a list of existing application links.
+1. Click **Application Links** in the sidebar, then click **Create new link**.
+1. Choose **Atlassian product** as the link type. This option also works for external applications and lets you continue to use OAuth 1.0 integrations.
+1. Enter `https://app.terraform.io` or the hostname of your Terraform Enterprise instance when prompted. You can only specify the main URL once. To connect multiple Terraform Cloud organizations to the same Bitbucket Data Center instance, enter the organization URL when creating the link instead. The organization URL is the Terraform Cloud URL or Terraform Enterprise hostname appended with `/app/<ORG NAME`.
+1. When prompted, confirm that you wish to use the URL as entered. If you specified Terraform Cloud's main URL, click **Continue**.  If you specified an organization URL, enabled the **Use this URL** option and then click **Continue**.
 
-   ![Bitbucket Data Center screenshot: The application links page](/img/docs/bitbucket-server-application-links.png)
-
-1. Select **Create link** in application links.
-2. Select **Atlassian product** as the link type. This option also works for external applications and lets you continue to use OAuth 1.0 integrations.
-3. Enter Terraform Cloud's URL in the text field (https://app.terraform.io or the hostname of your Terraform Enterprise instance).
-
-   ~> **Note:** If you connect multiple Terraform Cloud organizations to the same Bitbucket Data Center instance, you can only use Terraform Cloud's main URL once. For subsequent organizations, you can enter the organization URL instead. Organization URLs are the pages you go to using Terraform Cloud's **Workspaces** button and look like `https://app.terraform.io/app/<ORG NAME>` or `https://<TFE HOSTNAME>/app/<ORG NAME>`.
-
-1. In the "Configure application URL" dialog, confirm that you wish to use the URL exactly as you entered it. If you used Terraform Cloud's main URL, click "Continue;" if you used an organization URL, click the "Use this URL" checkbox and then click "Continue."
-
-   ![Bitbucket Data Center screenshot: confirming main URL](/img/docs/bitbucket-server-confirm-url-1.png)
-   ![Bitbucket Data Center screenshot: confirming organization URL](/img/docs/bitbucket-server-confirm-url-2.png)
-
-1. In the "Link applications" dialog, fill out the form fields as follows:
-
-   | Field                           | Value                          |
-   | ------------------------------- | ------------------------------ |
-   | Application Name (text)         | Terraform Cloud (`<ORG NAME>`) |
-   | Application Type (drop-down)    | Generic Application            |
-   | Create incoming link (checkbox) | ✔️ (enabled)                   |
-
-   Leave all the other fields blank, and click "Continue."
-
-   ![Bitbucket Data Center screenshot: filling the first page of the link applications form](/img/docs/bitbucket-server-link-applications-1.png)
-
-1. This takes you to another dialog, also titled "Link applications," with three text fields. In the "Consumer Key" and "Public Key" fields, copy and paste the values from step 1. In the "Consumer Name" field, enter "Terraform Cloud (`<ORG NAME>`)." Click "Continue." This takes you to a page on your Bitbucket Data Center instance, asking if you want to authorize Terraform Cloud. Double-check that you're logged in as the user account Terraform Cloud will be using, and not as a Bitbucket administrator.
-
-   ![Bitbucket Data Center screenshot: the authorization page](/img/docs/bitbucket-server-authorize.png)
-
-   If this results in a 500 error, it usually means Terraform Cloud was unable to reach your Bitbucket Data Center instance.
-
-1. Click the "Allow" button. This returns you to Terraform Cloud to enter a SSH key.
+1. In the **Link applications** dialog, configure the following settings:
+    - Specify `Terraform Cloud <ORG NAME>` in the **Application Name** field
+    - Choose **Generic Application** from the **Application Type** drop-down menu 
+    - Enable the **Create incoming link**option  
+    
+    Leave all the other fields empty.
+1. Click **Continue**. The **Link applications** screen progresses to second configuration screen.
+1. In the **Consumer Key** and **Public Key** fields, enter the key values you created in the [Add a new VCS provider to Terraform](#add-a-new-vcs-provider-to-terraform) instructions. 
+1. In the **Consumer Name** field, enter `Terraform Cloud (<ORG NAME>)`. 
+1. Click **Continue**. Bitbucket prompts you to authorize Terraform to make changes. Before you proceed, verify that you are logged in with the user account that Terraform Cloud will use to access Bitbucket and not as a Bitbucket administrator. If Bitbucket returns a 500 error instead of the authorization screen, Terraform may have been unable to reach your Bitbucket Data Center instance.
+1. Click **Allow**  and enter the SSH key when prompted.
 
 ## Step 3: On Workstation: Create an SSH Key for Terraform Cloud
 
@@ -92,30 +92,29 @@ On a secure workstation, create an SSH keypair that Terraform Cloud can use to c
 
 This SSH key **must have an empty passphrase.** Terraform Cloud cannot use SSH keys that require a passphrase.
 
-### Important Notes
 
-- Do not use your personal SSH key to connect Terraform Cloud and Bitbucket Data Center; generate a new one or use an existing key reserved for service access.
-- In the following steps, you must provide Terraform Cloud with the private key. Although Terraform Cloud does not display the text of the key to users after it is entered, it retains it and will use it for authenticating to Bitbucket Data Center.
-- **Protect this private key carefully.** It can push code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
+## Add an SSH key to Bitbucket
 
-## Step 4: On Bitbucket Data Center, Switch Users and Add an SSH Key
+In the following steps, you must provide Terraform Cloud with the private SSH key you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform). Although Terraform Cloud does not display the text of the key to users after it is entered, it retains the key and uses it for authenticating to Bitbucket Data Center.
 
-1. If you are still logged in to Bitbucket Data Center as an administrator, log out now.
+1. If you are logged into Bitbucket Data Center as an administrator, log out before proceeding.
+1. Log in with the account that you want to enable Terraform Cloud or Terraform Enterprise to log in with. Many organizations use a dedicated service user account for this purpose. The account you use for connecting Terraform Cloud must have admin access to any shared repositories of Terraform configurations because since creating webhooks requires admin permissions. Refer to [Requirements](#requirements) for additional information.
+1. Open the **SSH keys** page and click the profile icon. 
+1. Choose **Manage account**. 
+1. Click **SSH keys** or enter `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/ssh/account/keys` in the address bar to go to the **SSH keys** screen.
+1. Click **Add key** and enter the SSH public key you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform) into the text field. Open the `.pub` file to get the key value. 
+1. Click **Add key** to finish adding the key.
 
-1. Log in as whichever account you want Terraform Cloud to act as. For most organizations this should be a dedicated service user, but a personal account will also work.
+## Add an SSH Private Key
 
-   ~> **Important:** The account you use for connecting Terraform Cloud **must have admin access** to any shared repositories of Terraform configurations, since creating webhooks requires admin permissions.
+Complete the following steps in Terraform Cloud or Terraform Enterprise to request access to Bitbucket and dd the SSH private key.
 
-1. Go to the "SSH keys" page. You can click the profile icon, choose "Manage account". Click "SSH keys" or you can go directly to `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/ssh/account/keys`.
+1. Open the **SSH keys** settings page and click **Add a private SSH key**. A large text field appears. 
+1. Enter the text of the **SSH private key** you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform) and click **Add SSH Key**.
 
-   ![Bitbucket Data Center screenshot: the SSH keys page](/img/docs/bitbucket-server-ssh-keys.png)
+## Next steps
 
-1. Click the "Add key" button. Paste the text of the **SSH public key** you created in step 4 (from the `.pub` file) into the text field, then click the "Add key" button to confirm.
+After completing these instructions, you can create Terraform workspaces based on your organization's shared repositories. Refer to the following resources for additional guidance:
 
-## Step 5: On Terraform Cloud, Request Access and Add an SSH Private Key
-
-1. Click the "Add a private SSH key" link. A large text field will appear. Paste the text of the **SSH private key** you created in step 3, and click the "Add SSH Key" button.
-
-## Finished
-
-At this point, Bitbucket Data Center access for Terraform Cloud is fully configured, and you can create Terraform workspaces based on your organization's shared repositories.
+- [Creating Workspaces](/terraform/cloud-docs/workspaces/creating) in Terraform Cloud
+- [Creating Workspaces](/terraform/enterprise/workspaces/creating) in Terraform Enterprise
