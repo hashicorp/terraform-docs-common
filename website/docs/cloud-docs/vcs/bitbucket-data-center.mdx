@@ -20,7 +20,7 @@ The following steps provide an overview of how to connect Terraform Cloud and Te
 
 1. Add a new VCS provider to Terraform Cloud or Enterprise.
 1. Create a new application link in Bitbucket.
-1. Create an SSH key pair. SSH key must have an empty passphrase because Terraform Cloud cannot use SSH keys that require a passphrase.
+1. Create an SSH key pair. SSH keys must have an empty passphrase because Terraform Cloud cannot use SSH keys that require a passphrase.
 1. Add an SSH key to Bitbucket. You must complete this step as a non-administrator user in Bitbucket.
 1. Add the private SSH key to Terraform.
 
@@ -66,16 +66,16 @@ The following steps provide an overview of how to connect Terraform Cloud and Te
 
 1. Click **Application Links** in the sidebar, then click **Create new link**.
 1. Choose **Atlassian product** as the link type. This option also works for external applications and lets you continue to use OAuth 1.0 integrations.
-1. Enter `https://app.terraform.io` or the hostname of your Terraform Enterprise instance when prompted. You can only specify the main URL once. To connect multiple Terraform Cloud organizations to the same Bitbucket Data Center instance, enter the organization URL when creating the link instead. The organization URL is the Terraform Cloud URL or Terraform Enterprise hostname appended with `/app/<ORG NAME`.
-1. When prompted, confirm that you wish to use the URL as entered. If you specified Terraform Cloud's main URL, click **Continue**.  If you specified an organization URL, enabled the **Use this URL** option and then click **Continue**.
+1. Enter `https://app.terraform.io` or the hostname of your Terraform Enterprise instance when prompted. You can only specify the main URL once. To connect multiple Terraform Cloud organizations to the same Bitbucket Data Center instance, enter the organization URL when creating the link instead. The organization URL is the Terraform Cloud URL or Terraform Enterprise hostname appended with `/app/<ORG NAME>`.
+1. When prompted, confirm that you wish to use the URL as entered. If you specified Terraform Cloud's main URL, click **Continue**.  If you specified an organization URL, enable the **Use this URL** option and then click **Continue**.
 
 1. In the **Link applications** dialog, configure the following settings:
    - Specify `Terraform Cloud <ORG NAME>` in the **Application Name** field
    - Choose **Generic Application** from the **Application Type** drop-down menu
-   - Enable the **Create incoming link**option
+   - Enable the **Create incoming link** option
 
    Leave all the other fields empty.
-1. Click **Continue**. The **Link applications** screen progresses to second configuration screen.
+1. Click **Continue**. The **Link applications** screen progresses to the second configuration screen.
 1. In the **Consumer Key** and **Public Key** fields, enter the key values you created in the [Add a new VCS provider to Terraform](#add-a-new-vcs-provider-to-terraform) instructions.
 1. In the **Consumer Name** field, enter `Terraform Cloud (<ORG NAME>)`.
 1. Click **Continue**. Bitbucket prompts you to authorize Terraform to make changes. Before you proceed, verify that you are logged in with the user account that Terraform Cloud will use to access Bitbucket and not as a Bitbucket administrator. If Bitbucket returns a 500 error instead of the authorization screen, Terraform may have been unable to reach your Bitbucket Data Center instance.
