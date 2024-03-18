@@ -152,4 +152,10 @@ module.exports = [
       "/terraform/cloud-docs/integrations/kubernetes/ops-v2-migration",
     permanent: true,
   },
+  // Bitbucket Server Deprecation
+  {
+    source: "/terraform/cloud-docs/vcs/bitbucket-server",
+    destination: "/terraform/cloud-docs/vcs/bitbucket-data-center",
+    permanent: true,
+  },
 ];
