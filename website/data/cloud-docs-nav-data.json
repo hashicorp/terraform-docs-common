@@ -497,6 +497,10 @@
             "path": "integrations/kubernetes/api-reference"
           },
           {
+            "title": "Annotations and Labels",
+            "path": "integrations/kubernetes/annotations-and-labels"
+          },
+          {
             "title": "Migration Guide",
             "path": "integrations/kubernetes/ops-v2-migration"
           }
