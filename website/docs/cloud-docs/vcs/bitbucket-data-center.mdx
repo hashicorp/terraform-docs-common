@@ -30,7 +30,7 @@ The following steps provide an overview of how to connect Terraform Cloud and Te
 
 - You must have OAuth authentication credentials for Bitbucket Data Center. 
 
-- Your instance of Bitbucket Data Center must be internet-accessible on its SSH and HTTP(S) ports. This is because Terraform Cloud must be able to contact Bitbucket Data Center over both SSH and HTTP or HTTPS during setup and during normal operation. 
+- Your instance of Bitbucket Data Center must be internet-accessible on its SSH and HTTP(S) ports. This is because Terraform Cloud must be able to contact Bitbucket Data Center over both SSH and HTTP or HTTPS during setup and during normal operation.
 
 ### Terrafrom Enterprise requirements
 
@@ -46,23 +46,16 @@ The following steps provide an overview of how to connect Terraform Cloud and Te
 
 1. (Optional) Enter a **Name** for this VCS connection.
 
-1. Enter the URL of your Bitbucket Data Center instance in the **HTTP URL** and **API URL** fields.
+1. Specify the URL of your Bitbucket Data Center instance in the **HTTP URL** and **API URL** fields. If the context path is not set for your Bitbucket Data Center instance, the **API URL** is the same as the **HTTP URL**. Refer to the [Atlassian documentation](https://confluence.atlassian.com/bitbucketserver/moving-bitbucket-server-to-a-different-context-path-776640153.html) for additional information. Specify the following values if the context path is set for your Bitbucket Data Center instance:
 
-   ~> **Important:** The values for the **HTTP URL** and **API URL** fields differ depending on whether or not your Bitbucket Data Center instance has a [context path](https://confluence.atlassian.com/bitbucketserver/moving-bitbucket-server-to-a-different-context-path-776640153.html) set.
-
-   If your Bitbucket Data Center instance does not have a context path set, the **API URL** should be the same as the **HTTP URL**.
-
-   If your Bitbucket Data Center instance has a context path set:
-
-   1. Set the **HTTP URL** to the URL of your Bitbucket Data Center instance with the context path included, `https://<BITBUCKET INSTANCE HOSTNAME>/<CONTEXT PATH>`.
-   1. Set the **API URL** to the URL of your Bitbucket Data Center instance **without** the context path, `https://<BITBUCKET INSTANCE HOSTNAME>`.
+   - Set the **HTTP URL** field to your Bitbucket Data Center instance URL and add the context path: `https://<BITBUCKET INSTANCE HOSTNAME>/<CONTEXT PATH>`.
+   - Set the **API URL** field to your Bitbucket Data Center instance URL: `https://<BITBUCKET INSTANCE HOSTNAME>`.
 
    By default, Terraform Cloud uses port `80` for HTTP and  `443` for HTTPS. If Bitbucket Data Center is configured to use non-standard ports or is behind a reverse proxy, you must include the port number in the URL. 
 
 1. You can either generate new consumer and public keys that you can use to create a new application link in Bitbucket Data Center described in [Create an application link](#create-an-application-link) or use keys from an existing application link:
     - To generate new keys, click **Continue**. Do not leave this screen until you have copied the key values. 
     - To use existing keys, enable the **Use Custom Keys** option and enter them into the fields. 
-
 
 ## Create an application link
 
@@ -94,7 +87,7 @@ On a secure workstation, create an SSH keypair that Terraform Cloud or Terraform
  $ ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"
  ```
 
-Do not specify a passphrase. The SSH key must have an empty passphrase, othewise Terraform cannot use SSH keys that require a passphrase.
+Do not specify a passphrase because Terraform cannot use SSH keys that require a passphrase.
 
 
 ## Add an SSH key to Bitbucket
@@ -109,9 +102,9 @@ In the following steps, you must provide Terraform Cloud with the private SSH ke
 1. Click **Add key** and enter the SSH public key you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform) into the text field. Open the `.pub` file to get the key value. 
 1. Click **Add key** to finish adding the key.
 
-## Add an SSH Private Key
+## Add an SSH private key
 
-Complete the following steps in Terraform Cloud or Terraform Enterprise to request access to Bitbucket and dd the SSH private key.
+Complete the following steps in Terraform Cloud or Terraform Enterprise to request access to Bitbucket and add the SSH private key.
 
 1. Open the **SSH keys** settings page and click **Add a private SSH key**. A large text field appears. 
 1. Enter the text of the **SSH private key** you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform) and click **Add SSH Key**.
