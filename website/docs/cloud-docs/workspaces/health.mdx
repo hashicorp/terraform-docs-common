@@ -92,15 +92,19 @@ On the organization's **Workspaces** page, Terraform Cloud displays a **Health w
 On the right of a workspace’s overview page, Terraform Cloud displays a **Health** bar that summarizes the results of the last health assessment.
 - The **Drift** summary shows the total number of resources in the configuration and the number of resources that have drifted.
 - The **Checks** summary shows the number of passed, failed, and unknown statuses for objects with continuous validation checks.
-
+<!-- BEGIN: TFC:only name:health-in-explorer -->
 ### View Workspace Health in Explorer
 
-With [Explorer](/terraform/cloud-docs/workspaces/explorer), you can produce a report that provides a condensed overview of the health status of the workspaces within your organization.
+The [Explorer page](/terraform/cloud-docs/workspaces/explorer) presents a condensed overview of the health status of the workspaces within your organization. You can see the following information:
 
-You can see whether workspaces have enabled Workspace Health, the status of any configured Continuous Validation checks, and the count of drifted resources for each workspace. For additional details on the data available for reporting, refer to the [Explorer](/terraform/cloud-docs/workspaces/explorer) documentation.
+- Workspaces that are monitoring workspace health 
+- Status of any configured continuous validation checks 
+- Count of drifted resources for each workspace 
+
+For additional details on the data available for reporting, refer to the [Explorer](/terraform/cloud-docs/workspaces/explorer) documentation.
 
 ![Viewing Workspace Health in Explorer](/img/docs/tfc-explorer-health.png)
-
+<!-- END: TFC:only name:health-in-explorer -->
 ## Drift Detection
 
 Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terrafoto's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.

@@ -4,6 +4,8 @@ description: >-
   Learn how to integrate third-party tools into the run lifecycle. Create and delete run tasks and associate them with workspaces.
 ---
 
+[entitlement]: /terraform/cloud-docs/api-docs#feature-entitlements
+
 # Run Tasks
 
 Terraform Cloud run tasks let you directly integrate third-party tools and services at certain stages in the Terraform Cloud run lifecycle. You can use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
@@ -45,6 +47,24 @@ To create a new run task:
    - **HMAC key** (optional): A secret key that may be required by the external service to verify request authenticity.
 
 1. Click **Create run task**. The run task is now available within the organization, and you can associate it with one or more workspaces.
+
+### Global Run Tasks (Beta)
+
+When you create a new run task you may choose to apply to all workspaces in the organization. This feature requires the **global-run-task** [entitlement][].
+
+1. Select the **Global** checkbox
+
+1. Choose when Terraform Cloud should start the run task:
+
+   - **Pre-plan**: Before Terraform creates the plan.
+   - **Post-plan**: After Terraform creates the plan.
+   - **Pre-apply**: Before Terraform applies a plan.
+   - **Post-apply**: After Terraform applies a plan.
+
+1. Choose an enforcement level:
+
+   - **Advisory**: Run tasks can not block a run from completing. If the task fails, the run will proceed with a warning in the UI.
+   - **Mandatory**: Run tasks can block a run from completing. If the task fails (including a timeout or unexpected remote error condition), the run will transition to an Errored state with a warning in the UI.
 
 ## Associating Run Tasks with a Workspace
 

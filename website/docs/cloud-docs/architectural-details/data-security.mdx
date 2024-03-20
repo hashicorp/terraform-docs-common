@@ -14,18 +14,34 @@ seriously. This table lists which parts of the Terraform Cloud and Terraform Ent
 
 | Object                               | Storage      | Encrypted                |
 | :----------------------------------- | :----------- | :----------------------- |
-| Ingressed VCS Data                   | Blob Storage | Vault Transit Encryption |
-| Terraform Plan Result                | Blob Storage | Vault Transit Encryption |
-| Terraform State                      | Blob Storage | Vault Transit Encryption |
-| Terraform Logs                       | Blob Storage | Vault Transit Encryption |
+| Terraform Configuration (VCS data)   | Blob Storage | Vault Transit Encryption |
+| Private Registry Modules             | Blob Storage | Vault Transit Encryption |
+| Sentinel Policies                    | PostgreSQL   | Vault Transit Encryption |
 | Terraform/Environment Variables      | PostgreSQL   | Vault Transit Encryption |
+| Terraform/Provider Credentials       | PostgreSQL   | Vault Transit Encryption |
+| Terraform State File                 | Blob Storage | Vault Transit Encryption |
+| Terraform Plan Result                | Blob Storage | Vault Transit Encryption |
+| Terraform Audit Trails               | PostgreSQL   | No                       |
 | Organization/Workspace/Team Settings | PostgreSQL   | No                       |
+
+### Terraform Cloud and Enterprise Secrets 
+| Object                               | Storage      | Encrypted                |
+| :----------------------------------- | :----------- | :----------------------- |
 | Account Password                     | PostgreSQL   | bcrypt                   |
 | 2FA Recovery Codes                   | PostgreSQL   | Vault Transit Encryption |
 | SSH Keys                             | PostgreSQL   | Vault Transit Encryption |
 | User/Team/Organization Tokens        | PostgreSQL   | HMAC SHA512              |
 | OAuth Client ID + Secret             | PostgreSQL   | Vault Transit Encryption |
 | OAuth User Tokens                    | PostgreSQL   | Vault Transit Encryption |
+
+### Terraform Cloud Specific 
+
+| Object                               | Storage      | Encrypted                |
+| :----------------------------------- | :----------- | :----------------------- |
+| Cloud Data Backups                   | Amazon S3 | SSE-S3                   |
+| Cloud Copy of Backups for DR         | Amazon S3 | SSE-S3                   |
+
+Please see HashiCorp Cloud [subprocessors](https://www.hashicorp.com/trust/privacy/subprocessors) for third-parties engaged by HashiCorp to deliver cloud services. 
 
 ### Terraform Enterprise Specific
 
