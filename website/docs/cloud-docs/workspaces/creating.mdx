@@ -53,9 +53,10 @@ We recommend using 90 characters or less for the name of your workspace.
 The workspace creation process varies depending on the workspace workflow you choose (VCS, API, or CLI-driven). To create a workspace in the Terraform Cloud UI:
 1. Click **Projects & workspaces** to view a list of the workspaces within your organization.
 1. Click **New**, then select **Workspace** from the dropdown menu.
+1. If you have access to multiple projects, you may be prompted to choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](https://terraform.io/workspaces/organize-workspaces-with-projects) for more details. 
 1. Choose a workflow type: **Version control**, **CLI-driven**, or **API-driven**.
-1. (Version control only) Choose an existing version control provider or
-   configure a new one. Refer to [Connecting VCS
+1. (Version control only) Choose an existing version control provider from the list or
+   configure a new one. Only version control providers enabled for the selected project will be available to connect. Refer to [Connecting VCS
    Providers](/terraform/cloud-docs/vcs) for more details.
 1. (Version control only) Choose an organization (GitHub App only), and repository from the filterable list. The **Configure settings** page appears.
 
@@ -64,7 +65,6 @@ The workspace creation process varies depending on the workspace workflow you ch
   first 100 repositories from your VCS provider.
 
 1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to the [workspace naming recommendations](#workspace-naming).
-1. If you have access to multiple projects, choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](https://terraform.io/workspaces/organize-workspaces-with-projects) for more details. 
 1. Add an optional **Description** that will appear at the top of the workspace in the Terraform Cloud UI.
 1. (Version control only) Open **Advanced options** to optionally configure the following settings:
    - [Terraform Working Directory][workdir]

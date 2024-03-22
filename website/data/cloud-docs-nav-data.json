@@ -342,8 +342,8 @@
       { "title": "GitLab EE and CE", "path": "vcs/gitlab-eece" },
       { "title": "Bitbucket Cloud", "path": "vcs/bitbucket-cloud" },
       {
-        "title": "Bitbucket Server and Data Center",
-        "path": "vcs/bitbucket-server"
+        "title": "Bitbucket Data Center",
+        "path": "vcs/bitbucket-data-center"
       },
       {
         "title": "Azure DevOps Services",
@@ -495,6 +495,10 @@
           {
             "title": "API Reference",
             "path": "integrations/kubernetes/api-reference"
+          },
+          {
+            "title": "Annotations and Labels",
+            "path": "integrations/kubernetes/annotations-and-labels"
           },
           {
             "title": "Migration Guide",
