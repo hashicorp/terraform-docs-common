@@ -400,12 +400,13 @@ attached to the project this workspace is contained within.
 
 ### Query Parameters
 
-All of the list endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+All of the list endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters) and search through the `q` parameter. Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                         |
 |----------------|---------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint returns the first page.      |
 | `page[size]`   | **Optional.** If omitted, the endpoint returns 20 varsets per page. |
+| `q`            | **Optional.** A search query string. Variable sets are searchable by name. |
 
 ### Sample Response
 
