@@ -7,48 +7,61 @@ description: Example customizations for the ServiceNow Service Catalog Integrati
 
 # Example Customizations
 
-## Creating a Catalog Item with Your Own Variables
+## Customizing a Catalog Item
 
 This example use case creates a Terraform Catalog Item for requesting resources
 with custom variable values passed to the Terraform configuration.
 
-### Create Service Catalog Item
+### Make a copy of the existing Catalog Item
 
-1. Enter the ServiceNow Studio.
-1. Click "Create Application File" to raise a dialog box of options.
-1. In the dialog, navigate to the "Service Catalog" section, select "Catalog Item", and click the "Create" button.
-1. Name the new catalog item. (The rest of this example assumes an item named `Example With Pinned Variables`.)
-1. Select Catalogs: "Terraform Catalog" > Select Categories: "Terraform Resources".
-1. Add any other descriptions you may want.
-1. Click "Submit".
+The application provides pre-configured [Catalog
+Items](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions)
+for immediate use. Make a copy of the most appropriate Catalog Item for your
+specific business requirements by following these steps:
 
-![screenshot: ServiceNow integration create catalog item](/img/docs/service-now-create-catalog-item.png)
+1. Review the available Catalog Items and identify those based on Flows, which
+   are denoted by the suffix "Flow" in their names. When selecting a Catalog
+   Item, it is highly recommended to choose those based on Flows rather than
+   Workflows. Flows represent ServiceNow's latest and more advanced solution
+   compared to Workflows. Flows provide enhanced functionality, improved
+   performance, and are actively supported and developed by ServiceNow. On the
+   other hand, Workflows are an older technology and may have limited support
+   and updates in the future (for more information, refer to the documentation
+   on [Catalog Items based on Flows vs.
+   Workflows]/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions).
+1. Open the chosen Catalog Item in the editing mode: 
+   a. Click on the Catalog Item to open the request form. 
+   b. Click on the three dots located in the top right corner of the screen. 
+   c. Select "Configure Item" from the menu.
+1. Access the "Process Engine" tab within the Catalog Item configuration. Take
+   note of the Flow name associated with the Catalog Item, as you will need to
+   create a copy of this Flow as well.
+1. Initiate the copying process: a. Click on the "Copy" button. b. Assign a new
+   name to the copied Catalog Item. c. Optionally, modify the description and
+   short description fields to better reflect the purpose of the new Catalog
+   Item. Right-clik on the header and select "Save".
 
-### Create Variable Set
+By following these steps, you can create a customized Catalog Item tailored to
+your specific business needs, using the pre-existing Catalog Items as a starting
+point.
 
-1. Click "Create Application File" to raise a dialog box of options.
-1. In the dialog, navigate to the "Service Catalog" section, select "Variable Set", and click the "Create" button.
-1. Name your variable set. (The rest of this example assumes a set named `Example Pinned Variables`, with a default "Internal Name" of `example_pinned_variables`.)
-1. Click "Submit".
-1. Under the "Variables" tab click "New".
-   1. Create your variable:
-   1. In this example we will create a field called `tf_var_pet_name_length` that will be for a Terraform variable that determines the number of words to use for the pet server name.
-      - Question: `Pet Name Length`
-      - Name: `tf_var_pet_name_length`
-      - `tf_var_` tells the Terraform ServiceNow SDK that this is a Terraform variable.
-   1. Repeat variable creation as necessary for your use case.
-   1. Click "Submit".
+#TODO screenshot
 
-![screenshot: ServiceNow integration create catalog item](/img/docs/service-now-create-var-set.png)
+### Adjust the Variable Set
 
-### Add Variable Set to Catalog Item
+When selecting a Catalog Item that requires end users to input variable values,
+you have the ability to tailor the variable set according to your needs.
+Although some default Catalog Items come with pre-defined example variables, it
+is common practice to remove these and replace them with your own custom
+variables. The manner in which the example variables are configured and
+transmitted to the backend scripts of the application can serve as a helpful
+reference when defining your own variables.
 
-1. Go back to your Catalog Item.
-1. Under the "Variable Sets" tab, click "New".
-1. Search for and select the variable set you created (`Example Pinned Variables`).
-1. Click "Submit".
+#TODO screenshot
 
-### Create Flow
+### Make a copy of the Action
+
+### Make a copy of the Flow
 
 This example uses the "Provision Resources With Vars" flow, which is an example of flows with actions, included with the integration.
 
@@ -71,7 +84,7 @@ In the ServiceNow Studio:
       1. Select "Done" to save this flow
 1. Click "Save" then "Activate" to enable your flow
 
-### Set The Workflow for Catalog Item
+### Set the Flow for Catalog Item
 
 In the ServiceNow Studio:
 
@@ -81,4 +94,4 @@ In the ServiceNow Studio:
 
 ### Test the Catalog Item
 
-The new item should be available in the Terraform Service Catalog. Once the new catalog item is confirmed to work, you can customize as needed.
+The new item should be available in the Terraform Service Catalog. 
