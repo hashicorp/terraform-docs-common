@@ -153,7 +153,9 @@ Workspaces may be configured to share their state with other workspaces within t
 
 ### Use separate agent pools for request forwarding
 
-[Terraform Cloud Agents](/terraform/cloud-docs/agents) can be utilized to access private VCS repositories through the [request forwarding](/terraform/cloud-docs/agents/request-forwarding) feature. If an agent pool shares both workspace workloads and request forwarding, a malicious actor in a connected workspace could exfiltrate the agent’s API token to access private resources that could contain VCS or other sensitive requests, which may include sensitive data like valid session tokens. We recommend that agent pools that handle request forwarding are not assigned to handle workspace workloads.
+In addition to executing Terraform workloads from a workspace, [Terraform Cloud Agents](/terraform/cloud-docs/agents) can be utilized to access private VCS repositories through the [request forwarding](/terraform/cloud-docs/agents/request-forwarding) feature. A single agent pool may be configured to operate in request forwarding mode, workload execution mode, or both modes.
+
+An agent pool that is configured to operate in _both_ the request forwarding and workload execution modes poses a potential security risk. A malicious actor in a workspace connected to this agent pool could exfiltrate the agent’s API token, which could allow them to access private resources from the connected VCS. For this reason, we recommend that you create dedicated agent pools for request forwarding, and disable request forwarding mode on any agent pools intended for executing Terraform workloads.
 
 ### Treat Archivist URLs as secrets
 
