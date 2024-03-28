@@ -1,0 +1,48 @@
+---
+page_title: Projects - Terraform Cloud
+description: >-
+  Use projects to organize and group workspaces and create ownership boundaries
+  across your infrastructure. 
+---
+
+# Overview
+
+-> **Note:** Projects are available to all users, but managing project
+  permissions requires the [Team &
+  Governance](https://www.hashicorp.com/products/terraform/pricing) tier. 
+
+Projects let you organize your workspaces and scope access to workspace
+resources. Each project has a separate permissions set that you can use to grant
+teams access to all workspaces in the project, defining access control
+boundaries for teams and their resources. Project-level permissions are more
+granular than organization-level permissions, but more specific than individual
+workspace-level grants.
+
+When deciding how to structure your projects, consider which groups of resources
+need distinct access rules. You may wish to define projects by business units,
+departments, subsidiaries, or technical teams. 
+
+> **Hands On:**  Try our [Managing
+  Projects](/terraform/tutorials/cloud/projects)
+  tutorial. 
+
+## Default Project
+
+Every workspace must belong to exactly one project. By default, all workspaces
+belong to an organization's **Default Project**. You can rename the default
+project, but you cannot delete it. You can specify a workspace's project at the
+time of creation and move it to a different project later. 
+
+The “Manage Workspaces” team permission lets users create and manage workspaces.
+Users with this permission can read and manage all workspaces, but new
+workspaces are automatically added to the “Default Project” and users cannot
+access the metadata for other projects. To create workspaces under other
+projects, users also need the "Manage Projects & Workspaces" permission or the
+admin role for the project they wish to use.
+
+## View Projects
+
+To view your organization's projects, click **Projects**. You can sort the
+projects by clicking on the blue arrows beside the “Project name” table header.
+The table displays project’s metadata including name, description, and the count
+of teams and workspaces that belong to the project. 
