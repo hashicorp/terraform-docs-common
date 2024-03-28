@@ -28,18 +28,20 @@ specific business requirements by following these steps:
    other hand, Workflows are an older technology and may have limited support
    and updates in the future (for more information, refer to the documentation
    on [Catalog Items based on Flows vs.
-   Workflows]/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions).
+   Workflows](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions)).
 1. Open the chosen Catalog Item in the editing mode: 
-   a. Click on the Catalog Item to open the request form. 
-   b. Click on the three dots located in the top right corner of the screen. 
-   c. Select "Configure Item" from the menu.
+   1. Click on the Catalog Item to open the request form. 
+   1. Click on the three dots located in the top right corner of the screen. 
+   1. Select "Configure Item" from the menu.
 1. Access the "Process Engine" tab within the Catalog Item configuration. Take
    note of the Flow name associated with the Catalog Item, as you will need to
    create a copy of this Flow as well.
-1. Initiate the copying process: a. Click on the "Copy" button. b. Assign a new
-   name to the copied Catalog Item. c. Optionally, modify the description and
-   short description fields to better reflect the purpose of the new Catalog
-   Item. Right-clik on the header and select "Save".
+1. Initiate the copying process: 
+   1. Click on the "Copy" button. 
+   1. Assign a new name to the copied Catalog Item. 
+   1. Optionally, modify the description and short description fields to better
+   reflect the purpose of the new Catalog Item. Right-click on the header and
+   select "Save".
 
 By following these steps, you can create a customized Catalog Item tailored to
 your specific business needs, using the pre-existing Catalog Items as a starting
@@ -56,6 +58,37 @@ is common practice to remove these and replace them with your own custom
 variables. The manner in which the example variables are configured and
 transmitted to the backend scripts of the application can serve as a helpful
 reference when defining your own variables.
+
+1. Create a new Variable Set.
+   1. On the Catalog Item's configuration page, navigate to the Variable Sets tab.
+   1. Click the "New" button to create your own Variable Set. Ensure that the
+   variables in your new set match the variables required by your Terraform
+   configuration.
+   1. Select "Single-Row Variable Set" and provide a title and description.
+   Click "Submit". Upon submission, you will be redirected back to the Catalog
+   Item's configuration page.
+   1. Click on the name of your newly created Variable Set and begin creating
+   variables. Click the "New" button to create a new variable. It is important
+   to follow the [naming convention for Terraform
+   variables](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#terraform-variables-and-servicenow-variable-sets)
+   when providing a variable name. Failure to follow the naming convertion will
+   result in the backend scripts not recognizing it as Terraform variables.
+   ServiceNow offers various types of variable representation (strings,
+   booleans, dropdown menues, etc.). Consult the [ServiceNow documentation on
+   variables](https://docs.servicenow.com/csh?topicname=c_ServiceCatalogVariables.html&version=latest)
+   and select the types that best suit your use case. You can also set default
+   values for the variables, which will be prefilled for the end users on the
+   request form. Create as many variables as required by your Terraform
+   configuration.
+2. Attach the newly created Variable Set to your custom Catalog Item and remove
+the default Workspace Variables.
+   1. Return to the Variable Sets tab on the Catalog Item's configuration page
+   and click the "Edit" buttton. 
+   1. Move the "Workspace Variables" Set from the right side to the left side and
+   click "Save". This action will remove the example variables from the form,
+   leaving only your custom variables. You should not remove the "Workspace
+   Request Create" or the "Workspace Request Update" Sets, as they contain
+   mandatory variables and should not be modified.
 
 #TODO screenshot
 
