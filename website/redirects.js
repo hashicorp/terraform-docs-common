@@ -164,4 +164,10 @@ module.exports = [
     destination: "/terraform/cloud-docs/projects/managing",
     permanent: true,
   },
+  // Style guide relocation
+  {
+    source: "/terraform/language/syntax/style",
+    destination: "/terraform/language/style",
+    permanent: true,
+  },
 ];
