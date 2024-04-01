@@ -16,18 +16,21 @@ with custom variable values passed to the Terraform configuration.
 
 The application provides pre-configured [Catalog
 Items](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions)
-for immediate use. Make a copy of the most appropriate Catalog Item for your
-specific business requirements by following these steps:
+for immediate use. We suggest creating a copy of the most recent version of the
+Catalog Item to ensure you have access to the latest features and
+improvements. Make a copy of the most appropriate Catalog Item for your specific
+business requirements by following these steps:
 
-1. Review the available Catalog Items and identify those based on Flows, which
-   are denoted by the suffix "Flow" in their names. When selecting a Catalog
-   Item, it is highly recommended to choose those based on Flows rather than
-   Workflows. Flows represent ServiceNow's latest and more advanced solution
-   compared to Workflows. Flows provide enhanced functionality, improved
-   performance, and are actively supported and developed by ServiceNow. On the
-   other hand, Workflows are an older technology and may have limited support
-   and updates in the future (for more information, refer to the documentation
-   on [Catalog Items based on Flows vs.
+1. In All > Catalogs > Terraform Catalog, review the available Catalog Items and
+   identify those based on Flows, which are denoted by the suffix "Flow" in
+   their names. When selecting a Catalog Item, it is highly recommended to
+   choose those based on Flows rather than Workflows. Flows represent
+   ServiceNow's latest and more advanced solution compared to Workflows. Flows
+   provide enhanced functionality, improved performance, and are actively
+   supported and developed by ServiceNow. On the other hand, Workflows are an
+   older technology and may have limited support and updates in the future (for
+   more information, refer to the documentation on [Catalog Items based on Flows
+   vs.
    Workflows](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/developer-reference#example-service-catalog-flows-and-actions)).
 1. Open the chosen Catalog Item in the editing mode: 
    1. Click on the Catalog Item to open the request form. 
@@ -92,39 +95,64 @@ the default Workspace Variables.
 
 #TODO screenshot
 
-### Make a copy of the Action
+### Make a copy of the Flow and Action
 
-### Make a copy of the Flow
+1. In your ServiceNow instance, access the Flow Designer using one of the following methods:
+   1. Open the ServiceNow Studio through All > Studio and navigate to the "Terraform" application. Once in the "Terraform" application, navigate to "Flow Designer" > "Flows".
+   1. Type "Flow Designer" in the "All" search field of your ServiceNow instance and select "Flows".
+   Once in the Flow Designer, locate the Flow referenced in the Process Engine tab of the Catalog Item that you have copied. For example, the Flow might be named "Provision Resources With Vars". To quickly find the desired Flow, you can filter the list of Flows by setting the Application to "Terraform".
+1. After locating the Flow referenced in your Catalog Item, open it and click on the three dots in the top right corner of the Flow Designer interface. From the dropdown menu, select "Copy flow". A dialog box will appear, prompting you to provide a new name for the copied Flow. Enter a suitable name and click "Copy" to create a duplicate of the original Flow.
+1. Customize your newly copied Flow by clicking the "Edit flow" button.
+   1. The Trigger should remain "Service Catalog" without any changes.
+   1. In the first Action, "Get Catalog Variables":
+      1. Keep the "Requested Item Record" in the "Submitted Request" field without changes.
+      1. Select your newly created Catalog Item from the dropdown menu for "Template Catalog Item".
+      1. Move all of your variables to the "Selected" side in the "Catalog Variables" section. Remove any previous example variables from the "Available" side.
+      1. Click "Done" to finish configuring this Action.
+   1. Unfold the second Action in the Flow and click on the arrow to open it in the Action Designer.
+      1. Click on the 3 dots in the top right corner and select "Copy Action". Rename it and click "Copy".
+      1. In the the Inputs section, remove any previous example variables.
+      1. Add your custom variables by clicking the "Create Input" button. Ensure
+         that the variable names match your Catalog Item variables. Select the
+         appropriate type for each variable. Click "Save" at the top to save the
+         changes.
+      1. Open the "Script step" within the Action. Remove any example variables
+         and add your custom variables by clicking "Create Variable" at the
+         bottom. Enter the name of each variable and drag the corresponding data
+         pill from the right into the "Value field".
+      1. Click "Save" and then "Publish" to save the changes made to the Action.
+1. Finally, reopen the Flow and attach the newly created Action to the Flow:
+   1. Remove the previous Action that you copied earlier and replace it with your newly created Action.
+   1. Connect the new Action to the Flow by dragging and dropping the data pills
+      from the "Get Catalog Variables" Action to the corresponding inputs of
+      your new Action.
+   1. Once the Flow is properly configured, click "Save" to save the changes.
+   1. Click "Activate" to enable your Flow and make it available for use.
 
-This example uses the "Provision Resources With Vars" flow, which is an example of flows with actions, included with the integration.
+### Set the Flow for your Catalog Item
 
-In the ServiceNow Studio:
-
-1. Navigate to "Flow Designer" > "Flows" > "Provision Resources With Vars".
-   1. This will be flow that can be used as an example.
-1. Create a new flow by selecting "New" in Flow Designer
-1. Name it "Example Flow" and click "submit"
-1. Edit your example flow
-   1. Trigger: Service Catalog
-   1. 1st Action: Get Catalog Variables
-      1. Drag "Requested Item Record" to "Submitted Request" field
-      1. Template Catalog Item: This should be your example catalog item created above
-      1. Catalog Variables: Move all of your variables to "Selected" side
-      1. Select "Done" to finish this action
-   1. Add another action and select the "Terraform Create Workspace with Var"
-      1. Using the Flow "Provision Resources With Vars" as an example:
-      1. Move the variables from the "Data" options on the right of the flow designer to match the example flow
-      1. Select "Done" to save this flow
-1. Click "Save" then "Activate" to enable your flow
-
-### Set the Flow for Catalog Item
-
-In the ServiceNow Studio:
-
-1. Select the "Example with Pinned Variables" catalog item. ("Service Catalog" > "Catalog Item" > "Example With Pinned Variables")
-1. Select the "Process Engine" tab.
-1. Set the "Flow" field by searching for the "Example Pinned Variables" flow and clicking "Update".
+1. Navigate back to the main menu by clicking on "All" and then go to "Catalogs"
+   followed by "Terraform Catalog."
+1. Locate your custom Catalog Item and click on the three dots icon at the top
+   of the item. From the dropdown menu, select "Configure item."
+1. In the configuration settings, click on the "Process Engine" tab.
+1. In the "Flow" field, search for the Flow you recently created. Once you find
+   it, click on it to select it and then click the "Update" button to save the
+   changes.
 
 ### Test the Catalog Item
 
-The new item should be available in the Terraform Service Catalog. 
+The new item should be available in the Terraform Service Catalog. To make the
+new item accessible to your end users via the Service Portal, follow these
+steps:
+1. Navigate to the configuration page of the item you want to make available as
+   descrbed in the previous section.
+1. Locate the "Catalogs" field on the configuration page and click on the lock
+   icon next to it.
+1. In the search bar, type "Service Catalog" and select it from the search
+   results. Add "Service Catalog" to the list of catalogs associated with the
+   item. Click on the lock icon again to lock the changes.
+1. Finally, click the "Update" button at the top of the page to save the
+modifications. After completing these steps, your end users will be able to
+access the new item through the Service Portal of your ServiceNow instance. The
+Service Portal can be accessed by navigating to All > Service Portal Home.
