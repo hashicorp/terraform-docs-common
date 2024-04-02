@@ -21,27 +21,29 @@ In the example below the status check is named `Terraform Cloud/paul-hcp/gianni-
 
 With an older version of Azure DevOps Server it may be that the web interface does not allow entering the Genre and Name separately. In which case the status check will need to be created via the [API](https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/configurations/create).
 
-## Bitbucket Server
+## Bitbucket Data Center
 
-### Clicking "Connect organization `<X>`" with Bitbucket Server raises an error message in Terraform Cloud
+The following errors are specific to Bitbucket Data Center integrations.
 
-Terraform Cloud uses OAuth 1 to authenticate the user to Bitbucket Server. The first step in the authentication process is for Terraform Cloud to call Bitbucket Server to obtain a "request token". After the call completes, Terraform Cloud redirects you to Bitbucket Server with the request token.
+### Clicking "Connect organization `<X>`" with Bitbucket Data Center raises an error message in Terraform Cloud
 
-An error occurs when Terraform Cloud calls to Bitbucket Server to obtain the request token but the request is rejected. Some common reasons for the request to be rejected are:
+Terraform Cloud uses OAuth 1 to authenticate the user to Bitbucket Data Center. The first step in the authentication process is for Terraform Cloud to call Bitbucket Data Center to obtain a request token. After the call completes, Terraform Cloud redirects you to Bitbucket Data Center with the request token.
+
+An error occurs when Terraform Cloud calls to Bitbucket Data Center to obtain the request token but the request is rejected. Some common reasons for the request to be rejected are:
 
 - The API endpoint is unreachable; this can happen if the address or port is incorrect or the domain name doesn't resolve.
-- The certificate used on Bitbucket Server is rejected by the Terraform Cloud HTTP client because the SSL verification fails. This is often the case with self-signed certificates or when the Terraform Enterprise instance is not configured to trust the signing chain of the Bitbucket Server SSL certificate.
+- The certificate used on Bitbucket Data Center is rejected by the Terraform Cloud HTTP client because the SSL verification fails. This is often the case with self-signed certificates or when the Terraform Enterprise instance is not configured to trust the signing chain of the Bitbucket Data Center SSL certificate.
 
 To fix this issue, do the following:
 
-- Verify that the instance running Terraform Enterprise can resolve the domain name and can reach Bitbucket Server.
-- Verify that the Terraform Cloud client accepts the HTTPS connection to Bitbucket Server. This can be done by performing a `curl` from the Terraform Enterprise instance to Bitbucket Server; it should not return any SSL errors.
-- Verify that the Consumer Key, Consumer Name, and the Public Key are configured properly in Bitbucket Server.
-- Verify that the HTTP URL and API URL in Terraform Cloud are correct for your Bitbucket Server instance. This includes the proper scheme (HTTP vs HTTPS), as well as the port.
+- Verify that the instance running Terraform Enterprise can resolve the domain name and can reach Bitbucket Data Center.
+- Verify that the Terraform Cloud client accepts the HTTPS connection to Bitbucket Data Center. This can be done by performing a `curl` from the Terraform Enterprise instance to Bitbucket Data Center; it should not return any SSL errors.
+- Verify that the Consumer Key, Consumer Name, and the Public Key are configured properly in Bitbucket Data Center.
+- Verify that the HTTP URL and API URL in Terraform Cloud are correct for your Bitbucket Data Center instance. This includes the proper scheme (HTTP vs HTTPS), as well as the port.
 
 ### Creating a workspace from a repository hangs indefinitely, displaying a spinner on the confirm button
 
-If you were able to connect Terraform Cloud to Bitbucket Server but cannot create workspaces, it often means Terraform Cloud isn't able to automatically add webhook URLs for that repository.
+If you were able to connect Terraform Cloud to Bitbucket Data Center but cannot create workspaces, it often means Terraform Cloud isn't able to automatically add webhook URLs for that repository.
 
 To fix this issue:
 
@@ -49,8 +51,8 @@ To fix this issue:
 
   To check the hook URLs for a repository, go to the repository's settings, then go to the "Hooks" page (in the "Workflow" section) and click on the "Post-Receive WebHooks" link.
 
-  Also note that some Bitbucket Server versions might allow you to set per-project or server-wide hook URLs in addition to per-repository hooks. These should all be empty; if you set a hook URL that might affect more than one repo when installing the plugin, go back and delete it.
-- Make sure you aren't trying to connect too many workspaces to a single repository. Bitbucket Server's webhooks plugin can only attach five hooks to a given repo. You might need to create additional repositories if you need to make more than five workspaces from a single configuration repo.
+  Also note that some Bitbucket Data Center versions might allow you to set per-project or server-wide hook URLs in addition to per-repository hooks. These should all be empty; if you set a hook URL that might affect more than one repo when installing the plugin, go back and delete it.
+- Make sure you aren't trying to connect too many workspaces to a single repository. Bitbucket Data Center's webhooks plugin can only attach five hooks to a given repo. You might need to create additional repositories if you need to make more than five workspaces from a single configuration repo.
 
 ## Bitbucket Cloud
 
@@ -82,7 +84,9 @@ Note that the "SSH Key" section in a workspace's settings is only used for mid-r
 
 ## General
 
-### Terraform Cloud returns 500 after authenticating with the VCS provider (other than Bitbucket Server)
+The following errors may occur for all VCS providers except Bitbucket Data Center.
+
+### Terraform Cloud returns 500 after authenticating with the VCS provider 
 
 The Callback URL in the OAuth application configuration in the VCS provider probably wasn't updated in the last step of the instructions and still points to the default "/" path (or an example.com link) instead of the full callback url.
 
