@@ -192,7 +192,7 @@ data "hcp_packer_artifact" "hashiapp_image" {
 }
 
 resource "aws_instance" "hashiapp" {
-  ami                         = data.hcp_packer_artifact.hashiapp_image.cloud_image_id
+  ami                         = data.hcp_packer_artifact.hashiapp_image.cloud_external_identifier
   instance_type               = var.instance_type
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.hashiapp.id
@@ -212,8 +212,8 @@ check "ami_version_check" {
   }
 
   assert {
-    condition = aws_instance.hashiapp.ami == data.hcp_packer_artifact.hashiapp_image.cloud_image_id
-    error_message = "Must use the latest available AMI, ${data.hcp_packer_artifact.hashiapp_image.cloud_image_id}."
+    condition = aws_instance.hashiapp.ami == data.hcp_packer_artifact.hashiapp_image.cloud_external_identifier
+    error_message = "Must use the latest available AMI, ${data.hcp_packer_artifact.hashiapp_image.cloud_external_identifier}."
   }
 }
 ```
