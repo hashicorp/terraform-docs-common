@@ -152,25 +152,30 @@ the default Workspace Variables.
          pill from the right into the "Value field".
          ![Screenshot: ServiceNow Add Script Step Variables To Action](/img/docs/servicenow-catalog-adjust-script-variables.png "Screenshot of adjusting ServiceNow Action Script Variables")
       1. Click "Save" and then "Publish" to save the changes made to the Action.
-1. Finally, reopen the Flow and attach the newly created Action to the Flow:
+1. Finally, reopen the Flow and attach the newly created Action to the Flow
+   after "Get Catalog Variables" step:
    1. Remove the previous Action that you copied earlier and replace it with
       your newly created Action.
+      ![Screenshot: ServiceNow Replace Action Step](/img/docs/servicenow-catalog-replace-action.png "Screenshot of replacing ServiceNow Action step")
    1. Connect the new Action to the Flow by dragging and dropping the data pills
       from the "Get Catalog Variables" Action to the corresponding inputs of
-      your new Action.
-   1. Once the Flow is properly configured, click "Save" to save the changes.
+      your new Action. Click "Done" to save this step.
+      ![Screenshot: ServiceNow Fill Variables for Action](/img/docs/servicenow-catalog-fill-new-action-step.png "Screenshot of filling out ServiceNow Action variables")
+   1. Once the Flow is properly configured, click "Save" at the top to save the
+      changes.
    1. Click "Activate" to enable your Flow and make it available for use.
 
 ### Set the Flow for your Catalog Item
 
-1. Navigate back to the main menu by clicking on "All" and then go to "Catalogs"
-   followed by "Terraform Catalog."
+1. Navigate back to the Catalog by clicking on "All" and then go to "Service
+   Catalog > Catalogs" followed by "Terraform Catalog".
 1. Locate your custom Catalog Item and click on the three dots icon at the top
-   of the item. From the dropdown menu, select "Configure item."
+   of the item. From the dropdown menu, select "Configure item".
 1. In the configuration settings, click on the "Process Engine" tab.
 1. In the "Flow" field, search for the Flow you recently created. Once you find
    it, click on it to select it and then click the "Update" button to save the
    changes.
+   ![Screenshot: ServiceNow Update Process Engine](/img/docs/servicenow-catalog-update-process-engine.png "Screenshot of updating Process Engine for the Catalog Item")
 
 ### Test the Catalog Item
 
@@ -178,12 +183,13 @@ The new item should be available in the Terraform Service Catalog. To make the
 new item accessible to your end users via the Service Portal, follow these
 steps:
 1. Navigate to the configuration page of the item you want to make available as
-   descrbed in the previous section.
+   described in the previous section.
 1. Locate the "Catalogs" field on the configuration page and click on the lock
    icon next to it.
 1. In the search bar, type "Service Catalog" and select it from the search
    results. Add "Service Catalog" to the list of catalogs associated with the
    item. Click on the lock icon again to lock the changes.
+   ![Screenshot: ServiceNow Enable Service Portal](/img/docs/servicenow-catalog-service-portal.png "Screenshot of adding the Catalog Item to the Service Portal")
 1. Finally, click the "Update" button at the top of the page to save the
 modifications. After completing these steps, your end users will be able to
 access the new item through the Service Portal of your ServiceNow instance. The
