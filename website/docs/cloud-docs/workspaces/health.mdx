@@ -184,7 +184,7 @@ check "certificate_valid" {
 [HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example check fails when there is a newer AMI version available.
 
 ```hcl
-data "hcp_packer_image" "hashiapp_image" {
+data "hcp_packer_artifact" "hashiapp_image" {
   bucket_name     = "hashiapp"
   channel         = "latest"
   cloud_provider  = "aws"
@@ -192,7 +192,7 @@ data "hcp_packer_image" "hashiapp_image" {
 }
 
 resource "aws_instance" "hashiapp" {
-  ami                         = data.hcp_packer_image.hashiapp_image.cloud_image_id
+  ami                         = data.hcp_packer_artifact.hashiapp_image.cloud_image_id
   instance_type               = var.instance_type
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.hashiapp.id
@@ -212,8 +212,8 @@ check "ami_version_check" {
   }
 
   assert {
-    condition = aws_instance.hashiapp.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
-    error_message = "Must use the latest available AMI, ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
+    condition = aws_instance.hashiapp.ami == data.hcp_packer_artifact.hashiapp_image.cloud_image_id
+    error_message = "Must use the latest available AMI, ${data.hcp_packer_artifact.hashiapp_image.cloud_image_id}."
   }
 }
 ```
