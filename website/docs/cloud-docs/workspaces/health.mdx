@@ -107,7 +107,7 @@ For additional details on the data available for reporting, refer to the [Explor
 <!-- END: TFC:only name:health-in-explorer -->
 ## Drift Detection
 
-Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terrafoto's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
+Drift detection helps you identify situations where your actual infrastructure no longer matches the configuration defined in Terraform. This deviation is known as _configuration drift_. Configuration drift occurs when changes are made outside Terraform's regular process, leading to inconsistencies between the remote objects and your configured infrastructure.
 
 For example, a teammate could create configuration drift by directly updating a storage bucket's settings with conflicting configuration settings using the cloud provider's console. Drift detection could detect these differences and recommend steps to address and rectify the discrepancies.
 
@@ -184,15 +184,15 @@ check "certificate_valid" {
 [HCP Packer](/hcp/docs/packer) stores metadata about your [Packer](https://www.packer.io/) images. The following example check fails when there is a newer AMI version available.
 
 ```hcl
-data "hcp_packer_image" "hashiapp_image" {
-  bucket_name     = "hashiapp"
-  channel         = "latest"
-  cloud_provider  = "aws"
-  region          = "us-west-2"
+data "hcp_packer_artifact" "hashiapp_image" {
+  bucket_name  = "hashiapp"
+  channel_name = "latest"
+  platform     = "aws"
+  region       = "us-west-2"
 }
 
 resource "aws_instance" "hashiapp" {
-  ami                         = data.hcp_packer_image.hashiapp_image.cloud_image_id
+  ami                         = data.hcp_packer_artifact.hashiapp_image.external_identifier
   instance_type               = var.instance_type
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.hashiapp.id
@@ -212,8 +212,8 @@ check "ami_version_check" {
   }
 
   assert {
-    condition = aws_instance.hashiapp.ami == data.hcp_packer_image.hashiapp_image.cloud_image_id
-    error_message = "Must use the latest available AMI, ${data.hcp_packer_image.hashiapp_image.cloud_image_id}."
+    condition = aws_instance.hashiapp.ami == data.hcp_packer_artifact.hashiapp_image.external_identifier
+    error_message = "Must use the latest available AMI, ${data.hcp_packer_artifact.hashiapp_image.external_identifier}."
   }
 }
 ```
