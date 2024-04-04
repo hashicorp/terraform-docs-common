@@ -158,6 +158,12 @@ module.exports = [
     destination: "/terraform/cloud-docs/vcs/bitbucket-data-center",
     permanent: true,
   },
+  // Dedicated projects UI
+  {
+    source: "/terraform/cloud-docs/workspaces/organize-workspaces-with-projects",
+    destination: "/terraform/cloud-docs/projects/managing",
+    permanent: true,
+  },
   // Style guide relocation
   {
     source: "/terraform/language/syntax/style",
