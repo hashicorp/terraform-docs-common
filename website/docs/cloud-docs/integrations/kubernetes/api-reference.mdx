@@ -367,7 +367,7 @@ Project is the Schema for the projects API
 
 
 
-ProjectSpec defines the desired state of Project. [More information](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects)
+ProjectSpec defines the desired state of Project. [More information](/terraform/cloud-docs/projects/managing)
 
 _Appears in:_
 - [Project](#project)
@@ -377,7 +377,7 @@ _Appears in:_
 | `organization` _string_ | Organization name where the Workspace will be created. [More information](/terraform/cloud-docs/users-teams-organizations/organizations) |
 | `token` _[Token](#token)_ | API Token to be used for API calls. |
 | `name` _string_ | Name of the Project. |
-| `teamAccess` _[ProjectTeamAccess](#projectteamaccess) array_ | Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions. You can assign project-specific permissions to teams. [More information](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/organize-workspaces-with-projects) |
+| `teamAccess` _[ProjectTeamAccess](#projectteamaccess) array_ | Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions. You can assign project-specific permissions to teams. [More information](/terraform/cloud-docs/projects/managing) |
 
 
 
@@ -386,15 +386,15 @@ _Appears in:_
 
 
 
-Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions. You can assign project-specific permissions to teams. [More information](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/organize-workspaces-with-projects)
+Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions. You can assign project-specific permissions to teams. [More information](/terraform/cloud-docs/projects/managing)
 
 _Appears in:_
 - [ProjectSpec](#projectspec)
 
 | Field | Description |
 | --- | --- |
-| `team` _[Team](#team)_ | Team to grant access. [More information](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/teams) |
-| `access` _[TeamProjectAccessType](#teamprojectaccesstype)_ | There are two ways to choose which permissions a given team has on a project: fixed permission sets, and custom permissions. Must be one of the following values: `admin`, `custom`, `maintain`, `read`, `write`. [More information](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/permissions#general-project-permissions) |
+| `team` _[Team](#team)_ | Team to grant access. [More information](/terraform/cloud-docs/users-teams-organizations/teams) |
+| `access` _[TeamProjectAccessType](#teamprojectaccesstype)_ | There are two ways to choose which permissions a given team has on a project: fixed permission sets, and custom permissions. Must be one of the following values: `admin`, `custom`, `maintain`, `read`, `write`. [More information](/terraform/cloud-docs/users-teams-organizations/permissions#general-project-permissions) |
 | `custom` _[CustomProjectPermissions](#customprojectpermissions)_ | Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide. [More information](/terraform/cloud-docs/users-teams-organizations/permissions#custom-project-permissions |
 
 
@@ -584,6 +584,7 @@ _Appears in:_
 | `oAuthTokenID` _string_ | The VCS Connection (OAuth Connection + Token) to use. Must match pattern: ^ot-[a-zA-Z0-9]+$ |
 | `repository` _string_ | A reference to your VCS repository in the format `<organization>/<repository>` where `<organization>` and `<repository>` refer to the organization and repository in your VCS provider. |
 | `branch` _string_ | The repository branch that Run will execute from. This defaults to the repository's default branch (e.g. main). |
+| `speculativePlans` _boolean_ | Whether this workspace allows automatic speculative plans on PR. Default: `true`. [More information](/terraform/cloud-docs/run/ui#speculative-plans-on-pull-requests) |
 
 
 #### Workspace

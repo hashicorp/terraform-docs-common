@@ -88,6 +88,7 @@ The following entitlements are available:
 - `operations` — Allows an organization to perform runs within Terraform Cloud. Affects the [runs][], [plans][], and [applies][] endpoints.
 - `policy-enforcement` — Allows an organization to use [Sentinel][]. Affects the [policies][], [policy sets][], and [policy checks][] endpoints.
 - `private-module-registry` — Allows an organization to publish and use modules with the [private module registry][]. Affects the [registry modules][] endpoints.
+- `private-policy-agents` - Allows an organization to ensure that HTTP enabled [Sentinel][] and OPA [policies][] can communicate with isolated, private, or on-premises infrastructure.
 - `run-tasks` — Allows an organization to use [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks). Affects the [run tasks][] endpoints.
 - `self-serve-billing` — Allows an organization to pay via credit card using the in-app billing UI.
 - `sentinel` -  **DEPRECATED** Use `policy-enforcement` instead.
@@ -96,6 +97,7 @@ The following entitlements are available:
 - `teams` — Allows an organization to manage access to its workspaces with [teams](/terraform/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
 - `user-limit` — An integer value representing the maximum number of users allowed for the organization. If blank, there is no limit.
 - `vcs-integrations` — Allows an organization to [connect with a VCS provider][vcs integrations] and link VCS repositories to workspaces. Affects the [OAuth Clients][o-clients], and [OAuth Tokens][o-tokens] endpoints, and determines whether the `data.attributes.vcs-repo` property can be set for [workspaces][].
+- `private-vcs` — Enables private-vcs support for an organization.
 
 [agents]: /terraform/cloud-docs/api-docs/agents
 

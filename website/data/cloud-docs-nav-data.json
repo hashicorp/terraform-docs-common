@@ -164,13 +164,19 @@
     ]
   },
   {
+    "title": "Projects",
+    "routes": [
+      { "title": "Overview", "path": "projects" },
+      {
+        "title": "Managing Projects",
+        "path": "projects/managing"
+      }
+    ]
+  },
+  {
     "title": "Workspaces",
     "routes": [
       { "title": "Overview", "path": "workspaces" },
-      {
-        "title": "Organizing Workspaces With Projects",
-        "path": "workspaces/organize-workspaces-with-projects"
-      },
       {
         "title": "Creating Workspaces",
         "path": "workspaces/creating"
@@ -342,8 +348,8 @@
       { "title": "GitLab EE and CE", "path": "vcs/gitlab-eece" },
       { "title": "Bitbucket Cloud", "path": "vcs/bitbucket-cloud" },
       {
-        "title": "Bitbucket Server and Data Center",
-        "path": "vcs/bitbucket-server"
+        "title": "Bitbucket Data Center",
+        "path": "vcs/bitbucket-data-center"
       },
       {
         "title": "Azure DevOps Services",
@@ -495,6 +501,10 @@
           {
             "title": "API Reference",
             "path": "integrations/kubernetes/api-reference"
+          },
+          {
+            "title": "Annotations and Labels",
+            "path": "integrations/kubernetes/annotations-and-labels"
           },
           {
             "title": "Migration Guide",
