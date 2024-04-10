@@ -95,11 +95,9 @@ If a plan contains no changes, Terraform Cloud does not attempt to apply it. Ins
 
 ### Speculative Plans
 
-In addition to normal runs, Terraform Cloud can also run _speculative plans_, to test changes to a configuration during editing and code review. Speculative plans are plan-only runs. They show possible changes, and policies affected by those changes, but cannot apply any changes.
+In addition to normal runs, Terraform Cloud can run _speculative plans_ to test changes to a configuration during editing and code review. Speculative plans are plan-only runs. They show possible changes, and policies affected by those changes, but cannot apply any changes.
 
 Speculative plans can begin without waiting for other runs to finish because they don't affect real infrastructure. Terraform Cloud lists past speculative plan runs alongside a workspace's other runs.
-
-Speculative plans do not appear in a workspace's list of runs; viewing them requires a direct link, which is provided when the plan is initiated.
 
 There are three ways to run speculative plans:
 
