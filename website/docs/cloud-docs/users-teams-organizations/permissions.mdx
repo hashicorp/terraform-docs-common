@@ -313,7 +313,7 @@ Your organization must be on a Terraform Cloud Business or Plus subscription in 
 
 <!-- END: TFC:only name:pnp-callout -->
 
-### Team Permissions
+### Team Management Permissions
 
 There are three levels of team management permission that can be granted to teams: manage membership, manage teams, and manage organization access. They each provide unique abilities to manage teams and can require prerequisite permissions to be granted. For instance in order to grant manage teams permission manage membership must already be granted. In order to grant manage organization access permission both manage teams and manage membership permissions must be granted as well.
 
@@ -348,9 +348,9 @@ This permission confers all of the permissions granted by the manage teams and m
 
 ~> This permission is intended to allow owners of large organizations to delegate further team management control to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Members with this permission will be able to update all organization access settings for any team visible to them.
 
-### Access Secret Teams
+### Include Secret Teams
 
-Allows members access to secret teams.
+Allows members access to secret teams up to the level of permissions granted by their team permissions setting.
 
 This permission acts as a modifier to existing team management permissions. With it members can have access to secret teams up to the level permitted by other team management permissions. For instance the combination of access secret teams and manage teams permissions will allow members to create secret teams. Members with only this permission will be able to view all non-owners teams within the organization.
 
