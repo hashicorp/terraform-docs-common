@@ -11,6 +11,11 @@ The `tfrun` import provides access to data associated with a [Terraform run][run
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
+The Import will exclude `cost_estimate` data if using Enhanced Policy evaluation See [Policy Evaluation](terraform/cloud-docs/policy-enforcement/manage-policy-sets#policy-evaluations) for more details.
+<!-- END: TFC:only name:pnp-callout -->
+
+
 This import currently consists of run attributes, as well as namespaces for the `organization`, `workspace` and `cost-estimate`. Each namespace provides static data regarding the Terraform Cloud application that can then be consumed by Sentinel during a policy evaluation.
 
 ```
