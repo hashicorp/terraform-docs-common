@@ -1,5 +1,5 @@
 ---
-page_title: Setup Instructions - ServiceNow Service Catalog Integration - Terraform Cloud
+page_title: Setup Instructions - ServiceNow Service Catalog Integration - HCP Terraform
 description: >-
   ServiceNow integration to enable your users to order Terraform-built
   infrastructure from ServiceNow
@@ -9,7 +9,7 @@ description: >-
 
 -> **\[DEPRECATED] Integration version:** v1.1.0 (Find the latest version [here](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform))
 
-!> **Note:** The ServiceNow Catalog integration is designed for use by Terraform Enterprise customers. We do not currently recommend using it with the SaaS version of Terraform Cloud.
+!> **Note:** The ServiceNow Catalog integration is designed for use by Terraform Enterprise customers. We do not currently recommend using it with the SaaS version of HCP Terraform.
 
 The Terraform ServiceNow Service Catalog integration enables your end-users to provision self-serve infrastructure via ServiceNow. By connecting ServiceNow with Terraform Enterprise, this integration lets ServiceNow users create workspaces and perform Terraform runs, using prepared Terraform configurations hosted in VCS repositories.
 
@@ -105,7 +105,7 @@ The worker synchronizes ServiceNow with the current run state of Terraform works
    - Terraform > Configs
 1. Click on "New" to create a new Terraform Enterprise connection:
    - Set API Team Token to the Terraform Enterprise [Team Token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) you created earlier.
-   - Set Hostname to the hostname of your Terraform Enterprise instance. (If you're using the SaaS version of Terraform Cloud, this is app.terraform.io.)
+   - Set Hostname to the hostname of your Terraform Enterprise instance. (If you're using the SaaS version of HCP Terraform, this is app.terraform.io.)
    - Set Org Name to the name of the Terraform Enterprise organization you wish to use for new workspaces created by ServiceNow.
 
 ## Adding the Terraform Service Catalog

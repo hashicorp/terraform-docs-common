@@ -12,7 +12,7 @@ HCP Terraform offers [multiple plans](https://www.hashicorp.com/products/terrafo
 
 ## What is a Managed Resource?
 
-A “Managed Resource” or “Resources Under Management (RUM)” is a resource in an HCP Terraform-managed state file where `mode = "managed"`. HCP Terraform counts a resource as part of this count starting from the first `terraform plan` or `terraform apply` operation on the resource. HCP Terraform does not include resources defined as a `null_resource` or `terraform_data` resource in the total managed resource count.
+A “Managed Resource” or “Resources Under Management (RUM)” is a resource in a Terraform-Cloud-managed state file where `mode = "managed"`. HCP Terraform counts a resource as part of this count starting from the first `terraform plan` or `terraform apply` operation on the resource. HCP Terraform does not include resources defined as a `null_resource` or `terraform_data` resource in the total managed resource count.
 
 Examples of managed resources include resources provisioned by a Terraform provider (e.g. an AWS VPC), by [count](/terraform/language/meta-arguments/count) and [for_each](/terraform/language/meta-arguments/for_each) meta-arguments, and resources provisioned by [modules](/terraform/language/modules) and [no-code ready modules](/terraform/cloud-docs/no-code-provisioning/module-design).  
 

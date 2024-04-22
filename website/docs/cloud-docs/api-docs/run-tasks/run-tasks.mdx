@@ -1,5 +1,5 @@
 ---
-page_title: Run Tasks - API Docs - Terraform Cloud
+page_title: Run Tasks - API Docs - HCP Terraform
 description: >-
   Use the `/tasks` endpoint to manage run tasks. List, show, create, update, and delete run tasks, and list, show, update, delete and associate workspace run tasks using the HTTP API.
 ---
@@ -40,7 +40,7 @@ description: >-
 
 # Run Tasks API
 
-[Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
+[Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow HCP Terraform to interact with external systems at specific points in the HCP Terraform run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/run-tasks.mdx'
@@ -60,7 +60,7 @@ To interact with run tasks on an organization, you need the [Manage Run Tasks pe
 
 | Parameter            | Description                                                                                                                                                                                                                     |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The organization to create a run task in. The organization must already exist in Terraform Cloud, and the token authenticating the API request must have [owner permission](/terraform/cloud-docs/users-teams-organizations/permissions). |
+| `:organization_name` | The organization to create a run task in. The organization must already exist in HCP Terraform, and the token authenticating the API request must have [owner permission](/terraform/cloud-docs/users-teams-organizations/permissions). |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
