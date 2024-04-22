@@ -1,6 +1,6 @@
 # terraform-docs-common
 
-Documentation for Terraform Cloud and other Terraform-related documentation:
+Documentation for HCP Terraform and other Terraform-related documentation:
 
 - https://developer.hashicorp.com/terraform/cloud-docs
 - https://developer.hashicorp.com/terraform/plugin
@@ -384,8 +384,8 @@ It's also worth noting that it is possible to do glob-based redirects, for examp
 
 ## Excluding content from Terraform Enterprise
 
-The Terraform Cloud documentation is copied over to the Terraform Enterprise documentation every Terraform Enterprise release cycle. If you are adding content to the Terraform Cloud documentation about a new feature, ensure you know when/if that feature is coming to Terraform Enterprise. If your new feature is _not_ coming to Terraform Enterprise in the next release, you need to _exclude_ that content from the Terraform Enterprise documentation. 
+The HCP Terraform documentation is copied over to the Terraform Enterprise documentation every Terraform Enterprise release cycle. If you are adding content to the HCP Terraform documentation about a new feature, ensure you know when/if that feature is coming to Terraform Enterprise. If your new feature is _not_ coming to Terraform Enterprise in the next release, you need to _exclude_ that content from the Terraform Enterprise documentation. 
 
-> If you are adding content exclusive to either Terraform Cloud or Terraform Enterprise, refer to [our guidelines](https://github.com/hashicorp/ptfe-releases#excluding-tfc-specific-content) for guidance.
+> If you are adding content exclusive to either HCP Terraform or Terraform Enterprise, refer to [our guidelines](https://github.com/hashicorp/ptfe-releases#excluding-hcp-terraform-specific-content) for guidance.
 
 [Learn more about writing content for Terraform Enterprise](https://github.com/hashicorp/ptfe-releases#maintaining-tfe-website-documentation).

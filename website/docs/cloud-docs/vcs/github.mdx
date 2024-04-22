@@ -1,15 +1,15 @@
 ---
-page_title: GitHub.com (OAuth) - VCS Providers - Terraform Cloud
+page_title: GitHub.com (OAuth) - VCS Providers - HCP Terraform
 description: >-
   Learn how to use GitHub.com for VCS features, using a per-organization OAuth connection with the permissions of an individual GitHub user.
 ---
 
 # Configuring GitHub.com Access (OAuth)
 
-These instructions are for using GitHub.com for Terraform Cloud's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. [GitHub Enterprise has separate instructions,](/terraform/enterprise/vcs/github-enterprise) as do the [other supported VCS providers.](/terraform/enterprise/vcs)
+These instructions are for using GitHub.com for HCP Terraform's VCS features, using a per-organization OAuth connection with the permissions of one particular GitHub user. [GitHub Enterprise has separate instructions,](/terraform/enterprise/vcs/github-enterprise) as do the [other supported VCS providers.](/terraform/enterprise/vcs)
 
 <!-- BEGIN: TFC:only -->
-For beginning users on Terraform Cloud, we recommend using our [configuration-free GitHub App](/terraform/cloud-docs/vcs/github-app) to access repositories instead.
+For beginning users on HCP Terraform, we recommend using our [configuration-free GitHub App](/terraform/cloud-docs/vcs/github-app) to access repositories instead.
 <!-- END: TFC:only -->
 
 For Terraform Enterprise site-admins, you can create your own [GitHub App](/terraform/enterprise/admin/application/github-app-integration) to access repositories.
@@ -18,20 +18,20 @@ Configuring a new VCS provider requires permission to manage VCS settings for th
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-Connecting Terraform Cloud to your VCS involves four steps:
+Connecting HCP Terraform to your VCS involves four steps:
 
-| On your VCS                                                                    | On Terraform Cloud                                            |
+| On your VCS                                                                    | On HCP Terraform                                            |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-|                                                                                | Create a new connection in Terraform Cloud. Get callback URL. |
-| Register your Terraform Cloud organization as a new app. Provide callback URL. |                                                               |
-|                                                                                | Provide Terraform Cloud with ID and key. Request VCS access.  |
+|                                                                                | Create a new connection in HCP Terraform. Get callback URL. |
+| Register your HCP Terraform organization as a new app. Provide callback URL. |                                                               |
+|                                                                                | Provide HCP Terraform with ID and key. Request VCS access.  |
 | Approve access request.                                                        |                                                               |
 
 The rest of this page explains the GitHub versions of these steps.
 
--> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using Terraform Cloud's API. For details, see [the OAuth Clients API page](/terraform/cloud-docs/api-docs/oauth-clients).
+-> **Note:** Alternately, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using HCP Terraform's API. For details, see [the OAuth Clients API page](/terraform/cloud-docs/api-docs/oauth-clients).
 
-## Step 1: On Terraform Cloud, Begin Adding a New VCS Provider
+## Step 1: On HCP Terraform, Begin Adding a New VCS Provider
 
 1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
 
@@ -39,13 +39,13 @@ The rest of this page explains the GitHub versions of these steps.
 
 1. Select **GitHub** and then select **GitHub.com** from the menu. The page moves to the next step.
 
-Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring Terraform Cloud.
+Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring HCP Terraform.
 
 ## Step 2: On GitHub, Create a New OAuth Application
 
-1. In a new browser tab, open [github.com](https://github.com) and log in as whichever account you want Terraform Cloud to act as. For most organizations this should be a dedicated service user, but a personal account will also work.
+1. In a new browser tab, open [github.com](https://github.com) and log in as whichever account you want HCP Terraform to act as. For most organizations this should be a dedicated service user, but a personal account will also work.
 
-   ~> **Important:** The account you use for connecting Terraform Cloud **must have admin access** to any shared repositories of Terraform configurations, since creating webhooks requires admin permissions.
+   ~> **Important:** The account you use for connecting HCP Terraform **must have admin access** to any shared repositories of Terraform configurations, since creating webhooks requires admin permissions.
 
 1. Navigate to GitHub's [Register a New OAuth Application](https://github.com/settings/applications/new) page.
 
@@ -57,7 +57,7 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. This page has a form with four text fields.
 
-   Fill out the fields with the corresponding values currently displayed in your Terraform Cloud browser tab. Terraform Cloud lists the values in the order they appear, and includes controls for copying values to your clipboard.
+   Fill out the fields with the corresponding values currently displayed in your HCP Terraform browser tab. HCP Terraform lists the values in the order they appear, and includes controls for copying values to your clipboard.
 
    ![GitHub screenshot: New OAuth application fields](/img/docs/gh-fields-empty.png)
 
@@ -65,20 +65,20 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
    | Field name                 | Value                                                                         |
    | -------------------------- | ----------------------------------------------------------------------------- |
-   | Application Name           | Terraform Cloud (`<YOUR ORGANIZATION NAME>`)                                  |
+   | Application Name           | HCP Terraform (`<YOUR ORGANIZATION NAME>`)                                  |
    | Homepage URL               | `https://app.terraform.io` (or the URL of your Terraform Enterprise instance) |
    | Application Description    | Any description of your choice.                                               |
    | Authorization callback URL | `https://app.terraform.io/<YOUR CALLBACK URL>`                                |
 
 1. Click the "Register application" button, which creates the application and takes you to its page.
 
-1. <a href="/img/docs/tfe_logo.png" download>Download this image of the Terraform logo</a>, upload it with the "Upload new logo" button or the drag-and-drop target, and set the badge background color to `#5C4EE5`. This optional step helps you identify Terraform Cloud's pull request checks at a glance.
+1. <a href="/img/docs/tfe_logo.png" download>Download this image of the Terraform logo</a>, upload it with the "Upload new logo" button or the drag-and-drop target, and set the badge background color to `#5C4EE5`. This optional step helps you identify HCP Terraform's pull request checks at a glance.
 
 1. Leave this page open in a browser tab. In the next step, you will copy and paste the unique **Client ID** and **Client Secret.**
 
    ![GitHub screenshot: the new application's client ID and client secret](/img/docs/gh-secrets.png)
 
-## Step 3: On Terraform Cloud, Set up Your Provider
+## Step 3: On HCP Terraform, Set up Your Provider
 
 1. Enter the **Client ID** and **Client Secret** from the previous step, as well as an optional **Name** for this VCS connection.
 
@@ -90,7 +90,7 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. Click the green "Authorize `<GITHUB USER>`" button at the bottom of the authorization page. GitHub might request your password to confirm the operation.
 
-## Step 4: On Terraform Cloud, Configure Advanced Settings (Optional)
+## Step 4: On HCP Terraform, Configure Advanced Settings (Optional)
 
 The settings in this section are optional. The Advanced Settings you can configure are:
 - **Scope of VCS Provider** - You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
@@ -98,7 +98,7 @@ The settings in this section are optional. The Advanced Settings you can configu
 
 ### If You Don't Need to Configure Advanced Settings:
 
-1. Click the **Skip and Finish** button. This returns you to Terraform Cloud's VCS Provider page, which now includes your new GitHub client.
+1. Click the **Skip and Finish** button. This returns you to HCP Terraform's VCS Provider page, which now includes your new GitHub client.
 
 ### If You Need to Limit the Scope of this VCS Provider:
 
@@ -111,24 +111,24 @@ The settings in this section are optional. The Advanced Settings you can configu
 #### Important Notes
 
 - SSH will only be used to clone Git submodules. All other Git operations will still use HTTPS.
-- Do not use your personal SSH key to connect Terraform Cloud and GitHub; generate a new one or use an existing key reserved for service access.
-- In the following steps, you must provide Terraform Cloud with the private key. Although Terraform Cloud does not display the text of the key to users after it is entered, it retains it and will use it when authenticating to GitHub.
+- Do not use your personal SSH key to connect HCP Terraform and GitHub; generate a new one or use an existing key reserved for service access.
+- In the following steps, you must provide HCP Terraform with the private key. Although HCP Terraform does not display the text of the key to users after it is entered, it retains it and will use it when authenticating to GitHub.
 - **Protect this private key carefully.** It can push code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
 
-1. On a secure workstation, create an SSH keypair that Terraform Cloud can use to connect to GitHub.com. The exact command depends on your OS, but is usually something like:
+1. On a secure workstation, create an SSH keypair that HCP Terraform can use to connect to GitHub.com. The exact command depends on your OS, but is usually something like:
    `ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"`
-   This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key. This SSH key **must have an empty passphrase**. Terraform Cloud cannot use SSH keys that require a passphrase.
+   This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key. This SSH key **must have an empty passphrase**. HCP Terraform cannot use SSH keys that require a passphrase.
 
-1. While logged into the GitHub.com account you want Terraform Cloud to act as, navigate to the SSH Keys settings page, add a new SSH key and paste the value of the SSH public key you just created.
+1. While logged into the GitHub.com account you want HCP Terraform to act as, navigate to the SSH Keys settings page, add a new SSH key and paste the value of the SSH public key you just created.
 
-1. In Terraform Cloud's **Add VCS Provider** page, paste the text of the **SSH private key** you just created, and click the **Add SSH Key** button.
+1. In HCP Terraform's **Add VCS Provider** page, paste the text of the **SSH private key** you just created, and click the **Add SSH Key** button.
 
 ## Step 5: Contact Your GitHub Organization Admins
 
-If your organization uses OAuth app access restrictions, you had to click a "Request" button when authorizing Terraform Cloud, which sent an automated email to the administrators of your GitHub organization. An administrator must approve the request before Terraform Cloud can access your organization's shared repositories.
+If your organization uses OAuth app access restrictions, you had to click a "Request" button when authorizing HCP Terraform, which sent an automated email to the administrators of your GitHub organization. An administrator must approve the request before HCP Terraform can access your organization's shared repositories.
 
 If you're a GitHub administrator, check your email now and respond to the request; otherwise, contact whoever is responsible for GitHub accounts in your organization, and wait for confirmation that they've approved your request.
 
 ## Finished
 
-At this point, GitHub access for Terraform Cloud is fully configured, and you can create Terraform workspaces based on your organization's shared GitHub repositories.
+At this point, GitHub access for HCP Terraform is fully configured, and you can create Terraform workspaces based on your organization's shared GitHub repositories.
