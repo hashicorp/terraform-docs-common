@@ -34,6 +34,8 @@ in the AWS provider returns a list of availability zones.
 
 Function names are verbs, since they encapsulate computational logic for usage in practitioner configurations. Unlike resource and data source naming, function names should _NOT_ include the provider name since the configuration language syntax for calling the function must already specify the provider name separately. For example, a `time` provider-defined function that parses RFC3339 timestamp strings should be named `parse_rfc3339` since it would be called via `provider::time::parse_rfc3339`.
 
+Function names should be all lowercase and use underscores to separate words. The built-in functions in the Terraform language do not use underscores for historical reasons, but all functions defined in providers should use underscores to improve readability.
+
 ### Attribute Names
 
 Below is an example of a resource configuration block which illustrates some

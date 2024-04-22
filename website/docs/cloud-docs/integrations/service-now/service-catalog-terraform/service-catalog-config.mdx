@@ -1,30 +1,30 @@
 ---
-page_title: Service Catalog - ServiceNow Service Catalog Integration - Terraform Cloud
+page_title: Service Catalog - ServiceNow Service Catalog Integration - HCP Terraform
 description: |-
   Configure Service Catalogs and VCS repositories to allow end users to
-  provision infrastructure using ServiceNow and Terraform Cloud.
+  provision infrastructure using ServiceNow and HCP Terraform.
 ---
 
 # Service Catalog Configuration
 
-When using ServiceNow with the Terraform Cloud integration, you will configure
+When using ServiceNow with the HCP Terraform integration, you will configure
 at least one service catalog item. You will also configure one or more version
 control system (VCS) repositories or no-code modules containing the Terraform
 configurations which will be used to provision that infrastructure. End users
-will request infrastructure from the service catalog, and Terraform Cloud will
+will request infrastructure from the service catalog, and HCP Terraform will
 fulfill the request by creating a new workspace, applying the configuration, and
 then reporting the results back to ServiceNow.
 
 ## Prerequisites
 
 Before configuring a service catalog, you must install and configure the
-Terraform Cloud integration software on your ServiceNow instance. These steps
+HCP Terraform integration software on your ServiceNow instance. These steps
 are covered in the [installation documentation](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform).
 
 Additionally, you must have have the following information:
 
 1. The no-code module name or the OAuth token ID and repository identifier for
-   each VCS repository that Terraform Cloud will use to provision
+   each VCS repository that HCP Terraform will use to provision
    infrastructure. Your Terraform Admin will provide these to you. Learn more in
    [Configure VCS Repositories or No-Code
    Modules](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#configure-vcs-repositories-or-no-code-modules).
@@ -32,13 +32,13 @@ Additionally, you must have have the following information:
    given VCS repositories or no-code modules.
 
 Once these steps are complete, in order for end users to provision
-infrastructure with ServiceNow and Terraform Cloud, the ServiceNow Admin will
+infrastructure with ServiceNow and HCP Terraform, the ServiceNow Admin will
 perform the following steps to make Service Items available to your end users.
 
 1. Add at least one service catalog for use with Terraform.
 1. If using the VCS flow, configure at least one one VCS repository in ServiceNow.
 1. Create variable sets to define Terraform and environment variables to be used
-   by Terraform Cloud to provision infrastructure.
+   by HCP Terraform to provision infrastructure.
 
 ## Add the Terraform Service Catalog
 
@@ -86,9 +86,9 @@ configurations to the Service Catalog for Terraform.
      users, and does not have to be the same as the repository name as defined
      by your VCS provider. Ideally it will succinctly describe the
      infrastructure that will be provisioned by Terraform from the repository.
-   - OAuth Token ID: The OAuth token ID that from your Terraform Cloud
+   - OAuth Token ID: The OAuth token ID that from your HCP Terraform
      organization's VCS providers settings. This ID specifies which VCS
-     provider configured in Terraform Cloud hosts the desired repository.
+     provider configured in HCP Terraform hosts the desired repository.
    - Identifier: The VCS repository that contains the Terraform configuration
      for this workspace template. Repository identifiers are determined by your
      VCS provider; they typically use a format like
@@ -100,7 +100,7 @@ configurations to the Service Catalog for Terraform.
      - Working Directory: The directory within the repository containing
        Terraform configuration.
      - Terraform Version: The version of Terraform to use. This will default to
-       the latest version of Terraform supported by your Terraform Cloud
+       the latest version of Terraform supported by your HCP Terraform
        instance.
 1. Click "Submit".
 
@@ -122,7 +122,7 @@ Catalog Items using [no-code
 modules](/terraform/cloud-docs/no-code-provisioning/provisioning). This release
 introduces two new additions to the Terraform Catalog - no-code workspace
 create and update Items. Both utilize no-code modules from the private registry
-in Terraform Cloud to enable end users to request infrastructure without writing
+in HCP Terraform to enable end users to request infrastructure without writing
 code.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
@@ -136,7 +136,7 @@ no-code modules:
   values, runs and applies Terraform.
 - **Update No-Code Workspace and Deploy Resources**: updates a previously
   created no-code workspace to new no-code provisioning settings, when a new
-  version of the module is released in the Terraform Cloud registry; supplies
+  version of the module is released in the HCP Terraform registry; supplies
   updates variable values, runs and applies Terraform.
 
 Administrators can skip configuring VCS repositories in ServiceNow when using
@@ -144,7 +144,7 @@ no-code modules. The only input required in the no-code workspace request form
 is the name of the no-code module. 
 
 Before utilizing a no-code module, it must be set up in the private registry of
-your Terraform Cloud account. With this one-time configuration complete,
+your HCP Terraform account. With this one-time configuration complete,
 Administrators can then call the modules through Catalog requests without
 repository management, simplifying the use of infrastructure-as-code.
 
@@ -191,9 +191,9 @@ should provide these to you.
 When the Terraform integration applies configuration, it will map ServiceNow
 variables to Terraform and environment variables using the following convention.
 ServiceNow variables that begin with "sensitive_" will be saved as sensitive
-variables within Terraform Cloud.
+variables within HCP Terraform.
 
-| ServiceNow Variable Name         | Terraform Cloud Variable                                   |
+| ServiceNow Variable Name         | HCP Terraform Variable                                   |
 | -------------------------------- | ---------------------------------------------------------- |
 | `tf_var_VARIABLE_NAME`           | Terraform Variable: `VARIABLE_NAME`                        |
 | `tf_env_ENV_NAME`                | Environment Variable: `ENV_NAME`                           |
@@ -203,9 +203,9 @@ variables within Terraform Cloud.
 ## Provision Infrastructure
 
 Once the Service Catalog for Terraform has been configured, ServiceNow users
-will be able to request infrastructure to be provisioned by Terraform Cloud.
+will be able to request infrastructure to be provisioned by HCP Terraform.
 
-These requests will be fulfilled by Terraform Cloud, which will:
+These requests will be fulfilled by HCP Terraform, which will:
 
 1. Create a new workspace and specifying the no-code module name or the VCS repository provided by ServiceNow.
 1. Configure variables for that workspace, also provided by ServiceNow.
@@ -217,7 +217,7 @@ provisioned.
 
 -> **Note:** The integration creates workspaces with
 [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply)
-enabled. Terraform Cloud will queue an apply for these workspaces whenever
+enabled. HCP Terraform will queue an apply for these workspaces whenever
 changes are merged to the associated VCS repositories. This is known as the
 [VCS-driven run workflow](/terraform/cloud-docs/run/ui). It is important to keep in mind
 that all of the ServiceNow workspaces connected to a given repository will be
@@ -227,7 +227,7 @@ updated whenever changes are merged to the associated branch in that repository.
 
 If using v2.2.0 or above, the Service Catalog app allows you to set an [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) for your Terraform workspaces. There are two modes to choose from:
 
- - The default value is "Remote", which instructs Terraform Cloud to perform runs on its disposable virtual machines.
+ - The default value is "Remote", which instructs HCP Terraform to perform runs on its disposable virtual machines.
  - Selecting "Agent" mode allows you to run Terraform operations on isolated, private, or on-premises infrastructure. This option requires you to create an Agent Pool in your organization beforehand, then provide that Agent Pool's id when you order a new workspace through the Service Catalog.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
@@ -243,7 +243,7 @@ Refer to the [workspace naming recommendations](/terraform/cloud-docs/workspaces
 
 ## Workspace Tags
 
-Version 2.4.0 also allows you to add custom tags to your Terraform workspaces. Use the "Workspace Tags" field to provide a comma-separated list of tags that will be parsed and attached to the workspace in Terraform Cloud. 
+Version 2.4.0 also allows you to add custom tags to your Terraform workspaces. Use the "Workspace Tags" field to provide a comma-separated list of tags that will be parsed and attached to the workspace in HCP Terraform. 
 
 Tags give you an easier way to categorize, filter, and manage workspaces provisioned through the Service Catalog for Terraform.
 We recommend that you set naming conventions for tags with your end users to avoid variations such as `ec2`, `aws-ec2`, `aws_ec2`.

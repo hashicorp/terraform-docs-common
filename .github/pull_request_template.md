@@ -13,7 +13,7 @@
 _If items do not apply to your changes, add (N/A) and mark them as complete._
 
 #### Pull Request
-- [ ] One or more labels describe the type of change (e.g. clarification) and associated product (e.g. tfc).
+- [ ] One or more labels describe the type of change (e.g. clarification) and associated product (e.g. HCP Terraform ).
 - [ ] Description links to related pull requests or issues, if any.
 
 #### Content

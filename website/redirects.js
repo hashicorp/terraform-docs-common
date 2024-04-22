@@ -146,4 +146,38 @@ module.exports = [
       "/terraform/cloud-docs/integrations/kubernetes/ops-v2-migration",
     permanent: true,
   },
+  // Bitbucket Server Deprecation
+  {
+    source: "/terraform/cloud-docs/vcs/bitbucket-server",
+    destination: "/terraform/cloud-docs/vcs/bitbucket-data-center",
+    permanent: true,
+  },
+  // Dedicated projects UI
+  {
+    source: "/terraform/cloud-docs/workspaces/organize-workspaces-with-projects",
+    destination: "/terraform/cloud-docs/projects/managing",
+    permanent: true,
+  },
+  // Style guide relocation
+  {
+    source: "/terraform/language/syntax/style",
+    destination: "/terraform/language/style",
+    permanent: true,
+  },
+  // HCP Terraform rebranding
+  {
+    source: "/terraform/cloud-docs/overview/estimate-terraform-cloud-cost",
+    destination: "/terraform/cloud-docs/overview/estimate-hcp-terraform-cost",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/terraform-cloud",
+    destination: "/terraform/language/settings/cloud",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cdktf/create-and-deploy/terraform-cloud",
+    destination: "/terraform/cdktf/create-and-deploy/hcp-terraform",
+    permanent: true,
+  },
 ];

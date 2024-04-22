@@ -1,17 +1,39 @@
 ---
-page_title: API Changelog - API Docs - Terraform Cloud
+page_title: API Changelog - API Docs - HCP Terraform
 page_id: api-changelog
 description: >-
-  Learn about the changes made to the Terraform Cloud and Enterprise APIs.
+  Learn about the changes made to the HCP Terraform and Enterprise APIs.
 ---
 
 # API Changelog
 
-Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
+Keep track of changes to the API for HCP Terraform and Terraform Enterprise.
+
+## 2024-04-04
+* Add a `sort` parameter to the [Projects list API](/terraform/cloud-docs/api-docs/projects#query-parameters) to allow sorting projects by name.
+* Add a `description` attribute to the [Projects API](/terraform/cloud-docs/api-docs/projects).
+* Add `project-count` and `workspace-count` attributes to sample [Projects API](/terraform/cloud-docs/api-docs/projects) responses.
+
+## 2024-3-27
+* Add `private-vcs` to [Feature Entitlements](/terraform/cloud-docs/api-docs#feature-entitlements).
+
+## 2024-3-26
+* Add API documentation for searching [variable sets](/terraform/cloud-docs/api-docs/variable-sets#list-variable-sets) by name.
+
+## 2024-3-14
+* Add documentation for creating runs with debugging mode enabled.
+
+## 2024-3-12
+* Update OAuth Client API endpoints to create, update, and return projects associated with an oauth client.
+* Add API endpoints to [Attach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#attach-an-oauth-client-to-projects) and [Detach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#detach-an-oauth-client-from-projects) from a project.
+* Add `organization-scoped` attribute to the [OAuth Clients API](/terraform/cloud-docs/api-docs/oauth-clients).
 
 ## 2024-2-29
 * Update [run task stages](/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) with new multi-stage payload format.
 * Update [run tasks](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) with global run tasks request/response payloads.
+
+## 2024-2-27
+* Add `private-policy-agents` to [Feature Entitlements](/terraform/cloud-docs/api-docs#feature-entitlements).
 
 ## 2024-2-20
 * Add documentation for configuring organization and workspace data retention policies through the API and on the different [types of data retention policies](/terraform/enterprise/api-docs/data-retention-policies).
