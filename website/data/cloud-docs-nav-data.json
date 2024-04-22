@@ -1,5 +1,5 @@
 [
-  { "heading": "Terraform Cloud" },
+  { "heading": "HCP Terraform" },
   { "title": "Overview", "path": "" },
   { "title": "Plans and Features", 
     "routes": [
@@ -8,8 +8,8 @@
         "path": "overview" 
       },
       {
-        "title": "Estimate Terraform Cloud Cost",
-        "path": "overview/estimate-terraform-cloud-cost"
+        "title": "Estimate HCP Terraform Cost",
+        "path": "overview/estimate-hcp-terraform-cost"
       },
       {
         "title": "Activate Pay-As-You-Go",
@@ -403,7 +403,7 @@
     ]
   },
   {
-    "title": "Migrating to Terraform Cloud",
+    "title": "Migrating to HCP Terraform",
     "path": "migrate"
   },
   {
