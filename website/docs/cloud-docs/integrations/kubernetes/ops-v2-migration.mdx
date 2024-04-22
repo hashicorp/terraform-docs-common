@@ -1,14 +1,14 @@
 ---
 page_title: Terraform Cloud Kubernetes Operator v2 Migration Guide
 description: >-
-  Upgrade the Terraform Cloud Kubernetes Operator from version 1 to version 2.
+  Upgrade the Terraform Kubernetes Operator from version 1 to version 2.
 ---
 
 # Terraform Cloud Kubernetes Operator v2 Migration Guide
 
 ~> **Compatibility warning**: Terraform Enterprise only supports version 2 of the Terraform Cloud Kubernetes Operator. If you use Terraform Enterprise, [refer to this tutorial](/terraform/tutorials/kubernetes/kubernetes-operator-v2) for installation guidance. 
 
-To upgrade the Terraform Cloud Kubernetes Operator from version 1 to version 2, there is a one-time process that you need to complete. This process will upgrade the operator to the newest version and migrate your custom resources. 
+To upgrade the Terraform Cloud Kubernetes Operator from version 1 to the Terraform Cloud Kubernetes Operator (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Next, backup the workspace resources.
 $ kubectl get workspace --all-namespaces -o yaml > backup_tfc_operator_v1.yaml
 ```
 
-Finally, we suggest that you set the `applyMethod` of each Terraform Cloud workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies during the upgrade process. Run the following command for each Workspace resource.
+Finally, we suggest that you set the `applyMethod` of each HCP Terraform workspace to `manual`. In version 2 of the Terraform Cloud Kubernetes Operator this is the default value, however explicitly configuring it with the value provides extra protection from unintended automatic applies during the upgrade process. Run the following command for each Workspace resource.
 
 ```shell-session
 kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"applyMethod": "manual"}}'
@@ -88,7 +88,7 @@ $ helm install \
   --set controllers.workspace.workers=5
 ```
 
-Next, create a Kubernetes secret to store the TFC API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
+Next, create a Kubernetes secret to store the HCP Terraform API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
 
 ```shell-session
 $ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d

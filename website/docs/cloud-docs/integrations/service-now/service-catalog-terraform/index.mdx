@@ -1,5 +1,5 @@
 ---
-page_title: Setup Instructions - ServiceNow Service Catalog Integration - Terraform Cloud
+page_title: Setup Instructions - ServiceNow Service Catalog Integration - HCP Terraform
 description: >-
   ServiceNow integration enables your users to order Terraform-built
   infrastructure from ServiceNow.
@@ -11,7 +11,7 @@ description: >-
 
 The Terraform ServiceNow Service Catalog integration enables your end-users to
 provision self-serve infrastructure via ServiceNow. By connecting ServiceNow to
-Terraform Cloud, this integration lets ServiceNow users order Service
+HCP Terraform, this integration lets ServiceNow users order Service
 Items, create workspaces, and perform Terraform runs using prepared Terraform
 configurations hosted in VCS repositories.
 
@@ -26,15 +26,15 @@ installations can be found [here](/terraform/cloud-docs/integrations/service-now
 
 The integration relies on Terraform ServiceNow Catalog integration software
 installed within your ServiceNow instance. Installing and configuring this
-integration requires administration in both ServiceNow and Terraform Cloud.
+integration requires administration in both ServiceNow and HCP Terraform.
 Since administrators of these services within your organization are not
 necessarily the same person, this documentation refers to a **ServiceNow Admin**
 and a **Terraform Admin**.
 
-First, the Terraform Admin will configure your Terraform Cloud organization with
+First, the Terraform Admin will configure your HCP Terraform organization with
 a dedicated team for the ServiceNow integration, and obtain a team API token for
 that team. The Terraform Admin will provide your organization name, the team API
-token, the hostname of your Terraform Cloud instance, and details about version
+token, the hostname of your HCP Terraform instance, and details about version
 control repositories containing Terraform configurations and required variables
 to the ServiceNow Admin.
 
@@ -51,16 +51,16 @@ repositories and variable definitions provided by the Terraform Admin.
 |                                                                              | Prepare an organization for use with the ServiceNow Catalog.                                                                               |
 |                                                                              | Create a team that can manage workspaces in that organization.                                                                             |
 |                                                                              | Create a team API token so the integration can use that team's permissions.                                                                |
-|                                                                              | Retrieve the OAuth token IDs and repository identifiers that Terraform Cloud uses to identify your VCS repositories.                       |
-|                                                                              | Provide the API token, OAuth token ID, repository identifiers, variable definitions, and Terraform Cloud hostname to the ServiceNow Admin. |
+|                                                                              | Retrieve the OAuth token IDs and repository identifiers that HCP Terraform uses to identify your VCS repositories.                       |
+|                                                                              | Provide the API token, OAuth token ID, repository identifiers, variable definitions, and HCP Terraform hostname to the ServiceNow Admin. |
 | Install the Terraform integration application from the ServiceNow App Store. |                                                                                                                                            |
-| Connect the integration application with Terraform Cloud.                    |                                                                                                                                            |
+| Connect the integration application with HCP Terraform.                    |                                                                                                                                            |
 | Add the Terraform Service Catalog to ServiceNow.                             |                                                                                                                                            |
 | Configure the VCS repositories in ServiceNow.                                |                                                                                                                                            |
 | Configure variable sets for use with the VCS repositories.                   |                                                                                                                                            |
 
 Once these steps are complete, self-serve infrastructure will be available
-through the ServiceNow Catalog. Terraform Cloud will provision and manage
+through the ServiceNow Catalog. HCP Terraform will provision and manage
 requested infrastructure and report the status back to ServiceNow.
 
 ## Prerequisites
@@ -68,7 +68,7 @@ requested infrastructure and report the status back to ServiceNow.
 To start using Terraform with the ServiceNow Catalog Integration, you must have:
 
 - An administrator account on a Terraform Enterprise instance or within a
-  Terraform Cloud organization.
+  HCP Terraform organization.
 - An administrator account on your ServiceNow instance.
 - One or more [supported version control
   systems](/terraform/cloud-docs/vcs#supported-vcs-providers) (VCSs) with read access
@@ -89,7 +89,7 @@ It requires the following ServiceNow plugins as dependencies:
 
 -> **Note:** Dependent plugins are installed on your ServiceNow instance automatically when the app is downloaded from the ServiceNow Store.
 
-## Configure Terraform Cloud
+## Configure HCP Terraform
 
 Before installing the ServiceNow integration, the Terraform Admin will need to
 perform the following steps to configure and gather information from Terraform
@@ -112,11 +112,11 @@ Cloud.
 1. If you haven't yet done so, [connect a VCS provider](/terraform/cloud-docs/vcs) to
    this Terraform organization. This provider will include one or more
    repositories with Terraform configurations. Any repository that could be
-   connected to a manually-created Terraform Cloud workspace can also be
+   connected to a manually-created HCP Terraform workspace can also be
    used as a workspace template in the ServiceNow integration.
 1. On your organization's VCS provider settings page (Settings > VCS Providers),
    find the "OAuth Token ID" for the VCS provider or providers you will be using
-   with the ServiceNow integration. Terraform Cloud uses the OAuth token ID to
+   with the ServiceNow integration. HCP Terraform uses the OAuth token ID to
    identify and authorize the VCS provider.
    **Save the OAuth token ID for later.**
 1. Identify one or more VCS repositories in the VCS provider containing
@@ -127,8 +127,8 @@ Cloud.
 1. Provide the following information to the ServiceNow Admin.
 1. The organization name
 1. The team API token
-1. The hostname of your Terraform Enterprise instance, or of Terraform Cloud.
-   The hostname of Terraform Cloud is `app.terraform.io`.
+1. The hostname of your Terraform Enterprise instance, or of HCP Terraform.
+   The hostname of HCP Terraform is `app.terraform.io`.
 1. The OAuth token ID(s) of your VCS provider(s), and the repository
    identifier for each VCS repository containing Terraform configurations that
    will be used by the integration.
@@ -183,36 +183,36 @@ published by "HashiCorp Inc".
 
 ![Screenshot: ServiceNow Store Page](/img/docs/service-now-store.png "Screenshot of the ServiceNow Store listing for the Terraform Integration")
 
-## Connect ServiceNow to Terraform Cloud
+## Connect ServiceNow to HCP Terraform
 
 -> **ServiceNow Roles:** `admin` or `x_terraform.config_user`
 
 Once the integration is installed, the ServiceNow Admin can connect your
-ServiceNow instance to Terraform Cloud. Before you begin, you will need the
-information described in the "Configure Terraform Cloud" section from your
+ServiceNow instance to HCP Terraform. Before you begin, you will need the
+information described in the "Configure HCP Terraform" section from your
 Terraform Admin.
 
-Once you have this information, connect ServiceNow to Terraform Cloud with
+Once you have this information, connect ServiceNow to HCP Terraform with
 the following steps.
 
 1. Navigate to your ServiceNow Service Management Screen.
 1. Using the left-hand navigation, open the configuration table for the
-   integration to manage the Terraform Cloud connection.
+   integration to manage the HCP Terraform connection.
    - Terraform > Configs
-1. Click on "New" to create a new Terraform Cloud connection.
-   - Set Org Name to the Terraform Cloud organization name.
+1. Click on "New" to create a new HCP Terraform connection.
+   - Set Org Name to the HCP Terraform organization name.
    - Click on the "Lock" icon to set Hostname to the hostname of your Terraform
-     Enterprise instance. If you are using the SaaS version of Terraform Cloud,
+     Enterprise instance. If you are using the SaaS version of HCP Terraform,
      the hostname is `https://app.terraform.io`. Be sure to include "https://"
      before the hostname.
-   - Set API Team Token to the Terraform Cloud team API token.
+   - Set API Team Token to the HCP Terraform team API token.
 1. Click "Submit".
 
 ![Screenshot: ServiceNow Terraform Config](/img/docs/service-now-config.png "Screenshot of the ServiceNow Terraform Config New Record page")
 
 ## Create and Populate a Service Catalog
 
-Now that you have connected ServiceNow to Terraform Cloud, you are ready to
+Now that you have connected ServiceNow to HCP Terraform, you are ready to
 create a Service Catalog using the VCS repositories provided by the Terraform
 Admin.
 
