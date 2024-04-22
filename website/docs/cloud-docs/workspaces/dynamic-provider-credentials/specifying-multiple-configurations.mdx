@@ -1,20 +1,20 @@
 ---
-page_title: Specifying Multiple Configurations - Workspaces - Terraform Cloud
+page_title: Specifying Multiple Configurations - Workspaces - HCP Terraform
 description: >-
   Specifying multiple provider dynamic provider credentials configurations for the same workspace.
 ---
 
 # Specifying Multiple Configurations
 
-~> **Important:** If you are self-hosting [Terraform Cloud Agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [Terraform Cloud agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can create multiple dynamic credential configurations of the same provider in a workspace.
 
 Each configuration generates a distinct [workload identity token](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens), allowing you to create [aliases for different provider configurations](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace. You can specify unique audience values per configuration, and [manually generate multiple tokens](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/manual-generation).
 
-Specifying multiple dynamic credential configurations in Terraform Cloud builds on the existing method of providing each provider's environment variables to a workspace. The process requires mapping well-known authentication [input variables](/terraform/language/values/variables) to the correct providers.
+Specifying multiple dynamic credential configurations in HCP Terraform builds on the existing method of providing each provider's environment variables to a workspace. The process requires mapping well-known authentication [input variables](/terraform/language/values/variables) to the correct providers.
 
-## Configure Terraform Cloud
+## Configure HCP Terraform
 
 You can specify additional dynamic credentials configurations by defining and appending a “tag” to the end of your existing required environment variables: `[DYNAMIC_CREDENTIALS_VAR_NAME]_[YOUR_TAG]`.
 
@@ -26,15 +26,15 @@ Using [Vault's dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-pro
 
 ## Configure Terraform Code
 
-Each supported provider has input variables you must declare in your Terraform code to use dynamic credentials with that provider. Each dynamic provider's documentation page lists the required variables for that provider. Terraform Cloud provides values for these variables during runs, which you can use to authenticate Terraform Cloud with providers using dynamic credentials.
+Each supported provider has input variables you must declare in your Terraform code to use dynamic credentials with that provider. Each dynamic provider's documentation page lists the required variables for that provider. HCP Terraform provides values for these variables during runs, which you can use to authenticate HCP Terraform with providers using dynamic credentials.
 
-Use the input variable values that Terraform Cloud provides to map configuration values to the correct provider blocks. Authentication information for the default provider exists in a variable's top-level `default` object, while each additional configuration exists under a variable's `aliases` map. Terraform Cloud generates the keys of the `aliases` map based on the tag you define in your Terraform Cloud configuration.
+Use the input variable values that HCP Terraform provides to map configuration values to the correct provider blocks. Authentication information for the default provider exists in a variable's top-level `default` object, while each additional configuration exists under a variable's `aliases` map. HCP Terraform generates the keys of the `aliases` map based on the tag you define in your HCP Terraform configuration.
 
 ~> **Important:** If you add additional configurations to a workspace, you need to manually map authentication information for all providers *including* the default provider.
 
 ### Example
 
-Continuing from the [example above](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations#example), after setting the required environment variables for your provider, [add the following code to your Terraform configuration](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#required-terraform-variable). This lets Terraform Cloud supply variable values that you can use to map authentication and configuration details to the correct provider blocks.
+Continuing from the [example above](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations#example), after setting the required environment variables for your provider, [add the following code to your Terraform configuration](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#required-terraform-variable). This lets HCP Terraform supply variable values that you can use to map authentication and configuration details to the correct provider blocks.
 
 ```hcl
 variable "tfc_vault_dynamic_credentials" {
@@ -60,7 +60,7 @@ Use the above object to map authentication information to the correct provider b
 
 ```hcl
 provider "vault" {
-  // Set this to true as TFC manages the token lifecycle
+  // Set this to true as HCP Terraform manages the token lifecycle
   skip_child_token = true
   address = var.tfc_vault_dynamic_credentials.default.address
   namespace = var.tfc_vault_dynamic_credentials.default.namespace
@@ -71,7 +71,7 @@ provider "vault" {
 }
 
 provider "vault" {
-  // Set this to true as TFC manages the token lifecycle
+  // Set this to true as HCP Terraform manages the token lifecycle
   skip_child_token = true
   alias = "ALIAS1"
   address = var.tfc_vault_dynamic_credentials.aliases["ALIAS1"].address
