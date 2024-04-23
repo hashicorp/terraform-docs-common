@@ -36,8 +36,8 @@ Permissions for the owners team include:
 - Manage VCS settings (refer to [Organization Permissions][] below)
 - Manage the private registry (refer to [Organization Permissions][] below)
 - Manage Membership (refer to [Organization Permissions][] below; invite or remove users from the organization itself, and manage the membership of its teams)
-- View all secret teams (owners only)
-- Manage organization permissions (owners only)
+- View all secret teams (refer to [Organization Permissions][] below)
+- Manage organization permissions (refer to [Organization Permissions][] below)
 - Manage all organization settings (owners only)
 - Manage organization billing (owners only, not applicable to Terraform Enterprise)
 - Delete organization (owners only)
@@ -313,7 +313,11 @@ Your organization must be an HCP Terraform Plus subscription to enable this feat
 
 <!-- END: TFC:only name:pnp-callout -->
 
-### Manage Membership
+### Team Management Permissions
+
+There are three levels of team management permissions that can be granted to teams: manage membership, manage teams, and manage organization access. They each provide unique abilities to manage teams and can require prerequisite permissions to be granted. For instance, in order to grant the manage teams permission, manage membership must already be granted. In order to grant the manage organization access permission both manage teams and manage membership permissions must be granted as well.
+
+#### Manage Membership
 
 Allows members to invite users to the organization, remove users from the organization, and add or remove users from teams within the organization.
 
@@ -323,6 +327,32 @@ In order to modify the membership of a team, a user with Manage Membership permi
 In order to remove a user from the organization, the holder of this permission must have visibility into all of the teams which the user is a member of.
 
 ~> This permission is intended to allow owners of large organizations to delegate membership management to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Users with this permission are able to add themselves to any visible team, and inherit the permissions of any visible team.
+
+#### Manage Teams
+
+Allows members to create, update, and delete teams.
+
+This permission grants the ability to update a team names and SSO IDs but not its organization access settings. On its own this permission does not allow users to create, update, delete, or otherwise access secret teams.
+
+This permission confers all of the permissions granted by the manage membership permission.
+
+~> This permission is intended to allow owners of large organizations to delegate team management to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Users with this permission are able to update or delete any visible team. Because this permission also confers the manage membership permission these users could also add themselves to any visible team.
+
+#### Manage Organization Access
+
+Allows members to update the organization access settings of teams.
+
+On its own this permission does not allow users to create, update, delete, or otherwise access secret teams.
+
+This permission confers all of the permissions granted by the manage teams and manage membership permissions.
+
+~> This permission is intended to allow owners of large organizations to delegate further team management control to another trusted team, and should be granted only to teams of trusted users. **Assign with caution:** Members with this permission will be able to update all organization access settings for any team visible to them.
+
+### Include Secret Teams
+
+Allows members access to secret teams up to the level of permissions granted by their team permissions setting.
+
+This permission acts as a modifier to existing team management permissions. With it members can have access to secret teams up to the level permitted by other team management permissions. For instance the combination of include secret teams and [manage teams permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) will allow members to create secret teams.
 
 ## Permissions Outside HCP Terraform's Scope
 
