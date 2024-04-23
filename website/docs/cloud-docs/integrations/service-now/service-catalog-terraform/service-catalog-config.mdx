@@ -36,7 +36,7 @@ infrastructure with ServiceNow and HCP Terraform, the ServiceNow Admin will
 perform the following steps to make Service Items available to your end users.
 
 1. Add at least one service catalog for use with Terraform.
-1. If using the VCS flow, configure at least one one VCS repository in ServiceNow.
+1. If you are using the VCS flow, configure at least one one VCS repository in ServiceNow.
 1. Create variable sets to define Terraform and environment variables to be used
    by HCP Terraform to provision infrastructure.
 
@@ -65,17 +65,16 @@ left-hand navigation.
 -> **ServiceNow Roles:** `admin` or `x_terraform.vcs_repositories_user`
 
 Terraform workspaces created through the ServiceNow Service Catalog for
-Terraform have two configuration options: they can be associated with a VCS
+Terraform can be associated with a VCS
 provider repository or be backed by a [no-code
-module](/terraform/cloud-docs/no-code-provisioning/provisioning) created in your
+module](/terraform/cloud-docs/no-code-provisioning/provisioning) in your
 organization's private registry. Administrators determine which workspace type
-end users can request from the Terraform Catalog. Below we outline the key
-differences between the version control and no-code approaches to help guide
-this decision.
+end users can request from the Terraform Catalog. Below are the key
+differences between the version control and no-code approaches.
 
 ### VCS configuration
 
-To make infrastructure available to your users through Version control
+To make infrastructure available to your users through version control
 workspaces, you must add one or more VCS repositories containing Terraform
 configurations to the Service Catalog for Terraform.
 
@@ -106,9 +105,9 @@ configurations to the Service Catalog for Terraform.
 
 ![Screenshot: ServiceNow New VCS Repository](/img/docs/service-now-vcs-repository.png "Screenshot of the ServiceNow Terraform New VCS Repository page")
 
-After configuring one or more repositories in ServiceNow, the names of those
-repositories will be available in the "VCS Repository" dropdown menu when
-ordering new workspaces through the following items in the Terraform Catalog:
+After configuring your repositories in ServiceNow, the names of those
+repositories will be available in the "VCS Repository" dropdown menu a user
+orders new workspaces through the following items in the Terraform Catalog:
 
 - **Create Workspace**
 - **Create Workspace with Variables**
@@ -117,7 +116,7 @@ ordering new workspaces through the following items in the Terraform Catalog:
 
 ### No-Code Module Configuration
 
-New in version 2.5.0, ServiceNow Administrators gain the ability to configure
+In version 2.5.0 and newer, ServiceNow administrators can configure
 Catalog Items using [no-code
 modules](/terraform/cloud-docs/no-code-provisioning/provisioning). This release
 introduces two new additions to the Terraform Catalog - no-code workspace
@@ -129,7 +128,7 @@ code.
 @include 'tfc-package-callouts/nocode.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-The following Catalog Items allow you to build and manage workspaces powered by
+The following Catalog Items allow you to build and manage workspaces with
 no-code modules:
 - **Provision No-Code Workspace and Deploy Resources**: creates a new Terraform
   workspace based on a no-code module of your choice, supplies required variable
@@ -143,8 +142,8 @@ Administrators can skip configuring VCS repositories in ServiceNow when using
 no-code modules. The only input required in the no-code workspace request form
 is the name of the no-code module. 
 
-Before utilizing a no-code module, it must be set up in the private registry of
-your HCP Terraform account. With this one-time configuration complete,
+Before utilizing a no-code module, you must publish it to the your organization's
+private module registry. With this one-time configuration complete, ServiceNow
 Administrators can then call the modules through Catalog requests without
 repository management, simplifying the use of infrastructure-as-code.
 
@@ -202,12 +201,12 @@ variables within HCP Terraform.
 
 ## Provision Infrastructure
 
-Once the Service Catalog for Terraform has been configured, ServiceNow users
-will be able to request infrastructure to be provisioned by HCP Terraform.
+Once you configure the Service Catalog for Terraform, ServiceNow users
+can request infrastructure to be provisioned by HCP Terraform.
 
 These requests will be fulfilled by HCP Terraform, which will:
 
-1. Create a new workspace and specifying the no-code module name or the VCS repository provided by ServiceNow.
+1. Create a new workspace from the no-code module or the VCS repository provided by ServiceNow.
 1. Configure variables for that workspace, also provided by ServiceNow.
 1. Plan and apply the change.
 1. Report the results, including any outputs from Terraform, to ServiceNow.
