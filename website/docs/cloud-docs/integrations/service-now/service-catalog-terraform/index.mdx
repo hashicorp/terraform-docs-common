@@ -126,11 +126,11 @@ Terraform.
     3. Identify the VCS repositories in the VCS provider containing Terraform configurations that the ServiceNow Terraform integration will deploy. Take note of any Terraform or environment variables used by the repositories you select. Save the Terraform and environment variables for later.
 5. If using the [no-code flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration), create one or more no-code modules in the private registry of your HCP Terraform. **Save the no-code module names for later.**
 6. Provide the following information to the ServiceNow Admin:
-    1. The organization name 
-    2. The team API token
-    3. The hostname of your Terraform Enterprise instance, or of HCP Terraform. The hostname of HCP Terraform is `app.terraform.io`.
-    4. The no-code module name(s) or the OAuth token ID(s) of your VCS provider(s), and the repository identifier for each VCS repository containing Terraform configurations that will be used by the integration.
-    5. Any Terraform or environment variables required by the configurations in the
+    * The organization name 
+    * The team API token
+    * The hostname of your Terraform Enterprise instance, or of HCP Terraform. The hostname of HCP Terraform is `app.terraform.io`.
+    * The no-code module name(s) or the OAuth token ID(s) of your VCS provider(s), and the repository identifier for each VCS repository containing Terraform configurations that will be used by the integration.
+    * Any Terraform or environment variables required by the configurations in the
    given VCS repositories.
 
 -> **Note:** Repository identifiers are determined by your VCS provider; they
