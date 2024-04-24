@@ -30,9 +30,14 @@ Since administrators of these services within your organization are not
 necessarily the same person, this documentation refers to a **ServiceNow Admin**
 and a **Terraform Admin**.
 
-First, the Terraform Admin will configure your HCP Terraform organization with a
-dedicated team for the ServiceNow integration, and obtain a team API token for
-that team. The Terraform Admin will provide your organization name, the team API
+First, the Terraform Admin configures your HCP Terraform organization with a
+dedicated team for the ServiceNow integration, and obtains a team API token for
+that team. The Terraform Admin provides the following to your ServiceNow admin:
+* An Organization name
+* A team API token
+* The hostname of your HCP Terraform instance
+* Any available no-code modules or version control repositories containing Terraform configurations 
+* Other required variables
 token, the hostname of your HCP Terraform instance, and details about no-code
 modules or version control repositories containing Terraform configurations and
 required variables to the ServiceNow Admin.
@@ -117,7 +122,7 @@ Terraform.
 4. If you are using the [VCS flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#vcs-configuration): 
     1. If you haven't yet done so, [connect a VCS
     provider](/terraform/cloud-docs/vcs) to this Terraform organization. This provider will include one or more repositories with Terraform configurations. Any repository that could be connected to manually-created HCP Terraform workspace can also be used as a workspace template in the ServiceNow integration.
-    2. On your organization's VCS provider settings page (Settings > VCS Providers), find the "OAuth Token ID" for the VCS provider or providers you will be using with the ServiceNow integration. HCP Terraform uses the OAuth token ID to identify and authorize the VCS provider. **Save the OAuth token ID for later.**
+    2. On your organization's VCS provider settings page (**Settings** > **VCS Providers**), find the OAuth Token ID for the VCS provider(s) that you intend to use with the ServiceNow integration. HCP Terraform uses the OAuth token ID to identify and authorize the VCS provider. **Save the OAuth token ID for later.**
     3. Identify the VCS repositories in the VCS provider containing Terraform configurations that the ServiceNow Terraform integration will deploy. Take note of any Terraform or environment variables used by the repositories you select. Save the Terraform and environment variables for later.
 5. If using the [no-code flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration), create one or more no-code modules in the private registry of your HCP Terraform. **Save the no-code module names for later.**
 6. Provide the following information to the ServiceNow Admin:
