@@ -28,6 +28,7 @@ For more information, refer
    1. Click the Catalog Item to open the request form. 
    1. Click **...** in the top right corner. 
    1. Select **Configure Item** from the menu.
+   ![Screenshot: ServiceNow Configure Catalog Item](/img/docs/servicenow-catalog-configure-item.png "Screenshot of the ServiceNow Configure Catalog Item dropdown menu")
 1. Click the **Process Engine** tab in the Catalog Item configuration. Take
    note of the Flow name associated with the Catalog Item, because you need to
    create a copy of this Flow as well.
@@ -53,6 +54,7 @@ variables.
    1. Click the **New** button to create a new variable set. Ensure that the
    variables in your new set match the variables required by your Terraform
    configuration.
+   ![Screenshot: ServiceNow New Variable Set](/img/docs/servicenow-catalog-new-varset.png "Screenshot of the ServiceNow Catalog Item – new Variable Set")
    1. Select **Single-Row Variable Set** and provide a title and description.
    1. Click **Submit**. Upon submission, you will be redirected back to the Catalog
    Item's configuration page.
@@ -64,8 +66,8 @@ variables.
    booleans, and dropdown menus). Refer to the [ServiceNow documentation on
    variables](https://docs.servicenow.com/csh?topicname=c_ServiceCatalogVariables.html&version=latest)
    and select the types that best suit your use case. You can also set default
-   values for the variables in the **Default Value** tab, which ServiceNow prefills
-   for the end URLSearchParams.
+   values for the variables in the **Default Value** tab, which ServiceNow prefills for the end URLSearchParams.
+   ![Screenshot: ServiceNow New Variables](/img/docs/servicenow-catalog-variables.png "Screenshot of the ServiceNow Catalog Item – new variables")
 1. Attach the newly created Variable Set to your custom Catalog Item and remove
 the default Workspace Variables.
    1. Return to the **Variable Sets** tab on the Catalog Item's configuration page
@@ -80,6 +82,7 @@ the default Workspace Variables.
 1. Open the ServiceNow Studio by navigating to **All > Studio** and open the
       "Terraform" application. Once in the **Terraform** application, navigate to
       **Flow Designer > Flows**.
+      ![Screenshot: ServiceNow Flow Designer Interface](/img/docs/servicenow-catalog-original-flow.png "Screenshot of the ServiceNow Flow Designer – selecting a Flow")
 
       Another way to access the ServiceNow Studio is to click **All**, select
       "Flow Designer", then select **Flows**. You can set the **Application** 
@@ -88,7 +91,9 @@ the default Workspace Variables.
    in the top right corner of the Flow Designer interface and 
    select **Copy flow**. Provide a name for the copied Flow and
    click **Copy**.
+   ![Screenshot: ServiceNow Copy Flow Interface](/img/docs/servicenow-catalog-copy-flow.png "Screenshot of the ServiceNow Flow Designer – copying a Flow")
 1. Customize your newly copied Flow by clicking **Edit flow**.
+   ![Screenshot: ServiceNow Edit New Flow Interface](/img/docs/servicenow-catalog-edit-flow.png "Screenshot of the ServiceNow Flow Designer – editing a Flow")
    1. Do not change the **Service Catalog** trigger.
    1. Update the "Get Catalog Variables" action:
       1. Keep the "Requested Item Record" in the **Submitted Request** field.
@@ -103,11 +108,12 @@ the default Workspace Variables.
       the Action Designer.
       ![Screenshot: ServiceNow Open Action Designer](/img/docs/servicenow-catalog-open-action.png "Screenshot of the ServiceNow Action Designer")
       1. Click **...** in the top right corner and select **Copy Action**.
+         ![Screenshot: ServiceNow Copy Action](/img/docs/servicenow-catalog-copy-action.png "Screenshot of the ServiceNow Copy Action")
          Rename it and click **Copy**.
+         ![Screenshot: ServiceNow Rename Action](/img/docs/servicenow-catalog-rename-action.png "Screenshot of the ServiceNow Rename Action")
       1. In the the Inputs section, remove any previous example variables.
-      1. Add your custom variables by clicking the **Create Input** button. Ensure
-         that the variable names match your Catalog Item variables and select the
-         variable type that matches each variable. Click **Save**.
+      1. Add your custom variables by clicking the **Create Input** button. Ensure that the variable names match your Catalog Item variables and select the variable type that matches each variable. Click **Save**.
+      ![Screenshot: ServiceNow Add Variables To Action](/img/docs/servicenow-catalog-add-variables-to-action.png "Screenshot of adding ServiceNow Action Input Variables")
       1. Open the **Script step** within the Action. Remove any example variables
          and add your custom variables by clicking **Create Variable** at the
          bottom. Enter the name of each variable and drag the corresponding data
@@ -135,7 +141,8 @@ the default Workspace Variables.
 1. In the configuration settings, click the **Process Engine** tab.
 1. In the **Flow** field, search for the Flow you recently created. Click 
    the Flow then click the **Update**.
-
+   ![Screenshot: ServiceNow Update Process Engine](/img/docs/servicenow-catalog-update-process-engine.png "Screenshot of updating Process Engine for the Catalog Item")
+   
 ## Test the Catalog Item
 
 The new item is now available in the Terraform Service Catalog. To make the
