@@ -534,10 +534,6 @@
               {
                 "title": "Example Customizations",
                 "path": "integrations/service-now/service-catalog-terraform/example-customizations"
-              },
-              {
-                "title": "V1 Setup Instructions",
-                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
               }
             ]
           },
