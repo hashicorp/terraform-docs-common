@@ -83,7 +83,7 @@ The following entitlements are available:
 <!-- END: TFC:only name:tfc-audit-log -->
 - `configuration-designer` — Allows an organization to use the [Configuration Designer][].
 - `cost-estimation` — Allows an organization to access [cost estimation][].
-- `global-run-tasks` — Allows an organization to apply [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) to every workspace in an organization. Affects the [run tasks][] endpoints. This feature is currently in beta.
+- `global-run-tasks` — Allows an organization to apply [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) to every workspace. Affects the [run tasks][] endpoints. This feature is currently in beta.
 - `module-tests-generation` - Allows an organization to generate tests for private registry modules. This feature is currently in beta.
 - `operations` — Allows an organization to perform runs within HCP Terraform. Affects the [runs][], [plans][], and [applies][] endpoints.
 - `policy-enforcement` — Allows an organization to use [Sentinel][]. Affects the [policies][], [policy sets][], and [policy checks][] endpoints.
@@ -97,7 +97,6 @@ The following entitlements are available:
 - `teams` — Allows an organization to manage access to its workspaces with [teams](/terraform/cloud-docs/users-teams-organizations/teams). Without this entitlement, an organization only has an owners team. Affects the [teams][], [team members][], [team access][], and [team tokens][] endpoints.
 - `user-limit` — An integer value representing the maximum number of users allowed for the organization. If blank, there is no limit.
 - `vcs-integrations` — Allows an organization to [connect with a VCS provider][vcs integrations] and link VCS repositories to workspaces. Affects the [OAuth Clients][o-clients], and [OAuth Tokens][o-tokens] endpoints, and determines whether the `data.attributes.vcs-repo` property can be set for [workspaces][].
-- `private-vcs` — Enables Private VCS support for an organization.
 
 [agents]: /terraform/cloud-docs/api-docs/agents
 
