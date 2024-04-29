@@ -1,5 +1,5 @@
 ---
-page_title: OAuth Clients - API Docs - Terraform Cloud
+page_title: OAuth Clients - API Docs - HCP Terraform
 description: >-
   Use the `/oauth-clients` endpoint to manage OAuth connections between your organization and a VCS provider. List, show, create, update, and destroy clients using the HTTP API. Attach and detach OAuth clients to projects.
 ---
@@ -38,7 +38,7 @@ description: >-
 
 # OAuth Clients API
 
-An OAuth Client represents the connection between an organization and a VCS provider. The connection can be globally accessed throughout the org (default) or be scoped to one or more [projects](/terraform/cloud-docs/projects/managing).
+An OAuth client represents the connection between an organization and a VCS provider. By default, you can globally access an OAuth client throughout the organization, or you can have scope access to one or more [projects](/terraform/cloud-docs/projects/managing).
 
 ## List OAuth Clients
 
@@ -456,13 +456,13 @@ curl \
   https://app.terraform.io/api/v2/oauth-clients/oc-XKFwG6ggfA9n7t1K
 ```
 
-## Attach an OAuth Client to projects
+## Attach to a project
 
 `POST /oauth-clients/:id/relationships/projects`
 
 | Parameter | Description                                                                                        |
 | --------- | -------------------------------------------------------------------------------------------------- |
-| `:id`     | The ID of the OAuth client to attach to projects. Use the "List OAuth Clients" endpoint to find IDs. |
+| `:id`     | The ID of the OAuth client to attach to a project. Use the [List OAuth Clients](#list-oauth-clients) endpoint to reference your OAuth client IDs. |
 
 | Status  | Response                  | Reason                                                                     |
 | ------- | ------------------------- | -------------------------------------------------------------------------- |

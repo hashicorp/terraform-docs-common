@@ -130,12 +130,6 @@ module.exports = [
       "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/example-customizations",
     permanent: true,
   },
-  {
-    source: "/terraform/cloud-docs/integrations/service-now/service-now-v1",
-    destination:
-      "/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-now-v1",
-    permanent: true,
-  },
   // Redirect to integrate both Flex and PAYG TFC documentation
   // - https://github.com/hashicorp/terraform-docs-common/pull/399
   {
@@ -168,6 +162,22 @@ module.exports = [
   {
     source: "/terraform/language/syntax/style",
     destination: "/terraform/language/style",
+    permanent: true,
+  },
+  // HCP Terraform rebranding
+  {
+    source: "/terraform/cloud-docs/overview/estimate-terraform-cloud-cost",
+    destination: "/terraform/cloud-docs/overview/estimate-hcp-terraform-cost",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/terraform-cloud",
+    destination: "/terraform/language/settings/cloud",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cdktf/create-and-deploy/terraform-cloud",
+    destination: "/terraform/cdktf/create-and-deploy/hcp-terraform",
     permanent: true,
   },
 ];
