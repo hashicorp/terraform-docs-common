@@ -7,7 +7,7 @@ description: >-
 
 # Vault-Backed Dynamic Credentials with the AWS Provider
 
-~> **Important:** If you are self-hosting [Terraform Cloud agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can use HCP Terraform’s native OpenID Connect integration with Vault to use [Vault-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed) with the AWS provider in your HCP Terraform runs. Configuring the integration requires the following steps:
 
@@ -81,7 +81,7 @@ This includes the [`vault_aws_access_credentials`](https://registry.terraform.io
 
 ### Specifying Multiple Configurations
 
-~> **Important:** If you are self-hosting [Terraform Cloud agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can add additional configurations to handle multiple distinct Vault-backed AWS setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.
 
