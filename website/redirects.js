@@ -180,4 +180,10 @@ module.exports = [
     destination: "/terraform/cdktf/create-and-deploy/hcp-terraform",
     permanent: true,
   },
+  //verified -> partner
+  {
+    source: "/terraform/cloud-docs/modules/verified",
+    destination: "/terraform/cloud-docs/modules/partner",
+    permanent: true,
+  },
 ];
