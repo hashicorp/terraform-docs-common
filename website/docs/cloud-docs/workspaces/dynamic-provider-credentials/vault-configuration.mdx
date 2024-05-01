@@ -7,7 +7,7 @@ description: >-
 
 # Dynamic Credentials with the Vault Provider
 
-~> **Important:** If you are self-hosting [Terraform Cloud agents](/terraform/cloud-docs/agents), ensure your agents use [v1.7.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.7.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can use HCP Terraform’s native OpenID Connect integration with Vault to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Vault provider in your HCP Terraform runs. Configuring the integration requires the following steps:
 
@@ -143,7 +143,7 @@ You can use the Vault provider to read static secrets from Vault and use them wi
 
 ### Specifying Multiple Configurations
 
-~> **Important:** If you are self-hosting [Terraform Cloud agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 ~> **Important:** Ensure you are using version **3.18.0** or later of the **Vault provider** as the required [`auth_login_token_file`](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#token-file) block was introduced in this provider version.
 

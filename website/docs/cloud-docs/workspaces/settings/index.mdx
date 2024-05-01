@@ -62,7 +62,7 @@ Specifying the "Remote" execution mode instructs HCP Terraform to perform Terraf
 
 To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/terraform/cli/cloud).
 
-If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [Terraform Cloud agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
+If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [HCP Terraform agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
 
 Changing your workspace's execution mode after a run has already been planned will cause the run to error when it is applied.
 
