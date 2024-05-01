@@ -649,7 +649,7 @@
   },
   { "divider": true },
   {
-    "title": "Terraform Cloud Agents",
+    "title": "HCP Terraform Agents",
     "href": "/cloud-docs/agents"
   }
 ]
