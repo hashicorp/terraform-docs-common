@@ -1,13 +1,119 @@
 ---
-page_title: API Changelog - API Docs - Terraform Cloud
+page_title: API Changelog - API Docs - HCP Terraform
 page_id: api-changelog
 description: >-
-  Learn about the changes made to the Terraform Cloud and Enterprise APIs.
+  Learn about the changes made to the HCP Terraform and Enterprise APIs.
 ---
 
 # API Changelog
 
-Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
+Keep track of changes to the API for HCP Terraform and Terraform Enterprise.
+
+## 2024-04-25
+* Update [Projects API](/terraform/cloud-docs/api-docs/projects) documentation for creating and updating a project. Project name can now be up to 40 characters
+
+## 2024-04-08
+* Add API documentation for new [team management permissions](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions).
+
+## 2024-04-04
+* Add a `sort` parameter to the [Projects list API](/terraform/cloud-docs/api-docs/projects#query-parameters) to allow sorting projects by name.
+* Add a `description` attribute to the [Projects API](/terraform/cloud-docs/api-docs/projects).
+* Add `project-count` and `workspace-count` attributes to sample [Projects API](/terraform/cloud-docs/api-docs/projects) responses.
+
+## 2024-3-27
+* Add `private-vcs` to [Feature Entitlements](/terraform/cloud-docs/api-docs#feature-entitlements).
+
+## 2024-3-26
+* Add API documentation for searching [variable sets](/terraform/cloud-docs/api-docs/variable-sets#list-variable-sets) by name.
+
+## 2024-3-14
+* Add documentation for creating runs with debugging mode enabled.
+
+## 2024-3-12
+* Update OAuth Client API endpoints to create, update, and return projects associated with an oauth client.
+* Add API endpoints to [Attach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#attach-an-oauth-client-to-projects) and [Detach an OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients#detach-an-oauth-client-from-projects) from a project.
+* Add `organization-scoped` attribute to the [OAuth Clients API](/terraform/cloud-docs/api-docs/oauth-clients).
+
+## 2024-2-29
+* Update [run task stages](/terraform/cloud-docs/api-docs/run-tasks/run-task-stages-and-results) with new multi-stage payload format.
+* Update [run tasks](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) with global run tasks request/response payloads.
+
+## 2024-2-27
+* Add `private-policy-agents` to [Feature Entitlements](/terraform/cloud-docs/api-docs#feature-entitlements).
+
+## 2024-2-20
+* Add documentation for configuring organization and workspace data retention policies through the API and on the different [types of data retention policies](/terraform/enterprise/api-docs/data-retention-policies).
+<!-- BEGIN: TFC:only name:explorer -->
+## 2024-2-8
+* Add [Explorer API documentation](/terraform/cloud-docs/api-docs/explorer)
+<!-- END: TFC:only name:explorer -->
+## 2024-1-30
+* Update the [Audit trails](/terraform/cloud-docs/api-docs/audit-trails) documentation to expand on the payloads for each event.
+
+## 2024-1-24
+- Introduce configurable data retention policies at the site-wide level and extend data retention policies at the organization and workspace levels.
+- Added and/or updated data retention policy documentation to the following topics:
+    - [Admin Settings Documentation](/terraform/enterprise/application-administration/general#data-retention-policies)
+    - [Admin API Documentation](/terraform/enterprise/api-docs/admin/settings#data-retention-policies)
+    - [Organization Documentation](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies)
+    - [Workspace Documentation](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies)
+
+## 2024-1-4
+* Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to support the `aggregated-commit-status-enabled` attribute, which controls whether [Aggregated Status Checks](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-status-checks) are enabled.
+
+## 2023-11-17
+
+-   Added the [`opa-versions` endpoint](/terraform/enterprise/api-docs/admin/opa-versions) to allow administrators to manage available Open Policy Agent (OPA) versions.
+-   Added the [`sentinel-versions` endpoint](/terraform/enterprise/api-docs/admin/sentinel-versions) to allow administrators to manage available Sentinel versions.
+-   Add `authenticated-resource` relationship to the [`account` API](/terraform/enterprise/api-docs/account).
+
+## 2023-11-15
+
+- Introduce configurable data retention policies at the [organization](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies) and [workspace](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies) levels.
+- Added data retention policy documentation to the following topics:
+   - [`state-versions` API documentation](/terraform/enterprise/api-docs/state-versions)
+   - [`configuration-versions` API documentation](/terraform/enterprise/api-docs/configuration-versions)
+   - [Organizations documentation](/terraform/enterprise/users-teams-organizations/organizations#destruction-and-deletion)
+   - [Workspaces documentation](/terraform/enterprise/workspaces/settings/deletion#data-retention-policies)
+
+## 2023-11-07
+* Add `auto_destroy_activity_duration` to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces), which allows Terraform Cloud to schedule auto-destroy runs [based on workspace inactivity](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).
+
+## 2023-10-31
+* Update the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) to support the `auto-apply-run-trigger` attribute, which controls if run trigger runs are auto-applied.
+
+## 2023-10-30
+* Add `priority` attribute to the [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets).
+
+## 2023-10-04
+* Updates to [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration)
+  * Fix invalid JSON in the example payload.
+  * Clarify the expected JSON:API payload fields.
+* Add `policy-tool-version` attribute to [Policy Set Outcomes](/terraform/cloud-docs/api-docs/policy-evaluations#list-policy-outcomes).
+
+## 2023-10-03
+* Update [Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets) to include `agent-enabled` and `policy-tool-version`.
+* Update [Policy Evaluations API](/terraform/cloud-docs/api-docs/policy-evaluations) to include `policy-tool-version`.
+
+## 2023-09-29
+* Add support for [streamlined run task reviews](/terraform/cloud-docs/integrations/run-tasks), enabling run task integrations to return high fidelity results.
+  * Update the [Terraform cloud run task API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) to enable streamlined run task reviews.
+  * The [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) now guides integrations through sending rich results.
+  * Updated the run task payload [JSON Schema](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json).
+
+## 2023-09-25
+* Add `intermediate` boolean attribute to the [State Versions API](/terraform/cloud-docs/api-docs/state-versions).
+
+## 2023-09-19
+* Add [failed state upload recovery](/terraform/cloud-docs/api-docs/applies#recover-a-failed-state-upload-after-applying) endpoint.
+
+## 2023-09-15
+* Add `auto-destroy-at` attribute to the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces).
+* Update the [Notification Configurations API](/terraform/cloud-docs/api-docs/notification-configurations) to include [automatic destroy run](/terraform/cloud-docs/api-docs/notification-configurations#automatic-destroy-runs) details.
+
+## 2023-09-08
+* Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to include `default-execution-mode` and `default-agent-pool`.
+* Update the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) to add a `setting-overwrites` object to allow you to overwrite `default-execution-mode` and `default-agent-pool`.
 
 ## 2023-09-06
 * Update Policy Sets API endpoints to create, update, and return excluded workspaces associated with a policy set.
@@ -19,11 +125,8 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ## 2023-08-10
 * Add `provisional` to `configuration-versions` endpoint.
 
-## 2023-08-08
-* Update Policy Sets API endpoints to create, update, and return projects associated with a policy set.
-* Add API endpoints to [Attach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#attach-a-policy-set-to-projects) and [Detach a Policy Set](/terraform/cloud-docs/api-docs/policy-sets#detach-a-policy-set-to-projects) from a project.
-
 ## 2023-07-26
+
 * Add support for a `custom` option to the `team_project` access level along with various customizable permissions. The `project-access` permissions apply to the project itself, and `workspace-access` permissions apply to all workspaces within the project. For more information, see [Project Team Access](/terraform/cloud-docs/api-docs/project-team-access).
 
 ## 2023-06-09

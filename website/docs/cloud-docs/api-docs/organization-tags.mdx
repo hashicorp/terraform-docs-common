@@ -1,5 +1,5 @@
 ---
-page_title: Organization Tags - API Docs - Terraform Cloud
+page_title: Organization Tags - API Docs - HCP Terraform
 description: >-
   Use the `tags` endpoint to manage an organization's workspace tags. Assign, list, and delete tags using the HTTP API.
 ---
@@ -38,7 +38,14 @@ description: >-
 
 # Organization Tags API
 
-This API returns the list of tags used with all resources across the organization. Tags can be added to this pool directly or via those resources. Tags deleted here will be removed from all other resources. Tags can be added, applied, removed and deleted in bulk.
+This API returns the list of tags used in workspaces across the organization. Tags can be added to this pool via workspaces. Tags deleted here will be removed from all other workspaces. Tags can be added, applied, removed and deleted in bulk.
+
+Tags are subject to the following rules:
+
+- Workspace tags or tags must be one or more characters, have a 255 character limit, and can include letters, numbers, colons, hyphens, and underscores.
+- You can create tags for a workspace using the user interface or the API. After you create a tag, you can assign it to other workspaces in the same organization.
+- You cannot create tags for a workspace using the CLI.
+- You cannot set tags at the project level, so there is no tag inheritance from projects to workspaces.
 
 ## List Tags
 

@@ -1,5 +1,5 @@
 ---
-page_title: Creating Workspaces - Workspaces - Terraform Cloud
+page_title: Creating Workspaces - Workspaces - HCP Terraform
 description: >-
   Workspaces organize infrastructure into meaningful groups. Learn how to create
   and configure workspaces through the UI.
@@ -7,11 +7,11 @@ description: >-
 
 # Creating Workspaces
 
-> **Hands-on:** Try the [Get Started - Terraform Cloud](/terraform/tutorials/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
+> **Hands-on:** Try the [Get Started - HCP Terraform](/terraform/tutorials/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
 
 Workspaces organize infrastructure into meaningful groups. Create new workspaces when you need to manage a new collection of infrastructure resources. You can use the following methods to create workspaces:
 
-- **Terraform Cloud UI:** [Create a Workspace](#create-a-workspace)
+- **HCP Terraform UI:** [Create a Workspace](#create-a-workspace)
 - **Workspaces API:** [Create a Workspace endpoint](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace)
 - **Terraform Enterprise Provider:** [`tfe_workspace` resource](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/workspace)
 -   **No-Code Provisioning:** The no-code provisioning workflow creates a new workspace and deploys a [no-code ready module's](/terraform/cloud-docs/no-code-provisioning/provisioning) resources in it.
@@ -50,12 +50,13 @@ We recommend using 90 characters or less for the name of your workspace.
 
 [submodules]: /terraform/cloud-docs/workspaces/settings/vcs#include-submodules-on-clone
 
-The workspace creation process varies depending on the workspace workflow you choose (VCS, API, or CLI-driven). To create a workspace in the Terraform Cloud UI:
+The workspace creation process varies depending on the workspace workflow you choose (VCS, API, or CLI-driven). To create a workspace in the HCP Terraform UI:
 1. Click **Projects & workspaces** to view a list of the workspaces within your organization.
 1. Click **New**, then select **Workspace** from the dropdown menu.
+1. If you have access to multiple projects, you may be prompted to choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](/terraform/cloud-docs/projects/managing) for more details.
 1. Choose a workflow type: **Version control**, **CLI-driven**, or **API-driven**.
-1. (Version control only) Choose an existing version control provider or
-   configure a new one. Refer to [Connecting VCS
+1. (Version control only) Choose an existing version control provider from the list or
+   configure a new one. Only version control providers enabled for the selected project will be available to connect. Refer to [Connecting VCS
    Providers](/terraform/cloud-docs/vcs) for more details.
 1. (Version control only) Choose an organization (GitHub App only), and repository from the filterable list. The **Configure settings** page appears.
 
@@ -64,8 +65,7 @@ The workspace creation process varies depending on the workspace workflow you ch
   first 100 repositories from your VCS provider.
 
 1. Enter a **Workspace Name**. This defaults to the repository name, if applicable. The name must be unique within the organization and can include letters, numbers, dashes (`-`), and underscores (`_`). Refer to the [workspace naming recommendations](#workspace-naming).
-1. If you have access to multiple projects, choose a **Project** to add the workspace to. Only teams with permissions for the entire project or the specific workspace will be able to access the workspace. Refer to [Organizing Workspaces with Projects](https://terraform.io/workspaces/organize-workspaces-with-projects) for more details. 
-1. Add an optional **Description** that will appear at the top of the workspace in the Terraform Cloud UI.
+1. Add an optional **Description** that will appear at the top of the workspace in the HCP Terraform UI.
 1. (Version control only) Open **Advanced options** to optionally configure the following settings:
    - [Terraform Working Directory][workdir]
    - [Automatic Run Triggering][trigger]
@@ -75,14 +75,22 @@ The workspace creation process varies depending on the workspace workflow you ch
 
 For CLI and API-driven workspaces, the workspace overview page appears. For version control workspaces, the **Configure Terraform variables** page appears.
 
+### Workspace Tags
+
+After you create a workspace, you can create or assign tags to it. Tags are subject to the following rules:
+
+- Workspace tags or tags must be one or more characters, have a 255 character limit, and can include letters, numbers, colons, hyphens, and underscores.
+- You can create tags for a workspace using the user interface or the API. After you create a tag, you can assign it to other workspaces in the same organization.
+- You cannot create tags for a workspace using the CLI.
+- You cannot set tags at the project level, so there is no tag inheritance from projects to workspaces.
 
 ### Configure Terraform Variables (Version Control Only)
 
-After you create a new workspace from a version control repository, Terraform Cloud scans its configuration files for [Terraform variables](/terraform/cloud-docs/workspaces/variables#terraform-variables) and displays variables without default values or variables that are undefined in an existing [global or project-scoped variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets). Terraform cannot perform successful runs in the workspace until you set values for these variables.
+After you create a new workspace from a version control repository, HCP Terraform scans its configuration files for [Terraform variables](/terraform/cloud-docs/workspaces/variables#terraform-variables) and displays variables without default values or variables that are undefined in an existing [global or project-scoped variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets). Terraform cannot perform successful runs in the workspace until you set values for these variables.
 
 Choose one of the following actions:
 
-- To skip this step, click **Go to workspace overview**. You can [load these variables from files](/terraform/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. Terraform Cloud does not automatically scan your configuration again; you can only add variables from within the workspace individually.
+- To skip this step, click **Go to workspace overview**. You can [load these variables from files](/terraform/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. HCP Terraform does not automatically scan your configuration again; you can only add variables from within the workspace individually.
 - To configure variables, enter a value for each variable on the page. You may want to leave a variable empty if you plan to provide it through another source, like an `auto.tfvars` file. Click **Save variables** to add these variables to the workspace.
 
 ## After Creating a Workspace
@@ -96,6 +104,6 @@ If you have already configured all Terraform variables, we recommend [manually s
 
 ### VCS Connection
 
-If you connected a VCS repository to the workspace, Terraform Cloud automatically registers a webhook with your VCS provider. A workspace with no runs will not accept new runs from a VCS webhook, so you must [manually start at least one run](/terraform/cloud-docs/run/ui#manually-starting-runs).
+If you connected a VCS repository to the workspace, HCP Terraform automatically registers a webhook with your VCS provider. A workspace with no runs will not accept new runs from a VCS webhook, so you must [manually start at least one run](/terraform/cloud-docs/run/ui#manually-starting-runs).
 
-After you manually start a run, Terraform Cloud automatically queues a plan when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/terraform/cloud-docs/vcs#webhooks) for more details.
+After you manually start a run, HCP Terraform automatically queues a plan when new commits appear in the selected branch of the linked repository or someone opens a pull request on that branch. Refer to [Webhooks](/terraform/cloud-docs/vcs#webhooks) for more details.
