@@ -1,12 +1,14 @@
 ---
-page_title: VCS Events - API Docs - Terraform Cloud
+page_title: VCS Events - API Docs - HCP Terraform
+description: >-
+  Use the `/vcs-events` endpoint to query VCS-related events. List changes within your organization using the HTTP API.
 ---
 
 # VCS Events API
 
 -> **Note**: The VCS Events API is still in beta as support is being added for additional VCS providers. Currently only GitLab.com connections established after December 2020 are supported.
 
-VCS (version control system) events describe changes within your organization for VCS-related actions. Events are only stored for 10 days. If information about the [OAuth Client](/cloud-docs/api-docs/oauth-clients) or [OAuth Token](/cloud-docs/api-docs/oauth-tokens) are available at the time of the event, it will be logged with the event.
+VCS (version control system) events describe changes within your organization for VCS-related actions. Events are only stored for 10 days. If information about the [OAuth Client](/terraform/cloud-docs/api-docs/oauth-clients) or [OAuth Token](/terraform/cloud-docs/api-docs/oauth-tokens) are available at the time of the event, it will be logged with the event.
 
 ## List VCS events
 
@@ -18,11 +20,11 @@ This endpoint lists VCS events for an organization
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to list VCS events from. The organization must already exist in the system and the user must have permissions to manage VCS settings. |
 
--> **Note:** Viewing VCS events is restricted to the owners team, teams with the "Manage VCS Settings", and the [organization API token](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). ([More about permissions](/cloud-docs/users-teams-organizations/permissions).)
+-> **Note:** Viewing VCS events is restricted to the owners team, teams with the "Manage VCS Settings", and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). ([More about permissions](/terraform/cloud-docs/users-teams-organizations/permissions).)
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                           | Description                                                                                                                                                                                                                     |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

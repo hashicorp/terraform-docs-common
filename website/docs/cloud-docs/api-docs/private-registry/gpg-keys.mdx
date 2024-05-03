@@ -1,8 +1,7 @@
 ---
-page_title: Providers - API Docs - Terraform Cloud
+page_title: Providers - API Docs - HCP Terraform
 description: >-
-  GPG signing is required for custom providers. Create, read, update, and delete
-  GPG keys with the Terraform Cloud API.
+  Use the `/gpg-keys` endpoint to manage the GPG keys used to sign private providers. List, add, get, update, and delete GPG keys using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -33,15 +32,15 @@ description: >-
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # GPG Keys API
 
-These endpoints are only relevant to private providers. When you [publish a private provider](/cloud-docs/registry/publish-providers) to the Terraform Cloud private registry, you must upload the public key of the GPG keypair used to sign the release. Refer to [Preparing and Adding a Signing Key](/registry/providers/publishing#preparing-and-adding-a-signing-key) for more details.
+These endpoints are only relevant to private providers. When you [publish a private provider](/terraform/cloud-docs/registry/publish-providers) to the HCP Terraform private registry, you must upload the public key of the GPG keypair used to sign the release. Refer to [Preparing and Adding a Signing Key](/terraform/registry/providers/publishing#preparing-and-adding-a-signing-key) for more details.
 
-You need [owners team](/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete GPG keys in a private registry.
+You need [owners team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete GPG keys in a private registry.
 
 ## List GPG Keys
 
@@ -55,11 +54,11 @@ You need [owners team](/cloud-docs/users-teams-organizations/permissions#organiz
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling does not automatically encode URLs.
 
 | Parameter           | Description                                                                                                          |
 |---------------------|----------------------------------------------------------------------------------------------------------------------|
-| `filter[namespace]` | **Required.** A comma-separated list of one or more namespaces. The namespaces must be authorized TFC/TFE organization names. |
+| `filter[namespace]` | **Required.** A comma-separated list of one or more namespaces. The namespaces must be an authorized HCP Terraform or Terraform Enterprise organization name. |
 | `page[number]`      | **Optional.** If omitted, the endpoint returns the first page.                                                   |
 | `page[size]`        | **Optional.** If omitted, the endpoint returns 20 GPG keys per page.                                             |
 
@@ -150,7 +149,7 @@ curl \
 | -------------------- | -------------------- |
 | `:registry_name`     | Must be `private`.   |
 
-Uploads a GPG Key to a private registry scoped with a namespace. The response will provide a "key-id", which is required to [Create a Provider Version](/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version).
+Uploads a GPG Key to a private registry scoped with a namespace. The response will provide a "key-id", which is required to [Create a Provider Version](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version).
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
