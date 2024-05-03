@@ -1,5 +1,8 @@
 ---
-page_title: IP Ranges - API Docs - Terraform Cloud
+page_title: IP Ranges - API Docs - HCP Terraform
+tfc_only: true
+description: >-
+  Use the `/meta/ip-ranges` endpoint to query HCP Terraform's IP ranges. Get a list of the IP ranges used by HCP Terraform using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -34,28 +37,30 @@ page_title: IP Ranges - API Docs - Terraform Cloud
 
 [If-Modified-Since]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 [CIDR Notation]: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation
 
+[run task requests]: /terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#run-task-request
+
 # IP Ranges API
 
-IP Ranges provides a list of Terraform Cloud's IP ranges. For more information about Terraform Cloud's IP ranges, view our documentation about [Terraform Cloud IP Ranges](/cloud-docs/architectural-details/ip-ranges).
+IP Ranges provides a list of HCP Terraform's IP ranges. For more information about HCP Terraform's IP ranges, view our documentation about [HCP Terraform IP Ranges](/terraform/cloud-docs/architectural-details/ip-ranges).
 
 ## IP Ranges Payload
 
 | Name            | Type  | Description                                                                                      |
 | --------------- | ----- | ------------------------------------------------------------------------------------------------ |
-| `api`           | array | List of IP ranges in [CIDR notation] used for connections from user site to Terraform Cloud APIs |
-| `notifications` | array | List of IP ranges in [CIDR notation] used for notifications                                      |
+| `api`           | array | List of IP ranges in [CIDR notation] used for connections from user site to HCP Terraform APIs |
+| `notifications` | array | List of IP ranges in [CIDR notation] used for notifications and outbound [run task requests]     |
 | `sentinel`      | array | List of IP ranges in [CIDR notation] used for outbound requests from Sentinel policies           |
 | `vcs`           | array | List of IP ranges in [CIDR notation] used for connecting to VCS providers                        |
 
 -> **Note:** The IP ranges for each feature returned by the IP Ranges API may overlap. Additionally, these published ranges do not currently allow for execution of Terraform runs against local resources.
 
--> **Note:** Under normal circumstances, HashiCorp will publish any expected changes to Terraform Cloud's IP ranges at least 24 hours in advance of implementing them. This should allow sufficient time for users to update any connected systems to reflect the changes. In the event of an emergency outage or failover operation, it may not be possible to pre-publish these changes.
+-> **Note:** Under normal circumstances, HashiCorp will publish any expected changes to HCP Terraform's IP ranges at least 24 hours in advance of implementing them. This should allow sufficient time for users to update any connected systems to reflect the changes. In the event of an emergency outage or failover operation, it may not be possible to pre-publish these changes.
 
 ## Get IP Ranges
 

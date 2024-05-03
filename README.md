@@ -1,11 +1,10 @@
 # terraform-docs-common
-Content for Terraform's documentation.
 
-- https://terraform.io/cloud-docs
-- https://terraform.io/plugin
-- https://terraform.io/registry
+Documentation for HCP Terraform and other Terraform-related documentation:
 
-
+- https://developer.hashicorp.com/terraform/cloud-docs
+- https://developer.hashicorp.com/terraform/plugin
+- https://developer.hashicorp.com/terraform/registry
 
 <!-- BEGIN: contributions -->
 <!-- Generated text, do not edit directly -->
@@ -18,25 +17,25 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 
 ## Where the Docs Live
 
-| Subpath | Repository |
-| :--- | :--- |
-| [`/cdktf`][cdktf]                         | [terraform-cdk] |
-| [`/cli`][cli]                             | [terraform] |
-| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common] |
-| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents] |
-| [`/configuration`][configuration]         | [terraform] |
-| [`/docs`][docs]                           | [terraform] |
-| [`/enterprise`][enterprise]               | [terraform-website] |
-| [`/guides`][guides]                       | [terraform] |
-| [`/internals`][internals]                 | [terraform] |
-| [`/intro`][intro]                         | [terraform] |
-| [`/language`][language]                   | [terraform] |
-| [`/plugin`][plugin]                       | [terraform-docs-common] |
+| Subpath                                   | Repository                   |
+| :---------------------------------------- | :--------------------------- |
+| [`/cdktf`][cdktf]                         | [terraform-cdk]              |
+| [`/cli`][cli]                             | [terraform]                  |
+| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common]      |
+| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents]      |
+| [`/configuration`][configuration]         | [terraform]                  |
+| [`/docs`][docs]                           | [terraform]                  |
+| [`/enterprise`][enterprise]               | Internal repository          |
+| [`/guides`][guides]                       | [terraform]                  |
+| [`/internals`][internals]                 | [terraform]                  |
+| [`/intro`][intro]                         | [terraform]                  |
+| [`/language`][language]                   | [terraform]                  |
+| [`/plugin`][plugin]                       | [terraform-docs-common]      |
 | [`/plugin/framework`][plugin/framework]   | [terraform-plugin-framework] |
-| [`/plugin/log`][plugin/log]               | [terraform-plugin-log] |
-| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux] |
-| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk] |
-| [`/registry`][registry]                   | [terraform-docs-common] |
+| [`/plugin/log`][plugin/log]               | [terraform-plugin-log]       |
+| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux]       |
+| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk]       |
+| [`/registry`][registry]                   | [terraform-docs-common]      |
 
 [cdktf]: https://www.terraform.io/cdktf
 [cli]: https://www.terraform.io/cli
@@ -55,10 +54,9 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 [plugin/mux]: https://www.terraform.io/plugin/mux
 [plugin/sdkv2]: https://www.terraform.io/plugin/sdkv2
 [registry]: https://www.terraform.io/registry
-
 [terraform-cdk]: https://github.com/hashicorp/terraform-cdk
 [terraform]: https://github.com/hashicorp/terraform
-[terraform-website]: https://github.com/hashicorp/terraform-cdk
+[terraform-website]: https://github.com/hashicorp/terraform-website
 [terraform-docs-common]: https://github.com/hashicorp/terraform-docs-common
 [terraform-docs-agents]: https://github.com/hashicorp/terraform-docs-agents
 [terraform-plugin-sdk]: https://github.com/hashicorp/terraform-plugin-sdk
@@ -101,10 +99,9 @@ This file can be standard Markdown and also supports [YAML frontmatter](https://
 
 ```yaml
 ---
-title: 'My Title'
+title: "My Title"
 description: "A thorough, yet succinct description of the page's contents"
 ---
-
 ```
 
 The significant keys in the YAML frontmatter are:
@@ -113,6 +110,16 @@ The significant keys in the YAML frontmatter are:
 - `description` `(string)` - This is a description of the page that will be set in the HTML description.
 
 > ⚠️ If there is a need for a `/api/*` url on this website, the url will be changed to `/api-docs/*`, as the `api` folder is reserved by next.js.
+
+### Validating Content
+
+Content changes are automatically validated against a set of rules as part of the pull request process. If you want to run these checks locally to validate your content before committing your changes, you can run the following command:
+
+```
+npm run content-check
+```
+
+If the validation fails, actionable error messages will be displayed to help you address detected issues.
 
 ### Creating New Pages
 
@@ -146,7 +153,6 @@ There are several custom markdown plugins that are available by default that enh
 ### Custom Components
 
 A number of custom [mdx components](https://mdxjs.com/) are available for use within any .mdx file. If you have questions about custom components, or have a request for a new custom component, please reach out to @hashicorp/digital-marketing.
-
 
 ### Syntax Highlighting
 
@@ -307,7 +313,6 @@ If the link provided in the `href` property is external, it will display a small
 
 <!-- END: editing-docs-sidebars -->
 
-
 ## Content Images
 
 Image files should be placed in the [`website/img`](./website/img/) directory.
@@ -320,6 +325,67 @@ In markdown, images should be referenced by their absolute path, starting with `
 
 > **Note**: Images aren't expected to work GitHub markdown in previews, but they will work during local preview and Vercel deploy previews
 
+<!-- BEGIN: redirects -->
+<!-- Generated text, do not edit directly -->
+
 ## Redirects
 
-For now, redirects will need to be handled here: https://github.com/hashicorp/terraform-website/blob/master/redirects.next.js
+This website structures URLs based on the filesystem layout. This means that if a file is moved, removed, or a folder is re-organized, links will break. If a path change is necessary, it can be mitigated using redirects. It's important to note that redirects should only be used to cover for external links -- if you are moving a path which internal links point to, the internal links should also be adjusted to point to the correct page, rather than relying on a redirect.
+
+To add a redirect, head over to the `redirects.js` file - the format is fairly simple - there's a `source` and a `destination` - fill them both in, indicate that it's a permanent redirect or not using the `permanent` key, and that's it. Let's look at an example:
+
+```
+{
+  source: '/foo',
+  destination: '/bar',
+  permanent: true
+}
+```
+
+This redirect rule will send all incoming links to `/foo` to `/bar`. For more details on the redirects file format, [check out the docs on vercel](https://vercel.com/docs/configuration#project/redirects). All redirects will work both locally and in production exactly the same way, so feel free to test and verify your redirects locally. In the past testing redirects has required a preview deployment -- this is no longer the case. Please note however that if you add a redirect while the local server is running, you will need to restart it in order to see the effects of the redirect.
+
+There is still one caveat though: redirects do not apply to client-side navigation. By default, all links in the navigation and docs sidebar will navigate purely on the client side, which makes navigation through the docs significantly faster, especially for those with low-end devices and/or weak internet connections. In the future, we plan to convert all internal links within docs pages to behave this way as well. This means that if there is a link on this website to a given piece of content that has changed locations in some way, we need to also _directly change existing links to the content_. This way, if a user clicks a link that navigates on the client side, or if they hit the url directly and the page renders from the server side, either one will work perfectly.
+
+Let's look at an example. Say you have a page called `/docs/foo` which needs to be moved to `/docs/nested/foo`. Additionally, this is a page that has been around for a while and we know there are links into `/docs/foo.html` left over from our previous website structure. First, we move the page, then adjust the docs sidenav, in `data/docs-navigation.js`. Find the category the page is in, and move it into the appropriate subcategory. Next, we add to `_redirects` as such. The `.html` version is covered automatically.
+
+```js
+{ source: '/foo', destination: '/nested/foo', permanent: true }
+```
+
+Next, we run a global search for internal links to `/foo`, and make sure to adjust them to be `/nested/foo` - this is to ensure that client-side navigation still works correctly. _Adding a redirect alone is not enough_.
+
+One more example - let's say that content is being moved to an external website. A common example is guides moving to `learn.hashicorp.com`. In this case, we take all the same steps, except that we need to make a different type of change to the `docs-navigation` file. If previously the structure looked like:
+
+```js
+{
+  category: 'docs',
+  content: [
+    'foo'
+  ]
+}
+```
+
+If we no longer want the link to be in the side nav, we can simply remove it. If we do still want the link in the side nav, but pointing to an external destination, we need to slightly change the structure as such:
+
+```js
+{
+  category: 'docs',
+  content: [
+    { title: 'Foo Title', href: 'https://learn.hashicorp.com/<product>/foo' }
+  ]
+}
+```
+
+As the majority of items in the side nav are internal links, the structure makes it as easy as possible to represent these links. This alternate syntax is the most concise manner than an external link can be represented. External links can be used anywhere within the docs sidenav.
+
+It's also worth noting that it is possible to do glob-based redirects, for example matching `/docs/*`, and you may see this pattern in the redirects file. This type of redirect is much higher risk and the behavior is a bit more nuanced, so if you need to add a glob redirect, please reach out to the website maintainers and ask about it first.
+
+<!-- END: redirects -->
+
+## Excluding content from Terraform Enterprise
+
+The HCP Terraform documentation is copied over to the Terraform Enterprise documentation every Terraform Enterprise release cycle. If you are adding content to the HCP Terraform documentation about a new feature, ensure you know when/if that feature is coming to Terraform Enterprise. If your new feature is _not_ coming to Terraform Enterprise in the next release, you need to _exclude_ that content from the Terraform Enterprise documentation. 
+
+> If you are adding content exclusive to either HCP Terraform or Terraform Enterprise, refer to [our guidelines](https://github.com/hashicorp/ptfe-releases#excluding-hcp-terraform-specific-content) for guidance.
+
+[Learn more about writing content for Terraform Enterprise](https://github.com/hashicorp/ptfe-releases#maintaining-tfe-website-documentation).

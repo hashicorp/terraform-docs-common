@@ -1,8 +1,9 @@
 ---
 page_title: Microsoft Azure AD - Single Sign-on - Terraform Cloud
+tfc_only: true
+description: >-
+  Learn how to configure single sign-on with Azure Active Directory.
 ---
-
--> **Note:** Single sign-on is a paid feature, available as part of the **Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
 # Single Sign-on: Microsoft Azure AD
 
@@ -26,7 +27,7 @@ For more information on the listed features, visit the [Microsoft Azure AD SAML 
 1. On the **Select a single sign-on method** page, select **SAML**.
 1. In the SAML Signing Certificate section (you may need to refresh the page) copy the **App Federation Metadata Url**.
 
-## Configuration (Terraform Cloud)
+## Configuration (HCP Terraform)
 
 1. Visit your organization settings page and click "SSO".
 
@@ -62,15 +63,15 @@ For more information on the listed features, visit the [Microsoft Azure AD SAML 
 1. If you are expecting a role to be assigned to the users, you can select it from the **Select a role** dropdown. If no role has been set up for this app, you see "Default Access" role selected.
 1. In the **Add Assignment** dialog, click the **Assign** button.
 
-## Configuration (Terraform Cloud)
+## Configuration (HCP Terraform)
 To edit your Azure SSO configuration settings:
 
-   1. Go to **Public Certificate**. 
+   1. Go to **Public Certificate**.
    1. Paste the contents of the SAML Signing Certificate you downloaded from Microsoft Azure AD.
-   1. Save Settings.  
-1. [Verify](/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
+   1. Save Settings.
+1. [Verify](/terraform/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
 
-1. Your Azure SSO configuration is complete and ready to [use](/cloud-docs/users-teams-organizations/single-sign-on#signing-in-with-sso).
+1. Your Azure SSO configuration is complete and ready to [use](/terraform/cloud-docs/users-teams-organizations/single-sign-on#signing-in-with-sso).
 
    ![sso-settings](/img/docs/settings-azure.png)
 
@@ -79,15 +80,22 @@ To edit your Azure SSO configuration settings:
 To configure team management in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit step 2, "User Attributes & Claims."
-   We recommend naming it "MemberOf", leaving the namespace blank, and potentially sourcing `user.groups` as an easy starting point.
+1. Edit step 2, **User Attributes & Claims**. 
+1. Add a new group claim.
+1. In **Group Claims**, select **Security Groups**.  
+1. In the **Source Attribute** field, select either **sAMAccountName** to use account names or **Group ID** to use group UUIDs. 
+1. Check **Customize the name of the group claim**. 
+1. Set **Name (required)** to "MemberOf" and leave the namespace field blank.
 
--> **Note:** When Azure AD is configured to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your Terraform Cloud teams to match these Azure Group UUIDs.
+-> **Note:** When you configure Azure AD to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/terraform/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your HCP Terraform teams to match these Azure Group UUIDs.
 
-If you plan to make use of SAML to set usernames in your Microsoft Azure AD application:
+If you plan to use SAML to set usernames in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit the **User Attributes & Claims**.
-   We recommend naming the claim "Username", leaving the namespace blank, and sourcing something like `user.mail` or `user.userprincipalname`.
+1. Edit step 2, **User Attributes & Claims.**  
+   We recommend naming the claim "username", leaving the namespace blank, and sourcing `user.displayname` or `user.mailnickname` as a starting point. If you have a Terraform Enterprise account, you can source `user.mail` or `user.userprincipalname`. Note that HCP Terraform usernames only allow lowercase letters, numbers, and dashes.
 
-If you namespaced any of your claims, then Microsoft Azure AD passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting Team and Username attribute names.
+If you namespaced any of your claims, then Microsoft Azure AD passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting team and username attribute names.
+
+## Troubleshooting the SAML assertion
+[Use this guide](https://support.hashicorp.com/hc/en-us/articles/1500005371682-Capturing-a-SAML-Assertion) to verify and validate the claims being sent in the SAML response. 
