@@ -1,25 +1,29 @@
 ---
-page_title: State Version Outputs - API Docs - Terraform Cloud
+page_title: State Version Outputs - API Docs - HCP Terraform
+description: >-
+  Use the `/state-version-outputs` endpoint to access output values from a Terraform state version. List and show state version outputs, and show current state version outputs for a workspace using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
 [404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # State Version Outputs API
 
-State version outputs are the [output values](/language/values/outputs) from a Terraform state file. They include
+State version outputs are the [output values](/terraform/language/values/outputs) from a Terraform state file. They include
 the name and value of the output, as well as a sensitive boolean if the value should be hidden by default in UIs.
+
+~> **Important:** The state version outputs for a state version (as well as some other information about it) might be **populated asynchronously** by HCP Terraform. These values might not be immediately available after the state version is uploaded. The `resources-processed` property on the associated [state version object](/terraform/cloud-docs/api-docs/state-versions) indicates whether or not HCP Terraform has finished any necessary asynchronous processing. If you need to use these values, be sure to wait for `resources-processed` to become `true` before assuming that the values are in fact empty.
 
 ## List State Version Outputs
 
 `GET /state-versions/:state_version_id/outputs`
 
-Listing state version outputs requires permission to read state outputs for the workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+Listing state version outputs requires permission to read state outputs for the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 | Parameter           | Description                          |
 | ------------------- | ------------------------------------ |
@@ -32,7 +36,7 @@ Listing state version outputs requires permission to read state outputs for the 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                           |
 | -------------- | ------------------------------------------------------------------------------------- |
@@ -136,7 +140,7 @@ curl \
 | -------------------------- | ------------------------------------------- |
 | `:state_version_output_id` | The ID of the desired state version output. |
 
-State version output IDs must be obtained from a [state version object](/cloud-docs/api-docs/state-versions). When requesting a state version, you can optionally add `?include=outputs` to include full details for all of that state version's outputs.
+State version output IDs must be obtained from a [state version object](/terraform/cloud-docs/api-docs/state-versions). When requesting a state version, you can optionally add `?include=outputs` to include full details for all of that state version's outputs.
 
 | Status  | Response                                                | Reason                                                 |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------ |
@@ -174,9 +178,9 @@ curl \
 
 ## Show Current State Version Outputs for a Workspace
 
-This endpoint allows organization users, who do not have permissions to read state versions, to fetch the latest [output values](/language/values/outputs) for a workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+This endpoint allows organization users, who do not have permissions to read state versions, to fetch the latest [output values](/terraform/language/values/outputs) for a workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
--> **Note:** Sensitive values are not revealed and will be returned as `null`. To fetch an output including sensitive values see [Show a State Version Output](/cloud-docs/api-docs/state-version-outputs#show-a-state-version-output).
+-> **Note:** Sensitive values are not revealed and will be returned as `null`. To fetch an output including sensitive values see [Show a State Version Output](/terraform/cloud-docs/api-docs/state-version-outputs#show-a-state-version-output).
 
 `GET /workspaces/:workspace_id/current-state-version-outputs`
 

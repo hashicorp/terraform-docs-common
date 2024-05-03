@@ -1,5 +1,7 @@
 ---
-page_title: Notification Configurations - API Docs - Terraform Cloud
+page_title: Notification Configurations - API Docs - HCP Terraform
+description: >-
+  Use the `notification-configurations` endpoint to manage notification configurations. List, show, create, update, verify, and delete notification configurations for a workspace using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,15 +32,15 @@ page_title: Notification Configurations - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Notification Configurations API
 
-Terraform Cloud can send notifications for run state transitions and workspace events. You can specify a destination URL, request type, and what events will trigger the notification. Each workspace can have up to 20 notification configurations, and they apply to all runs for that workspace.
+HCP Terraform can send notifications for run state transitions and workspace events. You can specify a destination URL, request type, and what events will trigger the notification. Each workspace can have up to 20 notification configurations, and they apply to all runs for that workspace.
 
-Interacting with notification configurations requires admin access to the relevant workspace. ([More about permissions](/cloud-docs/users-teams-organizations/permissions).)
+Interacting with notification configurations requires admin access to the relevant workspace. ([More about permissions](/terraform/cloud-docs/users-teams-organizations/permissions).)
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -48,20 +50,23 @@ Notifications are sent as the run progresses, and can be triggered on one or mor
 
 | Display Name       | Value                   | Description                                                                                              |
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
-| Created            | `"run:created"`         | A run is created and enters the [Pending stage](/cloud-docs/run/states#1-the-pending-stage)                                                    |
+| Created            | `"run:created"`         | A run is created and enters the [Pending stage](/terraform/cloud-docs/run/states#the-pending-stage)                                                    |
 | Planning           | `"run:planning"`        | A run acquires the lock and starts to execute.                                                      |
-| Needs Attention    | `"run:needs_attention"` | A plan has changes and Terraform requires user input to continue. This input may include approving the plan or a [policy override](/cloud-docs/run/states#7-the-policy-check-stage). |
-| Applying           | `"run:applying"`        | A run enters the [Apply stage](/cloud-docs/run/states#9-the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
+| Needs Attention    | `"run:needs_attention"` | A plan has changes and Terraform requires user input to continue. This input may include approving the plan or a [policy override](/terraform/cloud-docs/run/states#the-policy-check-stage). |
+| Applying           | `"run:applying"`        | A run enters the [Apply stage](/terraform/cloud-docs/run/states#the-apply-stage), where Terraform makes the infrastructure changes described in the plan.                            |
 | Completed          | `"run:completed"`       | A run completes successfully.                                     |
 | Errored            | `"run:errored"`         | A run terminates early due to error or cancellation.                                          |
-| Drifted            | `"assessment:drifted"`  | Terraform Cloud detected configuration drift. This option is only available if you enabled drift detection for the workspace.  Not available in Terraform Enterprise.                                                   |
-| Health Assessment Failed | `"assessment:failed`"   | A health assessment failed. This option is only available if you enable health assessments for the workspace.  Not available in Terraform Enterprise.                                       |
+| Drifted            | `"assessment:drifted"`  | HCP Terraform detected configuration drift. This option is only available if you enabled drift detection for the workspace.                                                    |
+| Checks Failed      | `"assessment:check_failure"` | One or more continuous validation checks did not pass. This option is only available if you enabled drift detection for the workspace. |
+| Health Assessment Failed | `"assessment:failed"`   | A health assessment failed. This option is only available if you enable health assessments for the workspace.                                        |
+| Auto Destroy Reminder | `"workspace:auto_destro_reminder"`   | An automated workspace destroy run is imminent. |
+| Auto Destroy Results | `"workspace:auto_destroy_run_results"`   | HCP Terraform attempted an automated workspace destroy run. |
 
 ## Notification Payload
 
 The notification is an HTTP POST request with a detailed payload. The content depends on the type of notification.
 
-For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/cloud-docs/workspaces/settings/notifications#microsoft-teams) for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
+For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/terraform/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/terraform/cloud-docs/workspaces/settings/notifications#microsoft-teams) for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
 
 ### Run Notification Payload
 
@@ -79,7 +84,7 @@ Run events include detailed information about a specific run, including the time
 | `workspace_id`                   | string | ID of the run's workspace.                                                                                                                                                                                                                     |
 | `workspace_name`                 | string | Human-readable name of the run's workspace.                                                                                                                                                                                                    |
 | `organization_name`              | string | Human-readable name of the run's organization.                                                                                                                                                                                                 |
-| `notifications`                  | array  | List of events which caused this notification to be sent, with each event represented by an object. At present, this is always one event, but in the future Terraform Cloud may roll up several notifications for a run into a single request. |
+| `notifications`                  | array  | List of events which caused this notification to be sent, with each event represented by an object. At present, this is always one event, but in the future HCP Terraform may roll up several notifications for a run into a single request. |
 | `notifications[].message`        | string | Human-readable reason for the notification.                                                                                                                                                                                                    |
 | `notifications[].trigger`        | string | Value of the trigger which caused the notification to be sent.                                                                                                                                                                                 |
 | `notifications[].run_status`     | string | Status of the run at the time of notification.                                                                                                                                                                                                 |
@@ -112,38 +117,92 @@ Run events include detailed information about a specific run, including the time
 }
 ```
 
-<!-- BEGIN: TFC:only name:health-assessments -->
+##### `Send a test` Payload
+
+This is a sample payload you can send to test if notifications are working. The payload does not have a `run` or `workspace` context, resulting in null values.
+
+You can trigger a test notification from the workspace notifcation settings page. You can read more about verifying a [notificaton configuration](/terraform/enterprise/workspaces/settings/notifications#enabling-and-verifying-a-configuration).
+
+```json
+{
+  "payload_version": 1,
+  "notification_configuration_id": "nc-jWvVsmp5VxsaCeXm",
+  "run_url": null,
+  "run_id": null,
+  "run_message": null,
+  "run_created_at": null,
+  "run_created_by": null,
+  "workspace_id": null,
+  "workspace_name": null,
+  "organization_name": null,
+  "notifications": [
+    {
+      "message": "Verification of test",
+      "trigger": "verification",
+      "run_status": null,
+      "run_updated_at": null,
+      "run_updated_by": null,
+    }
+  ]
+}
+```
 
 ### Workspace Notification Payload
 
-Workspace events include detailed information about workspace-level validation events like [health assessments](/cloud-docs/workspaces/settings/health-assessments) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/cloud-docs/api-docs/assessment-results), which Terraform Cloud uses to track instances of continuous validation. Generic notifications for workspace events contain the following information:
+Workspace events include detailed information about workspace-level validation events like [health assessments](/terraform/cloud-docs/workspaces/health) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/terraform/cloud-docs/api-docs/assessment-results), which HCP Terraform uses to track instances of continuous validation.
+
+HCP Terraform returns different types of attributes returned in the payload details, depending on the type of `trigger_scope`. There are two main values for `trigger_scope`: `assessment` and `workspace`, examples of which you can see below.
+
+#### Health Assessments
+
+Health assessment notifications for workspace events contain the following information:
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/health-assessments.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 | Name                                         | Type   | Description                                                                          |
 | -------------------------------------------- | ------ | ------------------------------------------------------------------------------------ |
 | `payload_version`                            | number | Always "2".                                                                          |
 | `notification_configuration_id`              | string | The ID of the configuration associated with this notification.                       |
-| `notification_configuration_url`             | string | URL to get the notification configuration from the Terraform Cloud API.              |
-| `trigger_scope`                              | string | Always "assessment" for workspace notifications.                                     |
+| `notification_configuration_url`             | string | URL to get the notification configuration from the HCP Terraform API.              |
+| `trigger_scope`                              | string | Always "assessment" for workspace assessment notifications.                          |
 | `trigger`                                    | string | Value of the trigger that caused the notification to be sent.                        |
 | `message`                                    | string | Human-readable reason for the notification.                                          |
 | `details`                                    | object | Object containing details specific to the notification.                              |
 | `details.new_assessment_result`              | object | The most recent assessment result. This result triggered the notification.           |
 | `details.new_assessment_result.id`           | string | ID of the assessment result.                                                         |
-| `details.new_assessment_result.url`          | string | URL to get the assessment result from the Terraform Cloud API.                       |
-| `details.new_assessment_result.succeeded`    | bool   | Whether or not assessment succeeded.                                                 |
-| `details.new_assessment_result.drifted`      | bool   | Whether or not assessment detected drift.                                            |
-| `details.new_assessment_result.created_at`   | string | Timestamp of the assessment result                                                   |
+| `details.new_assessment_result.url`          | string | URL to get the assessment result from the HCP Terraform API.                       |
+| `details.new_assessment_result.succeeded`    | bool   | Whether assessment succeeded.                                                        |
+| `details.new_assessment_result.all_checks_succeeded`  | bool | Whether all conditions passed.                                                |
+| `details.new_assessment_result.checks_passed`         | number | The number of resources, data sources, and outputs passing their conditions.               |
+| `details.new_assessment_result.checks_failed`         | number | The number of resources, data sources, and outputs with one or more failing conditions.    |
+| `details.new_assessment_result.checks_errored`        | number | The number of resources, data sources, and outputs that had a condition error.             |
+| `details.new_assessment_result.checks_unknown`        | number | The number of resources, data sources, and outputs that had conditions left unevaluated.   |
+| `details.new_assessment_result.drifted`      | bool   | Whether assessment detected drift.                                                   |
+| `details.new_assessment_result.resources_drifted`     | number| The number of resources whose configuration does not match from the workspace's state file.                                             |
+| `details.new_assessment_result.resources_undrifted`   | number| The number of real resources whose configuration matches the workspace's state file.                                         |
+| `details.new_assessment_result.created_at`   | string | Timestamp for when HCP Terraform created the assessment result.                                                  |
 | `details.prior_assessment_result`            | object | The assessment result immediately prior to the one that triggered the notification.  |
 | `details.prior_assessment_result.id`         | string | ID of the assessment result.                                                         |
-| `details.prior_assessment_result.url`        | string | URL to get the assessment result from the Terraform Cloud API.                       |
-| `details.prior_assessment_result.succeeded`  | bool   | Whether or not assessment succeeded.                                                 |
-| `details.prior_assessment_result.drifted`    | bool   | Whether or not assessment detected drift.                                            |
+| `details.prior_assessment_result.url`        | string | URL to get the assessment result from the HCP Terraform API.                       |
+| `details.prior_assessment_result.succeeded`  | bool   | Whether assessment succeeded.                                                        |
+| `details.prior_assessment_result.all_checks_succeeded`  | bool | Whether all conditions passed.                                              |
+| `details.prior_assessment_result.checks_passed`         | number | The number of resources, data sources, and outputs passing their conditions.             |
+| `details.prior_assessment_result.checks_failed`         | number | The number of resources, data sources, and outputs with one or more failing conditions.  |
+| `details.prior_assessment_result.checks_errored`        | number | The number of resources, data sources, and outputs that had a condition error.           |
+| `details.prior_assessment_result.checks_unknown`        | number | The number of resources, data sources, and outputs that had conditions left unevaluated. |
+| `details.prior_assessment_result.drifted`    | bool   | Whether assessment detected drift.                                                   |
+| `details.prior_assessment_result.resources_drifted`     | number| The number of resources whose configuration does not match the workspace's state file.                                           |
+| `details.prior_assessment_result.resources_undrifted`   | number| The number of resources whose configuration matches the workspace's state file.                                       |
 | `details.prior_assessment_result.created_at` | string | Timestamp of the assessment result.                                                  |
 | `details.workspace_id`                       | string | ID of the workspace that generated the notification.                                 |
 | `details.workspace_name`                     | string | Human-readable name of the workspace.                                                |
 | `details.organization_name`                  | string | Human-readable name of the organization.                                             |
 
-#### Sample Payload
+##### Sample Payload
+
+Health assessment payloads have information about resource drift and continuous validation checks.
 
 ```json
 {
@@ -154,20 +213,34 @@ Workspace events include detailed information about workspace-level validation e
   "trigger": "assessment:drifted",
   "message": "Drift Detected",
   "details": {
-    "new_assessment_result": {
-      "id": "asmtres-vRVQxpqq64EA9V5a",
-      "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-vRVQxpqq64EA9V5a",
-      "succeeded": true,
-      "drifted": true,
-      "created_at": "2022-06-09T05:23:10Z"
-    },
-    "prior_assessment_result": {
-      "id": "asmtres-A6zEbpGArqP74fdL",
-      "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-A6zEbpGArqP74fdL",
-      "succeeded": true,
-      "drifted": true,
-      "created_at": "2022-06-09T05:22:51Z"
-    },
+      "new_assessment_result": {
+        "id": "asmtres-vRVQxpqq64EA9V5a",
+        "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-vRVQxpqq64EA9V5a",
+        "succeeded": true,
+        "drifted": true,
+        "all_checks_succeeded": true,
+        "resources_drifted": 4,
+        "resources_undrifted": 55,
+        "checks_passed": 33,
+        "checks_failed": 0,
+        "checks_errored": 0,
+        "checks_unknown": 0,
+        "created_at": "2022-06-09T05:23:10Z"
+      },
+      "prior_assessment_result": {
+        "id": "asmtres-A6zEbpGArqP74fdL",
+        "url": "https://app.terraform.io/api/v2/assessment-results/asmtres-A6zEbpGArqP74fdL",
+        "succeeded": true,
+        "drifted": true,
+        "all_checks_succeeded": true,
+        "resources_drifted": 4,
+        "resources_undrifted": 55,
+        "checks_passed": 33,
+        "checks_failed": 0,
+        "checks_errored": 0,
+        "checks_unknown": 0,
+        "created_at": "2022-06-09T05:22:51Z"
+      },
     "workspace_id": "ws-XdeUVMWShTesDMME",
     "workspace_name": "my-workspace",
     "organization_name": "acme-org"
@@ -175,12 +248,114 @@ Workspace events include detailed information about workspace-level validation e
 }
 ```
 
-<!-- END:   TFC:only name:health-assessments-->
+#### Automatic Destroy Runs
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/ephemeral-workspaces.mdx'
+<!-- END: TFC:only name:pnp-callout -->
+
+Automatic destroy run notifications for workspace events contain the following information:
+
+| Name                                         | Type   | Description                                                                                                 |
+| -------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------|
+| `payload_version`                            | string | Always 2.                                                                                                   |
+| `notification_configuration_id`                | string | The ID of the notification's configuration.                                                                   |
+| `notification_configuration_url`               | string | The URL to get the notification's configuration from the HCP Terraform API.                                 |
+| `trigger_scope`                              | string | Always "workspace" for ephemeral workspace notifications                                                     |
+| `trigger`                                    | string | Value of the trigger that caused HCP Terraform to send the notification.                                   |
+| `message`                                    | string | Human-readable reason for the notification.                                                                  |
+| `details`                                    | object | Object containing details specific to the notification.                                                       |
+| `details.auto_destroy_at`                    | string | Timestamp when HCP Terraform will schedule the next destroy run. Only applies to reminder notifications.   |
+| `details.run_created_at`                     | string | Timestamp of when HCP Terraform successfully created a destroy run. Only applies to results notifications. |
+| `details.run_status`                         | string | Status of the scheduled destroy run. Only applies to results notifications.                                  |
+| `details.run_external_id`                    | string | The ID of the scheduled destroy run. Only applies to results notifications.                                  |
+| `details.run_create_error_message`           | string | Message detailing why the run was unable to be queued. Only applies to results notifications.                |
+| `details.trigger_type`                       | string | The type of notification, and the value is either "reminder" or "results".                                   |
+| `details.workspace_name`                     | string | Human-readable name of the workspace.                                                                       |
+| `details.organization_name`                  | string | Human-readable name of the organization.                                                                    |
+
+##### Sample Payload
+
+The shape of data in auto destroy notification payloads may differ depending on the success of the run HCP Terraform created. Refer to the specific examples below.
+
+###### Reminder
+
+Reminders that HCP Terraform will trigger a destroy run at some point in the future.
+
+```json
+{
+  "payload_version": "2",
+  "notification_configuration_id": "nc-SZ3V3cLFxK6sqLKn",
+  "notification_configuration_url": "https://app.terraform.io/api/v2/notification-configurations/nc-SZ3V3cLFxK6sqLKn",
+  "trigger_scope": "workspace",
+  "trigger": "workspace:auto_destroy_reminder",
+  "message": "Auto Destroy Reminder",
+  "details": {
+      "auto_destroy_at": "2025-01-01T00:00:00Z",
+      "run_created_at": null,
+      "run_status": null,
+      "run_external_id": null,
+      "run_create_error_message": null,
+      "trigger_type": "reminder",
+      "workspace_name": "learned-english-dog",
+      "organization_name": "acme-org"
+  }
+}
+```
+
+###### Results
+
+The final result of the scheduled auto destroy run includes additional metadata about the run.
+
+```json
+{
+  "payload_version": "2",
+  "notification_configuration_id": "nc-SZ3V3cLFxK6sqLKn",
+  "notification_configuration_url": "https://app.terraform.io/api/v2/notification-configurations/nc-SZ3V3cLFxK6sqLKn",
+  "trigger_scope": "workspace",
+  "trigger": "workspace:auto_destroy_results",
+  "message": "Auto Destroy Results",
+  "details": {
+      "auto_destroy_at": null,
+      "run_created_at": "2022-06-09T05:22:51Z",
+      "run_status": "applied",
+      "run_external_id": "run-vRVQxpqq64EA9V5a",
+      "run_create_error_message": null,
+      "trigger_type": "results",
+      "workspace_name": "learned-english-dog",
+      "organization_name": "acme-org"
+  }
+}
+```
+
+###### Failed Run Creation
+
+Run-specific values are empty when HCP Terraform was unable to create an auto destroy run.
+
+```json
+{
+  "payload_version": "2",
+  "notification_configuration_id": "nc-SZ3V3cLFxK6sqLKn",
+  "notification_configuration_url": "https://app.terraform.io/api/v2/notification-configurations/nc-SZ3V3cLFxK6sqLKn",
+  "trigger_scope": "workspace",
+  "trigger": "workspace:auto_destroy_results",
+  "message": "Auto Destroy Results",
+  "details": {
+      "auto_destroy_at": null,
+      "run_created_at": null,
+      "run_status": null,
+      "run_external_id": null,
+      "run_create_error_message": "Configuration version is missing",
+      "trigger_type": "results",
+      "workspace_name": "learned-english-dog",
+      "organization_name": "acme-org"
+  }
+}
+```
 
 ## Notification Authenticity
 
-If a `token` is configured, Terraform Cloud provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the request body using the same shared secret, and dropping any requests with invalid signatures.
+If a `token` is configured, HCP Terraform provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the request body using the same shared secret, and dropping any requests with invalid signatures.
 
 Sample Ruby code for verifying the HMAC:
 
@@ -192,7 +367,7 @@ fail "Invalid HMAC" if hmac != @request.headers["X-TFE-Notification-Signature"]
 
 ## Notification Verification and Delivery Responses
 
-When saving a configuration with `enabled` set to `true`, or when using the [verify API][], Terraform Cloud sends a verification request to the configured URL. The response to this request is stored and available in the `delivery-responses` array of the `notification-configuration` resource.
+When saving a configuration with `enabled` set to `true`, or when using the [verify API][], HCP Terraform sends a verification request to the configured URL. The response to this request is stored and available in the `delivery-responses` array of the `notification-configuration` resource.
 
 Configurations cannot be enabled if the verification request fails. Success is defined as an HTTP response with status code of `2xx`.
 Configurations with `destination_type` `email` can only be verified manually, they do not require an HTTP response.
@@ -207,7 +382,7 @@ Each delivery response has several fields:
 | `code`       | string | HTTP status code, e.g. `400`.                                                                                                                                 |
 | `headers`    | object | All HTTP headers received, represented as an object with keys for each header name (lowercased) and an array of string values (most arrays will be size one). |
 | `sent-at`    | date   | The UTC timestamp when the notification was sent.                                                                                                             |
-| `successful` | bool   | Whether or not Terraform Cloud considers this response to be successful.                                                                                      |
+| `successful` | bool   | Whether HCP Terraform considers this response to be successful.                                                                                      |
 | `url`        | string | The URL to which the request was sent.                                                                                                                        |
 
 [verify API]: #verify-a-notification-configuration
@@ -218,7 +393,7 @@ Each delivery response has several fields:
 
 | Parameter       | Description                                                                                                                                                                                                      |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to list configurations for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to list configurations for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 | Status  | Response                                                      | Reason                                                         |
 | ------- | ------------------------------------------------------------- | -------------------------------------------------------------- |
@@ -405,11 +580,11 @@ curl \
 
 | Parameter       | Description                                                                                                                                                                                                                                                                                                                             |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to list configurations from. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results. |
+| `:workspace_id` | The ID of the workspace to list configurations from. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results. |
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                                 |
 | -------------- | ------------------------------------------------------------------------------------------- |
@@ -656,7 +831,7 @@ curl \
 | -------------------------------- | --------------------------------------------------- |
 | `:notification-configuration-id` | The id of the notification configuration to update. |
 
-If the `enabled` attribute is true, updating the configuration will cause Terraform Cloud to send a verification request. If a response is received, it will be stored and returned in the `delivery-responses` attribute. More details in the [Notification Verification and Delivery Responses][] section above.
+If the `enabled` attribute is true, updating the configuration will cause HCP Terraform to send a verification request. If a response is received, it will be stored and returned in the `delivery-responses` attribute. More details in the [Notification Verification and Delivery Responses][] section above.
 
 [Notification Verification and Delivery Responses]: #notification-verification-and-delivery-responses
 
@@ -766,7 +941,7 @@ curl \
 | -------------------------------- | --------------------------------------------------- |
 | `:notification-configuration-id` | The id of the notification configuration to verify. |
 
-This will cause Terraform Cloud to send a verification request for the specified configuration. If a response is received, it will be stored and returned in the `delivery-responses` attribute. More details in the [Notification Verification and Delivery Responses][] section above.
+This will cause HCP Terraform to send a verification request for the specified configuration. If a response is received, it will be stored and returned in the `delivery-responses` attribute. More details in the [Notification Verification and Delivery Responses][] section above.
 
 | Status  | Response                                                      | Reason                                                     |
 | ------- | ------------------------------------------------------------- | ---------------------------------------------------------- |
