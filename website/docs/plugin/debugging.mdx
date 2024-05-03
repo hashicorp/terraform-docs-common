@@ -19,14 +19,14 @@ happening in a provider and then examining that record to diagnose issues. Logs 
 
 When developing your provider, think carefully about what information you will need for debugging. Log lines cannot be inserted into the binary after it has been built. You will need to add a new log line and recompile your provider for new information to be surfaced in log output.
 
-- [Managing Log Output](/plugin/log/managing) explains how to turn on logging, filter log output, choose the log format, and specify the log output path.
-- [Writing Log Output](/plugin/log/writing) contains details about how to use the [`tflog` package](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-log/tflog) to write log output at varying verbosity levels, add variables to logs, and create subsystems to group logs that relate to distinct sections of code (e.g., the API client).
+- [Managing Log Output](/terraform/plugin/log/managing) explains how to turn on logging, filter log output, choose the log format, and specify the log output path.
+- [Writing Log Output](/terraform/plugin/log/writing) contains details about how to use the [`tflog` package](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-log/tflog) to write log output at varying verbosity levels, add variables to logs, and create subsystems to group logs that relate to distinct sections of code (e.g., the API client).
 
 ## Terraform CLI Development Overrides
 
-Development overrides is a method of using a specified local filesystem Terraform provider binary with Terraform CLI, such as one locally built with updated code, rather than a released binary. This method of debugging allows the use of real-world configurations and Terraform CLI commands for reproduction. For automated testing, implement [acceptance testing](/plugin/sdkv2/testing/acceptance-tests) instead.
+Development overrides is a method of using a specified local filesystem Terraform provider binary with Terraform CLI, such as one locally built with updated code, rather than a released binary. This method of debugging allows the use of real-world configurations and Terraform CLI commands for reproduction. For automated testing, implement [acceptance testing](/terraform/plugin/sdkv2/testing/acceptance-tests) instead.
 
-To start, create a [Terraform CLI Configuration File](/cli/config/config-file) that includes a `provider_installation` block with a `dev_overrides` block. If the configuration file is created in your operating system user directory with the name `.terraformrc`, it will always be used, otherwise the `TF_CLI_CONFIG_FILE` environment variable must be set to the file location for the configuration to take effect.
+To start, create a [Terraform CLI Configuration File](/terraform/cli/config/config-file) that includes a `provider_installation` block with a `dev_overrides` block. If the configuration file is created in your operating system user directory with the name `.terraformrc`, it will always be used, otherwise the `TF_CLI_CONFIG_FILE` environment variable must be set to the file location for the configuration to take effect.
 
 In this example, the `hashicorp/example` provider binary will be sourced from the local filesystem path `/home/example/go/bin/terraform-provider-example`, while others will be sourced normally:
 
@@ -42,7 +42,7 @@ provider_installation {
 
 Terraform CLI commands, such as `terraform apply`, will now use the specified provider binary. It is not necessary to run the `terraform init` command to use development overrides.
 
-Refer to the [Terraform CLI Configuration File documentation](/cli/config/config-file#development-overrides-for-provider-developers) for additional information about the configuration file and the developement overrides functionality.
+Refer to the [Terraform CLI Configuration File documentation](/terraform/cli/config/config-file#development-overrides-for-provider-developers) for additional information about the configuration file and the developement overrides functionality.
 
 ## Debugger-Based Debugging
 
@@ -87,17 +87,17 @@ To do so, build the provider binary with the necessary
 
 The code for enabling debugging is dependent on the provider implementation:
 
-* [terraform-plugin-framework](/plugin/framework/debugging): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
+* [terraform-plugin-framework](/terraform/plugin/framework/debugging): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
 * [terraform-plugin-go tf5server.WithManagedDebug()](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-go/tfprotov5/tf5server#WithManagedDebug): A lower-level SDK to develop Terraform providers for more advanced use cases.
 * [terraform-plugin-go tf6server.WithManagedDebug()](https://pkg.go.dev/github.com/hashicorp/terraform-plugin-go/tfprotov6/tf6server#WithManagedDebug): A lower-level SDK to develop Terraform providers for more advanced use cases.
-* [terraform-plugin-sdk/v2](/plugin/sdkv2/debugging): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
+* [terraform-plugin-sdk/v2](/terraform/plugin/sdkv2/debugging): A higher-level SDK that makes Terraform provider development easier by abstracting implementation details.
 
-If the provider is using [combining and translating functionality](/plugin/mux), refer to these code implementation sections instead:
+If the provider is using [combining and translating functionality](/terraform/plugin/mux), refer to these code implementation sections instead:
 
-* [tf5muxserver](/plugin/mux/combining-protocol-version-5-providers#code-implementation): A package to combine multiple protocol version 5 providers.
-* [tf5to6server](/plugin/mux/translating-protocol-version-5-to-6#code-implementation): A package to translate protocol version 5 providers into protocol version 6.
-* [tf6muxserver](/plugin/mux/combining-protocol-version-6-providers#code-implementation): A package to combine multiple protocol version 6 providers.
-* [tf6to5server](/plugin/mux/translating-protocol-version-6-to-5#code-implementation): A package to translate protocol version 6 providers into protocol version 5.
+* [tf5muxserver](/terraform/plugin/mux/combining-protocol-version-5-providers#code-implementation): A package to combine multiple protocol version 5 providers.
+* [tf5to6server](/terraform/plugin/mux/translating-protocol-version-5-to-6#code-implementation): A package to translate protocol version 5 providers into protocol version 6.
+* [tf6muxserver](/terraform/plugin/mux/combining-protocol-version-6-providers#code-implementation): A package to combine multiple protocol version 6 providers.
+* [tf6to5server](/terraform/plugin/mux/translating-protocol-version-6-to-5#code-implementation): A package to translate protocol version 6 providers into protocol version 5.
 
 ### Starting A Provider In Debug Mode
 

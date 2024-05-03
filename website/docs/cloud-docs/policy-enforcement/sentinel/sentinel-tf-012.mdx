@@ -1,16 +1,14 @@
 ---
-page_title: Using Sentinel with Terraform 0.12 - Terraform Cloud
+page_title: Using Sentinel with Terraform 0.12 - HCP Terraform
 description: Read about the changes made to Sentinel in Terraform 0.12.
 ---
 
 # Using Sentinel with Terraform 0.12
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
 The Terraform Sentinel imports
-([`tfconfig`](/cloud-docs/policy-enforcement/sentinel/import/tfconfig),
-[`tfplan`](/cloud-docs/policy-enforcement/sentinel/import/tfplan), and
-[`tfstate`](/cloud-docs/policy-enforcement/sentinel/import/tfstate)) have been updated to
+([`tfconfig`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig),
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan), and
+[`tfstate`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate)) have been updated to
 work with Terraform 0.12. Care has been taken to ensure that the API is as
 backwards compatible as possible and most policies will continue to work without
 modification.
@@ -27,16 +25,20 @@ that numeric attributes of resources are now treated as floats in Terraform
 these attributes as strings. In particular, you might have to modify existence
 checks and comparisons done against numeric attributes.
 
-There are no explicit changes in the [`tfrun`](/cloud-docs/policy-enforcement/sentinel/import/tfrun) import for
+There are no explicit changes in the [`tfrun`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun) import for
 Terraform 0.12, but the
-[`cost_estimate` namespace](/cloud-docs/policy-enforcement/sentinel/import/tfrun#namespace-cost_estimate)
+[`cost_estimate` namespace](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun#namespace-cost_estimate)
 does not appear in it for Terraform 0.11 since cost estimates are not available
 in workspaces that use Terraform 0.11.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 ## Changes to `tfconfig`
 
 Terraform 0.12 no longer exports raw configuration to Sentinel, so the
-[`tfconfig`](/cloud-docs/policy-enforcement/sentinel/import/tfconfig) import has seen the
+[`tfconfig`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig) import has seen the
 most profound changes, with the introduction of the `references` key in several
 of the namespaces within the import. Certain block values (such as maps) are
 also referenced slightly differently on part of the greater emphasis on
@@ -85,7 +87,7 @@ main = rule {
 ```
 
 You can read more about `references` in `tfconfig`
-For more information, see [`references` in the `tfconfig` import](/cloud-docs/policy-enforcement/sentinel/import/tfconfig#references-with-terraform-0-12).
+For more information, see [`references` in the `tfconfig` import](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig#references-with-terraform-0-12).
 
 ### Referencing Map Values
 
@@ -158,18 +160,18 @@ at the expected block index for the relevant data.
 ## Changes to `tfplan`
 
 When used as directed, the
-[`tfplan`](/cloud-docs/policy-enforcement/sentinel/import/tfplan) import generally behaves
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) import generally behaves
 the same way with Terraform 0.12 as it does with Terraform 0.11 with the
 following exceptions:
 
 1. The behavior of unknown values within the
-   [`applied`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-applied) value when creating or changing resources.
+   [`applied`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-applied) value when creating or changing resources.
 1. The behavior when destroying resources without re-creating them.
 
 ### Changes to Unknown Values in `applied`
 
 Unknown values within `applied` in the
-[resource namespace](/cloud-docs/policy-enforcement/sentinel/import/tfplan#namespace-resources-data-sources)
+[resource namespace](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#namespace-resources-data-sources)
 no longer return values with interpolation sequences, or the magic UUID (defined as
 `74D93920-ED26-11E3-AC10-0800200C9A66` in Terraform 0.11 or earlier). Instead,
 unknown values are now returned as `undefined`.
@@ -177,16 +179,16 @@ unknown values are now returned as `undefined`.
 As mentioned within the documentation for `tfplan`, relying on specific behavior
 of unknown data within `applied` is not supported. Instead, it is recommended to
 check the
-[`computed`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-computed) key
+[`computed`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-computed) key
 within the [diff
-namespace](/cloud-docs/policy-enforcement/sentinel/import/tfplan#namespace-resource-diff)
+namespace](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#namespace-resource-diff)
 to validate whether or not a value is unknown before looking for it in
 `applied`.
 
 ### Changes Affecting Resources Being Destroyed but not Re-created
 
 In Terraform 0.11, when a resource is being destroyed but not re-created, it's
-[`diff`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-diff) value in the `tfplan` import is empty.
+[`diff`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-diff) value in the `tfplan` import is empty.
 In Terraform 0.12, however, the `diff` value does have data. Existing policies
 that test the condition `length(r.diff) == 0` to determine whether a resource
 is being destroyed but not re-created need to be updated for use with Terraform
@@ -198,8 +200,8 @@ for both versions of Terraform. It is therefore very important to check whether
 this is the case in all Sentinel policies that use the `tfplan` import and the
 `applied` value to avoid `undefined` values in functions and rules.
 
-New [`destroy`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-destroy) and
-[`requires_new`](/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-requires_new) values have been added
+New [`destroy`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-destroy) and
+[`requires_new`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-requires_new) values have been added
 to the `tfplan` import to enable this check. Since these values are available
 both for Terraform 0.11 and 0.12, you can now test
 `r.destroy and not r.requires_new` to determine if a resource is being destroyed
@@ -211,16 +213,16 @@ you must use version v201909-1 or higher in order to use the `destroy` and
 
 ## Changes to `tfstate`
 
-The [`tfstate`](/cloud-docs/policy-enforcement/sentinel/import/tfstate) import has had
+The [`tfstate`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate) import has had
 the availability of outputs restricted to the top-level of the namespace,
 effectively restricting it to the root module only.
 
 ### Non-Root `outputs` are no Longer Available
 
 The [output
-namespace](/cloud-docs/policy-enforcement/sentinel/import/tfstate#namespace-outputs) is
+namespace](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate#namespace-outputs) is
 no longer available within `tfstate`'s [module
-namespace](/cloud-docs/policy-enforcement/sentinel/import/tfstate#namespace-module). The
+namespace](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate#namespace-module). The
 namespace must now be accessed from the top-level `tfstate` namespace,
 effectively allowing outputs to be viewed for the root module only.
 
@@ -243,7 +245,7 @@ main = rule {
 
 It's strongly advised that you test your Sentinel policies after upgrading to
 Terraform 0.12 to ensure they continue to work as expected. [Mock
-generation](/cloud-docs/policy-enforcement/sentinel/mock) has also been updated to
+generation](/terraform/cloud-docs/policy-enforcement/sentinel/mock) has also been updated to
 produce mock data for the Sentinel imports as they appear in Terraform 0.12.
 
 It's possible to set up a policy to be tested against both 0.11 and 0.12
@@ -260,15 +262,15 @@ devoted to testing.
 Use the steps below to generate mock data for both Terraform versions:
 
 1. Follow the instructions on [configuring the Terraform version of the
-   workspace](/cloud-docs/workspaces/settings#terraform-version) and
+   workspace](/terraform/cloud-docs/workspaces/settings#terraform-version) and
    ensure that it set to the latest 0.11 release.
-1. [Start a run](/cloud-docs/run/ui#manually-starting-runs) for the workspace
+1. [Start a run](/terraform/cloud-docs/run/ui#manually-starting-runs) for the workspace
    and let it finish the plan phase.
 1. Follow the instructions to [generate mock data using the
-   UI](/cloud-docs/policy-enforcement/sentinel/mock#generating-mock-data-using-the-ui)
+   UI](/terraform/cloud-docs/policy-enforcement/sentinel/mock#generating-mock-data-using-the-ui)
    for a plan on the workspace. Save this data to a file reflective of its
    version, example: `run-abcdEFgH-sentinel-mocks-011.tar.gz`.
-1. [Discard the plan](/cloud-docs/run/ui#confirming-or-discarding-plans).
+1. [Discard the plan](/terraform/cloud-docs/run/ui#confirming-or-discarding-plans).
 1. Re-configure the Terraform version for the workspace, this time selecting the
    latest 0.12 release.
 1. Start a run for the workspace again.
@@ -283,8 +285,8 @@ properly so that it can be utilized by the tests that require a specific
 version.
 
 Building on the file layout we use in [using mock
-data](/cloud-docs/policy-enforcement/sentinel/mock#using-mock-data) section of our
-[mocking guide](/cloud-docs/policy-enforcement/sentinel/mock), the following layout will
+data](/terraform/cloud-docs/policy-enforcement/sentinel/mock#using-mock-data) section of our
+[mocking guide](/terraform/cloud-docs/policy-enforcement/sentinel/mock), the following layout will
 allow you to have mock data for two versions co-exist at the same time:
 
 ```

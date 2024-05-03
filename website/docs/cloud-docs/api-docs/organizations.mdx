@@ -1,5 +1,7 @@
 ---
-page_title: Organizations - API Docs - Terraform Cloud
+page_title: Organizations - API Docs - HCP Terraform
+description: >-
+  Use the `/organizations` endpoint to interact with organizations. List organizations, entitlement sets, and module producers, and show, create, update, and destroy organizations using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,7 +32,7 @@ page_title: Organizations - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -49,7 +51,7 @@ The Organizations API is used to list, show, create, update, and destroy organiz
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 Currently, this endpoint returns a full, unpaginated list of organizations (without pagination metadata) if both of the pagination query parameters are omitted. To avoid inconsistent behavior, we recommend always supplying pagination parameters when building against this API.
 
@@ -73,7 +75,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -95,6 +97,7 @@ curl \
         "plan-identifier": "developer",
         "cost-estimation-enabled": true,
         "send-passing-statuses-for-untriggered-speculative-plans": true,
+        "aggregated-commit-status-enabled": false,
         "allow-force-delete-workspaces": true,
         "name": "hashicorp",
         "permissions": {
@@ -122,15 +125,20 @@ curl \
           "can-manage-public-modules": true,
           "can-manage-custom-providers": false,
           "can-manage-run-tasks": false,
-          "can-read-run-tasks": false
+          "can-read-run-tasks": false,
+          "can-create-project": true
         },
         "fair-run-queuing-enabled": true,
         "saml-enabled": false,
         "owners-team-saml-role-id": null,
         "two-factor-conformant": false,
-        "assessments-enforced": false
+        "assessments-enforced": false,
+        "default-execution-mode": "remote"
       },
       "relationships": {
+        "default-agent-pool": {
+            "data": null
+        },
         "oauth-tokens": {
           "links": {
             "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -177,6 +185,7 @@ curl \
         "plan-identifier": "free",
         "cost-estimation-enabled": false,
         "send-passing-statuses-for-untriggered-speculative-plans": false,
+        "aggregated-commit-status-enabled": true,
         "allow-force-delete-workspaces": false,
         "name": "hashicorp-two",
         "permissions": {
@@ -204,15 +213,20 @@ curl \
           "can-manage-public-modules": true,
           "can-manage-custom-providers": false,
           "can-manage-run-tasks": false,
-          "can-read-run-tasks": false
+          "can-read-run-tasks": false,
+          "can-create-project": false
         },
         "fair-run-queuing-enabled": true,
         "saml-enabled": false,
         "owners-team-saml-role-id": null,
         "two-factor-conformant": false,
-        "assessments-enforced": false
+        "assessments-enforced": false,
+        "default-execution-mode": "remote"
       },
       "relationships": {
+        "default-agent-pool": {
+          "data": null
+        },
         "oauth-tokens": {
           "links": {
             "related": "/api/v2/organizations/hashicorp-two/oauth-tokens"
@@ -288,7 +302,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -308,6 +322,7 @@ curl \
       "plan-is-enterprise": false,
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
+      "aggregated-commit-status-enabled": true,
       "allow-force-delete-workspaces": false,
       "name": "hashicorp",
       "permissions": {
@@ -332,15 +347,20 @@ curl \
         "can-manage-public-providers": false,
         "can-manage-run-tasks": false,
         "can-read-run-tasks": false,
-        "can-create-provider": false
+        "can-create-provider": false,
+        "can-create-project": true
       },
       "fair-run-queuing-enabled": true,
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -397,11 +417,14 @@ Properties without a default value are required.
 | `data.attributes.session-timeout`                                         | integer | 20160     | Session timeout after inactivity (minutes)                                                                                                                                                                                                                                                                                                                                         |
 | `data.attributes.session-remember`                                        | integer | 20160     | Session expiration (minutes)                                                                                                                                                                                                                                                                                                                                                       |
 | `data.attributes.collaborator-auth-policy`                                | string  | password  | Authentication policy (`password` or `two_factor_mandatory`)                                                                                                                                                                                                                                                                                                                       |
-| `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
+| `data.attributes.cost-estimation-enabled`                                 | boolean | false      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to false. In Terraform Enterprise, you must also enable cost estimation in [Site Administration](/terraform/enterprise/admin/application/integration#cost-estimation-integration). |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
-| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
-| `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
-| `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.aggregated-commit-status-enabled`                        | boolean | true      | Whether or not to aggregate VCS status updates for triggered workspaces. This is useful for monorepo projects with configuration spanning many workspaces. Defaults to `true`. You cannot use this option if `send-passing-statuses-for-untriggered-speculative-plans` is set to `true`.   |
+| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
+| `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.         |
+| `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.default-execution-mode`                                  | boolean | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use by default. Valid values are `remote`, `local`, and `agent`.                                                                                                                                                                           |
+| `data.attributes.default-agent-pool-id`                                   | string  | (previous value) | Required when `default-execution-mode` is set to `agent`. The ID of the agent pool belonging to the organization. Do _not_ specify this value if you set `execution-mode` to `remote` or `local`.                                                                                                                    |
 
 ### Sample Payload
 
@@ -430,7 +453,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties. Health assessments are not available in Terraform Enterprise.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -450,6 +473,7 @@ curl \
       "plan-is-enterprise": false,
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
+      "aggregated-commit-status-enabled": true,
       "allow-force-delete-workspaces": false,
       "name": "hashicorp",
       "permissions": {
@@ -474,15 +498,20 @@ curl \
         "can-manage-public-providers": false,
         "can-manage-run-tasks": false,
         "can-read-run-tasks": false,
-        "can-create-provider": false
+        "can-create-provider": false,
+        "can-create-project": true
       },
       "fair-run-queuing-enabled": true,
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -517,21 +546,31 @@ curl \
       "id": "org-Bzyc2JuegvVLAibn",
       "type": "entitlement-sets",
       "attributes": {
-        "cost-estimation": false,
+        "agents": false,
+        "audit-logging": false,
         "configuration-designer": true,
+        "cost-estimation": false,
+        "global-run-tasks": false,
+        "module-tests-generation": false,
         "operations": true,
+        "policy-enforcement": false,
+        "policy-limit": null,
+        "policy-mandatory-enforcement-limit": null,
+        "policy-set-limit": null,
         "private-module-registry": true,
-        "sentinel": false,
+        "run-task-limit": null,
+        "run-task-mandatory-enforcement-limit": null,
+        "run-task-workspace-limit": null,
         "run-tasks": false,
+        "self-serve-billing": true,
+        "sentinel": false,
+        "sso": false,
         "state-storage": true,
         "teams": false,
-        "vcs-integrations": true,
         "usage-reporting": false,
         "user-limit": 5,
-        "self-serve-billing": true,
-        "audit-logging": false,
-        "agents": false,
-        "sso": false
+        "vcs-integrations": true,
+        "versioned-policy-set-limit": null
       },
       "links": {
         "self": "/api/v2/entitlement-sets/org-Bzyc2JuegvVLAibn"
@@ -567,11 +606,14 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.session-timeout`                                         | integer | 20160     | Session timeout after inactivity (minutes)                                                                                                                                                                                                                                                                                                                                         |
 | `data.attributes.session-remember`                                        | integer | 20160     | Session expiration (minutes)                                                                                                                                                                                                                                                                                                                                                       |
 | `data.attributes.collaborator-auth-policy`                                | string  | password  | Authentication policy (`password` or `two_factor_mandatory`)                                                                                                                                                                                                                                                                                                                       |
-| `data.attributes.cost-estimation-enabled`                                 | boolean | true      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to true. In a Terraform Cloud organization that does not have Teams & Governance features, this value is always false and cannot be changed. In Terraform Enterprise, Cost Estimation must also be enabled in Site Administration.                                          |
+| `data.attributes.cost-estimation-enabled`                                 | boolean | false      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to false. In Terraform Enterprise, you must also enable cost estimation in [Site Administration](/terraform/enterprise/admin/application/integration#cost-estimation-integration). |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
-| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
-| `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`. Not available in Terraform Enterprise.             |
-| `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.aggregated-commit-status-enabled`                        | boolean | true      | Whether or not to aggregate VCS status updates for triggered workspaces. This is useful for monorepo projects with configuration spanning many workspaces. Defaults to `true`. You cannot use this option if `send-passing-statuses-for-untriggered-speculative-plans` is set to `true`.   |
+| `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
+| `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.             |
+| `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
+| `data.attributes.default-execution-mode`                                  | boolean | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use by default. Valid values are `remote`, `local`, and `agent`.                                                                                                                                                                           |
+| `data.attributes.default-agent-pool-id`                                   | string  | (previous value) | Required when `default-execution-mode` is set to `agent`. The ID of the agent pool belonging to the organization. Do _not_ specify this value if you set `execution-mode` to `remote` or `local`.                                                                                                                      |
 
 ### Sample Payload
 
@@ -599,7 +641,7 @@ curl \
 
 ### Sample Response
 
-**Note:** The `two-factor-conformant` and `assessments-enforced` properties are only returned from Terraform Cloud organizations.
+**Note:** The `two-factor-conformant` and `assessments-enforced` properties are only returned from HCP Terraform organizations.
 
 ```json
 {
@@ -619,6 +661,7 @@ curl \
       "plan-is-enterprise": false,
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
+      "aggregated-commit-status-enabled": true,
       "name": "hashicorp",
       "permissions": {
         "can-update": true,
@@ -642,15 +685,20 @@ curl \
         "can-manage-public-providers": false,
         "can-manage-run-tasks": false,
         "can-read-run-tasks": false,
-        "can-create-provider": false
+        "can-create-provider": false,
+        "can-create-project": true
       },
       "fair-run-queuing-enabled": true,
       "saml-enabled": false,
       "owners-team-saml-role-id": null,
       "two-factor-conformant": false,
-      "assessments-enforced": false
+      "assessments-enforced": false,
+      "default-execution-mode": "remote"
     },
     "relationships": {
+      "default-agent-pool": {
+        "data": null
+      },
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
@@ -712,7 +760,7 @@ The response body will be empty if successful.
 
 ## Show the Entitlement Set
 
-This endpoint shows the [entitlements](/cloud-docs/api-docs#feature-entitlements) for an organization.
+This endpoint shows the [entitlements](/terraform/cloud-docs/api-docs#feature-entitlements) for an organization.
 
 `GET /organizations/:organization_name/entitlement-set`
 
@@ -742,21 +790,33 @@ curl \
     "id": "org-Bzyc2JuegvVLAibn",
     "type": "entitlement-sets",
     "attributes": {
-      "cost-estimation": false,
+      "agents": false,
+      "audit-logging": false,
       "configuration-designer": true,
+      "cost-estimation": false,
+      "global-run-tasks": false,
+      "module-tests-generation": false,
       "operations": true,
+      "policy-enforcement": false,
+      "policy-limit": 5,
+      "policy-mandatory-enforcement-limit": null,
+      "policy-set-limit": 1,
       "private-module-registry": true,
-      "sentinel": false,
+      "private-policy-agents": false,
+      "private-vcs": false,
+      "run-task-limit": 1,
+      "run-task-mandatory-enforcement-limit": 1,
+      "run-task-workspace-limit": 10,
       "run-tasks": false,
+      "self-serve-billing": true,
+      "sentinel": false,
+      "sso": false,
       "state-storage": true,
       "teams": false,
-      "vcs-integrations": true,
       "usage-reporting": false,
       "user-limit": 5,
-      "self-serve-billing": true,
-      "audit-logging": false,
-      "agents": false,
-      "sso": false
+      "vcs-integrations": true,
+      "versioned-policy-set-limit": null
     },
     "links": {
       "self": "/api/v2/entitlement-sets/org-Bzyc2JuegvVLAibn"
@@ -767,9 +827,11 @@ curl \
 
 ## Show Module Producers
 
-~> **Note:** This endpoint is not available on Terraform Cloud.
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise, and not available in HCP Terraform.
+</EnterpriseAlert>
 
-This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/enterprise/admin/application/module-sharing).
+This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/terraform/enterprise/admin/application/module-sharing).
 
 `GET /organizations/:organization_name/relationships/module-producers`
 
@@ -784,7 +846,7 @@ This endpoint shows organizations that are configured to share modules with an o
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                      |
 | -------------- | -------------------------------------------------------------------------------- |
@@ -836,22 +898,79 @@ curl \
 }
 ```
 
+## Show data retention policy
+
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
+</EnterpriseAlert>
+
+`GET /organizations/:organization_name/relationships/data-retention-policy`
+
+| Parameter            | Description                                                         |
+| ---------------------| --------------------------------------------------------------------|
+| `:organization_name` | The name of the organization to show the data retention policy for. |
+
+This endpoint shows the data retention policy set explicitly on the organization.
+
+When no data retention policy is set for the organization, the endpoint returns the default policy configured for the Terraform Enterprise installation. Read more about [organization data retention policies](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies).
+
+For additional information, refer to [Data Retention Policy Types](/terraform/enterprise/api-docs/data-retention-policies#data-retention-policy-types) in the Terraform Enterprise documentation.
+
+## Create or update data retention policy
+
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
+</EnterpriseAlert>
+
+`POST /organizations/:organization_name/relationships/data-retention-policy`
+
+| Parameter            | Description                                                                |
+| -------------------- | -------------------------------------------------------------------------- |
+| `:organization_name` | The name of the organization to update the data retention policy for.      |
+
+This endpoint creates a data retention policy for an organization or updates the existing policy.
+
+Read more about [organization data retention policies](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies).
+
+Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#create-or-update-data-retention-policy) in the Terraform Enterprise documentation for details.
+
+## Remove data retention policy
+
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
+</EnterpriseAlert>
+
+`DELETE /organizations/:organization_name/relationships/data-retention-policy`
+
+| Parameter            | Description                                                                                                                                                                          |
+| ---------------------| -------------------------------------------------------------------------- |
+| `:organization_name` | The name of the organization to remove the data retention policy for. |
+
+This endpoint removes the data retention policy explicitly set on an organization.
+When the data retention policy is deleted, the organization inherits the default policy configured for the Terraform Enterprise installation. Refer to [Data Retention Policies](/terraform/enterprise/application-administration/general#data-retention-policies) for additional information.
+
+Refer to [Data Retention Policies](/terraform/enterprise/users-teams-organizations/organizations#data-retention-policies) for information about configuring data retention policies for an organization.
+
+Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retention-policies#remove-data-retention-policy) in the Terraform Enterprise documentation for details.
+
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name         | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |
-| `entitlement_set`     | The entitlement set that determines which Terraform Cloud features the organization can use. |
+| `entitlement_set`     | The entitlement set that determines which HCP Terraform features the organization can use. |
 
 ## Relationships
 
 The following relationships may be present in various responses.
 
-| Resource Name         | Description                                                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `module-producers`    | Other organizations configured to share modules with the organization. |
-| `oauth-tokens`        | OAuth tokens associated with VCS configurations for the organization.                                                         |
-| `authentication-token`| The API token for an organization.                                                                                            |
-| `entitlement-set`     | The entitlement set that determines which Terraform Cloud features the organization can use.                                  |
-| `subscription`        | The current subscription for an organization.                                                                                 |
+| Resource Name           | Description                                                                                                                   |
+| ---------------------   | ----------------------------------------------------------------------------------------------------------------------------- |
+| `module-producers`      | Other organizations configured to share modules with the organization.                                                        |
+| `oauth-tokens`          | OAuth tokens associated with VCS configurations for the organization.                                                         |
+| `authentication-token`  | The API token for an organization.                                                                                            |
+| `entitlement-set`       | The entitlement set that determines which HCP Terraform features the organization can use.                                  |
+| `subscription`          | The current subscription for an organization.                                                                                 |
+| `default-agent-pool`    | An organization's default agent pool. Set this value if your `default-execution-mode` is `agent`.                             |
+| `data-retention-policy` | <EnterpriseAlert inline/> Specifies an organization's data retention policy. Refer to [Data Retention Policy APIs](/terraform/enterprise/api-docs/data-retention-policies) in the Terraform Enterprise documentation for more details. |

@@ -1,16 +1,19 @@
 ---
-page_title:  Defining Policies - Open Policy Agent - Terraform Cloud
-description: Use the Rego policy language to define Open Policy Agent (OPA) policies for Terraform Cloud. 
+page_title:  Defining Policies - Open Policy Agent - HCP Terraform
+description: Use the Rego policy language to define Open Policy Agent (OPA) policies for HCP Terraform.
 
 ---
 
 # Defining OPA Policies
 
--> **Note:** Policies are available in the [Terraform Cloud Team and Governance tier](https://www.hashicorp.com/products/terraform/pricing), and OPA policies are in beta. OPA Policies are not available in Terraform Enterprise.
+Policies are rules that HCP Terraform enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that HCP Terraform can enforce globally or on specific [projects](/terraform/cloud-docs/projects/managing) and workspaces.
+OPA Policies are evaluated in HCP Terraform's infrastructure.
 
-Policies are rules that Terraform Cloud enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets) that Terraform Cloud can enforce on workspaces.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
-> **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](https://learn.hashicorp.com/tutorials/terraform/drift-and-opa) tutorial.
+> **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorial.
 
 ## Defining Policies
 
@@ -24,13 +27,13 @@ Refer to [How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0
 
 You must write a query to identify a specific policy rule within your Rego code. The query may evaluate code from multiple Rego files.
 
-The result of each query must return an array, which Terraform Cloud uses to determine whether the policy has passed or failed. If the array is empty, Terraform Cloud reports that the policy has passed.
+The result of each query must return an array, which HCP Terraform uses to determine whether the policy has passed or failed. If the array is empty, HCP Terraform reports that the policy has passed.
 
-The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`. 
+The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`.
 
 ### OPA Input
 
-Terraform Cloud combines the output from the Terraform run and plan into a single JSON file and passes that file to OPA as input. Refer to the [OPA Overview documentation](https://www.openpolicyagent.org/docs/latest/#the-input-document) for more details about how OPA uses JSON input data.
+HCP Terraform combines the output from the Terraform run and plan into a single JSON file and passes that file to OPA as input. Refer to the [OPA Overview documentation](https://www.openpolicyagent.org/docs/latest/#the-input-document) for more details about how OPA uses JSON input data.
 
 The run data contains information like workspace details and the organization name. To access the properties from the Terraform plan data in your policies, use  `input.plan`. To access properties from the Terraform run, use  `input.run`.
 
@@ -59,7 +62,7 @@ The following example shows sample OPA input data.
 }
 ```
 
-Use the [Retrieve JSON Execution Plan endpoint](/cloud-docs/api-docs/plans#retrieve-the-json-execution-plan) to retrieve Terraform plan output data for testing. Refer to [Terraform Run Data](#terraform-run-data) for the properties included in Terraform run output data.
+Use the [Retrieve JSON Execution Plan endpoint](/terraform/cloud-docs/api-docs/plans#retrieve-the-json-execution-plan) to retrieve Terraform plan output data for testing. Refer to [Terraform Run Data](#terraform-run-data) for the properties included in Terraform run output data.
 
 ### Example Policies
 
@@ -125,145 +128,39 @@ rule[msg] {
 
 ## Testing Policies
 
-You can write tests for your policies by mocking the input data the policies use during Terraform runs.
+You can write tests for your policies by [mocking](https://www.openpolicyagent.org/docs/latest/policy-testing/#data-and-function-mocking) the input data the policies use during Terraform runs.
 
-The following example policy called `policy1` checks whether a workspace has provider tags.
+The following example policy called `block_auto_apply_runs` checks whether or not an HCP Terraform workspace has been configured to automatically apply a successful Terraform plan.
 
 ```rego
-package terraform.policies.policy1
+package terraform.tfc.block_auto_apply_runs
 
-import input.plan as plan
 import input.run as run
 
-array_contains(arr, elem) {
-  arr[_] = elem
-}
-
-get_basename(path) = basename{
-    arr := split(path, "/")
-    basename:= arr[count(arr) - 1]
-}
-
-deny[reason] {
-    resource := plan.resource_changes[_]
-    action := resource.change.actions[count(resource.change.actions) - 1]
-    array_contains(["create", "update"], action)
-
-    cloud_tag := get_basename(resource.provider_name)
-
-    not run.workspace.tags[cloud_tag]
-
-    reason := sprintf("Workspace must be marked with '%s' tag to create resources in %s cloud",
-                      [cloud_tag, cloud_tag])
+deny[msg] {
+	run.workspace.auto_apply != false
+	msg := sprintf(
+		"HCP Terraform workspace %s has been configured to automatically provision Terraform infrastructure. Change the workspace Apply Method settings to 'Manual Apply'",
+		[run.workspace.name],
+	)
 }
 ```
 
-The following example shows mock JSON input data from Terraform that you could use to write tests for `policy1`.
-
-```json
-{
-   "mock":{
-      "valid_tags":{
-         "plan":{
-            "resource_changes":[
-               {
-                  "address":"aws_instance.instance1",
-                  "mode":"managed",
-                  "type":"aws_instance",
-                  "name":"instance1",
-                  "provider_name":"registry.terraform.io/hashicorp/aws",
-                  "change":{
-                     "actions":[
-                        "create",
-                        "update"
-                     ]
-                  }
-               },
-               {
-                  "address":"google_compute_instance.instance2",
-                  "mode":"managed",
-                  "type":"google_compute_instance",
-                  "name":"instance2",
-                  "provider_name":"registry.terraform.io/hashicorp/google",
-                  "change":{
-                     "actions":[
-                        "create"
-                     ]
-                  }
-               }
-            ]
-         },
-         "run":{
-            "workspace":{
-               "tags":{
-                  "aws":"",
-                  "google":""
-               }
-            }
-         }
-      },
-      "missing_tag":{
-         "plan":{
-            "resource_changes":[
-               {
-                  "address":"aws_instance.instance1",
-                  "mode":"managed",
-                  "type":"aws_instance",
-                  "name":"instance1",
-                  "provider_name":"registry.terraform.io/hashicorp/aws",
-                  "change":{
-                     "actions":[
-                        "create",
-                        "update"
-                     ]
-                  }
-               },
-               {
-                  "address":"google_compute_instance.instance2",
-                  "mode":"managed",
-                  "type":"google_compute_instance",
-                  "name":"instance2",
-                  "provider_name":"registry.terraform.io/hashicorp/google",
-                  "change":{
-                     "actions":[
-                        "create"
-                     ]
-                  }
-               }
-            ]
-         },
-         "run":{
-            "workspace":{
-               "tags":{
-                  "google":""
-               }
-            }
-         }
-      }
-   }
-}
-```
-
-The following test validates `policy1`. The test checks for valid tags and missing tags in the workspace. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
-
+The following test validates `block_auto_apply_runs`. The test is written in rego and uses the OPA [test format](https://www.openpolicyagent.org/docs/latest/policy-testing/#test-format) to check that the workspace [apply method](/terraform/cloud-docs/workspaces/settings#apply-method) is not configured to auto apply. You can run this test with the `opa test` CLI command. Refer to [Policy Testing](https://www.openpolicyagent.org/docs/latest/policy-testing/) in the OPA documentation for more details.
 
 ```rego
-package terraform.policies.policy1
+package terraform.tfc.block_auto_apply_runs
 
-test_workspace_tags_allowed {
-    result = deny with input as data.mock.valid_tags
-    count(result) == 0
-}
+import future.keywords
 
-test_workspace_tags_missing {
-    result = deny with input as data.mock.missing_tag
-    count(result) == 1
+test_run_workspace_auto_apply if {
+	deny with input as {"run": {"workspace": {"auto_apply": true}}}
 }
 ```
 
 ## Terraform Run Data
 
-Each [Terraform run](/docs/glossary#run) outputs data describing the run settings and the associated workspace.
+Each [Terraform run](/terraform/docs/glossary#run) outputs data describing the run settings and the associated workspace.
 
 ### Schema
 
@@ -273,6 +170,7 @@ The following code shows the schema for Terraform run data.
 run
 ├── id (string)
 ├── created_at (string)
+├── created_by (string)
 ├── message (string)
 ├── commit_sha (string)
 ├── is_destroy (boolean)
@@ -281,18 +179,22 @@ run
 ├── replace_addrs (array of strings)
 ├── speculative (boolean)
 ├── target_addrs (array of strings)
+└── project
+│    ├── id (string)
+│    └── name (string)
 ├── variables (map of keys)
 ├── organization
 │   └── name (string)
-├── workspace
-│   ├── id (string)
-│   ├── name (string)
-│   ├── created_at (string)
-│   ├── description (string)
-│   ├── auto_apply (bool)
-│   ├── tags (array of strings)
-│   ├── working_directory (string)
-│   └── vcs_repo (map of keys)
+└── workspace
+    ├── id (string)
+    ├── name (string)
+    ├── created_at (string)
+    ├── description (string)
+    ├── execution_mode (string)
+    ├── auto_apply (bool)
+    ├── tags (array of strings)
+    ├── working_directory (string)
+    └── vcs_repo (map of keys)
 ```
 
 ### Properties
@@ -307,19 +209,30 @@ The following table contains the attributes for the `run` namespace.
 |---------| ----------| ----------|
 |  `id`   | String | The ID associated with the current Terraform run |
 |  `created_at` | String | The time Terraform created the run. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
+|  `created_by` | String | A string that specifies the user name of the HCP Terraform user for the specific run.|
 |  `message` |  String | The message associated with the Terraform run. The default value is "Queued manually via the Terraform Enterprise API". |
 |  `commit_sha` |  String |  The checksum hash (SHA) that identifies the commit |
 |  `is_destroy` |  Boolean | Whether the plan is a destroy plan that destroys all provisioned resources |
 |  `refresh` | Boolean |  Whether the state refreshed prior to the plan |
 |   `refresh_only` |  Boolean | Whether the plan is in refresh-only mode. In refresh-only mode, Terraform ignores configuration changes and updates state with any changes made outside of Terraform. |
-|  `replace_addrs` | An array of strings representing [resource addresses](/cli/state/resource-addressing) | The targets specified using the [`-replace`](/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
-|  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) only |
-|  `target_addrs` |  An array of strings representing [resource addresses](/cli/state/resource-addressing). | The targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
-|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
+|  `replace_addrs` | An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing) | The targets specified using the [`-replace`](/terraform/cli/commands/plan#replace-address) flag in the CLI or the `replace-addrs` property in the API. Undefined if there are no specified resource targets. |
+|  `speculative` | Boolean | Whether the plan associated with the run is a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) only |
+|  `target_addrs` |  An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing). | The targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` property in the API. Undefined if there are no specified resource targets. |
+|   `variables` |  A string-keyed map of values. | Provides the variables configured within the run. Each variable `name` maps to two properties: `category` and `sensitive`.  The `category` property is a string indicating the variable type, either "input" or "environment". The `sensitive` property is a boolean, indicating whether the variable is a [sensitive value](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values).  |
+
+#### Project Namespace
+
+The following table contains the properties for the `project` namespace.
+
+| Property Name |  Type  | Description |
+|---------- | ------------ | -----------|
+| `id` | String | The ID associated with the Terraform project |
+|  `name` |  String | The name of the project, which can only include letters, numbers, spaces, `-`, and `_`. |
+
 
 #### Organization Namespace
 
-The `organization` namespace has one property called `name`. The `name` property is a string that specifies the name of the Terraform Cloud organization for the run.
+The `organization` namespace has one property called `name`. The `name` property is a string that specifies the name of the HCP Terraform organization for the run.
 
 #### Workspace Namespace
 
@@ -331,7 +244,8 @@ The following table contains the properties for the `workspace` namespace.
 |  `name` |  String | The name of the workspace, which can only include letters, numbers, `-`, and `_` |
 |  `created_at` | String | The time of the workspace's creation. The timestamp follows the [standard timestamp format in RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). |
 |  `description` | String | The description for the workspace. This value can be `null`. |
-|  `auto_apply` | Boolean | The workspace's [auto-apply](/cloud-docs/workspaces/settings#apply-method) setting |
+|  `auto_apply` | Boolean | The workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#apply-method) setting |
 |  `tags` | Array of strings | The list of tag names for the workspace |
-|  `working_directory` |  String | The configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
-|  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the Terraform Cloud [Workspaces API documentation](/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
+|  `working_directory` |  String | The configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
+|  `execution_mode` |  String | The configured Terraform execution mode of the workspace. The default value is `remote`. |
+|  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the HCP Terraform [Workspaces API documentation](/terraform/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
