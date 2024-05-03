@@ -1,5 +1,7 @@
 ---
-page_title: User Tokens - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: User Tokens - API Docs - HCP Terraform
+description: >-
+  Use the `/authentication-tokens` endpoint to manage user-specific API tokens. List, show, create, and destroy user tokens using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,7 +32,7 @@ page_title: User Tokens - API Docs - Terraform Cloud and Terraform Enterprise
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -44,11 +46,11 @@ page_title: User Tokens - API Docs - Terraform Cloud and Terraform Enterprise
 | ---------- | ------------------- |
 | `:user_id` | The ID of the User. |
 
-Use the [Account API](/cloud-docs/api-docs/account) to find your own user ID.
+Use the [Account API](/terraform/cloud-docs/api-docs/account) to find your own user ID.
 
 The objects returned by this endpoint only contain metadata, and do not include the secret text of any authentication tokens. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
 
 | Status  | Response                                                | Reason                                                                                |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -58,7 +60,7 @@ The objects returned by this endpoint only contain metadata, and do not include 
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results.
 
 | Parameter      | Description                                                                 |
 | -------------- | --------------------------------------------------------------------------- |
@@ -87,7 +89,8 @@ curl \
         "created-at": "2018-11-06T22:56:10.203Z",
         "last-used-at": null,
         "description": null,
-        "token": null
+        "token": null,
+        "expired-at": null
       },
       "relationships": {
         "created-by": {
@@ -102,7 +105,8 @@ curl \
         "created-at": "2018-11-25T22:31:30.624Z",
         "last-used-at": "2018-11-26T20:27:54.931Z",
         "description": "api",
-        "token": null
+        "token": null,
+        "expired-at": "2023-04-06T12:00:00.000Z"
       },
       "relationships": {
         "created-by": {
@@ -127,7 +131,7 @@ curl \
 
 The objects returned by this endpoint only contain metadata, and do not include the secret text of any authentication tokens. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only return useful data for that token's user account.
 
 | Status  | Response                                                | Reason                                                       |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------ |
@@ -155,7 +159,8 @@ curl \
       "created-at": "2018-11-25T22:31:30.624Z",
       "last-used-at": "2018-11-26T20:34:59.487Z",
       "description": "api",
-      "token": null
+      "token": null,
+      "expired-at": "2023-04-06T12:00:00.000Z"
     },
     "relationships": {
       "created-by": {
@@ -177,11 +182,11 @@ curl \
 | ---------- | ------------------- |
 | `:user_id` | The ID of the User. |
 
-Use the [Account API](/cloud-docs/api-docs/account) to find your own user ID.
+Use the [Account API](/terraform/cloud-docs/api-docs/account) to find your own user ID.
 
 This endpoint returns the secret text of the created authentication token. A token is only shown upon creation, and cannot be recovered later.
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only create new tokens for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only create new tokens for that token's user account.
 
 | Status  | Response                                                | Reason                                                         |
 | ------- | ------------------------------------------------------- | -------------------------------------------------------------- |
@@ -196,10 +201,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                      | Type   | Default | Description                         |
-| ----------------------------- | ------ | ------- | ----------------------------------- |
-| `data.type`                   | string |         | Must be `"authentication-tokens"`.  |
-| `data.attributes.description` | string |         | The description for the User Token. |
+| Key path                      | Type   | Default | Description                                                                                                     |
+| ----------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `data.type`                   | string |         | Must be `"authentication-tokens"`.                                                                              |
+| `data.attributes.description` | string |         | The description for the User Token.                                                                             |
+| `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the User Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
 ### Sample Payload
 
@@ -208,7 +214,8 @@ Properties without a default value are required.
   "data": {
     "type": "authentication-tokens",
     "attributes": {
-      "description":"api"
+      "description":"api",
+      "expired-at": "2023-04-06T12:00:00.000Z"
     }
   }
 }
@@ -236,7 +243,8 @@ curl \
       "created-at": "2018-11-26T20:48:35.054Z",
       "last-used-at": null,
       "description": "api",
-      "token": "6tL24nM38M7XWQ.atlasv1.KmWckRfzeNmUVFNvpvwUEChKaLGznCSD6fPf3VPzqMMVzmSxFU0p2Ibzpo2h5eTGwPU"
+      "token": "6tL24nM38M7XWQ.atlasv1.KmWckRfzeNmUVFNvpvwUEChKaLGznCSD6fPf3VPzqMMVzmSxFU0p2Ibzpo2h5eTGwPU",
+      "expired-at": "2023-04-06T12:00:00.000Z"
     },
     "relationships": {
       "created-by": {
@@ -258,7 +266,7 @@ curl \
 | --------- | ------------------------------------ |
 | `:id`     | The ID of the User Token to destroy. |
 
--> **Note:** You must access this endpoint with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens), and it will only delete tokens for that token's user account.
+-> **Note:** You must access this endpoint with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens), and it will only delete tokens for that token's user account.
 
 | Status  | Response                  | Reason                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------ |

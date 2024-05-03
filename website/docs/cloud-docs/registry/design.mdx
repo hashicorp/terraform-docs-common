@@ -1,7 +1,5 @@
 ---
-page_title: >-
-  Using the Configuration Designer - Private Registry - Terraform Cloud and
-  Terraform Enterprise
+page_title: Using the Configuration Designer - Private Registry - HCP Terraform
 description: >-
   The configuration designer lets you outline a configuration with private
   modules and helps you quickly define variables.
@@ -9,19 +7,15 @@ description: >-
 
 # Using the Configuration Designer
 
-Terraform Cloud's private registry includes a configuration designer that can help you spend less time writing boilerplate code in a module-centric Terraform workflow.
+HCP Terraform's private registry includes a configuration designer that can help you spend less time writing boilerplate code in a module-centric Terraform workflow.
 
 The configuration designer lets you outline a configuration for a new workspace by choosing any number of private modules. It then lists those modules' variables as a fillable HTML form, with a helper interface for finding values that you can interpolate. When you are finished, the designer returns the text of a `main.tf` configuration. This is the same Terraform code you would have written in your text editor.
 
 ## Accessing the Configuration Designer
 
-Click the **Registry** button in the main navigation bar, and then click **<\> Design Configuration**.
-
-![Terraform Cloud screenshot: the design configuration button](/img/docs/design-start.png)
+Go to your organization's private registry, and then click **<\> Design Configuration**.
 
 The **Select Modules** page appears.
-
-![Terraform Cloud screenshot: the select modules page](/img/docs/design-select-modules.png)
 
 ## Adding Modules
 
@@ -36,13 +30,9 @@ Selecting a module adds its most recent version to the configuration. To specify
 1. Click the module's version number from the **Selected Modules** list on the right.
 1. Select an alternate version from the menu.
 
-![Terraform Cloud screenshot: setting a module version with the drop-down](/img/docs/design-set-version.png)
-
 ## Setting Variables
 
 When you finish selecting modules, click **Next »** to go to the **Set Variables** page.
-
-![Terraform Cloud screenshot: the set variables page](/img/docs/design-variables-finished.png)
 
 The left side of this page lists your chosen modules, and the right side lists all variables for the currently selected module. Each variable is labeled as required or optional.
 
@@ -52,10 +42,9 @@ Once you set a value for all of a module's required variables, its **Configure**
 
 ### Interpolation Searching
 
-Variable values can be literal strings, or can interpolate other values. When you start typing an interpolation token (`${`), the designer displays a help message. As you continue typing, it searches the available outputs in your other selected modules, as well as outputs from workspaces where you are authorized to read state outputs. You can select one of these search results, or type a full name if you need to reference a value Terraform Cloud does not know about.
-\[permissions-citation]: #intentionally-unused---keep-for-maintainers
+Variable values can be literal strings, or can interpolate other values. When you start typing an interpolation token (`${`), the designer displays a help message. As you continue typing, it searches the available outputs in your other selected modules, as well as outputs from workspaces where you are authorized to read state outputs. You can select one of these search results, or type a full name if you need to reference a value HCP Terraform does not know about.
 
-![Terraform Cloud screenshot: interpolation help](/img/docs/design-variables-help.png)
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ### Deferring Variables
 
@@ -67,10 +56,8 @@ Select the **Deferred** checkbox to delegate a variable to configuration users. 
 
 When all modules are configured, click **Next »**.
 
-The "Publish" page appears. Use the **Preview configuration** menu to review the generated code.
-
-![Terraform Cloud screenshot: configuration designer output](/img/docs/design-verify.png)
+The **Publish** page appears. Use the **Preview configuration** menu to review the generated code.
 
 The configuration designer does not create any repositories or workspaces. To create workspaces with the configuration, you must download the generated code, save it as the `main.tf` file in a new directory, and commit it to version control. After you download the code, you can make any necessary changes or additions. For example, you may want to add non-module resources.
 
-When you are sure you have downloaded the results, click **Done** to discard the configuration. Terraform Cloud does not save output from previous configuration designer runs.
+When you are sure you have downloaded the results, click **Done** to discard the configuration. HCP Terraform does not save output from previous configuration designer runs.

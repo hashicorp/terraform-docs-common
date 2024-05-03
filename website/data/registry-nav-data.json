@@ -31,9 +31,24 @@
         "path": "modules/use"
       },
       { "title": "Publishing Modules", "path": "modules/publish" },
-      { "title": "Verified Modules", "path": "modules/verified" }
+      { "title": "Partner Modules", "path": "modules/partner" }
     ]
   },
+  {
+    "title": "Policy Libraries",
+    "routes": [
+      {
+        "title": "Publishing Policy Libraries",
+        "path": "policy-libraries/publishing"
+      },
+      {
+        "title": "Using Policies From Libraries",
+        "path": "policy-libraries/using-policies"
+      }
+    ]
+  },
+  { "title": "Run Tasks", "path": "run-tasks" },
   { "title": "Private Registries", "path": "private" },
-  { "title": "Registry API", "path": "api-docs" }
+  { "title": "Registry API", "path": "api-docs" },
+  { "title": "Publishing FAQ", "path": "faq"}
 ]

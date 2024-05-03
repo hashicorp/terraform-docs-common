@@ -1,5 +1,7 @@
 ---
-page_title: Agent Pools and Agents - API Docs - Terraform Cloud and Terraform Enterprise
+page_title: Agent Pools and Agents - API Docs - HCP Terraform
+description: >-
+  Use the `/agents` and `/agent-pools` endpoints. List, show, and delete agents, and list, show, create, update, and delete agent pools using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,7 +32,7 @@ page_title: Agent Pools and Agents - API Docs - Terraform Cloud and Terraform En
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
@@ -40,7 +42,9 @@ An Agent Pool represents a group of Agents, often related to one another by shar
 A workspace may be configured to use one of the organization's agent pools to run remote operations with isolated,
 private, or on-premises infrastructure.
 
--> **Note:** Terraform Cloud Agents are a paid feature, available as part of the **Terraform Cloud for Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/agents.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 ## List Agent Pools
 
@@ -59,14 +63,15 @@ This endpoint allows you to list agent pools, their agents, and their tokens for
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter      | Description                                                                                                                                                                              |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `q`            | **Optional.** A search query string. Agent pools are searchable by name. Available in Terraform Enterprise v202207-1 and later.                                                          |
-| `sort`         | **Optional.** Allows sorting the returned agents pools. Valid values are `"name"` and `"created-at"`. Prepending a hyphen to the sort parameter will reverse the order (e.g. `"-name"`). |
-| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                       |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                              |
+| Parameter                          | Description                                                                                                                                                                                                                                                                                                                 |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `q`                                | **Optional.** A search query string. Agent pools are searchable by name.                                                                                                                                                                                              |
+| `sort`                             | **Optional.** Allows sorting the returned agents pools. Valid values are `"name"` and `"created-at"`. Prepending a hyphen to the sort parameter will reverse the order (e.g. `"-name"`).                                                                                                                                    |
+| `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
+| `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
+| `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |                                                                             |
 
 ### Sample Request
 
@@ -88,7 +93,9 @@ curl \
       "type": "agent-pools",
       "attributes": {
         "name": "example-pool",
-        "created-at": "2020-08-05T18:10:26.964Z"
+        "created-at": "2020-08-05T18:10:26.964Z",
+        "organization-scoped": false,
+        "agent-count": 3
       },
       "relationships": {
         "agents": {
@@ -105,6 +112,14 @@ curl \
           "data": [
             {
               "id": "ws-9EEkcEQSA3XgWyGe",
+              "type": "workspaces"
+            }
+          ]
+        },
+        "allowed-workspaces": {
+          "data": [
+            {
+              "id": "ws-x9taqV23mxrGcDrn",
               "type": "workspaces"
             }
           ]
@@ -142,9 +157,9 @@ curl \
 
 `GET /agent-pools/:agent_pool_id/agents`
 
-| Parameter        | Description                   |
-| ---------------- | ----------------------------- |
-| `:agent_pool_id` | The name of the organization. |
+| Parameter        | Description                       |
+| ---------------- | --------------------------------- |
+| `:agent_pool_id` | The ID of the Agent Pool to list. |
 
 | Status  | Response                                 | Reason                                                       |
 | ------- | ---------------------------------------- | ------------------------------------------------------------ |
@@ -153,7 +168,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs/#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                 | Description                                                                  |
 | ------------------------- | ---------------------------------------------------------------------------- |
@@ -267,7 +282,8 @@ curl \
     "type": "agent-pools",
     "attributes": {
       "name": "example-pool",
-      "created-at": "2020-08-05T18:10:26.964Z"
+      "created-at": "2020-08-05T18:10:26.964Z",
+      "organization-scoped": false
     },
     "relationships": {
       "agents": {
@@ -284,6 +300,14 @@ curl \
         "data": [
           {
             "id": "ws-9EEkcEQSA3XgWyGe",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "allowed-workspaces": {
+        "data": [
+          {
+            "id": "ws-x9taqV23mxrGcDrn",
             "type": "workspaces"
           }
         ]
@@ -349,7 +373,7 @@ curl \
 
 | Status  | Response                  | Reason                                                                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [204][] | Nothing                   | Success                                                                                                      |
+| [204][] | No Content                | Success                                                                                                      |
 | [412][] | [JSON API error object][] | Agent is not deletable. Agents must have a status of `unknown`, `errored`, or `exited` before being deleted. |
 | [404][] | [JSON API error object][] | Agent not found, or user unauthorized to perform action                                                      |
 
@@ -384,10 +408,13 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default | Description                                                                                                                                                   |
-| ---------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`            | string |         | Must be `"agent-pools"`.                                                                                                                                      |
-| `data.attributes.name` | string |         | The name of the agent-pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization. |
+| Key path                                          | Type   | Default | Description                                                                                                                                                                                                                                      |
+|---------------------------------------------------|--------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                                       | string |         | Must be `"agent-pools"`.                                                                                                                                                                                                                         |
+| `data.attributes.name`                            | string |         | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                    |
+| `data.attributes.organization-scoped`             | bool   | true    | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
+| `data.relationships.allowed-workspaces.data.type` | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
+| `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).  |
 
 ### Sample Payload
 
@@ -396,7 +423,18 @@ Properties without a default value are required.
     "data": {
         "type": "agent-pools",
         "attributes": {
-            "name": "my-pool"
+            "name": "my-pool",
+            "organization-scoped": false,
+        },
+        "relationships": {
+          "allowed-workspaces": {
+            "data": [
+              {
+                "id": "ws-x9taqV23mxrGcDrn",
+                "type": "workspaces"
+              }
+            ]
+          }
         }
     }
 }
@@ -422,7 +460,9 @@ curl \
     "type": "agent-pools",
     "attributes": {
       "name": "my-pool",
-      "created-at": "2020-10-13T16:32:45.165Z"
+      "created-at": "2020-10-13T16:32:45.165Z",
+      "organization-scoped": false,
+
     },
     "relationships": {
       "agents": {
@@ -437,6 +477,14 @@ curl \
       },
       "workspaces": {
         "data": []
+      },
+      "allowed-workspaces": {
+        "data": [
+          {
+            "id": "ws-x9taqV23mxrGcDrn",
+            "type": "workspaces"
+          }
+        ]
       }
     },
     "links": {
@@ -466,10 +514,13 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default          | Description                                                                                                                                                   |
-| ---------------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`            | string |                  | Must be `"agent-pools"`.                                                                                                                                      |
-| `data.attributes.name` | string | (previous value) | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization. |
+| Key path                                          | Type   | Default          | Description                                                                                                                                                                                                                                      |
+|---------------------------------------------------|--------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                                       | string |                  | Must be `"agent-pools"`.                                                                                                                                                                                                                         |
+| `data.attributes.name`                            | string | (previous value) | The name of the agent pool, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                    |
+| `data.attributes.organization-scoped`             | bool   | true             | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
+| `data.relationships.allowed-workspaces.data.type` | string |                  | Must be `"workspaces"`.                                                                                                                                                                   |
+| `data.relationships.allowed-workspaces.data.id`   | string |                  | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |
 
 ### Sample Payload
 
@@ -478,7 +529,18 @@ Properties without a default value are required.
   "data": {
     "type": "agent-pools",
     "attributes": {
-      "name": "example-pool"
+      "name": "example-pool",
+      "organization-scoped": false,
+    },
+    "relationships": {
+      "allowed-workspaces": {
+        "data": [
+          {
+            "id": "ws-x9taqV23mxrGcDrn",
+            "type": "workspaces"
+          }
+        ]
+      }
     }
   }
 }
@@ -524,6 +586,14 @@ $ curl \
             "type": "workspaces"
           }
         ]
+      },
+      "allowed-workspaces": {
+        "data": [
+          {
+            "id": "ws-x9taqV23mxrGcDrn",
+            "type": "workspaces"
+          }
+        ]
       }
     },
     "links": {
@@ -553,7 +623,7 @@ $ curl \
 
 ### Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs/#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource Name  | Description                                 |
 | -------------- | ------------------------------------------- |
