@@ -1,5 +1,7 @@
 ---
-page_title: Team Membership - API Docs - Terraform Cloud
+page_title: Team Membership - API Docs - HCP Terraform
+description: >-
+  Use the team membership API to manage a team's users. Add and remove a user from a team using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,19 +32,21 @@ page_title: Team Membership - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Team Membership API
 
--> **Note:** Team management is a paid feature, available as part of the **Team** upgrade package. Free organizations can also use this API, but can only manage membership of their owners team. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+<!-- BEGIN: TFC:only name:pnp-callout -->
+-> **Note:** Team management is available in HCP Terraform **Standard** Edition. Free organizations can also use this API, but can only manage membership of their owners team. [Learn more about HCP Terraform pricing here](https://www.hashicorp.com/products/terraform/pricing).
+<!-- END: TFC:only name:pnp-callout -->
 
-The Team Membership API is used to add or remove users from teams. The [Team API](/cloud-docs/api-docs/teams) is used to create or destroy teams.
+The Team Membership API is used to add or remove users from teams. The [Team API](/terraform/cloud-docs/api-docs/teams) is used to create or destroy teams.
 
 ## Organization Membership
 
--> **Note:** To add users to a team, they must first receive and accept the invitation to join the organization by email. This process ensures that you do not accidentally add the wrong person by mistyping a username. Refer to [the Organization Memberships API documentation](/cloud-docs/api-docs/organization-memberships) for more information.
+-> **Note:** To add users to a team, they must first receive and accept the invitation to join the organization by email. This process ensures that you do not accidentally add the wrong person by mistyping a username. Refer to [the Organization Memberships API documentation](/terraform/cloud-docs/api-docs/organization-memberships) for more information.
 
 ## Add a User to Team (With user ID)
 

@@ -1,20 +1,23 @@
 ---
-page_title: tfrun - Imports - Sentinel - Terraform Cloud
+page_title: tfrun - Imports - Sentinel - HCP Terraform
 description: The `tfrun` import provides access to data associated with a Terraform run.
 ---
 
 # Import: tfrun
 
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
 The `tfrun` import provides access to data associated with a [Terraform run][run-glossary].
 
-This import currently consists of run attributes, as well as namespaces for the `organization`, `workspace` and `cost-estimate`. Each namespace provides static data regarding the Terraform Cloud application that can then be consumed by Sentinel during a policy evaluation.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
+
+This import currently consists of run attributes, as well as namespaces for the `organization`, `workspace` and `cost-estimate`. Each namespace provides static data regarding the HCP Terraform application that can then be consumed by Sentinel during a policy evaluation.
 
 ```
 tfrun
 ├── id (string)
 ├── created_at (string)
+├── created_by (string)
 ├── message (string)
 ├── commit_sha (string)
 ├── is_destroy (boolean)
@@ -23,6 +26,9 @@ tfrun
 ├── replace_addrs (array of strings)
 ├── speculative (boolean)
 ├── target_addrs (array of strings)
+├── project
+│   ├── id (string)
+│   └── name (string)
 ├── variables (map of keys)
 ├── organization
 │   └── name (string)
@@ -31,6 +37,7 @@ tfrun
 │   ├── name (string)
 │   ├── created_at (string)
 │   ├── description (string)
+│   ├── execution_mode (string)
 │   ├── auto_apply (bool)
 │   ├── tags (array of strings)
 │   ├── working_directory (string)
@@ -49,12 +56,12 @@ policy to pass if the workspace ends in `-dev`). While this is useful for
 extremely granular exceptions, the workspace name could be edited by
 workspace admins, effectively bypassing the policy. In this case, where an
 extremely strict separation of policy managers vs. workspace practitioners is
-required, using [policy sets](/cloud-docs/policy-enforcement/manage-policy-sets)
+required, using [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets)
 to only enforce the policy on non-development workspaces is more appropriate.
 
-[run-glossary]: /docs/glossary#run
+[run-glossary]: /terraform/docs/glossary#run
 
-[workspace-glossary]: /docs/glossary#workspace
+[workspace-glossary]: /terraform/docs/glossary#workspace
 
 ## Namespace: root
 
@@ -73,6 +80,12 @@ Specifies the ID that is associated with the current Terraform run.
 The `created_at` value within the [root namespace](#namespace-root) specifies the time that the run was created. The timestamp returned follows the format outlined in [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339).
 
 Users can use the `time` import to [load](https://docs.hashicorp.com/sentinel/imports/time#time-load-timeish) a run timestamp and create a new timespace from the specified value. See the `time` import [documentation](https://docs.hashicorp.com/sentinel/imports/time#import-time) for available actions that can be performed on timespaces.
+
+### Value: `created_by`
+
+* **Value Type:** String.
+
+The `created_by` value within the [root namespace](#namespace-root) is string that specifies the user name of the HCP Terraform user for the specific run.
 
 ### Value: `message`
 
@@ -108,35 +121,35 @@ Specifies whether the plan is in refresh-only mode, which ignores configuration 
 
 ### Value: `replace_addrs`
 
-* **Value Type:** An array of strings representing [resource addresses](/cli/state/resource-addressing).
+* **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-replace`](/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-replace`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `replace-addrs` attribute in the API. Will be null if no resource targets are specified.
 
 ### Value: `speculative`
 
 * **Value Type:** Boolean.
 
-Specifies whether the plan associated with the run is a [speculative plan](/cloud-docs/run/remote-operations#speculative-plans) only.
+Specifies whether the plan associated with the run is a [speculative plan](/terraform/cloud-docs/run/remote-operations#speculative-plans) only.
 
 ### Value: `target_addrs`
 
-* **Value Type:** An array of strings representing [resource addresses](/cli/state/resource-addressing).
+* **Value Type:** An array of strings representing [resource addresses](/terraform/cli/state/resource-addressing).
 
-Provides the targets specified using the [`-target`](/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be undefined if no resource targets are specified.
+Provides the targets specified using the [`-target`](/terraform/cli/commands/plan#resource-targeting) flag in the CLI or the `target-addrs` attribute in the API. Will be null if no resource targets are specified.
 
-To prohibit targeted runs altogether, make sure the `target_addrs` value is undefined or empty:
+To prohibit targeted runs altogether, make sure the `target_addrs` value is null or empty:
 
 ```
 import "tfrun"
 
-main = (length(tfrun.target_addrs) else 0) == 0
+main = tfrun.target_addrs is null or tfrun.target_addrs is empty
 ```
 
 ### Value: `variables`
 
 * **Value Type:** A string-keyed map of values.
 
-Provides the names of the variables that are configured within the run and the [sensitivity](/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of the value.
+Provides the names of the variables that are configured within the run and the [sensitivity](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values) state of the value.
 
 ```
 variables (map of keys)
@@ -145,15 +158,31 @@ variables (map of keys)
     └── sensitive (boolean)
 ```
 
-## Namespace: organization
+## Namespace: project
 
-The **organization namespace** contains data associated with the current run's Terraform Cloud [organization](/cloud-docs/users-teams-organizations/organizations).
+The **project namespace** contains data associated with the current run's [projects](/terraform/cloud-docs/api-docs/projects).
+
+### Value: `id`
+
+* **Value Type:** String.
+
+Specifies the ID that is associated with the current project.
 
 ### Value: `name`
 
 * **Value Type:** String.
 
-Specifies the name assigned to the Terraform Cloud organization.
+Specifies the name assigned to the HCP Terraform project.
+
+## Namespace: organization
+
+The **organization namespace** contains data associated with the current run's HCP Terraform [organization](/terraform/cloud-docs/users-teams-organizations/organizations).
+
+### Value: `name`
+
+* **Value Type:** String.
+
+Specifies the name assigned to the HCP Terraform organization.
 
 ## Namespace: workspace
 
@@ -207,7 +236,7 @@ This value can be `null`.
 
 * **Value Type:** Boolean.
 
-Contains the workspace's [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting.
+Contains the workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply) setting.
 
 ### Value: `tags`
 
@@ -219,9 +248,17 @@ Contains the list of tag names for the workspace.
 
 * **Value Type:** String.
 
-Contains the configured [Terraform working directory](/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace.
+Contains the configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace.
 
 This value can be `null`.
+
+### Value: `execution_mode`
+
+* **Value Type:** String.
+
+Contains the configured [Terraform execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) of the workspace.
+
+The default value is `remote`.
 
 ### Value: `vcs_repo`
 
@@ -229,7 +266,7 @@ This value can be `null`.
 
 Contains data associated with a VCS repository connected to the workspace.
 
-Details regarding each attribute can be found in the documentation for the Terraform Cloud [Workspaces API](/cloud-docs/api-docs/workspaces).
+Details regarding each attribute can be found in the documentation for the HCP Terraform [Workspaces API](/terraform/cloud-docs/api-docs/workspaces).
 
 This value can be `null`.
 
@@ -247,7 +284,7 @@ The **cost_estimation namespace** contains data associated with the current run'
 
 This namespace is only present if a cost estimate is available.
 
--> Cost estimation is disabled for runs using [resource targeting](/cli/commands/plan#resource-targeting), which may cause unexpected failures.
+-> Cost estimation is disabled for runs using [resource targeting](/terraform/cli/commands/plan#resource-targeting), which may cause unexpected failures.
 
 -> **Note:** Cost estimates are not available for Terraform 0.11.
 
