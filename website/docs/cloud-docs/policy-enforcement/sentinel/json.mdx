@@ -1,15 +1,11 @@
 ---
-page_title: Working With JSON Result Data - Sentinel - Terraform Cloud
+page_title: Working With JSON Result Data - Sentinel - HCP Terraform
 description: Learn how to view and filter Sentinel JSON data.
 ---
 
 # Working With Sentinel JSON Result Data
 
--> **Note:** Sentinel policies are a paid feature, available as part of the
-**Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing
-here](https://www.hashicorp.com/products/terraform/pricing).
-
-When using the Terraform Cloud UI, Sentinel policy check results are available
+When using the HCP Terraform UI, Sentinel policy check results are available
 both in a human-readable log form, and in a more detailed, lower-level JSON
 form.  While the logs may suppress some output that would make the logs harder
 to read, the JSON output exposes the lower-level output directly to you. Being
@@ -18,14 +14,18 @@ with [non-boolean rule
 data](https://docs.hashicorp.com/sentinel/language/rules#non-boolean-values) in
 a policy designed to work with Sentinel 0.17.0 and higher.
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
+
 -> The JSON data exposed is the same as you would see when using the [policy
-checks API](/cloud-docs/api-docs/policy-checks), with the data starting at the
+checks API](/terraform/cloud-docs/api-docs/policy-checks), with the data starting at the
 `sentinel` key.
 
 ## Viewing JSON Data
 
 To view the JSON data, expand the policy check on the [runs
-page](/cloud-docs/run/manage) if it is not already expanded. The logs are
+page](/terraform/cloud-docs/run/manage) if it is not already expanded. The logs are
 always displayed first, so click the **View JSON Data** button to view the JSON
 data. You can click the **View Logs** button to switch back to the log view.
 
@@ -35,7 +35,7 @@ data. You can click the **View Logs** button to switch back to the log view.
 
 The JSON data is filterable using a [jq](https://stedolan.github.io/jq/)-subset
 filtering language. See the [JSON
-filtering](/cloud-docs/workspaces/json-filtering) page for more details on
+filtering](/terraform/cloud-docs/workspaces/json-filtering) page for more details on
 the filtering language.
 
 Filters are entered by putting the filter in the aptly named **filter** box in
