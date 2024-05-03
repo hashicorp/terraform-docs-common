@@ -10,7 +10,7 @@ description: >-
 When downloading modules from registry sources such as the public
 [Terraform Registry](https://registry.terraform.io/), Terraform CLI expects
 the given hostname to support
-[the module registry protocol](/internals/module-registry-protocol),
+[the module registry protocol](/terraform/internals/module-registry-protocol),
 which is the minimal API required for Terraform CLI to successfully retrieve
 a module.
 
@@ -25,7 +25,7 @@ registry implementations, and is aimed at those intending to build clients
 to work with registry data. Third-party implementations of the registry
 protocol are not required to implement these extensions. If you intend to
 implement your own module registry, please refer to
-[the module registry protocol](/internals/module-registry-protocol)
+[the module registry protocol](/terraform/internals/module-registry-protocol)
 instead.
 
 Terraform Registry also has some additional internal API endpoints used to
@@ -35,7 +35,7 @@ subject to change over time.
 ## Service Discovery
 
 The hostname portion of a module source address is first passed to
-[the service discovery protocol](/internals/remote-service-discovery)
+[the service discovery protocol](/terraform/internals/remote-service-discovery)
 to determine if the given host has a module registry and, if so, the base
 URL for its module registry endpoints.
 
@@ -78,9 +78,7 @@ These endpoints list modules according to some criteria.
 
 - `offset`, `limit` `(int: <optional>)` - See [Pagination](#pagination) for details.
 - `provider` `(string: <optional>)` - Limits modules to a specific provider.
-- `verified` `(bool: <optional>)` - If `true`, limits results to only verified
-  modules. Any other value including none returns all modules _including_
-  verified ones.
+- `verified` `(bool: <optional>)` - If `true`, limits results to only partner modules. Any other value including none returns all modules (including partner modules).
 
 ### Sample Request
 
@@ -145,9 +143,7 @@ This endpoint allows searching modules.
 - `offset`, `limit` `(int: <optional>)` - See [Pagination](#pagination) for details.
 - `provider` `(string: <optional>)` - Limits results to a specific provider.
 - `namespace` `(string: <optional>)` - Limits results to a specific namespace.
-- `verified` `(bool: <optional>)` - If `true`, limits results to only verified
-  modules. Any other value including none returns all modules _including_
-  verified ones.
+- `verified` `(bool: <optional>)` - If `true`, limits results to only partner modules. Any other value including none returns all modules (including partner modules).
 
 ### Sample Request
 

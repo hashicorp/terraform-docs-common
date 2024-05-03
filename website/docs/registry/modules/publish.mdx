@@ -39,7 +39,7 @@ The list below contains all the requirements for publishing a module:
   one sentence description of the module.
 
 - **Standard module structure.** The module must adhere to the
-  [standard module structure](/language/modules/develop/structure).
+  [standard module structure](/terraform/language/modules/develop/structure).
   This allows the registry to inspect your module and generate documentation,
   track resource usage, parse submodules and examples, and more.
 
@@ -87,3 +87,9 @@ by viewing your module on the registry and clicking "Resync Module"
 under the "Manage Module" dropdown. This process may take a few minutes.
 Please only do this if you do not see the version appear, since it will
 cause the registry to resync _all versions_ of your module.
+
+## Removing published content
+
+The owner of a module can use the Terraform Registry to remove one or all versions of that module. Please be aware that [we do not recommend removing anything from the Registry unless it contains a critical flaw](/terraform/registry/faq#how-do-i-remove-a-version-of-my-provider-module-or-policy-library-that-has-already-been-published).
+
+To remove a module version, navigate to your module's page and select the appropriate option from the **Manage Module** dropdown menu.

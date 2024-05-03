@@ -13,11 +13,11 @@
 _If items do not apply to your changes, add (N/A) and mark them as complete._
 
 #### Pull Request
-- [ ] One or more labels describe the type of change (e.g. clarification) and associated product (e.g. tfc).
+- [ ] One or more labels describe the type of change (e.g. clarification) and associated product (e.g. HCP Terraform ).
 - [ ] Description links to related pull requests or issues, if any.
 
 #### Content
-- [ ] Redirects have been added for moved, renamed, or deleted pages. This requires a separate PR in the [`terraform-website` repository](https://github.com/hashicorp/terraform-website) `redirects.next.js` file.
+- [ ] Redirects have been added to `website/redirects.js` for moved, renamed, or deleted pages.
 - [ ] API documentation and the API Changelog have been updated. 
 - [ ] Links to related content where appropriate (e.g., API endpoints, permissions, etc.).
 - [ ] Pages with related content are updated and link to this content when appropriate.
