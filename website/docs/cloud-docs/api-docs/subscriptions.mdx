@@ -1,5 +1,8 @@
 ---
-page_title: Subscriptions - API Docs - Terraform Cloud
+page_title: Subscriptions - API Docs - HCP Terraform
+tfc_only: true
+description: >-
+  Use the `/subscriptions` endpoint to access subscription information. Get an organization's subscription, and access a subscription by ID using the HTTP API.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,17 +33,17 @@ page_title: Subscriptions - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Subscriptions API
 
--> **Note:** The subscriptions API is only available in Terraform Cloud.
+-> **Note:** The subscriptions API is only available in HCP Terraform.
 
-An organization can subscribe to different [feature sets](/cloud-docs/api-docs/feature-sets), which represent the [pricing plans](/cloud-docs/overview) available in Terraform Cloud. An organization's [entitlement set](/cloud-docs/api-docs#feature-entitlements) is calculated using its subscription and feature set.
+An organization can subscribe to different [feature sets](/terraform/cloud-docs/api-docs/feature-sets), which represent the [pricing plans](/terraform/cloud-docs/overview) available in HCP Terraform. An organization's [entitlement set](/terraform/cloud-docs/api-docs#feature-entitlements) is calculated using its subscription and feature set.
 
-To change the subscription for an organization, use the billing settings in the Terraform Cloud UI.
+To change the subscription for an organization, use the billing settings in the HCP Terraform UI.
 
 ## Show Subscription For Organization
 
@@ -75,6 +78,13 @@ curl \
       "contract-start-at": null,
       "contract-user-limit": null,
       "contract-apply-limit": null,
+      "run-task-limit": null,
+      "run-task-workspace-limit": null,
+      "run-task-mandatory-enforcement-limit": null,
+      "policy-set-limit": null,
+      "policy-limit": null,
+      "policy-mandatory-enforcement-limit": null,
+      "versioned-policy-set-limit": null,
       "agents-ceiling": 0,
       "is-public-free-tier": true,
       "is-self-serve-trial": false
@@ -105,23 +115,35 @@ curl \
       "id": "fs-EvCGYfpx9CVRzteA",
       "type": "feature-sets",
       "attributes": {
+        "audit-logging": false,
         "comparison-description": "Essential collaboration features for practitioners and small teams.",
+        "cost-estimation": false,
         "cost": 0,
         "description": "State storage, locking, run history, VCS integration, private module registry, and remote operations",
+        "global-run-tasks": false,
         "identifier": "free",
         "is-current": true,
         "is-free-tier": true,
+        "module-tests-generation": false,
         "name": "Free",
         "plan": null,
-        "self-serve-billing": true,
-        "cost-estimation": false,
-        "sentinel": false,
+        "policy-enforcement": false,
+        "policy-limit": null,
+        "policy-mandatory-enforcement-limit": null,
+        "policy-set-limit": null,
+        "private-networking": false,
+        "private-policy-agents": false,
+        "private-vcs": false,
+        "run-task-limit": null,
+        "run-task-mandatory-enforcement-limit": null,
+        "run-task-workspace-limit": null,
         "run-tasks": false,
-        "teams": false,
-        "user-limit": 5.0,
-        "audit-logging": false,
+        "self-serve-billing": true,
+        "sentinel": false,
         "sso": false,
-        "private-networking": false
+        "teams": false,
+        "user-limit": 5,
+        "versioned-policy-set-limit": null
       }
     }
   ]
@@ -162,6 +184,13 @@ curl \
       "contract-user-limit": null,
       "contract-apply-limit": null,
       "agents-ceiling": 0,
+      "run-task-limit": null,
+      "run-task-workspace-limit": null,
+      "run-task-mandatory-enforcement-limit": null,
+      "policy-set-limit": null,
+      "policy-limit": null,
+      "policy-mandatory-enforcement-limit": null,
+      "versioned-policy-set-limit": null,
       "is-public-free-tier": true,
       "is-self-serve-trial": false
     },
@@ -191,23 +220,35 @@ curl \
       "id": "fs-EvCGYfpx9CVRzteA",
       "type": "feature-sets",
       "attributes": {
+        "audit-logging": false,
         "comparison-description": "Essential collaboration features for practitioners and small teams.",
+        "cost-estimation": false,
         "cost": 0,
         "description": "State storage, locking, run history, VCS integration, private module registry, and remote operations",
+        "global-run-tasks": false,
         "identifier": "free",
         "is-current": true,
         "is-free-tier": true,
+        "module-tests-generation": false,
         "name": "Free",
         "plan": null,
-        "self-serve-billing": true,
-        "cost-estimation": false,
-        "sentinel": false,
+        "policy-enforcement": false,
+        "policy-limit": null,
+        "policy-mandatory-enforcement-limit": null,
+        "policy-set-limit": null,
+        "private-networking": false,
+        "private-policy-agents": false,
+        "private-vcs": false,
+        "run-task-limit": null,
+        "run-task-mandatory-enforcement-limit": null,
+        "run-task-workspace-limit": null,
         "run-tasks": false,
-        "teams": false,
-        "user-limit": 5.0,
-        "audit-logging": false,
+        "self-serve-billing": true,
+        "sentinel": false,
         "sso": false,
-        "private-networking": false
+        "teams": false,
+        "user-limit": 5,
+        "versioned-policy-set-limit": null
       }
     }
   ]

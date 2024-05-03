@@ -1,11 +1,9 @@
 ---
-page_title: tfconfig - Imports - Sentinel - Terraform Cloud
+page_title: tfconfig - Imports - Sentinel - HCP Terraform
 description: The tfconfig import provides access to a Terraform configuration.
 ---
 
 # Import: tfconfig
-
--> **Note:** Sentinel policies are a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
 
 The `tfconfig` import provides access to a Terraform configuration.
 
@@ -13,6 +11,10 @@ The Terraform configuration is the set of `*.tf` files that are used to
 describe the desired infrastructure state. Policies using the `tfconfig`
 import can access all aspects of the configuration: providers, resources,
 data sources, modules, and variables.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/policies.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 Some use cases for `tfconfig` include:
 
@@ -34,7 +36,7 @@ in the configuration. Since this is the configuration and not an invocation
 of Terraform, you can't see values for variables, the state, or the diff for
 a pending plan. If you want to write policy around expressions used
 within configuration blocks, you likely want to use the
-[`tfplan`](/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
 
 ## Namespace Overview
 
@@ -161,7 +163,7 @@ configuration and not the final values as a result of invoking Terraform. If
 you want to write policy around the _result_ of expressions used within
 configuration blocks (for example, if you wanted to ensure the final value of
 `filename` above includes `accounts.txt`), you likely want to use the
-[`tfplan`](/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
 
 ## Namespace: Root
 
@@ -274,7 +276,7 @@ particular type from all modules using the `tfplan` import. By changing `tfplan`
 in this function to `tfconfig`, you could make a similar function find all
 resources of a specific type in the Terraform configuration.
 
-[iterate-over-modules]: /cloud-docs/policy-enforcement/sentinel#sentinel-imports
+[iterate-over-modules]: /terraform/cloud-docs/policy-enforcement/sentinel#sentinel-imports
 
 ## Namespace: Module
 
@@ -411,7 +413,7 @@ data sources cannot actually have provisioners.
 The data within a provisioner can be inspected via the returned [provisioner
 namespace](#namespace-provisioners).
 
-[ref-tf-provisioners]: /language/resources/provisioners/syntax
+[ref-tf-provisioners]: /terraform/language/resources/provisioners/syntax
 
 ## Namespace: Provisioners
 
@@ -542,13 +544,13 @@ The `version` value within the [module configuration
 namespace](#namespace-module-configuration) represents the [version
 constraint][module-version-constraint] for modules that support it, such as
 modules within the [Terraform Module Registry][terraform-module-registry] or the
-[Terraform Cloud private module registry][tfe-private-registry].
+[HCP Terraform private module registry][tfe-private-registry].
 
-[module-version-constraint]: /language/modules#module-versions
+[module-version-constraint]: /terraform/language/modules#module-versions
 
 [terraform-module-registry]: https://registry.terraform.io/
 
-[tfe-private-registry]: /cloud-docs/registry
+[tfe-private-registry]: /terraform/cloud-docs/registry
 
 As an example, given the module declaration block:
 
@@ -622,7 +624,7 @@ configuration. As such, configuration for the [`value`](#outputs-value-value) at
 will be in its raw form, and not yet interpolated. For fully interpolated output
 values, see the [`tfstate` import][ref-tfe-sentinel-tfstate].
 
-[ref-tfe-sentinel-tfstate]: /cloud-docs/policy-enforcement/sentinel/import/tfstate
+[ref-tfe-sentinel-tfstate]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate
 
 This namespace is indexed by output name.
 
@@ -637,7 +639,7 @@ represents any _explicit_ dependencies for this output. For more information,
 see the [depends_on output setting][ref-depends_on] within the general Terraform
 documentation.
 
-[ref-depends_on]: /language/values/outputs#depends_on
+[ref-depends_on]: /terraform/language/values/outputs#depends_on
 
 As an example, given the following output declaration block:
 
@@ -801,7 +803,7 @@ represents all declared [non-default provider
 instances][ref-tf-provider-instances] for a specific provider type, indexed by
 their specific alias.
 
-[ref-tf-provider-instances]: /language/providers/configuration#alias-multiple-provider-configurations
+[ref-tf-provider-instances]: /terraform/language/providers/configuration#alias-multiple-provider-configurations
 
 The return type is a provider namespace with the data for the instance in
 question loaded. The `alias` key will not be available within this namespace.
@@ -902,7 +904,7 @@ configuration. As such, static data can be extracted, such as defaults, but not
 dynamic data, such as the current value of a variable within a plan (although
 this can be extracted within the [`tfplan` import][ref-tfe-sentinel-tfplan]).
 
-[ref-tfe-sentinel-tfplan]: /cloud-docs/policy-enforcement/sentinel/import/tfplan
+[ref-tfe-sentinel-tfplan]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan
 
 This namespace is indexed by variable name.
 
