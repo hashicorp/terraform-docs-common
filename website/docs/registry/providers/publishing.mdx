@@ -76,6 +76,15 @@ To use GitHub Actions to publish new provider releases to the Terraform Registry
 1. Ensure the [GitHub Organization settings for GitHub Actions](https://docs.github.com/en/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization) and [GitHub Repository settings for GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) allows running workflows and allows the actions specified in the [GitHub Actions workflow from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.github/workflows/release.yml).
 1. Create and export a signing key that you plan on using to sign your provider releases. See [Preparing and Adding a Signing Key](#preparing-and-adding-a-signing-key) for more information.
 1. Copy the [GoReleaser configuration from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.goreleaser.yml) to the root of your repository.
+  * *Optionally, if you are interested in bundling your repository's license file with the release artifacts, modify `.gorelease.yml` so that the first array element of the `archives` key looks like this*:
+    ```yaml
+    archives:
+      - files:
+          - src: 'LICENSE' # Replace with the license filepath in your project repo if different
+            dst: 'LICENSE.txt'
+        format: zip
+        name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    ```
 1. Copy the [GitHub Actions workflow from the terraform-provider-scaffolding-framework repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework/blob/main/.github/workflows/release.yml) to `.github/workflows/release.yml` in your repository.
 1. Go to _Settings > Secrets_ in your repository, and add the following secrets:
 
