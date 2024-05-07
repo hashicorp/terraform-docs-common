@@ -50,7 +50,7 @@ To create a new run task:
 
 ### Global Run Tasks
 
-When you create a new run task you may choose to apply to all workspaces in the organization. This feature requires the **global-run-task** [entitlement][].
+When you create a new run task, you can choose to apply it globally to every workspace in an organization. Your organization must have the `global-run-task` [entitlement][] to use global run tasks.
 
 1. Select the **Global** checkbox
 
@@ -63,8 +63,8 @@ When you create a new run task you may choose to apply to all workspaces in the 
 
 1. Choose an enforcement level:
 
-   - **Advisory**: Run tasks can not block a run from completing. If the task fails, the run will proceed with a warning in the UI.
-   - **Mandatory**: Run tasks can block a run from completing. If the task fails (including a timeout or unexpected remote error condition), the run will transition to an Errored state with a warning in the UI.
+    - **Advisory**: Run tasks can not block a run from completing. If the task fails, the run proceeds with a warning in the user interface.
+    - **Mandatory**: Failed run tasks can block a run from completing. If the task fails (including timeouts or unexpected remote errors), the run stops and errors with a warning in the user interface.
 
 ## Associating Run Tasks with a Workspace
 

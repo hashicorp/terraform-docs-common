@@ -85,9 +85,11 @@ You must include an additional `\` to escape the regex pattern when you manage y
 | **Version contains a prefix** | `\d+.\d+.\d+$`            | `\\d+.\\d+.\\d+$`        |
 | **Version contains a suffix** | `^\d+.\d+.\d+`            | `^\\d+.\\d+.\\d+`        |
 
+HCP Terraform triggers runs for all tags matching this pattern, regardless of the value in the [VCS Branch](#vcs-branch) setting.
+
 ### VCS Branch
 
-This designates which branch of the repository HCP Terraform should use in the workspace. If left blank, HCP Terraform uses the repository's default branch.
+This setting designates which branch of the repository HCP Terraform should use when the workspace is set to [Always Trigger Runs](#always-trigger-runs) or [Only trigger runs when files in specified paths change](#only-trigger-runs-when-files-in-specified-paths-change). If you leave this setting blank, HCP Terraform uses the repository's default branch. If the workspace is set to trigger runs when a [git tag is published](#trigger-runs-when-a-git-tag-is-published), all tags will trigger runs, regardless of the branch specified in this setting.
 
 ### Automatic Speculative Plans
 

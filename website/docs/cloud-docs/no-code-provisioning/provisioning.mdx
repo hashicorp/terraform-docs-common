@@ -61,11 +61,7 @@ To change a variable's options after provisioning, go to the **Variables** secti
 
 Start a new run in your workspace to update your existing infrastructure with your new variable value.
 
-<!-- BEGIN: TFC:only name:ncm-update -->
-
 ### Module Version Updates
-
-~> **NOTE**: Updating a no-code workspace's module version is in beta.
 
 When you publish a new tag for a no-code module or change the module version made available to the end user, every workspace that is provisioned with the module is notified that an updated version is available on the workspace overview page. HCP Terraform does not automatically update the workspaces; instead the workspace owner must respond to the notification to update their workspace. HCP Terraform will prompt them to provide values for any new variables.
 
@@ -80,5 +76,3 @@ To change the version of the module that users can deploy:
 1. Choose the desired module version from the **Module version** dropdown.
 
 1. Click **Save**.
-
-<!-- END: TFC:only name:ncm-update -->

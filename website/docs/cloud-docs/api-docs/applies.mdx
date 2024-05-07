@@ -103,9 +103,9 @@ curl \
 }
 ```
 
-_Using Terraform Cloud Agents_
+_Using HCP Terraform agents_
 
-[Terraform Cloud agents](/terraform/cloud-docs/api-docs/agents) are a solution to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. When a workspace is set to use the agent execution mode, the apply response will include additional details about the agent pool and agent used.
+[HCP Terraform agents](/terraform/cloud-docs/api-docs/agents) allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. When a workspace is set to use the agent execution mode, the apply response will include additional details about the agent pool and agent used.
 
 ```json
 {
@@ -163,7 +163,7 @@ _Using Terraform Cloud Agents_
 
 It is possible that during the course of a Run, Terraform may fail to upload a
 state file. This can happen for a variety of reasons, but should be an
-exceptionally rare occurance. Terraform Cloud agent versions greater than 1.12.0
+exceptionally rare occurance. HCP Terraform agent versions greater than 1.12.0
 include a fallback mechanism which attempts to upload the state directly to
 HCP Terraform's backend storage system in these cases. This endpoint then
 makes the raw data from these failed uploads available to users who are

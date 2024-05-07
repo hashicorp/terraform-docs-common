@@ -38,7 +38,7 @@ description: >-
 
 # OAuth Clients API
 
-An OAuth Client represents the connection between an organization and a VCS provider. The connection can be globally accessed throughout the org (default) or be scoped to one or more [projects](/terraform/cloud-docs/projects/managing).
+An OAuth client represents the connection between an organization and a VCS provider. By default, you can globally access an OAuth client throughout the organization, or you can have scope access to one or more [projects](/terraform/cloud-docs/projects/managing).
 
 ## List OAuth Clients
 
@@ -208,8 +208,6 @@ To learn how to generate one of these token strings for your VCS provider, you c
 * [GitHub and GitHub Enterprise](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 * [GitLab, GitLab Community Edition, and GitLab Enterprise Edition](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token)
 * [Azure DevOps Server](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops-2019&tabs=preview-page)
-
-~> **Note:** You cannot call this endpoint to create a Bitbucket Cloud, Bitbucket Data Center, or Azure DevOps Services OAuth Client.
 
 | Status  | Response                                        | Reason                                                         |
 | ------- | ----------------------------------------------- | -------------------------------------------------------------- |
@@ -456,13 +454,13 @@ curl \
   https://app.terraform.io/api/v2/oauth-clients/oc-XKFwG6ggfA9n7t1K
 ```
 
-## Attach an OAuth Client to projects
+## Attach to a project
 
 `POST /oauth-clients/:id/relationships/projects`
 
 | Parameter | Description                                                                                        |
 | --------- | -------------------------------------------------------------------------------------------------- |
-| `:id`     | The ID of the OAuth client to attach to projects. Use the "List OAuth Clients" endpoint to find IDs. |
+| `:id`     | The ID of the OAuth client to attach to a project. Use the [List OAuth Clients](#list-oauth-clients) endpoint to reference your OAuth client IDs. |
 
 | Status  | Response                  | Reason                                                                     |
 | ------- | ------------------------- | -------------------------------------------------------------------------- |

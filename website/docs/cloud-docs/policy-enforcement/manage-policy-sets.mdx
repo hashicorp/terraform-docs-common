@@ -30,7 +30,7 @@ Only Sentinel policies can run as policy checks, and it is the default mode for 
 
 ### Policy evaluations
 
-OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Enhanced` policy set type. Policy evaluations run within the [Terraform Cloud agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure. 
+OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Enhanced` policy set type. Policy evaluations run within the [HCP Terraform agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure. 
 
 For Sentinel policy sets, using policy evaluations lets you:
 - Enable overrides for soft-mandatory and hard-mandatory policies, letting any user with [Manage Policy Overrides permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides) proceed with a run in the event of policy failure.
@@ -38,7 +38,7 @@ For Sentinel policy sets, using policy evaluations lets you:
 
 Policy evaluations **cannot** access cost estimation data, so use policy checks if your policies rely on cost estimates.
 
-~> **Tip:** Sentinel runtime version pinning is supported only for Sentinel 0.23.1 and above, as well as Terraform Cloud agent versions 1.13.1 and above
+~> **Tip:** Sentinel runtime version pinning is supported only for Sentinel 0.23.1 and above, as well as HCP Terraform agent versions 1.13.1 and above
 
 ## Policy enforcement levels
 

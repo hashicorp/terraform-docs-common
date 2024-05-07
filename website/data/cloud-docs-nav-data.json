@@ -534,10 +534,6 @@
               {
                 "title": "Example Customizations",
                 "path": "integrations/service-now/service-catalog-terraform/example-customizations"
-              },
-              {
-                "title": "V1 Setup Instructions",
-                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
               }
             ]
           },
@@ -653,7 +649,7 @@
   },
   { "divider": true },
   {
-    "title": "Terraform Cloud Agents",
+    "title": "HCP Terraform Agents",
     "href": "/cloud-docs/agents"
   }
 ]
