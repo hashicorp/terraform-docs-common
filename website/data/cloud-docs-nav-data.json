@@ -1,5 +1,5 @@
 [
-  { "heading": "Terraform Cloud" },
+  { "heading": "HCP Terraform" },
   { "title": "Overview", "path": "" },
   { "title": "Plans and Features", 
     "routes": [
@@ -8,8 +8,8 @@
         "path": "overview" 
       },
       {
-        "title": "Estimate Terraform Cloud Cost",
-        "path": "overview/estimate-terraform-cloud-cost"
+        "title": "Estimate HCP Terraform Cost",
+        "path": "overview/estimate-hcp-terraform-cost"
       },
       {
         "title": "Activate Pay-As-You-Go",
@@ -164,13 +164,19 @@
     ]
   },
   {
+    "title": "Projects",
+    "routes": [
+      { "title": "Overview", "path": "projects" },
+      {
+        "title": "Managing Projects",
+        "path": "projects/managing"
+      }
+    ]
+  },
+  {
     "title": "Workspaces",
     "routes": [
       { "title": "Overview", "path": "workspaces" },
-      {
-        "title": "Organizing Workspaces With Projects",
-        "path": "workspaces/organize-workspaces-with-projects"
-      },
       {
         "title": "Creating Workspaces",
         "path": "workspaces/creating"
@@ -397,7 +403,7 @@
     ]
   },
   {
-    "title": "Migrating to Terraform Cloud",
+    "title": "Migrating to HCP Terraform",
     "path": "migrate"
   },
   {
@@ -528,10 +534,6 @@
               {
                 "title": "Example Customizations",
                 "path": "integrations/service-now/service-catalog-terraform/example-customizations"
-              },
-              {
-                "title": "V1 Setup Instructions",
-                "path": "integrations/service-now/service-catalog-terraform/service-now-v1"
               }
             ]
           },
@@ -647,7 +649,7 @@
   },
   { "divider": true },
   {
-    "title": "Terraform Cloud Agents",
+    "title": "HCP Terraform Agents",
     "href": "/cloud-docs/agents"
   }
 ]

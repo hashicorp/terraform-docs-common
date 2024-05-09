@@ -1,5 +1,5 @@
 ---
-page_title: No-Code Provisioning - API Docs - Terraform Cloud
+page_title: No-Code Provisioning - API Docs - HCP Terraform
 description: >-
   Use these endpoints to control availability of no-code provisioning and designate variable values for a no-code module in your organization.
 ---
@@ -38,7 +38,7 @@ description: >-
 
 # No-Code Provisioning API
 
-The No-Code Provisioning API allows you to establish and configure a list of Terraform modules that you can use in no-code provisioning workflows within Terraform Cloud. For more information on no-code modules, see [Designing No-Code Ready Modules](/terraform/cloud-docs/no-code-provisioning/module-design).
+The No-Code Provisioning API allows you to establish and configure a list of Terraform modules that you can use in no-code provisioning workflows within HCP Terraform. For more information on no-code modules, see [Designing No-Code Ready Modules](/terraform/cloud-docs/no-code-provisioning/module-design).
 
 ## Allow No-Code Provisioning of a Module within an Organization
 
@@ -49,7 +49,7 @@ The No-Code Provisioning API allows you to establish and configure a list of Ter
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization where no-code provisioning workflows should be allowed for this module.  |
 
-Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to enable no-code provisioning for a specific module. You can also use this API to set options for the allowed values of a variable for a no-code module in your organization.
+Each HCP Terraform organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to enable no-code provisioning for a specific module. You can also use this API to set options for the allowed values of a variable for a no-code module in your organization.
 
 -> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
@@ -500,7 +500,7 @@ This endpoint creates a Workspace for No-Code Provisioning.
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:id`                | The id of the No-Code Module that should be used for provisioning. |
 
-Each Terraform Cloud organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to create a Workspace by selecting a No-Code module to enable a no-code provisioning workflow.
+Each HCP Terraform organization has a list of which modules you can use to establish workspaces using no-code provisioning. You can use this API to create a Workspace by selecting a No-Code module to enable a no-code provisioning workflow.
 
 -> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
@@ -736,7 +736,7 @@ curl \
 
 ## Initiate a Workspace Update to new No-Code provisioning settings
 
-Upgrading a workspace's No-code provisioning settings is a multi-step process. First, use this API to initiate the update. Terraform Cloud will start a new plan, which will describe the resources that will be added, updated, or removed from the workspace, should you choose to confirm the plan in a later step.
+Upgrading a workspace's No-code provisioning settings is a multi-step process. First, use this API to initiate the update. HCP Terraform will start a new plan, which will describe the resources that will be added, updated, or removed from the workspace, should you choose to confirm the plan in a later step.
 
 After calling this API, the next step is to await the completion of the plan, by polling [the API which shows plan status](#read-workspace-upgrade-plan-status).
 
