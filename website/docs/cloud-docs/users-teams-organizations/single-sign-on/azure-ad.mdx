@@ -80,15 +80,22 @@ To edit your Azure SSO configuration settings:
 To configure team management in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit step 2, "User Attributes & Claims."
-   We recommend naming it "MemberOf", leaving the namespace blank, and potentially sourcing `user.groups` as an easy starting point.
+1. Edit step 2, **User Attributes & Claims**. 
+1. Add a new group claim.
+1. In **Group Claims**, select **Security Groups**.  
+1. In the **Source Attribute** field, select either **sAMAccountName** to use account names or **Group ID** to use group UUIDs. 
+1. Check **Customize the name of the group claim**. 
+1. Set **Name (required)** to "MemberOf" and leave the namespace field blank.
 
--> **Note:** When Azure AD is configured to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/terraform/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your HCP Terraform teams to match these Azure Group UUIDs.
+-> **Note:** When you configure Azure AD to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/terraform/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your HCP Terraform teams to match these Azure Group UUIDs.
 
-If you plan to make use of SAML to set usernames in your Microsoft Azure AD application:
+If you plan to use SAML to set usernames in your Microsoft Azure AD application:
 
 1. Navigate to the single sign-on page.
-1. Edit step 2, "User Attributes & Claims."
-   We recommend naming the claim "username", leaving the namespace blank, and sourcing `user.displayname` or `user.mailnickname` as a starting point. Note that HCP Terraform usernames only allow lowercase letters, numbers, and dashes.
+1. Edit step 2, **User Attributes & Claims.**  
+   We recommend naming the claim "username", leaving the namespace blank, and sourcing `user.displayname` or `user.mailnickname` as a starting point. If you have a Terraform Enterprise account, you can source `user.mail` or `user.userprincipalname`. Note that HCP Terraform usernames only allow lowercase letters, numbers, and dashes.
 
-If you namespaced any of your claims, note that the attribute name passed by Microsoft Azure AD will follow the form `<claim_namespace/claim_name>`. Consider this when setting Team and Username attribute names.
+If you namespaced any of your claims, then Microsoft Azure AD passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting team and username attribute names.
+
+## Troubleshooting the SAML assertion
+[Use this guide](https://support.hashicorp.com/hc/en-us/articles/1500005371682-Capturing-a-SAML-Assertion) to verify and validate the claims being sent in the SAML response. 
