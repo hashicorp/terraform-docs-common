@@ -37,11 +37,11 @@ Permissions for the owners team include:
 - Manage the private registry (refer to [Organization Permissions][] below)
 - Manage Membership (refer to [Organization Permissions][] below; invite or remove users from the organization itself, and manage the membership of its teams)
 - View all secret teams (refer to [Organization Permissions][] below)
+- Manage agents (refer to [Organization Permissions][] below)
 - Manage organization permissions (refer to [Organization Permissions][] below)
 - Manage all organization settings (owners only)
 - Manage organization billing (owners only, not applicable to Terraform Enterprise)
 - Delete organization (owners only)
-- Manage agents (owners only)
 
 This list is not necessarily exhaustive.
 
@@ -298,6 +298,12 @@ This permission implicitly gives permission to read runs on all workspaces, whic
 ### Manage VCS Settings
 
 Allows members to manage the set of [VCS providers](/terraform/cloud-docs/vcs) and [SSH keys](/terraform/cloud-docs/vcs#ssh-keys) available within the organization.
+
+### Manage Agent Pools
+
+Allows members to create, edit, and delete agent pools within their organization.
+
+This permission implicitly grants access to read all workspaces, this is necessary for agent pool management.
 
 ### Manage Private Registry
 
