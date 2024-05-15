@@ -186,4 +186,45 @@ module.exports = [
     destination: "/terraform/cloud-docs/modules/partner",
     permanent: true,
   },
+  // Terraform Recommended Practices
+  {
+    source: "/terraform/cloud-docs/recommended-practices",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part1",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part1",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part2",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part2",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part3",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part3",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part3.1",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part3.1",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part3.2",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part3.2",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part3.3",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part3.3",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/recommended-practices/part3.4",
+    destination: "/terraform/cloud-docs/recommended-practices/workflow/part3.4",
+    permanent: true,
+  },
 ];
