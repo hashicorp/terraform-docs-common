@@ -616,34 +616,49 @@
   {
     "title": "Recommended Practices",
     "routes": [
-      { "title": "Overview", "path": "recommended-practices" },
       {
-        "title": "Part 1: Overview of Our Recommended Workflow",
-        "path": "recommended-practices/part1"
+        "title": "Phases of Terraform Adoption",
+        "routes": [
+          {"title": "Overview", "path": "recommended-practices/adopt"},
+          {"title": "Adopt", "path": "recommended-practices/adopt/adopt"},
+          {"title": "Collaborate", "path": "recommended-practices/adopt/collaborate"},
+          {"title": "Scale", "path": "recommended-practices/adopt/scale"},
+          {"title": "Govern", "path": "recommended-practices/adopt/govern"}
+        ]
       },
       {
-        "title": "Part 2: Evaluating Your Current Provisioning Practices",
-        "path": "recommended-practices/part2"
-      },
-      {
-        "title": "Part 3: How to Evolve Your Provisioning Practices",
-        "path": "recommended-practices/part3"
-      },
-      {
-        "title": "Part 3.1: From Manual Changes to Semi-Automation",
-        "path": "recommended-practices/part3.1"
-      },
-      {
-        "title": "Part 3.2: From Semi-Automation to Infrastructure as Code",
-        "path": "recommended-practices/part3.2"
-      },
-      {
-        "title": "Part 3.3: From Infrastructure as Code to Collaborative Infrastructure as Code",
-        "path": "recommended-practices/part3.3"
-      },
-      {
-        "title": "Part 3.4: Advanced Workflow Improvements",
-        "path": "recommended-practices/part3.4"
+        "title": "Workflow",
+        "routes": [
+          { "title": "Overview", "path": "recommended-practices/workflow" },
+          {
+            "title": "Part 1: Overview of Our Recommended Workflow",
+            "path": "recommended-practices/workflow/part1"
+          },
+          {
+            "title": "Part 2: Evaluating Your Current Provisioning Practices",
+            "path": "recommended-practices/workflow/part2"
+          },
+          {
+            "title": "Part 3: How to Evolve Your Provisioning Practices",
+            "path": "recommended-practices/workflow/part3"
+          },
+          {
+            "title": "Part 3.1: From Manual Changes to Semi-Automation",
+            "path": "recommended-practices/workflow/part3.1"
+          },
+          {
+            "title": "Part 3.2: From Semi-Automation to Infrastructure as Code",
+            "path": "recommended-practices/workflow/part3.2"
+          },
+          {
+            "title": "Part 3.3: From Infrastructure as Code to Collaborative Infrastructure as Code",
+            "path": "recommended-practices/workflow/part3.3"
+          },
+          {
+            "title": "Part 3.4: Advanced Workflow Improvements",
+            "path": "recommended-practices/workflow/part3.4"
+          }
+        ]
       }
     ]
   },
