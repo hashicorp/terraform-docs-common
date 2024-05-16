@@ -29,17 +29,19 @@ If you are using the SaaS version of HCP Terraform, this means your VCS provider
 
 Terraform Enterprise instances must have network connectivity to any connected VCS providers or managed infrastructure providers.
 
-## Concurrency and Run Queuing
+<a name="concurrency-and-run-queuing"></a>
 
-HCP Terraform uses multiple concurrent worker VMs, which take jobs from a global queue of runs that are ready for processing. (This includes confirmed applies, and plans that have just become the current run on their workspace.)
+## Concurrency and Job Queuing
 
-If the global queue has more runs than the workers can handle at once, some of them must wait until a worker becomes available. When the queue is backed up, HCP Terraform gives different priorities to different kinds of runs:
+HCP Terraform uses multiple concurrent worker VMs, which take jobs from a global queue of operations that are ready to execute. (This includes both creating new plans and then applying those plans once they've been approved.)
 
-- Applies that will make changes to infrastructure have the highest priority.
-- Normal plans have the next highest priority.
-- Speculative plans have the lowest priority.
+If the global queue has more jobs than the workers can handle at once, some of them must wait until a worker becomes available. When the queue is backed up, HCP Terraform gives different priorities to different kinds of jobs:
 
-HCP Terraform can also delay some runs in order to make performance more consistent across organizations. If an organization requests a large number of runs at once, HCP Terraform queues some of them immediately, and delays the rest until some of the initial batch have finished; this allows every organization to continue performing runs even during periods of especially heavy load.
+- Applying approved plans has the highest priority.
+- Creation of normal plans has the next-highest priority.
+- Creation of speculative plans has the lowest priority.
+
+HCP Terraform can also delay some jobs to make performance more consistent across organizations. If an organization requests a large number of jobs at once, HCP Terraform queues some of them immediately, and delays the rest until some of the initial batch have finished; this allows every organization to continue executing jobs even during periods of especially heavy load.
 
 ## State Access and Authentication
 
