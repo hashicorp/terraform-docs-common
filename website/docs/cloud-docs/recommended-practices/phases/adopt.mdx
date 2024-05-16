@@ -7,7 +7,7 @@ description: Establish strong foundational practices that support future scale a
 
 An individual practitioner can establish strong foundational practices that support future scale and make Terraform operations predictable and secure. 
 
-### Use version control
+## Use version control
 
 Store your Terraform configuration in a version control system, such as Git, just as you would with your application code. Terraform configuration files are code, and will benefit from the same features as your application in a version control repository such as versioning and easier code reviews.
 
@@ -19,7 +19,7 @@ Do not store [`terraform.tfstate` state files](/terraform/language/state), provi
 
 You can [connect your VCS provider to HCP Terraform](/terraform/cloud-docs/vcs) to automatically initiate Terraform runs and view [speculative plans that let you preview your infrastructure changes](/terraform/cloud-docs/run/ui#speculative-plans-on-pull-requests) in your pull requests. 
 
-### Reuse code with modules
+## Reuse code with modules
 
 Terraform modules group resources that you usually deploy together, letting you define reusable units of infrastructure code. For example, when you create a VPC in AWS, you may also need to create subnets, the route table, the internet gateway, security groups, and more. Instead defining the individual resources and configuring the relationships between them every time you need a new VPC, you can use the [VPC module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest), which you can customize using input variables to quickly create the required infrastructure. The [public Terraform module registry](https://registry.terraform.io/browse/modules) offers many modules that encode best practices for common use cases. 
 
@@ -40,7 +40,7 @@ output "web_instance_ips" {
 
 [Follow our tutorials to learn how to use and develop modules](/terraform/tutorials/modules/module) and explore the [public Terraform module registry](https://registry.terraform.io/browse/modules). 
 
-### Use secrets storage
+## Use secrets storage
 
 Your configuration may rely on sensitive values, such as provider credentials. Although you can mark certain variables as sensitive to prevent displaying them as plaintext in run output, a more robust solution is to use secrets storage such as [HashiCorp Vault](/vault)
 
@@ -49,3 +49,9 @@ Vault securely stores sensitive information such as credentials and provides gra
 
 
 Vault also integrates into many popular CI/CD solutions such as [GitHub, Jenkins, and CircleCI](/well-architected-framework/security/security-cicd-vault). Vault provides a central system to store and access data, which lets CI/CD pipelines push and pull secrets programmatically.
+
+## Next steps
+
+Multiple developers working on the same codebase introduces a new set of challenges, but solutions such as remote state backends help ease collaboration and coordinate execution. 
+
+Learn how to [collaborate with Terraform](/terraform/cloud-docs/recommended-practices/phases/collaborate).
