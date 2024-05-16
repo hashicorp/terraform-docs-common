@@ -9,7 +9,7 @@ Multiple developers working on the same codebase introduces a new set of challen
 
 ## Use remote state storage
 
-As more team members work on Terraform configuration, you should implement remote state storage to support collaboration. HCP Terraform and remote  backends implement several features to help you safely manage your Terraform state:
+As more team members work on Terraform configuration, you should implement remote state storage to support collaboration. HCP Terraform and remote backends implement several features to help you safely manage your Terraform state:
 
 - **Storage:** Remote state storage lets you manage infrastructure collaboratively and securely. Different state stores may also support additional features for state management, such as encryption, versioning, automated backups, redundancy, and more.
 - **Locking:** Some remote state storage options support [state locking](/terraform/language/state/locking). State locking prevents concurrent Terraform operations on single state files. 
