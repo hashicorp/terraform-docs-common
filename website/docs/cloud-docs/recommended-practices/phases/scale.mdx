@@ -13,7 +13,7 @@ You will also need to decide on a cloud deployment strategy based on your organi
 
 We recommend using modules early in your Terraform adoption process to support consistent infrastructure configuration. As your Terraform usage scales, a central module registry helps teams find and use your modules rather than rewriting the same code.
 
-Terraform supports  [multiple module distribution options](/terraform/language/modules/sources), but we recommend that you use a native Terraform module registry such as HCP Terraform or Terraform Enterprise. These both use the [module registry protocol](/terraform/internals/module-registry-protocol), which is the Terraform-specific protocol to discover metadata about modules available for installation and to locate the distribution package for a selected module.
+Terraform supports [multiple module distribution options](/terraform/language/modules/sources), but we recommend that you use a native Terraform module registry such as HCP Terraform or Terraform Enterprise. These both use the [module registry protocol](/terraform/internals/module-registry-protocol), which is the Terraform-specific protocol to discover metadata about modules available for installation and to locate the distribution package for a selected module.
 
 If you cannot use a native module registry, there are other source options such as [Git repositories](/terraform/language/modules/sources#generic-git-repository) or [AWS S3](/terraform/language/modules/sources#s3-bucket).
 
