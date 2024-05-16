@@ -308,7 +308,7 @@
             "path": "users-teams-organizations/single-sign-on"
           },
           {
-            "title": "Microsoft Azure AD",
+            "title": "Microsoft Azure Entra ID",
             "path": "users-teams-organizations/single-sign-on/azure-ad"
           },
           {

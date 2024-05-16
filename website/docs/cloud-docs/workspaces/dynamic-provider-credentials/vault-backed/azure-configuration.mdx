@@ -49,7 +49,7 @@ You may need to set these variables, depending on your use case.
 ## Configure Terraform Providers
 The final step is to directly configure your Azure and Vault providers.
 
-### Configure the AzureRM or AzureAD Provider
+### Configure the AzureRM or Azure Entra ID
 Ensure you pass a value for the `subscription_id` and `tenant_id` arguments in your provider configuration block or set the `ARM_SUBSCRIPTION_ID` and `ARM_TENANT_ID` variables in your workspace.
 
 Do not set values for `client_id`, `use_oidc`, or `oidc_token` in your provider configuration block. Additionally, do not set variable values for `ARM_CLIENT_ID`, `ARM_USE_OIDC`, or `ARM_OIDC_TOKEN`.
@@ -60,7 +60,7 @@ This includes the [`vault_azure_access_credentials`](https://registry.terraform.
 
 ### Specifying Multiple Configurations
 
-~> **Important:** Ensure you are using version **3.60.0** or later of the **AzureRM provider** and version **2.43.0** or later of the **AzureAD provider** as required functionality was introduced in these provider versions.
+~> **Important:** Ensure you are using version **3.60.0** or later of the **AzureRM provider** and version **2.43.0** or later of the **Azure Entra ID provider** (previously AzureAD) as required functionality was introduced in these provider versions.
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
@@ -115,7 +115,7 @@ provider "azurerm" {
 }
 ```
 
-##### AzureAD Provider
+##### Azure Entra ID Provider (previously AzureAD)
 
 ```hcl
 provider "azuread" {

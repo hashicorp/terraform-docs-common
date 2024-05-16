@@ -1,24 +1,24 @@
 ---
-page_title: Microsoft Azure AD - Single Sign-on - Terraform Cloud
+page_title: Microsoft Azure Entra ID - Single Sign-on - Terraform Cloud
 tfc_only: true
 description: >-
-  Learn how to configure single sign-on with Azure Active Directory.
+  Learn how to configure single sign-on with Azure Entra ID.
 ---
 
-# Single Sign-on: Microsoft Azure AD
+# Single Sign-on: Microsoft Azure Entra ID
 
-The Microsoft Azure AD SSO integration currently supports the following SAML features:
+The Microsoft Azure Entra ID SSO integration currently supports the following SAML features:
 
 - Service Provider (SP) initiated SSO
 - Identity Provider (IdP) initiated SSO
 - Just-in-Time Provisioning
 
-For more information on the listed features, visit the [Microsoft Azure AD SAML Protocol Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/single-sign-on-saml-protocol).
+For more information on the listed features, visit the [Microsoft Azure Entra ID SAML Protocol Documentation](https://docs.microsoft.com/en-us/azure/active-directory/develop/single-sign-on-saml-protocol).
 
-## Configuration (Microsoft Azure AD)
+## Configuration (Azure Entra ID)
 
 1. Sign in to the Azure portal.
-1. On the left navigation pane, select the **Azure Active Directory** service.
+1. On the left navigation pane, select the **Azure Entra ID** service.
 1. Navigate to **Enterprise Applications** and then select **All Applications**.
 1. To add new application, select **New application**.
 1. In the **Add from the gallery** section, type **Terraform Cloud** in the search box.
@@ -47,7 +47,7 @@ For more information on the listed features, visit the [Microsoft Azure AD SAML 
 
 1. Copy Entity ID and Reply URL.
 
-## Configuration (Microsoft Azure AD)
+## Configuration (Microsoft Azure Entra ID)
 
 1. In the Azure portal, on the **Terraform Cloud** application integration page, find the **Manage** section and select **single sign-on**.
 1. On the **Select a single sign-on method** page, select **SAML**.
@@ -67,7 +67,7 @@ For more information on the listed features, visit the [Microsoft Azure AD SAML 
 To edit your Azure SSO configuration settings:
 
    1. Go to **Public Certificate**.
-   1. Paste the contents of the SAML Signing Certificate you downloaded from Microsoft Azure AD.
+   1. Paste the contents of the SAML Signing Certificate you downloaded from Microsoft Azure Entra ID.
    1. Save Settings.
 1. [Verify](/terraform/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
 
@@ -77,7 +77,7 @@ To edit your Azure SSO configuration settings:
 
 ## Team and Username Attributes
 
-To configure team management in your Microsoft Azure AD application:
+To configure team management in your Microsoft Azure Entra ID application:
 
 1. Navigate to the single sign-on page.
 1. Edit step 2, **User Attributes & Claims**. 
@@ -87,15 +87,15 @@ To configure team management in your Microsoft Azure AD application:
 1. Check **Customize the name of the group claim**. 
 1. Set **Name (required)** to "MemberOf" and leave the namespace field blank.
 
--> **Note:** When you configure Azure AD to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/terraform/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your HCP Terraform teams to match these Azure Group UUIDs.
+-> **Note:** When you configure Azure Entra ID to use Group Claims, it provides Group UUIDs instead of human readable names in its SAML assertions. We recommend [configuring SSO Team IDs](/terraform/cloud-docs/users-teams-organizations/single-sign-on#team-names-and-sso-team-ids) for your HCP Terraform teams to match these Azure Group UUIDs.
 
-If you plan to use SAML to set usernames in your Microsoft Azure AD application:
+If you plan to use SAML to set usernames in your Microsoft Azure Entra ID application:
 
 1. Navigate to the single sign-on page.
 1. Edit step 2, **User Attributes & Claims.**  
    We recommend naming the claim "username", leaving the namespace blank, and sourcing `user.displayname` or `user.mailnickname` as a starting point. If you have a Terraform Enterprise account, you can source `user.mail` or `user.userprincipalname`. Note that HCP Terraform usernames only allow lowercase letters, numbers, and dashes.
 
-If you namespaced any of your claims, then Microsoft Azure AD passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting team and username attribute names.
+If you namespaced any of your claims, then Microsoft Azure Entra ID passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting team and username attribute names.
 
 ## Troubleshooting the SAML assertion
 [Use this guide](https://support.hashicorp.com/hc/en-us/articles/1500005371682-Capturing-a-SAML-Assertion) to verify and validate the claims being sent in the SAML response. 
