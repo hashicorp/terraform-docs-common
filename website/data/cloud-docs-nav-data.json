@@ -619,11 +619,11 @@
       {
         "title": "Phases of Terraform Adoption",
         "routes": [
-          {"title": "Overview", "path": "recommended-practices/adopt"},
-          {"title": "Adopt", "path": "recommended-practices/adopt/adopt"},
-          {"title": "Collaborate", "path": "recommended-practices/adopt/collaborate"},
-          {"title": "Scale", "path": "recommended-practices/adopt/scale"},
-          {"title": "Govern", "path": "recommended-practices/adopt/govern"}
+          {"title": "Overview", "path": "recommended-practices/phases"},
+          {"title": "Adopt", "path": "recommended-practices/phases/adopt"},
+          {"title": "Collaborate", "path": "recommended-practices/phases/collaborate"},
+          {"title": "Scale", "path": "recommended-practices/phases/scale"},
+          {"title": "Govern", "path": "recommended-practices/phases/govern"}
         ]
       },
       {
