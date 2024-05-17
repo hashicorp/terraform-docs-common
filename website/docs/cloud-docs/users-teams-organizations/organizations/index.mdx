@@ -153,9 +153,14 @@ HCP Terraform can perform automatic health assessments in a workspace to assess 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.
 
 #### Runs
-View all the current runs from your workspaces in HCP Terraform.
-From this page, you can delete a current run from different workspaces, filtering by `Needs Attention`, `Running` or `On Hold`.
-All the runs can also be sorted by `Latest change` or alphabetically by `Workspace/Project`.
+From the Workspaces page, click **Settings** in the sidebar, then **Runs**  to view current runs in all workspaces. You can perform the following actions:
+
+- Click **Needs Attention** to filter runs that requires user input, such as approving the plan or overriding a policy, to continue. 
+- Click **Running** to filter for runs that are in progress. 
+- Click **On Hold** to filter runs that have paused. 
+- Click on a column header to display runs in alphanumeric order according to the most recent change or workspace name.  
+
+Refer to [Run States and Stages](/terraform/cloud-docs/run/states) for additional information about understanding run states.
 
 ### Integrations
 
