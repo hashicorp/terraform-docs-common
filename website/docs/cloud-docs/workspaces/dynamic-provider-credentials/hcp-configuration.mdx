@@ -26,7 +26,7 @@ Create a service principal for HCP Terraform to assume during runs by running th
 hcp iam service-principals create hcp-terraform --project=HCP_PROJECT_ID
 ```
 
-You should then grant this service princpal the permissions it needs to manage your infrastructure during runs.
+Grant your service principal the necessary permissions to manage your infrastructure during runs.
 
 ```shell
 hcp projects add-binding \
