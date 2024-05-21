@@ -9,7 +9,7 @@ description: >-
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.15.1](/terraform/cloud-docs/agents/changelog#1-15-1-05-01-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
-You can use HCP Terraform’s native OpenID Connect integration with HCP to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the HCP provider in your HCP Terraform runs. Configuring the integration requires the following steps:
+You can use HCP Terraform’s native OpenID Connect integration with HCP to authenticate with the HCP provider using [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) in your HCP Terraform runs. Configuring dynamic credentials for the HCP provider requires the following steps:
 
 1. **[Configure HCP](#configure-hcp):** Set up a trust configuration between HCP and HCP Terraform. Then, you must create an [service principal in HPC](https://developer.hashicorp.com/hcp/docs/hcp/admin/iam/service-principals) for your HCP Terraform workspaces.
 2. **[Configure HCP Terraform](#configure-hcp-terraform):** Add environment variables to the HCP Terraform workspaces where you want to use Dynamic Credentials.
