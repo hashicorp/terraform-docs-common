@@ -80,7 +80,7 @@ For more details, refer to [Specifying Multiple Configurations](/terraform/cloud
 
 #### Required Terraform Variable
 
-To use additional configurations, add the following code to your Terraform configuration. This lets HCP Terraform supply variable values that you can then use to map authentication and configuration details to the correct provider blocks.
+Add the following variable to your Terraform configuration to set up additional dynamic credential configurations with the HCP provider. This variable lets HCP Terraform supply variable values that you can then use to map authentication and configuration details to the correct provider blocks.
 
 ```hcl
 variable "tfc_hcp_dynamic_credentials" {
