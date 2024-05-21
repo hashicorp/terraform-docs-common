@@ -16,7 +16,7 @@ HCP Terraform allows organizations to configure SAML single sign-on (SSO), an al
 
 Select your preferred provider to learn more about what is supported for that provider and how to configure SSO for it.
 
-* [Azure Entra ID](/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
+* [Microsoft Entra ID](/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
 * [Okta](/terraform/cloud-docs/users-teams-organizations/single-sign-on/okta)
 * [SAML](/terraform/cloud-docs/users-teams-organizations/single-sign-on/saml)
 
@@ -114,7 +114,7 @@ HCP Terraform expects the team names in the team membership SAML attribute to ex
 
 You can configure SSO Team IDs in the organization's **Teams** page. If an SSO Team ID is configured, HCP Terraform will attempt to match the chosen SAML attribute against both the team name and the SSO Team ID when mapping users to teams. You may want to create an SSO Team ID if the team membership SAML attribute is not human readable and is not used as the team's name in HCP Terraform.
 
-SSO Team IDs are particularly helpful if your SSO or Azure Entra ID provider restricts the `MemberOf` attribute in its SAML responses to Group UUIDs, rather than human readable group names. Setting the SSO Team ID allows you to maintain human readable team names in HCP Terraform, while still managing team membership through SSO or Azure Entra ID.
+SSO Team IDs are particularly helpful if your SSO or Microsoft Entra ID provider restricts the `MemberOf` attribute in its SAML responses to Group UUIDs, rather than human readable group names. Setting the SSO Team ID allows you to maintain human readable team names in HCP Terraform, while still managing team membership through SSO or Microsoft Entra ID.
 
 ## NameID Format
 
