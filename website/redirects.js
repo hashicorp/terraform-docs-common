@@ -186,4 +186,10 @@ module.exports = [
     destination: "/terraform/cloud-docs/modules/partner",
     permanent: true,
   },
+  //Azure AD -> Microsoft Entra ID
+  {
+    source: "/users-teams-organizations/single-sign-on/azure-ad",
+    destination: "/users-teams-organizations/single-sign-on/entra-id",
+    permanent: true,
+  },
 ];
