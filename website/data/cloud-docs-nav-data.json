@@ -308,8 +308,8 @@
             "path": "users-teams-organizations/single-sign-on"
           },
           {
-            "title": "Microsoft Azure AD",
-            "path": "users-teams-organizations/single-sign-on/azure-ad"
+            "title": "Microsoft Entra ID",
+            "path": "users-teams-organizations/single-sign-on/entra-id"
           },
           {
             "title": "Okta",
