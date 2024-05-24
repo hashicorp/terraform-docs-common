@@ -34,7 +34,7 @@ vault write auth/jwt/config \
 ```
 The `oidc_discovery_url` and `bound_issuer` should both be the root address of HCP Terraform, including the scheme and without a trailing slash.
 
-#### TFE Specific Requirements
+#### Terraform Enterprise Specific Requirements
 
 If you are using a custom or self-signed CA certificate you may need to specify the CA certificate or chain of certificates, in PEM format, via the [`oidc_discovery_ca_pem`](/vault/api-docs/auth/jwt#oidc_discovery_ca_pem) argument as shown in the following example command:
 ```shell

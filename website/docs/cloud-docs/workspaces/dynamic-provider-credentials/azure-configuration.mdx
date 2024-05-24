@@ -11,7 +11,7 @@ description: >-
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.7.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
-!> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your TFE instance is using a custom or self-signed certificate due to restrictions on Azure's end.
+!> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your Terraform Enterprise instance is using a custom or self-signed certificate due to restrictions on Azure's end.
 
 You can use HCP Terraform’s native OpenID Connect integration with Azure to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AzureRM or Microsoft Entra ID providers in your HCP Terraform runs. Configuring the integration requires the following steps:
 
