@@ -43,7 +43,7 @@ You do not need permission from the owners to leave an organization, but you can
 
 ## Creating Organizations
 
-On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Administration: General Settings](/terraform/cloud-docs/admin/application/general#organization-creation) for details.
+On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Administration: General Settings](/terraform/enterprise/admin/application/general#organization-creation) for details.
 
 On HCP Terraform, any user can create a new organization. If you do not belong to any organizations, HCP Terraform prompts you to create one the first time you log in. To create an organization:
 
@@ -112,18 +112,20 @@ Review a list of tags for all resources across the organization. When you delete
 
 All users in an organization can access the **Teams** page, which displays a list of [teams][] within the organization. 
 
-Owners and users with the [include secret teams permission](/terraform/cloud-docs/users-teams-organizations/permissions#include-secret-teams) can:
+Organization owners and users with the [include secret teams permission](/terraform/cloud-docs/users-teams-organizations/permissions#include-secret-teams) can:
   * view all [secret teams](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility)
   * view each team's membership
   * manage team API tokens
 
-HCP Terraform restricts team creation, team deletion, and management of team API tokens to organization owners and users with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permission. Both owners and users with [manage membership](/terraform/cloud-docs/users-teams-organizations/permissions#manage-membership) can manage team membership. Remember that users must accept their invitation to the organization before you can add them to a team.
+HCP Terraform restricts team creation, team deletion, and management of team API tokens to organization owners and users with the [manage teams](#manage-teams) permission. Organization owners and users with the [manage membership](#manage-membership) permission can manage team membership. 
+
+Remember that users must accept their organization invitations before you can add them to a team.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 #### Users
 
-Organization owners and users with [Manage Membership](/terraform/cloud-docs/users-teams-organizations/permissions#manage-membership) permissions can invite HCP Terraform users into the organization, cancel invitations, and remove existing members.
+Organization owners and users with [manage membership](#manage-membership) permissions can invite HCP Terraform users into the organization, cancel invitations, and remove existing members.
 
 The list of users is separated into one tab for active users and one tab for invited users who have not yet accepted their invitations. For active users, the list includes usernames, email addresses, avatar icons, two-factor authentication status, and current team memberships. Use the **Search by username or email** field to filter these lists.
 
