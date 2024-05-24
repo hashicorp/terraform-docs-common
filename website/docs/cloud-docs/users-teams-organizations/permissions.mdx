@@ -1,5 +1,5 @@
 ---
-page_title: Permissions - Terraform Cloud
+page_title: Permissions - HCP Terraform
 description: >-
   Learn the difference between workspace-level and organization-level
   permissions and what permissions you can grant to users.
@@ -8,14 +8,14 @@ description: >-
 # Permissions
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Team management is available in Terraform Cloud **Standard** Edition. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+-> **Note:** Team management is available in HCP Terraform **Standard** Edition. [Learn more about HCP Terraform pricing here](https://www.hashicorp.com/products/terraform/pricing).
 <!-- END: TFC:only name:pnp-callout -->
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-> **Hands-on:** Try the [Manage Permissions in Terraform Cloud](/terraform/tutorials/cloud/cloud-permissions?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
+> **Hands-on:** Try the [Manage Permissions in HCP Terraform](/terraform/tutorials/cloud/cloud-permissions?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorial.
 
-Terraform Cloud's access model is team-based. In order to perform an action within a Terraform Cloud organization, users must belong to a team that has been granted the appropriate permissions.
+HCP Terraform's access model is team-based. In order to perform an action within an HCP Terraform organization, users must belong to a team that has been granted the appropriate permissions.
 
 The permissions model is split into organization-level, project-level, and workspace-level permissions. Additionally, every organization has a special team named "owners", whose members have maximal permissions within the organization.
 
@@ -38,8 +38,8 @@ Permissions for the owners team include:
 - Manage VCS settings (refer to [Organization Permissions][] below)
 - Manage the private registry (refer to [Organization Permissions][] below)
 - Manage Membership (refer to [Organization Permissions][] below; invite or remove users from the organization itself, and manage the membership of its teams)
-- View all secret teams (owners only)
-- Manage organization permissions (owners only)
+- View all secret teams (refer to [Organization Permissions][] below)
+- Manage organization permissions (refer to [Organization Permissions][] below)
 - Manage all organization settings (owners only)
 - Manage organization billing (owners only, not applicable to Terraform Enterprise)
 - Delete organization (owners only)
@@ -55,7 +55,7 @@ If the organization has enabled Single Sign On, these permissions will also be a
 
 [workspace]: /terraform/cloud-docs/workspaces
 
-Most of Terraform Cloud's permissions system is focused on workspaces. In general, administrators want to delegate access to specific collections of infrastructure; Terraform Cloud implements this by granting permissions to teams on a per-workspace basis.
+Most of HCP Terraform's permissions system is focused on workspaces. In general, administrators want to delegate access to specific collections of infrastructure; HCP Terraform implements this by granting permissions to teams on a per-workspace basis.
 
 There are two ways to choose which permissions a given team has on a workspace: fixed permission sets, and custom permissions. Additionally, there is a special "admin" permission set that grants the highest level of permissions on a workspace.
 
@@ -90,7 +90,7 @@ The following workspace permissions can be granted to teams on a per-workspace b
   - **Read and write:** — _Implies permission to read._ Allows users to directly create new state versions in the workspace. Applying a remote Terraform run creates new state versions without this permission, but if the workspace's execution mode is set to "local", this permission is required for performing local runs. This permission is also required to use any of the Terraform CLI's state manipulation and maintenance commands against this workspace, including `terraform import`, `terraform taint`, and the various `terraform state` subcommands.
 - **Other controls:**
   - **Download Sentinel mocks:** — Allows users to download data from runs in the workspace in a format that can be used for developing Sentinel policies. This run data is very detailed, and often contains unredacted sensitive information.
-  - **Manage Workspace Run Tasks:** — Allows users to associate or dissociate run tasks with the workspace. Terraform Cloud creates Run Tasks at the organization level, where you can manually associate or dissociate them with specific workspaces.
+  - **Manage Workspace Run Tasks:** — Allows users to associate or dissociate run tasks with the workspace. HCP Terraform creates Run Tasks at the organization level, where you can manually associate or dissociate them with specific workspaces.
   - **Lock/unlock workspace:** — Allows users to manually lock the workspace to temporarily prevent runs. When a workspace's execution mode is set to "local", users must have this permission to perform local CLI runs using the workspace's state.
 
 ### Fixed Permission Sets
@@ -313,11 +313,15 @@ Allow members to generate module tests for private registry modules.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 
-Your organization must be on a Terraform Cloud Business or Plus subscription in order to enable this feature.
+Your organization must be an HCP Terraform Plus subscription to enable this feature.
 
 <!-- END: TFC:only name:pnp-callout -->
 
-### Manage Membership
+### Team Management Permissions
+
+There are three levels of team management permissions that can be granted to teams: manage membership, manage teams, and manage organization access. They each provide unique abilities to manage teams and can require prerequisite permissions to be granted. For instance, in order to grant the manage teams permission, manage membership must already be granted. In order to grant the manage organization access permission both manage teams and manage membership permissions must be granted as well.
+
+#### Manage Membership
 
 Allows members to invite users to the organization, remove users from the organization, and add or remove users from teams within the organization.
 
@@ -328,16 +332,42 @@ In order to remove a user from the organization, the holder of this permission m
 
 ~> This permission is intended to allow owners of large organizations to delegate membership management to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Users with this permission are able to add themselves to any visible team, and inherit the permissions of any visible team.
 
-## Permissions Outside Terraform Cloud's Scope
+#### Manage Teams
 
-This documentation only refers to permissions that are managed by Terraform Cloud itself.
+Allows members to create, update, and delete teams.
 
-Since Terraform Cloud integrates with other systems, the permissions models of those systems can also be relevant to the overall security model of your Terraform Cloud organization. For example:
+This permission grants the ability to update a team names and SSO IDs but not its organization access settings. On its own this permission does not allow users to create, update, delete, or otherwise access secret teams.
 
-- When a workspace is connected to a VCS repository, anyone who can merge changes to that repository's main branch can indirectly queue plans in that workspace, regardless of whether they have explicit permission to queue plans or are even a member of your Terraform Cloud organization. (And when auto-apply is enabled, merging changes will indirectly apply runs.)
-- If you use Terraform Cloud's API to create a Slack bot for provisioning infrastructure, anyone able to issue commands to that Slack bot can implicitly act with that bot's permissions, regardless of their own membership and permissions in the Terraform Cloud organization.
+This permission confers all of the permissions granted by the manage membership permission.
+
+~> This permission is intended to allow owners of large organizations to delegate team management to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Users with this permission are able to update or delete any visible team. Because this permission also confers the manage membership permission these users could also add themselves to any visible team.
+
+#### Manage Organization Access
+
+Allows members to update the organization access settings of teams.
+
+On its own this permission does not allow users to create, update, delete, or otherwise access secret teams.
+
+This permission confers all of the permissions granted by the manage teams and manage membership permissions.
+
+~> This permission is intended to allow owners of large organizations to delegate further team management control to another trusted team, and should be granted only to teams of trusted users. **Assign with caution:** Members with this permission will be able to update all organization access settings for any team visible to them.
+
+### Include Secret Teams
+
+Allows members access to secret teams up to the level of permissions granted by their team permissions setting.
+
+This permission acts as a modifier to existing team management permissions. With it members can have access to secret teams up to the level permitted by other team management permissions. For instance the combination of include secret teams and [manage teams permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) will allow members to create secret teams.
+
+## Permissions Outside HCP Terraform's Scope
+
+This documentation only refers to permissions that are managed by HCP Terraform itself.
+
+Since HCP Terraform integrates with other systems, the permissions models of those systems can also be relevant to the overall security model of your HCP Terraform organization. For example:
+
+- When a workspace is connected to a VCS repository, anyone who can merge changes to that repository's main branch can indirectly queue plans in that workspace, regardless of whether they have explicit permission to queue plans or are even a member of your HCP Terraform organization. (And when auto-apply is enabled, merging changes will indirectly apply runs.)
+- If you use HCP Terraform's API to create a Slack bot for provisioning infrastructure, anyone able to issue commands to that Slack bot can implicitly act with that bot's permissions, regardless of their own membership and permissions in the HCP Terraform organization.
 - When a run task sends a request to an integrator, it provides an access token that provides access depending on the run task stage:
   - For post-plan, it provides access to the runs plan json and the run task callback
   - All access tokens created for run tasks have a lifetime of 10 minutes
 
-When integrating Terraform Cloud with other systems, you are responsible for understanding the effects on your organization's security. An integrated system is able to delegate any level of access that it has been granted, so carefully consider the conditions and events that will cause it to delegate that access.
+When integrating HCP Terraform with other systems, you are responsible for understanding the effects on your organization's security. An integrated system is able to delegate any level of access that it has been granted, so carefully consider the conditions and events that will cause it to delegate that access.
