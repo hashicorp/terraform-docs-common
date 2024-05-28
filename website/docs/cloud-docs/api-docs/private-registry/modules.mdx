@@ -519,7 +519,7 @@ curl \
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-Creates a new registry module version. This endpoint only applies to private modules without a VCS repository and VCS-linked branch based modules; VCS-linked Tag based modules automatically create new versions for new tags. After creating the version for a non-VCS backed module, the module should be uploaded to the returned upload link.
+Creates a new registry module version. This endpoint only applies to private modules without a VCS repository and VCS-linked branch based modules. VCS-linked tag-based modules automatically create new versions for new tags. After creating the version for a non-VCS backed module, you should upload the module to the link that HCP Terraform returns.
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
@@ -538,7 +538,7 @@ Properties without a default value are required.
 | ---------------------------- | ------ | ------- | ---------------------------------------------------- |
 | `data.type`                  | string |         | Must be `"registry-module-versions"`.                |
 | `data.attributes.version`    | string |         | A valid semver version string.                       |
-| `data.attributes.commit-sha` | string |         | A valid sha for the module version to ingress        |
+| `data.attributes.commit-sha` | string |         | The commit SHA to use to create the module version.        |
 
 
 ### Sample Payload
@@ -548,7 +548,8 @@ Properties without a default value are required.
   "data": {
     "type": "registry-module-versions",
     "attributes": {
-      "version": "1.2.3"
+      "version": "1.2.3",
+      "commit_sha": "abcdef12345"
     }
   }
 }
