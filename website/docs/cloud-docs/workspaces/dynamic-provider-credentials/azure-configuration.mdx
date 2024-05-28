@@ -18,7 +18,7 @@ You can use HCP Terraform’s native OpenID Connect integration with Azure to ge
 
 Once you complete the setup, HCP Terraform automatically authenticates to Azure during each run. The Azure provider authentication is valid for the length of the plan or apply.
 
-!> **Warning:** Dynamic Credentials with the Azure providers do **_not_** work when your Terraform Enterprise instance is using a custom or self-signed certificate due to restrictions on Azure's end.
+!> **Warning:** Dynamic credentials with the Azure providers do not  work when your Terraform Enterprise instance uses a custom or self-signed certificate. This limitation is due to restrictions in Azure.
 
 ## Configure Azure
 You must enable and configure an application and service principal with accompanying federated credentials and permissions on Azure. These instructions use the Azure portal, but you can also use Terraform to configure Azure. Refer to our [example Terraform configuration](https://github.com/hashicorp/terraform-dynamic-credentials-setup-examples/tree/main/azure).
