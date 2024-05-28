@@ -129,7 +129,7 @@ You can use one of the following approaches to correct configuration drift:
 
 Continuous validation regularly verifies whether your configuration’s custom assertions continue to pass, validating your infrastructure. For example, you can monitor whether your website returns an expected status code, or whether an API gateway certificate is valid. Identifying failed assertions helps you resolve the failure and prevent errors during your next time Terraform operation.
 
-Continuous validation evaluates preconditions, postconditions, and check blocks as part of an assessment, but we recommend using [check blocks](https://developer.hashicorp.com/terraform/language/checks) for post-apply monitoring. Use check blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
+Continuous validation evaluates preconditions, postconditions, and check blocks as part of an assessment, but we recommend using [check blocks](/terraform/language/checks) for post-apply monitoring. Use check blocks to create custom rules to validate your infrastructure's resources, data sources, and outputs.
 
 ### Preventing false positives
 
