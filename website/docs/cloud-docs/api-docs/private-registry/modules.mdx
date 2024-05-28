@@ -519,7 +519,7 @@ curl \
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-Creates a new registry module version. This endpoint only applies to private modules without a VCS repository; VCS-linked modules automatically create new versions for new tags. After creating the version, the module should be uploaded to the returned upload link.
+Creates a new registry module version. This endpoint only applies to private modules without a VCS repository and VCS-linked branch based modules. VCS-linked tag-based modules automatically create new versions for new tags. After creating the version for a non-VCS backed module, you should upload the module to the link that HCP Terraform returns.
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
@@ -535,9 +535,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 Properties without a default value are required.
 
 | Key path                  | Type   | Default | Description                           |
-| ------------------------- | ------ | ------- | ------------------------------------- |
-| `data.type`               | string |         | Must be `"registry-module-versions"`. |
-| `data.attributes.version` | string |         | A valid semver version string.        |
+| ---------------------------- | ------ | ------- | ---------------------------------------------------- |
+| `data.type`                  | string |         | Must be `"registry-module-versions"`.                |
+| `data.attributes.version`    | string |         | A valid semver version string.                       |
+| `data.attributes.commit-sha` | string |         | The commit SHA to use to create the module version.        |
+
 
 ### Sample Payload
 
@@ -546,7 +548,8 @@ Properties without a default value are required.
   "data": {
     "type": "registry-module-versions",
     "attributes": {
-      "version": "1.2.3"
+      "version": "1.2.3",
+      "commit-sha": "abcdef12345"
     }
   }
 }
