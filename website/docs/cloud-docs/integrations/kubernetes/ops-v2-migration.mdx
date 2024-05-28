@@ -53,7 +53,7 @@ Below is the field mapping of the `Workspace` controller from v1 to v2 of the op
 
 | Version 1 | Version 2 | Notes |
 | --- | --- | --- |
-| `apiVersion: app.terraform.io/v1alpha1` | `apiVersion: app.terraform.io/v1alpha2` | The `apiVersion` changed from `v1alpha1` to `v1alpha2`. |
+| `apiVersion: app.terraform.io/v1alpha1` | `apiVersion: app.terraform.io/v1alpha2` | The `apiVersion` is changed from `v1alpha1` to `v1alpha2`. |
 | `kind: Workspace` | `kind: Workspace` |  |
 | `metadata` | `metadata` |  |
 | `spec.organization` | `spec.organization` |  |
@@ -63,7 +63,7 @@ Below is the field mapping of the `Workspace` controller from v1 to v2 of the op
 | `spec.vcs.repo_identifier` | `spec.versionControl.repository` | Renamed. Refer to the `versionControl` structure for details. |
 | `spec.vcs.branch` | `spec.versionControl.branch` |  |
 | `spec.vcs.ingress_submodules` | `spec.workingDirectory` | Moved. |
-| `spec.variables.[*]` | `spec.environmentVariables.[*]` OR `spec.terraformVariables.[*]` | Variables were split into two different paths. <br/>It depends on the bool value `spec.variables.environmentVariable` in v1 CRD:<br/> - If it is `true` then a variable should be migrated to `spec.environmentVariables`.<br/> - If it is `false` then a variable should be migrated to `spec.terraformVariables`. |
+| `spec.variables.[*]` | `spec.environmentVariables.[*]` OR `spec.terraformVariables.[*]` | Variables were split into two different paths. Depending on the variable's value of `spec.variables.environmentVariable` in v1 CRD:<br/> - If it is `true` then you must migrate the variable to `spec.environmentVariables`.<br/> - If it is `false` then you must migrate the variable to `spec.terraformVariables`. |
 | `spec.variables.[*]key` | `spec.environmentVariables.[*]name` OR `spec.terraformVariables.[*]name` | The `key` field is renamed to `name`. |
 | `spec.variables.[*]value` | `spec.environmentVariables.[*]value` OR `spec.terraformVariables.[*]value` |  |
 | `spec.variables.[*]valueFrom` | `spec.environmentVariables.[*]valueFrom` OR `spec.terraformVariables.[*]valueFrom` |  |
