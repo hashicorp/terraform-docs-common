@@ -37,6 +37,7 @@ description: >-
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Tests API
+Tests are terraform operations and are referred to as Test Runs within the HCP Terraform API.
 
 Performing a test on a new configuration is a multi-step process.
 
@@ -50,7 +51,7 @@ Alternatively, you can create a test with a pre-existing configuration version, 
 
 The `tests` API endpoint has the following attributes.
 
-### Test run states
+### Test Run states
 
 The state of the test operation is found in `data.attributes.status`, and you can reference the following list of possible states.
 
@@ -93,7 +94,7 @@ List tests for a module. You can use the following sources as [tests list](/terr
 | `tfe-configuration-version` | Indicates a test was queued from a Configuration Version, triggered from a VCS provider. |
 
 
-## Create a test Run
+## Create a Test
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/test-runs`
 
@@ -223,7 +224,7 @@ curl \
 }
 ```
 
-## Create a Configuration Version for a test
+## Create a Configuration Version for a Test
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/test-runs/configuration-versions`
 
@@ -538,7 +539,7 @@ curl \
   https://app.terraform.io/api/v2/organizations/my-organization/tests/registry-modules/private/my-organization/registry-name/registry-provider/test-runs/trun-xFMAHM3FhkFBL6Z7/force-cancel
 ```
 
-## Create an Environment Variable for module tests
+## Create an Environment Variable for Module Tests
 
 `POST /organizations/:organization_name/tests/registry-modules/private/:namespace/:name/:provider/vars`
 
