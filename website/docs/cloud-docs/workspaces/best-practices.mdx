@@ -14,7 +14,7 @@ Scoping your configuration and planning your workspace strategy early in your ad
 
 Volatility refers to the rate of change of the resources in a workspace. Infrastructure such as databases, VPCs, and subnets change much less frequently than infrastructure such as your web servers. By exposing your long-living infrastructure to unnecessary volatility, you introduce more opportunities for accidental changes. When planning your workspace organization, group resources by volatility.
 
-![An example of how workspaces can be split among Production, Staging, QA, and Dev. In this example, networking and security are grouped in one workspace, with compute, filestore, and SQL all having their own workspace. This is duplicated in each environment](/img/workspace-net-infra-split.png)
+![An example of how workspaces can be split among Production, Staging, QA, and Dev. In this example, networking and security are grouped in one workspace, with compute, filestore, and SQL all having their own workspace. This is duplicated in each environment](/img/docs/workspace-net-infra-split.png)
 
 The above example groups together tightly-coupled resources like networking, security, and identity. Compute, storage, and databases have separate workspaces, since they change at different frequencies. You may scale compute instances multiple times a day, but your database instances probably change far less frequently. By grouping these parts of your infrastructure into separate workspaces, you decouple unrelated resources and reduce the risk of unexpected changes. 
 
@@ -30,7 +30,7 @@ A best practice is to split up workspaces based on team responsibilities and req
 
 From the privilege standpoint, this means that only the networking team has permissions to manage the resources in the networking workspaces, and others cannot modify their configuration. If the workspace scope is too large, a user might need more permissions than appropriate in order to access the workspace.
 
-![An example of how workspaces can be split among Production, Staging, QA, and Dev. In this example, networking and security are grouped in one workspace, with compute, filestore, and SQL all having their own workspace. This is duplicated in each environment](/img/workspace-net-infra-combined.png)
+![An example of how workspaces can be split among Production, Staging, QA, and Dev. In this example, networking and security are grouped in one workspace, with compute, filestore, and SQL all having their own workspace. This is duplicated in each environment](/img/docs/workspace-net-infra-combined.png)
 
 Splitting your workspaces by team also helps limit the responsibility per workspace and allows teams to maintain distinct areas of ownership. If you need to reference attributes of resources managed in other workspaces, you can share the outputs using the [tfe_outputs](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/outputs) data source. By limiting the scope of each workspace and sharing just the required outputs with others, you reduce the risk of leaking potentially sensitive information in a workspace's state. To share outputs from a workspace, you must explicitly enable remote state sharing in the workspace settings. 
 
