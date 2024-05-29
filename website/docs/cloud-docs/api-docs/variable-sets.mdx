@@ -1,5 +1,5 @@
 ---
-page_title: Variable Sets - API Docs - Terraform Cloud
+page_title: Variable Sets - API Docs - HCP Terraform
 description: >-
   Use the `/varsets` endpoint to manage variable sets. List, show, create, update, and delete variable sets, and apply or remove variable sets from workspaces using the HTTP API.
 ---
@@ -26,12 +26,13 @@ Properties without a default value are required.
 |---------------------------------|---------|---------|-----------------------------------------------------------------------------------------------------------------------------|
 | `data.name`                     | string  |         | The name of the variable set.                                                                                               |
 | `data.description`              | string  | `""`    | Text displayed in the UI to contextualize the variable set and its purpose.                                                 |
-| `data.global`                   | boolean | `false` | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization. |
+| `data.global`                   | boolean | `false` | When true, HCP Terraform automatically applies the variable set to all current and future workspaces in the organization. |
+| `data.priority`                 | boolean | `false` | When true, the variables in the set override any other variable values with a more specific scope, including values set on the command line. |
 | `data.relationships.workspaces` | array   | \`[]`     | Array of references to workspaces that the variable set should be assigned to.                                              |
 | `data.relationships.projects`   | array   | \`[]`    | Array of references to projects that the variable set should be assigned to.                                                |
 | `data.relationships.vars`       | array   | \`[]`     | Array of complete variable definitions that comprise the variable set.                                                      |
 
-Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
+HCP Terraform does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
@@ -48,7 +49,8 @@ Terraform Cloud does not allow different global variable sets to contain conflic
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
-      "global": false
+      "global": false,
+      "priority": false,
     },
     "relationships": {
       "workspaces": {
@@ -97,7 +99,8 @@ curl \
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
-      "global": false
+      "global": false,
+      "priority": false,
     },
     "relationships": {
       "workspaces": {
@@ -142,7 +145,7 @@ curl \
 | ------------ | ------------------- |
 | `:varset_id` | The variable set ID |
 
-Terraform Cloud does not allow global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
+HCP Terraform does not allow global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
 ### Request Body
 
@@ -150,7 +153,8 @@ Terraform Cloud does not allow global variable sets to contain conflicting varia
 |---------------------------------|---------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.name`                     | string  |         | The name of the variable set.                                                                                                                        |
 | `data.description`              | string  |         | Text displayed in the UI to contextualize the variable set and its purpose.                                                                          |
-| `data.global`                   | boolean |         | When true, Terraform Cloud automatically applies the variable set to all current and future workspaces in the organization.                          |
+| `data.global`                   | boolean |         | When true, HCP Terraform automatically applies the variable set to all current and future workspaces in the organization.                          |
+| `data.priority`                 | boolean | `false` | When true, the variables in the set override any other variable values set with a more specific scope, including values set on the command line. |
 | `data.relationships.workspaces` | array   |         | **Optional** Array of references to workspaces that the variable set should be assigned to. Sending an empty array clears all workspace assignments. |
 | `data.relationships.projects`   | array   |         | **Optional** Array of references to projects that the variable set should be assigned to. Sending an empty array clears all project assignments.     |
 | `data.relationships.vars`       | array   |         | **Optional** Array of complete variable definitions to add to the variable set.                                                                      |
@@ -170,7 +174,8 @@ Terraform Cloud does not allow global variable sets to contain conflicting varia
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse. Now global!",
-      "global": true
+      "global": true,
+      "priority": true,
     },
     "relationships": {
       "workspaces": {
@@ -213,6 +218,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request PATCH \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv
 ```
 
@@ -226,7 +232,8 @@ curl \
     "attributes": {
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse. Now global!",
-      "global": true
+      "global": true,
+      "priority": true
     },
     "relationships": {
       "vars": {
@@ -298,6 +305,7 @@ curl \
       "name": "MyVarset",
       "description": "Full of vars and such for mass reuse",
       "global": false,
+      "priority": false,
       "updated-at": "2023-03-06T21:48:33.588Z",
       "var-count": 5,
       "workspace-count": 2,
@@ -392,12 +400,13 @@ attached to the project this workspace is contained within.
 
 ### Query Parameters
 
-All of the list endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+All list endpoints support pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters) and searching with the `q` parameter. Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                         |
 |----------------|---------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint returns the first page.      |
 | `page[size]`   | **Optional.** If omitted, the endpoint returns 20 varsets per page. |
+| `q`            | **Optional.** A search query string. You can search for a variable set using its name. |
 
 ### Sample Response
 
@@ -411,6 +420,7 @@ All of the list endpoints support pagination [with standard URL query parameters
         "name": "MyVarset",
         "description": "Full of vars and such for mass reuse",
         "global": false,
+        "priority": false,
         "updated-at": "2023-03-06T21:48:33.588Z",
         "var-count": 5,
         "workspace-count": 2,
@@ -520,7 +530,7 @@ Properties without a default value are required.
 | `data.attributes.hcl`         | bool   | `false` | Whether to evaluate the value of the variable as a string of HCL code. Has no effect for environment variables. |
 | `data.attributes.sensitive`   | bool   | `false` | Whether the value is sensitive. If true, variable is not visible in the UI.                                     |
 
-Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to add a conflicting variable to a global variable set.
+HCP Terraform does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to add a conflicting variable to a global variable set.
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
@@ -585,7 +595,7 @@ curl \
 | `:varset_id` | The variable set ID              |
 | `:var_id`    | The ID of the variable to delete |
 
-Terraform Cloud does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to add a conflicting variable to a global variable set.
+HCP Terraform does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to add a conflicting variable to a global variable set.
 
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | ------------------------- | --------------------------------------------------------------------- |
@@ -656,12 +666,11 @@ curl \
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  --request DELETE\
-  --data @payload.json \
+  --request DELETE \
   https://app.terraform.io/api/v2/varsets/varset-4q8f7H0NHG733bBH/relationships/vars/var-EavQ1LztoRTQHSNT
 ```
 
-on success, responds with no content
+On success, this endpoint responds with no content.
 
 ## List Variables in a Variable Set
 
@@ -753,6 +762,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/workspaces
 ```
 
@@ -803,6 +813,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/workspaces
 ```
 
@@ -849,6 +860,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
 ```
 
@@ -899,6 +911,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
+  --data @payload.json \
   https://app.terraform.io/api/v2/varsets/varset-kjkN545LH2Sfercv/relationships/projects
 ```
 

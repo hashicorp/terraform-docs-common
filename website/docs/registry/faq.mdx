@@ -13,6 +13,10 @@ If you have issues formatting documentation, use the [documentation preview tool
 
 If you have already released a version of your provider and are unhappy with its documentation, [fix the documentation issue in your repository and include it in a new release](#how-do-i-correct-bugs-in-published-versions).
 
+### Why is my documentation not rendered like it is in Github?
+
+We make every effort to support GitHub Markdown syntax in the registry documentation, but occasionally compatibility limitations arise. To ensure consistent rendering in the public registry, we recommend using syntax widely supported across various Markdown flavors. Use the [documentation preview tool](https://registry.terraform.io/tools/doc-preview) to view how the Terraform Registry will format your documentation.
+
 ## How do I remove a published version?
 
 If you remove a version of a provider, module, or policy library from the Terraform Registry, you will break the configuration of any individuals using that version. For this reason, _we never recommend removing previously published versions_ of providers, modules, or policy libraries.
@@ -38,6 +42,10 @@ The Terraform Registry effectively acts as an index for Terraform-related conten
 The Terraform Registry is unaware if you remove a file, a tag, a release, or other content from GitHub. The Registry could still host index records pointing to now-removed content. As a result, someone using your provider or module may have their Terraform configuration break because the Registry is referencing GitHub files that are no longer available.
 
 If you find a typo, bug, or other issues with a published version of your provider, module, or policy library, [we recommend fixing the problem and publishing a new release](#how-do-i-correct-bugs-in-published-versions).
+
+## How do I change the image associated with my artifacts?
+
+The image is associated with the GitHub user or organization profile. Customize the [user profile](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/personalizing-your-profile) or [organization profile](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile) to update the image.
 
 ## Can I change the name of my artifact?
 
@@ -119,4 +127,8 @@ If your GPG key or Github account has been compromised, please [reach out to us 
 
 ## Can I regain ownership of my artifact after losing access to my GitHub account?
 
-For support, please [reach out to us via email](/terraform/registry#getting-help).
+Artifacts in the Public Registry that were originally published by a GitHub user that no longer exists are routinely detected and marked with a disclaimer.
+
+> The GitHub user that published this artifact no longer exists. See the FAQ for more information.
+
+If you are the owner of such an artifact, or for other artifact ownership issues, please [reach out to us](/terraform/registry#getting-help).

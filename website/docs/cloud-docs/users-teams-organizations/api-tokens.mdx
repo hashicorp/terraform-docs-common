@@ -1,5 +1,5 @@
 ---
-page_title: API Tokens - Terraform Cloud
+page_title: API Tokens - HCP Terraform
 description: >-
   Learn about the level of access granted by user, team, and organization API
   tokens.
@@ -7,7 +7,7 @@ description: >-
 
 # API Tokens
 
-Terraform Cloud supports three distinct types of API tokens with varying levels of access: user, team, and organization. There are differences in access levels and generation workflows for each of these token types, which are outlined below.
+HCP Terraform supports three distinct types of API tokens with varying levels of access: user, team, and organization. There are differences in access levels and generation workflows for each of these token types, which are outlined below.
 
 API tokens are displayed only once when they are created, and are obfuscated thereafter. If the token is lost, it must be regenerated.
 
@@ -43,7 +43,7 @@ Each organization can have **one** valid API token at a time. Only [organization
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-Organization API tokens are designed for creating and configuring workspaces and teams. We don't recommend using them as an all-purpose interface to Terraform Cloud; their purpose is to do some initial setup before delegating a workspace to a team. For more routine interactions with workspaces, use [team API tokens](#team-api-tokens).
+Organization API tokens are designed for creating and configuring workspaces and teams. We don't recommend using them as an all-purpose interface to HCP Terraform; their purpose is to do some initial setup before delegating a workspace to a team. For more routine interactions with workspaces, use [team API tokens](#team-api-tokens).
 
 Organization API tokens have permissions across the entire organization. They can perform all CRUD operations on most resources, but have some limitations; most importantly, they cannot start runs or create configuration versions. Any API endpoints that can't be used with an organization API token include a note like the following:
 
@@ -51,7 +51,7 @@ Organization API tokens have permissions across the entire organization. They ca
 
 ## Agent API Tokens
 
-[Agent pools](/terraform/cloud-docs/agents) have their own set of API tokens which allow agents to communicate with Terraform Cloud, scoped to an organization. These tokens are not valid for direct usage in the Terraform Cloud API and are only used by agents.
+[Agent pools](/terraform/cloud-docs/agents) have their own set of API tokens which allow agents to communicate with HCP Terraform, scoped to an organization. These tokens are not valid for direct usage in the HCP Terraform API and are only used by agents.
 
 ## Access Levels
 
@@ -62,7 +62,7 @@ The following chart illustrates the various access levels for the supported API 
 |                                    | User tokens | Team tokens | Organization tokens |
 | ---------------------------------- | :---------: | :---------: | :-----------------: |
 | **Users**                          |             |             |                     |
-| Manage user settings               |      🔵     |             |                     |
+| Manage account settings            |      🔵     |             |                     |
 | Manage user tokens                 |      🔵     |             |                     |
 | **Workspaces**                     |             |             |                     |
 | Read workspace variables           |      🔶     |      🔶     |          🔵         |
@@ -76,9 +76,9 @@ The following chart illustrates the various access levels for the supported API 
 | Manage notification configurations |      🔶     |      🔶     |                     |
 | Manage run tasks                   |      🔶     |      🔶     |          🔵          |
 | **Teams**                          |             |             |                     |
-| Create teams                       |      🔶     | 🔵 (owners) |          🔵         |
-| Modify team                        |      🔶     | 🔵 (owners) |          🔵         |
-| Read team                          |      🔶     |      🔵     |          🔵         |
+| Create teams                       |      🔶     |      🔶     |          🔵         |
+| Modify team                        |      🔶     |      🔶     |          🔵         |
+| Read team                          |      🔶     |      🔶     |          🔵         |
 | Manage team tokens                 |      🔶     |      🔵     |          🔵         |
 | Manage team workspace access       |      🔶     |      🔶     |          🔵         |
 | Manage team membership             |      🔶     |      🔶     |          🔵         |
@@ -105,4 +105,4 @@ You can create user, team, and organization tokens with an expiration date and t
 
 HashiCorp recommends setting an expiration on all new authentication tokens. Creating tokens with an expiration date helps reduce the risk of accidentally leaking valid tokens or forgetting to delete tokens meant for a delegated use once their intended purpose is complete.
 
-You can not modify the expiration of a token once you have created it. The Terraform Cloud UI displays tokens relative to the current user's timezone, but all tokens are passed and displayed in UTC in ISO 8601 format through the Terraform Cloud API.
+You can not modify the expiration of a token once you have created it. The HCP Terraform UI displays tokens relative to the current user's timezone, but all tokens are passed and displayed in UTC in ISO 8601 format through the HCP Terraform API.

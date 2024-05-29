@@ -1,5 +1,5 @@
 ---
-page_title: Projects - API Docs - Terraform Cloud
+page_title: Projects - API Docs - HCP Terraform
 description: >-
   Use the `/projects` endpoint to manage an organization's projects. List, show, create, update, and delete projects using the HTTP API.
 ---
@@ -56,10 +56,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default | Description                                                                                                                                                             |
-|------------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |         | Must be `"projects"`.                                                                                                                                                   |
-| `data.attributes.name` | string |         | The name of the project, which can only include letters, numbers, spaces, `-`, and `_`. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path                      | Type   | Default   | Description                                                                                                                                                                                           |
+|-------------------------------|--------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                   | string |           | Must be `"projects"`.                                                                                                                                                                                 |
+| `data.attributes.name`        | string |           | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
+| `data.attributes.description` | string | (nothing) | **Optional.** The description of the project. It must be no more than 256 characters long.                                                                                                            |
 
 ### Sample Payload
 
@@ -68,6 +69,7 @@ Properties without a default value are required.
   "data": {
     "attributes": {
       "name": "Test Project"
+      "description": "An example project for documentation."
     },
     "type": "projects"
   }
@@ -83,6 +85,7 @@ Properties without a default value are required.
     "type": "projects",
     "attributes": {
       "name": "Test Project",
+      "description": "An example project for documentation.",
       "permissions": {
         "can-update": true
       }
@@ -119,10 +122,12 @@ These PATCH endpoints require a JSON object with the following properties as a r
 
 Properties without a default value are required.
 
-| Key path               | Type   | Default          | Description                                                                                                                                                                |
-|------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`            | string |                  | Must be `"projects"`.                                                                                                                                                      |
-| `data.attributes.name` | string | (previous value) | A new name for the project, which can only include letters, numbers, spaces, `-`, and `_`. It must be at least 3 characters long and no more than 36 characters long. |
+| Key path                      | Type   | Default          | Description                                                                                                                                                                                              |
+|-------------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                   | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
+| `data.attributes.name`        | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
+| `data.attributes.description` | string | (previous value) | The new description for the project. It must be no more than 256 characters long.                                                                                                                        |
+
 
 ### Sample Payload
 
@@ -157,6 +162,9 @@ $ curl \
     "type": "projects",
     "attributes": {
       "name": "Infrastructure Project",
+      "description": null,
+      "workspace-count": 4,
+      "team-count": 2,
       "permissions": {
         "can-update": true,
         "can-destroy": true,
@@ -195,15 +203,15 @@ This endpoint lists projects in the organization.
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter                               | Description                                                                                                                                                                                                 |
-|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `page[number]`                          | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                          |
-| `page[size]`                            | **Optional.** If omitted, the endpoint will return 20 projects per page.                                                                                                                                    |
-| `q`                                     | **Optional.** A search query string. This query searches projects by name. This search is case-insensitive. If both `q` and `filter[names]` are specified, `filter[names]` will be used.                    |
-| `filter[names]`                         | **Optional.** If specified, returns the project with the matching name. This filter is case-insensitive. If multiple comma separated values are specified, projects matching any of the names are returned. |
-| `filter[permissions][create-workspace]` | **Optional.** If present, returns a list of projects that the authenticated user can create workspaces in.                                                                                                  |
-| `filter[permissions][update]`           | **Optional.** If present, returns a list of projects that the authenticated user can update.                                                                                                                |
-
+| Parameter                               | Description                                                                                                                                                                                                                                                         |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `page[number]`                          | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                  |
+| `page[size]`                            | **Optional.** If omitted, the endpoint will return 20 projects per page.                                                                                                                                                                                            |
+| `q`                                     | **Optional.** A search query string. This query searches projects by name. This search is case-insensitive. If both `q` and `filter[names]` are specified, `filter[names]` will be used.                                                                            |
+| `filter[names]`                         | **Optional.** If specified, returns the project with the matching name. This filter is case-insensitive. If multiple comma separated values are specified, projects matching any of the names are returned.                                                         |
+| `filter[permissions][create-workspace]` | **Optional.** If present, returns a list of projects that the authenticated user can create workspaces in.                                                                                                                                                          |
+| `filter[permissions][update]`           | **Optional.** If present, returns a list of projects that the authenticated user can update.                                                                                                                                                                        |
+| `sort`                                  | **Optional.** Allows sorting the organization's projects by `"name"`. Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
 
 ### Sample Request
 
@@ -224,6 +232,9 @@ $ curl \
       "type": "projects",
       "attributes": {
         "name": "Default Project",
+        "description": null,
+        "workspace-count": 2,
+        "team-count": 1,
         "permissions": {
           "can-update": true,
           "can-destroy": true,
@@ -250,6 +261,9 @@ $ curl \
       "type": "projects",
       "attributes": {
         "name": "Infrastructure Project",
+        "description": null,
+        "workspace-count": 4,
+        "team-count": 2,
         "permissions": {
           "can-update": true,
           "can-destroy": true,
@@ -322,6 +336,9 @@ $ curl \
     "type": "projects",
     "attributes": {
       "name": "Infrastructure Project",
+      "description": null,
+      "workspace-count": 4,
+      "team-count": 2,
       "permissions": {
         "can-update": true,
         "can-destroy": true,

@@ -1,5 +1,5 @@
 ---
-page_title: tfplan/v2 - Imports - Sentinel - Terraform Cloud
+page_title: tfplan/v2 - Imports - Sentinel - HCP Terraform
 description: The tfplan/v2 import provides access to a Terraform plan.
 ---
 
@@ -63,6 +63,17 @@ tfplan/v2
 │       ├── provider_name (string)
 │       ├── deposed (string)
 │       └── change (change representation)
+├── resource_drift
+│   └── (indexed by address[:deposed])
+│       ├── address (string)
+│       ├── module_address (string)
+│       ├── mode (string)
+│       ├── type (string)
+│       ├── name (string)
+│       ├── index (float (number) or string)
+│       ├── provider_name (string)
+│       ├── deposed (string)
+│       └── change (change representation)
 ├── output_changes
 │   └── (indexed by name)
 │       ├── name (string)
@@ -78,13 +89,15 @@ The collections are:
 * [`planned_values`](#the-planned_values-collection) - The state representation
   of _planned values_, or an estimation of what the state will look like after
   the plan is applied.
-* [`resource_changes`](#the-resource_changes-collection) - The set of change
+* [`resource_changes`](#the-resource_changes-and-resource_drift-collections) - The set of change
   operations for resources and data sources within this plan.
+* [`resource_drift`](#the-resource_changes-and-resource_drift-collections) - A description of the
+  changes Terraform detected when it compared the most recent state to the prior saved state.
 * [`output_changes`](#the-output_changes-collection) - The changes to outputs
   within this plan. This collection only contains outputs set in the root
   module.
 * [`raw`](#the-raw-collection) - Access to the raw plan data as stored by
-  Terraform Cloud.
+  HCP Terraform.
 
 These collections are specifically designed to be used with the
 [`filter`](https://docs.hashicorp.com/sentinel/language/collection-operations#filter-expression)
@@ -304,12 +317,15 @@ representations, regardless of whether or not they existed before. Use
 [`resource_changes`](#the-resource_changes-collection) if awareness of unknown
 data is important.
 
-## The `resource_changes` Collection
+## The `resource_changes` and `resource_drift` Collections
 
-The `resource_changes` collection is the set of change operations for resources
+The `resource_changes` and `resource_drift` collections are a set of change operations for resources
 and data sources within this plan.
 
-This includes all resources that have been found in the configuration and state,
+The `resource_drift` collection provides a description of the changes Terraform detected
+when it compared the most recent state to the prior saved state.
+
+The `resource_changes` collection includes all resources that have been found in the configuration and state,
 regardless of whether or not they are changing.
 
 ~> When [resource targeting](/terraform/cli/commands/plan#resource-targeting) is in effect, the `resource_changes` collection will only include the resources specified as targets for the run. This may lead to unexpected outcomes if a policy expects a resource to be present in the plan. To prohibit targeted runs altogether, ensure [`tfrun.target_addrs`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs) is undefined or empty.
@@ -366,7 +382,7 @@ value are below:
 ## The `raw` Collection
 
 The `raw` collection exposes the raw, unprocessed plan data, direct from the
-data stored by Terraform Cloud.
+data stored by HCP Terraform.
 
 This is the same data that is produced by [`terraform show -json`](/terraform/cli/commands/show#json-output) on the plan file for the run this
 policy check is attached to.
@@ -378,6 +394,6 @@ Format](/terraform/internals/json-format) page.
 
 -> **NOTE:** Although designed to be relatively stable, the actual makeup for
 the JSON output format is a Terraform CLI concern and as such not managed by
-Terraform Cloud. Use at your own risk, follow the [Terraform CLI
+HCP Terraform. Use at your own risk, follow the [Terraform CLI
 project](https://github.com/hashicorp/terraform), and watch the file format
 documentation for any changes.
