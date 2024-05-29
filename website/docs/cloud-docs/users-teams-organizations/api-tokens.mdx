@@ -7,7 +7,7 @@ description: >-
 
 # API Tokens
 
-HCP Terraform supports three distinct types of API tokens with varying levels of access: user, team, and organization. There are differences in access levels and generation workflows for each of these token types, which are outlined below.
+HCP Terraform supports four distinct types of API tokens with varying levels of access: user, team, organization, and audit trails. There are differences in access levels and generation workflows for each of these token types, which are outlined below.
 
 API tokens are displayed only once when they are created, and are obfuscated thereafter. If the token is lost, it must be regenerated.
 
@@ -48,6 +48,16 @@ Organization API tokens are designed for creating and configuring workspaces and
 Organization API tokens have permissions across the entire organization. They can perform all CRUD operations on most resources, but have some limitations; most importantly, they cannot start runs or create configuration versions. Any API endpoints that can't be used with an organization API token include a note like the following:
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](#team-api-tokens).
+
+## Audit Trails Tokens
+
+Tokens may be generated for reading organization audit trails. They are intended to be used in the [HCP Terraform for Splunk](/terraform/cloud-docs/integrations/splunk) app.
+
+To manage the token for reading audit trails for a specific organization, go to **Organization settings > API Token** and use the controls under the "Audit Token" header.
+
+Each organization can have **one** valid audit trails token at a time. Only [organization owners](/terraform/cloud-docs/users-teams-organizations/teams#the-owners-team) can generate or revoke an organization's audit trails token.
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Agent API Tokens
 
