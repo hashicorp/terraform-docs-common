@@ -20,7 +20,7 @@ The above example groups together tightly-coupled resources like networking, sec
 
 ## Determine stateful vs stateless infrastructure
 
-By managing stateful resources independently of stateless ones, such as separating databases from compute instances, you limit the blast radius of operations that cause the resource recreation, and make the workspace easier to refactor in the future. Grouping workspaces that manage stateful resources can help protect against accidental data loss. Stateful resources are ones that you cannot delete and recreate because they persist data, such as databases and object storage. 
+Stateful resources are ones that you cannot delete and recreate because they persist data, such as databases and object storage. By managing stateful resources independently of stateless ones, such as separating databases from compute instances, you limit the blast radius of operations that cause the resource recreation and help protect against accidental data loss.
 
 Consider the workspace structure in the [Volatility section](#group-by-volatility). You could potentially manage filestore and database resources together, as they are both stateful resources. Your compute resources are stateless and should still have a separate workspace.
 
@@ -34,10 +34,6 @@ In this setup, only the networking team needs permissions to manage the resource
 
 Splitting your workspaces by team also helps limit the responsibility per workspace and allows teams to maintain distinct areas of ownership. If you need to reference attributes of resources managed in other workspaces, you can share the outputs using the [tfe_outputs](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/data-sources/outputs) data source. By limiting the scope of each workspace and sharing just the required outputs with others, you reduce the risk of leaking potentially sensitive information in a workspace's state. To share outputs from a workspace, you must explicitly enable remote state sharing in the workspace settings. 
 
-## Limit child modules
-
-Nesting modules can complicate your configuration's dependency graph and significantly increase the number of references it must track. While the impact of nested modules depends on the modules themselves, we recommend that you limit module nesting to a maximum depth of two, where one module calls another module. 
-
 ## Avoid large Terraform plans and applies
 
 HCP Terraform and Terraform Enterprise execute workloads using agents. Every time an agent refreshes a workspace's state, it builds a [dependency graph](/terraform/internals/graph) of the resources to determine how to sequence operations in the workspace. As the number of resources your workspace manages grows, these graphs become larger and more complex. As these graphs grow, they require more worker RAM to build them. If your agent's performance degrades or workloads take longer to complete, we suggest exploring ways to split up the workspace to reduce the size of the dependency graph.
@@ -48,7 +44,7 @@ Concurrency refers to the number of plan and apply operations HCP Terraform or T
 
 Parallelism refers to the number of tasks the Terraform CLI performs simultaneously in a single workload. By default, Terraform performs a maximum of 10 operations in parallel. When running a `terraform apply` command, Terraform refreshes each resource in the state file and compares to the remote object. Every resource refresh, creation, update, or destruction is an individual operation. If your workload creates 11 resources, Terraform starts by creating the first 10 resources in its dependency graph, and will begin creating the 11th once it finishes creating one of the first 10 resources.
 
-You can [increase the parallelism](/terraform/cli/commands/apply#parallelism-n) of the Terraform CLI, but this increases a run's CPU usage. We recommend that you instead break down large Terraform configurations into smaller ones with fewer resources when possible. Long-running Terraform workloads are an early sign of a bloated workspace scope.
+You can [increase the parallelism](/terraform/cloud-docs/workspaces/variables#parallelism) of Terraform, but this increases a run's CPU usage. We recommend that you instead break down large Terraform configurations into smaller ones with fewer resources when possible. Long-running Terraform workloads are an early sign of a bloated workspace scope.
 
 ## Next steps
 
