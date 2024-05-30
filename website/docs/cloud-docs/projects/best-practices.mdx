@@ -11,15 +11,15 @@ Projects let you group and scope access to your workspaces. You can group relate
 
 Projects offer several advantages to help you further develop your workspace strategy:
 
-- **Increased workspace organization**: You can add related workspaces to projects to simplify and organize a team's workspace view.
-- **Simplified management**: You can create project-level permissions and variable sets that apply to all current and future workspaces in the project. For example, you can create a project variable set containing your cloud provider credentials and all workspaces in the project will have access to them.
+- **Focused workspace view**: You can scope which workspaces HCP Terraform displays by project, allowing for a more organized view. 
+- **Simplified workspace management**: You can create project-level permissions and variable sets that apply to all current and future workspaces in the project. For example, you can create a project variable set containing your cloud provider credentials for all workspaces in the project to access.
 - **Reduced risk with centralized control**: You can scope project permissions to only grant teams administrator access to the projects and workspaces they need.
 - **Efficiency through self-service**: Granting users project-level administrator permissions lets them create and manage workspaces.
 
 When using projects, we recommend the following:
 
 - Automate the creation of projects, variable sets, and teams together using the [TFE provider](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs).
-- Restrict the number of project administrators similar to maintain least privilege.
+- Restrict the number of project administrators to maintain least privilege.
 - Designate a “landing zone” project that will contain workspaces used to create all other projects, teams, and workspaces. This lets you have a variable set that includes the organization token, which the TFE provider can use to create other resources in your organization. You can also create a [Sentinel policy](/terraform/cloud-docs/policy-enforcement) to prevent users in other projects from accessing the organization token.
 
 Finally, decide on the logical boundaries for your projects. Some considerations to keep in mind include:
@@ -29,7 +29,7 @@ Finally, decide on the logical boundaries for your projects. Some considerations
 - **Variable set usage**: Project-wide variable sets let you configure and reuse values such as default tags for cost-codes, owners, and support contacts.
 - **Practitioner efficiency**: Consider if it makes sense for a practitioner to need to visit multiple projects to complete a deployment.
 
-## Next Steps
+## Next steps
 
 This article introduces some considerations to keep in mind as your organization matures their project usage. Being deliberate about how you use these to organize your infrastructure will ensure smoother and safer operations. [HCP Terraform](/terraform/tutorials/cloud-get-started) provides a place to try these concepts hands-on, and you can [get started for free](https://app.terraform.io/public/signup/account).
 
