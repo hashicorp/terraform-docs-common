@@ -170,7 +170,8 @@
       {
         "title": "Managing Projects",
         "path": "projects/managing"
-      }
+      },
+      { "title": "Best Practices", "path": "projects/best-practices" }
     ]
   },
   {
@@ -253,7 +254,8 @@
       {
         "title": "JSON Filtering",
         "path": "workspaces/json-filtering"
-      }
+      },
+      { "title": "Best Practices", "path": "workspaces/best-practices"}
     ]
   },
   {
