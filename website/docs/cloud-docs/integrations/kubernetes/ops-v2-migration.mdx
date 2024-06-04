@@ -166,7 +166,7 @@ The table below details the mapping between the `Workspace` controller in v1 of 
 | `spec.module.source` | `spec.module.source` | This supports all Terraform [module sources](https://developer.hashicorp.com/terraform/language/modules/sources). |
 | `spec.module.version` | `spec.module.version` | Refer to  [module sources](https://developer.hashicorp.com/terraform/language/modules/sources) for versioning information for each module source. |
 | `spec.variables.[*]` | `spec.variables.[*].name` | Variable names should be included in the module. This is a reference to variables in the Workspace where the module will be executed. |
-| `spec.outputs.[*].key` | `spec.outputs.[*].name` | Output names should be included in the module. This is a reference to the output variables produced by the module. |
+| `spec.outputs.[*].key` | `spec.outputs.[*].name` | You should include output names in the module. This is a reference to the output variables produced by the module. |
 | `status.workspaceID` OR `metadata.namespace-metadata.name` | `spec.workspace.id` OR `spec.workspace.name` | The workspace where the module is executed. The workspace must be in the same organization. |
 
 Below is an example migration of a `Module` between v1 and v2 of the operator:
