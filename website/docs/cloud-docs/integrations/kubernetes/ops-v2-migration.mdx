@@ -57,7 +57,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `kind: Workspace` | `kind: Workspace` |  |
 | `metadata` | `metadata` |  |
 | `spec.organization` | `spec.organization` |  |
-| `spec.secretsMountPath` | `spec.token.secretKeyRef` | In v2 the operator keeps HCP Terraform access token in a Kubernetes Secret. |
+| `spec.secretsMountPath` | `spec.token.secretKeyRef` | In v2 the operator keeps the HCP Terraform access token in a Kubernetes Secret. |
 | `spec.vcs` | `spec.versionControl` | Renamed. Refer to the `versionControl` structure for details. |
 | `spec.vcs.token_id` | `spec.versionControl.oAuthTokenID` | Renamed. Refer to the `versionControl` structure for details. |
 | `spec.vcs.repo_identifier` | `spec.versionControl.repository` | Renamed. Refer to the `versionControl` structure for details. |
