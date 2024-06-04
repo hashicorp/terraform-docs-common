@@ -1,17 +1,17 @@
 ---
 page_title: Migrating to HCP Terraform or Terraform Enterprise - HCP Terraform
 description: >-
-  Migrate state to HCP Terraform or Terraform Enterprise to continue managing
+  Learn how to migrate existing Terraform state files to HCP Terraform or Terraform Enterprise so that you can manage
   existing infrastructure without de-provisioning.
 ---
 
-# Migrating to HCP Terraform or Terraform Enterprise
+# Migrate Terraform state to HCP Terraform or Terraform Enterprise
 
-This topic describes how to migrate Terraform state files to HCP Terraform and Terraform Enterprise. Refer to [State](/terraform/language/state) in the Terraform configuration language reference for additional information about state. 
+This topic describes how to migrate existing Terraform state files to HCP Terraform or Terraform Enterprise without first de-provisioning them. Refer to [State](/terraform/language/state) in the Terraform configuration language reference for additional information about Terraform state. 
 
 ## Overview
 
-Perform the following actions to migrate existing resources to one or more workspaces in HCP Terraform or Terraform Enterprise without de-provisioning them:
+Perform the following actions to migrate existing resources to one or more workspaces in HCP Terraform or Terraform Enterprise:
 
 1. Stop all Terraform operations associated with the state files. 
 1. Migrate Terraform state files using either the Terraform CLI or the HCP Terraform or Terraform Enterprise API.
