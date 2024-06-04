@@ -335,7 +335,7 @@ If you have any migrated `Module` custom resources, apply them now.
 $ kubectl apply --filename <MIGRATED_V2_MODULE_MANIFEST.yaml>
 ```
 
-In v2 of the operator, `applyMethod` is set to `manual` by default. In this case, a new run in a managed workspace will require manual approval. Run the following command for each Workspace resource to change it to `auto` approval.
+In v2 of the operator, the `applyMethod` is set to `manual` by default. In this case, a new run in a managed workspace requires manual approval. Run the following command for each `Workspace` resource to change it to `auto` approval.
 
 ```shell-session
 kubectl patch workspace <WORKSPACE_NAME> --type=merge --patch '{"spec": {"applyMethod": "auto"}}'
