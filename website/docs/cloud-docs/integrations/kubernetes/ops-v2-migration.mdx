@@ -87,7 +87,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `spec.omitNamespacePrefix` | N/A | Removed. In v1 `spec.omitNamespacePrefix` is a boolean field and affects a Workspace name:<br/> - If it is `true` then a Workspace name will be generated as `metadata.namespace-metadata.name`.<br/> - If it is `false` then a Workspace name will be generated as `metadata.name`.<br/> In v2 a Workspace name must be explicitly set in `spec.name`. |
 | `spec.agentPoolID` | `spec.agentPool.id` | The `agentPoolID` field is moved to `spec.agentPool.id`. |
 | `spec.agentPoolName` | `spec.agentPool.name` | The `agentPoolName` field is moved to `spec.agentPool.name`. |
-| `spec.module` | N/A | Removed. Modules are now configured with a separate `Module` CRD. Refer to the below migration mapping for more information. |
+| `spec.module` | N/A | Removed. You now configure modules with a separate `Module` CRD. [Learn more](#module-controller). |
 
 Below is an example of configuring a variable in v1 of the operator. 
 
