@@ -255,7 +255,7 @@ $ kubectl diff --filename workspaces_patch_a.yaml
 
 Patch the workspace CRD with **patch A**. This patch adds `app.terraform.io/v1alpha2` support, but excludes `.status.runStatus` because it has a different format in `app.terraform.io/v1alpha1` and causes JSON unmarshalling issues.
 
-~> **Warning** Once the patch is applied, Kubernetes will convert existing `app.terraform.io/v1alpha1` custom resources to `app.terraform.io/v1alpha2` according to the updated schema and v1 of the operator will no longer serve custom resources. You must update existing custom resources to satisfy the current schema. Refer to the tables above for a mapping of resource fields between v1 and v2 of the operator.
+!> **Upgrade warning**: Once you apply a patch, Kubernetes converts existing `app.terraform.io/v1alpha1` custom resources to `app.terraform.io/v1alpha2` according to the updated schema, meaning that v1 of the operator can no longer serve custom resources. Before patching, update your existing custom resources to satisfy the v2 schema requirements. [Learn more](#manifest-schema-migration).
 
 ```shell-session
 $ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_a.yaml
