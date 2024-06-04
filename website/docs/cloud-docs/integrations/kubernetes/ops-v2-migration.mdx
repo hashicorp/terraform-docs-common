@@ -69,7 +69,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `spec.variables.[*]valueFrom` | `spec.environmentVariables.[*]valueFrom` OR `spec.terraformVariables.[*]valueFrom` |  |
 | `spec.variables.[*]hcl` | `spec.environmentVariables.[*]hcl` OR `spec.terraformVariables.[*]hcl` |  |
 | `spec.variables.sensitive` |  `spec.environmentVariables.[*]sensitive` OR `spec.terraformVariables.[*]sensitive` |  |
-| `spec.variables.environmentVariable` | N/A | Removed, variables are split to `spec.environmentVariables` and `spec.terraformVariables`. |
+| `spec.variables.environmentVariable` | N/A | Removed, variables are split between `spec.environmentVariables` and `spec.terraformVariables`. |
 | `spec.runTriggers.[*]` | `spec.runTriggers.[*]` |  Changes made to the `runTriggers` structure. |
 | `spec.runTriggers.[*].sourceableName` | `spec.runTriggers.[*].name` | The `sourceableName` field is renamed to `name`. |
 | `spec.sshKeyID` | `spec.sshKey.id` | The `sshKeyID` is moved to `spec.sshKey.id`. |
