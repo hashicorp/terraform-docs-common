@@ -327,7 +327,7 @@ Review the operator logs once more and verify there are no error messages report
 ```shell-session
 $ kubectl logs -f <POD_NAME>
 ```
-The operator will reconcile resources during the next sync period. This interval is set by the `operator.syncPeriod` configuration of the operator and defaults to five minutes. 
+The operator reconciles resources during the next sync period. This interval is set by the `operator.syncPeriod` configuration of the operator and defaults to five minutes. 
 
 If you have any migrated `Module` custom resources, apply them now.
 
