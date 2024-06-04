@@ -51,39 +51,39 @@ Version 2 of the Terraform Cloud Kubernetes operator renames and moves many exis
 
 The table below lists the field mapping of the `Workspace` controller between v1 and v2 of the operator.
 
-| Version 1 | Version 2 | Notes |
+| Version 1 | Version 2 | Changes between versions |
 | --- | --- | --- |
 | `apiVersion: app.terraform.io/v1alpha1` | `apiVersion: app.terraform.io/v1alpha2` | The `apiVersion` is now `v1alpha2`. |
-| `kind: Workspace` | `kind: Workspace` |  |
-| `metadata` | `metadata` |  |
-| `spec.organization` | `spec.organization` |  |
+| `kind: Workspace` | `kind: Workspace` | None. |
+| `metadata` | `metadata` | None. |
+| `spec.organization` | `spec.organization` | None. |
 | `spec.secretsMountPath` | `spec.token.secretKeyRef` | In v2 the operator keeps the HCP Terraform access token in a Kubernetes Secret. |
-| `spec.vcs` | `spec.versionControl` | Renamed. Refer to the `versionControl` structure for details. |
-| `spec.vcs.token_id` | `spec.versionControl.oAuthTokenID` | Renamed. Refer to the `versionControl` structure for details. |
-| `spec.vcs.repo_identifier` | `spec.versionControl.repository` | Renamed. Refer to the `versionControl` structure for details. |
-| `spec.vcs.branch` | `spec.versionControl.branch` |  |
+| `spec.vcs` | `spec.versionControl` | Renamed the `vcs` field to `versionControl`. |
+| `spec.vcs.token_id` | `spec.versionControl.oAuthTokenID` | Renamed the `token_id` field to `oAuthTokenID`. |
+| `spec.vcs.repo_identifier` | `spec.versionControl.repository` | Renamed the `repo_identifier` field to `repository`. |
+| `spec.vcs.branch` | `spec.versionControl.branch` | None. |
 | `spec.vcs.ingress_submodules` | `spec.workingDirectory` | Moved. |
-| `spec.variables.[*]` | `spec.environmentVariables.[*]` OR `spec.terraformVariables.[*]` | We split variables into two possible places. In v1's CRD, if `spec.variables.environmentVariable` was `true`, migrate those variables to `spec.environmentVariables`. If `false`, migrate those variables to `spec.terraformVariables`. |
-| `spec.variables.[*]key` | `spec.environmentVariables.[*]name` OR `spec.terraformVariables.[*]name` | Renamed the `key` field as `name`. |
-| `spec.variables.[*]value` | `spec.environmentVariables.[*]value` OR `spec.terraformVariables.[*]value` |  |
-| `spec.variables.[*]valueFrom` | `spec.environmentVariables.[*]valueFrom` OR `spec.terraformVariables.[*]valueFrom` |  |
-| `spec.variables.[*]hcl` | `spec.environmentVariables.[*]hcl` OR `spec.terraformVariables.[*]hcl` |  |
-| `spec.variables.sensitive` |  `spec.environmentVariables.[*]sensitive` OR `spec.terraformVariables.[*]sensitive` |  |
+| `spec.variables.[*]` | `spec.environmentVariables.[*]` OR `spec.terraformVariables.[*]` | <a id="workspace-variables"></a>We split variables into two possible places. In v1's CRD, if `spec.variables.environmentVariable` was `true`, migrate those variables to `spec.environmentVariables`. If `false`, migrate those variables to `spec.terraformVariables`. |
+| `spec.variables.[*]key` | `spec.environmentVariables.[*]name` OR `spec.terraformVariables.[*]name` | Renamed the `key` field as `name`. [Learn more](#workspace-variables).|
+| `spec.variables.[*]value` | `spec.environmentVariables.[*]value` OR `spec.terraformVariables.[*]value` | [Learn more](#workspace-variables). |
+| `spec.variables.[*]valueFrom` | `spec.environmentVariables.[*]valueFrom` OR `spec.terraformVariables.[*]valueFrom` | [Learn more](#workspace-variables). |
+| `spec.variables.[*]hcl` | `spec.environmentVariables.[*]hcl` OR `spec.terraformVariables.[*]hcl` | [Learn more](#workspace-variables). |
+| `spec.variables.sensitive` |  `spec.environmentVariables.[*]sensitive` OR `spec.terraformVariables.[*]sensitive` | [Learn more](#workspace-variables). |
 | `spec.variables.environmentVariable` | N/A | Removed, variables are split between `spec.environmentVariables` and `spec.terraformVariables`. |
-| `spec.runTriggers.[*]` | `spec.runTriggers.[*]` |  Changes made to the `runTriggers` structure. |
+| `spec.runTriggers.[*]` | `spec.runTriggers.[*]` | None. |
 | `spec.runTriggers.[*].sourceableName` | `spec.runTriggers.[*].name` | The `sourceableName` field is now `name`. |
 | `spec.sshKeyID` | `spec.sshKey.id` | Moved the `sshKeyID` to `spec.sshKey.id`. |
 | `spec.outputs` | N/A | Removed. |
-| `spec.terraformVersion` | `spec.terraformVersion` |  |
-| `spec.notifications` | `spec.notifications` |  Changes made to the `notification` structure. |
-| `spec.notifications.type` | `spec.notifications.type` |  |
-| `spec.notifications.enabled` | `spec.notifications.enabled` |  |
-| `spec.notifications.name` | `spec.notifications.name` |  |
-| `spec.notifications.url` | `spec.notifications.url` |  |
-| `spec.notifications.token` | `spec.notifications.token` |  |
-| `spec.notifications.triggers.[*]` | `spec.notifications.triggers.[*]` |  |
-| `spec.notifications.recepients.[*]` | `spec.notifications.emailAddesses.[*]` | Renamed the `recepients` field to `emailAddesses`. |
-| `spec.notifications.users.[*]` | `spec.notifications.emailUsers.[*]` | Renamed the `users` field to `emailUsers`. |
+| `spec.terraformVersion` | `spec.terraformVersion` | None. |
+| `spec.notifications.[*]` | `spec.notifications.[*]` | None. |
+| `spec.notifications.[*].type` | `spec.notifications.[*].type` | None. |
+| `spec.notifications.[*].enabled` | `spec.notifications.[*].enabled` | None. |
+| `spec.notifications.[*].name` | `spec.notifications.[*].name` | None. |
+| `spec.notifications.[*].url` | `spec.notifications.[*].url` | None. |
+| `spec.notifications.[*].token` | `spec.notifications.[*].token` | None. |
+| `spec.notifications.[*].triggers.[*]` | `spec.notifications.[*].triggers.[*]` | None. |
+| `spec.notifications.[*].recepients.[*]` | `spec.notifications.[*].emailAddesses.[*]` | Renamed the `recepients` field to `emailAddesses`. |
+| `spec.notifications.[*].users.[*]` | `spec.notifications.[*].emailUsers.[*]` | Renamed the `users` field to `emailUsers`. |
 | `spec.omitNamespacePrefix` | N/A | Removed. In v1 `spec.omitNamespacePrefix` is a boolean field that affects how the operator generates a workspace name. In v2, you must explicitly set workspace names in `spec.name`. |
 | `spec.agentPoolID` | `spec.agentPool.id` | Moved the `agentPoolID` field to `spec.agentPool.id`. |
 | `spec.agentPoolName` | `spec.agentPool.name` | Moved the `agentPoolName` field to `spec.agentPool.name`. |
