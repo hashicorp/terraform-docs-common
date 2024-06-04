@@ -162,7 +162,7 @@ The table below details the mapping between the `Workspace` controller in v1 of 
 | Version 1 (Workspace CRD) | Version 2 (Module CRD) | Notes |
 | --- | --- | --- |
 | `spec.module` | N/A | In v2 of the operator a `Module` is a separate controller with its own CRD. |
-| N/A | `spec.name: operator` | In v1 of the operator, the name of the generated module is hardcoded to `operator`. In v2, the default name of the generated module is `this`, however it can be changed. |
+| N/A | `spec.name: operator` | In v1 of the operator, the name of the generated module is hardcoded to `operator`. In v2, the default name of the generated module is `this`, but you can rename it. |
 | `spec.module.source` | `spec.module.source` | This supports all Terraform [module sources](/terraform/language/modules/sources). |
 | `spec.module.version` | `spec.module.version` | Refer to  [module sources](/terraform/language/modules/sources) for versioning information for each module source. |
 | `spec.variables.[*]` | `spec.variables.[*].name` | You should include variable names in the module. This is a reference to variables in the workspace that is executing the module. |
