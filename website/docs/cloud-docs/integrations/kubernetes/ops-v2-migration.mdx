@@ -89,7 +89,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `spec.agentPoolName` | `spec.agentPool.name` | The `agentPoolName` field is moved to `spec.agentPool.name`. |
 | `spec.module` | N/A | Removed. Modules are now configured with a separate `Module` CRD. Refer to the below migration mapping for more information. |
 
-Below is an example of the differences is how variables are configured between v1 and v2.
+Below is an example of configuring a variable in v1 of the operator. 
 
 <CodeBlockConfig filename="v1.yaml">
 
