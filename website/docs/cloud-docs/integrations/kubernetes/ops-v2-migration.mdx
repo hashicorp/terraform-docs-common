@@ -280,7 +280,7 @@ Next, create a Kubernetes secret to store the HCP Terraform API token following 
 $ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
 ```
 
-Update existing custom resources accoring to the migration table above and apply your changes.
+Update existing custom resources [according to the schema migration guidance](#manifest-schema-migration) and apply your changes.
 
 ```shell-session
 $ kubectl apply --filename <UPDATED_V2_WORKSPACE_MANIFEST.yaml>
