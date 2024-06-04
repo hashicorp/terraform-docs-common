@@ -322,7 +322,7 @@ The `finalizer` exists to provide greater control over the migration process. Ve
 $ kubectl patch workspace migration --type=merge --patch '{"metadata": {"finalizers": ["workspace.app.terraform.io/finalizer"]}}'
 ```
 
-Review the operator logs once more and verify there are no error messages reported.
+Review the operator logs once more and verify there are no error messages.
 
 ```shell-session
 $ kubectl logs -f <POD_NAME>
