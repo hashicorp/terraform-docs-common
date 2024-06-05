@@ -251,6 +251,7 @@ Properties without a default value are required.
 | `data.attributes.rsa-public-key`     | string |         | **Required for Bitbucket Data Center in conjunction with the `secret`. Not used for any other providers.** The text of the SSH public key associated with your Bitbucket Data Center application link.   |
 | `data.attributes.organization-scoped` | boolean |         | Whether or not the OAuth client is scoped to all projects and workspaces in the organization. Defaults to `true`.
 | `data.relationships.projects.data[]` | array\[object] | `[]`      | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. |
+| `data.relationships.agent-pool.data` | object | `{}`    | **For Private VCS** The Agent Pool associated to the VCS connection. This pool will be responsible for forwarding VCS Provider API calls and cloning VCS repositories.                         |
 
 ### Sample Payload
 
@@ -270,6 +271,10 @@ Properties without a default value are required.
         "data": [
           { "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }
         ]
+      },
+      "agent-pool": {
+        "data": 
+          { "id": "apool-VsmjEMcYkShrckzzz", "type": "agent-pools" } 
       }
     }
   }
