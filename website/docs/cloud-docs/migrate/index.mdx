@@ -34,9 +34,9 @@ Stop all Terraform operations associated with the state files. This may require 
 1. Add the `cloud` block to your Terraform configuration and specify the following fields:
    1. `hostname` field: Specify either `app.terraform.io` for HCP Terraform or the hostname of your Terraform Enterprise deployment. 
    1. `organization` field: Specify your HCP Terraform or Terraform Enterprise organization. 
-   1. `workspaces` block: Add the `tags` field and specify one or more destination workspaces as a list of strings. 
+   1. `workspaces` block: Add a `tags` or `name` field and specify one or more destination workspaces as a list of strings. 
 
-   The following example below shows how you can map your CLI workspaces to HCP Terraform workspaces that have a specific tag.
+   Refer to [The `cloud` Block](/terraform/cli/cloud/settings#the-cloud-block) in the Terraform CLI documentation for additional information. The following example migrates the state associated with the configuration to the `networking` workspace on HCP Terraform:
 
   ```
   terraform {
@@ -58,7 +58,7 @@ Stop all Terraform operations associated with the state files. This may require 
 1. Encode your state files as a base64 string and generate an MD5 hash. The following example generates the string and hash file for a single `terraform.tfstate` file:
 
    ```shell-session
-    $ echo terraform.tfstate | base64
+    $ cat terraform.tfstate | base64
     dGVycmFmb3JtLnRmc3RhdGUK
     $ md5sum terraform.tfstate
     690a3f8ae079c629494a52c68757d585  terraform.tfstate
