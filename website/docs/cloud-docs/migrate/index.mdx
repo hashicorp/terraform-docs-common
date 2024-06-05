@@ -75,5 +75,5 @@ Stop all Terraform operations associated with the state files. This may require 
    - [Create a state version](/terraform/enterprise/api-docs/state-versions#create-a-state-version) in the Terraform Enterprise API reference documentation.
 1. Send a `POST` request to the `/workspaces/:workspace_id/actions/unlock` endpoint to unlock the workspace. 
 
-Refer to the following external article for an example how to create a script in Python to automate multiple state files:
+Refer to the following external article for an example of how to create a script in Python to automate multiple state files:
 [Migrating A Lot of State with Python and the HCP Terraform (previously Terraform Cloud) API](https://medium.com/hashicorp-engineering/migrating-a-lot-of-state-with-python-and-the-terraform-cloud-api-997ec798cd11). The example uses the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace) to create the necessary workspaces in HCP Terraform and the [State Versions API](/terraform/cloud-docs/api-docs/state-versions) to migrate the state files to those workspaces.
