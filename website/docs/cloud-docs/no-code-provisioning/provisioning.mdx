@@ -63,7 +63,7 @@ Start a new run in your workspace to update your existing infrastructure with yo
 
 ### Module Version Updates
 
-When you publish a new tag for a no-code module or change the module version made available to the end user, every workspace that is provisioned with the module is notified that an updated version is available on the workspace overview page. HCP Terraform does not automatically update the workspaces; instead the workspace owner must respond to the notification to update their workspace. HCP Terraform will prompt them to provide values for any new variables.
+When you [update the module version](/terraform/cloud-docs/no-code-provisioning/module-design#updating-a-module-s-version) designated for no-code provisioning, every workspace provisioned from the module is notified that an updated version is available on the workspace overview page. HCP Terraform does not automatically update workspaces. A workspace admin must respond to the update notification to upgrade the workspace, and HCP Terraform prompts for values for any new input variables.
 
 To change the version of the module that users can deploy:
 
