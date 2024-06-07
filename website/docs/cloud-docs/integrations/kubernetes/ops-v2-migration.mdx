@@ -297,7 +297,7 @@ View the changes that patch B applies to the workspace CRD.
 $ kubectl diff --filename workspaces_patch_b.yaml
 ```
 
-Patch workspace CRD with patch B. This patch adds `.status.runStatus` support, which was excluded in patch A.
+Patch the workspace CRD with patch B. This patch adds `.status.runStatus` support, which was excluded in patch A.
 
 ```shell-session
 $ kubectl patch crd workspaces.app.terraform.io --patch-file workspaces_patch_b.yaml
