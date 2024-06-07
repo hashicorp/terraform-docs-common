@@ -44,8 +44,8 @@ The no-code provisioning API allows you to create, configure, and deploy Terrafo
 
 `POST /organizations/:organization_name/no-code-modules`
 
-| Parameter            | Description                                                                                                                                                              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Parameter            | Description                                          |
+| -------------------- | ---------------------------------------------------- |
 | `:organization_name` | The name of the organization the module belongs to.  |
 
 To deploy a module using the no-code provisioning workflow, the module must meet the following requirement:
@@ -58,12 +58,12 @@ You can send a `POST` request to the `/no-code-modules` endpoint to enable no-co
 
 -> **Note**: This endpoint can not be accessed with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
 
-| Status  | Response                                     | Reason                                                         |
-| ------- | -------------------------------------------- | -------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully enabled a module for no-code provisioning.                                    |
-| [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action. |
-| [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.). |
-| [500][] | [JSON API error object][]                    | Internal system failure.                                   |
+| Status  | Response                                          | Reason                                                                |
+| ------- | ------------------------------------------------- | --------------------------------------------------------------------- |
+| [200][] | [JSON API document][] (`type: "no-code-modules"`) | Successfully enabled a module for no-code provisioning.               |
+| [404][] | [JSON API error object][]                         | Not found, or the user is unauthorized to perform this action.        |
+| [422][] | [JSON API error object][]                         | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][]                         | Internal system failure.                                              |
 
 
 ### Request Body
@@ -75,7 +75,7 @@ Properties without a default value are required.
 | Key path | Type   | Default | Description |
 | --- | --- | --- | --- |
 | `data.type` | string | | Must be `"no-code-modules"`. |
-| `data.attributes.version-pin` | string   |  (latest version of the module) | The module version to use in no-code provisioning workflows. |
+| `data.attributes.version-pin` | string   |  Latest version of the module | The module version to use in no-code provisioning workflows. |
 | `data.attributes.enabled` | boolean   |  `false`  | Set to `true` to enable no-code provisioning workflows. |
 | `data.relationships.registry-module.data.id` | string |  | The ID of a module in the organization's private registry. |
 | `data.relationships.registry-module.data.type` | string |  | Must be `"registry-module"`. |
@@ -200,9 +200,9 @@ curl \
 
 `PATCH /no-code-modules/:id`
 
-| Parameter | Description                                         |
-| --------- | --------------------------------------------------- |
-| `:id`     | The unique identifier for a No-Code-Allowed module. |
+| Parameter | Description                                  |
+| --------- | -------------------------------------------- |
+| `:id`     | The unique identifier of the no-code module. |
 
 Send a `PATCH` request to the `/no-code-modules/:id` endpoint to update the settings for the no-code provisioning of a module. You can update the following settings:
 
@@ -234,9 +234,9 @@ Properties without a default value are required.
 | `data.type` | string | | Must be `"no-code-modules"`. |
 | `data.attributes.version-pin` | string   | Existing value | The module version to use in no-code provisioning workflows. |
 | `data.attributes.enabled` | boolean   | Existing value | Set to `true` to enable no-code provisioning workflows, or `false` to disable them. |
-| `data.relationships.registry-module.data.id` | string | (previous value) | The ID of a module in the organization's Private Registry. |
-| `data.relationships.registry-module.data.type` | string | (previous value) | Must be `"registry-module"`. |
-| `data.relationships.variable-options.data[].id` | string | (new value) | The ID of an existing variable-options set. If provided, a new variable-options set replaces the set with this ID. If not provided, this creates a new variable-option set. |
+| `data.relationships.registry-module.data.id` | string | Existing value | The ID of a module in the organization's Private Registry. |
+| `data.relationships.registry-module.data.type` | string | Existing value | Must be `"registry-module"`. |
+| `data.relationships.variable-options.data[].id` | string | | The ID of an existing variable-options set. If provided, a new variable-options set replaces the set with this ID. If not provided, this creates a new variable-option set. |
 | `data.relationships.variable-options.data[].type` | string | | Must be `"variable-options"`. |
 | `data.relationships.variable-options.data[].attributes.variable-name` | string | | The name of a variable within the module. |
 | `data.relationships.variable-options.data[].attributes.variable-type` | string | | The data type for the variable. Can be [any type supported by Terraform](/terraform/language/expressions/types#types). |
@@ -359,9 +359,9 @@ curl \
 `GET /no-code-modules/:id`
 
 
-| Parameter | Description                                 |
-| --------- | ------------------------------------------- |
-| `:id`     | The unique identifier for a no-code module. |
+| Parameter | Description                                  |
+| --------- | -------------------------------------------- |
+| `:id`     | The unique identifier of the no-code module. |
 
 Use this API to read the details of an existing no-code module.
 
@@ -379,7 +379,7 @@ The [API call that enables no-code provisioning for a module](#allow-no-code-pro
 
 This endpoint uses our [standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Use HTML URL encoding syntax, such as `%5B` to represent `[` and `%5D` to represent `]`, if your tooling does not automatically encode URLs.
 
-Terraform returns related resources when you add [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources) to the request.
+Terraform returns related resources when you add the [`include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources) to the request.
 
 | Parameter | Description                                       |
 | --------- | ------------------------------------------------- | 
@@ -509,7 +509,7 @@ Each HCP Terraform organization has a list of which modules you can use to creat
 
 | Status  | Response                                     | Reason                                                                           |
 | ------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
-| [200][] | [JSON API document][] (`type: "workspaces"`) | Successfully created a workspace from a No-Code module for no-code provisioning. |
+| [200][] | [JSON API document][] (`type: "workspaces"`) | Successfully created a workspace from a no-code module for no-code provisioning. |
 | [404][] | [JSON API error object][]                    | Not found, or the user is unauthorized to perform this action.                   |
 | [422][] | [JSON API error object][]                    | Malformed request body (e.g., missing attributes, wrong types, etc.).            |
 | [500][] | [JSON API error object][]                    | Internal system failure.                                                         |
@@ -525,7 +525,7 @@ Properties without a default value are required.
 | --- | --- | --- | ---  |
 | `data.type`                                             | string  |           | Must be `"workspaces"`. |
 | `data.attributes.name`                                  | string  |           | The name of the workspace. You can only include letters, numbers, `-`, and `_`. Terraform uses this value to identify the workspace and must be unique in the organization. |
-| `data.attributes.description`                           | string  | (nothing) | A description for the workspace. |
+| `data.attributes.description`                           | string  | `""` | A description for the workspace. |
 | `data.attributes.auto_apply`                            | boolean |  `false`  | If `true`, HCP Terraform automatically applies changes when a Terraform plan is successful. |
 | `data.relationships.project.data.id`                    | string  |           | The ID of the project to create the workspace in. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project. |
 | `data.relationships.project.data.type`                  | string  |           | Must be `"project"`. |
@@ -545,7 +545,7 @@ Properties without a default value are required.
     "type": "workspaces",
     "attributes": {
       "name":  "no-code-workspace",
-      "description": "A workspace to enable the No-Code provisioning workflow."
+      "description": "A workspace to enable the no-code provisioning workflow."
     },
     "relationships": {
       "project": {
@@ -750,7 +750,7 @@ Upgrading a workspace's no-code provisioning settings is a multi-step process.
 
 | Parameter            | Description                    |
 | -------------------- | -------------------------------|
-| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:no_code_module_id` | The ID of the no-code module.  |
 | `:id`                | The ID of the workspace.       |
 
 
@@ -843,13 +843,13 @@ curl \
 
 ## Read workspace upgrade plan status
 
-This endpoint returns the plan details and status for updating a workspace to new No-Code Provisioning Settings.
+This endpoint returns the plan details and status for updating a workspace to new no-code provisioning settings.
 
 `GET /no-code-modules/:no_code_module_id/workspaces/:workspace_id/upgrade/:id`
 
 | Parameter            | Description                    |
 | -------------------- | -------------------------------|
-| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:no_code_module_id` | The ID of the no-code module.  |
 | `:workspace_id`      | The ID of workspace.           |
 | `:id`                | The ID of update.              |
 
@@ -902,7 +902,7 @@ Use this endpoint to confirm an update and finalize the update for a workspace t
 
 | Parameter            | Description                    |
 | -------------------- | -------------------------------|
-| `:no_code_module_id` | The ID of the No-Code module.  |
+| `:no_code_module_id` | The ID of the no-code module.  |
 | `:workspace_id`      | The ID of workspace.           |
 | `:id`                | The ID of update.              |
 
