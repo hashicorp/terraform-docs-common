@@ -1,0 +1,173 @@
+---
+page_title: Stacks - API Docs - HCP Terraform
+description: >-
+  Use these endpoints to manage and interact with stacks.
+---
+
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+
+[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+
+[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
+
+[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
+
+[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+
+[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
+
+[JSON API error object]: http://jsonapi.org/format/#error-objects
+
+# Stacks API
+
+Stacks represent collections of components, replicated across one or more deployments.
+
+## Create a stack
+
+`POST /stacks`
+
+-> **Note:** Stack creation is restricted to users who maintain the specified project, the owners team, teams with the "Manage all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path                                        | Type    | Default   | Description |
+| --- | --- | --- | --- |
+| `data.type` | string | | Must be `"stacks"`. |
+| `data.attributes.name` | string | | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project. |
+| `data.attributes.description` | string | (nothing) | A description for the stack. |
+| `data.attributes.vcs-repo` | object | | Settings for the stack's VCS repository. |
+| `data.attributes.vcs-repo.branch` | string | (nothing) | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`). |
+| `data.attributes.vcs-repo.identifier` | string | | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. |
+| `data.attributes.vcs-repo.oauth-token-id` | string | | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint. |
+| `data.relationships.project.data.id` | string | | The ID of the project to create the stack in. You must have permission to manage the project, either by organization-level permissions or team admin access to a specific project. |
+
+| Status | Response | Reason |
+| --- | --- | --- |
+| [201][] | [JSON API document][] (`type: "stacks"`) | Successfully created a stack. |
+| [404][] | [JSON API error object][] | Not found, or the user is unauthorized to perform this action. |
+| [422][] | [JSON API error object][] | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][] | Internal system failure. |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "attributes": {
+      "vcs-repo": {
+        "identifier": "my-organization/basic-stack",
+        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
+        "branch": ""
+      },
+      "name": "basic-stack",
+      "description": "Example stack for documentation"
+    },
+    "relationships": {
+      "project": {
+        "data": {
+          "type": "projects",
+          "id": "prj-jT92VLSFpv8FwKtc",
+        }
+      }
+    },
+    "type": "stacks"
+  }
+}
+
+```
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/stacks
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "st-8owEfTCMQShdQ8Lb",
+    "type": "stacks",
+    "attributes": {
+      "name": "basic-stack",
+      "description": "Example stack for documentation"
+      "deployment-names": [],
+      "vcs-repo": {
+        "branch": "",
+        "identifier": "my-organization/basic-stack",
+        "display-identifier": "my-organization/basic-stack",
+        "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
+        "repository-http-url": "https://github.com/my-organization/basic-stack",
+        "service-provider": "github"
+      },
+      "created-at": "2024-06-12T21:25:37.504Z",
+      "updated-at": "2024-06-12T21:25:37.504Z"
+    },
+    "relationships": {
+      "project": {
+        "data": {
+          "id": "prj-AeuWVcVZVFGFgSbk",
+          "type": "projects"
+        }
+      },
+      "latest-stack-configuration": {
+        "data": null
+      },
+      "stack-diagnostics": {
+        "links": {
+          "related": "/api/v2/stacks/st-8owEfTCMQShdQ8Lb/stack-diagnostics"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stacks/st-8owEfTCMQShdQ8Lb"
+    }
+  }
+}
+```
+
+## Fetch the latest configuration for a stack
+
+TODO
+
+##
+
+## Modify a stack's settings
+
+TODO
+
+## List stacks in a project
+
+TODO
+
+## Delete an empty stack
+
+TODO
