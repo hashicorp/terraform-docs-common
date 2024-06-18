@@ -238,7 +238,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must have the "**Manage modules**" permission. |
 
 Publishes a new registry private module from a VCS repository, with module versions managed automatically by the repository's tags. The publishing process will fetch all tags in the source repository that look like [SemVer](https://semver.org/) versions with optional 'v' prefix. For each version, the tag is cloned and the config parsed to populate module details (input and output variables, readme, submodules, etc.). The [Module Registry Requirements](/terraform/registry/modules/publish#requirements) define additional requirements on naming, standard module structure and tags for releases.
 
@@ -349,7 +349,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must have the "**Manage modules**" permission. |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -511,7 +511,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must have the "**Manage modules**" permission. |
 | `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter                                                           |
 | `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
 | `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
