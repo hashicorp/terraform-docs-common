@@ -138,6 +138,7 @@
       { "title": "Subscriptions", "path": "api-docs/subscriptions" },
       { "title": "Team Membership", "path": "api-docs/team-members" },
       { "title": "Team Tokens", "path": "api-docs/team-tokens" },
+      { "title": "Organization Team Tokens", "path": "api-docs/organization-team-tokens" },
       { "title": "Teams", "path": "api-docs/teams" },
       { "title": "User Tokens", "path": "api-docs/user-tokens" },
       { "title": "Users", "path": "api-docs/users" },
