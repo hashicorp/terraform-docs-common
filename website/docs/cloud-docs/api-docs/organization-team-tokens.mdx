@@ -49,6 +49,7 @@ List team tokens in an organization.
 | `:organization_name` | The name of the organization the team tokens belong to |
 
 The objects returned by this endpoint only contain metadata, and do not include the secret text of any authentication tokens. A token is only shown upon creation, and cannot be recovered later.
+By default, the tokens returned are ordered by ascending expiration date.
 
 | Status  | Response                                                | Reason                                                                                |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -65,6 +66,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]` | **Optional.** If omitted, the endpoint returns the first page.      |
 | `page[size]`   | **Optional.** If omitted, the endpoint returns 20 tokens per page.  |
 | `q`            | **Optional.** A search query string. You can search for a team authentication token using the team name. |
+| `sort`         | **Optional.** Allows sorting the team tokens by `"team-name"`, `"created-by"`, `"expired-at"`, and `"last-used-at"`. Prepending a hyphen to the sort parameter reverses the order. For example, `"-team-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order ascending. |
 
 ### Sample Response
 
