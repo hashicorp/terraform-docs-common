@@ -175,11 +175,11 @@ module.exports = [
     destination: "/terraform/language/settings/cloud",
     permanent: true,
   },
-  {
-    source: "/terraform/cdktf/create-and-deploy/terraform-cloud",
-    destination: "/terraform/cdktf/create-and-deploy/hcp-terraform",
-    permanent: true,
-  },
+  // {
+  //   source: "/terraform/cdktf/create-and-deploy/terraform-cloud",
+  //   destination: "/terraform/cdktf/create-and-deploy/hcp-terraform",
+  //   permanent: true,
+  // },
   //verified -> partner
   {
     source: "/terraform/cloud-docs/modules/verified",
