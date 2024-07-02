@@ -338,9 +338,9 @@ In order to remove a user from the organization, the holder of this permission m
 
 #### Manage Teams
 
-Allows members to create, update, and delete teams.
+Allows members to create, update, and delete teams, and generate, regenerate, and revoke tokens.
 
-This permission grants the ability to update a team's names and SSO IDs, but does not allow access to organization settings. On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams.
+This permission grants the ability to update a team's names, SSO IDs, and token management permissions, but does not allow access to organization settings. On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams.
 
 The manage teams permission confers all permissions granted by the manage membership permission.
 
@@ -363,6 +363,14 @@ This permission allows owners of large organizations to delegate team management
 Allows members access to secret teams at the level permitted by that user's team permissions setting.
 
 This permission acts as a modifier to existing team management permissions. Members with this permission can access secret teams up to the level permitted by other team management permissions. For example, if a user has permission to include secret teams and [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams), that user can create secret teams.
+
+### Allow Member Token Management
+
+Allows owners and members with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions to enable and disable team token management for team members. This permission defaults to true.
+
+When member token management is enabled, members will be able to perform actions on team tokens, including generating and revoking a team token.
+
+When member token management is disabled, members will be unable to perform actions on team tokens, including generating and revoking a team token.
 
 ## Permissions Outside HCP Terraform's Scope
 
