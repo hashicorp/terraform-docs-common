@@ -11,7 +11,7 @@ HCP Terraform can perform automatic health assessments in a workspace to assess 
 - [Drift detection](#drift-detection) determines whether your real-world infrastructure matches your Terraform configuration.
 - [Continuous validation](#continuous-validation) determines whether custom conditions in the workspace’s configuration continue to pass after Terraform provisions the infrastructure.
 
-When enabled, HCP Terraform periodically runs an automated health assessment for your workspace. Refer to [Health Assessment Scheduling](#health-assessment-scheduling) for details.
+When you enable health assessments, HCP Terraform periodically runs health assessments for your workspace. Refer to [Health Assessment Scheduling](#health-assessment-scheduling) for details.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/health-assessments.mdx'
@@ -25,7 +25,7 @@ Working with health assessments requires the following permissions:
 - To change organization health settings, you must be an [organization owner](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners).
 - To change a workspace’s health settings, you must be an [administrator for that workspace](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins).
 <!-- BEGIN: TFC:only name:health-assessments -->
-- To trigger [on-demand assessments](/terraform/cloud-docs/workspaces/health#on-demand-assessments) for a workspace, you must be an [administrator for that workspace](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins).
+- To trigger [on-demand health assessments](/terraform/cloud-docs/workspaces/health#on-demand-assessments) for a workspace, you must be an [administrator for that workspace](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins).
 <!-- END: TFC:only name:health-assessments -->
 
 ## Workspace requirements
@@ -56,7 +56,7 @@ The timing of the first health assessment in the workspace depends on whether yo
 
 - **No active runs:** The first health assessment starts a few minutes after you enable the feature.
 - **Active speculative plan:** The first health assessment starts soon after that plan's completion.
-- **Other active runs:** The first health assessment starts during the next assessment period.
+- **Other active runs:** During the next assessment period.
 
 After the first health assessment, HCP Terraform starts a new health assessment during the next assessment period if there are no active runs in the workspace. Health assessments may take longer to complete when you enable health assessments in many workspaces at once or your workspace contains a complex configuration with many resources.
 
@@ -77,7 +77,7 @@ If you are an administrator for a workspace and it satisfies all [assessment req
 
 When you click the **Start health assessment** button, the workspace displays a message in the bottom lefthand corner of the page to indicate if it successfully triggered a new assessment. The time it takes to complete an assessment can vary based on network latency and the number of resources managed by the workspace. 
 
-While an assessment is in progress, you cannot trigger another assessment. An on-demand assessment resets the scheduling for automated assessments, so the next automated assessment will during the next assessment period. 
+While an assessment is in progress, you cannot trigger another assessment. An on-demand assessment resets the scheduling for automated assessments, so HCP Terraform will run the next assessment during the next assessment period. 
 
 <!-- END: TFC:only name:health-assessments -->
 
