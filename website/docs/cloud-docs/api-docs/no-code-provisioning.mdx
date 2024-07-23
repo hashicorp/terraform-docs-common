@@ -524,6 +524,7 @@ Properties without a default value are required.
 | Key path | Type   | Default | Description |
 | --- | --- | --- | ---  |
 | `data.type`                                             | string  |           | Must be `"workspaces"`. |
+| `data.attributes.agent-pool-id`                         | string  | (nothing) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote`. |                                                                                                                                                                                                                                   |
 | `data.attributes.auto_apply`                            | boolean |  `false`  | If `true`, HCP Terraform automatically applies changes when a Terraform plan is successful. |
 | `data.attributes.description`                           | string  | `""`      | A description for the workspace. |
 | `data.attributes.execution-mode`                        | string  | (nothing) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, and `agent`. When not provided, defaults to `remote`. |                                                                                                                                            |
