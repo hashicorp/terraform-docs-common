@@ -16,7 +16,9 @@ For most use cases, separately configuring [dynamic provider credentials](/terra
 
 The "Vault-backed" in "Vault-backed dynamic credentials" refers to Vault's [secrets engines](/vault/docs/secrets), which allow you to generate short-lived [dynamic secrets](https://www.vaultproject.io/use-cases/dynamic-secrets) for the AWS, GCP, or Azure providers. If you are using Terraform Enterprise and your Vault instance is configured within the same secure network, you can generate secrets while keeping your environment air-gapped.
 
-Vault-backed dynamic credentials combine the features of dynamic provider credentials and Vault's secrets engines. This means you can authenticate a Vault instance using workload identity tokens and use secrets engines on that instance to generate dynamic credentials for the AWS, GCP, and Azure providers.
+Vault-backed dynamic credentials combine the features of dynamic provider credentials and Vault's secrets engines. This means you can authenticate a Vault instance using workload identity tokens and use secrets engines on that instance to generate dynamic credentials for the AWS, GCP, and Azure providers. 
+
+For a comparison of Vault-backed dynamic credentials and dynamic provider credentials, refer to [Why use Vault-backed dynamic credentials to secure HCP Terraform infrastructure?](https://www.hashicorp.com/blog/why-use-vault-backed-dynamic-credentials-to-secure-hcp-terraform-infrastructure)
 
 ## Configure Vault-Backed Dynamic Credentials
 
@@ -31,7 +33,7 @@ Setting up Vault-backed dynamic credentials differs slightly for each cloud prov
 - [Google Cloud Platform](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration)
 - [Azure](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-backed/azure-configuration)
 
-## TFE Specific Requirements
+## Terraform Enterprise Specific Requirements
 
 ### Access to Metadata Endpoints
 

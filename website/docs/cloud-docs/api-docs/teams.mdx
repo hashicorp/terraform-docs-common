@@ -84,6 +84,7 @@ $ curl \
 ### Sample Response
 
 The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 and later, or in HCP Terraform.
+The `allow-member-token-management` attribute is false for Terraform Enterprise versions older than 202408-1.
 
 ```json
 {
@@ -96,6 +97,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "sso-team-id": "cb265c8e41bddf3f9926b2cf3d190f0e1627daa4",
         "users-count": 0,
         "visibility": "organization",
+        "allow-member-token-management": true,
         "permissions": {
           "can-update-membership": true,
           "can-destroy": true,
@@ -109,6 +111,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
           "manage-run-tasks": true,
           "manage-workspaces": false,
           "manage-vcs-settings": false,
+          "manage-agent-pools": false,
           "manage-projects": false,
           "read-projects": false,
           "read-workspaces": false
@@ -159,7 +162,7 @@ Properties without a default value are required.
 | `data.type`                             | string |            | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
 | `data.attributes.name`                  | string |            | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
 | `data.attributes.sso-team-id`           | string | (nothing)  | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or in HCP Terraform.                                                                                             |
-| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, `manage-membership`, `manage-teams`, and `manage-organization-access` properties with boolean values. All properties default to `false`. |
+| `data.attributes.organization-access`   | object | (nothing)  | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-agent-pools`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, `manage-membership`, `manage-teams`, and `manage-organization-access` properties with boolean values. All properties default to `false`. |
 | `data.attributes.visibility` **(beta)** | string | `"secret"` | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
 
 ### Sample Payload
@@ -205,6 +208,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-policy-overrides": false,
         "manage-run-tasks": false,
         "manage-vcs-settings": false,
+        "manage-agent-pools": false,
         "manage-workspaces": true,
         "manage-providers": false,
         "manage-modules": false,
@@ -223,7 +227,8 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "can-update-visibility": true
       },
       "users-count": 0,
-      "visibility": "secret"
+      "visibility": "secret",
+      "allow-member-token-management": true
     },
     "id": "team-6p5jTwJQXwqZBncC",
     "links": {
@@ -274,6 +279,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
       "sso-team-id": "cb265c8e41bddf3f9926b2cf3d190f0e1627daa4",
       "users-count": 0,
       "visibility": "organization",
+      "allow-member-token-management": true,
       "permissions": {
         "can-update-membership": true,
         "can-destroy": true,
@@ -287,6 +293,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-run-tasks": true,
         "manage-workspaces": false,
         "manage-vcs-settings": false,
+        "manage-agent-pools": false,
         "manage-providers": false,
         "manage-modules": false,
         "manage-projects": false,
@@ -342,8 +349,9 @@ Properties without a default value are required.
 | `data.type`                             | string |                  | Must be `"teams"`.                                                                                                                                                                                                                                                                                                |
 | `data.attributes.name`                  | string | (previous value) | The name of the team, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                           |
 | `data.attributes.sso-team-id`           | string | (previous value) | The unique identifier of the team from the SAML `MemberOf` attribute. Only available in Terraform Enterprise 202204-1 and later, or in HCP Terraform.                                                                                             |
-| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, `manage-membership`, `manage-teams`, and `manage-organization-access` properties with boolean values. All properties default to `false`. |
+| `data.attributes.organization-access`   | object | (previous value) | Settings for the team's organization access. This object can include the `manage-policies`, `manage-policy-overrides`, `manage-run-tasks`, `manage-workspaces`, `manage-vcs-settings`, `manage-agent-pools`, `manage-providers`, `manage-modules`, `manage-projects`, `read-projects`, `read-workspaces`, `manage-membership`, `manage-teams`, and `manage-organization-access` properties with boolean values. All properties default to `false`. |
 | `data.attributes.visibility` **(beta)** | string | (previous value) | The team's visibility. Must be `"secret"` or `"organization"` (visible).                                                                                                                                                                                                                                          |
+| `data.attributes.allow-team-token-management` | boolean | (previous value) | The ability to enable and disable team token management for a team. Defaults to true.                                                                                                                                                                                                                                         |
 
 ### Sample Payload
 
@@ -353,6 +361,7 @@ Properties without a default value are required.
     "type": "teams",
     "attributes": {
       "visibility": "organization",
+      "allow-member-token-management": true,
       "organization-access": {
         "manage-vcs-settings": true
       }
@@ -387,6 +396,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-policy-overrides": false,
         "manage-run-tasks": true,
         "manage-vcs-settings": true,
+        "manage-agent-pools": false,
         "manage-workspaces": true,
         "manage-providers": false,
         "manage-modules": false,
@@ -398,6 +408,7 @@ The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 an
         "manage-organization-access": false
       },
       "visibility": "organization",
+      "allow-member-token-management": true,
       "permissions": {
         "can-update-membership": true,
         "can-destroy": true,

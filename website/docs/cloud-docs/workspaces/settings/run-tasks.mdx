@@ -8,9 +8,9 @@ description: >-
 
 # Run Tasks
 
-HCP Terraform run tasks let you directly integrate third-party tools and services at certain stages in the HCP Terraform run lifecycle. You can use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
+HCP Terraform run tasks let you directly integrate third-party tools and services at certain stages in the HCP Terraform run lifecycle. Use run tasks to validate Terraform configuration files, analyze execution plans before applying them, scan for security vulnerabilities, or perform other custom actions.
 
-Run tasks send data about a run to an external service at [specific run stages](#understanding-run-tasks-within-a-run). The external service processes the data, evaluates whether the run passes or fails, and sends a response to HCP Terraform. HCP Terraform then uses this response and the run task enforcement level to determine if a run can proceed.
+Run tasks send data about a run to an external service at [specific run stages](#understanding-run-tasks-within-a-run). The external service processes the data, evaluates whether the run passes or fails, and sends a response to HCP Terraform. HCP Terraform then uses this response and the run task enforcement level to determine if a run can proceed. [Explore run tasks in the Terraform registry](https://registry.terraform.io/browse/run-tasks).
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/run-tasks.mdx'
@@ -28,9 +28,11 @@ You can manage run tasks through the HCP Terraform UI or the [Run Tasks API](/te
 
 ## Creating a Run Task
 
-Run tasks send an API payload to an external service. This payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to HCP Terraform.
+Explore the full list of [run tasks in the Terraform Registry](https://registry.terraform.io/browse/run-tasks). 
 
-You can access a complete list of all run tasks in the [Terraform Registry](https://registry.terraform.io/browse/run-tasks). These run tasks include the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) and run tasks that our HashiCorp Technology Partners develop and maintain.
+Run tasks send an API payload to an external service. The API payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to HCP Terraform. 
+
+For example, the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) checks image artifacts within a Terraform configuration for validity. If the configuration references images marked as unusable (revoked), then the run task fails and provides an error message.
 
 To create a new run task:
 

@@ -308,6 +308,7 @@ _Without a VCS repository_
       "latest-change-at": "2021-08-16T21:22:49.566Z",
       "last-assessment-result-at" : "2021-08-17T21:20:12.908Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -426,6 +427,7 @@ _With a VCS repository_
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T21:50:58.726Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-2",
       "operations": true,
       "permissions": {
@@ -544,6 +546,7 @@ _With a project_
       "created-at": "2022-12-05T20:57:13.829Z",
       "environment": "default",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-in-project",
       "queue-all-runs": false,
       "speculative-enabled": true,
@@ -775,6 +778,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T21:50:58.726Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-2",
       "operations": true,
       "permissions": {
@@ -899,16 +903,17 @@ This endpoint lists workspaces in the organization.
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter               | Description                                                                                                                                                                                                                                                                                                                                                                                                          |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `page[number]`          | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                                                                                                                   |
-| `page[size]`            | **Optional.** If omitted, the endpoint will return 20 workspaces per page.                                                                                                                                                                                                                                                                                                                                           |
-| `search[name]`          | **Optional.** If specified, restricts results to workspaces with a name that matches the search string using a fuzzy search.
-| `search[tags]`          | **Optional.** If specified, restricts results to workspaces with that tag. If multiple comma separated values are specified, results matching all of the tags are returned.                                                                                                                                                                                                                                          |
-| `search[exclude-tags]`  | **Optional.** If specified, results exclude workspaces with that tag. If multiple comma separated values are specified, workspaces with tags matching any of the tags are excluded.                                                                                                                                                                                                                                  |
-| `search[wildcard-name]` | **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with substring `-prod-` regardless of prefix and/or suffix. |
-| `sort`                  | **Optional.** Allows sorting the organization's workspaces by a provided value. You can sort by `"name"`, `"current-run.created-at"` (the time of the current run), and `"latest-change-at"` (the creation time of the latest state version or the workspace itself if no state version exists). Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable.                                                                                                                                                     |
-| `filter[project][id]`   | **Optional.** If specified, restricts results to workspaces in the specific project.                                                                                                                                                                                                                                                                                                                                 |
+| Parameter                     | Description                                                                                                                                                                                                                                                                                                                                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]`                | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                                                                                                                   |
+| `page[size]`                  | **Optional.** If omitted, the endpoint will return 20 workspaces per page.                                                                                                                                                                                                                                                                                                                                           |
+| `search[name]`                | **Optional.** If specified, restricts results to workspaces with a name that matches the search string using a fuzzy search.                                                                                                                                                                                                                                                                                         |
+| `search[tags]`                | **Optional.** If specified, restricts results to workspaces with that tag. If multiple comma separated values are specified, results matching all of the tags are returned.                                                                                                                                                                                                                                          |
+| `search[exclude-tags]`        | **Optional.** If specified, results exclude workspaces with that tag. If multiple comma separated values are specified, workspaces with tags matching any of the tags are excluded.                                                                                                                                                                                                                                  |
+| `search[wildcard-name]`       | **Optional.** If specified, restricts results to workspaces with partial matching, using `*` on prefix, suffix, or both. For example, `search[wildcard-name]=*-prod` returns all workspaces ending in `-prod`, `search[wildcard-name]=prod-*` returns all workspaces beginning with `prod-`, and `search[wildcard-name]=*-prod-*` returns all workspaces with substring `-prod-` regardless of prefix and/or suffix. |
+| `sort`                        | **Optional.** Allows sorting the organization's workspaces by a provided value. You can sort by `"name"`, `"current-run.created-at"` (the time of the current run), and `"latest-change-at"` (the creation time of the latest state version or the workspace itself if no state version exists). Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
+| `filter[project][id]`         | **Optional.** If specified, restricts results to workspaces in the specific project.                                                                                                                                                                                                                                                                                                                                 |
+| `filter[current-run][status]` | **Optional.** If specified, restricts results to workspaces that match the status of a current run.                                                                                                                                                                                                                                                                                                                  |
 
 ### Sample Request
 
@@ -943,6 +948,7 @@ $ curl \
         "global-remote-state": false,
         "latest-change-at": "2021-08-16T21:50:58.726Z",
         "locked": false,
+        "locked-reason": "",
         "name": "workspace-2",
         "operations": true,
         "permissions": {
@@ -1063,6 +1069,7 @@ $ curl \
         "global-remote-state": false,
         "latest-change-at": "2021-08-16T21:22:49.566Z",
         "locked": false,
+        "locked-reason": "",
         "name": "workspace-1",
         "operations": true,
         "permissions": {
@@ -1217,6 +1224,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-06-23T17:50:48.815Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -1470,6 +1478,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T19:44:45.241Z",
       "locked": true,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -1647,6 +1656,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T19:44:45.241Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -1815,6 +1825,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T19:44:45.241Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -2002,6 +2013,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T19:44:45.241Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -2198,6 +2210,7 @@ $ curl \
       "global-remote-state": false,
       "latest-change-at": "2021-08-16T19:44:45.241Z",
       "locked": false,
+      "locked-reason": "",
       "name": "workspace-1",
       "operations": true,
       "permissions": {
@@ -2375,6 +2388,7 @@ $ curl \
         "global-remote-state": false,
         "latest-change-at": "2021-08-16T21:50:58.726Z",
         "locked": false,
+        "locked-reason": "",
         "name": "workspace-2",
         "operations": true,
         "permissions": {
@@ -2792,7 +2806,7 @@ It is important to note that `type`, as well as one of `id` _or_ `attributes.nam
 | Key path                 | Type   | Default | Description                 |
 | ------------------------ | ------ | ------- | --------------------------- |
 | `data[].type`            | string |         | Must be `"tags"`.           |
-| `data[].id`              | string |         | The id of the tag to add.   |
+| `data[].id`              | string |         | The ID of the tag to add.   |
 | `data[].attributes.name` | string |         | The name of the tag to add. |
 
 ### Sample Payload
@@ -2860,7 +2874,7 @@ It is important to note that `type`, as well as one of `id` _or_ `attributes.nam
 | Key path                 | Type   | Default | Description                    |
 | ------------------------ | ------ | ------- | ------------------------------ |
 | `data[].type`            | string |         | Must be `"tags"`.              |
-| `data[].id`              | string |         | The id of the tag to remove.   |
+| `data[].id`              | string |         | The ID of the tag to remove.   |
 | `data[].attributes.name` | string |         | The name of the tag to remove. |
 
 ### Sample Payload
