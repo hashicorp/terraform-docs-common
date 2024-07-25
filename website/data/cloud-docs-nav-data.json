@@ -47,7 +47,7 @@
       { "title": "Applies", "path": "api-docs/applies" },
       { "title": "Audit Trails", "path": "api-docs/audit-trails" },
       {
-        "title": "Audit Trails Tokens <sup>Beta</sup>",
+        "title": "Audit Trails Tokens",
         "path": "api-docs/audit-trails-tokens"
       },
       { "title": "Assessment Results", "path": "api-docs/assessment-results" },
