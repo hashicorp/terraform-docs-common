@@ -31,6 +31,8 @@ There are two main ways to automatically destroy a workspace's resources:
 * Schedule a run to destroy all resources in a workspace at a specific date and time.
 * Configure HCP Terraform to destroy a workspace's infrastructure after a period of workspace inactivity.
 
+Workspaces can inherit auto-destroy settings from their project. Refer to [managing projects](/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for more information. You can configure an individual workspace's auto-destroy settings to override the project's configuration.
+
 You can reduce your spending on infrastructure by automatically destroying temporary resources like development environments.
 
 After HCP Terraform performs an auto-destroy run, it unsets the `auto-destroy-at` field on the workspace. If you continue using the workspace, you can schedule another future auto-destroy run to remove any new resources. 
