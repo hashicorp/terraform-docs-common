@@ -61,6 +61,7 @@ Properties without a default value are required.
 | `data.type`                   | string |           | Must be `"projects"`.                                                                                                                                                                                 |
 | `data.attributes.name`        | string |           | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | (nothing) | **Optional.** The description of the project. It must be no more than 256 characters long.                                                                                                            |
+| `data.attributes.auto-destroy-activity-duration`| string  | (nothing) | Value and units for [automatically scheduled destroy runs based on workspace activity](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces). Valid values are greater than 0 and four digits or less. Valid units are `d` and `h`. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. |
 
 ### Sample Payload
 
@@ -68,12 +69,23 @@ Properties without a default value are required.
 {
   "data": {
     "attributes": {
-      "name": "Test Project"
+      "name": "Test Project",
       "description": "An example project for documentation."
     },
     "type": "projects"
   }
 }
+```
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/organizations/my-organization/projects
 ```
 
 ### Sample Response
@@ -127,6 +139,7 @@ Properties without a default value are required.
 | `data.type`                   | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
 | `data.attributes.name`        | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | (previous value) | The new description for the project. It must be no more than 256 characters long.                                                                                                                        |
+| `data.attributes.auto-destroy-activity-duration`| string  | (nothing) | Value and units for [automatically scheduled destroy runs based on workspace activity](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces). Valid values are greater than 0 and four digits or less. Valid units are `d` and `h`. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. |
 
 
 ### Sample Payload
@@ -343,7 +356,8 @@ $ curl \
         "can-update": true,
         "can-destroy": true,
         "can-create-workspace": true
-      }
+      },
+      "auto-destroy-activity-duration": "2d"
     },
     "relationships": {
       "organization": {
