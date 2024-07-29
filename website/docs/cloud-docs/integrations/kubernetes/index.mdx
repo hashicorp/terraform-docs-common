@@ -79,6 +79,9 @@ spec:
     - wildcardName: eu-development-*
     minReplicas: 1
     maxReplicas: 3
+    cooldownPeriod:
+      scaleUpSeconds: 30
+      scaleDownSeconds: 30
 ```
 
 </CodeBlockConfig>
