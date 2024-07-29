@@ -1,19 +1,19 @@
 ---
-page_title: Terraform Cloud Operator for Kubernetes 
+page_title: HCP Terraform Operator for Kubernetes 
 description: >-
-  The Terraform Cloud operator for Kubernetes allows you to provision infrastructure directly from
+  The HCP Terraform Operator for Kubernetes allows you to provision infrastructure directly from
   the Kubernetes control plane.
 ---
 
-# Terraform Cloud Operator for Kubernetes overview
+# HCP Terraform Operator for Kubernetes overview
 
-The [Terraform Cloud Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) allows you to manage HCP Terraform resources with Kubernetes custom resources. You can provision infrastructure internal or external to your Kubernetes cluster directly from the Kubernetes control plane. 
+The [HCP Terraform Operator for Kubernetes](https://github.com/hashicorp/terraform-cloud-operator) allows you to manage HCP Terraform resources with Kubernetes custom resources. You can provision infrastructure internal or external to your Kubernetes cluster directly from the Kubernetes control plane. 
 
 The operator's CustomResourceDefinitions (CRD) let you dynamically create HCP Terraform workspaces with Terraform modules, populate workspace variables, and provision infrastructure with Terraform runs.
 
 ## Key benefits
 
-The Terraform Cloud operator for Kubernetes v2 offers several improvements over v1:
+The HCP Terraform Operator for Kubernetes v2 offers several improvements over v1:
 
 - **Flexible resource management**: The operator now features multiple custom resources, each with separate controllers for different HCP Terraform resources. This provides additional flexibility and the ability to manage more custom resources concurrently, significantly improving performance for large-scale deployments.
 
@@ -24,11 +24,11 @@ The Terraform Cloud operator for Kubernetes v2 offers several improvements over 
 
 ## Supported HCP Terraform features
 
-The Terraform Cloud Operator for Kubernetes allows you to create agent pools, deploy modules, and manage workspaces through Kubernetes controllers. These controllers enable you to automate and manage HCP Terraform resources using custom resources in Kubernetes.
+The HCP Terraform Operator for Kubernetes allows you to create agent pools, deploy modules, and manage workspaces through Kubernetes controllers. These controllers enable you to automate and manage HCP Terraform resources using custom resources in Kubernetes.
 
 ### Agent pools
 
-Agent pools in HCP Terraform manage the execution environment for Terraform runs. The Terraform Cloud operator for Kubernetes allows you to create and manage agent pools as part of your Kubernetes infrastructure.
+Agent pools in HCP Terraform manage the execution environment for Terraform runs. The HCP Terraform Operator for Kubernetes allows you to create and manage agent pools as part of your Kubernetes infrastructure.
 
 The following example creates a new agent pool with the name `agent-pool-development` and generates an agent token with the name `token-red`.
 
@@ -175,7 +175,7 @@ Refer to the [project API reference](/terraform/cloud-docs/integrations/kubernet
 
 ### Workspace
 
-HCP Terraform workspaces organize and manage Terraform configurations. The Terraform Cloud Operator for Kubernetes allows you to create, configure, and manage workspaces directly from Kubernetes.
+HCP Terraform workspaces organize and manage Terraform configurations. The HCP Terraform Operator for Kubernetes allows you to create, configure, and manage workspaces directly from Kubernetes.
 
 The following example creates a new workspace named `us-west-development`, configured to use Terraform version `1.6.2`. This workspace has two variables, `nodes` and `rds-secret`. The variable `rds-secret` is treated as sensitive, and the operator reads the value for the variable from a Kubernetes secret named `us-west-development-secrets`.
 

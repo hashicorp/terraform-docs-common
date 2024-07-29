@@ -1,14 +1,14 @@
 ---
-page_title: Terraform Cloud Kubernetes Operator v2 Migration Guide
+page_title: HCP Terraform Operator for Kubernetes v2 Migration Guide
 description: >-
   Upgrade the Terraform Kubernetes Operator from version 1 to version 2.
 ---
 
-# Terraform Cloud Kubernetes Operator v2 Migration Guide
+# HCP Terraform Operator for Kubernetes v2 Migration Guide
 
-~> **Compatibility warning**: Terraform Enterprise only supports version 2 of the Terraform Cloud Kubernetes Operator. If you use Terraform Enterprise, [refer to this tutorial](/terraform/tutorials/kubernetes/kubernetes-operator-v2) for installation guidance. 
+~> **Compatibility warning**: Terraform Enterprise only supports version 2 of the HCP Terraform Operator for Kubernetes. If you use Terraform Enterprise, [refer to this tutorial](/terraform/tutorials/kubernetes/kubernetes-operator-v2) for installation guidance. 
 
-To upgrade the Terraform Cloud Kubernetes Operator from version 1 to the Terraform Cloud Kubernetes Operator (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
+To upgrade the HCP Terraform Operator for Kubernetes from version 1 to the HCP Terraform Operator for Kubernetes (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ Next, create an environment variable named `RELEASE_NAME` with the value of the 
 $ export RELEASE_NAME=<INSTALLATION_NAME>
 ```
 
-Before you migrate to Terraform Cloud Kubernetes Operator v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
+Before you migrate to HCP Terraform Operator for Kubernetes v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
 
 ```shell-session
 $ helm upgrade --namespace ${RELEASE_NAMESPACE} ${RELEASE_NAME} hashicorp/terraform
@@ -45,7 +45,7 @@ $ kubectl get workspace --all-namespaces -o yaml > backup_tfc_operator_v1.yaml
 
 ## Manifest schema migration
 
-Version 2 of the Terraform Cloud Kubernetes operator renames and moves many existing fields. When you migrate, you must update your specification to match version 2's field names.
+Version 2 of the HCP Terraform Operator for Kubernetes renames and moves many existing fields. When you migrate, you must update your specification to match version 2's field names.
 
 ### Workspace controller
 
@@ -140,7 +140,7 @@ metadata:
 
 ### Module controller
 
-Terraform Cloud Kubernetes Operator v2 configures modules in a new `Module` controller separate from the `Workspace` controller. Below is a template of a custom resource manifest:
+HCP Terraform Operator for Kubernetes v2 configures modules in a new `Module` controller separate from the `Workspace` controller. Below is a template of a custom resource manifest:
 
 ```yaml
 apiVersion: app.terraform.io/v1alpha2
