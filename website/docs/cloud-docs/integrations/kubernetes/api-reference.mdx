@@ -41,8 +41,7 @@ _Appears in:_
 
 
 
-AgentDeploymentAutoscaling allows you to configure the operator
-to scale the deployment for an AgentPool up and down to meet demand.
+AgentDeploymentAutoscaling configures the operator to scale the deployment for an AgentPool up and down to meet demand.
 
 _Appears in:_
 - [AgentPoolSpec](#agentpoolspec)
@@ -53,14 +52,11 @@ _Appears in:_
 | `minReplicas` _integer_ | MinReplicas is the minimum number of replicas for the Agent deployment. |
 | `targetWorkspaces` _[TargetWorkspace](#targetworkspace)_ | TargetWorkspaces is a list of HCP Terraform Workspaces which the agent pool should scale up to meet demand. When this field is ommited the autoscaler will target all workspaces that are associated with the AgentPool. |
 | `cooldownPeriodSeconds` _integer_ | CooldownPeriodSeconds is the time to wait between scaling events. Defaults to 300. |
-| `cooldownPeriod` _[AgentDeploymentAutoscalingCooldownPeriod](#agentdeploymentautoscalingcooldownperiod)_ | CoolDownPeriod configures the period to wait between scaling up and scaling down |
+| `cooldownPeriod` _[AgentDeploymentAutoscalingCooldownPeriod](#agentdeploymentautoscalingcooldownperiod)_ | CoolDownPeriod is the period to wait between scaling up and scaling down |
 
 
 #### AgentDeploymentAutoscalingCooldownPeriod
-
-
-
-AgentDeploymentAutoscalingCooldownPeriod configures the period to wait between scaling up and scaling down
+AgentDeploymentAutoscalingCooldownPeriod configures the period to wait between scaling up and scaling down.
 
 _Appears in:_
 - [AgentDeploymentAutoscaling](#agentdeploymentautoscaling)
@@ -129,9 +125,9 @@ _Appears in:_
 
 
 
-Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool.
-In `spec` only the field `Name` is allowed, the rest are used in `status`.
-More infromation:
+HCP Terraform agents use secret tokens, called `AgentToken`s, to connect to the HCP Terraform agent pool. In `spec`, you can only define `Name`. The other attributes are returned in `status`. 
+
+More information:
   - https://developer.hashicorp.com/terraform/cloud-docs/agents
 
 _Appears in:_
@@ -187,6 +183,7 @@ _Appears in:_
 
 
 Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide.
+
 More information:
   - https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/permissions#custom-workspace-permissions
 
@@ -234,8 +231,8 @@ _Appears in:_
 
 
 
-Module is the Schema for the modules API
-Module implements the API-driven Run Workflow
+Module is the Schema for the modules API. Module implements the API-driven run workflow.
+
 More information:
   - https://developer.hashicorp.com/terraform/cloud-docs/run/api
 
@@ -387,11 +384,6 @@ _Appears in:_
 
 
 #### PlanStatus
-
-
-
-
-
 _Appears in:_
 - [WorkspaceStatus](#workspacestatus)
 
