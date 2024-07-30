@@ -243,7 +243,7 @@ spec:
 Download Workspace CRD patch A:
 
 ```shell-session
-$ curl -sO https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_a.yaml
+$ curl -sO https://raw.githubusercontent.com/hashicorp/hcp-terraform-operator/main/docs/migration/crds/workspaces_patch_a.yaml
 ```
 
 View the changes that patch A applies to the workspace CRD.
@@ -264,7 +264,7 @@ Install the Operator v2 Helm chart with the `helm install` command. Be sure to s
 
 ```shell-session
 $ helm install \
-  ${RELEASE_NAME} hashicorp/terraform-cloud-operator \
+  ${RELEASE_NAME} hashicorp/hcp-terraform-operator \
   --version 2.4.0 \
   --namespace ${RELEASE_NAMESPACE} \
   --set 'operator.watchedNamespaces={white,blue,red}' \
@@ -273,7 +273,7 @@ $ helm install \
   --set controllers.workspace.workers=5
 ```
 
-Next, create a Kubernetes secret to store the HCP Terraform API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
+Next, create a Kubernetes secret to store the HCP Terraform API token following the [Usage Guide](https://github.com/hashicorp/hcp-terraform-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
 
 ```shell-session
 $ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
@@ -288,7 +288,7 @@ $ kubectl apply --filename <UPDATED_V2_WORKSPACE_MANIFEST.yaml>
 Download Workspace CRD patch B.
 
 ```shell-session
-$ curl -sO https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_b.yaml
+$ curl -sO https://raw.githubusercontent.com/hashicorp/hcp-terraform-operator/main/docs/migration/crds/workspaces_patch_b.yaml
 ```
 
 View the changes that patch B applies to the workspace CRD.
