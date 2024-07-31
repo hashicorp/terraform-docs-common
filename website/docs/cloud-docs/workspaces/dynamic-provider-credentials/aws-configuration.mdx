@@ -90,7 +90,7 @@ A permissions policy needs to be added to the role which defines what operations
 ```
 
 ## Configure HCP Terraform
-You’ll need to set some environment variables in your HCP Terraform workspace in order to configure HCP Terraform to authenticate with AWS using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set.  When you configure dynamic provider credentials with multiple provider configurations of the same type, use either a default variable or a tagged alias variable name.  Refer to [Specifying Multiple Configurations](#specifying-multiple-configurations) for more details.
+You’ll need to set some environment variables in your HCP Terraform workspace in order to configure HCP Terraform to authenticate with AWS using dynamic credentials. You can set these as workspace variables, or if you’d like to share one AWS role across multiple workspaces, you can use a variable set. When you configure dynamic provider credentials with multiple provider configurations of the same type, use either a default variable or a tagged alias variable name for each provider configuration. Refer to [Specifying Multiple Configurations](#specifying-multiple-configurations) for more details.
 
 ### Required Environment Variables
 | Variable                                                                                     | Value                                 | Notes                                                                                                                                                                                                                                                                                           |
@@ -117,7 +117,7 @@ Make sure that you’re not using any of the other arguments or methods mentione
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
-You can add additional configurations to handle multiple distinct AWS setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace.  These can be configured entirely independently of one another, or default values can be shared amongst them.
+You can add additional variables to handle multiple distinct AWS setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace. You can configure each set of credentials independently, or use default values by configuring the variables prefixed with `TFC_DEFAULT_`.
 
 For more details, see [Specifying Multiple Configurations](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations).
 
