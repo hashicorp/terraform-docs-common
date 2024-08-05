@@ -9,6 +9,14 @@ description: >-
 
 Keep track of changes to the API for HCP Terraform and Terraform Enterprise.
 
+## 2024-08-01 
+
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise, and not available in HCP Terraform.
+</EnterpriseAlert>
+
+* Update the [admin settings API](/terraform/enterprise/api-docs/admin/settings##update-general-settings) and [admin organizations API](/terraform/enterprise/api-docs/admin/organizations#update-an-organization) to indicate that the `terraform-build-worker-plan-timeout` and `terraform-build-worker-apply-timeout` attributes are deprecated and will be replaced by `plan-timeout` and `apply-timeout`, respectively.
+
 ## 2024-07-24
 * Remove beta tags from documentation for audit trail tokens.
 
