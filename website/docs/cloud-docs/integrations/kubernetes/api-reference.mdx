@@ -272,7 +272,7 @@ _Appears in:_
 | `type` _[NotificationDestinationType](#notificationdestinationtype)_ | The type of the notification. Must be one of the following values: `email`, `generic`, `microsoft-teams`, `slack`. |
 | `enabled` _boolean_ | Whether the notification configuration should be enabled or not. Default: `true`. |
 | `token` _string_ | The token of the notification. |
-| `triggers` _[NotificationTrigger](#notificationtrigger) array_ | The list of run events that will trigger notifications. Trigger represents the different TFC notifications that can be sent as a run's progress transitions between different states. There are two categories of triggers:   - Health Events: `assessment:check_failure`, `assessment:drifted`, `assessment:failed`.   - Run Events: `run:applying`, `run:completed`, `run:created`, `run:errored`, `run:needs_attention`, `run:planning`. |
+| `triggers` _[NotificationTrigger](#notificationtrigger) array_ | The list of run events that trigger notifications. Triggers represent the different notifications that HCP Terraform can send as a run's progress transitions between different states. There are two categories of triggers:   - Health Events: `assessment:check_failure`, `assessment:drifted`, `assessment:failed`.   - Run Events: `run:applying`, `run:completed`, `run:created`, `run:errored`, `run:needs_attention`, `run:planning`. |
 | `url` _string_ | The URL of the notification. Must match pattern: `^https?://.*` |
 | `emailAddresses` _string array_ | The list of email addresses that will receive notification emails. It is only available for Terraform Enterprise users. It is not available in HCP Terraform. |
 | `emailUsers` _string array_ | The list of users belonging to the organization that will receive notification emails. |
@@ -282,7 +282,7 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
-NotificationTrigger represents the different TFC notifications that can be sent as a run's progress transitions between different states. This must be aligned with go-tfe type `NotificationTriggerType`. Must be one of the following values: `run:applying`, `assessment:check_failure`, `run:completed`, `run:created`, `assessment:drifted`, `run:errored`, `assessment:failed`, `run:needs_attention`, `run:planning`.
+NotificationTrigger represents the different HCP Terraform notifications that can be sent as a run's progress transitions between different states. This must be aligned with go-tfe type `NotificationTriggerType`. Must be one of the following values: `run:applying`, `assessment:check_failure`, `run:completed`, `run:created`, `assessment:drifted`, `run:errored`, `assessment:failed`, `run:needs_attention`, `run:planning`.
 
 _Appears in:_
 - [Notification](#notification)
@@ -502,7 +502,7 @@ _Appears in:_
 | --- | --- |
 | `name` _string_ | Name of the variable. |
 | `id` _string_ | ID of the variable. |
-| `versionID` _string_ | VersionID is a hash of the variable on the TFC end. |
+| `versionID` _string_ | VersionID is a hash of the variable on the HCP Terraform end. |
 | `valueID` _string_ | ValueID is a hash of the variable on the CRD end. |
 | `category` _string_ | Category of the variable. |
 
