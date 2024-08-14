@@ -96,6 +96,9 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.working-directory`             | string  | (nothing) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                                                                                                                   |
 | `data.attributes.setting-overwrites`            | object  |           |   The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, you set `setting-overwrites.execution-mode = false`.                        |
 | `data.relationships.project.data.id`            | string  |           | The ID of the project to create the workspace in. If left blank, the workspace will be created in the organization's default project. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project.                                                                                                                                                                                                                        |
+| `data.relationships.tag-bindings`            | array  | `[]`          | A list
+of tags to bind to this workspace. If left blank, the workspace will be created
+without tag bindings. You must have permission to manage tags.                                                                                                                                                                                                                        |
 
 ### Sample Payload
 
@@ -261,6 +264,27 @@ _With a project_
 }
 ```
 
+_With tag bindings_
+
+```json
+{
+  "data": {
+    "type": "workspaces",
+    "attributes": {
+      "name": "workspace-in-project"
+    },
+    "relationships": {
+      "tag-bindings": {
+        "data": {
+          "key": "cost-center",
+          "value": "engineering"
+        }
+      }
+    }
+  }
+}
+```
+
 ### Sample Request
 
 ```shell
@@ -274,13 +298,151 @@ $ curl \
 
 ### Sample Response
 
+_Without a VCS repository_
+
+**Note:** The `assessments-enabled` property is only accepted by or returned from HCP Terraform.
+
+@include 'api-code-blocks/workspace.mdx'
+
 _With a VCS repository_
 
 @include 'api-code-blocks/workspace-with-vcs.mdx'
 
-_Without a VCS repository_
+_With a project_
 
-@include 'api-code-blocks/workspace.mdx'
+```json
+{
+  "data": {
+    "id": "ws-HRkJLSYWF97jucqQ",
+    "type": "workspaces",
+    "attributes": {
+      "allow-destroy-plan": true,
+      "auto-apply": false,
+      "auto-apply-run-trigger": false,
+      "auto-destroy-at": null,
+      "auto-destroy-activity-duration": null,
+      "created-at": "2022-12-05T20:57:13.829Z",
+      "environment": "default",
+      "locked": false,
+      "locked-reason": "",
+      "name": "workspace-in-project",
+      "queue-all-runs": false,
+      "speculative-enabled": true,
+      "structured-run-output-enabled": true,
+      "terraform-version": "1.3.5",
+      "working-directory": null,
+      "global-remote-state": true,
+      "updated-at": "2022-12-05T20:57:13.829Z",
+      "resource-count": 0,
+      "apply-duration-average": null,
+      "plan-duration-average": null,
+      "policy-check-failures": null,
+      "run-failures": null,
+      "workspace-kpis-runs-count": null,
+      "latest-change-at": "2022-12-05T20:57:13.829Z",
+      "operations": true,
+      "execution-mode": "remote",
+      "vcs-repo": null,
+      "vcs-repo-identifier": null,
+      "permissions": {
+        "can-update": true,
+        "can-destroy": true,
+        "can-queue-run": true,
+        "can-read-variable": true,
+        "can-update-variable": true,
+        "can-read-state-versions": true,
+        "can-read-state-outputs": true,
+        "can-create-state-versions": true,
+        "can-queue-apply": true,
+        "can-lock": true,
+        "can-unlock": true,
+        "can-force-unlock": true,
+        "can-read-settings": true,
+        "can-manage-tags": true,
+        "can-manage-run-tasks": false,
+        "can-force-delete": true,
+        "can-manage-assessments": true,
+        "can-read-assessment-results": true,
+        "can-queue-destroy": true
+      },
+      "actions": {
+        "is-destroyable": true
+      },
+      "description": null,
+      "file-triggers-enabled": true,
+      "trigger-prefixes": [],
+      "trigger-patterns": [],
+      "assessments-enabled": false,
+      "last-assessment-result-at": null,
+      "source": "tfe-api",
+      "source-name": null,
+      "source-url": null,
+      "tag-names": [],
+      "setting-overwrites": {
+        "execution-mode": false,
+        "agent-pool": false
+      }
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "my-organization",
+          "type": "organizations"
+        }
+      },
+      "current-run": {
+        "data": null
+      },
+      "latest-run": {
+        "data": null
+      },
+      "outputs": {
+        "data": []
+      },
+      "remote-state-consumers": {
+        "links": {
+          "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/relationships/remote-state-consumers"
+        }
+      },
+      "current-state-version": {
+        "data": null
+      },
+      "current-configuration-version": {
+        "data": null
+      },
+      "agent-pool": {
+        "data": null
+      },
+      "readme": {
+        "data": null
+      },
+      "project": {
+        "data": {
+          "id": "prj-jT92VLSFpv8FwKtc",
+          "type": "projects"
+        }
+      },
+      "current-assessment-result": {
+        "data": null
+      },
+      "vars": {
+        "data": []
+      },
+      "effective-tag-bindings": {
+        "links": {
+          "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/effective-tag-bindings"
+      },
+      "tag-bindings": {
+        "links": {
+          "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/tag-bindings"
+      }
+    },
+    "links": {
+      "self": "/api/v2/organizations/my-organization/workspaces/workspace-in-project"
+    }
+  }
+}
+```
 
 ## Update a Workspace
 
@@ -958,15 +1120,15 @@ No response body.
 
 Status code `204`.
 
-## Get Tags
+## Get Single-Value Tags
 
 `GET /workspaces/:workspace_id/relationships/tags`
 
 | Parameter       | Description                                                                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to fetch tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+| `:workspace_id` | The workspace ID to fetch single-value tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
-This endpoint returns the tags that are currently associated to a workspace.
+This endpoint returns the single-value tags that are currently associated to a workspace.
 
 ### Query Parameters
 
@@ -1029,9 +1191,9 @@ $ curl \
 }
 ```
 
-## Add tags to a workspace
+## Add single-value tags to a workspace
 
-This endpoints adds one or more tags to the workspace. The workspace must already exist, and any
+This endpoints adds one or more single-value tags to the workspace. The workspace must already exist, and any
 tag element that supplies an `id` attribute must exist. If the `name` attribute is used, and no
 matching organization tag exists with such name, a new one will be created.
 
