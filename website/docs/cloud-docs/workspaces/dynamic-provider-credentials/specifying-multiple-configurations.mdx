@@ -24,6 +24,14 @@ Your tag can only contain letters, numbers, and underscores and can not use rese
 
 Using [Vault's dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration) setup as an example, we can create additional configurations by setting new tagged variables that match Vault's [required environment variables](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration#required-environment-variables). So, if you want to add a configuration with the tag `ALIAS1`, you must set environment variables for `TFC_VAULT_PROVIDER_AUTH_ALIAS1`, `TFC_VAULT_ADDR_ALIAS1`, and `TFC_VAULT_RUN_ROLE_ALIAS1`.
 
+### Default Values for Multiple Configurations
+
+Each environment variable has a corresponding default variable which you can use to share values across multiple configurations. In this way, you can set values common to multiple configurations a single time, rather than repeating them for each configuration. If you explicitly set the corresponding environment variable in addition to the default variable, the explicit value is given precedence.
+
+#### Example
+
+In the [example above](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations#example), if each of your Vault configurations used the same underlying Vault instance, you could define the Vault address a single time using the `TFC_DEFAULT_VAULT_ADDR` variable, and omit `TFC_VAULT_ADDR` and `TFC_VAULT_ADDR_ALIAS1`.  If you add a third Vault configuration for a different Vault instance with the tag `ALIAS2`, you could set the variable `TFC_VAULT_ADDR_ALIAS2` to override the Vault address specifically for the `ALIAS2` configuration.
+
 ## Configure Terraform Code
 
 Each supported provider has input variables you must declare in your Terraform code to use dynamic credentials with that provider. Each dynamic provider's documentation page lists the required variables for that provider. HCP Terraform provides values for these variables during runs, which you can use to authenticate HCP Terraform with providers using dynamic credentials.
