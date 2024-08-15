@@ -110,6 +110,14 @@ For complete details, click the link for your VCS provider:
 
 -> **Note:** Alternatively, you can skip the OAuth configuration process and authenticate with a personal access token. This requires using HCP Terraform's API. For details, see [the OAuth Clients API page](/terraform/cloud-docs/api-docs/oauth-clients).
 
+
+<!-- BEGIN: TFC:only -->
+### Private VCS
+
+You can use self-hosted HCP Terraform Agents to connect HCP Terraform to your private VCS provider, such as GitHub Enterprise, GitLab Enterprise, and BitBucket Data Center. 
+
+<!-- END: TFC:only -->
+
 ## Viewing events
 
 VCS events describe changes within your organization for VCS-related actions. The VCS events page only displays events from previously processed commits in the past 30 days. The VCS page indicates previously processed commits with the message, `"Processing skipped for duplicate commit SHA"`.
