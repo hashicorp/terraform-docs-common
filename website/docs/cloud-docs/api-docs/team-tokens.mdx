@@ -229,3 +229,71 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
   ]
 }
 ```
+
+## Show a Team Token
+
+A [Team Token](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens) can be displayed for a particular team:
+
+`GET /teams/:team-id/authentication-token`
+
+| Parameter  | Description               |
+| ---------- | ------------------------- |
+| `:team-id` | The ID of the Team.       |
+
+or fetched by its ID:
+
+`GET /authentication-tokens/:id`
+
+| Parameter   | Description               |
+| ----------- | ------------------------- |
+| `:token-id` | The ID of the Team Token. |
+
+The object returned by this endpoint only contains metadata, and does not include the secret text of the authentication token. A token's secret test is only shown upon creation, and cannot be recovered later.
+
+| Status  | Response                                                | Reason                                                       |
+| ------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| [200][] | [JSON API document][] (`type: "authentication-tokens"`) | The request was successful                                   |
+| [404][] | [JSON API error object][]                               | Team Token not found, or unauthorized to view the Team Token |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/teams/team-6yEmxNAhaoQLH1Da/authentication-token
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "at-6yEmxNAhaoQLH1Da",
+    "type": "authentication-tokens",
+    "attributes": {
+      "created-at": "2023-11-25T22:31:30.624Z",
+      "last-used-at": "2023-11-26T20:34:59.487Z",
+      "description": null,
+      "token": null,
+      "expired-at": "2024-04-06T12:00:00.000Z"
+    },
+    "relationships": {
+      "team": {
+        "data": {
+          "id": "team-LnREdjodkvZFGdXL",
+          "type": "teams"
+        }
+      },
+      "created-by": {
+        "data": {
+          "id": "user-MA4GL63FmYRpSFxa",
+          "type": "users"
+        }
+      }
+    }
+  }
+}
+```
+
