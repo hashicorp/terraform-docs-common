@@ -7,7 +7,7 @@ description: >-
 
 # Provider Documentation
 
-The [Terraform Registry][terraform-registry] displays documentation for the providers it hosts. This page describes the expected format for provider documentation. Provider documentation is _not_ supported in the private registry of [Terraform Cloud or Terraform Enterprise](/terraform/cloud-docs/registry/publish-providers#release-files).
+The [Terraform Registry][terraform-registry] displays documentation for the providers it hosts. This page describes the expected format for provider documentation. Provider documentation is _not_ supported in the private registry of [HCP Terraform or Terraform Enterprise](/terraform/cloud-docs/registry/publish-providers#release-files).
 
 -> In order to test how documents will render in the Terraform Registry, you can use the [Terraform Registry Doc Preview Tool](https://registry.terraform.io/tools/doc-preview).
 
@@ -18,8 +18,6 @@ The Terraform Registry publishes providers from their Git repositories, creating
 Provider documentation is always tied to a provider version. A given version always displays the documentation from that version's Git commit, and the only way to publish updated documentation is to release a new version of the provider.
 
 ### Storage Limits
-
-The maximum number of documents allowed for a single provider version is 2500.
 
 Each document can contain no more than 500KB of data. Documents which exceed this limit will be truncated, and a note will be displayed in the Terraform Registry.
 

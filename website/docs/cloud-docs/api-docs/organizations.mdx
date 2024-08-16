@@ -1,5 +1,5 @@
 ---
-page_title: Organizations - API Docs - Terraform Cloud
+page_title: Organizations - API Docs - HCP Terraform
 description: >-
   Use the `/organizations` endpoint to interact with organizations. List organizations, entitlement sets, and module producers, and show, create, update, and destroy organizations using the HTTP API.
 ---
@@ -75,7 +75,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -302,7 +302,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -453,7 +453,7 @@ curl \
 
 ### Sample Response
 
-**Note:** Only Terraform Cloud organizations return the `two-factor-conformant` and `assessments-enforced` properties.
+**Note:** Only HCP Terraform organizations return the `two-factor-conformant` and `assessments-enforced` properties.
 
 ```json
 {
@@ -641,7 +641,7 @@ curl \
 
 ### Sample Response
 
-**Note:** The `two-factor-conformant` and `assessments-enforced` properties are only returned from Terraform Cloud organizations.
+**Note:** The `two-factor-conformant` and `assessments-enforced` properties are only returned from HCP Terraform organizations.
 
 ```json
 {
@@ -828,7 +828,7 @@ curl \
 ## Show Module Producers
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise, and not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise, and not available in HCP Terraform.
 </EnterpriseAlert>
 
 This endpoint shows organizations that are configured to share modules with an organization through [Module Sharing](/terraform/enterprise/admin/application/module-sharing).
@@ -901,7 +901,7 @@ curl \
 ## Show data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
 </EnterpriseAlert>
 
 `GET /organizations/:organization_name/relationships/data-retention-policy`
@@ -919,7 +919,7 @@ For additional information, refer to [Data Retention Policy Types](/terraform/en
 ## Create or update data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
 </EnterpriseAlert>
 
 `POST /organizations/:organization_name/relationships/data-retention-policy`
@@ -937,7 +937,7 @@ Refer to [Data Retention Policy API](/terraform/enterprise/api-docs/data-retenti
 ## Remove data retention policy
 
 <EnterpriseAlert>
-This endpoint is exclusive to Terraform Enterprise and is not available in Terraform Cloud.
+This endpoint is exclusive to Terraform Enterprise and is not available in HCP Terraform.
 </EnterpriseAlert>
 
 `DELETE /organizations/:organization_name/relationships/data-retention-policy`
@@ -959,7 +959,7 @@ The GET endpoints above can optionally return related resources, if requested wi
 
 | Resource Name         | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |
-| `entitlement_set`     | The entitlement set that determines which Terraform Cloud features the organization can use. |
+| `entitlement_set`     | The entitlement set that determines which HCP Terraform features the organization can use. |
 
 ## Relationships
 
@@ -970,7 +970,7 @@ The following relationships may be present in various responses.
 | `module-producers`      | Other organizations configured to share modules with the organization.                                                        |
 | `oauth-tokens`          | OAuth tokens associated with VCS configurations for the organization.                                                         |
 | `authentication-token`  | The API token for an organization.                                                                                            |
-| `entitlement-set`       | The entitlement set that determines which Terraform Cloud features the organization can use.                                  |
+| `entitlement-set`       | The entitlement set that determines which HCP Terraform features the organization can use.                                  |
 | `subscription`          | The current subscription for an organization.                                                                                 |
 | `default-agent-pool`    | An organization's default agent pool. Set this value if your `default-execution-mode` is `agent`.                             |
 | `data-retention-policy` | <EnterpriseAlert inline/> Specifies an organization's data retention policy. Refer to [Data Retention Policy APIs](/terraform/enterprise/api-docs/data-retention-policies) in the Terraform Enterprise documentation for more details. |

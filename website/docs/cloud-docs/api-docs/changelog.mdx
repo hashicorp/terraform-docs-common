@@ -1,13 +1,57 @@
 ---
-page_title: API Changelog - API Docs - Terraform Cloud
+page_title: API Changelog - API Docs - HCP Terraform
 page_id: api-changelog
 description: >-
-  Learn about the changes made to the Terraform Cloud and Enterprise APIs.
+  Learn about the changes made to the HCP Terraform and Enterprise APIs.
 ---
 
 # API Changelog
 
-Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
+Keep track of changes to the API for HCP Terraform and Terraform Enterprise.
+
+## 2024-08-14
+* Add documentation for a new API endpoint that lists an [organization's team tokens](/terraform/cloud-docs/api-docs/team-tokens).
+
+## 2024-08-01 
+
+<EnterpriseAlert>
+This endpoint is exclusive to Terraform Enterprise, and not available in HCP Terraform.
+</EnterpriseAlert>
+
+* Update the [admin settings API](/terraform/enterprise/api-docs/admin/settings##update-general-settings) and [admin organizations API](/terraform/enterprise/api-docs/admin/organizations#update-an-organization) to indicate that the `terraform-build-worker-plan-timeout` and `terraform-build-worker-apply-timeout` attributes are deprecated and will be replaced by `plan-timeout` and `apply-timeout`, respectively.
+
+## 2024-07-24
+* Remove beta tags from documentation for audit trail tokens.
+
+## 2024-07-15
+* Update the [Team API](/terraform/cloud-docs/api-docs/teams) to include `allow-member-token-management`.
+
+## 2024-07-12
+* Add beta tags to documentation for audit trail tokens.
+
+## 2024-06-25
+* Add API documentation for new [team token management setting](/terraform/cloud-docs/users-teams-organizations/api-tokens).
+* Update API documentation for the [manage teams permission](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions).
+
+## 2024-05-29
+* Add API documentation for the new [audit trails token](/terraform/cloud-docs/api-docs/audit-trails-tokens).
+
+## 2024-05-23
+* Update the [registry modules API](/terraform/cloud-docs/api-docs/private-registry/modules#create-a-module-version) for publishing new versions of branch based modules.
+
+## 2024-05-10
+* Add API documentation for new [manage agent pools permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-agent-pools).
+
+## 2024-04-25
+* Project names can now be up to 40 characters.
+
+## 2024-04-08
+* Add API documentation for new [team management permissions](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions).
+
+## 2024-04-04
+* Add a `sort` parameter to the [Projects list API](/terraform/cloud-docs/api-docs/projects#query-parameters) to allow sorting projects by name.
+* Add a `description` attribute to the [Projects API](/terraform/cloud-docs/api-docs/projects).
+* Add `project-count` and `workspace-count` attributes to sample [Projects API](/terraform/cloud-docs/api-docs/projects) responses.
 
 ## 2024-3-27
 * Add `private-vcs` to [Feature Entitlements](/terraform/cloud-docs/api-docs#feature-entitlements).
@@ -336,7 +380,7 @@ Keep track of changes to the API for Terraform Cloud and Terraform Enterprise.
 ### 2021-11-18
 
 * Introduced the [Registry Providers](/terraform/cloud-docs/api-docs/private-registry/providers) endpoint to manage public providers for a
-  private registry. These endpoints will be available in the following TFE Release: `v202112-1`
+  private registry. These endpoints will be available in the following Terraform Enterprise Release: `v202112-1`
 
 ### 2021-09-12
 
