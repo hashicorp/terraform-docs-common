@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Team Token API
+# Team token API
 
 Team API tokens grant access to a team's workspaces. Each team can have an API token that is not associated with a specific user. You can create and delete team tokens and list an organization's team tokens.
 
@@ -54,7 +54,7 @@ This endpoint returns the secret text of the new authentication token. You can o
 
 - `:team_id` (`string: <required>`) - specifies the team ID for generating the team token
 
-### Request Body
+### Request body
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -64,7 +64,7 @@ This POST endpoint requires a JSON object with the following properties as a req
 | `data.type`                   | string |         | Must be `"authentication-token"`.                                                                               |
 | `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Team Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
-### Sample Payload
+### Sample payload
 
 ```json
 {
@@ -77,7 +77,7 @@ This POST endpoint requires a JSON object with the following properties as a req
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -88,7 +88,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-BUHBEM97xboT8TVz/authentication-token
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -130,7 +130,7 @@ curl \
 
 - `:team_id` (`string: <required>`) - specifies the team_id from which to delete the token
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -140,7 +140,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-BUHBEM97xboT8TVz/authentication-token
 ```
 
-## List Team Tokens
+## List team tokens
 
 Lists the [team tokens](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens) in an organization.
 
@@ -160,7 +160,7 @@ By default, this endpoint returns tokens by ascending expiration date.
 | [200][] | Empty [JSON API document][]                             | The specified organization has no team tokens.                                        |
 | [404][] | [JSON API error object][]                               | Organization not found.                                                                |
 
-### Query Parameters
+### Query parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters) and searching with the `q` parameter. Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
@@ -171,7 +171,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `q`            | **Optional.** A search query string. You can search for a team authentication token using the team name. |
 | `sort`         | **Optional.** Allows sorting the team tokens by `"team-name"`, `"created-by"`, `"expired-at"`, and `"last-used-at"`. Prepending a hyphen to the sort parameter reverses the order. For example, `"-team-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order ascending. |
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -229,3 +229,71 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
   ]
 }
 ```
+
+## Show a team token
+
+You can display a [team token](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens) for a particular team using:
+
+`GET /teams/:team-id/authentication-token`
+
+| Parameter  | Description               |
+| ---------- | ------------------------- |
+| `:team-id` | The ID of the Team.       |
+
+You can also fetch a team token directly by using the token's ID with the `authentication-tokens/` endpoint:
+
+`GET /authentication-tokens/:id`
+
+| Parameter   | Description               |
+| ----------- | ------------------------- |
+| `:token-id` | The ID of the Team Token. |
+
+The object returned by this endpoint only contains metadata, and does not include the secret text of the authentication token. A token's secret test is only shown upon creation, and cannot be recovered later.
+
+| Status  | Response                                                | Reason                                                       |
+| ------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| [200][] | [JSON API document][] (`type: "authentication-tokens"`) | The request was successful                                   |
+| [404][] | [JSON API error object][]                               | Team Token not found, or unauthorized to view the Team Token |
+
+### Sample request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/teams/team-6yEmxNAhaoQLH1Da/authentication-token
+```
+
+### Sample response
+
+```json
+{
+  "data": {
+    "id": "at-6yEmxNAhaoQLH1Da",
+    "type": "authentication-tokens",
+    "attributes": {
+      "created-at": "2023-11-25T22:31:30.624Z",
+      "last-used-at": "2023-11-26T20:34:59.487Z",
+      "description": null,
+      "token": null,
+      "expired-at": "2024-04-06T12:00:00.000Z"
+    },
+    "relationships": {
+      "team": {
+        "data": {
+          "id": "team-LnREdjodkvZFGdXL",
+          "type": "teams"
+        }
+      },
+      "created-by": {
+        "data": {
+          "id": "user-MA4GL63FmYRpSFxa",
+          "type": "users"
+        }
+      }
+    }
+  }
+}
+```
+
