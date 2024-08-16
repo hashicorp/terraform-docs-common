@@ -60,7 +60,7 @@ By default, HCP Terraform uses an organization's [default execution mode](/terra
 
 Specifying the "Remote" execution mode instructs HCP Terraform to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
-To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state, which Terraform can access with the [CLI integration](/terraform/cli/cloud). Workspace variables and variable sets defined in HCP Terraform are not evaluated in local execution mode.
+To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state, which Terraform can access with the [CLI integration](/terraform/cli/cloud). HCP Terraform does not evaluate workspace variables or variable sets in local execution mode.
 
 If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [HCP Terraform agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
 

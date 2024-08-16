@@ -44,7 +44,7 @@ To view and manage a workspace's variables, go to the workspace and click the **
 
 The **Variables** page appears, showing all workspace-specific variables and variable sets applied to the workspace. This is where you can add, edit, and delete workspace-specific variables. You can also apply and remove variable sets from the workspace.
 
-The **Variables** page is not available for workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). Workspace variables defined in HCP Terraform are not evaluated in local execution mode.
+The **Variables** page is not available for workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). HCP Terraform does not evaluate workspace variables or variable sets in local execution mode.
 
 ### Add a Variable
 
@@ -86,7 +86,7 @@ You can only do this with files ending in `auto.tfvars` or `terraform.tfvars`. Y
 
 Only members of the [Owners Team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) or members of a team with the [Manage all projects](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) or [Manage all workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces) permission can create, update, and delete variable sets.
 
-Variable sets are not evaluated during Teraform runs for workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).
+HCP Terraform does not evaluate variable sets during Terraform runs for workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).
 
 To view variable sets for your organization, click **Settings**, then click **Variable sets**.
 
