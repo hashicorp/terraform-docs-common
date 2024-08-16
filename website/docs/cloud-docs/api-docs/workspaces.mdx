@@ -106,8 +106,6 @@ _Without a VCS repository_
   "data": {
     "attributes": {
       "name": "workspace-1",
-      "resource-count": 0,
-      "updated-at": "2017-11-29T19:18:09.976Z"
     },
     "type": "workspaces"
   }
@@ -121,7 +119,6 @@ _With a VCS repository_
   "data": {
     "attributes": {
       "name": "workspace-2",
-      "resource-count": 0,
       "terraform_version": "0.11.1",
       "working-directory": "",
       "vcs-repo": {
@@ -129,8 +126,7 @@ _With a VCS repository_
         "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
         "branch": "",
         "tags-regex": null
-      },
-      "updated-at": "2017-11-29T19:18:09.976Z"
+      }
     },
     "type": "workspaces"
   }
@@ -145,7 +141,6 @@ HCP Terraform triggers a run when you push a Git tag that matches the regular ex
   "data": {
     "attributes": {
       "name": "workspace-3",
-      "resource-count": 0,
       "terraform_version": "0.12.1",
       "file-triggers-enabled": false,
       "working-directory": "/networking",
@@ -154,8 +149,7 @@ HCP Terraform triggers a run when you push a Git tag that matches the regular ex
         "oauth-token-id": "ot-hmAyP66qk2AMVdbJ",
         "branch": "",
         "tags-regex": "\d+.\d+.\d+"
-      },
-      "updated-at": "2017-11-29T19:18:09.976Z"
+      }
     },
     "type": "workspaces"
   }
@@ -171,8 +165,8 @@ A run will be triggered in this workspace when changes are detected in any of th
   "data": {
     "attributes": {
       "name": "workspace-3",
-      "resource-count": 0,
       "terraform_version": "0.12.1",
+      "file-triggers-enabled": true,
       "trigger-prefixes": ["/modules", "/vendor"],
       "working-directory": "/networking",
       "vcs-repo": {
@@ -199,8 +193,8 @@ A run will be triggered in this workspace when HCP Terraform detects any of the 
   "data": {
     "attributes": {
       "name": "workspace-4",
-      "resource-count": 0,
       "terraform_version": "1.2.2",
+      "file-triggers-enabled": true,
       "trigger-patterns": ["/**/networking/*.tf", "/base/*", "/submodule/**/*"],
       "vcs-repo": {
         "identifier": "example/terraform-test-proj-monorepo",
@@ -224,9 +218,7 @@ _Using HCP Terraform agents_
     "attributes": {
       "name":"workspace-1",
       "execution-mode": "agent",
-      "agent-pool-id": "apool-ZjT6A7mVFm5WHT5a",
-      "resource-count": 0,
-      "updated-at": "2017-11-29T19:18:09.976Z"
+      "agent-pool-id": "apool-ZjT6A7mVFm5WHT5a"
     }
   },
   "type": "workspaces"
