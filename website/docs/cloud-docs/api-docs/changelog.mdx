@@ -22,16 +22,16 @@ This endpoint is exclusive to Terraform Enterprise, and not available in HCP Ter
 </EnterpriseAlert>
 
 * Update the [admin settings API](/terraform/enterprise/api-docs/admin/settings##update-general-settings) and [admin organizations API](/terraform/enterprise/api-docs/admin/organizations#update-an-organization) to indicate that the `terraform-build-worker-plan-timeout` and `terraform-build-worker-apply-timeout` attributes are deprecated and will be replaced by `plan-timeout` and `apply-timeout`, respectively.
-
+<!-- BEGIN: TFC:only name:audit-trail-tokens -->
 ## 2024-07-24
 * Remove beta tags from documentation for audit trail tokens.
-
+<!-- END: TFC:only name:audit-trail-tokens -->
 ## 2024-07-15
 * Update the [Team API](/terraform/cloud-docs/api-docs/teams) to include `allow-member-token-management`.
-
+<!-- BEGIN: TFC:only name:audit-trail-tokens -->
 ## 2024-07-12
 * Add beta tags to documentation for audit trail tokens.
-
+<!-- END: TFC:only name:audit-trail-tokens -->
 ## 2024-06-25
 * Add API documentation for new [team token management setting](/terraform/cloud-docs/users-teams-organizations/api-tokens).
 * Update API documentation for the [manage teams permission](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions).
