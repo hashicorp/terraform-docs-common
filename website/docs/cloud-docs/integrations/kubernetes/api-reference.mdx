@@ -76,8 +76,8 @@ AgentPool is the Schema for the agentpools API.
 | --- | --- |
 | `apiVersion` _string_ | `app.terraform.io/v1alpha2`
 | `kind` _string_ | `AgentPool`
-| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
-| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
+| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
+| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[AgentPoolSpec](#agentpoolspec)_ |  |
 
@@ -99,8 +99,7 @@ _Appears in:_
 
 #### AgentToken
 
-Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool.
-In `spec` only the field `Name` is allowed, the rest are used in `status`. [More information](/terraform/cloud-docs/agents).
+Terraform uses `AgentTokens` to connect to the Terraform agent pool. Only the field `Name` is allowed in the `spec` list. Use the other fields in the `status` list. [More information](/terraform/cloud-docs/agents).
 
 _Appears in:_
 - [AgentPoolSpec](#agentpoolspec)
@@ -187,8 +186,8 @@ Module is the Schema for the modules API Module implements the API-driven Run Wo
 | --- | --- |
 | `apiVersion` _string_ | `app.terraform.io/v1alpha2`
 | `kind` _string_ | `Module`
-| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
-| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
+| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
+| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ModuleSpec](#modulespec)_ |  |
 
@@ -272,7 +271,7 @@ _Appears in:_
 | `type` _[NotificationDestinationType](#notificationdestinationtype)_ | The type of the notification. Must be one of the following values: `email`, `generic`, `microsoft-teams`, `slack`. |
 | `enabled` _boolean_ | Whether the notification configuration should be enabled or not. Default: `true`. |
 | `token` _string_ | The token of the notification. |
-| `triggers` _[NotificationTrigger](#notificationtrigger) array_ | The list of run events that will trigger notifications. Trigger represents the different TFC notifications that can be sent as a run's progress transitions between different states. There are two categories of triggers:   - Health Events: `assessment:check_failure`, `assessment:drifted`, `assessment:failed`.   - Run Events: `run:applying`, `run:completed`, `run:created`, `run:errored`, `run:needs_attention`, `run:planning`. |
+| `triggers` _[NotificationTrigger](#notificationtrigger) array_ | The list of run events that trigger notifications. Triggers are notifications that Terraform sends when a run transitions to a different state. <br/><br/>The following triggers notify you about health events: `assessment:check_failure`, `assessment:drifted`, `assessment:failed`. <br/><br/>The following triggers notify you about run events: `run:applying`, `run:completed`, `run:created`, `run:errored`, `run:needs_attention`, `run:planning`. |
 | `url` _string_ | The URL of the notification. Must match pattern: `^https?://.*` |
 | `emailAddresses` _string array_ | The list of email addresses that will receive notification emails. It is only available for Terraform Enterprise users. It is not available in HCP Terraform. |
 | `emailUsers` _string array_ | The list of users belonging to the organization that will receive notification emails. |
@@ -282,7 +281,7 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
-NotificationTrigger represents the different TFC notifications that can be sent as a run's progress transitions between different states. This must be aligned with go-tfe type `NotificationTriggerType`. Must be one of the following values: `run:applying`, `assessment:check_failure`, `run:completed`, `run:created`, `assessment:drifted`, `run:errored`, `assessment:failed`, `run:needs_attention`, `run:planning`.
+NotificationTrigger represents the notifications Terraform sends when a run transitions to a different state. This resource must align with `go-tfe` type `NotificationTriggerType`. You must use one of the following values:  `run:applying`, `assessment:check_failure`, `run:completed`, `run:created`, `assessment:drifted`, `run:errored`, `assessment:failed`, `run:needs_attention`, `run:planning`.
 
 _Appears in:_
 - [Notification](#notification)
@@ -316,8 +315,8 @@ Project is the Schema for the projects API
 | --- | --- |
 | `apiVersion` _string_ | `app.terraform.io/v1alpha2`
 | `kind` _string_ | `Project`
-| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
-| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
+| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
+| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More infornatuib](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ProjectSpec](#projectspec)_ |  |
 
@@ -502,7 +501,7 @@ _Appears in:_
 | --- | --- |
 | `name` _string_ | Name of the variable. |
 | `id` _string_ | ID of the variable. |
-| `versionID` _string_ | VersionID is a hash of the variable on the TFC end. |
+| `versionID` _string_ | VersionID is a hash of the variable on the HCP Terraform end. |
 | `valueID` _string_ | ValueID is a hash of the variable on the CRD end. |
 | `category` _string_ | Category of the variable. |
 
@@ -531,8 +530,8 @@ Workspace is the Schema for the workspaces API
 | --- | --- |
 | `apiVersion` _string_ | `app.terraform.io/v1alpha2`
 | `kind` _string_ | `Workspace`
-| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
-| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More info](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
+| `kind` _string_ | Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds) |
+| `apiVersion` _string_ | APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. [More information](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources) |
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[WorkspaceSpec](#workspacespec)_ |  |
 

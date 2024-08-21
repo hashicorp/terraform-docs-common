@@ -29,7 +29,7 @@ In addition to the HCP Terraform UI, you can use the following methods to manage
 
 - [Teams API](/terraform/cloud-docs/api-docs/teams) to list, create, update, and delete teams
 - [Team Members API](/terraform/cloud-docs/api-docs/team-members) to add and delete users from teams
-- [Team Tokens API](/terraform/cloud-docs/api-docs/team-tokens) to generate and delete tokens
+- [Team Tokens API](/terraform/cloud-docs/api-docs/team-tokens) to generate and delete tokens and list an organization's team tokens
 - [Team Access API](/terraform/cloud-docs/api-docs/team-access) to manage team access to one or more workspaces
 - The `tfe` provider resources [`tfe_team`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/team), [`tfe_team_members`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/team_members), and [`tfe_team_access`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/team_access)
 
@@ -119,7 +119,7 @@ We recommend making most (or all) teams visible to simplify workspace administra
 
 ### API Tokens
 
-Each team can have an API token that is not associated with a specific user. You can manage this API token from the team's settings page under **Team API Token** . Refer to [Team API Tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) for details.
+Each team can have an API token that is not associated with a specific user. You can manage a team's API token from the **Organization settings > API Tokens > Team Token** page. On the API token page you can create, regenerate, and delete team tokens. Refer to [Team API Tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) for details.
 
 ## Managing Workspace Access
 
