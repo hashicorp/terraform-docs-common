@@ -30,9 +30,9 @@ There are no special prerequisites for Splunk Cloud users.
 
 In order for the HCP Terraform for Splunk app to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the HCP Terraform application APIs. This may require perimeter networking as well as container host networking changes, depending on your environment. The IP ranges are documented in the [HCP Terraform IP Ranges documentation](/terraform/cloud-docs/architectural-details/ip-ranges). The services which run on these IP ranges are described in the table below.
 
-| Hostname         | Port/Protocol  | Directionality | Purpose                                                      |
-| ---------------- | -------------- | -------------- | ------------------------------------------------------------ |
-| app.terraform.io | tcp/443, HTTPS | Outbound       | Polling for new audit log events via the HCP Terraform API |
+| Hostname                                | Port/Protocol  | Directionality | Purpose                                                    |
+| --------------------------------------- | -------------- | -------------- | -----------------------------------------------------------|
+| app.terraform.io or app.eu.terraform.io | tcp/443, HTTPS | Outbound       | Polling for new audit log events via the HCP Terraform API |
 
 ### Compatibility
 
@@ -46,6 +46,7 @@ The current release of the HCP Terraform for Splunk app supports the following v
 * Install the [HCP Terraform for Splunk app via Splunkbase](https://splunkbase.splunk.com/app/5141/)
   * Splunk Cloud users should consult the latest instructions on how to [use IDM with cloud-based add-ons](https://docs.splunk.com/Documentation/SplunkCloud/8.0.2007/Admin/IntroGDI#Use_IDM_with_cloud-based_add-ons) within the Splunk documentation.
 * Click "Configure the application"
+* Update the hostname to https://app.eu.terraform.io if you use HCP Terraform in Europe
 * Generate an [Audit trails token](/terraform/cloud-docs/users-teams-organizations/api-tokens#audit-trails-tokens) within HCP Terraform
 * Click "complete setup"
 
