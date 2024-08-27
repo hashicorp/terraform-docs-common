@@ -79,7 +79,7 @@ Note, if you want to directly integrate third-party tools and services between y
 
 ## The Post-Plan Stage
 
-The post-plan phase executes any configured run tasks after the plan is complete, so it only occurs if there are [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) enabled
+The post-plan phase executes any configured run tasks after the plan is successfully complete, so it only occurs if there are [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) enabled
 for the workspace. All runs can enter this phase, including [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans). During this phase, HCP Terraform sends information about the run to the configured external system and waits for a `passed` or `failed` response to determine whether the run can continue.
 
 -> **Note:** The information sent to the configured external system includes the [JSON output](/terraform/internals/json-format) of the Terraform plan.
@@ -190,11 +190,7 @@ After applying, the run proceeds automatically to completion.
 
 ## The Post-Apply Stage
 
-The post-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin after Terraform complete the apply operation. 
-
-Unlike other run task stages, the post-apply stage gathers information about the resulting response of an apply operation because that operation has already occurred, and HCP Terraform has already provisioned infrastructure. HCP Terraform sends the information about the run to the configured external system with the `passed` or `failed` status along with the configuration version of the run.
-
-Only confirmed runs can enter this phase.
+The post-apply phase only occurs if the workspace has [run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) configured to begin after Terraform successfully completes an apply operation. During this phase, HCP Terraform sends information about the run to the configured external system and waits for a `passed` or `failed` response. However, unlike other stages in the run task process, a failed outcome will not halt the run since HCP Terraform has already provisioned the infrastructure.
 
 _States in this stage:_
 
