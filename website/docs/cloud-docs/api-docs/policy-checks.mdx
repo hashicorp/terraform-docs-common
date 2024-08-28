@@ -42,8 +42,10 @@ description: >-
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Policy checks are the default workflow for Sentinel. Policy checks use the latest version of the Sentinel runtime and have access to cost estimation data.
+Policy checks use the latest version of the Sentinel runtime and have access to cost estimation data.
 This set of APIs provides endpoints to get, list, and override policy checks.
+
+~> **Important:** Policy checks are now deprecated and will be permanently removed in August 2025. We recommend that you start using [policy evaluations](/terraform/cloud-docs/api-docs#policy-avaluations) to avoid disruptions.
 
 ## List Policy Checks
 

@@ -26,11 +26,13 @@ Policy checks and evaluations can access different types of data and enable slig
 
 ### Policy checks
 
+~> **Important:** Policy checks are now deprecated and will be permanently removed in August 2025. We recommend that you start using policy evaluations to avoid disruptions.
+
 Only Sentinel policies can run as policy checks, and it is the default mode for Sentinel policy sets. Checks can access cost estimation data but can only use the latest version of Sentinel.
 
 ### Policy evaluations
 
-OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Enhanced` policy set type. Policy evaluations run within the [HCP Terraform agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure. 
+OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Enhanced` policy set type. Policy evaluations run within the [HCP Terraform agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure.
 
 For Sentinel policy sets, using policy evaluations lets you:
 - Enable overrides for soft-mandatory and hard-mandatory policies, letting any user with [Manage Policy Overrides permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides) proceed with a run in the event of policy failure.
