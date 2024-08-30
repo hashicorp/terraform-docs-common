@@ -87,7 +87,7 @@ The run state is found in `data.attributes.status`, and you can reference the fo
 
 ### Run Operations
 
-The run operation specifies the Terraform execution mode. You can reference the following list of possible operation modes and use them as [runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+The run operation specifies the Terraform execution mode. You can reference the following list of possible operation modes and use them as query parameters in [workspace runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) and [organization runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace).
 
 | Operation        | Description                                                                                                                                                                             |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -100,13 +100,24 @@ The run operation specifies the Terraform execution mode. You can reference the 
 
 ### Run Sources
 
-You can use the following sources as [runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) query parameters.
+You can use the following sources as query parameters in [workspace runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace) and [organization runs list](/terraform/cloud-docs/api-docs/run#list-runs-in-a-workspace).
 
 | Source                      | Description                                                                             |
 |-----------------------------|-----------------------------------------------------------------------------------------|
 | `tfe-ui`                    | Indicates a run was queued from HCP Terraform UI.                                     |
 | `tfe-api`                   | Indicates a run was queued from HCP Terraform API.                                    |
 | `tfe-configuration-version` | Indicates a run was queued from a Configuration Version, triggered from a VCS provider. |
+
+### Run Status Groups
+
+The run status group specifies a collection of run states by logical category.
+
+| Group                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `non_final`              | Inclusive of runs that are currently running, require user confirmation, or are queued/pending.                                                                                                                                                                                                                                                                                                                                                              |
+| `final`             | Inclusive of runs that have reached their final and terminal state.                                                                                                                                                                                                                                                                                                                                                                 |
+| `discardable`   | Inclusive of runs whose state falls under the following: `planned`, `planned_and_saved`, `cost_estimated`, `policy_checked`, `policy_override`, `post_plan_running`, `post_plan_completed`                                                                                                                                                                                                                                                                                            |
+
 
 ## Create a Run
 
@@ -351,6 +362,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `filter[operation]` | **Optional.** A comma-separated list of run operations; the result will only include runs that perform one of these operations. Options are listed in [Run Operations](/terraform/cloud-docs/api-docs/run#run-operations).                                                                                                                                 |
 | `filter[status]`    | **Optional.** A comma-separated list of run statuses; the result will only include runs that are in one of these statuses. Options are listed in [Run States](/terraform/cloud-docs/api-docs/run#run-states).                                                                                                                                         |
 | `filter[source]`    | **Optional.** A comma-separated list of run sources; the result will only include runs that came from one of these sources. Options are listed in [Run Sources](/terraform/cloud-docs/api-docs/run#run-sources).                                                                                                                                       |
+| `filter[status_group]` |   **Optional.** A single status group; the result will only include runs whose status falls under this status group. Options are listed in [Run Status Groups](/terraform/cloud-docs/api-docs/run#run-status-groups).                                                                                                                                        |
 | `search[user]`      | **Optional.** Searches runs that matches the supplied VCS username.                                                                                                                                                            |
 | `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                                                                                                                                              |
 | `search[basic]`     | **Optional.** Searches runs that matches the supplied VCS username, commit sha, run_id, and run message. The presence of search[commit] or search[user] takes priority over this parameter and will cause it to not be used.   |
@@ -362,6 +374,115 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "id": "run-CZcmD7eagjhyX0vN",
+      "type": "runs",
+      "attributes": {
+        "actions": {
+          "is-cancelable": true,
+          "is-confirmable": false,
+          "is-discardable": false,
+          "is-force-cancelable": false
+        },
+        "canceled-at": null,
+        "created-at": "2021-05-24T07:38:04.171Z",
+        "has-changes": false,
+        "auto-apply": false,
+        "allow-empty-apply": false,
+        "allow-config-generation": false,
+        "is-destroy": false,
+        "message": "Custom message",
+        "plan-only": false,
+        "source": "tfe-api",
+        "status-timestamps": {
+          "plan-queueable-at": "2021-05-24T07:38:04+00:00"
+        },
+        "status": "pending",
+        "trigger-reason": "manual",
+        "target-addrs": null,
+        "permissions": {
+          "can-apply": true,
+          "can-cancel": true,
+          "can-comment": true,
+          "can-discard": true,
+          "can-force-execute": true,
+          "can-force-cancel": true,
+          "can-override-policy-check": true
+        },
+        "refresh": false,
+        "refresh-only": false,
+        "replace-addrs": null,
+        "save-plan": false,
+        "variables": []
+      },
+      "relationships": {
+        "apply": {...},
+        "comments": {...},
+        "configuration-version": {...},
+        "cost-estimate": {...},
+        "created-by": {...},
+        "input-state-version": {...},
+        "plan": {...},
+        "run-events": {...},
+        "policy-checks": {...},
+        "workspace": {...},
+        "workspace-run-alerts": {...}
+      },
+      "links": {
+        "self": "/api/v2/runs/run-bWSq4YeYpfrW4mx7"
+      }
+    },
+    {...}
+  ]
+}
+```
+
+## List Runs in an Organization
+
+`GET /organizations/:organization_name/runs`
+
+| Parameter      | Description                        |
+|----------------|------------------------------------|
+| `organization_name` | The organization name to list runs for. |
+
+This endpoint has an adjusted rate limit of 30 requests per minute. Note that most endpoints are limited to 30 requests per second.
+
+| Status  | Response                                         | Reason                   |
+|---------|--------------------------------------------------|--------------------------|
+| [200][] | Array of [JSON API document][]s (`type: "runs"`) | Successfully listed runs |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter           | Description                                                                                                                                                                                                                    |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                             |
+| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 runs per page.                                                                                                                                                           |
+| `filter[operation]` | **Optional.** A comma-separated list of run operations; the result will only include runs that perform one of these operations. Options are listed in [Run Operations](/terraform/cloud-docs/api-docs/run#run-operations).                                                                                                                                 |
+| `filter[status]`    | **Optional.** A comma-separated list of run statuses; the result will only include runs that are in one of these statuses. Options are listed in [Run States](/terraform/cloud-docs/api-docs/run#run-states).                                                                                                                                         |
+| `filter[agent_pool_names]`    | **Optional.** A comma-separated list of agent pool names; the result will only include runs who have used one of these agent pools.                                                                                                                                          |
+| `filter[workspace_names]`    | **Optional.** A comma-separated list of workspace names; the result will only include runs belong to one of these workspaces.                                                                                                                                         |
+| `filter[source]`    |**Optional.** A comma-separated list of run sources; the result will only include runs that came from one of these sources. Options are listed in [Run Sources](/terraform/cloud-docs/api-docs/run#run-sources).                                                                                                                                       |
+| `filter[status_group]` |   **Optional.** A single status group; the result will only include runs whose status falls under this status group. Options are listed in [Run Status Groups](/terraform/cloud-docs/api-docs/run#run-status-groups).                                                                                                                                        |
+| `search[user]`      | **Optional.** Searches runs that matches the supplied VCS username.                                                                                                                                                            |
+| `search[commit]`    | **Optional.** Searches runs that matches the supplied commit sha.                                                                                                                                                              |
+| `search[basic]`     | **Optional.** Searches runs that matches the supplied VCS username, commit sha, run_id, and run message. The presence of search[commit] or search[user] takes priority over this parameter and will cause it to not be used.   |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/organizations/hashicorp/runs
 ```
 
 ### Sample Response
