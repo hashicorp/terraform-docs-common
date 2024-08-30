@@ -40,21 +40,66 @@ description: >-
 
 # Workspaces API
 
-Workspaces represent running infrastructure managed by Terraform.
+This topic provides reference information about the workspaces AP. Workspaces represent running infrastructure managed by Terraform.
 
-Viewing a workspace (individually or in a list) requires permission to read runs. Changing settings and force-unlocking require admin access to the workspace. Locking and unlocking a workspace requires permission to lock and unlock the workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+## Overview
+
+The scope of the API includes the following endpoints:
+
+- `POST /organizations/:organization_name/workspaces`: Call this endpoint to [create a workspace](#create-a-workspace). You can apply tags stored as key-value pairs when creating the workspace.
+- `POST /organizations/:organization_name/workspaces/:name/actions/safe-delete`: Call this endpoint to [safely delete a workspace](#safe-delete-a-workspace) by querying the organization and workspace names.
+- `POST /workspaces/:workspace_id/actions/safe-delete`: Call this endpoint [safely delete a workspace](#safe-delete-a-workspace) by querying the workspace ID.
+`POST /workspaces/:workspace_id/actions/lock`: Call this endpoint to [lock a workspace](#lock-a-workspace).
+- `POST /workspaces/:workspace_id/actions/unlock`: Call this endpoint to [unlock a workspace](#unlock-a-workspace).
+- `POST /workspaces/:workspace_id/actions/force-unlock`: Call this endpoint to [force a workspace to unlock](#force-unlock-a-workspace).
+- `POST /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [add remote state consumers](#get-remote-state-consumers).
+- `POST /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [bind flat string tags to an existing workspace](#add-tags-to-a-workspace).
+- `POST /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy).
+- `GET /organizations/:organization_name/workspaces`: Call this endpoint to [list existing workspaces](#list-workspaces). Each project in the response contains a link to `effective-tag-bindings` and `tag-bindings` collections. You can filter the response by tag keys and values using a query string parameter.
+- `GET /organizations/:organization_name/workspaces/:name`: Call this endpoint to [show workspace details](#show-workspace) by querying the organization and workspace names.
+- `GET /workspaces/:workspace_id`: Call this endpoint to [show workspace details](#show-workspace).
+- `GET /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [list remote state consumers](#get-remote-state-consumers).
+- `GET /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [list tags workspace tags](#get-tags) stored as flat string values.
+- `GET /workspaces/:id/tag-bindings`: Call this endpoint to [list workspace tags](#list-tags) stored as key-value pairs.  
+- `GET /workspaces/:workspace_id/tag-bindings`: Call this endpoint to [list tags](#get-tags) stored as key-value pairs that were added directly to the workspace instead of inherited from the parent project. 
+- `GET /workspaces/:workspace_id/effective-tag-bindings`: Call this endpoint to [list workspace tags](#get-tags) stored as key-value pairs that were added directly to the workspace as well as key-value tags inherited from the parent project.
+- `GET /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy). <alert enterprise/>
+- `PATCH /workspaces/:workspace_id/relationships/ssh-key`: Call this endpoint to manage SSH key assignments for workspaces. Refer to [Assign an SSH key to a workspace](#assign-an-ssh-key-to-a-workspace) and [Unassign an SSH key from a workspace](#unassign-an-ssh-key-from-a-workspace) for instructions.
+- `PATCH /workspaces/:workspace_id`: Call this endpoint to [update a workspace](#update-a-workspace). You can apply tags stored as key-value pairs when updating the workspace.
+- `PATCH /organizations/:organization_name/workspaces/:name`: Call this endpoint to [update a workspace](#update-a-workspace) by querying the organization and workspace names.
+- `PATCH /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [replace remote state consumers](#replace-remote-state-consumers).
+- `DELETE /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [delete remote state consumers](#delete-remote-state-consumers).
+- `DELETE /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [delete workspace tags](#remove-tags-from-workspace) stored as flat string values.  To remove tags from a workspace stored as key-value pairs, use the [`PATCH /workspaces/:workspace_id`] endpoint.
+- `DELETE /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [remove a workspace data retention policy](#remove-data-retention-policy).
+- `DELETE /workspaces/:workspace_id`: Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources.
+- `DELETE /organizations/:organization_name/workspaces/:name`: Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources, by querying the organization and workspace names.
+
+## Requirements
+
+- You must be a member of a team with the **Read** permission enabled for Terraform runs to view workspaces.
+- You must be a member of a team with the **Admin** permissions enabled on the workspace to change settings and force-unlock it.
+- You must be a member of a team with the **Lock/unlock** permission enabled to lock and unlock the workspace.
+- You must meet one of the following requirements to create a workspace:
+  - Be the team owner 
+  - Be on a team with the **Manage all workspaces** permission enabled
+  - Present an [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) when calling the API.
+
+Refer to [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions) for additional information.
+
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Create a Workspace
 
+Use the following endpoint to create a new workspace:
+
 `POST /organizations/:organization_name/workspaces`
 
-| Parameter            | Description                                                                                                                                                              |
+| Parameter | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to create the workspace in. The organization must already exist in the system, and the user must have permissions to create new workspaces. |
 
--> **Note:** Workspace creation is restricted to the owners team, teams with the "Manage all workspaces" permission, teams with the "Manage all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+
 
 ### Request Body
 
@@ -64,41 +109,46 @@ Properties without a default value are required.
 
 By supplying the necessary attributes under a `vcs-repository` object, you can create a workspace that is configured against a VCS Repository.
 
-| Key path                                        | Type    | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-|-------------------------------------------------|---------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`                                     | string  |           | Must be `"workspaces"`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `data.attributes.name`                          | string  |           | The name of the workspace, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization.                                                                                                                                                                                                                                                                                                                                                    |
-| `data.attributes.agent-pool-id`                 | string  | (nothing) | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`.                                                                                                                                                                                                                                                                   |
-| `data.attributes.allow-destroy-plan`            | boolean | `true`    | Whether destroy plans can be queued on the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `data.attributes.assessments-enabled`           | boolean | `false`   | (previously `drift-detection`) Whether or not HCP Terraform performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Plus tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).                                                                                                                               |
-| `data.attributes.auto-apply`                    | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by VCS, UI or CLI, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).                                                                                                                                                                                                                                                                                                  |
-| `data.attributes.auto-apply-run-trigger`        | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by run triggers.                                                                                                                                                                                                                                                                                                   |
-| `data.attributes.auto-destroy-at`               | string  | (nothing) | Timestamp when the next scheduled destroy run will occur, refer to [Scheduled Destroy](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy).                                                                                                                                                                                                                                                                                                                                               |
-| `data.attributes.auto-destroy-activity-duration`| string  | (nothing) | Value and units for [automatically scheduled destroy runs based on workspace activity](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy). Valid values are greater than 0 and four digits or less. Valid units are `d` and `h`. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`.                                                                                                                                       |
-| `data.attributes.description`                   | string  | (nothing) | A description for the workspace.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `data.attributes.execution-mode`                | string  | (nothing) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value _must not_ be specified if `operations` is specified, and _must_ be specified if `setting-overwrites.execution-mode` is set to `true`.                                                                                                                                             |
-| `data.attributes.file-triggers-enabled`          | boolean | `true`    | Whether to filter runs based on the changed files in a VCS push. If enabled, it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe the set of changed files that will start a run. If disabled, any push will trigger a run.                                                                                                                                                                                                                              |
-| `data.attributes.global-remote-state`           | boolean | `false`   | Whether the workspace should allow all workspaces in the organization to [access its state data](/terraform/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/terraform/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. **Note:** Terraform Enterprise admins can choose the default value for new workspaces if this attribute is omitted. |
-| `data.attributes.operations`                    | boolean | `true`    | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified.                                                                                                                                                                                                                                                                                   |
-| `data.attributes.queue-all-runs`                | boolean | `false`   | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued.                                                                                                                                                                                                                                                                                                                             |
-| `data.attributes.source-name`                   | string  | (nothing) | A friendly name for the application or client creating this workspace. If set, this will be displayed on the workspace as "Created via `<SOURCE NAME>`".                                                                                                                                                                                                                                                                                                                                                        |
-| `data.attributes.source-url`                    | string  | (nothing) | A URL for the application or client creating this workspace. This can be the URL of a related resource in another app, or a link to documentation or other info about the client.                                                                                                                                                                                                                                                                                                                               |
-| `data.attributes.speculative-enabled`           | boolean | true      | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.                                                                                                                                                                                    |
-| `data.attributes.terraform-version`             | string  | (special) | The version of Terraform to use for this workspace. This can be either an exact version or a [version constraint](/terraform/language/expressions/version-constraints) (like `~> 1.0.0`); if you specify a constraint, the workspace will always use the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version.                                                                                                                         |
-| `data.attributes.trigger-patterns`              | array   | `[]`      | List of glob patterns that describe the files HCP Terraform monitors for changes. Trigger patterns are always appended to the root directory of the repository.                                                                                                                                                                                                                                                                                                                                               |
-| `data.attributes.trigger-prefixes`               | array   | `[]`      | List of trigger prefixes that describe the paths HCP Terraform monitors for changes, in addition to the working directory. Trigger prefixes are always appended to the root directory of the repository. HCP Terraform will start a run when files are changed in any directory path matching the provided set of prefixes.                                                                                                                                                                                 |
-| `data.attributes.vcs-repo.branch`               | string  | (nothing) | The repository branch that Terraform will execute from. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `master`) .                                                                                                                                                                                                                                                                                                                                          |
-| `data.attributes.vcs-repo.identifier`            | string  |           | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.vcs-repo.ingress-submodules`   | boolean | `false`   | Whether submodules should be fetched when cloning the VCS repository.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `data.attributes.vcs-repo.oauth-token-id`       | string  |           | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                                                                                                                                                                                                                                                                                    |
-| `data.attributes.vcs-repo.tags-regex`           | string  | (nothing) | A regular expression used to match Git tags. HCP Terraform triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                                                                                                                                                                                                                                                                                                                      |
-| `data.attributes.vcs-repo`                      | object  | (nothing) | Settings for the workspace's VCS repository. If omitted, the workspace is created without a VCS repo. If included, you must specify at least the `oauth-token-id` and `identifier` keys below.                                                                                                                                                                                                                                                                                                                  |
-| `data.attributes.working-directory`             | string  | (nothing) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                                                                                                                   |
-| `data.attributes.setting-overwrites`            | object  |           |   The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, you set `setting-overwrites.execution-mode = false`.                        |
-| `data.relationships.project.data.id`            | string  |           | The ID of the project to create the workspace in. If left blank, the workspace will be created in the organization's default project. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project.                                                                                                                                                                                                                        |
-| `data.relationships.tag-bindings`            | array  | `[]`          | A list
-of tags to bind to this workspace. If left blank, the workspace will be created
-without tag bindings. You must have permission to manage tags.                                                                                                                                                                                                                        |
+| Key path | Type | Default | Description |
+|--- | --- | ---| ---|
+| `data.type` | string  | none | Must be `"workspaces"`. |
+| `data.attributes.name` | string  | none | The name of the workspace. Workspace names can only include letters, numbers, `-`, and `_`. The name a unique identifier n the organization. |
+| `data.attributes.agent-pool-id` | string  | none | Required when `execution-mode` is set to `agent`. The ID of the agent pool belonging to the workspace's organization. This value must not be specified if `execution-mode` is set to `remote` or `local` or if `operations` is set to `true`. |
+| `data.attributes.allow-destroy-plan` | boolean | `true` | Whether destroy plans can be queued on the workspace. |
+| `data.attributes.assessments-enabled`           | boolean | `false`   | (previously `drift-detection`) Whether or not HCP Terraform performs health assessments for the workspace. May be overriden by the organization setting `assessments-enforced`. Only available for Plus tier organizations, in workspaces running Terraform version 0.15.4+ and operating in [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). |
+| `data.attributes.auto-apply` | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by VCS, UI or CLI, [with some exceptions](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply). |
+| `data.attributes.auto-apply-run-trigger`        | boolean | `false`   | Whether to automatically apply changes when a Terraform plan is successful in runs initiated by run triggers. |
+| `data.attributes.auto-destroy-at` | string  | (nothing) | Timestamp when the next scheduled destroy run will occur, refer to [Scheduled Destroy](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy). |
+| `data.attributes.auto-destroy-activity-duration`| string  | (nothing) | Value and units for [automatically scheduled destroy runs based on workspace activity](/terraform/cloud-docs/workspaces/settings/deletion#automatically-destroy). Valid values are greater than 0 and four digits or less. Valid units are `d` and `h`. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. |
+| `data.attributes.description` | string  | (nothing) | A description for the workspace. |
+| `data.attributes.execution-mode`                | string  | (nothing) | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use. Valid values are `remote`, `local`, and `agent`. When set to `local`, the workspace will be used for state storage only. This value _must not_ be specified if `operations` is specified, and _must_ be specified if `setting-overwrites.execution-mode` is set to `true`. |
+| `data.attributes.file-triggers-enabled` | boolean | `true` | Whether to filter runs based on the changed files in a VCS push. If enabled, it uses either `trigger-prefixes` in conjunction with `working_directory` or `trigger-patterns` to describe the set of changed files that will start a run. If disabled, any push triggers a run. |
+| `data.attributes.global-remote-state`           | boolean | `false`   | Whether the workspace should allow all workspaces in the organization to [access its state data](/terraform/cloud-docs/workspaces/state) during runs. If `false`, then only specifically approved workspaces can access its state. Manage allowed workspaces using the [Remote State Consumers](/terraform/cloud-docs/api-docs/workspaces#get-remote-state-consumers) endpoints, documented later on this page. Terraform Enterprise admins can choose the default value for new workspaces if this attribute is omitted. |
+| `data.attributes.operations` | boolean | `true`    | **DEPRECATED** Use `execution-mode` instead. Whether to use remote execution mode. When set to `false`, the workspace will be used for state storage only. This value must not be specified if `execution-mode` is specified. |
+| `data.attributes.queue-all-runs` | boolean | `false`   | Whether runs should be queued immediately after workspace creation. When set to false, runs triggered by a VCS change will not be queued until at least one run is manually queued. |
+| `data.attributes.source-name` | string  | none | A friendly name for the application or client creating this workspace. If set, this will be displayed on the workspace as "Created via `<SOURCE NAME>`". |
+| `data.attributes.source-url` | string  | none | A URL for the application or client creating this workspace. This can be the URL of a related resource in another app, or a link to documentation or other info about the client. |
+| `data.attributes.speculative-enabled`           | boolean | `true`      | Whether this workspace allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. It doesn't prevent manual speculative plans via the CLI or the runs API.  |
+| `data.attributes.terraform-version` | string  | latest release | Specifies the version of Terraform to use for this workspace. You can specify an exact version or a [version constraint](/terraform/language/expressions/version-constraints) such as `~> 1.0.0`. If you specify a constraint, the workspace always uses the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version. |
+| `data.attributes.trigger-patterns` | array   | `[]`      | List of glob patterns that describe the files HCP Terraform monitors for changes. Trigger patterns are always appended to the root directory of the repository.  |
+| `data.attributes.trigger-prefixes`               | array   | `[]`      | List of trigger prefixes that describe the paths HCP Terraform monitors for changes, in addition to the working directory. Trigger prefixes are always appended to the root directory of the repository. HCP Terraform starts a run when files are changed in any directory path matching the provided set of prefixes. |
+| `data.attributes.vcs-repo.branch`               | string  | repository's default branch | The repository branch that Terraform executes from. If omitted or submitted as an empty string, this defaults to the repository's default branch. |
+| `data.attributes.vcs-repo.identifier` | string  | none | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`. |
+| `data.attributes.vcs-repo.ingress-submodules`   | boolean | `false`   | Whether submodules should be fetched when cloning the VCS repository. |
+| `data.attributes.vcs-repo.oauth-token-id`       | string  | none | Specifies the VCS OAuth connection and token. Call the [`oauth-tokens`](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint to retrieve the OAuth ID. |
+| `data.attributes.vcs-repo.tags-regex`           | string  | none | A regular expression used to match Git tags. HCP Terraform triggers a run when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.|
+| `data.attributes.vcs-repo` | object  | none | Settings for the workspace's VCS repository. If omitted, the workspace is created without a VCS repo. If included, you must specify at least the `oauth-token-id` and `identifier` keys. |
+| `data.attributes.working-directory`             | string  | (nothing) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository. |
+| `data.attributes.setting-overwrites` | object  | none |   The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, set `setting-overwrites.execution-mode` to `false`. |
+| `data.relationships` | object | none | Specifies a group of workspace associations. |
+| `data.relationships.project.data.id` | string  | default project | The ID of the project to create the workspace in. If left blank, Terraform creates the workspace in the organization's default project. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project. |
+| `data.relationships.tag-bindings`            | array of objects  | `[]`          | A list
+of tags to bind to this workspace. If left blank, Terraform creates the workspace without tag bindings. You must have permission to manage tags.|
+| `data.relationships.tag-bindings.data` | object  | none | Specifies the type of relationship the workspace has with the attached tags stored as key-value pairs. This value must be `tag-binding` to bind tags to the workspace. |
+| `data.relationships.tag-bindings.data.attributes` | object  | none | Specifies a key name and value to attach to the workspace as a tag. |
+| `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the name of the key to use for a tag. |
+| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the name of the value to use for a tag. |
+
 
 ### Sample Payload
 
@@ -110,7 +160,18 @@ _Without a VCS repository_
     "attributes": {
       "name": "workspace-1",
     },
-    "type": "workspaces"
+    "type": "workspaces",
+    "relationships": {
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
+    }
+
   }
 }
 ```
@@ -131,7 +192,17 @@ _With a VCS repository_
         "tags-regex": null
       }
     },
-    "type": "workspaces"
+    "type": "workspaces",
+    "relationships": {
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
+    }
   }
 }
 ```
@@ -154,7 +225,17 @@ HCP Terraform triggers a run when you push a Git tag that matches the regular ex
         "tags-regex": "\d+.\d+.\d+"
       }
     },
-    "type": "workspaces"
+    "type": "workspaces",
+    "relationships": {
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
+    }
   }
 }
 ```
@@ -179,7 +260,17 @@ A run will be triggered in this workspace when changes are detected in any of th
       },
       "updated-at": "2017-11-29T19:18:09.976Z"
     },
-    "type": "workspaces"
+    "type": "workspaces",
+    "relationships": {
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
+    }
   }
 }
 ```
@@ -206,7 +297,17 @@ A run will be triggered in this workspace when HCP Terraform detects any of the 
       },
       "updated-at": "2022-06-09T19:18:09.976Z"
     },
-    "type": "workspaces"
+    "type": "workspaces",
+    "relationships": {
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
+    }
   }
 }
 ```
@@ -224,11 +325,22 @@ _Using HCP Terraform agents_
       "agent-pool-id": "apool-ZjT6A7mVFm5WHT5a"
     }
   },
-  "type": "workspaces"
+  "type": "workspaces",
+  "relationships": {
+    "tag-bindings": [
+      {
+        "data": {
+          "type": "tag-binding",
+          "attributes": { "key": "env", "value": "test"}
+        }
+      }
+    ]
+  }
 }
 ```
 
 _Using an organization default execution mode_
+
 ```json
 {
   "data": {
@@ -239,8 +351,19 @@ _Using an organization default execution mode_
       }
     }
   },
-  "type": "workspaces"
+  "type": "workspaces",
+  "relationships": {
+    "tag-bindings": [
+      {
+        "data": {
+          "type": "tag-binding",
+          "attributes": { "key": "env", "value": "test"}
+        }
+      }
+    ]
+  }
 }
+
 ```
 
 _With a project_
@@ -258,7 +381,15 @@ _With a project_
           "type": "projects",
           "id": "prj-jT92VLSFpv8FwKtc"
         }
-      }
+      },
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
     }
   }
 }
@@ -446,20 +577,17 @@ _With a project_
 
 ## Update a Workspace
 
-A workspace can be updated via two endpoints, which behave identically. One refers to a workspace by its ID, and the other by its name and organization.
+Use one of the following endpoint to update a workspace:
 
-`PATCH /workspaces/:workspace_id`
+- `PATCH /organizations/:organization_name/workspaces/:name`
+- `PATCH /workspaces/:workspace_id`
 
 | Parameter       | Description                       |
 | --------------- | --------------------------------- |
 | `:workspace_id` | The ID of the workspace to update |
+| `:organization_name` | The name of the organization the workspace belongs to. |
+| `:name` | The name of the workspace to update. Workspace names are unique identifiers in the organization and can only include letters, numbers, `-`, and `_`. |
 
-`PATCH /organizations/:organization_name/workspaces/:name`
-
-| Parameter            | Description                                                                                                                                                            |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization the workspace belongs to.                                                                                                                 |
-| `:name`              | The name of the workspace to update, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the organization. |
 
 ### Request Body
 
@@ -497,7 +625,13 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo`                    | object or null | (previous value) | To delete a workspace's existing VCS repo, specify `null` instead of an object. To modify a workspace's existing VCS repo, include whichever of the keys below you wish to modify. To add a new VCS repo to a workspace that didn't previously have one, include at least the `oauth-token-id` and `identifier` keys.                                                                                                                                                           |
 | `data.attributes.working-directory`           | string         | (previous value) | A relative path that Terraform will execute within. This defaults to the root of your repository and is typically set to a subdirectory matching the environment when multiple environments exist within the same repository.                                                                                                                                                                                                                                                   |
 | `data.attributes.setting-overwrites`          | object  |      |  The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, you set `setting-overwrites.execution-mode = false`.       |
-| `data.relationships.project.data.id`          | string         | (previous value) | The ID of the project to move the workspace to. If left blank or unchanged, the workspace will not be moved. You must have admin permissions on both the source project and destination project in order to move a workspace between projects.                                                                                                                                                                                                                                  |
+| `data.relationships` | object | none | Specifies a group of workspace relationships. |
+| `data.relationships.project.data.id`          | string         | existing value | The ID of the project to move the workspace to. If left blank or unchanged, the workspace will not be moved. You must have admin permissions on both the source project and destination project in order to move a workspace between projects. |
+| `data.relationships.tag-bindings` | array | none | Specifies a list of objects that define tags stored as key-value pairs to attach to the workspace. |
+| `data.relationships.tag-bindings.data` | object | none | Specifies a set of tags stored as key-value pairs to attach to the workspace.  |
+| `data.relationships.tag-bindings.data.type` | object | none | Specifies the type of relationship the workspace has with the attached tags stored as key-value pairs. This value must be `tag-binding` to bind tags to the workspace.  |
+| `data.relationships.tag-bindings.data.type.key` | string | none | Specifies the name of the key to use for a tag.  |
+| `data.relationships.tag-bindings.data.type.value` | string | none | Specifies the value of of the `key` to use for a tag.  |
 
 ### Sample Payload
 
@@ -523,7 +657,15 @@ Properties without a default value are required.
           "type": "projects",
           "id": "prj-7HWWPGY3fYxztELU"
         }
-      }
+      },
+      "tag-bindings": [
+        {
+          "data": {
+            "type": "tag-binding",
+            "attributes": { "key": "env", "value": "test"}
+          }
+        }
+      ]
     },
     "type": "workspaces"
   }
@@ -1120,9 +1262,15 @@ No response body.
 
 Status code `204`.
 
-## Get Single-Value Tags
+## Get tags
 
-`GET /workspaces/:workspace_id/relationships/tags`
+Call the following endpoints to list the tags attached to a workspace:
+
+- `GET /workspaces/:workspace_id/relationships/tags`: Lists tags stored as flat string values.
+- `GET /workspaces/:workspace_id/tag-bindings`: Lists tags stored as key-value pairs.
+- `GET /workspaces/:workspace_id/effective-tag-bindings`: Lists tags stored as key-value pairs that are inherited from the parent project.
+
+### Path parameters
 
 | Parameter       | Description                                                                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1139,7 +1287,9 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.         |
 | `page[size]`   | **Optional.** If omitted, the endpoint will return 20 workspaces per page. |
 
-### Sample Request
+### Sample Requests
+
+The following request returns tags stored as flat string values:
 
 ```shell
 $ curl \
@@ -1147,8 +1297,27 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/workspace-2/relationships/tags
 ```
+The following request returns tags stored as key-value pairs:
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/workspaces/workspace-2/tag-bindings
+```
+
+The following request returns tags stored as key-value pairs that are attached to the parent project and inherited by the workspace:
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/workspaces/workspace-2/effective-tag-bindings
+```
 
 ### Sample Response
+
+The following response lists tags stored as flat string values:
 
 ```json
 {
@@ -1191,20 +1360,78 @@ $ curl \
 }
 ```
 
-## Add single-value tags to a workspace
+The following response lists tags stored as key-value pairs:
 
-This endpoints adds one or more single-value tags to the workspace. The workspace must already exist, and any
-tag element that supplies an `id` attribute must exist. If the `name` attribute is used, and no
-matching organization tag exists with such name, a new one will be created.
+```json
+{
+    "data": [
+        {
+            "id": "158",
+            "type": "tag-bindings",
+            "attributes": {
+                "target-id": 2004890,
+                "target-type": "Workspace",
+                "key": "ws1-key",
+                "value": "ws1-value"
+            }
+        }
+    ]
+}
+```
 
-Tags are subject to the following rules:
+The following response lists tags stored as key-value pairs that are attached to the parent project and inherited by the workspace:
 
-- Workspace tags or tags must be one or more characters, have a 255 character limit, and can include letters, numbers, colons, hyphens, and underscores.
-- You can create tags for a workspace using the user interface or the API. After you create a tag, you can assign it to other workspaces in the same organization.
-- You cannot create tags for a workspace using the CLI.
-- You cannot set tags at the project level, so there is no tag inheritance from projects to workspaces.
+```json 
+{
+  "data": [
+    {
+      "id": "1324",
+      "type": "effective-tag-bindings",
+      "attributes": {
+        "source-tag-id": 158,
+        "target-id": 2004890,
+        "target-type": "Workspace",
+        "key": "ws1-key",
+        "value": "ws1-value"
+      }
+    },
+    {
+      "id": "1418",
+      "type": "effective-tag-bindings",
+      "attributes": {
+        "source-tag-id": 176,
+        "target-id": 2004890,
+        "target-type": "Workspace",
+        "key": "key1",
+        "value": "value1"
+      }
+    },
+    {
+      "id": "1421",
+      "type": "effective-tag-bindings",
+      "attributes": {
+        "source-tag-id": 177,
+        "target-id": 2004890,
+        "target-type": "Workspace",
+        "key": "key2",
+        "value": "value2"
+      }
+    }
+  ]
+}
+```
+
+## Add tags to a workspace
+
+Use the following endpoint to add flat string value tags to an existing workspace:
 
 `POST /workspaces/:workspace_id/relationships/tags`
+
+To add tags stored as key-value pairs to an existing workspace, call the `PATCH /workspaces/:workspace_id` and provide workspace tags in the JSON payload. Refer to [Update a workspace](#update-a-workspace) for additional information.
+
+You can also bind tags stored as key-value pairs when creating a workspace. Refer to [Create a workspace](#create-a-workspace) for additional information.
+
+Refer to [Define project tags](/terraform/cloud-docs/projects/manage#define-project-tags) for information about supported tag values.
 
 | Parameter       | Description                                                                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
