@@ -40,6 +40,26 @@ description: >-
 
 # Projects API
 
+This topic provides reference information about the projects API.
+
+## Overview
+
+The scope of the API includes the following endpoints:
+
+- `POST /organizations/:organization_name/projects`: Call this endpoint to [create a project](#create-a-project). You can apply tags to a project during creation.
+- `PATCH /projects/:project_id`: Call this endpoint to [update an existing project](#update-a-project). You can apply tags to a project during an update.
+- `GET /organizations/:organization_name/projects`: Call this endpoint to [list existing projects](#list-projects). Each of the projects in the response contains a link to both `effective-tag-bindings` and `tag-bindings` collections.
+- `GET /projects/:project_id`: Call this endpoint to [show project details](#show-project).
+- `DELETE /projects/:project_id`: Call this endpoint to [delete a project](#delete-a-project)
+- `GET /projects/:project_id/tag-bindings`: Call this endpoint to [list project tag bindings](#list-project-tag-bindings). For projects, this returns the same results as the `effective-tag-bindings` endpoint.
+- `GET /projects/:project_id/effective-tag-bindings`: Call this endpoint to [list project effective tag bindings](#list-project-effective-tag-bindings). For projects, this returns the same results as the tag-bindings endpoint.
+
+## Requirements
+
+You must be on a team with one of the **Owners** or **Manage projects** permissions settings enabled to create and manage projects. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) for additional information.
+
+You can also provide an organization API token to call project API endpoints. Refer to [Organization API Tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) for additional information.
+
 ## Create a Project
 
 `POST /organizations/:organization_name/projects`
@@ -56,12 +76,16 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                      | Type   | Default   | Description                                                                                                                                                                                           |
-|-------------------------------|--------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`                   | string |           | Must be `"projects"`.                                                                                                                                                                                 |
-| `data.attributes.name`        | string |           | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
-| `data.attributes.description` | string | (nothing) | **Optional.** The description of the project. It must be no more than 256 characters long.                                                                                                            |
-| `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies how long each workspace in a project waits before automatically destroying its infrastructure. Specify a duration of up to four digits, greater than `0` and followed by either `d` for days or `h` hours. <br/><br/> For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. All future workspaces in this project inherit the default value. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for details. |
+| Key path | Type | Default | Description |
+|---|---|---|--- |
+| `data.type` | string | none | Must be `"projects"`. |
+| `data.attributes.name` | string | | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least three characters long and no more than 40 characters long. |
+| `data.attributes.description` | string | none | Optional. The description of the project. It must be no more than 256 characters long. |
+| `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies the default for how long each workspace in the project should wait before automatically destroying its infrastructure. You can specify a duration up to four digits that is greater than `0` followed by either a `d` for days or `h` hours. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. All future workspaces in this project inherit this default value. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for additional information. | 
+| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to attach to the project. |
+| `data.relationships.tag-bindings.data.type` | string | none | Must be `tag-bindings` for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the tag key for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
 
 ### Sample Payload
 
@@ -72,10 +96,56 @@ Properties without a default value are required.
       "name": "Test Project",
       "description": "An example project for documentation."
     },
-    "type": "projects"
+    "type": "projects",
+    "relationships": {
+        "tag-bindings": [
+          {
+            "data": {
+              "id": "prj-WsVcWRr7SfxRci1v",
+              "type": "projects",
+              "attributes": {
+                "name": "Test Project",
+                "description": "An example project for documentation.",
+                "permissions": {
+                  "can-update": true
+                }
+              },
+              "relationships": {
+                "organization": {
+                  "data": {
+                    "id": "my-organization",
+                    "type": "organizations"
+                  },
+                  "links": {
+                    "related": "/api/v2/organizations/my-organization"
+                  }
+                },
+                "tag-bindings": [
+                  {
+                    "data": {
+                      "type": "tag-binding",
+                      "attributes": { "key": "env", "value": "prod"}
+                    }
+                  }
+                ]
+              },
+              "links": {
+                "self": "/api/v2/projects/prj-WsVcWRr7SfxRci1v"
+              }
+            }
+          },
+          {
+                "data": {
+                    "type": "tag-binding",
+                    "attributes": { "key": "env", "value": "prod"}
+                  }
+             }
+         ]
+      }        
   }
 }
 ```
+
 
 ### Sample Request
 
@@ -122,6 +192,8 @@ $ curl \
 
 ## Update a Project
 
+Call the following endpoint to update a project:
+
 `PATCH /projects/:project_id`
 
 | Parameter     | Description                     |
@@ -134,12 +206,26 @@ These PATCH endpoints require a JSON object with the following properties as a r
 
 Properties without a default value are required.
 
+<<<<<<< HEAD
 | Key path                      | Type   | Default          | Description                                                                                                                                                                                              |
 |-------------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `data.type`                   | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
 | `data.attributes.name`        | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | (previous value) | The new description for the project. It must be no more than 256 characters long.                                                                                                                        |
 | `data.attributes.auto-destroy-activity-duration` | string | none      | Specifies how long each workspace in a project waits before automatically destroying its infrastructure. Specify a duration of up to four digits, greater than `0` and followed by either `d` for days or `h` hours. <br/><br/> For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. All future workspaces in this project inherit the default value. Refer to [Automatically destroy inactive workspaces](/terraform/enterprise/projects/managing#automatically-destroy-inactive-workspaces) for details. |
+=======
+| Key path | Type | Default | Description |
+|---|---|---|---|
+| `data.type` | string | none | Must be `"projects"`. |
+| `data.attributes.name` | string | existing value | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
+| `data.attributes.description` | string | existing value | The new description for the project. It must be no more than 256 characters long. |
+| `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies how long each workspace in the project should wait before automatically destroying its infrastructure by default. You can specify a duration up to four digits that is greater than `0` followed by either a `d` for days or `h` hours. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. When you update this value, all workspaces in the project receive the new value unless you previously configured an override. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for additional information. |
+| `data.relationships` | object | none | Specifies a group of attributes that define tags attached to the project. |
+| `data.relationships.tag-bindings` | list of objects | none | Specifies a list of objects that define tags to attach to the project. |
+| `data.relationships.tag-bindings.data` | object | none | Specifies a set of tags to attach to the projects. |
+| `data.relationships.tag-bindings.data.type` | string | none | Specifies the type of relationship the project has with the attached tags. This value must be `tag-binding` to bind tags to the project. |
+| `data.relationships.tag-bindings.data.attributes` | object | none | Specifies one or more key value pairs to attach to the project as tags. |
+>>>>>>> 695c58e4 (updated projects api endpoints)
 
 
 ### Sample Payload
@@ -150,7 +236,17 @@ Properties without a default value are required.
     "attributes": {
       "name": "Infrastructure Project"
     },
-    "type": "projects"
+    "type": "projects",
+    "relationships": {
+        "tag-bindings": [ 
+            {
+                "data": {
+                    "type": "tag-binding",
+                    "attributes": { "key": "env", "value": "test"}
+                  }
+             }
+         ]
+      }        
   }
 }
 ```
@@ -192,7 +288,15 @@ $ curl \
         },
         "links": {
           "related": "/api/v2/organizations/my-organization"
-        }
+        },
+        "tag-bindings": [
+          {
+            "data": {
+              "type": "tag-binding",
+              "attributes": { "key": "env", "value": "dev"}
+            }
+          }
+        ]
       }
     },
     "links": {
@@ -401,6 +505,97 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
   https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v
+```
+## List project tags
+
+Call the following endpoints to list the tags associated with a project:
+
+- `GET /projects/:project_id/tag-bindings`: Lists all tags bound to the project.
+- `GET /projects/:project_id/effective-tag-bindings`: Lists only the tags bound to the project that are inherited from the organization.
+
+| Parameter     | Description            |
+|---------------|----------------------- |
+| `:project_id` | The ID of the project. |
+
+### Sample request
+
+The following request returns all tags bound to a project with the ID `prj-WsVcWRr7SfxRci1v`:
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v/tag-bindings
+```
+
+### Sample response
+
+```json
+{
+    "data": [
+        {
+            "id": "173",
+            "type": "tag-bindings",
+            "attributes": {
+                "target-id": 19215,
+                "target-type": "Project",
+                "key": "added",
+                "value": "new"
+            }
+        },
+        {
+            "id": "174",
+            "type": "tag-bindings",
+            "attributes": {
+                "target-id": 19215,
+                "target-type": "Project",
+                "key": "aww",
+                "value": "aww"
+            }
+        }
+    ]
+}
+```
+### Sample request
+
+The following request returns only tags directly bound to a project with the ID `prj-WsVcWRr7SfxRci1v`:
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v/effective-tag-bindings
+```
+
+### Sample response
+
+```json
+{
+    "data": [
+        {
+            "id": "1342",
+            "type": "effective-tag-bindings",
+            "attributes": {
+                "source-tag-id": 173,
+                "target-id": 19215,
+                "target-type": "Project",
+                "key": "added",
+                "value": "new"
+            }
+        },
+        {
+            "id": "1379",
+            "type": "effective-tag-bindings",
+            "attributes": {
+                "source-tag-id": 174,
+                "target-id": 19215,
+                "target-type": "Project",
+                "key": "aww",
+                "value": "aww"
+            }
+        }
+    ]
+}
 ```
 
 ## Move workspaces into a project
