@@ -9,6 +9,10 @@ description: >-
 
 # Import: tfplan
 
+~> **Warning:** The `tfplan` import is now deprecated and will be permanently removed in August 2025.
+We recommend that you start using the updated [tfplan/v2](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) import as soon as possible to avoid disruptions.
+The `tfplan/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
+
 The `tfplan` import provides access to a Terraform plan. A Terraform plan is the
 file created as a result of `terraform plan` and is the input to `terraform
 apply`. The plan represents the changes that Terraform needs to make to
@@ -22,10 +26,6 @@ Finally, this import also allows you to access the configuration files and the
 Terraform state at the time the plan was run. See the section on [accessing a
 plan's state and configuration
 data](#accessing-a-plan-39-s-state-and-configuration-data) for more information.
-
-~> **Warning:** The `tfplan` import is now deprecated and will be permanently removed in August 2025.
-We recommend that you start using the updated [tfplan/v2](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) import as soon as possible to avoid disruptions.
-The `tfplan/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/policies.mdx'
