@@ -16,11 +16,11 @@ The following table describes the available endpoints:
 
 | Method | Path | Description |
 | --- | --- | --- |
-| `GET` | `/reserved-tags/:reserved_tag_id` |  Shows the reserved tag key with the specified ID. |
-| `DELETE` | `/reserved-tags/:reserved_tag_id` |  Deletes a reserved tag key with the specified ID. |
-| `GET` | `/organizations/:organization_name/reserved-tag-keys` |  Lists reserved tag keys for the specified organization. |
-| `POST` | `/organizations/:organization_name/reserved-tag-keys` |  Adds a reserved tag key. |
-| `PUT` | `/reserved-tags/:reserved_tag_id` |  Updates the reserved tag key for the specified ID. |
+| `GET` | `/reserved-tags/:reserved_tag_id` | [Shows details of the reserved tag key](#show-reserved-tag-key-details) with the specified ID. |
+| `DELETE` | `/reserved-tags/:reserved_tag_id` | [Deletes a reserved tag key](#delete-a-reserved-tag-key) with the specified ID. |
+| `GET` | `/organizations/:organization_name/reserved-tag-keys` | [Lists reserved tag keys](#lists-reserved-tag-keys) for the specified organization. |
+| `POST` | `/organizations/:organization_name/reserved-tag-keys` | [Adds a reserved tag key](#add-a-reserved-tag-key) to the specified organization. |
+| `PUT` | `/reserved-tags/:reserved_tag_id` |  [Updates the reserved tag key](#add-a-reserved-tag-value) for the specified ID. |
 
 
 ## Path parameters
@@ -30,9 +30,12 @@ The `/reserved-tags/ API endpoints take the following path parameters:
 - `:reserved_tag_id`: External ID of the reserved tag object.
 - `:organization_name`: Name of the organization associated with the reserved tags.
 
-## `GET /reserved-tags/:reserved_tag_id`
+## Show reserved tag key details 
 
-Returns a paginated list of reserved tag values for the specified ID.
+The following endpoint to returns a paginated list of reserved tag values for the specified ID:
+
+`GET /reserved-tags/:reserved_tag_id`
+
 
 ### Sample payload
 
@@ -54,9 +57,13 @@ curl \
 ```
 
 
-## `DELETE /reserved-tags/:reserved_tag_id`
+## Delete a reserved tag key
 
-Deletes a reserved tag key with the specified ID.
+The following endpoint deletes a reserved tag key with the specified ID:
+
+`DELETE /reserved-tags/:reserved_tag_id`
+
+
 
 ### Sample payload
 
@@ -78,9 +85,12 @@ curl \
 
 ```
 
-## `GET /organizations/:organization_name/reserved-tag-keys`
+## Lists reserved tag keys
 
-Lists reserved tag keys for the specified organization. 
+The following endpoint lists reserved tag keys for the specified organization:
+
+`GET /organizations/:organization_name/reserved-tag-keys`
+
 
 ### Sample payload
 
@@ -102,9 +112,12 @@ curl \
 
 ```
 
-## `POST /organizations/:organization_name/reserved-tag-keys` 
+## Add a reserved tag key 
 
-Adds a reserved tag key. 
+The following endpoint adds a reserved tag key to the organization:
+
+`POST /organizations/:organization_name/reserved-tag-keys` 
+
 
 ### Sample payload
 
@@ -126,9 +139,11 @@ curl \
 
 ```
 
-## `POST /reserved-tags/:reserved_tag_id/value`
+## Add a reserved tag value
 
-Adds a reserved tag value for the specified reserved key ID.
+The following endpoint adds a reserved tag value for the specified reserved key ID:
+
+`POST /reserved-tags/:reserved_tag_id/value`
 
 ### Sample payload
 
