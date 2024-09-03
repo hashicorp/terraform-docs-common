@@ -187,6 +187,7 @@
         "path": "workspaces/create"
       },
       { "title": "Explorer", "path": "workspaces/explorer" },
+      { "title":  "Browse workspaces", "path":  "workspaces/browse"},
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
