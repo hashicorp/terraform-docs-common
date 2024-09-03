@@ -46,13 +46,15 @@ This topic provides reference information about the projects API.
 
 The scope of the API includes the following endpoints:
 
-- `POST /organizations/:organization_name/projects`: Call this endpoint to [create a project](#create-a-project). You can apply tags to a project during creation.
-- `PATCH /projects/:project_id`: Call this endpoint to [update an existing project](#update-a-project). You can apply tags to a project during an update.
-- `GET /organizations/:organization_name/projects`: Call this endpoint to [list existing projects](#list-projects). Each of the projects in the response contains a link to both `effective-tag-bindings` and `tag-bindings` collections.
-- `GET /projects/:project_id`: Call this endpoint to [show project details](#show-project).
-- `DELETE /projects/:project_id`: Call this endpoint to [delete a project](#delete-a-project)
-- `GET /projects/:project_id/tag-bindings`: Call this endpoint to [list project tag bindings](#list-project-tag-bindings). For projects, this returns the same results as the `effective-tag-bindings` endpoint.
-- `GET /projects/:project_id/effective-tag-bindings`: Call this endpoint to [list project effective tag bindings](#list-project-effective-tag-bindings). For projects, this returns the same results as the tag-bindings endpoint.
+| Method | Path | Action |
+| --- | --- | --- |
+| `POST` | `/organizations/:organization_name/projects` |  Call this endpoint to [create a project](#create-a-project). You can apply tags to a project during creation. |
+| `PATCH`| `/projects/:project_id` | Call this endpoint to [update an existing project](#update-a-project). You can apply tags to a project during an update. |
+| `GET` | `/organizations/:organization_name/projects`| Call this endpoint to [list existing projects](#list-projects). Each of the projects in the response contains a link to both `effective-tag-bindings` and `tag-bindings` collections. |
+| `GET` | `/projects/:project_id` | Call this endpoint to [show project details](#show-project). |
+| `DELETE` | `/projects/:project_id` | Call this endpoint to [delete a project](#delete-a-project) |
+| `GET` | `/projects/:project_id/tag-bindings` | Call this endpoint to [list project tag bindings](#list-project-tag-bindings). For projects, this returns the same results as the `effective-tag-bindings` endpoint. |
+| `GET` | `/projects/:project_id/effective-tag-bindings` | Call this endpoint to [list project effective tag bindings](#list-project-effective-tag-bindings). For projects, this returns the same results as the tag-bindings endpoint. |
 
 ## Requirements
 

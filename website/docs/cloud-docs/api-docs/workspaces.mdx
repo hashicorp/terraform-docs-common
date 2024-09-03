@@ -46,33 +46,35 @@ This topic provides reference information about the workspaces AP. Workspaces re
 
 The scope of the API includes the following endpoints:
 
-- `POST /organizations/:organization_name/workspaces`: Call this endpoint to [create a workspace](#create-a-workspace). You can apply tags stored as key-value pairs when creating the workspace.
-- `POST /organizations/:organization_name/workspaces/:name/actions/safe-delete`: Call this endpoint to [safely delete a workspace](#safe-delete-a-workspace) by querying the organization and workspace names.
-- `POST /workspaces/:workspace_id/actions/safe-delete`: Call this endpoint [safely delete a workspace](#safe-delete-a-workspace) by querying the workspace ID.
-`POST /workspaces/:workspace_id/actions/lock`: Call this endpoint to [lock a workspace](#lock-a-workspace).
-- `POST /workspaces/:workspace_id/actions/unlock`: Call this endpoint to [unlock a workspace](#unlock-a-workspace).
-- `POST /workspaces/:workspace_id/actions/force-unlock`: Call this endpoint to [force a workspace to unlock](#force-unlock-a-workspace).
-- `POST /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [add remote state consumers](#get-remote-state-consumers).
-- `POST /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [bind flat string tags to an existing workspace](#add-tags-to-a-workspace).
-- `POST /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy).
-- `GET /organizations/:organization_name/workspaces`: Call this endpoint to [list existing workspaces](#list-workspaces). Each project in the response contains a link to `effective-tag-bindings` and `tag-bindings` collections. You can filter the response by tag keys and values using a query string parameter.
-- `GET /organizations/:organization_name/workspaces/:name`: Call this endpoint to [show workspace details](#show-workspace) by querying the organization and workspace names.
-- `GET /workspaces/:workspace_id`: Call this endpoint to [show workspace details](#show-workspace).
-- `GET /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [list remote state consumers](#get-remote-state-consumers).
-- `GET /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [list tags workspace tags](#get-tags) stored as flat string values.
-- `GET /workspaces/:id/tag-bindings`: Call this endpoint to [list workspace tags](#list-tags) stored as key-value pairs.  
-- `GET /workspaces/:workspace_id/tag-bindings`: Call this endpoint to [list tags](#get-tags) stored as key-value pairs that were added directly to the workspace instead of inherited from the parent project. 
-- `GET /workspaces/:workspace_id/effective-tag-bindings`: Call this endpoint to [list workspace tags](#get-tags) stored as key-value pairs that were added directly to the workspace as well as key-value tags inherited from the parent project.
-- `GET /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy). <alert enterprise/>
-- `PATCH /workspaces/:workspace_id/relationships/ssh-key`: Call this endpoint to manage SSH key assignments for workspaces. Refer to [Assign an SSH key to a workspace](#assign-an-ssh-key-to-a-workspace) and [Unassign an SSH key from a workspace](#unassign-an-ssh-key-from-a-workspace) for instructions.
-- `PATCH /workspaces/:workspace_id`: Call this endpoint to [update a workspace](#update-a-workspace). You can apply tags stored as key-value pairs when updating the workspace.
-- `PATCH /organizations/:organization_name/workspaces/:name`: Call this endpoint to [update a workspace](#update-a-workspace) by querying the organization and workspace names.
-- `PATCH /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [replace remote state consumers](#replace-remote-state-consumers).
-- `DELETE /workspaces/:workspace_id/relationships/remote-state-consumers`: Call this endpoint to [delete remote state consumers](#delete-remote-state-consumers).
-- `DELETE /workspaces/:workspace_id/relationships/tags`: Call this endpoint to [delete workspace tags](#remove-tags-from-workspace) stored as flat string values.  To remove tags from a workspace stored as key-value pairs, use the [`PATCH /workspaces/:workspace_id`] endpoint.
-- `DELETE /workspaces/:workspace_id/relationships/data-retention-policy`: Call this endpoint to [remove a workspace data retention policy](#remove-data-retention-policy).
-- `DELETE /workspaces/:workspace_id`: Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources.
-- `DELETE /organizations/:organization_name/workspaces/:name`: Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources, by querying the organization and workspace names.
+| Method | Path | Action |
+| --- | --- | --- |
+| `POST` | `/organizations/:organization_name/workspaces` | Call this endpoint to [create a workspace](#create-a-workspace). You can apply tags stored as key-value pairs when creating the workspace. |
+| `POST` | `/organizations/:organization_name/workspaces/:name/actions/safe-delete` | Call this endpoint to [safely delete a workspace](#safe-delete-a-workspace) by querying the organization and workspace names. |
+| `POST` | `/workspaces/:workspace_id/actions/safe-delete` | Call this endpoint [safely delete a workspace](#safe-delete-a-workspace) by querying the workspace ID. |
+|`POST`  | `/workspaces/:workspace_id/actions/lock` | Call this endpoint to [lock a workspace](#lock-a-workspace). |
+| `POST` | `/workspaces/:workspace_id/actions/unlock` | Call this endpoint to [unlock a workspace](#unlock-a-workspace).| 
+| `POST` | `/workspaces/:workspace_id/actions/force-unlock` | Call this endpoint to [force a workspace to unlock](#force-unlock-a-workspace). |
+| `POST` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [add remote state consumers](#get-remote-state-consumers). |
+| `POST` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [bind flat string tags to an existing workspace](#add-tags-to-a-workspace). |
+| `POST` | `/workspaces/:workspace_id/relationships/data-retention-policy` | Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy). |
+| `GET` | `/organizations/:organization_name/workspaces` | Call this endpoint to [list existing workspaces](#list-workspaces). Each project in the response contains a link to `effective-tag-bindings` and `tag-bindings` collections. You can filter the response by tag keys and values using a query string parameter. |
+| `GET` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [show workspace details](#show-workspace) by querying the organization and workspace names. |
+| `GET` | `/workspaces/:workspace_id` | Call this endpoint to [show workspace details](#show-workspace). |
+| `GET` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [list remote state consumers](#get-remote-state-consumers). |
+| `GET` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [list tags workspace tags](#get-tags) stored as flat string values. |
+| `GET` | `/workspaces/:id/tag-bindings` | Call this endpoint to [list workspace tags](#list-tags) stored as key-value pairs. |  
+| `GET` | `workspaces/:workspace_id/tag-bindings` | Call this endpoint to [list tags](#get-tags) stored as key-value pairs that were added directly to the workspace instead of inherited from the parent project. |
+| `GET` | `/workspaces/:workspace_id/effective-tag-bindings` | Call this endpoint to [list workspace tags](#get-tags) stored as key-value pairs that were added directly to the workspace as well as key-value tags inherited from the parent project. |
+| `GET` | `/workspaces/:workspace_id/relationships/data-retention-policy` | Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy). <alert enterprise/> |
+| `PATCH` | `/workspaces/:workspace_id/relationships/ssh-key` | Call this endpoint to manage SSH key assignments for workspaces. Refer to [Assign an SSH key to a workspace](#assign-an-ssh-key-to-a-workspace) and [Unassign an SSH key from a workspace](#unassign-an-ssh-key-from-a-workspace) for instructions. |
+| `PATCH` | `/workspaces/:workspace_id` | Call this endpoint to [update a workspace](#update-a-workspace). You can apply tags stored as key-value pairs when updating the workspace. |
+| `PATCH` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [update a workspace](#update-a-workspace) by querying the organization and workspace names. |
+| `PATCH` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [replace remote state consumers](#replace-remote-state-consumers). |
+| `DELETE` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [delete remote state consumers](#delete-remote-state-consumers). |
+| `DELETE` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [delete workspace tags](#remove-tags-from-workspace) stored as flat string values.  To remove tags from a workspace stored as key-value pairs, use the [`PATCH /workspaces/:workspace_id`] endpoint. |
+| `DELETE` | `/workspaces/:workspace_id/relationships/data-retention-policy` | Call this endpoint to [remove a workspace data retention policy](#remove-data-retention-policy). |
+| `DELETE` | `/workspaces/:workspace_id` | Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources.|
+| `DELETE` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources, by querying the organization and workspace names. |
 
 ## Requirements
 
