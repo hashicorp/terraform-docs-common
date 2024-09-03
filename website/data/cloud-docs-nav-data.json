@@ -116,6 +116,7 @@
       },
       { "title": "Projects", "path": "api-docs/projects" },
       { "title": "Project Team Access", "path": "api-docs/project-team-access" },
+      { "title":  "Reserved tags", "path":  "api-docs/reserved-tags"},
       { "title": "Runs", "path": "api-docs/run" },
       {
         "title": "Run Tasks",

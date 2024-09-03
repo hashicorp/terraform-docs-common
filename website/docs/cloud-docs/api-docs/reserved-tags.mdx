@@ -1,0 +1,151 @@
+---
+page_title: Reserved-tags API endpoint reference documentation
+description: >-
+    Use the `/reserved-tags` API endpoints to manage immutable tag keys for your organization so that project and workspace managers can follow a consistent tagging strategy.
+---
+
+# Reserved tags API reference
+
+This topic provides reference information about the `/reserved-tags` API endpoints.
+
+## Overview
+
+Use the `/reserved-tags` API endpoints to manage immutable tag keys for your organization so that project and workspace managers can follow a consistent tagging strategy. HCP Terraform presents reserved tag keys as recommendations for projects within the organization. Refer to [Create a project](/terraform/cloud-docs/projects/manage#create-a-project) for additional information.
+
+The following table describes the available endpoints:
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/reserved-tags/:reserved_tag_id` |  Shows the reserved tag key with the specified ID. |
+| `DELETE` | `/reserved-tags/:reserved_tag_id` |  Deletes a reserved tag key with the specified ID. |
+| `GET` | `/organizations/:organization_name/reserved-tag-keys` |  Lists reserved tag keys for the specified organization. |
+| `POST` | `/organizations/:organization_name/reserved-tag-keys` |  Adds a reserved tag key. |
+| `PUT` | `/reserved-tags/:reserved_tag_id` |  Updates the reserved tag key for the specified ID. |
+
+
+## Path parameters
+
+The `/reserved-tags/ API endpoints take the following path parameters:
+
+- `:reserved_tag_id`: External ID of the reserved tag object.
+- `:organization_name`: Name of the organization associated with the reserved tags.
+
+## `GET /reserved-tags/:reserved_tag_id`
+
+Returns a paginated list of reserved tag values for the specified ID.
+
+### Sample payload
+
+This endpoint does not require a payload.
+
+### Sample request
+
+```shell-session
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/reserved-tags/${RESERVED_TAG_ID}
+```
+
+### Sample response
+
+```json
+
+```
+
+
+## `DELETE /reserved-tags/:reserved_tag_id`
+
+Deletes a reserved tag key with the specified ID.
+
+### Sample payload
+
+This endpoint does not require a payload.
+
+### Sample request
+
+```shell-session
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/reserved-tags/${RESERVED_TAG_ID}
+```
+
+### Sample response
+
+```json
+
+```
+
+## `GET /organizations/:organization_name/reserved-tag-keys`
+
+Lists reserved tag keys for the specified organization. 
+
+### Sample payload
+
+This endpoint does not require a payload.
+
+### Sample request
+
+```shell-session
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/organizations/${ORGANIZATION_NAME}/reserved-tag-keys
+```
+
+### Sample response
+
+```json
+
+```
+
+## `POST /organizations/:organization_name/reserved-tag-keys` 
+
+Adds a reserved tag key. 
+
+### Sample payload
+
+TODO
+
+### Sample request
+
+```shell-session
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/organizations/${ORGANIZATION_NAME}/reserved-tag-keys
+```
+
+### Sample response
+
+```json
+
+```
+
+## `POST /reserved-tags/:reserved_tag_id/value`
+
+Adds a reserved tag value for the specified reserved key ID.
+
+### Sample payload
+
+This endpoint does not require a payload.
+
+### Sample request
+
+```shell-session
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/reserved-tags/${RESERVED_TAG_ID}/new-value
+```
+
+### Sample response
+
+```json
+
+```
