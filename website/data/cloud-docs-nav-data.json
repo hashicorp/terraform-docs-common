@@ -172,8 +172,8 @@
     "routes": [
       { "title": "Overview", "path": "projects" },
       {
-        "title": "Managing Projects",
-        "path": "projects/managing"
+        "title": "Manage Projects",
+        "path": "projects/manage"
       },
       { "title": "Best Practices", "path": "projects/best-practices" }
     ]

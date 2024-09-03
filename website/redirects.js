@@ -192,4 +192,8 @@ module.exports = [
     destination: "/users-teams-organizations/single-sign-on/entra-id",
     permanent: true,
   },
+  {
+    source: "/terraform/cloud-docs/projects/managing",
+    destination: "/terraform/cloud-docs/projects/manage"
+  }
 ];

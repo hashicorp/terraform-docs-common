@@ -1,8 +1,7 @@
 ---
-page_title: Organizations - HCP Terraform
+page_title: Organizations overview
 description: >-
-  Organizations allow teams to collaborate on workspaces. Learn about
-  organization membership, organization settings, and more.
+  Organizations are partitions in HCP Terraform and Terraform Enterprise that let teams within a business unit collaborate on infrastructure as code projects. Organizations contain one or more projects, which contain one or more workspaces.
 ---
 
 [teams]: /terraform/cloud-docs/users-teams-organizations/teams
@@ -11,9 +10,13 @@ description: >-
 
 [owners]: /terraform/cloud-docs/users-teams-organizations/teams#the-owners-team
 
-# Organizations
+# Organizations overview
 
-Organizations are a shared space for one or more [teams][] to collaborate on workspaces.
+This topic provides overview information about how to create and manage organizations in HCP Terraform and Terraform Enterprise. An organization contains one or more projects.
+
+## Requirements
+
+The **admin** permission preset must be enabled on your profile to create and manage organizations in the HCP Terraform UI. Refer to [Permissions]() for addtional information. 
 
 ## API and Terraform Enterprise Provider
 
@@ -108,7 +111,19 @@ Review the organization's plan and any invoices for previous plan payments. Orga
 
 #### Tags
 
-Review a list of tags for all resources across the organization. When you delete a tag from this page, HCP Terraform removes it from all resources.
+Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources, as well as track resource consumption.
+
+Click on **Tags** in the sidebar to view all tags in your organization. You can perform the following actions:
+
+1. Search for a tag key or value.
+1. Click on a column header to sort tags.
+1. Click the trash icon to delete a tag from the system. Deleting a tag removes it from projects and workspaces it is attached to.
+
+Refer to the following topics for information about creating and managing tags:
+
+- [Manage projects](/terraform/cloud-docs/projects/manage)
+- [Create workspaces](/terraform/cloud-docs/workspaces/create)
+
 
 #### Teams
 
@@ -192,7 +207,7 @@ Policies let you define and enforce rules for Terraform runs. You can write them
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Create groups of policies and enforce those policy sets globally or on specific [projects](/terraform/cloud-docs/projects/managing) and workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in HCP Terraform. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
+Create groups of policies and enforce those policy sets globally or on specific [projects](/terraform/cloud-docs/projects/manage) and workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in HCP Terraform. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
 
 Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.
 
