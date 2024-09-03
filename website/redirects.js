@@ -195,5 +195,9 @@ module.exports = [
   {
     source: "/terraform/cloud-docs/projects/managing",
     destination: "/terraform/cloud-docs/projects/manage"
-  }
+  },
+  {
+    source: "/terraform/cloud-docs/workspaces/creating",
+    destination: "/terraform/cloud-docs/workspaces/create"
+  },
 ];

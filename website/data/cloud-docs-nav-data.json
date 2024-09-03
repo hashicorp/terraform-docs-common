@@ -183,8 +183,8 @@
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
-        "title": "Creating Workspaces",
-        "path": "workspaces/creating"
+        "title": "Create Workspaces",
+        "path": "workspaces/create"
       },
       { "title": "Explorer", "path": "workspaces/explorer" },
       {
