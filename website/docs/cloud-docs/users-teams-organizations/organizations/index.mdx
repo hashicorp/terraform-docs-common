@@ -24,14 +24,14 @@ In addition to the HCP Terraform UI, you can use the following methods to manage
 - [Organizations API](/terraform/cloud-docs/api-docs/organizations)
 - The `tfe` provider [`tfe_organization`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization) resource
 
-## Selecting Organizations
+## Selecting organizations
 
 HCP Terraform displays your current organization in the bottom left of the sidebar. To select an organization:
 
 1. Click the current organization name to view a list of all the organizations where you are a member.
 1. Click an organization to select it. HCP Terraform displays list of workspaces within that organization.
 
-## Joining and Leaving Organizations
+## Joining and leaving organizations
 
 To join an organization, the organization [owners][] or a user with specific [team management](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions) permissions must invite you, and you must accept the emailed invitation. [Learn more](#users).
 
@@ -44,7 +44,7 @@ To leave an organization:
 
 You do not need permission from the owners to leave an organization, but you cannot leave if you are the last member of the owners team. Either add a new owner and then leave, or [delete the organization](/terraform/cloud-docs/users-teams-organizations/organizations#general).
 
-## Creating Organizations
+## Creating organizations
 
 On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Administration: General Settings](/terraform/enterprise/admin/application/general#organization-creation) for details.
 
@@ -58,7 +58,8 @@ On HCP Terraform, any user can create a new organization. If you do not belong t
 HCP Terraform shows the new organization and prompts you to create a new workspace. You can also [invite other users](#users) to join the organization.
 
 <!-- BEGIN: TFC:only name:managed-resources -->
-## Managed Resources
+
+## Managed resources
 
 Your organization’s managed resource count helps you understand the number of infrastructure resources that HCP Terraform manages across all your workspaces.
 
@@ -68,7 +69,11 @@ You can view your organization's managed resource count on the **Usage** page.
 
 <!-- END: TFC:only name:managed-resources -->
 
-## Managing Settings
+## Create and manage reserved tags
+
+TODO
+
+## Managing settings
 
 To view and manage an organization's settings, click **Settings**.
 
@@ -78,7 +83,7 @@ You may be able to manage the following organization settings.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-### Organization Settings
+### Organization settings
 
 #### General
 
@@ -92,7 +97,7 @@ Organization owners using HCP Terraform Plus edition can choose whether members 
 
 <!-- END: TFC:only name:generated-tests -->
 
-##### Renaming an Organization
+##### Renaming an organization
 
 !> **Warning:** Deleting or renaming an organization can be very disruptive. We strongly recommend against deleting or renaming organizations with active members.
 
