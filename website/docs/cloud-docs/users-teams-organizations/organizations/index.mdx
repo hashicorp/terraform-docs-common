@@ -139,10 +139,9 @@ You can perform the following actions in the **Tags** tab:
 
 You cannot manage single-value tags in the UI. Instead, use the following workspace API endpoints to manage single-value tags:
 
-- Add a new single-value workspace tag: [`POST /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#add-tags-to-a-workspace)
-- Delete a single-value workspace tag: [`DELETE /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#remove-tags-from-workspace)
-- Update an existing single-value workspace tag: [`PATCH /workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace)
-
+- [`POST /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#add-tags-to-a-workspace): Adds a new single-value workspace tag.
+- [`DELETE /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#remove-tags-from-workspace): Deletes a single-value workspace tag.
+- [`PATCH /workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace): Updates an existing single-value workspace tag.
 
 #### Teams
 
