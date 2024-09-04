@@ -200,19 +200,22 @@ module.exports = [
   },
   {
     source: "/terraform/language/settings",
-    destination: "/terraform/language/terraform"
+    destination: "/terraform/language/terraform",
     permanent: true,
   },
   {
-    source: "/terraform/language/settings/backends/configuration*,
+    source: "/terraform/language/settings/backends/configuration*",
     destination: "/terraform/language/backend",
+    permanent: true,
   },
   {
-    source: "/terraform/language/settings/backends/:slug*,
+    source: "/terraform/language/settings/backends/:slug*",
     destination: "/terraform/language/backend:slug*",
+    permanent: true,
   },
   {
     source: "/terraform/cli/cloud/migrating",
     destination: "/terraform/cli/cloud/settings",
+    permanent: true,
   },
 ];
