@@ -192,4 +192,27 @@ module.exports = [
     destination: "/users-teams-organizations/single-sign-on/entra-id",
     permanent: true,
   },
+// Reorg terraform block reference
+  {
+    source: "/terraform/language/settings/cloud",
+    destination: "/terraform/language/terraform",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings",
+    destination: "/terraform/language/terraform"
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/backends/configuration*,
+    destination: "/terraform/language/backend",
+  },
+  {
+    source: "/terraform/language/settings/backends/:slug*,
+    destination: "/terraform/language/backend:slug*",
+  },
+  {
+    source: "/terraform/cli/cloud/migrating",
+    destination: "/terraform/cli/cloud/settings",
+  },
 ];
