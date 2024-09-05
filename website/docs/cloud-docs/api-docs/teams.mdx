@@ -60,6 +60,8 @@ Any member of an organization can view visible teams and any secret teams they a
 | -------------------- | ------------------------------------------------ |
 | `:organization_name` | The name of the organization to list teams from. |
 
+-> **Note:** HashiCorp API service accounts eg:`api-team_XXXXXX` may return as a member of a team. However when checking in the UI these accounts will not be shown. This may lead to scenarios where the UI reports 0 members on a team and the API reports 1.
+
 ### Query Parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
