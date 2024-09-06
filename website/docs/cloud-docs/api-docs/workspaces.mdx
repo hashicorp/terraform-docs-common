@@ -61,17 +61,16 @@ The scope of the API includes the following endpoints:
 | `GET` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [show workspace details](#show-workspace) by querying the organization and workspace names. |
 | `GET` | `/workspaces/:workspace_id` | Call this endpoint to [show workspace details](#show-workspace). |
 | `GET` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [list remote state consumers](#get-remote-state-consumers). |
-| `GET` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [list tags workspace tags](#get-tags) stored as flat string values. |
-| `GET` | `/workspaces/:id/tag-bindings` | Call this endpoint to [list workspace tags](#list-tags) stored as key-value pairs. |  
-| `GET` | `workspaces/:workspace_id/tag-bindings` | Call this endpoint to [list tags](#get-tags) stored as key-value pairs that were added directly to the workspace instead of inherited from the parent project. |
-| `GET` | `/workspaces/:workspace_id/effective-tag-bindings` | Call this endpoint to [list workspace tags](#get-tags) stored as key-value pairs that were added directly to the workspace as well as key-value tags inherited from the parent project. |
+| `GET` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [list flat string workspace tags](#get-tags). |
+| `GET` | `/workspaces/:workspace_id/tag-bindings` | Call this endpoint to [list workspace key-value tags](#get-tags) bound directly to this workspace. |
+| `GET` | `/workspaces/:workspace_id/effective-tag-bindings` | Call this endpoint to [list all workspace key-value tags](#get-tags), including both those bound directly to the workspace as well as those inherited from the parent project. |
 | `GET` | `/workspaces/:workspace_id/relationships/data-retention-policy` | Call this endpoint to [show the workspace data retention policy](#show-data-retention-policy). <alert enterprise/> |
 | `PATCH` | `/workspaces/:workspace_id/relationships/ssh-key` | Call this endpoint to manage SSH key assignments for workspaces. Refer to [Assign an SSH key to a workspace](#assign-an-ssh-key-to-a-workspace) and [Unassign an SSH key from a workspace](#unassign-an-ssh-key-from-a-workspace) for instructions. |
 | `PATCH` | `/workspaces/:workspace_id` | Call this endpoint to [update a workspace](#update-a-workspace). You can apply tags stored as key-value pairs when updating the workspace. |
 | `PATCH` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [update a workspace](#update-a-workspace) by querying the organization and workspace names. |
 | `PATCH` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [replace remote state consumers](#replace-remote-state-consumers). |
 | `DELETE` | `/workspaces/:workspace_id/relationships/remote-state-consumers` | Call this endpoint to [delete remote state consumers](#delete-remote-state-consumers). |
-| `DELETE` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [delete workspace tags](#remove-tags-from-workspace) stored as flat string values.  To remove tags from a workspace stored as key-value pairs, use the [`PATCH /workspaces/:workspace_id`] endpoint. |
+| `DELETE` | `/workspaces/:workspace_id/relationships/tags` | Call this endpoint to [delete flat string workspace tags](#remove-tags-from-workspace) from the workspace. |
 | `DELETE` | `/workspaces/:workspace_id/relationships/data-retention-policy` | Call this endpoint to [remove a workspace data retention policy](#remove-data-retention-policy). |
 | `DELETE` | `/workspaces/:workspace_id` | Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources.|
 | `DELETE` | `/organizations/:organization_name/workspaces/:name` | Call this endpoint to [force delete a workspace](#force-delete-a-workspace), which deletes the workspace without first checking for managed resources, by querying the organization and workspace names. |
@@ -82,7 +81,7 @@ The scope of the API includes the following endpoints:
 - You must be a member of a team with the **Admin** permissions enabled on the workspace to change settings and force-unlock it.
 - You must be a member of a team with the **Lock/unlock** permission enabled to lock and unlock the workspace.
 - You must meet one of the following requirements to create a workspace:
-  - Be the team owner 
+  - Be the team owner
   - Be on a team with the **Manage all workspaces** permission enabled
   - Present an [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) when calling the API.
 
@@ -144,12 +143,11 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.setting-overwrites` | object  | none |   The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, set `setting-overwrites.execution-mode` to `false`. |
 | `data.relationships` | object | none | Specifies a group of workspace associations. |
 | `data.relationships.project.data.id` | string  | default project | The ID of the project to create the workspace in. If left blank, Terraform creates the workspace in the organization's default project. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project. |
-| `data.relationships.tag-bindings`            | array of objects  | `[]`          | A list
 of tags to bind to this workspace. If left blank, Terraform creates the workspace without tag bindings. You must have permission to manage tags.|
-| `data.relationships.tag-bindings.data` | object  | none | Specifies the type of relationship the workspace has with the attached tags stored as key-value pairs. This value must be `tag-binding` to bind tags to the workspace. |
-| `data.relationships.tag-bindings.data.attributes` | object  | none | Specifies a key name and value to attach to the workspace as a tag. |
-| `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the name of the key to use for a tag. |
-| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the name of the value to use for a tag. |
+| `data.relationships.tag-bindings.data`          | list of objects | none | Specifies a list of tags to attach to the workspace. |
+| `data.relationships.tag-bindings.data.type`     | string | none | Must be `tag-bindings` for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.key`   | string | none | Specifies the tag key for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
 
 
 ### Sample Payload
@@ -397,7 +395,7 @@ _With a project_
 }
 ```
 
-_With tag bindings_
+_With key-value tags_
 
 ```json
 {
@@ -440,6 +438,7 @@ _Without a VCS repository_
 _With a VCS repository_
 
 @include 'api-code-blocks/workspace-with-vcs.mdx'
+
 
 _With a project_
 
@@ -526,6 +525,11 @@ _With a project_
       "current-run": {
         "data": null
       },
+      "effective-tag-bindings": {
+        "links": {
+          "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/effective-tag-bindings"
+        }
+      },
       "latest-run": {
         "data": null
       },
@@ -558,17 +562,13 @@ _With a project_
       "current-assessment-result": {
         "data": null
       },
-      "vars": {
-        "data": []
-      },
-      "effective-tag-bindings": {
-        "links": {
-          "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/effective-tag-bindings"
-      },
       "tag-bindings": {
         "links": {
           "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/tag-bindings"
       }
+      "vars": {
+        "data": []
+      },
     },
     "links": {
       "self": "/api/v2/organizations/my-organization/workspaces/workspace-in-project"
@@ -629,11 +629,10 @@ Properties without a default value are required.
 | `data.attributes.setting-overwrites`          | object  |      |  The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, you set `setting-overwrites.execution-mode = false`.       |
 | `data.relationships` | object | none | Specifies a group of workspace relationships. |
 | `data.relationships.project.data.id`          | string         | existing value | The ID of the project to move the workspace to. If left blank or unchanged, the workspace will not be moved. You must have admin permissions on both the source project and destination project in order to move a workspace between projects. |
-| `data.relationships.tag-bindings` | array | none | Specifies a list of objects that define tags stored as key-value pairs to attach to the workspace. |
-| `data.relationships.tag-bindings.data` | object | none | Specifies a set of tags stored as key-value pairs to attach to the workspace.  |
-| `data.relationships.tag-bindings.data.type` | object | none | Specifies the type of relationship the workspace has with the attached tags stored as key-value pairs. This value must be `tag-binding` to bind tags to the workspace.  |
-| `data.relationships.tag-bindings.data.type.key` | string | none | Specifies the name of the key to use for a tag.  |
-| `data.relationships.tag-bindings.data.type.value` | string | none | Specifies the value of of the `key` to use for a tag.  |
+| `data.relationships.tag-bindings.data`        | list of objects | none | Specifies a list of tags to attach to the workspace. |
+| `data.relationships.tag-bindings.data.type`   | string | none | Must be `tag-bindings` for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.key`   | string | none | Specifies the tag key for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
 
 ### Sample Payload
 
@@ -660,14 +659,17 @@ Properties without a default value are required.
           "id": "prj-7HWWPGY3fYxztELU"
         }
       },
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
+      "tag-bindings": {
+        "data": [
+          {
+            "type": "tag-bindings",
+            "attributes": {
+              "key": "environment",
+              "value": "development"
+            }
+          },
+        ]
+      }
     },
     "type": "workspaces"
   }
@@ -714,6 +716,8 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `sort`                        | **Optional.** Allows sorting the organization's workspaces by a provided value. You can sort by `"name"`, `"current-run.created-at"` (the time of the current run), and `"latest-change-at"` (the creation time of the latest state version or the workspace itself if no state version exists). Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
 | `filter[project][id]`         | **Optional.** If specified, restricts results to workspaces in the specific project.                                                                                                                                                                                                                                                                                                                                 |
 | `filter[current-run][status]` | **Optional.** If specified, restricts results to workspaces that match the status of a current run.                                                                                                                                                                                                                                                                                                                  |
+| `filter[tagged][i][key]`      | **Optional.** If specified, restricts results to workspaces that are tagged with the provided key. Use a value of "0" for `i` if you are only using a single filter. For multiple tag filters, use an incrementing integer value for each filter. Multiple tag filters will be combined together with a logical AND when filtering results. |
+| `filter[tagged][i][value]`    | **Optional.** If specified, restricts results to workspaces that are tagged with the provided value. This is useful when combined with a `key` filter for more specificity. Use a value of "0" for `i` if you are only using a single filter. For multiple tag filters, use an incrementing integer value for each filter. Multiple tag filters will be combined together with a logical AND when filtering results. |
 
 ### Sample Request
 
@@ -722,6 +726,15 @@ $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/organizations/my-organization/workspaces
+```
+
+_With multiple tag filters_
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/organizations/my-organization/workspaces?filter%5B%tagged5D%5B0%5D%5Bkey%5D=environment&filter%5B%tagged5D%5B0%5D%5Bvalue%5D=development&filter%5B%tagged5D%5B1%5D%5Bkey%5D=meets-compliance
 ```
 
 ### Sample Response
@@ -1268,21 +1281,19 @@ Status code `204`.
 
 Call the following endpoints to list the tags attached to a workspace:
 
-- `GET /workspaces/:workspace_id/relationships/tags`: Lists tags stored as flat string values.
-- `GET /workspaces/:workspace_id/tag-bindings`: Lists tags stored as key-value pairs.
-- `GET /workspaces/:workspace_id/effective-tag-bindings`: Lists tags stored as key-value pairs that are inherited from the parent project.
+- `GET /workspaces/:workspace_id/relationships/tags`: Lists flat string tags attached to the workspace.
+- `GET /workspaces/:workspace_id/tag-bindings`: Lists key-value tags directly bound to the workspace.
+- `GET /workspaces/:workspace_id/effective-tag-bindings`: Lists all key-value tags bound to the workspace, including those inherited from the parent project.
 
 ### Path parameters
 
 | Parameter       | Description                                                                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The workspace ID to fetch single-value tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
-
-This endpoint returns the single-value tags that are currently associated to a workspace.
+| `:workspace_id` | The workspace ID to fetch tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+The flat string tags endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -1291,7 +1302,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 
 ### Sample Requests
 
-The following request returns tags stored as flat string values:
+_List flat string tags attached to the workspace:_
 
 ```shell
 $ curl \
@@ -1299,27 +1310,28 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/workspace-2/relationships/tags
 ```
-The following request returns tags stored as key-value pairs:
 
-```shell-session
+_List key-value tags bound directly to the workspace:_
+
+```shell
 $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/workspace-2/tag-bindings
 ```
 
-The following request returns tags stored as key-value pairs that are attached to the parent project and inherited by the workspace:
+_List all key-value tags bound to the workspace, including those inherited from the parent project:_
 
-```shell-session
+```shell
 $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/workspace-2/effective-tag-bindings
 ```
 
-### Sample Response
+### Sample Responses
 
-The following response lists tags stored as flat string values:
+_List flat string tags attached to the workspace:_
 
 ```json
 {
@@ -1362,59 +1374,45 @@ The following response lists tags stored as flat string values:
 }
 ```
 
-The following response lists tags stored as key-value pairs:
+_List key-value tags bound directly to the workspace:_
 
 ```json
 {
-    "data": [
-        {
-            "id": "158",
-            "type": "tag-bindings",
-            "attributes": {
-                "target-id": 2004890,
-                "target-type": "Workspace",
-                "key": "ws1-key",
-                "value": "ws1-value"
-            }
-        }
-    ]
+  "data": [
+    {
+      "id": "tb-RKs9JSC2lInns32K",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "ws1-key",
+        "value": "ws1-value"
+      }
+    }
+  ]
 }
 ```
 
-The following response lists tags stored as key-value pairs that are attached to the parent project and inherited by the workspace:
+_List all key-value tags bound to the workspace, including those inherited from the parent project:_
 
-```json 
+```json
 {
   "data": [
     {
-      "id": "1324",
       "type": "effective-tag-bindings",
       "attributes": {
-        "source-tag-id": 158,
-        "target-id": 2004890,
-        "target-type": "Workspace",
         "key": "ws1-key",
         "value": "ws1-value"
       }
     },
     {
-      "id": "1418",
       "type": "effective-tag-bindings",
       "attributes": {
-        "source-tag-id": 176,
-        "target-id": 2004890,
-        "target-type": "Workspace",
         "key": "key1",
         "value": "value1"
       }
     },
     {
-      "id": "1421",
       "type": "effective-tag-bindings",
       "attributes": {
-        "source-tag-id": 177,
-        "target-id": 2004890,
-        "target-type": "Workspace",
         "key": "key2",
         "value": "value2"
       }
@@ -1423,15 +1421,13 @@ The following response lists tags stored as key-value pairs that are attached to
 }
 ```
 
-## Add tags to a workspace
-
-Use the following endpoint to add flat string value tags to an existing workspace:
+## Add flat string tags to a workspace
 
 `POST /workspaces/:workspace_id/relationships/tags`
 
-To add tags stored as key-value pairs to an existing workspace, call the `PATCH /workspaces/:workspace_id` and provide workspace tags in the JSON payload. Refer to [Update a workspace](#update-a-workspace) for additional information.
+To add key-value tags to an existing workspace, call the `PATCH /workspaces/:workspace_id` and provide workspace tag bindings in the JSON payload. Refer to [Update a workspace](#update-a-workspace) for additional information.
 
-You can also bind tags stored as key-value pairs when creating a workspace. Refer to [Create a workspace](#create-a-workspace) for additional information.
+You can also bind key-value tags when creating a workspace. Refer to [Create a workspace](#create-a-workspace) for additional information.
 
 Refer to [Define project tags](/terraform/cloud-docs/projects/manage#define-project-tags) for information about supported tag values.
 
@@ -1500,6 +1496,8 @@ This endpoint removes one or more tags from a workspace. The workspace must alre
 element that supplies an `id` attribute must exist. If the `name` attribute is used, and no matching
 organization tag is found, no action will occur for that entry. Tags removed from all workspaces will be
 removed from the organization-wide list.
+
+To remove key-value tags to an existing workspace, call the `PATCH /workspaces/:workspace_id` and provide workspace tag bindings in the JSON payload. Refer to [Update a workspace](#update-a-workspace) for additional information.
 
 `DELETE /workspaces/:workspace_id/relationships/tags`
 

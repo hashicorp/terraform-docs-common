@@ -48,13 +48,13 @@ The scope of the API includes the following endpoints:
 
 | Method | Path | Action |
 | --- | --- | --- |
-| `POST` | `/organizations/:organization_name/projects` |  Call this endpoint to [create a project](#create-a-project). You can apply tags to a project during creation. |
-| `PATCH`| `/projects/:project_id` | Call this endpoint to [update an existing project](#update-a-project). You can apply tags to a project during an update. |
-| `GET` | `/organizations/:organization_name/projects`| Call this endpoint to [list existing projects](#list-projects). Each of the projects in the response contains a link to both `effective-tag-bindings` and `tag-bindings` collections. |
+| `POST` | `/organizations/:organization_name/projects` |  Call this endpoint to [create a project](#create-a-project). |
+| `PATCH`| `/projects/:project_id` | Call this endpoint to [update an existing project](#update-a-project). |
+| `GET` | `/organizations/:organization_name/projects`| Call this endpoint to [list existing projects](#list-projects). |
 | `GET` | `/projects/:project_id` | Call this endpoint to [show project details](#show-project). |
-| `DELETE` | `/projects/:project_id` | Call this endpoint to [delete a project](#delete-a-project) |
-| `GET` | `/projects/:project_id/tag-bindings` | Call this endpoint to [list project tag bindings](#list-project-tag-bindings). For projects, this returns the same results as the `effective-tag-bindings` endpoint. |
-| `GET` | `/projects/:project_id/effective-tag-bindings` | Call this endpoint to [list project effective tag bindings](#list-project-effective-tag-bindings). For projects, this returns the same results as the tag-bindings endpoint. |
+| `DELETE` | `/projects/:project_id` | Call this endpoint to [delete a project](#delete-a-project). |
+| `GET` | `/projects/:project_id/tag-bindings` | Call this endpoint to [list project tag bindings](#list-project-tag-bindings). (For projects, this returns the same result set as the `effective-tag-bindings` endpoint.) |
+| `GET` | `/projects/:project_id/effective-tag-bindings` | Call this endpoint to [list project effective tag bindings](#list-project-tag-bindings). (For projects, this returns the same result set as the `tag-bindings` endpoint.) |
 
 ## Requirements
 
@@ -96,58 +96,25 @@ Properties without a default value are required.
   "data": {
     "attributes": {
       "name": "Test Project",
-      "description": "An example project for documentation."
+      "description": "An example project for documentation.",
     },
     "type": "projects",
     "relationships": {
-        "tag-bindings": [
+      "tag-bindings": {
+        "data": [
           {
-            "data": {
-              "id": "prj-WsVcWRr7SfxRci1v",
-              "type": "projects",
-              "attributes": {
-                "name": "Test Project",
-                "description": "An example project for documentation.",
-                "permissions": {
-                  "can-update": true
-                }
-              },
-              "relationships": {
-                "organization": {
-                  "data": {
-                    "id": "my-organization",
-                    "type": "organizations"
-                  },
-                  "links": {
-                    "related": "/api/v2/organizations/my-organization"
-                  }
-                },
-                "tag-bindings": [
-                  {
-                    "data": {
-                      "type": "tag-binding",
-                      "attributes": { "key": "env", "value": "prod"}
-                    }
-                  }
-                ]
-              },
-              "links": {
-                "self": "/api/v2/projects/prj-WsVcWRr7SfxRci1v"
-              }
+            "type": "tag-bindings",
+            "attributes": {
+              "key": "environment",
+              "value": "development"
             }
           },
-          {
-                "data": {
-                    "type": "tag-binding",
-                    "attributes": { "key": "env", "value": "prod"}
-                  }
-             }
-         ]
-      }        
+        ]
+      }
+    }
   }
 }
 ```
-
 
 ### Sample Request
 
@@ -183,6 +150,16 @@ $ curl \
         "links": {
           "related": "/api/v2/organizations/my-organization"
         }
+      },
+      "tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/tag-bindings"
+        }
+      },
+      "effective-tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/effective-tag-bindings"
+        }
       }
     },
     "links": {
@@ -208,26 +185,16 @@ These PATCH endpoints require a JSON object with the following properties as a r
 
 Properties without a default value are required.
 
-<<<<<<< HEAD
-| Key path                      | Type   | Default          | Description                                                                                                                                                                                              |
-|-------------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.type`                   | string |                  | Must be `"projects"`.                                                                                                                                                                                    |
-| `data.attributes.name`        | string | (previous value) | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
-| `data.attributes.description` | string | (previous value) | The new description for the project. It must be no more than 256 characters long.                                                                                                                        |
-| `data.attributes.auto-destroy-activity-duration` | string | none      | Specifies how long each workspace in a project waits before automatically destroying its infrastructure. Specify a duration of up to four digits, greater than `0` and followed by either `d` for days or `h` hours. <br/><br/> For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. All future workspaces in this project inherit the default value. Refer to [Automatically destroy inactive workspaces](/terraform/enterprise/projects/managing#automatically-destroy-inactive-workspaces) for details. |
-=======
 | Key path | Type | Default | Description |
 |---|---|---|---|
 | `data.type` | string | none | Must be `"projects"`. |
 | `data.attributes.name` | string | existing value | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | existing value | The new description for the project. It must be no more than 256 characters long. |
 | `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies how long each workspace in the project should wait before automatically destroying its infrastructure by default. You can specify a duration up to four digits that is greater than `0` followed by either a `d` for days or `h` hours. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. When you update this value, all workspaces in the project receive the new value unless you previously configured an override. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for additional information. |
-| `data.relationships` | object | none | Specifies a group of attributes that define tags attached to the project. |
-| `data.relationships.tag-bindings` | list of objects | none | Specifies a list of objects that define tags to attach to the project. |
-| `data.relationships.tag-bindings.data` | object | none | Specifies a set of tags to attach to the projects. |
-| `data.relationships.tag-bindings.data.type` | string | none | Specifies the type of relationship the project has with the attached tags. This value must be `tag-binding` to bind tags to the project. |
-| `data.relationships.tag-bindings.data.attributes` | object | none | Specifies one or more key value pairs to attach to the project as tags. |
->>>>>>> 695c58e4 (updated projects api endpoints)
+| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to attach to the project. |
+| `data.relationships.tag-bindings.data.type` | string | none | Must be `tag-bindings` for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the tag key for each object in the list. |
+| `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
 
 
 ### Sample Payload
@@ -240,15 +207,18 @@ Properties without a default value are required.
     },
     "type": "projects",
     "relationships": {
-        "tag-bindings": [ 
-            {
-                "data": {
-                    "type": "tag-binding",
-                    "attributes": { "key": "env", "value": "test"}
-                  }
-             }
-         ]
-      }        
+      "tag-bindings": {
+        "data": [
+          {
+            "type": "tag-bindings",
+            "attributes": {
+              "key": "environment",
+              "value": "staging"
+            }
+          },
+        ]
+      }
+    }
   }
 }
 ```
@@ -290,15 +260,17 @@ $ curl \
         },
         "links": {
           "related": "/api/v2/organizations/my-organization"
-        },
-        "tag-bindings": [
-          {
-            "data": {
-              "type": "tag-binding",
-              "attributes": { "key": "env", "value": "dev"}
-            }
-          }
-        ]
+        }
+      },
+      "tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/tag-bindings"
+        }
+      },
+      "effective-tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/effective-tag-bindings"
+        }
       }
     },
     "links": {
@@ -369,6 +341,16 @@ $ curl \
           "links": {
             "related": "/api/v2/organizations/my-organization"
           }
+        },
+        "tag-bindings": {
+          "links": {
+            "related": "/api/v2/projects/prj-W6k9K23oSXRHGpj3/tag-bindings"
+          }
+        },
+        "effective-tag-bindings": {
+          "links": {
+            "related": "/api/v2/projects/prj-W6k9K23oSXRHGpj3/effective-tag-bindings"
+          }
         }
       },
       "links": {
@@ -397,6 +379,16 @@ $ curl \
           },
           "links": {
             "related": "/api/v2/organizations/my-organization"
+          }
+        },
+        "tag-bindings": {
+          "links": {
+            "related": "/api/v2/projects/prj-YoriCxAawTMDLswn/tag-bindings"
+          }
+        },
+        "effective-tag-bindings": {
+          "links": {
+            "related": "/api/v2/projects/prj-YoriCxAawTMDLswn/effective-tag-bindings"
           }
         }
       },
@@ -474,6 +466,16 @@ $ curl \
         "links": {
           "related": "/api/v2/organizations/my-organization"
         }
+      },
+      "tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/tag-bindings"
+        }
+      },
+      "effective-tag-bindings": {
+        "links": {
+          "related": "/api/v2/projects/prj-WsVcWRr7SfxRci1v/effective-tag-bindings"
+        }
       }
     },
     "links": {
@@ -508,12 +510,13 @@ $ curl \
   --request DELETE \
   https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v
 ```
-## List project tags
 
-Call the following endpoints to list the tags associated with a project:
+## List project tag bindings
 
-- `GET /projects/:project_id/tag-bindings`: Lists all tags bound to the project.
-- `GET /projects/:project_id/effective-tag-bindings`: Lists only the tags bound to the project that are inherited from the organization.
+Call the following endpoints to list the tags associated with a project.
+
+- `GET /projects/:project_id/effective-tag-bindings`: Lists the complete set of tags for the project, including any that have been inherited from a parent resource. For projects, this endpoint returns the same set of data as the `tag-bindings` endpoint, so only that endpoint is documented here.
+
 
 | Parameter     | Description            |
 |---------------|----------------------- |
@@ -521,48 +524,10 @@ Call the following endpoints to list the tags associated with a project:
 
 ### Sample request
 
-The following request returns all tags bound to a project with the ID `prj-WsVcWRr7SfxRci1v`:
+The following request returns all tags bound to a project with the ID
+`prj-WsVcWRr7SfxRci1v`.
 
-```shell-session
-$ curl \
-  --header "Authorization: Bearer $TOKEN" \
-  --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/projects/prj-WsVcWRr7SfxRci1v/tag-bindings
-```
-
-### Sample response
-
-```json
-{
-    "data": [
-        {
-            "id": "173",
-            "type": "tag-bindings",
-            "attributes": {
-                "target-id": 19215,
-                "target-type": "Project",
-                "key": "added",
-                "value": "new"
-            }
-        },
-        {
-            "id": "174",
-            "type": "tag-bindings",
-            "attributes": {
-                "target-id": 19215,
-                "target-type": "Project",
-                "key": "aww",
-                "value": "aww"
-            }
-        }
-    ]
-}
-```
-### Sample request
-
-The following request returns only tags directly bound to a project with the ID `prj-WsVcWRr7SfxRci1v`:
-
-```shell-session
+```shell
 $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
@@ -575,23 +540,15 @@ $ curl \
 {
     "data": [
         {
-            "id": "1342",
             "type": "effective-tag-bindings",
             "attributes": {
-                "source-tag-id": 173,
-                "target-id": 19215,
-                "target-type": "Project",
                 "key": "added",
                 "value": "new"
             }
         },
         {
-            "id": "1379",
             "type": "effective-tag-bindings",
             "attributes": {
-                "source-tag-id": 174,
-                "target-id": 19215,
-                "target-type": "Project",
                 "key": "aww",
                 "value": "aww"
             }
