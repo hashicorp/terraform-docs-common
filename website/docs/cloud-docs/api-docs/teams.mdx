@@ -60,7 +60,7 @@ Any member of an organization can view visible teams and any secret teams they a
 | -------------------- | ------------------------------------------------ |
 | `:organization_name` | The name of the organization to list teams from. |
 
--> **Note:** HashiCorp API service accounts eg:`api-team_XXXXXX` may return as a member of a team. However when checking in the UI these accounts will not be shown. This may lead to scenarios where the UI reports 0 members on a team and the API reports 1.
+The response may identify HashiCorp API service accounts, for example `api-team_XXXXXX`,  as a members of a team. However, API service accounts do not appear in the UI. As a result, there may be differences between the number of team members reported by the UI and the API. For example, the UI may report `0` members on a team when and the API reports `1`.
 
 ### Query Parameters
 
