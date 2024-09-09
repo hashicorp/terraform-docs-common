@@ -145,7 +145,7 @@ Properties without a default value are required.
 | `data.type` | string | none | Must be `reserved-tag-keys`. |
 | `data.attributes.key` | string | none | The key targeted by this reserved
 tag key. |
-| `data.attributes.disableOverrides` | boolean | none | If `true`, disables
+| `data.attributes.disable-overrides` | boolean | none | If `true`, disables
 overriding inherited tags with the specified key at the workspace level. |
 
 ### Sample payload
@@ -180,7 +180,7 @@ curl \
         "id": "rtk-Tj86UdGahKGDiYXY",
         "type": "reserved-tag-keys",
         "attributes": {
-            "key": "rtk-58b359cd-383d-4c46-b82a-5bf80ec49213",
+            "key": "environment",
             "disable-overrides": false,
             "created-at": "2024-09-04T05:02:06.794Z",
             "updated-at": "2024-09-04T05:02:06.794Z"
@@ -202,7 +202,7 @@ Properties without a default value are required.
 | `data.type` | string | none | Must be `reserved-tag-keys`. |
 | `data.attributes.key` | string | none | The key targeted by this reserved
 tag key. |
-| `data.attributes.disableOverrides` | boolean | none | If `true`, disables
+| `data.attributes.disable-overrides` | boolean | none | If `true`, disables
 overriding inherited tags with the specified key at the workspace level. |
 
 ### Sample payload
@@ -210,10 +210,13 @@ overriding inherited tags with the specified key at the workspace level. |
 ```json
 {
   "data": {
+    "id": "rtk-Tj86UdGahKGDiYXY",
     "type": "reserved-tag-keys",
     "attributes": {
       "key": "env",
-      "disable-overrides": true
+      "disable-overrides": true,
+      "created-at": "2024-09-04T05:02:06.794Z",
+      "updated-at": "2024-09-04T05:02:06.794Z"
     }
   }
 }
