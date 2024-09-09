@@ -153,7 +153,7 @@ You can share [HCP Terraform Agents](/terraform/cloud-docs/agents) across all wo
 
 ### Treat Archivist URLs as secrets
 
-HCP Terraform uses a blob storage service called Archivist for storing various pieces of customer data. Archivist URLs have the origin `https://archivist.terraform.io` and are returned by various HCP Terraform APIs, such as the [state versions API](/terraform/cloud-docs/api-docs/state-versions#fetch-the-current-state-version-for-a-workspace). You do not need to submit a bearer token with each request to call the Archivist API. Instead, Archivist URLs contain a signed authorization token that performs authorization checks. The token expires in approximately 24 hours. As a result, you must treat Archivist URLs as secrets and avoid logging or sharing them.
+HCP Terraform uses a blob storage service called Archivist for storing various pieces of customer data. Archivist URLs have the origin `https://archivist.terraform.io` and are returned by various HCP Terraform APIs, such as the [state versions API](/terraform/cloud-docs/api-docs/state-versions#fetch-the-current-state-version-for-a-workspace). You do not need to submit a bearer token with each request to call the Archivist API. Instead, Archivist URLs contain a short-term signed authorization token that performs authorization checks. As a result, you must treat Archivist URLs as secrets and avoid logging or sharing them.
 
 ### Use dynamic credentials
 
