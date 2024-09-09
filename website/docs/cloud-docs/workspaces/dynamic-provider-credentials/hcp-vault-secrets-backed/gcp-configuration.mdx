@@ -12,7 +12,7 @@ description: >-
 You can use HCP Terraform’s native OpenID Connect integration with HCP to use [HCP Vault Secrets-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed) with the GCP provider in your HCP Terraform runs. Configuring the integration requires the following steps:
 
 1. **[Configure HCP Provider Credentials](#configure-hcp-provider-credentials)**: Set up a trust configuration between HCP Vault Secrets and HCP Terraform, create HCP Vault Secrets roles and policies for your HCP Terraform workspaces, and add environment variables to those workspaces.
-2. **[Configure the HCP Vault Secrets GCP Secrets Engine](#configure-hcp-vault-secrets-gcp-secrets-engine)**: Set up the GCP secrets engine in your HCP instance.
+2. **[Configure HCP Vault Secrets](#configure-hcp-vault-secrets-gcp-secrets-engine)**: Set up your HCP project's AWS integration and dynamic secret.
 3. **[Configure HCP Terraform](#configure-hcp-terraform)**: Add additional environment variables to the HCP Terraform workspaces where you want to use HCP Vault Secrets-backed dynamic credentials.
 4. **[Configure Terraform Providers](#configure-terraform-providers)**: Configure your Terraform providers to work with HCP Vault Secrets-backed dynamic credentials.
 
@@ -23,10 +23,8 @@ You must first set up HCP provider credentials before you can use HCP Vault Secr
 
 [See the setup instructions for HCP dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-configuration).
 
-# Configure HCP Vault Secrets GCP Secrets Engine
-Follow the instructions in the HCP Vault Secrets documentation for [setting up the GCP secrets engine in your HCP instance](/hcp/docs/vault-secrets/dynamic-secrets/gcp). You can also do this configuration through Terraform. Refer to our [example Terraform configuration](https://github.com/hashicorp/terraform-dynamic-credentials-setup-examples/hcp-vault-secrets-backed/gcp).
-
-~> **Important**: carefully consider the limitations and differences between each supported credential type in the GCP secrets engine. These limitations carry over to HCP Terraform’s usage of these credentials for authenticating the GCP provider.
+## Configure HCP Vault Secrets GCP Secrets Engine
+Follow the instructions in the HCP Vault Secrets documentation for [setting up the GCP integration in your HCP project](/hcp/docs/vault-secrets/dynamic-secrets/gcp).
 
 ## Configure HCP Terraform
 Next, you need to set certain environment variables in your HCP Terraform workspace to authenticate HCP Terraform with GCP using HCP Vault Secrets-backed dynamic credentials. These variables are in addition to those you previously set while configuring [HCP provider credentials](#configure-hcp-provider-credentials). You can add these as workspace variables or as a [variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
@@ -60,10 +58,6 @@ The final step is to directly configure your GCP and HCP Vault Secrets providers
 Ensure you pass values for the `project` and `region` arguments into the provider configuration block.
 
 Ensure you are not setting values or environment variables for `GOOGLE_CREDENTIALS` or `GOOGLE_APPLICATION_CREDENTIALS`. Otherwise, these values may interfere with dynamic provider credentials.
-
-### Configure the HCP Vault Secrets Provider
-If you were previously using the HCP Vault Secrets provider to authenticate the GCP provider, remove any existing usage of the GCP secrets engine from your Terraform Code.
-This includes the [`hvs_aws_access_credentials`](https://registry.terraform.io/providers/hashicorp/hvs/latest/docs/data-sources/aws_access_credentials) data source and any instances of [`hvs_generic_secret`](https://registry.terraform.io/providers/hashicorp/hvs/latest/docs/data-sources/generic_secret) you previously used to generate AWS credentials.
 
 ### Specifying Multiple Configurations
 
