@@ -106,7 +106,6 @@ Workspace administrators with appropriate permissions can attach new key-value p
 
 Tags that you create appear in the tags management screen in the organization settings. Refer to [Organizations](/terraform/cloud-docs/users-teams-organizations/organizations) for additional information.
 
-You cannot override reserved tag keys created by the organization administrator. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
 
 The following rules apply to tag keys and values:
 
@@ -114,6 +113,8 @@ The following rules apply to tag keys and values:
 - Tags have a 255 character limit.
 - Tags can include letters, numbers, colons, hyphens, and underscores.
 - Tag values are optional.
+- You can create up to 10 unique tags per workspace and 10 unique tags per project. As a result, each workspace can have up to 20 tags.
 - You cannot use the following strings at the beginning of a tag key:
     - `hcp`
     - `hc`
+    - `ibm`
