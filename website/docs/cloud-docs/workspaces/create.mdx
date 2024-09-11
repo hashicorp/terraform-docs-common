@@ -27,9 +27,9 @@ Each workspace belongs to a project. Refer to [Manage projects](/terraform/cloud
 
 You must be a member of a team with one of the following permissions enabled to create and manage workspaces:
 
-**Manage all projects**
-**Manage all workspaces**
-**Admin** permission group for a project.
+- **Manage all projects**
+- **Manage all workspaces**
+- **Admin** permission group for a project.
 
 To delete tags on a workspace, you must be member of a team with the **Admin** permission group enabled for the workspace.
 
@@ -108,10 +108,10 @@ Complete the following steps to define workspace tags:
 1. Open your workspace.
 1. Click either the count link for the **Tags** label or **Manage Tags** in the **Tags** card on the right-sidebar to open the **Manage workspace tags** drawer.
 1. Click **+Add tag** to define a new key-value pair. The following rules apply to tag keys and values:
-   1. Tags must be one or more characters.
-   1. Tags have a 255 character limit.
-   1. Tabs can include letters, numbers, colons, hyphens, and underscores.
-   1. Tag values are optional.
+   - Tags must be one or more characters.
+   - Tags have a 255 character limit.
+   - Tags can include letters, numbers, colons, hyphens, and underscores.
+   - Tag values are optional.
 1. Tags inherited from the project appear in the **Inherited Tags** section. You can attach new key-value pairs to their projects to override inherited tags. Refer to [Manage projects](/terraform/cloud-docs/projects/manage) for additional information about using tags in projects.
 
     You cannot override reserved tag keys created by the organization administrator. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
@@ -121,7 +121,7 @@ Complete the following steps to define workspace tags:
 
 Tags that you create appear in the tags management screen in the organization settings. Refer to [Organizations](/terraform/cloud-docs/users-teams-organizations/organizations) for additional information.
 
-### Configure Terraform Variables for VCS workflows
+### Configure Terraform variables for VCS workflows
 
 After you create a new workspace from a version control repository, HCP Terraform scans its configuration files for [Terraform variables](/terraform/cloud-docs/workspaces/variables#terraform-variables) and displays variables without default values or variables that are undefined in an existing [global or project-scoped variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets). Terraform cannot perform successful runs in the workspace until you set values for these variables.
 

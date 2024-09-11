@@ -38,9 +38,9 @@ To view your organization's projects:
 1. Click **+ New project**.
 1. Specify a name for the project. The name must be unique within the organization and can only include letters, numbers, inner spaces, hyphens, and underscores.
 1. Add a description for the project. This field is optional.
-1. Open the **Add key value tags** menu to add tags to your project. Tags are optional key-value pairs that you can use to organize projects. Workspaces created within the project inherit project tags. Refer to [Define project tags](#define-project-tags) for additional information.
+1. Open the **Add key value tags** menu to add tags to your project. Tags are optional key-value pairs that you can use to organize projects. Any workspaces you create within the project inherit project tags. Refer to [Define project tags](#define-project-tags) for additional information.
 1. Click **+Add tag** and specify a tag key and tag value. If your organization has defined reserved tag keys, they appear in the **Tag key** field as suggestions. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
-1. You can  **+add another tag** to attach any additional tags.
+1. Click **+add another tag** to attach any additional tags.
 1. Click **Create** to finish creating the project.
 
 HCP Terraform returns a new project page displaying all the project
@@ -71,7 +71,7 @@ If you configure a project to auto-destroy its infrastructure when inactive,
 any run that updates Terraform state further delays the scheduled auto-destroy 
 time by the length of your designated timeframe.
 
-!> **Note:** Automatic destroy plans _do not_ prompt you for apply approval in the HCP Terraform user interface. We recommend only using this setting for development environments.
+!> **Warning:** Automatic destroy plans _do not_ prompt you for apply approval in the HCP Terraform user interface. We recommend only using this setting for development environments.
 
 To schedule an auto-destroy run after a period of workspace inactivity:
 
