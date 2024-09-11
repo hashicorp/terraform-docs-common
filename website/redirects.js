@@ -210,7 +210,7 @@ module.exports = [
   },
   {
     source: "/terraform/language/settings/backends/:slug*",
-    destination: "/terraform/language/backend:slug*",
+    destination: "/terraform/language/backend/:slug*",
     permanent: true,
   },
   {
