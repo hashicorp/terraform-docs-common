@@ -1302,7 +1302,7 @@ The flat string tags endpoint supports pagination [with standard URL query param
 
 ### Sample Requests
 
-_List flat string tags attached to the workspace:_
+<CodeBlockConfig hideClipboard heading="List flat string tags attached to the workspace">
 
 ```shell-session
 $ curl \
@@ -1311,7 +1311,9 @@ $ curl \
   https://app.terraform.io/api/v2/workspaces/workspace-2/relationships/tags
 ```
 
-_List key-value tags bound directly to the workspace:_
+</CodeBlockConfig>
+
+<CodeBlockConfig hideClipboard heading="List key-value tags bound directly to the workspace">
 
 ```shell-session
 $ curl \
@@ -1320,7 +1322,9 @@ $ curl \
   https://app.terraform.io/api/v2/workspaces/workspace-2/tag-bindings
 ```
 
-_List all key-value tags bound to the workspace, including those inherited from the parent project:_
+</CodeBlockConfig>
+
+<CodeBlockConfig hideClipboard heading="List all key-value tags bound to the workspace, including those inherited from the parent project">
 
 ```shell-session
 $ curl \
@@ -1329,9 +1333,11 @@ $ curl \
   https://app.terraform.io/api/v2/workspaces/workspace-2/effective-tag-bindings
 ```
 
+</CodeBlockConfig>
+
 ### Sample Responses
 
-_List flat string tags attached to the workspace:_
+<CodeBlockConfig hideClipboard heading="List flat string tags attached to the workspace">
 
 ```json
 {
@@ -1374,7 +1380,9 @@ _List flat string tags attached to the workspace:_
 }
 ```
 
-_List key-value tags bound directly to the workspace:_
+</CodeBlockConfig>
+
+<CodeBlockConfig hideClipboard heading="List key-value tags bound directly to the workspace">
 
 ```json
 {
@@ -1391,7 +1399,9 @@ _List key-value tags bound directly to the workspace:_
 }
 ```
 
-_List all key-value tags bound to the workspace, including those inherited from the parent project:_
+</CodeBlockConfig>
+
+<CodeBlockConfig hideClipboard heading="List all key-value tags bound to the workspace, including those inherited from the parent project">
 
 ```json
 {
@@ -1420,6 +1430,8 @@ _List all key-value tags bound to the workspace, including those inherited from 
   ]
 }
 ```
+
+</CodeBlockConfig>
 
 ## Add flat string tags to a workspace
 
