@@ -204,7 +204,7 @@ module.exports = [
     permanent: true,
   },
   {
-    source: "/terraform/language/settings/backends/configuration*",
+    source: "/terraform/language/settings/backends/configuration",
     destination: "/terraform/language/backend",
     permanent: true,
   },
