@@ -655,10 +655,6 @@
       }
     ]
   },
-  {
-    "title": "Changelog",
-    "path": "changelog"
-  },
   { "divider": true },
   {
     "title": "HCP Terraform Agents",
