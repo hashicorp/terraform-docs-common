@@ -1,0 +1,32 @@
+---
+page_title: HCP Terraform changelog
+description: Learn about updates to HCP Terraform
+---
+
+# HCP Terraform changelog
+
+This page contains a running list of updates to HCP Terraform.
+
+## 2024-09-12
+
+This update includes the following changes:
+
+### Updates to HCP Terraform tags <sup>BETA</sup>
+
+HCP Terraform now supports tags defined as key-value pairs. Additionally, you can apply key-value tags to projects and not just workspaces. When bound to a project, key-value tags are inherited by workspaces in the project. 
+
+You can also reserve tag keys for the organization. Reserved tags appear as suggestions when people create tags for projects and workspaces so that you can use consistent terms for tags throughout the organization.
+
+Tags based on key-value pairs and tag inheritance increase the flexibility of HCP Terraform’s tagging and open new possibilities for governance, reporting, and chargeback use cases. These changes bring us closer to being able to synchronize HCP Terraform tags with infrastructure resources at apply time.
+
+Refer to the following topics for details about using key-value tags:
+
+- [Create project tags](/terraform/cloud-docs/projects/manage#define-project-tags)
+- [Create workspace tags](/terraform/cloud-docs/workspaces/create#define-workspace-tags)
+- [Migrate single-value tags to key-value tags](/terraform/cloud-docs/workspaces/create#migrating-to-key-value-tags)
+
+HCP Terraform still supports single-value tags that you may have added prior to this update, but you can no longer create new single-value tags or manage existing tags in the HCP UI. We have not changed how single-value tags function. Refer to the following topics in the Terraform CLI and configuration language documentation for additional information:   
+
+- [`terraform{}.cloud{}.workspaces` reference](/terraform/language/terraform#terraform-cloud-workspaces)
+- [Define connection settings](/terraform/cli/cloud/settings#define-connection-settings)
+
