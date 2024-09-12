@@ -71,6 +71,8 @@ You can view your organization's managed resource count on the **Usage** page.
 
 ## Create and manage reserved tags
 
+~> **Reserved tags is in limited beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the limited beta.
+
 Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources, as well as track resource consumption. Refer to the following topics for information about creating and managing tags attached to projects and workspaces:
 
 - [Manage projects](/terraform/cloud-docs/projects/manage)
@@ -136,12 +138,6 @@ You can perform the following actions in the **Tags** tab:
 
 1. Search for a tag key or value.
 1. Click on a column header to sort tags.
-
-You cannot manage single-value tags in the UI. Instead, use the following workspace API endpoints to manage single-value tags:
-
-- [`POST /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#add-tags-to-a-workspace): Adds a new single-value workspace tag.
-- [`DELETE /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#remove-tags-from-workspace): Deletes a single-value workspace tag.
-- [`PATCH /workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace): Updates an existing single-value workspace tag.
 
 #### Teams
 

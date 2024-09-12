@@ -5,54 +5,45 @@ description: Learn how to create tags for your workspaces so that you can organi
 
 # Create workspace tags
 
-This topic describes how to attach tags to your workspaces. 
+This topic describes how to attach tags to your workspaces so that you can organize workspaces. Tagging workspaces also helps you sort and filter workspaces in the UI and enable you to associate Terraform configurations with several workspaces. 
 
 ## Overview
 
-Tagging workspaces helps you organize, sort, and filter workspaces in the UI. 
+You can create tags and attach them to your workspaces. Tagging workspaces helps organization administrators organize, sort, and filter workspaces so that they can track resource consumption. For example, you could add a `cost-center` tag so that administrators can sort workspaces according to cost center. 
 
-You can define key-value pairs to help you organize your workspaces and use them to sort by cost center, for example, to help you track resource consumption. You can define tags while [creating the workspace](#create-a-workspace) or create and attach them to an existing workspace.
+HCP Terraform stores tags as either single-value tags or key-value pairs. You can also migrate existing single-value tags to the key-value scheme. Refer to [Migrating to key-value tags](#migrating-to-key-value-tags) for instructions.
 
+~> **Adding tags stored as key-value pairs is in limited beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the limited beta.
 
-### Updates to HCP Terraform tags <sup>BETA</sup>
-
-HCP Terraform now supports tags defined as key-value pairs. Additionally, you can apply key-value tags to projects and not just workspaces. When bound to a project, key-value tags are inherited by workspaces in the project.
-
-You can also reserve tag keys for the organization. Reserved tags appear as suggestions when people create tags for projects and workspaces so that you can use consistent terms for tags throughout the organization.
-
-Tags based on key-value pairs and tag inheritance increase the flexibility of HCP Terraform’s tagging and open new possibilities for governance, reporting, and chargeback use cases. These changes bring us closer to being able to synchronize HCP Terraform tags with infrastructure resources at apply time.
-
-Refer to the following topics for details about using key-value tags:
-
-- [Create project tags](/terraform/cloud-docs/projects/manage#define-project-tags)
-- [Create workspace tags](/terraform/cloud-docs/workspaces/create#define-workspace-tags)
-- [Migrate single-value tags to key-value tags](/terraform/cloud-docs/workspaces/create#migrating-to-key-value-tags)
-
-HCP Terraform still supports single-value tags that you may have added prior to this update, but you can no longer create new single-value tags or manage existing tags in the HCP UI. We have not changed how single-value tags function. Refer to the following topics in the Terraform CLI and configuration language documentation for additional information:
+Single-value tags enable you to associate a single Terraform configuration file with several workspaces according to tag. Refer to the following topics in the Terraform CLI and configuration language documentation for additional information:
 
 - [`terraform{}.cloud{}.workspaces` reference](/terraform/language/terraform#terraform-cloud-workspaces)
 - [Define connection settings](/terraform/cli/cloud/settings#define-connection-settings)
 
+### Reserved tags
 
-#
+You can reserve a set of tag keys for each organization. Reserved tag keys appear as suggestions when people create tags for projects and workspaces so that you can use consistent terms for tags. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
 
-Functionality associated with key-value tags is in beta. Refer [2024-09-12](/terraform/cloud-docs/changelog#2024-09-12) in the changelog for additional information.
+~> **Reserved tags and project tags are in limited beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the limited beta.
 
-The tag management interfaces only support tags stored as key-value pairs. If your organization contains existing single-string tags, you must use the workspace API to manage the tags. Refer to [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) for additional information.
+## Requirements
 
-You can also migrate existing single-value tags to the key-value scheme. Refer to [Migrating to key-value tags](#migrating-to-key-value-tags) for instructions.
+- You must be member of a team with the **Write** permission group enabled for the workspace to create tags for a workspace.
+- You must be member of a team with the **Admin** permission group enabled for the workspace to delete tags on a workspace.
 
 You cannot create tags for a workspace using the CLI.
 
-Complete the following steps to define workspace tags:
+## Define tags
+
+Complete the following steps to define workspace tags: 
+
+<Tabs>
+
+<Tab heading="Key-value tags">
 
 1. Open your workspace.
 1. Click either the count link for the **Tags** label or **Manage Tags** in the **Tags** card on the right-sidebar to open the **Manage workspace tags** drawer.
-1. Click **+Add tag** to define a new key-value pair. The following rules apply to tag keys and values:
-    - Tags must be one or more characters.
-    - Tags have a 255 character limit.
-    - Tags can include letters, numbers, colons, hyphens, and underscores.
-    - Tag values are optional.
+1. Click **+Add tag** to define a new key-value pair. Refer to [Tag syntax](#Tag-syntax) for information about supported characters. 
 1. Tags inherited from the project appear in the **Inherited Tags** section. You can attach new key-value pairs to their projects to override inherited tags. Refer to [Manage projects](/terraform/cloud-docs/projects/manage) for additional information about using tags in projects.
 
    You cannot override reserved tag keys created by the organization administrator. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
@@ -60,8 +51,38 @@ Complete the following steps to define workspace tags:
    You can also click on tag links in the **Inherited Tags** section to view workspaces that use the same tag.
 1. Click **Save**.
 
+</Tab>
+<Tab heading="Single-value tags">
+
+1. Open your workspace.
+1. Open the **Add a tag** drop-down menu and enter a value. If a tag value already exists, you can attach it to the workspace. Otherwise, HCP Terraform creates a new tag and attaches it to the workspace. Refer to [Tag syntax](#Tag-syntax) for information about supported characters.
+
+</Tab>
+</Tabs>
+
 Tags that you create appear in the tags management screen in the organization settings. Refer to [Organizations](/terraform/cloud-docs/users-teams-organizations/organizations) for additional information.
 
+## Update tags
+
+<Tabs>
+
+<Tab heading="Key-value tags">
+
+1. Open your workspace.
+1. Click either the count link for the **Tags** label or **Manage Tags** in the **Tags** card on the right-sidebar to open the **Manage workspace tags** drawer.
+1. In the **Direct Tags** section, modify either a key, value, or both and click **Save**.
+
+</Tab>
+<Tab heading="Single-value tags">
+
+You cannot manage single-value tags in the UI. Instead, use the following workspace API endpoints to manage single-value tags:
+
+- [`POST /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#add-tags-to-a-workspace): Adds a new single-value workspace tag.
+- [`DELETE /workspaces/:workspace_id/relationships/tags`](/terraform/cloud-docs/api-docs/workspaces#remove-tags-from-workspace): Deletes a single-value workspace tag.
+- [`PATCH /workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace): Updates an existing single-value workspace tag.
+
+</Tab>
+</Tabs>
 
 ## Migrating to key-value tags
 
@@ -78,3 +99,12 @@ You can use the API to migrate single-value tags that may already be in your wor
 1. Send a `GET` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#list-tags) endpoint to request all workspaces for your organization.
 1. Enumerate the external IDs for all tags.
 2. Send a `DELETE` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#delete-tags) endpoint to delete tags.
+
+## Tag syntax
+
+The following rules apply to tags:
+
+- Tags must be one or more characters.
+- Tags have a 255 character limit.
+- Tags can include letters, numbers, colons, hyphens, and underscores.
+- For tags stored as key-value pairs, tag values are optional.

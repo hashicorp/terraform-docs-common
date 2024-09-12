@@ -31,10 +31,6 @@ You must be a member of a team with one of the following permissions enabled to 
 - **Manage all workspaces**
 - **Admin** permission group for a project.
 
-To delete tags on a workspace, you must be member of a team with the **Admin** permission group enabled for the workspace.
-
-To create tags for a workspace, you must be member of a team with the **Write** permission group enabled for the workspace.
-
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 ## Workspace naming
@@ -82,15 +78,6 @@ Complete the following steps to use the HCP Terraform or Terraform Enterprise UI
       - [Include submodules on clone][submodules]
 1. Specify a name for the workspace. VCS workflow workspaces default to the name of the repository. The name must be unique within the organization and can include letters, numbers, hyphens, and underscores. Refer to [Workspace naming](#workspace-naming) for additional information.
 1. Add an optional description for the workspace. The description appears at the top of the workspace in the HCP Terraform UI.
-1. Click **+ Add tag** and define an optional key-value pair. Tags help you organize workspaces. 
-
-   Workspaces inherit parent project tags. Reserved keys appear in the **Tag key** field as suggestions. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
-
-    Refer to [Workspace tags](#define-tags) for character restrictions, inheritance, and other information.
-
-   Functionality associated with key-value tags is in beta. Refer [2024-09-12](/terraform/cloud-docs/changelog#2024-09-12) in the changelog for additional information.
-
-1. Add any additional tags.
 1. Click **Create workspace** to finish.
 
 For CLI or API-driven workflow, the system opens the new workspace overview. For version control workspaces, the **Configure Terraform variables** page appears.
@@ -104,9 +91,6 @@ Choose one of the following actions:
 - To skip this step, click **Go to workspace overview**. You can [load these variables from files](/terraform/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. HCP Terraform does not automatically scan your configuration again; you can only add variables from within the workspace individually.
 - To configure variables, enter a value for each variable on the page. You may want to leave a variable empty if you plan to provide it through another source, like an `auto.tfvars` file. Click **Save variables** to add these variables to the workspace.
 
-
- 
-
 ## Next steps
 
 If you have already configured all Terraform variables, we recommend [manually starting a run](/terraform/cloud-docs/run/ui#manually-starting-runs) to prepare VCS-driven workspaces. You may also want to do one or more of the following actions:
@@ -115,7 +99,8 @@ If you have already configured all Terraform variables, we recommend [manually s
 - [Edit environment variables](/terraform/cloud-docs/workspaces/variables): Shell environment variables store credentials and customize Terraform's behavior.
 - [Edit additional workspace settings](/terraform/cloud-docs/workspaces/settings): This includes notifications, permissions, and run triggers to start runs automatically.
 - [Learn more about running Terraform in your workspace](/terraform/cloud-docs/run/remote-operations): This includes how Terraform processes runs within the workspace, run modes, run states, and other operations.
-- Track workspace consumption: Use the interfaces available in the UI to browse, sort, and filter workspaces so that you can track resource consumption. Refer to [Browse workspaces](/terraform/cloud-docs/workspaces/browse).
+- [Create workspace tags](/terraform/cloud-docs/workspaces/tags): Add tags to your workspaces so that you can organize and track them. 
+- [Browse workspaces](/terraform/cloud-docs/workspaces/browse): Use the interfaces available in the UI to browse, sort, and filter workspaces so that you can track resource consumption. 
 
 ### VCS Connection
 
