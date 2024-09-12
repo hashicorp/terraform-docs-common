@@ -104,51 +104,8 @@ Choose one of the following actions:
 - To skip this step, click **Go to workspace overview**. You can [load these variables from files](/terraform/cloud-docs/workspaces/variables/managing-variables#loading-variables-from-files) or create and set values for them later from within the workspace. HCP Terraform does not automatically scan your configuration again; you can only add variables from within the workspace individually.
 - To configure variables, enter a value for each variable on the page. You may want to leave a variable empty if you plan to provide it through another source, like an `auto.tfvars` file. Click **Save variables** to add these variables to the workspace.
 
-## Define workspace tags
 
-You can define key-value pairs to help you organize your workspaces and use them to sort by cost center, for example, to help you track resource consumption. You can define tags while [creating the workspace](#create-a-workspace) or create and attach them to an existing workspace.
-
-Functionality associated with key-value tags is in beta. Refer [2024-09-12](/terraform/cloud-docs/changelog#2024-09-12) in the changelog for additional information.
-
-The tag management interfaces only support tags stored as key-value pairs. If your organization contains existing single-string tags, you must use the workspace API to manage the tags. Refer to [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) for additional information.
-
-You can also migrate existing single-value tags to the key-value scheme. Refer to [Migrating to key-value tags](#migrating-to-key-value-tags) for instructions.  
-
-You cannot create tags for a workspace using the CLI.
-
-Complete the following steps to define workspace tags:
-
-1. Open your workspace.
-1. Click either the count link for the **Tags** label or **Manage Tags** in the **Tags** card on the right-sidebar to open the **Manage workspace tags** drawer.
-1. Click **+Add tag** to define a new key-value pair. The following rules apply to tag keys and values:
-   - Tags must be one or more characters.
-   - Tags have a 255 character limit.
-   - Tags can include letters, numbers, colons, hyphens, and underscores.
-   - Tag values are optional.
-1. Tags inherited from the project appear in the **Inherited Tags** section. You can attach new key-value pairs to their projects to override inherited tags. Refer to [Manage projects](/terraform/cloud-docs/projects/manage) for additional information about using tags in projects.
-
-    You cannot override reserved tag keys created by the organization administrator. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
-
-    You can also click on tag links in the **Inherited Tags** section to view workspaces that use the same tag.
-1. Click **Save**.
-
-Tags that you create appear in the tags management screen in the organization settings. Refer to [Organizations](/terraform/cloud-docs/users-teams-organizations/organizations) for additional information.
  
-## Migrating to key-value tags
-
-You can use the API to migrate single-value tags that may already be in your workspace tags to tag stored as key-value pairs. You must have permissions in the workspace to perform the following task. Refer to [Requirements](#requirements) for additional information.
-
-### Re-create existing workspace tags as resource tags 
-
-1. Send a `GET` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#list-tags) endpoint to request all workspaces for your organization. The response may span several pages.
-1. For each workspace, check the `tag-names` attribute for existing tags.
-1. Send a `PATCH` request to the [`/workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace) endpoint and include the `tag-binding` relationship in the request body for each workspace tag.
-
-### Delete single-value workspace tags
-
-1. Send a `GET` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#list-tags) endpoint to request all workspaces for your organization. 
-1. Enumerate the external IDs for all tags.
-2. Send a `DELETE` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#delete-tags) endpoint to delete tags.
 
 ## Next steps
 

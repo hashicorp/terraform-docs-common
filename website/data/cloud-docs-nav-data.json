@@ -186,6 +186,10 @@
         "title": "Create Workspaces",
         "path": "workspaces/create"
       },
+      {
+        "title": "Create tags",
+        "path": "workspaces/tags"
+      },
       { "title": "Explorer", "path": "workspaces/explorer" },
       { "title":  "Browse workspaces", "path":  "workspaces/browse"},
       {
