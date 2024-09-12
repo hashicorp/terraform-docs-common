@@ -138,7 +138,7 @@ You can use the API to migrate single-value tags that may already be in your wor
 
 1. Send a `GET` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#list-tags) endpoint to request all workspaces for your organization. The response may span several pages.
 1. For each workspace, check the `tag-names` attribute for existing tags.
-1. Send a `PATCH` request to the [`PATCH /workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace) endpoint and include the `tag-binding` relationship in the request body for each workspace tag.
+1. Send a `PATCH` request to the [`/workspaces/:workspace_id`](/terraform/cloud-docs/api-docs/workspaces#update-a-workspace) endpoint and include the `tag-binding` relationship in the request body for each workspace tag.
 
 ### Delete single-value workspace tags
 
