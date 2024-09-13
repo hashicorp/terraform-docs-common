@@ -232,7 +232,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 
 ## Show a team token
 
-You can display a [team token](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens) for a particular team using:
+Use this endpoint to display a [team token](/terraform/cloud-docs/users-teams-organizations/teams#api-tokens) for a particular team.
 
 `GET /teams/:team-id/authentication-token`
 
@@ -240,9 +240,9 @@ You can display a [team token](/terraform/cloud-docs/users-teams-organizations/t
 | ---------- | ------------------------- |
 | `:team-id` | The ID of the Team.       |
 
-You can also fetch a team token directly by using the token's ID with the `authentication-tokens/` endpoint:
+You can also fetch a team token directly by using the token's ID with the `authentication-tokens/` endpoint.
 
-`GET /authentication-tokens/:id`
+`GET /authentication-tokens/:token-id`
 
 | Parameter   | Description               |
 | ----------- | ------------------------- |
