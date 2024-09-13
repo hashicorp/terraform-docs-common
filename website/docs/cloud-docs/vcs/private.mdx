@@ -13,7 +13,7 @@ This article describes the steps required to configure connect HCP Terraform to 
 
 ## Background
 
-You can use HCP Terraform agents to connect HCP Terraform to your private VCS providers. The following are examples of private VCS providers that can be managed locally on your private network:
+You can use HCP Terraform agents to connect HCP Terraform to your private VCS providers. The following are examples of private VCS providers that you can manage locally on your private network:
 
 - GitHub Enterprise
 - GitLab Enterprise
@@ -75,10 +75,10 @@ To create a private VCS connection, complete the following steps:
 
 There are two sources of information to help diagnose issues with Private VCS and the HCP Terraform agent:
 
-- HCP Terraform agent logs
+1. HCP Terraform agent logs
   - These display events as seen by the HCP Terraform agent.
   - They can aid in diagnosing errors between the HCP Terraform agent and the VCS provider during VCS ingestion, as well as any issues occurring during request forwarding.
-- VCS events in HCP Terraform (Organization **Settings > Version Control > Events**)
+1. VCS events in HCP Terraform (Organization **Settings > Version Control > Events**)
   - VCS events include errors that have resulted from making requests for private VCS during setup of the VCS Connection, and during normal operation.
   - This will not include messages during normal operations of private VCS.
 
