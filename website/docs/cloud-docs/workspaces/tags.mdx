@@ -88,6 +88,8 @@ You cannot manage single-value tags in the UI. Instead, use the following worksp
 
 You can use the API to migrate single-value tags that may already be in your workspace tags to tag stored as key-value pairs. You must have permissions in the workspace to perform the following task. Refer to [Requirements](#requirements) for additional information.
 
+Note that Terraform adds single-value workspace tags that are defined in the associated Terraform cloud block configuration to workspaces selected by the configuration. As result, your workspace may include duplicate tags. Refer to the [Terraform reference documentation](/terraform/language/terraform#terraform-cloud-workspaces) for additional information. 
+
 ### Re-create existing workspace tags as resource tags
 
 1. Send a `GET` request to the [`/organizations/:organization_name/tags`](/terraform/cloud-docs/api-docs/organization-tags#list-tags) endpoint to request all workspaces for your organization. The response may span several pages.
