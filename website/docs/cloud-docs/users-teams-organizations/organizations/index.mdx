@@ -163,14 +163,25 @@ HCP Terraform can perform automatic health assessments in a workspace to assess 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.
 
 #### Runs
-From the Workspaces page, click **Settings** in the sidebar, then **Runs** to view current runs in all workspaces. You can perform the following actions:
+From the Workspaces page, click **Settings** in the sidebar, then **Runs** to view all of the current runs in your organization's workspaces. The **Runs** page displays:
+- The name of the run
+- The run's ID
+- What triggered the run
+- The workspace and project where the run is taking place
+- When the latest change in the run occurred
+- A button allowing you to cancel that run
 
-- Click **Needs Attention** to filter runs that requires user input, such as approving the plan or overriding a policy, to continue. 
-- Click **Running** to filter for runs that are in progress. 
-- Click **On Hold** to filter runs that have paused. 
-- Click on a column header to display runs in alphanumeric order according to the most recent change or workspace name.  
+You can apply the following filters to limit the runs HCP Terraform displays:
+- Click **Needs Attention** to display runs that require user input to continue, such as approving a plan or overriding a policy. 
+- Click **Running** to display runs that are in progress.
+- Click **On Hold** to display paused runs.
 
-Refer to [Run States and Stages](/terraform/cloud-docs/run/states) for additional information about understanding run states.
+
+For precise filtering, click **More filters** and check the boxes to filter runs by specific [run statuses](/terraform/cloud-docs/run/states), [run operations](/terraform/cloud-docs/run/modes-and-options), workspaces, or [agent pools](/terraform/cloud-docs/agents/agent-pools). Click **Apply filters** to list the runs that match your criteria.
+
+You can dismiss any of your filtering criteria by clicking the **X** next to the filter name above the table displaying your runs. 
+
+For more details about run states, refer to [Run States and Stages](/terraform/cloud-docs/run/states).
 
 ### Integrations
 
