@@ -43,11 +43,11 @@ To configure your HCP Terraform agent with private VCS support, you must set the
 
 Below is an example command to start the HCP Terraform agent:
 
-<CodeBlockConfig hideClipboard>
-
-```bash
+```shell-session
 $ export TFC_AGENT_TOKEN=<...>
+```
 
+```shell-session
 $ _TFC_AGENT_REQUEST_FORWARDING_ENABLED=true \
   tfc-agent \
   -name private-vcs-test-01 \
@@ -55,8 +55,6 @@ $ _TFC_AGENT_REQUEST_FORWARDING_ENABLED=true \
   -accept "ingress" \
   -log-level "debug"
 ```
-
-</CodeBlockConfig>
 
 ## Configure the private VCS connection
 
