@@ -10,6 +10,23 @@ description: >-
 An HCP Terraform workspace manages a single state file and the lifecycle of its resources. It is the smallest collection of HCP Terraform-managed infrastructure. Any operation on a resource can potentially affect other resources managed in the same state file, so it is best to keep the potential blast radius of your operations small. To do so, manage resources in separate workspaces when possible, grouping together only necessary and logically-related resources. For example, even though your application may require both compute resources and a database, these resources can operate independently and should be in their own workspaces. 
 Scoping your configuration and planning your workspace strategy early in your adoption of HCP Terraform and Terraform Enterprise will simplify your operations and make them safer.
 
+## Workspace design
+
+When designing workspaces, it is important to consider the following:
+
+*Workspace isolation*: Each workspace should be isolated from other workspaces to prevent unintended changes or disruptions. This isolation ensures that changes made to one workspace do not affect other workspaces.
+
+*Workspace naming*: We recommend following a naming convention for workspaces to maintain consistency and clarity. The recommended format, with a maximum of 90 characters, is as follows: `<business-unit>-<app-name>-<layer>-<env>`. By incorporating the business unit, application name, layer, and environment into the workspace name, you can easily identify and associate workspaces with specific components of your infrastructure.
+
+- `<business-unit>`: The business unit or team that owns the workspace.
+- `<app-name>`: The name of the application or service that the workspace manages.
+- `<layer>`: The layer of the infrastructure that the workspace manages (e.g., network, compute, data, app).
+- `<env>`: The environment that the workspace manages (e.g., dev, test, prod).
+
+By incorporating the business unit, application name, layer, and environment into the workspace name, you can identify and associate workspaces with specific components of your infrastructure. We recommend a maximum of ninety characters but this is not a hard limit.
+
+Many application teams will not need the layer component in the name as the infrastructure they need for their application is relatively simple. To standardize, you can use the string main or app in place of the layer component. This will help to maintain consistency across the organization.
+
 ## Group by volatility
 
 Volatility refers to the rate of change of the resources in a workspace. Infrastructure such as databases, VPCs, and subnets change much less frequently than infrastructure such as your web servers. By exposing your long-living infrastructure to unnecessary volatility, you introduce more opportunities for accidental changes. When planning your workspace organization, group resources by volatility.
