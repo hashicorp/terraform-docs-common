@@ -372,6 +372,7 @@
         "title": "Azure DevOps Server",
         "path": "vcs/azure-devops-server"
       },
+      { "title": "Private VCS Providers", "path": "vcs/private"},
       { "title": "Troubleshooting", "path": "vcs/troubleshooting" }
     ]
   },
