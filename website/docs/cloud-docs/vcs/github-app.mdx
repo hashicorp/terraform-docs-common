@@ -60,6 +60,10 @@ HCP Terraform requests GitHub authorization from each user, displaying a pop-up 
 
 ![Screenshot: GitHub asking whether you want to authorize "Terraform Cloud by HashiCorp".](/img/docs/gh-app-authorize.png)
 
+After initial configuration of GitHub App is performed, and therefore VCS provider instance created, GitHub App option will become grayed out and unavailable. You can modify existing configuration without removing it from GitHub, and re-creating.
+To add new repositories, use GitHub repository Settings tab(must be repository owner for it to be visible and accessible) -> Github Apps -> Terraform Cloud -> Configure -> Repository access
+In order to pull up the pop-up window again, use HCP Terraform -> Workspaces -> New -> Version Control Workflow -> GitHub App -> click GitHub Organization right above the repository list on the left -> Add another organization. 
+
 Once you authorize the app, you can use GitHub in any of your HCP Terraform organizations without needing to re-authorize.
 
 Authorization doesn't grant HCP Terraform any repository permissions; the app must also be installed in at least one of the GitHub organizations or accounts you have access to.
