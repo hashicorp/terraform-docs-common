@@ -1,0 +1,299 @@
+---
+page_title: Change Requests - API Docs - HCP Terraform
+description: >-
+  Use the `/change_requests` endpoint to view and archive change requests on given workspace.
+---
+
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+
+[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+
+[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
+
+[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
+
+[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+
+[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
+
+[JSON API error object]: https://jsonapi.org/format/#error-objects
+
+# Change Requests API
+
+Change requests are simple messages that can be appended to workspace. They convey work-to-be-done to the teams responsible for the attached workspaces. Change requests can also trigger team notifications to further amplify visibility of workspace maintenance tasks.
+
+## List Change Requests
+
+`GET api/v2/workspaces/:workspace_name/change-requests`
+
+| Parameter               | Description              |
+| ----------------------- | ------------------------ |
+| `:workspace_name`       | The workspace name to list change requests for |
+
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter       | Description                                                                                                                                                                  |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `page[number]`  | **Optional.** If omitted, the endpoint will return the first page.                                                                                                           |
+| `page[size]`    | **Optional.** If omitted, the endpoint will return 20 teams per page.                                                                                                        |
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/workspaces/:workspace_name/change-requests
+```
+### Sample Response
+
+```
+{
+  "data": [{
+	  "type": workspace_change_requests,
+	  "id": "wscr-yjLcKUMFTs6kr9iC"
+	  "attributes": {
+      "subject": "[Action Required] Github Actions Pinning (SEC-090)",
+      "message": "Some long description here",
+      "archived-by": null,
+      "archived-at": null,
+      "created-at": "2024-06-12T21:45:11.594Z",
+      "updated-at": "2024-06-12T21:45:11.594Z"
+	  },
+    "relationships": {
+      "workspace" : {
+        "data": {
+          "id": "ws-FTs6kr9iCwweku",
+          "type": "workspaces"
+        }
+      }
+    }
+  },
+  {
+    "type": "workspace_change_requests",
+    "id": "wscr-jXQMBkPAFGD6eyFs",
+    "attributes": {
+      "subject": "[Action Required] Github Actions Pinning (SEC-100)",
+      "message": "Some long description here",
+      "archived-by": null,
+      "archived-at": null,
+      "created-at": "2024-06-12T21:45:11.594Z",
+      "updated-at": "2024-06-12T21:45:11.594Z"
+     },
+     "relationships": {
+       "workspace" : {
+         "data": {
+          "id": "ws-FTs6kr9iCwweku",
+          "type": "workspaces"
+         }
+       }
+     }
+  }],
+  "links": {
+    "self": "https://localhost/api/v2/workspaces/example-workspace-name/change-requests?page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/workspaces/example-workspace-name/change-requests?page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/workspaces/example-workspace-name/change-requests?page%5Bnumber%5D=1\u0026page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+```
+
+## Show Change Request
+
+`GET api/v2/workspaces/change-requests/:change_request_id`
+
+| Parameter               | Description              |
+| ----------------------- | ------------------------ |
+| `:change_request_id`    | The change request ID    |
+
+### Sample Reuest
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request GET \
+  https://app.terraform.io/api/v2/change-requests/wscr-jXQMBkPAFGD6eyFs
+```
+
+### Sample Response
+
+{
+  "data": {
+    "type": "workspace_change_requests",
+      "id": "wscr-jXQMBkPAFGD6eyFs",
+      "attributes": {
+        "subject": "[Action Required] Github Actions Pinning (SEC-100)",
+        "message": "Some long description here",
+        "archived-by": null,
+        "archived-at": null,
+        "created-at": "2024-06-12T21:45:11.594Z",
+        "updated-at": "2024-06-12T21:45:11.594Z"
+      },
+      "relationships": {
+         "workspace" : {
+            "data": {
+              "id": "ws-FTs6kr9iCwweku",
+              "type": "workspaces"
+            }
+         }
+      }
+   }
+}
+
+
+## Archive Change Request
+
+Archived change requests can still be viewed. But will be sorted separated and report as "archived."
+
+`POST api/v2/workspaces/change-requests/:change_request_id`
+
+| Parameter               | Description              |
+| ----------------------- | ------------------------ |
+| `:change_request_id`    | The change request ID    |
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request PATCH \
+  https://app.terraform.io/api/v2/workspaces/change-requests/wscr-jXQMBkPAFGD6eyFs`
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "type": "workspace_change_requests",
+      "id": "wscr-jXQMBkPAFGD6eyFs",
+      "attributes": {
+        "subject": "[Action Required] Github Actions Pinning (SEC-100)",
+        "message": "Some long description here",
+        "archived-by": "user-2n4yj45149kf",
+        "archived-at": "2024-08-12T10:12:44.745Z",
+        "created-at": "2024-06-12T21:45:11.594Z",
+        "updated-at": "2024-06-12T21:45:11.594Z"
+      },
+      "relationships": {
+         "workspace" : {
+            "data": {
+              "id": "ws-FTs6kr9iCwweku",
+              "type": "workspaces"
+            }
+         }
+      }
+   }
+}
+```
+
+## Creating New Change Requests
+
+Presently, change requests can be made through an experimental "bulk actions" end point.
+
+`/api/v2/organizations/:organization_name/explorer/bulk-actions`
+
+| Parameter               | Description              |
+| ----------------------- | ------------------------ |
+| `:organiztion_id`       | The organization ID      |
+
+| Key path   | Type | Default | Description |
+| `data.action_type`          | string |      | The action to take. Accepted value is `"change_request"` |
+| `data.action_inputs`        | object |      | Arguments for the bulk action |
+| `data.action_inputs.subject | string |      | The subject line of the Change Request
+| `data.action_inputs.message | string |      | The message of the Change Request. This text is treated as markdown. |
+| `data.target_ids`           | array  |      | (optional) Ids of resources to take actiona against. Not needed if a valid query is provided | 
+| `data.query`                | object |      | (optional) Explorer query describing resources to target. Not needed if `target_ids` are present. See saved queries docs for more info. |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "type": "bulk_actions",
+    "attributes": {
+	    "action_type": "change_requests",
+	    "action_inputs": {
+        "subject": "[Action Required] Github Actions Pinning (SEC-090)",
+        "message": "Some long description here",
+      },
+    "query": {
+      "type": "workspaces",
+      "filter": [
+        "field": "workspace_name",
+        "operator": "contains",
+        "value": ["dev"]
+      ]
+    }
+  },
+}
+```
+
+### Sample Request
+
+```shell
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/organizations/sample_organization/explorer/bulk-actions`
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "attributes": {
+      "id": "eba-3jk34n5k2bs",
+      "organization_id: "org-9mvjfwpq098",
+	    "action_type": "change_requests",
+	    "action_inputs": {
+        "subject": "[Action Required] Github Actions Pinning (SEC-090)",
+        "message": "Some long description here",
+      },
+      "created_by": {
+        "id": "user-n86dcbcrwtw9",
+        "type": "users"
+      }
+    },
+    "type": "explorer_bulk_actions",
+  }
+}
+```
