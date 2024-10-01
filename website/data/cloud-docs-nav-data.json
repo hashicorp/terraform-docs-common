@@ -116,6 +116,7 @@
       },
       { "title": "Projects", "path": "api-docs/projects" },
       { "title": "Project Team Access", "path": "api-docs/project-team-access" },
+      { "title": "Reserved Tag Keys", "path":  "api-docs/reserved-tag-keys"},
       { "title": "Runs", "path": "api-docs/run" },
       {
         "title": "Run Tasks",
@@ -172,8 +173,8 @@
     "routes": [
       { "title": "Overview", "path": "projects" },
       {
-        "title": "Managing Projects",
-        "path": "projects/managing"
+        "title": "Manage Projects",
+        "path": "projects/manage"
       },
       { "title": "Best Practices", "path": "projects/best-practices" }
     ]
@@ -183,10 +184,15 @@
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
-        "title": "Creating Workspaces",
-        "path": "workspaces/creating"
+        "title": "Create Workspaces",
+        "path": "workspaces/create"
+      },
+      {
+        "title": "Create tags",
+        "path": "workspaces/tags"
       },
       { "title": "Explorer", "path": "workspaces/explorer" },
+      { "title":  "Browse workspaces", "path":  "workspaces/browse"},
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
@@ -366,6 +372,7 @@
         "title": "Azure DevOps Server",
         "path": "vcs/azure-devops-server"
       },
+      { "title": "Private VCS Providers", "path": "vcs/private"},
       { "title": "Troubleshooting", "path": "vcs/troubleshooting" }
     ]
   },

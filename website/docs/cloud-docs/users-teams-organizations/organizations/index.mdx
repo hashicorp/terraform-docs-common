@@ -1,8 +1,7 @@
 ---
-page_title: Organizations - HCP Terraform
+page_title: Organizations overview
 description: >-
-  Organizations allow teams to collaborate on workspaces. Learn about
-  organization membership, organization settings, and more.
+  Organizations are partitions in HCP Terraform and Terraform Enterprise that let teams within a business unit collaborate on infrastructure as code projects. Organizations contain one or more projects, which contain one or more workspaces.
 ---
 
 [teams]: /terraform/cloud-docs/users-teams-organizations/teams
@@ -11,9 +10,13 @@ description: >-
 
 [owners]: /terraform/cloud-docs/users-teams-organizations/teams#the-owners-team
 
-# Organizations
+# Organizations overview
 
-Organizations are a shared space for one or more [teams][] to collaborate on workspaces.
+This topic provides overview information about how to create and manage organizations in HCP Terraform and Terraform Enterprise. An organization contains one or more projects.
+
+## Requirements
+
+The **admin** permission preset must be enabled on your profile to create and manage organizations in the HCP Terraform UI. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) for additional information. 
 
 ## API and Terraform Enterprise Provider
 
@@ -21,14 +24,14 @@ In addition to the HCP Terraform UI, you can use the following methods to manage
 - [Organizations API](/terraform/cloud-docs/api-docs/organizations)
 - The `tfe` provider [`tfe_organization`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization) resource
 
-## Selecting Organizations
+## Selecting organizations
 
 HCP Terraform displays your current organization in the bottom left of the sidebar. To select an organization:
 
 1. Click the current organization name to view a list of all the organizations where you are a member.
 1. Click an organization to select it. HCP Terraform displays list of workspaces within that organization.
 
-## Joining and Leaving Organizations
+## Joining and leaving organizations
 
 To join an organization, the organization [owners][] or a user with specific [team management](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions) permissions must invite you, and you must accept the emailed invitation. [Learn more](#users).
 
@@ -41,7 +44,7 @@ To leave an organization:
 
 You do not need permission from the owners to leave an organization, but you cannot leave if you are the last member of the owners team. Either add a new owner and then leave, or [delete the organization](/terraform/cloud-docs/users-teams-organizations/organizations#general).
 
-## Creating Organizations
+## Creating organizations
 
 On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Administration: General Settings](/terraform/enterprise/admin/application/general#organization-creation) for details.
 
@@ -55,7 +58,8 @@ On HCP Terraform, any user can create a new organization. If you do not belong t
 HCP Terraform shows the new organization and prompts you to create a new workspace. You can also [invite other users](#users) to join the organization.
 
 <!-- BEGIN: TFC:only name:managed-resources -->
-## Managed Resources
+
+## Managed resources
 
 Your organization’s managed resource count helps you understand the number of infrastructure resources that HCP Terraform manages across all your workspaces.
 
@@ -65,7 +69,27 @@ You can view your organization's managed resource count on the **Usage** page.
 
 <!-- END: TFC:only name:managed-resources -->
 
-## Managing Settings
+## Create and manage reserved tags
+
+~> **Reserved tags is in private beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the private beta.
+
+Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources, as well as track resource consumption. Refer to the following topics for information about creating and managing tags attached to projects and workspaces:
+
+- [Create a project](/terraform/cloud-docs/projects/manage#create-a-project)
+- [Create workspace tags](/terraform/cloud-docs/workspaces/tags)
+
+You can define reserved tag keys for your organization so that project and workspace managers can use consistent labels.
+
+1. Click on **Tags** in the sidebar to view all tags in your organization. 
+1. Click on the **Reserved Keys** tab. You can perform the following actions:
+   1. Use the search bar to find a specific tag key.
+   1. Click on a column header to sort the table.
+   1. Click on the ellipses menu to open the management options for each tag key.
+   1. Click **New tag key** to define a new key.
+
+You can also view single-value tags that workspace managers added directly to their workspaces. Refer to [Tags](#tags) in the organization settings reference for additional information.
+
+## Managing settings
 
 To view and manage an organization's settings, click **Settings**.
 
@@ -75,7 +99,7 @@ You may be able to manage the following organization settings.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-### Organization Settings
+### Organization settings
 
 #### General
 
@@ -89,7 +113,7 @@ Organization owners using HCP Terraform Plus edition can choose whether members 
 
 <!-- END: TFC:only name:generated-tests -->
 
-##### Renaming an Organization
+##### Renaming an organization
 
 !> **Warning:** Deleting or renaming an organization can be very disruptive. We strongly recommend against deleting or renaming organizations with active members.
 
@@ -108,7 +132,12 @@ Review the organization's plan and any invoices for previous plan payments. Orga
 
 #### Tags
 
-Review a list of tags for all resources across the organization. When you delete a tag from this page, HCP Terraform removes it from all resources.
+Click the **Tags** tab in the **Tags Management** screen to view single-value tags that workspace managers added directly to their workspaces. For information about key-value tag keys, refer to [Create and manage reserved tags](#create-and-manage-reserved-tags).
+
+You can perform the following actions in the **Tags** tab:
+
+1. Search for a tag key or value.
+1. Click on a column header to sort tags.
 
 #### Teams
 
@@ -163,14 +192,25 @@ HCP Terraform can perform automatic health assessments in a workspace to assess 
 You can enforce health assessments for all eligible workspaces or let each workspace opt in to health assessments through workspace settings. Refer to [Health](/terraform/cloud-docs/workspaces/health) in the workspaces documentation for more details.
 
 #### Runs
-From the Workspaces page, click **Settings** in the sidebar, then **Runs** to view current runs in all workspaces. You can perform the following actions:
+From the Workspaces page, click **Settings** in the sidebar, then **Runs** to view all of the current runs in your organization's workspaces. The **Runs** page displays:
+- The name of the run
+- The run's ID
+- What triggered the run
+- The workspace and project where the run is taking place
+- When the latest change in the run occurred
+- A button allowing you to cancel that run
 
-- Click **Needs Attention** to filter runs that requires user input, such as approving the plan or overriding a policy, to continue. 
-- Click **Running** to filter for runs that are in progress. 
-- Click **On Hold** to filter runs that have paused. 
-- Click on a column header to display runs in alphanumeric order according to the most recent change or workspace name.  
+You can apply the following filters to limit the runs HCP Terraform displays:
+- Click **Needs Attention** to display runs that require user input to continue, such as approving a plan or overriding a policy. 
+- Click **Running** to display runs that are in progress.
+- Click **On Hold** to display paused runs.
 
-Refer to [Run States and Stages](/terraform/cloud-docs/run/states) for additional information about understanding run states.
+
+For precise filtering, click **More filters** and check the boxes to filter runs by specific [run statuses](/terraform/cloud-docs/run/states), [run operations](/terraform/cloud-docs/run/modes-and-options), workspaces, or [agent pools](/terraform/cloud-docs/agents/agent-pools). Click **Apply filters** to list the runs that match your criteria.
+
+You can dismiss any of your filtering criteria by clicking the **X** next to the filter name above the table displaying your runs. 
+
+For more details about run states, refer to [Run States and Stages](/terraform/cloud-docs/run/states).
 
 ### Integrations
 
@@ -192,7 +232,7 @@ Policies let you define and enforce rules for Terraform runs. You can write them
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-Create groups of policies and enforce those policy sets globally or on specific [projects](/terraform/cloud-docs/projects/managing) and workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in HCP Terraform. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
+Create groups of policies and enforce those policy sets globally or on specific [projects](/terraform/cloud-docs/projects/manage) and workspaces. You can create policy sets through the Terraform API, by connecting a VCS repository containing policies, or directly in HCP Terraform. To create policies and policy sets, you must have [permission to manage policies](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions).
 
 Refer to [Managing Policy Sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) for details.
 
