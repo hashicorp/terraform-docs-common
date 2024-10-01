@@ -233,6 +233,7 @@ Presently, change requests can be made through an experimental "bulk actions" en
 | `:organiztion_id`       | The organization ID      |
 
 | Key path   | Type | Default | Description |
+|------------|------|---------|-------------|
 | `data.action_type`          | string |      | The action to take. Accepted value is `"change_request"` |
 | `data.action_inputs`        | object |      | Arguments for the bulk action |
 | `data.action_inputs.subject | string |      | The subject line of the Change Request
@@ -272,7 +273,7 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/sample_organization/explorer/bulk-actions`
+  https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/bulk-actions`
 ```
 
 ### Sample Response
@@ -280,8 +281,8 @@ $ curl \
 ```json
 {
   "data": {
+    "id": "eba-3jk34n5k2bs",
     "attributes": {
-      "id": "eba-3jk34n5k2bs",
       "organization_id: "org-9mvjfwpq098",
 	    "action_type": "change_requests",
 	    "action_inputs": {
