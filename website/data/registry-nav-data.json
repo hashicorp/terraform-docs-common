@@ -31,7 +31,6 @@
         "path": "modules/use"
       },
       { "title": "Publishing Modules", "path": "modules/publish" },
-      { "title": "Manage Module Versions", "path": "modules/manage-module-versions" },
       { "title": "Partner Modules", "path": "modules/partner" }
     ]
   },
