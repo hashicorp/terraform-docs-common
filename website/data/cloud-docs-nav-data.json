@@ -102,6 +102,7 @@
         "title": "Private Registry",
         "routes": [
           { "title": "Modules", "path": "api-docs/private-registry/modules" },
+          { "title": "Manage Module Versions", "path": "api-docs/private-registry/manage-module-versions" },
           {
             "title": "Providers",
             "path": "api-docs/private-registry/providers"
