@@ -393,7 +393,7 @@
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
       },
-      { "title": "Manage Module Versions", "path": "modules/manage-module-versions" },
+      { "title": "Manage Module Versions", "path": "registry/manage-module-versions" },
       {
         "title": "Test-Integrated Modules",
         "path": "registry/test"
