@@ -39,7 +39,9 @@ description: |-
 # Manage module version API
 Deprecating a module version in your organization’s private registry adds warnings to the module's registry page and warnings in the run outputs of any users of that version. 
 
-@import "partials/tfc-package-callouts/manage-module-version.mdx"
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include "tfc-package-callouts/manage-module-version.mdx"
+<!-- END: TFC:only name:pnp-callout -->
 
 Once you have deprecated a module version, you can revert its deprecation to remove the warnings from that version. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/deprecate-module-versions).
 
