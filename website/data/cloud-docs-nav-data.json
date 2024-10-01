@@ -56,6 +56,10 @@
         "path": "api-docs/comments"
       },
       {
+        "title": "Comments",
+        "path": "api-docs/change-requests"
+      },
+      {
         "title": "Configuration Versions",
         "path": "api-docs/configuration-versions"
       },
