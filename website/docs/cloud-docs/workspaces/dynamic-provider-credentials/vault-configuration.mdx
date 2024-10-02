@@ -101,6 +101,8 @@ Create a file called `vault-jwt-auth-role.json` with the following content:
 }
 ```
 
+~> **Note**: Setting the `user_claim` to be a workspace will tie the entity created in Vault to this workspace. Since workspaces are the uniqueness factor, if the workspace is renamed, this can create an additional identity object within Vault. To avoid this, the alias name in Vault can be updated to the new workspace name before updating the workspace name in HCP Terraform.
+
 Then run the following command to create a role named `tfc-role` with this configuration in Vault:
 ```shell
 vault write auth/jwt/role/tfc-role @vault-jwt-auth-role.json
