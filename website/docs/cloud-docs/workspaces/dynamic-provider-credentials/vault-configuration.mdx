@@ -83,6 +83,8 @@ Create a Vault role that HCP Terraform can use when authenticating to Vault.
 
 Vault offers a lot of flexibility in determining how to map roles and permissions in Vault to workspaces in HCP Terraform. You can have one role for each workspace, one role for a group of workspaces, or one role for all workspaces in an organization. You can also configure different roles for the plan and apply phases of a run.
 
+test
+
 -> **Note:** Setting the `user_claim` to be per workspace will tie the entity created in Vault to that workspace. Since workspaces are the uniqueness factor, if the workspace is renamed, this can create an additional identity object within Vault. To avoid this, the alias name in Vault can be updated to the new workspace name before updating the workspace name in HCP Terraform.
 
 The following example creates a role called `tfc-role`. The role is mapped to a single workspace and HCP Terraform can use it for both plan and apply runs.
