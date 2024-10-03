@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Notification Configurations API
+# Notification configuration API
 
 HCP Terraform can send notifications for run state transitions and workspace events. You can specify a destination URL, request type, and what events will trigger the notification. Each workspace can have up to 20 notification configurations, and they apply to all runs for that workspace.
 
@@ -46,7 +46,7 @@ Interacting with notification configurations requires admin access to the releva
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## Notification Triggers
+## Notification triggers
 
 Notifications are sent in response to triggers related to workspace events, and can be defined at workspace and team levels. These are specified in the `triggers` array attribute. Available triggers are:
 
@@ -70,13 +70,13 @@ Team Notification Triggers
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
 | Change Request | `"team:change_request"`   | A change request has been sent to a workspace that the team has explicit acces to. |
 
-## Notification Payload
+## Notification payload
 
 The notification is an HTTP POST request with a detailed payload. The content depends on the type of notification.
 
 For Slack and Microsoft Teams notifications, the payload conforms to the respective webhook API and results in a notification message with informational attachments. Refer to [Slack Notification Payloads](/terraform/cloud-docs/workspaces/settings/notifications#slack) and [Microsoft Teams Notification Payloads](/terraform/cloud-docs/workspaces/settings/notifications#microsoft-teams) for examples. For generic notifications, the payload varies based on whether the notification contains information about run events or workspace events.
 
-### Run Notification Payload
+### Run notification payload
 
 Run events include detailed information about a specific run, including the time it began and the associated workspace and organization. Generic notifications for run events contain the following information:
 
@@ -99,7 +99,7 @@ Run events include detailed information about a specific run, including the time
 | `notifications[].run_updated_at` | string | Timestamp of the run's update.                                                                                                                                                                                                                 |
 | `notifications[].run_updated_by` | string | Username of the user who caused the run to update.                                                                                                                                                                                             |
 
-#### Sample Payload
+#### Sample payload
 
 ```json
 {
@@ -142,7 +142,7 @@ Change request events contain
 | `workspace_name`                 | string | Human-readable name of the run's workspace.                                                                                                                                                                                                    |
 | `organization_name`              | string | Human-readable name of the run's organization.                                                                                                                                                                                                 |
 
-##### `Send a test` Payload
+##### `Send a test` payload
 
 This is a sample payload you can send to test if notifications are working. The payload does not have a `run` or `workspace` context, resulting in null values.
 
@@ -178,7 +178,7 @@ Workspace events include detailed information about workspace-level validation e
 
 HCP Terraform returns different types of attributes returned in the payload details, depending on the type of `trigger_scope`. There are two main values for `trigger_scope`: `assessment` and `workspace`, examples of which you can see below.
 
-#### Health Assessments
+#### Health assessments
 
 Health assessment notifications for workspace events contain the following information:
 
@@ -225,7 +225,7 @@ Health assessment notifications for workspace events contain the following infor
 | `details.workspace_name`                     | string | Human-readable name of the workspace.                                                |
 | `details.organization_name`                  | string | Human-readable name of the organization.                                             |
 
-##### Sample Payload
+##### Sample payload
 
 Health assessment payloads have information about resource drift and continuous validation checks.
 
@@ -273,7 +273,7 @@ Health assessment payloads have information about resource drift and continuous 
 }
 ```
 
-#### Automatic Destroy Runs
+#### Automatic destroy runs
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/ephemeral-workspaces.mdx'
@@ -299,7 +299,7 @@ Automatic destroy run notifications for workspace events contain the following i
 | `details.workspace_name`                     | string | Human-readable name of the workspace.                                                                       |
 | `details.organization_name`                  | string | Human-readable name of the organization.                                                                    |
 
-##### Sample Payload
+##### Sample payload
 
 The shape of data in auto destroy notification payloads may differ depending on the success of the run HCP Terraform created. Refer to the specific examples below.
 
@@ -353,7 +353,7 @@ The final result of the scheduled auto destroy run includes additional metadata 
 }
 ```
 
-###### Failed Run Creation
+###### Failed run creation
 
 Run-specific values are empty when HCP Terraform was unable to create an auto destroy run.
 
@@ -378,9 +378,9 @@ Run-specific values are empty when HCP Terraform was unable to create an auto de
 }
 ```
 
-## Notification Authenticity
+## Notification authenticity
 
-If a `token` is configured, HCP Terraform provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the request body using the same shared secret, and dropping any requests with invalid signatures.
+If a `token` is configured, HCP Terraform provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the Request body using the same shared secret, and dropping any requests with invalid signatures.
 
 Sample Ruby code for verifying the HMAC:
 
@@ -390,7 +390,7 @@ hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha512"), token, @request.bo
 fail "Invalid HMAC" if hmac != @request.headers["X-TFE-Notification-Signature"]
 ```
 
-## Notification Verification and Delivery Responses
+## Notification verification and delivery responses
 
 When saving a configuration with `enabled` set to `true`, or when using the [verify API][], HCP Terraform sends a verification request to the configured URL. The response to this request is stored and available in the `delivery-responses` array of the `notification-configuration` resource.
 
@@ -412,7 +412,7 @@ Each delivery response has several fields:
 
 [verify API]: #verify-a-notification-configuration
 
-## Create a Notification Configuration
+## Create a notification configuration
 
 `POST /workspaces/:workspace_id/notification-configurations`
 
@@ -425,9 +425,9 @@ Each delivery response has several fields:
 | [201][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully created a notification configuration              |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL     |
 | [404][] | [JSON API error object][]                                     | Workspace not found, or user unauthorized to perform action    |
-| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.) |
+| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.) |
 
-### Request Body
+### Request body
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -450,7 +450,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 
 [notification-triggers]: #notification-triggers
 
-### Sample Payload for Generic Notification Configurations
+### Sample payload for generic notification configurations
 
 ```json
 {
@@ -474,7 +474,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample Payload for Email Notification Configurations
+### Sample payload for email notification configurations
 
 ```json
 {
@@ -502,7 +502,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -513,7 +513,7 @@ curl \
   https://app.terraform.io/api/v2/workspaces/ws-XdeUVMWShTesDMME/notification-configurations
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -616,7 +616,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                          |
 | `page[size]`   | **Optional.** If omitted, the endpoint will return 20 notification configurations per page. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -626,7 +626,7 @@ curl \
   https://app.terraform.io/api/v2/workspaces/ws-XdeUVMWShTesDMME/notification-configurations
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -752,7 +752,7 @@ curl \
 | -------------------------------- | ------------------------------------------------- |
 | `:notification-configuration-id` | The id of the notification configuration to show. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -762,7 +762,7 @@ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-AeUQ2zfKZzW9TiGZ
 ```
 
-### Sample Response
+### Sample response
 
 -> **Note:** The `type` and `id` attributes in `relationsips.subscribable` may also reference a `"teams"` and team id, respectively.
 
@@ -867,9 +867,9 @@ If the `enabled` attribute is true, updating the configuration will cause HCP Te
 | [200][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully updated the notification configuration                          |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL                   |
 | [404][] | [JSON API error object][]                                     | Notification configuration not found, or user unauthorized to perform action |
-| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.)               |
+| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.)               |
 
-### Request Body
+### Request body
 
 This PATCH endpoint requires a JSON object with the following properties as a request payload.
 
@@ -889,7 +889,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 
 [notification-triggers]: #notification-triggers
 
-### Sample Payload
+### Sample payload
 
 ```json
 {
@@ -912,7 +912,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -923,7 +923,7 @@ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-W6VGEi8A7Cfoaf4K
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -975,7 +975,7 @@ This will cause HCP Terraform to send a verification request for the specified c
 | [200][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully verified the notification configuration       |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -985,7 +985,7 @@ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-AeUQ2zfKZzW9TiGZ/actions/verify
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -1071,7 +1071,7 @@ curl \
 }
 ```
 
-## Delete a Notification Configuration
+## Delete a notification configuration
 
 This endpoint deletes a notification configuration.
 
@@ -1086,7 +1086,7 @@ This endpoint deletes a notification configuration.
 | [204][] | None                      | Successfully deleted the notification configuration                          |
 | [404][] | [JSON API error object][] | Notification configuration not found, or user unauthorized to perform action |
 
-### Sample Request
+### Sample request
 
 ```shell
 $ curl \
@@ -1096,13 +1096,19 @@ $ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-AeUQ2zfKZzW9TiGZ
 ```
 
-# Team Notification Configurations API
+# Team notification configurations API
+
+TODO
 
 ## Notification Triggers
 
+TODO
+
 ## Notification Payload
 
-## Create a Team Notification Configuration
+TODO
+
+## Create a team notification configuration
 
 --> **Note:** All teams have a default email notification configuration defined with no users assigned. With no users assigned any email notifications are sent to all team members.
 
@@ -1118,9 +1124,9 @@ $ curl \
 | [201][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully created a notification configuration              |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL     |
 | [404][] | [JSON API error object][]                                     | Team not found, or user unauthorized to perform action    |
-| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.) |
+| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.) |
 
-### Request Body
+### Request body
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -1144,7 +1150,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 
 [notification-triggers]: #notification-triggers
 
-### Sample Payload for Generic Notification Configurations
+### Sample payload for generic notification configurations
 
 ```json
 {
@@ -1163,7 +1169,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample Payload for Email Notification Configurations
+### Sample payload for email notification configurations
 
 ```json
 {
@@ -1186,7 +1192,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -1197,7 +1203,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-6p5jTwJQXwqZBncC/notification-configurations
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -1278,7 +1284,7 @@ curl \
 }
 ```
 
-## List Team Notification Configurations
+## List team notification configurations
 
 `GET /teams/:team_id/notification-configurations`
 
@@ -1296,7 +1302,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                          |
 | `page[size]`   | **Optional.** If omitted, the endpoint will return 20 notification configurations per page. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -1306,7 +1312,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-6p5jTwJQXwqZBncC/notification-configurations
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -1415,6 +1421,5 @@ curl \
     }
   ]
 }
-
 ```
 

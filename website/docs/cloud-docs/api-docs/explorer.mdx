@@ -71,7 +71,7 @@ contain data that represents the current state of the system, but in some cases
 a small delay may be necessary before querying for data that has recently been
 updated.
 
-### Query Parameters
+### Query parameters
 
 This GET endpoint requires a query string that supports the following properties.
 
@@ -245,7 +245,7 @@ where the field value is earlier than the filter value. ISO 8601 formatted times
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-### Sample Requests
+### Sample requests
 
 **View Type: `workspaces`**
 
@@ -319,7 +319,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer?type=tf_versions&filter%5B0%5D%5Bworkspace_count%5D%5Bgt%5D%5B0%5D=10'
 ```
 
-### Sample Response
+### Sample response
 
 _Show data for all workspaces_
 
@@ -433,12 +433,12 @@ contain data that represents the current state of the system, but in some cases
 a small delay may be necessary before querying for data that has recently been
 updated.
 
-### Query Parameters
+### Query parameters
 
 This GET endpoint supports the same query string parameters as the Explorer [Query
 endpoint](#execute-a-query).
 
-### Sample Requests
+### Sample requests
 
 **View Type: `workspaces`**
 
@@ -450,7 +450,7 @@ curl \
   https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/export/csv?type=workspaces
 ```
 
-### Sample Response
+### Sample response
 
 _Show data for all workspaces_
 
@@ -458,8 +458,9 @@ _Show data for all workspaces_
 all_checks_succeeded,checks_errored,checks_failed,checks_passed,checks_unknown,current_run_applied_at,current_run_external_id,current_run_status,drifted,external_id,module_count,modules,organization_name,project_external_id,project_name,provider_count,providers,resources_drifted,resources_undrifted,state_version_terraform_version,vcs_repo_identifier,workspace_created_at,workspace_name,workspace_terraform_version,workspace_updated_at
 "true","0","0","0","0","","run-rdoEKh2Gy3K6SbCZ","planned_and_finished","false","ws-j2sAeWRxou1b5HYf","0","","acme-corp","prj-V61QLE8tvs4NvVZG","Default Project","0","","0","0","1.5.7","","2023-10-17T21:56:45+00:00","payments-service","1.5.7","2023-12-13T15:48:16+00:00"
 "true","0","0","0","0","2023-08-18T16:24:59+00:00","run-9MmJaoQTvDCh5wUa","applied","true","ws-igUVNQSYVXRkhYuo","0","","acme-corp","prj-uU2xNqGeG86U9WgT","web","0","","3","3","1.4.5","acmecorp/api","2023-04-25T17:09:14+00:00","api-service","1.4.5","2023-12-13T15:29:03+00:00"
+```
 
-## List Saved Views
+## List saved views
 
 Show available saved views
 
@@ -469,7 +470,7 @@ Show available saved views
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -478,7 +479,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views'
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -507,7 +508,7 @@ curl \
 }
 ```
 
-## Create Saved View
+## Create saved view
 
 `POST /api/v2/organizations/:organization_name/explorer/views`
 
@@ -520,7 +521,7 @@ curl \
 |------------|------|---------|-------------|
 | `data.name`         | string |   | The name of the saved view. |
 | `data.query_type`   | string |   | The type primary type that the view is querying. See [View Types](#view-types) for full details. |
-| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. See [Query Parameters](#query-parameters) for full details. |
+| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. See [Query parameters](#query-parameters) for full details. |
 | `data.query.filter`          | array\[objects]|   | A list of filters composed of fields, operators, and values. |
 | `data.query.filter.field`    | string        |   | The field name to filter by. |
 | `data.query.filter.operator` | string        |   | The operator applied to field and value. |
@@ -528,7 +529,7 @@ curl \
 | `data.query.fields` | array\[strings] |   | A list of fields to include in the view. |
 | `data.query.sort`   | array\[strings] |   | A list of fields to sort by. Prefix with `-` for descending sort. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -538,7 +539,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views'
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -567,7 +568,7 @@ curl \
 }
 ```
 
-## Show Saved View
+## Show saved view
 
 `GET /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
@@ -577,7 +578,7 @@ curl \
 | `:view_id`           | The external id of the saved view to show. |
 
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -586,7 +587,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views/$VIEW_ID`
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -614,7 +615,7 @@ curl \
   }
 }
 ```
-## Update a Saved View
+## Update a saved view
 
 `PATCH /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
@@ -626,7 +627,7 @@ curl \
 | Key path   | Type | Default | Description |
 |------------|------|---------|-------------|
 | `data.name`         | string |   | The name of the saved view. |
-| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. See [Query Parameters](#query-parameters) for full details. |
+| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. See [Query parameters](#query-parameters) for full details. |
 | `data.query.filter`          | array\[objects]|   | A list of filters composed of fields, operators, and values. See [Filtering](#filtering) for more information. |
 | `data.query.filter.field`    | string        |   | The field name to filter by. |
 | `data.query.filter.operator` | string        |   | The operator applied to field and value. |
@@ -634,7 +635,7 @@ curl \
 | `data.query.fields` | array\[strings] |   | A list of fields to include in the view. See TODO |
 | `data.query.sort`   | array\[strings] |   | A list of fields to sort by. Prefix with `-` for descending sort. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -644,7 +645,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/viewsi/$VIEW_ID'
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -673,7 +674,7 @@ curl \
 }
 ```
 
-## Delete a Saved View
+## Delete a saved view
 
 `DELETE /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
@@ -682,7 +683,7 @@ curl \
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 | `:view_id`           | The external id of the saved view to delete. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -691,7 +692,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views/$VIEW_ID`
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -720,7 +721,7 @@ curl \
 }
 ```
 
-## Query a Saved View
+## Query a saved view
 
 Execute the query represented by the saved view to retrieve current results associated with it.
 
@@ -731,7 +732,7 @@ Execute the query represented by the saved view to retrieve current results asso
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 | `:view_id`           | The external id of the saved view to query. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -740,7 +741,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views/$VIEW_ID/results`
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -828,7 +829,7 @@ curl \
 }
 ```
 
-## Query a Saved View (CSV format)
+## Query a saved view (CSV format)
 
 Same as the results endpoint, but in a report file format.
 
@@ -839,7 +840,7 @@ Same as the results endpoint, but in a report file format.
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 | `:view_id`           | The external id of the saved view to query. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -848,7 +849,7 @@ curl \
   'https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/views/$VIEW_ID/csv`
 ```
 
-### Sample Response
+### Sample response
 
 ```csv
 all_checks_succeeded,checks_errored,checks_failed,checks_passed,checks_unknown,current_run_applied_at,current_run_external_id,current_run_status,drifted,external_id,module_count,modules,organization_name,project_external_id,project_name,provider_count,providers,resources_drifted,resources_undrifted,state_version_terraform_version,vcs_repo_identifier,workspace_created_at,workspace_name,workspace_terraform_version,workspace_updated_at

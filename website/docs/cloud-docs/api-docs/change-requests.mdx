@@ -49,7 +49,7 @@ Change requests are simple messages that can be appended to workspace. They conv
 | `:workspace_name`       | The workspace name to list change requests for |
 
 
-### Query Parameters
+### Query parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
@@ -58,7 +58,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]`  | **Optional.** If omitted, the endpoint will return the first page.                                                                                                           |
 | `page[size]`    | **Optional.** If omitted, the endpoint will return 20 teams per page.                                                                                                        |
 
-### Sample Request
+### Sample request
 
 ```shell
 $ curl \
@@ -67,7 +67,7 @@ $ curl \
   --request GET \
   https://app.terraform.io/api/v2/workspaces/:workspace_name/change-requests
 ```
-### Sample Response
+### Sample response
 
 ```
 {
@@ -149,7 +149,7 @@ $ curl \
   https://app.terraform.io/api/v2/change-requests/wscr-jXQMBkPAFGD6eyFs
 ```
 
-### Sample Response
+### Sample response
 
 {
   "data": {
@@ -185,7 +185,7 @@ Archived change requests can still be viewed. But will be sorted separated and r
 | ----------------------- | ------------------------ |
 | `:change_request_id`    | The change request ID    |
 
-### Sample Request
+### Sample request
 
 ```shell
 $ curl \
@@ -195,7 +195,7 @@ $ curl \
   https://app.terraform.io/api/v2/workspaces/change-requests/wscr-jXQMBkPAFGD6eyFs`
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -265,7 +265,7 @@ Presently, change requests can be made through an experimental "bulk actions" en
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 $ curl \
@@ -276,7 +276,7 @@ $ curl \
   https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/bulk-actions`
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
