@@ -52,12 +52,12 @@
       },
       { "title": "Assessment Results", "path": "api-docs/assessment-results" },
       {
-        "title": "Comments",
-        "path": "api-docs/comments"
+        "title": "Change requests",
+        "path": "api-docs/change-requests"
       },
       {
         "title": "Comments",
-        "path": "api-docs/change-requests"
+        "path": "api-docs/comments"
       },
       {
         "title": "Configuration Versions",
