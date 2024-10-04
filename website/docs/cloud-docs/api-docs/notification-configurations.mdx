@@ -50,7 +50,10 @@ Interacting with notification configurations requires admin access to the releva
 
 Notifications are sent in response to triggers related to workspace events, and can be defined at workspace and team levels. These are specified in the `triggers` array attribute. Available triggers are:
 
-Workspace Notification Triggers
+### Workspace notification triggers
+
+The following triggers are available for workspace notifications:
+
 | Display Name       | Value                   | Description                                                                                              |
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
 | Created            | `"run:created"`         | A run is created and enters the [Pending stage](/terraform/cloud-docs/run/states#the-pending-stage)                                                    |
@@ -65,7 +68,9 @@ Workspace Notification Triggers
 | Auto Destroy Reminder | `"workspace:auto_destro_reminder"`   | An automated workspace destroy run is imminent. |
 | Auto Destroy Results | `"workspace:auto_destroy_run_results"`   | HCP Terraform attempted an automated workspace destroy run. |
 
-Team Notification Triggers
+### Team notification triggers
+The following triggers are available for team notifications:
+
 | Display Name       | Value                   | Description                                                                                              |
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
 | Change Request | `"team:change_request"`   | A change request has been sent to a workspace that the team has explicit acces to. |
@@ -125,9 +130,9 @@ Run events include detailed information about a specific run, including the time
 }
 ```
 
-### Change Request Notification Payload
+### Change request notification payload
 
-Change request events contain
+Change request events contain the following fields in their payloads.
 
 | Name                             | Type   | Description                                                                                                                                                                                                                                    |
 | -------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -172,7 +177,7 @@ You can trigger a test notification from the workspace notifcation settings page
 }
 ```
 
-### Workspace Notification Payload
+### Workspace notification payload
 
 Workspace events include detailed information about workspace-level validation events like [health assessments](/terraform/cloud-docs/workspaces/health) if you enable them for the workspace. Much of the information provides details about the associated [assessment result](/terraform/cloud-docs/api-docs/assessment-results), which HCP Terraform uses to track instances of continuous validation.
 
@@ -599,7 +604,9 @@ curl \
 }
 ```
 
-## List Notification Configurations
+## List notification configurations
+
+USe the following endpoint to list all notification configurations for a workspace.
 
 `GET /workspaces/:workspace_id/notification-configurations`
 
@@ -607,7 +614,7 @@ curl \
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `:workspace_id` | The ID of the workspace to list configurations from. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint.  If neither pagination query parameters are provided, the endpoint will not be paginated and will return all results. |
 
-### Query Parameters
+### Query parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
@@ -744,7 +751,7 @@ curl \
 
 ```
 
-## Show a Notification Configuration
+## Show a notification configuration
 
 `GET /notification-configurations/:notification-configuration-id`
 
@@ -850,7 +857,7 @@ curl \
 }
 ```
 
-## Update a Notification Configuration
+## Update a notification configuration
 
 `PATCH /notification-configurations/:notification-configuration-id`
 
@@ -960,7 +967,7 @@ curl \
 }
 ```
 
-## Verify a Notification Configuration
+## Verify a notification configuration
 
 `POST /notification-configurations/:notification-configuration-id/actions/verify`
 
@@ -1096,19 +1103,19 @@ $ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-AeUQ2zfKZzW9TiGZ
 ```
 
-# Team notification configurations API
+##  Team notification configurations API
 
 TODO
 
-## Notification Triggers
+###  Notification Triggers
 
 TODO
 
-## Notification Payload
+### Notification Payload
 
 TODO
 
-## Create a team notification configuration
+### Create a team notification configuration
 
 --> **Note:** All teams have a default email notification configuration defined with no users assigned. With no users assigned any email notifications are sent to all team members.
 
@@ -1126,7 +1133,7 @@ TODO
 | [404][] | [JSON API error object][]                                     | Team not found, or user unauthorized to perform action    |
 | [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.) |
 
-### Request body
+#### Request body
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -1150,7 +1157,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 
 [notification-triggers]: #notification-triggers
 
-### Sample payload for generic notification configurations
+#### Sample payload for generic notification configurations
 
 ```json
 {
@@ -1169,7 +1176,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample payload for email notification configurations
+#### Sample payload for email notification configurations
 
 ```json
 {
@@ -1192,7 +1199,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 }
 ```
 
-### Sample request
+#### Sample request
 
 ```shell
 curl \
@@ -1203,7 +1210,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-6p5jTwJQXwqZBncC/notification-configurations
 ```
 
-### Sample response
+#### Sample response
 
 ```json
 {
@@ -1284,7 +1291,7 @@ curl \
 }
 ```
 
-## List team notification configurations
+### List team notification configurations
 
 `GET /teams/:team_id/notification-configurations`
 
@@ -1302,7 +1309,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                          |
 | `page[size]`   | **Optional.** If omitted, the endpoint will return 20 notification configurations per page. |
 
-### Sample request
+#### Sample request
 
 ```shell
 curl \
@@ -1312,7 +1319,7 @@ curl \
   https://app.terraform.io/api/v2/teams/team-6p5jTwJQXwqZBncC/notification-configurations
 ```
 
-### Sample response
+#### Sample response
 
 ```json
 {
