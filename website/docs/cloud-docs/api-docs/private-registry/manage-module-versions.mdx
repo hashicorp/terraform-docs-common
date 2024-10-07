@@ -1,8 +1,9 @@
- ---
+---
 page_title: Manage module versions - API Docs - HCP Terraform
 description: |-
  Use these module management endpoints to deprecate and revert the deprecation of module versions you published to an organization's private registry. 
-—
+tfc_only: true
+---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
@@ -36,19 +37,16 @@ description: |-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Manage module version API
+# Manage module versions API
 Deprecating a module version in your organization’s private registry adds warnings to the module's registry page and warnings in the run outputs of any users of that version. 
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
-@include "tfc-package-callouts/manage-module-version.mdx"
+@include "tfc-package-callouts/manage-module-versions.mdx"
 <!-- END: TFC:only name:pnp-callout -->
 
-Once you have deprecated a module version, you can revert its deprecation to remove the warnings from that version. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/deprecate-module-versions).
+Once you have deprecated a module version, you can revert its deprecation to remove the warnings from that version. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/manage-module-versions).
 
-~> **Note**: The ability to deprecate module versions is in public beta. All APIs and workflows are subject to change.
-
-Module deprecation is not available for users on legacy HCP Terraform team plans. Learn more about [migrating to current HCP Terraform plan](/terraform/cloud-docs/overview/migrate-teams-standard).
-
+@include "public-beta/manage-module-versions.mdx"
 
 ## Deprecate a module version
 
