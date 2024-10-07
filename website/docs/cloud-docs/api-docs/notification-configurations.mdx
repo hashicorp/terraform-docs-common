@@ -385,7 +385,7 @@ Run-specific values are empty when HCP Terraform was unable to create an auto de
 
 ## Notification authenticity
 
-If a `token` is configured, HCP Terraform provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the Request body using the same shared secret, and dropping any requests with invalid signatures.
+If a `token` is configured, HCP Terraform provides an HMAC signature on all `"generic"` notification requests, using the `token` as the key. This is sent in the `X-TFE-Notification-Signature` header. The digest algorithm used is SHA-512. Notification target servers should verify the source of the HTTP request by computing the HMAC of the request body using the same shared secret, and dropping any requests with invalid signatures.
 
 Sample Ruby code for verifying the HMAC:
 
@@ -430,7 +430,7 @@ Each delivery response has several fields:
 | [201][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully created a notification configuration              |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL     |
 | [404][] | [JSON API error object][]                                     | Workspace not found, or user unauthorized to perform action    |
-| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.) |
+| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.) |
 
 ### Request body
 
@@ -606,7 +606,7 @@ curl \
 
 ## List notification configurations
 
-USe the following endpoint to list all notification configurations for a workspace.
+Use the following endpoint to list all notification configurations for a workspace.
 
 `GET /workspaces/:workspace_id/notification-configurations`
 
@@ -874,7 +874,7 @@ If the `enabled` attribute is true, updating the configuration will cause HCP Te
 | [200][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully updated the notification configuration                          |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL                   |
 | [404][] | [JSON API error object][]                                     | Notification configuration not found, or user unauthorized to perform action |
-| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.)               |
+| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.)               |
 
 ### Request body
 
@@ -1131,7 +1131,7 @@ TODO
 | [201][] | [JSON API document][] (`type: "notification-configurations"`) | Successfully created a notification configuration              |
 | [400][] | [JSON API error object][]                                     | Unable to complete verification request to destination URL     |
 | [404][] | [JSON API error object][]                                     | Team not found, or user unauthorized to perform action    |
-| [422][] | [JSON API error object][]                                     | Malformed Request body (missing attributes, wrong types, etc.) |
+| [422][] | [JSON API error object][]                                     | Malformed request body (missing attributes, wrong types, etc.) |
 
 #### Request body
 
