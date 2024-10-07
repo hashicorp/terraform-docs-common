@@ -82,6 +82,16 @@ To remove your workspace's auto-destroy based on inactivity:
 1. Under **Auto-destroy settings**, click **Edit** to change the auto-destroy settings.
 1. Click **Remove**.
 
+#### When workspaces are moved between projects with auto destroy settings
+
+When a workspace is moved between projects, it will begin inheriting auto-destroy settings from the new project. This means that:
+
+1. When a workspace without auto-destroy settings is moved into a project with auto-destroy settings, it will begin inheriting the project's auto-destroy settings.
+1. When a workspace with existing inherited auto-destroy settings is moved to a project without auto-destroy settings, it will no longer have auto-destroy settings.
+1. When a workspace with existing inherited auto-destroy settings is moved to a project with different auto-destroy settings, it will pick up the new project's auto-destroy settings.
+1. When a workspace with overriding auto-destroy settings on an existing project's auto-destroy settings is moved to another project with auto-destroy settings, it will keep its override settings.
+1. When a workspace with overriding auto-destroy settings on an existing project's auto-destroy settings is moved to a project with no auto-destroy settings, it becomes regular auto-destroy settings.
+
 ## Delete Workspace
 
 Terraform does not automatically destroy managed infrastructure when you delete a workspace.
