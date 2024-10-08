@@ -1,0 +1,42 @@
+---
+page_title: VCS Speculative Plan Management
+description: Learn how VCS Speculative Plans Management work in HCP Terraform.
+---
+
+# VCS Speculative Plan Management
+
+VCS Speculative Plan Management setting automatically cancel's unfinished speculative plans triggered by pull requests when a new commit is pushed in VCS workflows.
+
+## Managing Organization Speculative Plan Settings 
+
+To view and manage an organization’s Speculative Plan settings, click Settings, followed by General under Version Control, then view the Manage speculative plans part of the page.
+
+Once the organization setting is enabled, HCP Terraform will cancel ongoing or pending speculative plans if new commits are received on the same branch.
+
+![Screenshot: VCS Speculative Plan Management Settings](/img/docs/vcs-speculative-plan-management-general-settings.png)
+
+## Run Details Page
+
+When a newer commit gets pushed to the same branch, a user can see the message mentioning that the run was automatically canceled.
+
+![Screenshot: VCS Speculative Plan Management Run Details](/img/docs/vcs-speculative-plan-management-run-details.png)
+
+## Updated VCS Status Checks
+
+For non-aggregated status checks, we now show a different message for the auto canceled plan than the normally canceled one (which would show “Terraform plan canceled”).
+
+![Screenshot: VCS Speculative Plan Management Non Aggregated Status Checks](/img/docs/vcs-speculative-plan-management-non-aggregated-status-checks.png)
+
+For aggregated status check, we now include the count of automatically canceled runs in the aggregated result, separating it from the count of manually canceled ones.
+
+![Screenshot: VCS Speculative Plan Management Auto Cancelled Run](/img/docs/vcs-speculative-plan-management-auto-cancelled-run.png)
+
+Also, in the aggregated status page, we now include the message that the run has been auto canceled, using the same message that we would send for non-aggregated status checks.
+
+![Screenshot: VCS Speculative Plan Management Auto Cancelled Run Message](/img/docs/vcs-speculative-plan-management-auto-cancelled-run-message.png)
+
+## Aggregated Status Page
+
+When more than one run is automatically canceled for a commit, we’ll show an alert text below the "Resources to be changed" section, as a reminder that the section may not reflect a complete result if all the runs of the commit were to reach completion.
+
+![Screenshot: VCS Speculative Plan Management Aggregated Status Page](/img/docs/vcs-speculative-plan-management-aggregated-status.png)
