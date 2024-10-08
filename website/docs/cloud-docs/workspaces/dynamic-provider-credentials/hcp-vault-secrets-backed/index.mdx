@@ -8,11 +8,9 @@ description: >-
 
 # HCP Vault Secrets-Backed Dynamic Credentials
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
-For most use cases, separately configuring [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) with different cloud providers works well. However, HCP Vault Secrets-backed dynamic credentials are for those looking for a way to:
- 1. Use the HashiCorp Cloud Platform as a centralized way to manage and consolidate cloud credentials management.
- 2. Generate short-lived credentials without exposing their Terraform Enterprise instance's OIDC metadata endpoints to the broader public internet.
+For most use cases, separately configuring [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) with different cloud providers works well. However, HCP Vault Secrets-backed dynamic credentials are for those looking for a way to use the HashiCorp Cloud Platform as a centralized way to manage and consolidate cloud credentials management.
 
 HCP Vault Secrets-backed dynamic credentials leverage HCP Vault Secrets' [dynamic secrets capability](/hcp/docs/vault-secrets/dynamic-secrets), which allows you to generate short-lived credentials for various providers. This means you can authenticate a HCP instance using workload identity tokens and use dynamic secret capabilities on that instance to generate dynamic credentials for the various providers. 
 

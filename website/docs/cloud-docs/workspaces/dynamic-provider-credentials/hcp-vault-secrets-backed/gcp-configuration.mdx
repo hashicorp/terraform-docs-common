@@ -7,19 +7,19 @@ description: >-
 
 # HCP Vault Secrets-Backed Dynamic Credentials with the GCP Provider
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can use HCP Terraform’s native OpenID Connect integration with HCP to use [HCP Vault Secrets-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed) with the GCP provider in your HCP Terraform runs. Configuring the integration requires the following steps:
 
 1. **[Configure HCP Provider Credentials](#configure-hcp-provider-credentials)**: Set up a trust configuration between HCP Vault Secrets and HCP Terraform, create HCP Vault Secrets roles and policies for your HCP Terraform workspaces, and add environment variables to those workspaces.
-2. **[Configure HCP Vault Secrets](#configure-hcp-vault-secrets-gcp-secrets-engine)**: Set up your HCP project's AWS integration and dynamic secret.
+2. **[Configure HCP Vault Secrets](#configure-hcp-vault-secrets-gcp-secrets-engine)**: Set up your HCP project's GCP integration and dynamic secret.
 3. **[Configure HCP Terraform](#configure-hcp-terraform)**: Add additional environment variables to the HCP Terraform workspaces where you want to use HCP Vault Secrets-backed dynamic credentials.
 4. **[Configure Terraform Providers](#configure-terraform-providers)**: Configure your Terraform providers to work with HCP Vault Secrets-backed dynamic credentials.
 
 Once you complete this setup, HCP Terraform automatically authenticates with GCP via HCP Vault Secrets-generated credentials during the plan and apply phase of each run. The GCP provider's authentication is only valid for the length of the plan or apply phase.
 
 ## Configure HCP Provider Credentials
-You must first set up HCP provider credentials before you can use HCP Vault Secrets-backed dynamic credentials. This includes setting up the JWT auth backend in HCP Vault Secrets, configuring trust between HCP Terraform and HCP Vault Secrets, and populating the required environment variables in your HCP Terraform workspace.
+You must first set up HCP dynamic provider credentials before you can use HCP Vault Secrets-backed dynamic credentials. This includes creating a service principal, configuring trust between HCP and HCP Terraform, and populating the required environment variables in your HCP Terraform workspace.
 
 [See the setup instructions for HCP dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-configuration).
 
@@ -29,24 +29,21 @@ Follow the instructions in the HCP Vault Secrets documentation for [setting up t
 ## Configure HCP Terraform
 Next, you need to set certain environment variables in your HCP Terraform workspace to authenticate HCP Terraform with GCP using HCP Vault Secrets-backed dynamic credentials. These variables are in addition to those you previously set while configuring [HCP provider credentials](#configure-hcp-provider-credentials). You can add these as workspace variables or as a [variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
 
-### Common Environment Variables
-The below variables apply to all GCP auth types.
-
-#### Required Common Environment Variables
+### Required Common Environment Variables
 | Variable                                                                                                | Value                                                                        | Notes                                                                                                                                                  |
 |---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TFC_HVS_BACKED_GCP_AUTH`<br />`TFC_HVS_BACKED_GCP_AUTH[_TAG]`<br />_(Default variable not supported)_  | `true`                                                                       | Requires **v1.8.0** or later if self-managing agents. Must be present and set to `true`, or HCP Terraform will not attempt to authenticate with GCP.   |
-| `TFC_HVS_BACKED_GCP_RUN_SECRET_RESOURCE_NAME`                                                           | The name of the HCP Vault Secrets dynamic secret resource to read.                    | Requires **v1.8.0** or later if self-managing agents. Must be present.                                                                                 |
+| `TFC_HVS_BACKED_GCP_AUTH`<br />`TFC_HVS_BACKED_GCP_AUTH[_TAG]`<br />_(Default variable not supported)_  | `true`                                                                       | Requires **v1.16.0** or later if self-managing agents. Must be present and set to `true`, or HCP Terraform will not attempt to authenticate with GCP.   |
+| `TFC_HVS_BACKED_GCP_RUN_SECRET_RESOURCE_NAME`                                                           | The name of the HCP Vault Secrets dynamic secret resource to read.           | Requires **v1.16.0** or later if self-managing agents. Must be present.                                                                                 |
 
 
-#### Optional Common Environment Variables
+### Optional Common Environment Variables
 You may need to set these variables, depending on your use case.
 
 | Variable                                                                                                                    | Value                                                                                                                                                                                               | Notes                                                                                                                                       |
 |-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| `TFC_HVS_BACKED_GCP_HCP_CONFIG`<br />`TFC_HVS_BACKED_GCP_HCP_CONFIG[_TAG]`<br />`TFC_DEFAULT_HVS_BACKED_GCP_HCP_CONFIG`     | The name of the non-default HCP configuration for workspaces using [multiple HCP configurations](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations). | Requires **v1.12.0** or later if self-managing agents. Will fall back to using the default HCP Vault Secrets configuration if not provided. |
-| `TFC_HVS_BACKED_GCP_PLAN_SECRET_RESOURCE_NAME`                                                                              | The name of the HCP Vault Secrets dynamic secret resource to read for the plan phase.                                                                                                                        | Requires **v1.8.0** or later if self-managing agents. Must be present.                                                                      |
-| `TFC_HVS_BACKED_GCP_APPLY_SECRET_RESOURCE_NAME`                                                                             | The name of the HCP Vault Secrets dynamic secret resource to read for the apply phase.                                                                                                                       | Requires **v1.8.0** or later if self-managing agents. Must be present.                                                                      |
+| `TFC_HVS_BACKED_GCP_HCP_CONFIG`<br />`TFC_HVS_BACKED_GCP_HCP_CONFIG[_TAG]`<br />`TFC_DEFAULT_HVS_BACKED_GCP_HCP_CONFIG`     | The name of the non-default HCP configuration for workspaces using [multiple HCP configurations](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/specifying-multiple-configurations). | Requires **v1.16.0** or later if self-managing agents. Will fall back to using the default HCP Vault Secrets configuration if not provided. |
+| `TFC_HVS_BACKED_GCP_PLAN_SECRET_RESOURCE_NAME`                                                                              | The name of the HCP Vault Secrets dynamic secret resource to read for the plan phase.                                                                                                               | Requires **v1.16.0** or later if self-managing agents. Must be present.                                                                      |
+| `TFC_HVS_BACKED_GCP_APPLY_SECRET_RESOURCE_NAME`                                                                             | The name of the HCP Vault Secrets dynamic secret resource to read for the apply phase.                                                                                                              | Requires **v1.16.0** or later if self-managing agents. Must be present.                                                                      |
 
 ## Configure Terraform Providers
 The final step is to directly configure your GCP and HCP Vault Secrets providers.
@@ -58,7 +55,7 @@ Ensure you are not setting values or environment variables for `GOOGLE_CREDENTIA
 
 ### Specifying Multiple Configurations
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
 You can add additional variables to handle multiple distinct HCP Vault Secrets-backed GCP setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace. You can configure each set of credentials independently, or use default values by configuring the variables prefixed with `TFC_DEFAULT_`.
 
