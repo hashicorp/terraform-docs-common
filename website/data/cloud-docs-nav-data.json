@@ -376,6 +376,22 @@
       { "title": "Troubleshooting", "path": "vcs/troubleshooting" }
     ]
   },
+   {
+    "title": "Stacks <sup>BETA</sup>",
+    "routes": [
+      { "title": "Overview", "path": "stacks" },
+      { "title": "Create a Stack", "path": "stacks/create" },
+      { "title": "Configure a stack", "path": "stacks/configure" },
+      {
+        "title": "Deploy Infrastructure",
+        "routes": [
+          { "title": "Configuration Versions", "path": "stacks/deploy/configuration-versions" },
+          { "title": "Review Deployment Plans", "path": "stacks/deploy/plans" }
+        ]
+      },
+      { "title": "Destroy a stack", "path": "stacks/destroy" }
+    ]
+  },
   {
     "title": "Private Registry",
     "routes": [
