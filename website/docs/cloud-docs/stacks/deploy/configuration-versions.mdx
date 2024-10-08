@@ -1,0 +1,63 @@
+---
+page_title: Fetch and review configuration versions
+description: Learn how to fetch and review configuration versions for your stacks in HCP Terraform.
+tfc_only: true
+---
+
+# Fetch and review configuration versions
+
+This guide explains how to fetch new stack configurations and review the changes those configurations propose in HCP Terraform.
+
+## Requirements
+
+To view a stack and its configurations, you must also be a member of a team in your organization with one of the following permissions:
+* [Organization-level "manage all projects"](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)
+* [Project-level "maintain"](/terraform/cloud-docs/users-teams-organizations/permissions#read) or higher
+
+## Fetch new configurations
+
+If you are not already on your stack’s deployment page, navigate to it:
+
+1. In the navigation menu, click **Projects** under **Manage**.  
+1. Select the project containing your stack.  
+1. Click **Stacks** in the navigation menu.  
+1. Select the stack you want to review.
+
+Stacks automatically detect when you push changes to your configuration from your VCS-linked repository. 
+
+However, if something changes outside of your configuration, you can fetch your configuration manually by clicking **Fetch Configurations from VCS** on a stack’s **Overview** page or clicking **Fetch configuration** on a stack’s **Configurations** page. For example, if someone changes resources directly in the AWS console, and you want your stack to be aware of the changes, you can manually fetch your configuration to update your stack.
+
+## Create configuration versions
+
+Whether manual or automatic, every time HCP Terraform fetches a new configuration, it creates a new configuration version, even if you have not made any changes to your configuration files.
+
+HCP Terraform then creates a new plan to roll out your new configuration version to your deployments. Learn more about [reviewing and approving deployment plans](/terraform/cloud-docs/stacks/deploy/plans). 
+
+### Review configurations
+
+To review your configuration versions, click **Configurations** in the side navigation menu of your stack.
+
+The **Configurations** page lists the available configuration versions of your stack. The top-level dashboard lists your configurations and the percentage of deployments that use each configuration version.
+
+Clicking on an individual configuration version reveals more details, including:
+
+* The ID of the configuration version.  
+* The latest commit that HCP Terraform based this configuration version on.  
+* The deployments using this configuration version.  
+* The corresponding plans for each deployment, along with what triggered each plan. Clicking **Quick View** next to a plan lists the differences introduced in that plan.
+
+You can use the **Deployment** filter to filter the list of deployments or the **Status** filter to filter by plan status.
+
+### Download configuration data
+
+While in public beta, we want to enable those using stacks to download helpful information to help debug and analyze how your stack changes over time.  
+
+Using the  **Inspect** drop-down allows you to gather additional information about your configuration:
+
+* Selecting **Configuration event stream** downloads a log file of your configuration’s events.  
+* Selecting **Provider schemas** downloads the schema of the providers of your configuration version.   
+* Selecting **Source bundle** downloads the files from which HCP Terraform built this configuration version.
+
+## Next Steps
+
+Check out a stack’s **Overview** page to see a chart of which deployment is using which configuration version, and [approve or discard deployment plans](/terraform/language/stacks/review-plans) to manage your deployments.  
