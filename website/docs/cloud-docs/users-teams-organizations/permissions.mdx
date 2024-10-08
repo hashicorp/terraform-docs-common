@@ -309,16 +309,6 @@ This permission implicitly grants access to read all workspaces, which is necess
 
 Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/terraform/cloud-docs/registry). These permissions are otherwise only available to organization owners.
 
-### Manage Module Test Generation (Beta)
-
-Allow members to generate module tests for private registry modules. 
-
-<!-- BEGIN: TFC:only name:pnp-callout -->
-
-Your organization must be an HCP Terraform Plus subscription to enable this feature.
-
-<!-- END: TFC:only name:pnp-callout -->
-
 ### Team Management Permissions
 
 HCP Terraform has three levels of team management permissions: manage membership, manage teams, and manage organization access. Each permission level grants users the ability to perform specific actions and each progressively requires prerequisite permissions. 
@@ -366,7 +356,7 @@ This permission acts as a modifier to existing team management permissions. Memb
 
 ### Allow Member Token Management
 
-Allows owners and members with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions to enable and disable team token management for team members. This permission defaults to true.
+Allows owners and members with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions to enable and disable team token management for team members. This permission defaults to `true`.
 
 When member token management is enabled, members will be able to perform actions on team tokens, including generating and revoking a team token.
 

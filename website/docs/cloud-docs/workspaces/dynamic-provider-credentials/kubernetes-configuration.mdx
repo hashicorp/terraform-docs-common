@@ -68,13 +68,13 @@ resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
+    name      = "${var.tfc_hostname}#organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
   }
 
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
+    name      = "${var.tfc_hostname}#organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
   }
 }
 ```
