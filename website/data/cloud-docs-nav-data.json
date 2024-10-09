@@ -548,6 +548,10 @@
               {
                 "title": "Example Customizations",
                 "path": "integrations/service-now/service-catalog-terraform/example-customizations"
+              },
+              {
+                "title": "Troubleshooting Tips",
+                "path": "integrations/service-now/service-catalog-terraform/troubleshooting-tips"
               }
             ]
           },
