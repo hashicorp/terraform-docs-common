@@ -462,13 +462,13 @@ all_checks_succeeded,checks_errored,checks_failed,checks_passed,checks_unknown,c
 
 ## List saved views
 
-Show available saved views
+Use this endpoint to display all of the explorer's [saved views](/terraform/cloud-docs/workspaces/explorer#saved-views) in an organization.
 
 `GET /api/v2/organizations/:organization_name/explorer/views`
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
 
 ### Sample request
 
@@ -510,18 +510,23 @@ curl \
 
 ## Create saved view
 
+Use this endpoint to create a [saved view](/terraform/cloud-docs/workspaces/explorer#saved-views) in the explorer.
+
 `POST /api/v2/organizations/:organization_name/explorer/views`
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+
+
+To create a saved view, you most provide the following data in your payload.
 
 
 | Key path   | Type | Default | Description |
 |------------|------|---------|-------------|
 | `data.name`         | string |   | The name of the saved view. |
-| `data.query_type`   | string |   | The type primary type that the view is querying. See [View Types](#view-types) for full details. |
-| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. See [Query parameters](#query-parameters) for full details. |
+| `data.query_type`   | string |   | The primary type that the view is querying. Refer to [View Types](#view-types) for details. |
+| `data.query`        | object |   | A list of filters, fields, and sorting rules for the view. Refer to [Query parameters](#query-parameters) for full details. |
 | `data.query.filter`          | array\[objects]|   | A list of filters composed of fields, operators, and values. |
 | `data.query.filter.field`    | string        |   | The field name to filter by. |
 | `data.query.filter.operator` | string        |   | The operator applied to field and value. |
@@ -570,12 +575,14 @@ curl \
 
 ## Show saved view
 
+Use this endpoint to display a specific saved view from the explorer.
+
 `GET /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
-| `:view_id`           | The external id of the saved view to show. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:view_id`           | The ID of the saved view to show. |
 
 
 ### Sample request
@@ -617,12 +624,16 @@ curl \
 ```
 ## Update a saved view
 
+Use this endpoint to update the data a saved view queries. 
+
 `PATCH /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
 | `:view_id`           | The external id of the saved view to update. |
+
+You must have the following fields in the payload for your request.
 
 | Key path   | Type | Default | Description |
 |------------|------|---------|-------------|
@@ -676,11 +687,13 @@ curl \
 
 ## Delete a saved view
 
+Use this endpoint to delete a saved view.
+
 `DELETE /api/v2/organizations/:organization_name/explorer/views/:view_id`
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
 | `:view_id`           | The ID of the saved view you want to delete. |
 
 ### Sample request

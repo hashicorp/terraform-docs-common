@@ -47,7 +47,7 @@ Use this endpoint to list a workspace's change requests.
 
 | Parameter               | Description              |
 | ----------------------- | ------------------------ |
-| `:workspace_name`       | The workspace name to list change requests for |
+| `:workspace_name`       | The name of workspace you want to list the change requests of. |
 
 
 ### Query parameters
@@ -154,6 +154,7 @@ $ curl \
 ### Sample response
 
 ```json
+```json
 {
   "data": {
     "type": "workspace_change_requests",
@@ -180,13 +181,13 @@ $ curl \
 
 ## Archive Change Request
 
-Archived change requests can still be viewed. But will be sorted separated and report as "archived."
+If someone completes a change request, they can archive it to reflect the request's completion. You can still view archived change requests, however they are be sorted separated and marked as `"archived"`. 
 
 `POST api/v2/workspaces/change-requests/:change_request_id`
 
 | Parameter               | Description              |
 | ----------------------- | ------------------------ |
-| `:change_request_id`    | The change request ID    |
+| `:change_request_id`    | The ID of the change request to archive.    |
 
 ### Sample request
 
@@ -225,24 +226,26 @@ $ curl \
 }
 ```
 
-## Creating New Change Requests
+## Create new change request
 
-Presently, change requests can be made through an experimental "bulk actions" end point.
+You can make change requests through the [explorer's](/terraform/cloud-docs/api-docs/explorer] experimental `"bulk actions"` end point.
 
 `/api/v2/organizations/:organization_name/explorer/bulk-actions`
 
 | Parameter               | Description              |
 | ----------------------- | ------------------------ |
-| `:organiztion_id`       | The organization ID      |
+| `:organization_id`       | The ID of the organization you want to create a change request in.       |
 
-| Key path   | Type | Default | Description |
+You must specify the following fields in your payload when creating a new change request.
+
+| Key path   | Type | Required | Description |
 |------------|------|---------|-------------|
-| `data.action_type`          | string |      | The action to take. Accepted value is `"change_request"` |
-| `data.action_inputs`        | object |      | Arguments for the bulk action |
-| `data.action_inputs.subject | string |      | The subject line of the Change Request
-| `data.action_inputs.message | string |      | The message of the Change Request. This text is treated as markdown. |
-| `data.target_ids`           | array  |      | (optional) Ids of resources to take actiona against. Not needed if a valid query is provided | 
-| `data.query`                | object |      | (optional) Explorer query describing resources to target. Not needed if `target_ids` are present. See saved queries docs for more info. |
+| `data.action_type`          | string |   Required   | The action to take. To create a change request, specify `"change_request"`. |
+| `data.action_inputs`        | object |   Required   | Arguments for the bulk action. |
+| `data.action_inputs.subject` | string |  Required   | The change request's subject line.
+| `data.action_inputs.message` | string |   Required   | The change request's message, which HCP Terraform treats as markdown. |
+| `data.target_ids`           | array  |   Optional   | The IDs of the workspace you want to associate with this change request. You do not need to specify this field if you provide `data.query`. | 
+| `data.query`                | object |    Optional  | An [explorer query](/terraform/cloud-docs/api-docs/explorer#execute-a-query) with workspace data. You do not need to specify this field if you provide `data.target_ids`. |
 
 ### Sample Payload
 
@@ -276,7 +279,7 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/$ORG_NAME/explorer/bulk-actions`
+  https://app.terraform.io/api/v2/organizations/:organization_name/explorer/bulk-actions`
 ```
 
 ### Sample response
