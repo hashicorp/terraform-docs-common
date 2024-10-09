@@ -6,7 +6,7 @@ tfc_only: true
 
 # Configure a stack
 
-This guide explains how to configure a stack’s name, description, and VCS settings in HCP Terraform.
+This guide explains configuring a stack’s name, description, and VCS settings in HCP Terraform.
 
 ## Requirements
 
@@ -20,17 +20,17 @@ To view a Stack and its configurations, you must also be a member of a team in y
 You can configure a Stack by performing the following steps:
 
 1. In the navigation menu, click **Projects** under **Manage**.  
-1. Select the project containing your stack.  
+1. Select the project containing your Stack.  
 1. Click **Stacks** in the navigation menu.  
 1. Select the Stack you want to configure.  
 1. Click **Stack settings** in the navigation menu.  
 1. Update any of the following settings:  
    * Name   
    * Description  
-   * Version control settings
-        * By default, stacks automatically trigger new plans when you push to your repositories’ default branch. You can deactivate this by toggling the **VCS Trigger Enabled** setting.  
-        * You can also configure stacks to work from either a branch or tag-based workflow.   
-        * By default, HCP Terraform fetches your stack’s configuration after creating your stack. To fetch your Stack configuration manually, uncheck **Fetch configuration after HCP Terraform creates stack**.  
+   * Version control settings, including:
+        * Stacks automatically trigger new plans when you push them to your repositories’ default branch. You can deactivate this by toggling the **VCS Trigger Enabled** setting.  
+        * You can also configure Stacks to work from either a branch or tag-based workflow.   
+        * By default, HCP Terraform fetches your stack’s configuration after creating your Stack. To fetch your Stack configuration manually, uncheck **Fetch configuration after HCP Terraform creates stack**.  
 1. Click **Save settings** to apply your changes.
 
 ## What's next
