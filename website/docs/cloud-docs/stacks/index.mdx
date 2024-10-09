@@ -11,7 +11,7 @@ As your infrastructure grows, managing Terraform configurations becomes increasi
 
 ~> **Public Beta**: Stacks are in public beta. Once we generally release them, we do not guarantee backward compatibility support for the public beta. All APIs, workflows, and HCL syntax for stacks are subject to change.
 
-Stacks allow you to split your Terraform configuration into components and then deploy and manage those components across multiple environments. You can manage the lifecycle of each deployment separately, roll out configuration changes across your deployments, and manage your stack as a unit in HCP Terraform.
+Stacks allow you to split your Terraform configuration into components and then deploy and manage those components across multiple environments. You can manage the lifecycle of each deployment separately, roll out configuration changes across your deployments, and manage your Stack as a unit in HCP Terraform.
 
 ## Background
 
@@ -22,25 +22,25 @@ Stacks are an alternative way to organize your infrastructure and fundamentally 
 Previously, those looking to deploy repeatable infrastructure using HCP Terraform would create separate workspaces and then use run triggers or other automation tools to coordinate changes between them. However, workspaces are not truly coupled to each other, hampering your ability to flexibly manage infrastructure as your workspaces scale. Stacks enable you to manage your infrastructure as a single unit, simplifying the process of deploying and managing infrastructure at scale.
 
 ## Workflow
-You start by creating a [stack configuration file](/terraform/language/stacks/reference/tfstack) and filling it with the component blocks. Each component block includes a Terraform module as its source, and you can configure a component further using input arguments. Your stack components share a lifecycle, which you can repeatedly deploy together using HCP Terraform.
+You start by creating a [stack configuration file](/terraform/language/stacks/reference/tfstack) and filling it with the component blocks. Each component block includes a Terraform module as its source, and you can configure a component further using input arguments. Your Stack components share a lifecycle, which you can repeatedly deploy together using HCP Terraform.
 
-![Diagram of the architecture of a stack. A stack of two components (Kubernetes and Namespace) are rolled our in to three deploymentes (US, Europe, and Asia). ](/img/docs/stacks-example.png)
+![Diagram of the architecture of a stack. A Stack of two components (Kubernetes and Namespace) are rolled our in to three deploymentes (US, Europe, and Asia). ](/img/docs/stacks-example.png)
 
-After configuring your stack’s components, you create a separate [deployment configuration file](/terraform/language/stacks/reference/tfdeploy) to define how you want to repeat its infrastructure. Each deployment in a stack represents a group of infrastructure that works together. You can define deployment blocks for your development environments, cloud provider accounts, or regions.
+After configuring your stack’s components, you create a separate [deployment configuration file](/terraform/language/stacks/reference/tfdeploy) to define how you want to repeat its infrastructure. Each deployment in a Stack represents a group of infrastructure that works together. You can define deployment blocks for your development environments, cloud provider accounts, or regions.
 
-Once you are ready to deploy your stack’s infrastructure, you can create a stack in HCP Terraform to deploy your stack’s defined infrastructure. In HCP Terraform, you can manage your stack, its configuration version, deployments, and deployment plans.
+Once you are ready to deploy your stack’s infrastructure, you can create a Stack in HCP Terraform to deploy your stack’s defined infrastructure. In HCP Terraform, you can manage your stack, its configuration version, deployments, and deployment plans.
 
 ## Primary Workflow
 The overall process for managing your infrastructure using stacks consists of the following steps.
-### Write stack configuration 
-Begin by [designing your stack](/terraform/language/stacks/design) and codifying your infrastructure in a stack configuration. To learn more, refer to [Define configuration](/terraform/language/stacks/create/config).
+### Write Stack configuration 
+Begin by [designing your stack](/terraform/language/stacks/design) and codifying your infrastructure in a Stack configuration. To learn more, refer to [Define configuration](/terraform/language/stacks/create/config).
 
 ### Define Deployments
-With a stack configuration in hand, the next step is to define how you want to deploy your stack. In stacks, deployments allow you to replicate infrastructure across multiple environments, regions, or accounts. Refer to [Define deployment configuration](/terraform/language/stacks/deploy/config) to learn more.
+With a Stack configuration in hand, the next step is to define how you want to deploy your stack. In stacks, deployments allow you to replicate infrastructure across multiple environments, regions, or accounts. Refer to [Define deployment configuration](/terraform/language/stacks/deploy/config) to learn more.
 
 ### Deploy
-After writing your stack and deployment configurations, you can deploy your stack’s defined infrastructure using HCP Terraform. In HCP Terraform, you can [create stacks](/terraform/cloud-docs/stacks/create) that live alongside your workspaces within a specified project. You can also [reconfigure](/terraform/cloud-docs/stacks/configure) the settings of existing stacks.
-When you change your stack configuration, you can [fetch and review configuration versions](/terraform/cloud-docs/stacks/deploy/configuration-versions) before applying them to your deployments. Changes to your stack deployment configuration create [deployment plans](/terraform/cloud-docs/stacks/deploy/plans) that you can review and apply like normal Terraform operations.
+After writing your Stack and deployment configurations, you can deploy your stack’s defined infrastructure using HCP Terraform. In HCP Terraform, you can [create stacks](/terraform/cloud-docs/stacks/create) that live alongside your workspaces within a specified project. You can also [reconfigure](/terraform/cloud-docs/stacks/configure) the settings of existing stacks.
+When you change your Stack configuration, you can [fetch and review configuration versions](/terraform/cloud-docs/stacks/deploy/configuration-versions) before applying them to your deployments. Changes to your Stack deployment configuration create [deployment plans](/terraform/cloud-docs/stacks/deploy/plans) that you can review and apply like normal Terraform operations.
 
 ## Guidance
 Stacks are particularly useful when managing complex, multi-environment infrastructures where consistency and reusability are crucial. Refer to [stack use cases](/terraform/language/stacks/use-cases) for inspiration and examples of how to use stacks.
@@ -48,9 +48,9 @@ Stacks are particularly useful when managing complex, multi-environment infrastr
 ## Constraints, limitations, and troubleshooting
 While stacks provide powerful capabilities, there are some limitations to be aware of during this beta phase:
 
-* Each stack currently supports a maximum of 20 deployments, which may limit scalability for large environments.
+* Each Stack currently supports a maximum of 20 deployments, which may limit scalability for large environments.
 * Stacks have a limit of 500 [managed resources per HCP Terraform organization](/terraform/cloud-docs/overview/estimate-hcp-terraform-cost#what-is-a-managed-resource) while in public beta. If your organization exceeds this limit, you can no longer apply new resources until you reduce your resource count.
   * If you need more resources, [fill out our form to request a resource extension](https://forms.gle/uGhn5CL1krf5T93m9).
 * Stacks are not available for users on legacy HCP Terraform team plans. Learn more about [migrating to current HCP Terraform plan](/terraform/cloud-docs/overview/migrate-teams-standard).
 
-For those using stacks, your maximum HCP Terraform concurrency is the combination of your workspace runs and your stack operations. Concurrency traditionally refers to the number of plan and apply operations that HCP Terraform can run simultaneously. In HCP Terraform, your subscription limits your maximum concurrency. Stacks operations are run in the same agent pool and queue that workspaces are, therefore stack operations also fall within your plan’s existing concurrency limits.
+For those using stacks, your maximum HCP Terraform concurrency is the combination of your workspace runs and your Stack operations. Concurrency traditionally refers to the number of plan and apply operations that HCP Terraform can run simultaneously. In HCP Terraform, your subscription limits your maximum concurrency. Stacks operations are run in the same agent pool and queue that workspaces are, therefore Stack operations also fall within your plan’s existing concurrency limits.

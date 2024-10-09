@@ -381,7 +381,7 @@
     "routes": [
       { "title": "Overview", "path": "stacks" },
       { "title": "Create a Stack", "path": "stacks/create" },
-      { "title": "Configure a stack", "path": "stacks/configure" },
+      { "title": "Configure a Stack", "path": "stacks/configure" },
       {
         "title": "Deploy Infrastructure",
         "routes": [
@@ -389,7 +389,7 @@
           { "title": "Review Deployment Plans", "path": "stacks/deploy/plans" }
         ]
       },
-      { "title": "Destroy a stack", "path": "stacks/destroy" }
+      { "title": "Destroy a Stack", "path": "stacks/destroy" }
     ]
   },
   {

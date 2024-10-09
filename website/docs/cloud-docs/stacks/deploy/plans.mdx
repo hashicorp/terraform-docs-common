@@ -12,7 +12,7 @@ This guide explains how to review and approve deployment plans in HCP Terraform.
 
 ## Requirements
 
-To view a stack and its configurations, you must also be a member of a team in your organization with one of the following permissions:
+To view a Stack and its configurations, you must also be a member of a team in your organization with one of the following permissions:
 * [Organization-level **View all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#view-all-projects) or higher
 * [Project-level **Write**](/terraform/cloud-docs/users-teams-organizations/permissions#write) or higher
 
@@ -23,7 +23,7 @@ If you are not already on your stack’s deployment page, navigate to it:
 1. In the navigation menu, click **Projects** under **Manage**.  
 1. Select the project containing your stack.  
 1. Click **Stacks** in the navigation menu.  
-1. Select the stack you want to review.
+1. Select the Stack you want to review.
 
 A stack’s **Overview** page displays the following information:
 
@@ -52,7 +52,7 @@ Each plan includes a timeline detailing when the plan started, when it received 
 
 ### Check deployment health
 
-Click **Overview** in the sidebar of your stack to view the status of each of your deployments. 
+Click **Overview** in the sidebar of your Stack to view the status of each of your deployments. 
 
 | Status | Description |
 | :---- | :---- |
@@ -64,7 +64,7 @@ Click **Overview** in the sidebar of your stack to view the status of each of yo
 
 ### Download plan data
 
-While in public beta, we want to enable those using stacks to download helpful information to help debug and analyze how your stack changes over time.  
+While in public beta, we want to enable those using stacks to download helpful information to help debug and analyze how your Stack changes over time.  
 
 Using the **Inspect** drop-down lets you gather additional information about your deployment plan. Select one of the following options to perform the associated action:
 
@@ -77,19 +77,19 @@ Using the **Inspect** drop-down lets you gather additional information about you
 
 ## Approve plans
 
-Like traditional Terraform plans, stack deployment plans list the changes that will occur if you approve that plan. Each component lists its expected resource changes, and you can review those changes as you decide whether or not to apply a plan. 
+Like traditional Terraform plans, Stack deployment plans list the changes that will occur if you approve that plan. Each component lists its expected resource changes, and you can review those changes as you decide whether or not to apply a plan. 
 
 When viewing a deployment plan, HCP Terraform notes if that plan is awaiting approval. Click **Approve plan** if you want HCP Terraform to apply a plan to this deployment or **Discard plan** to ignore it. You manage each deployment independently, so any plans you approve only affect the current deployment you are interacting with.
 
 After applying any plan, HCP Terraform automatically triggers a plan we call a convergence check. A convergence check is a re-plan to ensure components do not have any (deferred changes)[#deferred-changes]. HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes. 
 
-By default, each stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan because of the `empty_plan` rule. Learn more about [approving plans with orchestration rules](/terraform/language/stacks/deploy/conditions).
+By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan because of the `empty_plan` rule. Learn more about [approving plans with orchestration rules](/terraform/language/stacks/deploy/conditions).
 
 ## Deferred changes
 
 As with Terraform configuration files, HCP Terraform processes all of the blocks in your `tfstack.hcl` and `tfdeploy.hcl` files in dependency order. HCP Terraform cannot create all of your plans at once because those plans contain resources that depend on other resources. 
 
-When you deploy a stack with resources that depend on resources provisioned by other components in your stack, HCP Terraform recognizes the dependency between components and automatically defers a plan until it can complete it successfully. Plans with resources that depend on other resources and, therefore, require follow-up plans are called plans with deferred changes.  
+When you deploy a Stack with resources that depend on resources provisioned by other components in your stack, HCP Terraform recognizes the dependency between components and automatically defers a plan until it can complete it successfully. Plans with resources that depend on other resources and, therefore, require follow-up plans are called plans with deferred changes.  
 
 > Hands-on: Go through our [Manage Kubernetes workloads with stacks](/terraform/tutorials/cloud/stacks-eks-deferred) tutorial to see deferred changes in action.
 
