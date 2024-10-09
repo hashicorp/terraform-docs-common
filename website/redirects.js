@@ -225,5 +225,5 @@ module.exports = [
   {
     source: "/terraform/cloud-docs/workspaces/creating",
     destination: "/terraform/cloud-docs/workspaces/create"
-  },
+  }
 ];
