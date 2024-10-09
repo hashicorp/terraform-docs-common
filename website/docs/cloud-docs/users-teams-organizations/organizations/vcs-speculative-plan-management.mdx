@@ -1,42 +1,38 @@
 ---
-page_title: VCS Speculative Plan Management
-description: Learn how VCS Speculative Plans Management work in HCP Terraform.
+page_title: Automatically cancel plan-only runs triggered by outdated commits
+description: Learn how to configure HCP Terraform to automatically cancel Terraform plan operations triggered by pull requests when new commits are pushed to the VCS.
 ---
 
-# VCS Speculative Plan Management
+# Automatically cancel plan-only runs
 
-VCS Speculative Plan Management setting automatically cancel's unfinished speculative plans triggered by pull requests when a new commit is pushed in VCS workflows.
+This topic describes how to configure HCP Terrraform to automatically cancel plan-only Terraform run triggered by pull requests in the VCS. 
 
-## Managing Organization Speculative Plan Settings 
+## Introduction
+ 
+When connected to a VCS, HCP Terraform can automatically start a Terraform run that performs a `terraform plan` operation when someone creates a pull request (PR) in the repository. Refer to [Connecting to VCS](/terraform/cloud-docs/vcs) for additional information. 
+When team members push new commits to the same branch, HCP Terraform starts new run that performs a `terraform plan` operation. But as team members push new commits, the queue of Terraform runs can cause delays and reduce efficiency. 
+You can enable the **Automatically cancel speculative plans for outdated commits** option in the organization's settings screen so that HCP Terraform automatically cancel unfinished plan-only runs in VCS workflows.
 
-To view and manage an organization’s Speculative Plan settings, click Settings, followed by General under Version Control, then view the Manage speculative plans part of the page.
+## Configure automatic cancellation 
 
-Once the organization setting is enabled, HCP Terraform will cancel ongoing or pending speculative plans if new commits are received on the same branch.
+1. Log into HCP Terraform and click on your organization.
+1. Click **Settings** in the sidebar navigation.
+1. Under the **Version Control** group of settings, click **General**. 
+1. Enable the **Automatically cancel speculative plans for outdated commits** option under the **Manage speculative plans** section.
+1. Click **Update settings**.
 
-![Screenshot: VCS Speculative Plan Management Settings](/img/docs/vcs-speculative-plan-management-general-settings.png)
+After enabling the option, HCP Terraform cancels ongoing or pending speculative plans when new commits are received on the same branch.
 
-## Run Details Page
+## Automated cancellation notifications
 
-When a newer commit gets pushed to the same branch, a user can see the message mentioning that the run was automatically canceled.
+When the **Automatically cancel speculative plans for outdated commits** option is enabled, HCP Terraform notifies you about plan-only runs that are canceled as a result of the setting.  Notifications appear in the following screens:
 
-![Screenshot: VCS Speculative Plan Management Run Details](/img/docs/vcs-speculative-plan-management-run-details.png)
+-  **Run details page**. Refer to [Viewing and Managing Runs](/terraform/cloud-docs/run/manage) for additional information.
 
-## Updated VCS Status Checks
+- **VCS status checks**. When the **Non-aggregated status checks** option is enabled in the version control settings, the notification explicitly states when a plan has been canceled automatically.
 
-For non-aggregated status checks, we now show a different message for the auto canceled plan than the normally canceled one (which would show “Terraform plan canceled”).
+    When the **Aggregated status checks** option is enabled, HCP Terraform includes canceled plans in the result and identifies them separately from manually canceled plans.  
 
-![Screenshot: VCS Speculative Plan Management Non Aggregated Status Checks](/img/docs/vcs-speculative-plan-management-non-aggregated-status-checks.png)
-
-For aggregated status check, we now include the count of automatically canceled runs in the aggregated result, separating it from the count of manually canceled ones.
-
-![Screenshot: VCS Speculative Plan Management Auto Cancelled Run](/img/docs/vcs-speculative-plan-management-auto-cancelled-run.png)
-
-Also, in the aggregated status page, we now include the message that the run has been auto canceled, using the same message that we would send for non-aggregated status checks.
-
-![Screenshot: VCS Speculative Plan Management Auto Cancelled Run Message](/img/docs/vcs-speculative-plan-management-auto-cancelled-run-message.png)
-
-## Aggregated Status Page
-
-When more than one run is automatically canceled for a commit, we’ll show an alert text below the "Resources to be changed" section, as a reminder that the section may not reflect a complete result if all the runs of the commit were to reach completion.
-
-![Screenshot: VCS Speculative Plan Management Aggregated Status Page](/img/docs/vcs-speculative-plan-management-aggregated-status.png)
+    Refer to [VCS Status Checks](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-status-checks) for additional information.
+     
+- **Aggregated status page**. HCP Terraform prints the cancelation message in the aggregated status page in the  **Resources to be changed** section. The section may not reflect a complete result if all runs associated with the commit reach completion.
