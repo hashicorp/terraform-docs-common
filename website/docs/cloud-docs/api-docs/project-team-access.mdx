@@ -44,7 +44,7 @@ description: >-
 
 The team access APIs are used to associate a team to permissions on a project. A single `team-project` resource contains the relationship between the Team and Project, including the privileges the team has on the project.
 
--> **Note**: A `team-project` resource represents a team's _local_ permissions on a specific project. Teams can also have _organization-level_ permissions that grant access to projects, and HCP Terraform uses whichever access level is higher. (For example: a team with the "manage projects" permission has admin access on all projects, even if their `team-project` on a particular project only grants read access.) For more information, see [Managing Project Access](/terraform/cloud-docs/users-teams-organizations/teams#managing-project-access).
+-> **Note**: A `team-project` resource represents a team's _local_ permissions on a specific project. Teams can also have _organization-level_ permissions that grant access to projects, and HCP Terraform uses whichever access level is higher. (For example: a team with the "manage projects" permission has admin access on all projects, even if their `team-project` on a particular project only grants read access.) For more information, see [Managing Project Access](/terraform/cloud-docs/users-teams-organizations/teams/manage#managing-project-access).
 
 Any member of an organization can view team access relative to their own team memberships, including secret teams of which they are a member. Organization owners and project admins can modify team access or view the full set of secret team accesses. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 

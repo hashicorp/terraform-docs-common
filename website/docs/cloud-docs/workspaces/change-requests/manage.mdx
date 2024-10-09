@@ -10,13 +10,13 @@ You can use change requests as a backlog of the tasks a workspace requires, ofte
 @include 'tfc-package-callouts/change-requests.mdx'
 
 ## Create a change request
-Change requests live directly on workspaces, and you can create them from the explorer. To create a change request you must have one of the following permissions levels:
+To create a change request you must be a member of a team with one of the following permissions:
 
-* Be a member of an [organization owners team](terraform/cloud-docs/users-teams-organizations/permissions#organization-owners),  
-*  A member of a team with team with [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)  
-*  A member of a team with team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces)
+* The [owners' team](terraform/cloud-docs/users-teams-organizations/permissions#organization-owners)
+* A team with [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)  
+* A  team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces)
 
-The first step in making a change request is to specify which workspaces you want to make the change request about. You can use the explorer to query workspace data, then select specific multiple workspaces to assign to your change request.
+The first step in making a change request is to specify which workspaces this change request is about. You can use the explorer to query workspace data, then select specific workspaces to assign to your change request.
 
 To create a change request, perform the following steps:
 
@@ -26,21 +26,19 @@ To create a change request, perform the following steps:
    * The **Name** column, selecting all of the workspaces currently visible in the table.  
    * The **Name** column, selecting all of the workspaces currently visible in the table, then clicking **Select all workspaces from query result** to choose all of the workspaces in this query.  
 1. Click **Create change request**.  
-1. Create an easy-to-identify **Subject** for your change request.  
-1. Write a **Description** using Markdown about what your change request entails. You can preview your Markdown text by opening the **Preview** tab.  
+1. Write an easy-to-identify **Subject** for your change request.  
+1. Write a **Description** using Markdown about what your change request entails. You can preview your change request's text by opening the **Preview** tab.  
 1. Click **Create change request**. 
 
-After creating your change request, HCP Terraform notifies you if it successfully received it. Depending on the number of workspaces you selected, it may take a few minutes for HCP Terraform to create the change request.
+After creating your change request, HCP Terraform will notify you if it has successfully received that request. Depending on the number of workspaces you selected, HCP Terraform may take a few minutes to create the change request.
 
 ## View change requests
 
-You can review active and archived change requests for a workspace by opening it and then selecting **Change requests** in the sidebar navigation. If someone creates a change request on multiple workspaces, each workspace has its own independent copy of that change request.
-
 To view change requests, you must have at least [**Read** permissions](/terraform/cloud-docs/users-teams-organizations/permissions#read) on the workspace associated with that change request.  
 
-Open a workspace and select **Change requests** from the side navigation to display a list of that workspace's active change requests. You can view the full description of a change request by clicking on that request.
+Open a workspace and select **Change requests** from the side navigation to display a list of that workspace's active change requests. You can view the full description of a change request by clicking on that request. If someone creates a change request on multiple workspaces, each workspace has its own independent copy of that change request.
 
-The table for active change requests display each request’s:
+The table for active change requests displays each request’s:
 
 * Subject  
 * Description  
@@ -52,11 +50,11 @@ Opening the **Archived** tab displays the archived change requests for this work
 * Description  
 * Date the request was archived
 
-You can also see who archived a particular change request by clicking the archived request entry and viewing the expanded details.
+You can also see who archived a particular change request by clicking that request and viewing the expanded details.
 
 ### Archive existing change requests
 
-Once you have completed the requested actions on a workspace, you can archive a change request to reflect that you completed the work to satisfy that request. Each workspace has its own independent copy of a change request, so archiving a change request on one workspace does not affect the affiliated change request on another. 
+Once you have completed the requested actions on a workspace, you can archive a change request to reflect its completion. Each workspace has its own independent copy of a change request, so archiving a change request on one workspace does not affect the affiliated change request on others. 
 
 To archive change requests, you must have at least [**Write** permissions](/terraform/cloud-docs/users-teams-organizations/permissions#write) on the workspace associated with that change request.  
 
