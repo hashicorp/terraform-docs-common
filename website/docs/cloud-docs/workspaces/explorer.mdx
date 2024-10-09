@@ -75,3 +75,43 @@ Each filter condition is represented by a row of inputs, each made up of a targe
 -> **Tip:** Inspect the filter conditions used by the various pre-canned [**Use Cases**](#use-cases) to learn how they are constructed.
 
 You can create multiple filter conditions for a query. When you provide multiple conditions, the explorer evaluates them at query time with a logical AND. To add a new condition, use the **Add condition** button below the condition list. To remove a condition, use the trash bin button on the right hand side of the condition.
+
+## Save a view
+
+Using the explorer to view your organization’s data in various ways, you may want to save and revisit a custom query or use case later. 
+
+> **Note**: The ability to save views in the explorer is in public beta. All APIs and workflows are subject to change.
+
+You can save the explorer’s view of your data by:
+
+1. Navigate to the **Explorer** page in the sidebar of your organization.  
+1. Perform a query using the types or use cases buttons and add any custom filters you want.   
+1. By default, the explorer displays all of the available information, but you can also specify which columns you want your view to include.  
+1. Open the **Actions** dropdown menu and select **Save view**, saving the last query you performed in the explorer.  
+1. Specify a new, unique name for your saved view.   
+1. Click **Save**.
+
+Note that the explorer saves the last query it performed when you save a view. If you make changes to a query and do not rerun it, the explorer does not save those changes. 
+
+After you’ve saved a view of your data, you can access it from the explorer’s main page underneath the **Saved views** tab. Saved views keep track of the following attributes:
+
+* The name of the saved view  
+* The type of data you are querying, which is either module, workspace, providers, or terraform versions  
+* The owner of the saved view  
+* When the saved view was last updated
+
+You can rename or delete a saved view from the **Saved views** tab by opening the ellipsis menu next to a view and selecting either **Rename** or **Delete**.
+
+After saving a view, you can update that view by:
+
+1. Open the view in the explorer and make changes.  
+1. Open the **Actions** dropdown menu and select **Save view.**
+
+You can also make a new view based on an existing saved view by:
+
+1. Open a saved view in the explorer and make changes.  
+1. Open the **Actions** dropdown menu and select **Save as**.  
+1. Entering a name for this new saved view.  
+1. Click **Save**.
+
+While in a saved view in the explorer, you can delete it by opening the **Actions** dropdown menu, selecting **Delete view**, and clicking **Delete**.

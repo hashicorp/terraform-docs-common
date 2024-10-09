@@ -1,0 +1,97 @@
+---
+page_title: Manage teams
+description: |-
+ Learn how to manage team creation, team deletion, team membership, and team access to workspaces, projects, and organizations. 
+---
+
+# Manage teams
+
+Organization owners can create teams, assign teams permissions, or view the full list of teams. Other users can view any teams marked as visible within the organization, plus any secret teams they
+are members of. Refer to [Team Visibility](#team-visibility) for details.
+
+Other team management abilities can be granted to members of teams with either one of the manage teams or manage organization access permissions. Refer to [Team Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#team-permissions) for details.
+
+To manage teams:
+
+1. Click **Settings** and then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Click a team to go to its settings page, which lists the team's settings and current members. Members that have [two-factor authentication](/terraform/cloud-docs/users-teams-organizations/2fa) enabled have a **2FA** badge.
+
+## Create teams
+
+To create a new team:
+
+1. Click **Settings** and then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Enter a unique team **Name** and click **Create Team**. Team names can include numbers, letters, underscores (`_`), and hyphens (`-`).
+
+The new team's settings page appears, where you can add new members and grant permissions.
+
+## Delete teams
+
+~> **Important:** Deletion is permanent and you cannot undo it.
+
+To delete a team:
+
+1. Click **Settings** then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Click the team you want to delete to go to its settings page.
+1. Click **Delete [team name]** at the bottom of the page. The **Deleting team "[team name]"** box appears.
+1. Click **Yes, delete team** to permanently delete the team and all of its data from HCP Terraform.
+
+## Manage team membership
+
+Team structure often resembles your company's organizational structure.
+
+### Add users
+
+If the user is not yet in the organization, [invite them to join the organization](/terraform/cloud-docs/users-teams-organizations/organizations#users) and include a list of teams they should belong to in the invitation. Once the user accepts the invitation, HCP Terraform automatically adds them to those teams.
+
+To add a user that is already in the organization:
+
+1. Click **Settings** and then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Click the team to go to its settings page.
+1. Choose a user under **Add a New Team Member**. Use the text field to filter the list by username or email.
+1. Click the user to add them to the team. The user is now listed under **Members**.
+
+### Remove users
+
+To remove a user from a team:
+
+1. Click **Settings** and then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Click the team to go to its settings page.
+1. Click the **ellipses (...)** next to the user's name and select **Remove from team**. HCP Terraform removes the user from the list of team members.
+
+
+## Team visibility
+
+Visibility controls who can see a team within the organization. To edit a team's visibility:
+
+1. Click **Settings** and then click **Teams**. The **Team Management** page appears, containing a list of all teams within the organization.
+1. Click the team to go to its settings page.
+1. Choose a **Visibility** setting:
+   - **Visible:** Every user in the organization can see the team and its membership. Non-members have read-only access.
+   - **Secret:** Only team members and organization owners can read a team and its membership. This is the default setting.
+
+We recommend making the majority of teams visible to simplify workspace administration. Secret teams should only have
+[organization-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions), since workspace admins cannot manage permissions for teams they cannot view.
+
+## Manage workspace access
+
+You can grant teams various permissions on workspaces. Refer to [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions) for details.
+
+HCP Terraform uses the highest permission level from your teams to determine what actions you can take on a particular resource. For example, if you belong to a team that only has permission to read runs for a workspace and another team with admin access to that workspace, HCP Terraform grants you admin access.
+
+[Organization-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) and [project-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions). For example, if a team only has permission to read runs for a given workspace but also has permission to manage workspaces for the organization, members of that team have admin access to the workspace. Conversely, if the team has permission to manage policies for the organization granting permission to read runs for all workspaces, and also has admin access to a specific workspace, HCP Terraform grants the higher admin permission level on that workspace.
+
+To manage team permissions on a workspace:
+
+1. Go to the workspace and click **Settings > Team Access**. The **Team Access** page appears.
+1. Click **Add team and permissions** to select a team and assign a pre-built or custom permission set.
+
+## Manage project access
+
+You can grant teams permissions to manage a project and the workspaces that belong to it. Refer to [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for details.
+
+## Manage organization access
+
+Organization owners can grant teams permissions to manage policies, projects and workspaces, team and organization membership, VCS settings, private registry providers and modules, and policy overrides across an organization. Refer to [Organization Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) for details.
+
+[permissions-citation]: #intentionally-unused---keep-for-maintainers
