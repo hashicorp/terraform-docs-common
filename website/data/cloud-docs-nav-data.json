@@ -198,7 +198,7 @@
         "routes": [
           { "title": "Overview", "path": "workspaces/change-requests" },
           {
-            "title": "Create and Manage Requests",
+            "title": "Manage Change Requests",
             "path": "workspaces/change-requests/manage"
           }
         ]
