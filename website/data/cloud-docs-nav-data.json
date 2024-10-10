@@ -196,8 +196,18 @@
         "title": "Create tags",
         "path": "workspaces/tags"
       },
-      { "title": "Explorer", "path": "workspaces/explorer" },
       { "title":  "Browse workspaces", "path":  "workspaces/browse"},
+      { "title": "Explorer", "path": "workspaces/explorer" },
+      {
+        "title": "Change requests",
+        "routes": [
+          { "title": "Overview", "path": "workspaces/change-requests" },
+          {
+            "title": "Manage change requests",
+            "path": "workspaces/change-requests/manage"
+          }
+        ]
+      },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
@@ -297,7 +307,14 @@
     "title": "Users, Teams, Organizations",
     "routes": [
       { "title": "Users", "path": "users-teams-organizations/users" },
-      { "title": "Teams", "path": "users-teams-organizations/teams" },
+    {
+        "title": "Teams",
+        "routes": [
+          {"title": "Overview","path": "users-teams-organizations/teams"},
+          { "title": "Manage teams", "path": "users-teams-organizations/teams/manage" },
+          { "title": "Notifications", "path": "users-teams-organizations/teams/notifications" }
+        ]
+      },
       {
         "title": "Organizations",
         "routes": [
