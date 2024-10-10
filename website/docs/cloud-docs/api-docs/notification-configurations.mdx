@@ -48,7 +48,7 @@ Interacting with notification configurations requires admin access to the releva
 
 ## Notification triggers
 
-Notifications are sent in response to triggers related to workspace events, and can be defined at workspace and team levels. These are specified in the `triggers` array attribute. Available triggers are:
+Notifications are sent in response to triggers related to workspace events, and can be defined at workspace and team levels. You can specify workspace events in the `triggers` array attribute. 
 
 ### Workspace notification triggers
 
@@ -69,11 +69,12 @@ The following triggers are available for workspace notifications.
 | Auto Destroy Results | `"workspace:auto_destroy_run_results"`   | HCP Terraform attempted an automated workspace destroy run. |
 
 ### Team notification triggers
-The following triggers are available for [team notifications](#team-notification-configurations).
+
+The following triggers are available for [team notifications](#team-notification-configuration).
 
 | Display Name       | Value                   | Description                                                                                              |
 | ------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
-| Change Request | `"team:change_request"`   | A change request has been sent to a workspace that the team has explicit acces to. |
+| Change Request | `"team:change_request"`   |  HCP Terraform sent a change request to a workspace that the specified team has explicit access to.  |
 
 ## Notification payload
 
@@ -771,7 +772,7 @@ curl \
 
 ### Sample response
 
--> **Note:** The `type` and `id` attributes in `relationsips.subscribable` may also reference a `"teams"` and team id, respectively.
+The `type` and `id` attributes in `relationsips.subscribable` may also reference a `"teams"` and team ID, respectively.
 
 ```json
 {
@@ -1117,7 +1118,9 @@ TODO
 
 ### Create a team notification configuration
 
---> **Note:** All teams have a default email notification configuration defined with no users assigned. With no users assigned any email notifications are sent to all team members.
+By default, all teams have a default email notification configuration defined with no users assigned. With no users assigned, HCP Terraform sense email notifications to all team members.
+
+Use this endpoint to create a notification configuration to notify a team.
 
 `POST /teams/:team_id/notification-configurations`
 
@@ -1135,11 +1138,10 @@ TODO
 
 #### Request body
 
-This POST endpoint requires a JSON object with the following properties as a request payload.
+This `POST` endpoint requires a JSON object with the following properties as a request payload. Properties without a default value are required.
 
-Properties without a default value are required.
 
-If `enabled` is set to `true`, a verification request will be sent before saving the configuration. If this request receives no response or the response is not successful (HTTP 2xx), the configuration will not save.
+If `enabled` is set to `true`, HCP Terraform sends a verification request before saving the configuration. If this request does not receive a response or the response is not successful (HTTP 2xx), the configuration will not be saved.
 
 | Key path                           | Type           | Default | Description                                                                                                                                                                              |
 | ---------------------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1150,7 +1152,7 @@ If `enabled` is set to `true`, a verification request will be sent before saving
 | `data.attributes.token`            | string or null | `null`  | Optional write-only secure token, which can be used at the receiving server to verify request authenticity. See [Notification Authenticity][notification-authenticity] for more details. |
 | `data.attributes.triggers`         | array          | `[]`    | Array of triggers for which this configuration will send notifications. See [Notification Triggers][notification-triggers] for more details and a list of allowed values.                |
 | `data.attributes.url`              | string         |         | HTTP or HTTPS URL to which notification requests will be made, only for configurations with `"destination_type:"` `"slack"`, `"microsoft-teams"` or `"generic"`                                               |
-| `data.attributes.email_all_members`| bool           |         | Email all team members, only for configurations with "destination_type:" "email". |
+| `data.attributes.email_all_members`| bool           |         | Email all team members, only for configurations with `"destination_type:" "email"`. |
 | `data.relationships.users`         | array          |         | Array of users part of the organization, only for configurations with `"destination_type:"` `"email"`                                                                                    |
 
 [notification-authenticity]: #notification-authenticity
@@ -1292,6 +1294,8 @@ curl \
 ```
 
 ### List team notification configurations
+
+Use this endpoint to list notification configurations for a team.
 
 `GET /teams/:team_id/notification-configurations`
 
