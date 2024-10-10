@@ -1,10 +1,10 @@
 ---
-page_title: Create a stack
+page_title: Create a Stack
 description: Learn how to create a Stack in HCP Terraform so you can get started deploying your infrastructure.
 tfc_only: true
 ---
 
-# Create a stack
+# Create a Stack
 
 Stacks enable you to provision and coordinate your infrastructure lifecycle at scale, offering an organized and reusable approach that expands upon infrastructure as code (IaC). 
 
@@ -24,7 +24,7 @@ You must also be a member of a team in your organization with one of the followi
 * [Organization-level **Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)
 * [Project-level **Maintain**](/terraform/cloud-docs/users-teams-organizations/permissions#maintain) or higher
 
-## Create a stack
+## Create a Stack
 
 If you are creating a Stack in an organization for the first time, you should first enable Stacks for your organization. Navigate to your organization’s **Settings** page, and in the **General** settings, check the box next to **Stacks** to enable them. 
 
@@ -37,7 +37,7 @@ Stacks live alongside workspaces in a project. To create a new Stack in HCP Terr
 1. Select a version control provider from the list.  
 1. Choose an organization and repository from the filterable list. If your repository is missing, enter its ID in the text field below the list. The list only displays the first 100 repositories from your VCS provider.  
 1. Enter a new **Stack Name**.   
-    * The name must be unique within the project and can include letters, numbers, dashes (-), and underscores (_). We recommend using 90 characters or less for the name of your Stack.   
+    * The name must be unique within the project and can include letters, numbers, dashes (`-`), and underscores (`_`). We recommend using 90 characters or less for the name of your Stack.   
 1. You can optionally add a description for your Stack.  
 1. You can optionally adjust your version control settings by expanding **Advanced Options.**  
     * Stacks automatically trigger new plans when you push them to your repositories’ default branch. You can deactivate this by toggling the **VCS Trigger Enabled** setting.  

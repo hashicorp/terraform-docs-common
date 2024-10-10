@@ -383,10 +383,10 @@
       { "title": "Create a Stack", "path": "stacks/create" },
       { "title": "Configure a Stack", "path": "stacks/configure" },
       {
-        "title": "Deploy Infrastructure",
+        "title": "Deploy infrastructure",
         "routes": [
-          { "title": "Configuration Versions", "path": "stacks/deploy/configuration-versions" },
-          { "title": "Review Deployment Plans", "path": "stacks/deploy/plans" }
+          { "title": "Configuration versions", "path": "stacks/deploy/configuration-versions" },
+          { "title": "Review deployment plans", "path": "stacks/deploy/plans" }
         ]
       },
       { "title": "Destroy a Stack", "path": "stacks/destroy" }

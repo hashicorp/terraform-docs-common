@@ -9,7 +9,7 @@ tfc_only: true
 
 As your infrastructure grows, managing Terraform configurations becomes increasingly complex. Stacks are a powerful configuration layer in Terraform that simplifies managing your infrastructure modules and then repeating that infrastructure.
 
-~> **Public Beta**: Stacks are in public beta. Once we generally release them, we do not guarantee backward compatibility support for the public beta. All APIs, workflows, and HCL syntax for Stacks are subject to change.
+-> **Public Beta**: Stacks are in public beta. Once we generally release them, we do not guarantee backward compatibility support for the public beta. All APIs, workflows, and HCL syntax for Stacks are subject to change.
 
 Stacks allow you to split your Terraform configuration into components and then deploy and manage those components across multiple environments. You can manage the lifecycle of each deployment separately, roll out configuration changes across your deployments, and manage your Stack as a unit in HCP Terraform.
 
@@ -60,7 +60,7 @@ Stacks are particularly useful when managing complex, multi-environment infrastr
 While Stacks provide exciting capabilities, there are some limitations to be aware of during this beta phase:
 
 * Each Stack currently supports a maximum of 20 deployments, which may limit scalability for large environments.
-* Stacks have a limit of 500 [managed resources per HCP Terraform organization](/terraform/cloud-docs/overview/estimate-hcp-terraform-cost#what-is-a-managed-resource) while in public beta. If your organization exceeds this limit, you can no longer apply new resources until you reduce your resource count. If you need more resources, [fill out our form to request a resource extension](https://forms.gle/uGhn5CL1krf5T93m9).
+* While in public beta, Stacks have a limit of 500 [managed resources per HCP Terraform organization](/terraform/cloud-docs/overview/estimate-hcp-terraform-cost#what-is-a-managed-resource). If your organization exceeds this limit, you can no longer apply new resources until you reduce your resource count. If you need more resources, [fill out our form to request a resource extension](https://forms.gle/uGhn5CL1krf5T93m9).
 * Stacks are not available for users on legacy HCP Terraform team plans. Learn more about [migrating to a current HCP Terraform plan](/terraform/cloud-docs/overview/migrate-teams-standard).
 
 ### Concurrency

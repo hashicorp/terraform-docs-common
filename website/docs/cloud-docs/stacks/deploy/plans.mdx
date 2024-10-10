@@ -1,6 +1,6 @@
 ---
 page_title: Review deployment plans
-description: Learn how to review deployment plans in HCP Terraform stacks.
+description: Learn how to review deployment plans in HCP Terraform Stacks.
 tfc_only: true
 ---
 
@@ -52,11 +52,11 @@ You can see a plan’s full details by clicking the plan’s name or an abbrevia
 
 Each plan includes a timeline detailing when the plan started, when it received its configuration version, and when it was approved.  
 
-### Download plan data
+## Download plan data
 
 While in public beta, we want to enable those using Stacks to download helpful information to help debug and analyze how your Stack changes over time.  
 
-Using the **Inspect** drop-down lets you gather additional information about your deployment plan. Select one of the following options to perform the associated action:
+Select one of the following options in the **Inspect** drop-down to perform the associated action:
 
 * **View plan orchestration results** displays HCP Terraform's decisions while making this plan.  
 * **Download plan event stream** downloads a log file of your plan’s events.   
@@ -80,15 +80,15 @@ Click **Overview** in the sidebar of your Stack to view the status of each of yo
 
 ## Approve plans
 
-Like traditional Terraform plans, Stack deployment plans list the changes that will occur if you approve that plan. Each component lists its expected resource changes, and you can review those changes as you decide whether or not to apply a plan. 
+Like traditional Terraform plans, Stack deployment plans list the changes that will occur if you approve that plan. Each component lists its expected resource changes, and you can review those changes as you decide whether to apply a plan. 
 
 When viewing a deployment plan, HCP Terraform notes if that plan is awaiting approval. Click **Approve plan** if you want HCP Terraform to apply a plan to this deployment or **Discard plan** to ignore it. You manage each deployment independently, so any plans you approve only affect the current deployment you are interacting with.
 
 ### Convergence checks
 
-After applying any plan, HCP Terraform automatically triggers a plan we call a convergence check. A convergence check is a re-plan to ensure components do not have any [deferred changes](#deferred-changes). HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes. 
+After applying any plan, HCP Terraform automatically triggers a plan called a convergence check. A convergence check is a re-plan to ensure components do not have any [deferred changes](#deferred-changes). HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes. 
 
-By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan because of the `empty_plan` rule and finishes.
+By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan.
 
 ## Deferred changes
 

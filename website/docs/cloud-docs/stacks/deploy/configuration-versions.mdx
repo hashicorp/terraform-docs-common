@@ -33,7 +33,7 @@ Whether manual or automatic, every time HCP Terraform fetches a new version of y
 
 HCP Terraform then creates a new plan to roll out that new configuration version to your deployments. Learn more about [reviewing and approving deployment plans](/terraform/cloud-docs/stacks/deploy/plans). 
 
-### Review configurations
+## Review configurations
 
 To review your configuration versions, click **Configurations** in the side navigation menu of your Stack.
 
@@ -52,12 +52,12 @@ You can use the **Deployment** filter to filter by deployment name or the **Stat
 
 While in public beta, we want to enable those using Stacks to download helpful information to help debug and analyze how your Stack changes over time.  
 
-Using the  **Inspect** drop-down allows you to gather additional information about your configuration:
+Select one of the following options in the **Inspect** drop-down to download specific information about your configuration:
 
-* Selecting **Configuration event stream** downloads a log file of your configuration’s events.  
-* Selecting **Provider schemas** downloads the schema of the providers of your configuration version.   
-* Selecting **Source bundle** downloads the files from which HCP Terraform built this configuration version.
+* **Configuration event stream** downloads a log file of your configuration’s events.  
+* **Provider schemas** downloads the schema of the providers of your configuration version.   
+* **Source bundle** downloads the files that HCP Terraform built this configuration version.
 
 ## Next steps
 
-Check out a Stack’s **Overview** page to see a chart of which deployment uses which configuration version and [approve or discard deployment plans](/terraform/language/stacks/plans) to manage your deployments.  
+The overview page for each Stack contains a chart of a Stack's configuration version and its respective deployment. You can [approve or discard deployment plans](/terraform/cloud-docs/stacks/deploy/plans) to manage your deployments.  
