@@ -64,6 +64,7 @@ While Stacks provide exciting capabilities, there are some limitations to be awa
 * Stacks are not available for users on legacy HCP Terraform team plans. Learn more about [migrating to a current HCP Terraform plan](/terraform/cloud-docs/overview/migrate-teams-standard).
 
 ### Concurrency
+
 Concurrency traditionally refers to the number of plan and apply operations that HCP Terraform can run simultaneously. However, HCP Terraform runs Stack operations in the same agent pool and queue as workspaces. For those using stacks, your maximum HCP Terraform concurrency is the combination of your workspace runs and your Stack operations. 
 
 Your HCP Terraform [subscription plan](https://www.hashicorp.com/products/terraform/pricing?product_intent=terraform) limits your maximum concurrency. 
