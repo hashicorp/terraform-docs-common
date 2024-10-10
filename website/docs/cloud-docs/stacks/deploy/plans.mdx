@@ -85,6 +85,7 @@ Like traditional Terraform plans, Stack deployment plans list the changes that w
 When viewing a deployment plan, HCP Terraform notes if that plan is awaiting approval. Click **Approve plan** if you want HCP Terraform to apply a plan to this deployment or **Discard plan** to ignore it. You manage each deployment independently, so any plans you approve only affect the current deployment you are interacting with.
 
 ### Convergence checks
+
 After applying any plan, HCP Terraform automatically triggers a plan we call a convergence check. A convergence check is a re-plan to ensure components do not have any [deferred changes](#deferred-changes). HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes. 
 
 By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan because of the `empty_plan` rule and finishes.
