@@ -468,7 +468,7 @@ Use this endpoint to display all of the explorer's [saved views](/terraform/clou
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 
 ### Sample request
 
@@ -516,10 +516,10 @@ Use this endpoint to create a [saved view](/terraform/cloud-docs/workspaces/expl
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 
 
-To create a saved view, you most provide the following data in your payload.
+To create a saved view, provide the following data in your payload.
 
 
 | Key path   | Type | Default | Description |
@@ -581,7 +581,7 @@ Use this endpoint to display a specific saved view from the explorer.
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query.  |
 | `:view_id`           | The ID of the saved view to show. |
 
 
@@ -622,6 +622,7 @@ curl \
   }
 }
 ```
+
 ## Update a saved view
 
 Use this endpoint to update the data a saved view queries. 
@@ -630,7 +631,7 @@ Use this endpoint to update the data a saved view queries.
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 | `:view_id`           | The external id of the saved view to update. |
 
 You must have the following fields in the payload for your request.
@@ -643,7 +644,7 @@ You must have the following fields in the payload for your request.
 | `data.query.filter.field`    | string        |   | The field name to filter by. |
 | `data.query.filter.operator` | string        |   | The operator applied to field and value. |
 | `data.query.filter.value`    | array\[strings] |   | A list of values to filter by. |
-| `data.query.fields` | array\[strings] |   | A list of fields to include in the view. See TODO |
+| `data.query.fields` | array\[strings] |   | A list of fields to include in the view. Refer to [execute a query](#execute-a-query) for a list of available parameters.  |
 | `data.query.sort`   | array\[strings] |   | A list of fields to sort by. Prefix with `-` for descending sort. |
 
 ### Sample request
@@ -693,7 +694,7 @@ Use this endpoint to delete a saved view.
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 | `:view_id`           | The ID of the saved view you want to delete. |
 
 ### Sample request
@@ -742,7 +743,7 @@ Re-execute a saved view's query to retrieve current results.
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. To view a query, you must have permissions to the workspaces and projects within that query. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 | `:view_id`           | The ID of the saved view to re-query. |
 
 ### Sample request
@@ -842,7 +843,7 @@ curl \
 }
 ```
 
-## Query a saved view (CSV format)
+## Query a saved view as CSV
 
 Re-execute a saved view's query to retrieve current results, HCP Terraform returns results in a in CSV format.
 
@@ -850,7 +851,7 @@ Re-execute a saved view's query to retrieve current results, HCP Terraform retur
 
 | Parameter            | Description |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:organization_name` | The name of the organization to query. The organization must already exist in the system, and the user must have permissions to read the workspaces and projects within it. |
+| `:organization_name` | The name of the organization to query. To view a query, you must have permission to read the workspaces and projects within that query. |
 | `:view_id`           | The external id of the saved view to query. |
 
 ### Sample request

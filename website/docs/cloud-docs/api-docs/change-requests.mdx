@@ -38,7 +38,7 @@ description: >-
 
 # Change Requests API
 
-You can use change requests to keep track of workspace to-dos directly on that workspace. You can use change requests as a backlog of the changes that a workspace requires, often to ensure that workspace keeps up with compliance and best practices of your company. Change requests can also trigger [team notifications](/terraform/cloud-docs/users-teams-organizations/teams/notifications) to directly notify team members whenever someone creates a new change request.
+You can use change requests to keep track of workspace to-dos directly on that workspace. Change requests are a backlog of the changes that a workspace requires, often to ensure that workspace keeps up with compliance and best practices of your company. Change requests can also trigger [team notifications](/terraform/cloud-docs/users-teams-organizations/teams/notifications) to directly notify team members whenever someone creates a new change request.
 
 ## List Change Requests
 Use this endpoint to list a workspace's change requests.
@@ -227,9 +227,9 @@ $ curl \
 
 ## Create new change request
 
-You can make change requests through the [explorer's](/terraform/cloud-docs/api-docs/explorer] experimental `"bulk actions"` end point.
+You can make change requests through the [explorer's](/terraform/cloud-docs/api-docs/explorer) experimental `"bulk actions"` end point.
 
-POST `/api/v2/organizations/:organization_name/explorer/bulk-actions`
+`POST /api/v2/organizations/:organization_name/explorer/bulk-actions`
 
 | Parameter               | Description              |
 | ----------------------- | ------------------------ |
