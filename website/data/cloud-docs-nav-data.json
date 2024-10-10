@@ -194,11 +194,11 @@
       { "title":  "Browse workspaces", "path":  "workspaces/browse"},
       { "title": "Explorer", "path": "workspaces/explorer" },
       {
-        "title": "Change Requests",
+        "title": "Change requests",
         "routes": [
           { "title": "Overview", "path": "workspaces/change-requests" },
           {
-            "title": "Manage Change Requests",
+            "title": "Manage change requests",
             "path": "workspaces/change-requests/manage"
           }
         ]
