@@ -1104,17 +1104,19 @@ $ curl \
   https://app.terraform.io/api/v2/notification-configurations/nc-AeUQ2zfKZzW9TiGZ
 ```
 
-##  Team notification configurations
+##  Team notification configuration
 
 -> **Note**: Team notifications are in public beta. All APIs and workflows are subject to change.
 
-HCP Terraform can use webhooks to notify external systems about run progress, change requests, and other events. Team notifications allow you to configure relevant alerts that notify teams you specify whenever a certain event occurs. 
+Team notifications allow you to configure relevant alerts that notify teams you specify whenever a certain event occurs. 
 
+<!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/notifications.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 ### Create a team notification configuration
 
-By default, all teams have a default email notification configuration defined with no users assigned. With no users assigned, HCP Terraform sense email notifications to all team members.
+By default, every team has a default email notification configuration with no users assigned. If a notification configuration has no users assigned, HCP Terraform sends email notifications to all team members.
 
 Use this endpoint to create a notification configuration to notify a team.
 

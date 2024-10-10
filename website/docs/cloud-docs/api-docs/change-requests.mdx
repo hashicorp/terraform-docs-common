@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Change Requests API
+# Change requests API
 
 -> **Note**: Change requests are in public beta. All APIs and workflows are subject to change.
 
@@ -44,7 +44,7 @@ You can use change requests to keep track of workspace to-dos directly on that w
 
 @include 'tfc-package-callouts/change-requests.mdx'
 
-## List Change Requests
+## List change requests
 
 Use this endpoint to list a workspace's change requests.
 
@@ -137,7 +137,7 @@ $ curl \
 }
 ```
 
-## Show Change Request
+## Show a change sequest
 
 Use this endpoint to list the details of a specific change request.
 
@@ -147,7 +147,7 @@ Use this endpoint to list the details of a specific change request.
 | ----------------------- | ------------------------ |
 | `:change_request_id`    | The change request ID    |
 
-### Sample Reuest
+### Sample request
 
 ```shell
 $ curl \
@@ -184,7 +184,7 @@ $ curl \
 }
 ```
 
-## Archive Change Request
+## Archive change request
 
 If someone completes a change request, they can archive it to reflect the request's completion. You can still view archived change requests, however they are be sorted separated and marked as `"archived"`. 
 
@@ -233,7 +233,7 @@ $ curl \
 
 ## Create new change request
 
-You can make change requests through the [explorer's](/terraform/cloud-docs/api-docs/explorer) experimental `"bulk actions"` end point.
+You can make change requests through the [explorer's](/terraform/cloud-docs/api-docs/explorer) experimental `"bulk actions"` endpoint.
 
 `POST /api/v2/organizations/:organization_name/explorer/bulk-actions`
 
@@ -284,7 +284,7 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/:organization_name/explorer/bulk-actions`
+  https://app.terraform.io/api/v2/organizations/:organization_name/explorer/bulk-actions
 ```
 
 ### Sample response
@@ -294,7 +294,7 @@ $ curl \
   "data": {
     "id": "eba-3jk34n5k2bs",
     "attributes": {
-      "organization_id: "org-9mvjfwpq098",
+      "organization_id": "org-9mvjfwpq098",
 	    "action_type": "change_requests",
 	    "action_inputs": {
         "subject": "[Action Required] Github Actions Pinning (SEC-090)",
