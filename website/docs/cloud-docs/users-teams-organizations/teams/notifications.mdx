@@ -13,7 +13,7 @@ You can configure an individual team notification to notify up to twenty teams. 
 
 ## Requirements
 
-~> **Note**: Team notifications are in public beta. All APIs and workflows are subject to change.
+-> **Note**: Team notifications are in public beta. All APIs and workflows are subject to change.
 
 To configure team notifications, you need the [**Manage teams**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions for the team for which you want to configure notifications.
 
@@ -30,14 +30,14 @@ HCP Terraform displays a list of any notification configurations you have set up
 
 ### Update and enable notification configurations
 
-Each notification configuration includes a quick overview of each configuration’s name, type, the events that can trigger that notification, and the last time the notification was triggered. Clicking on a notification configuration takes you to a page where you can do the following:
+Each notification configuration includes a brief overview of each configuration’s name, type, the events that can trigger the notification, and the last time the notification was triggered. Clicking on a notification configuration opens a page where you can perform the following actions:
 
 * Enable your configuration to send notifications by toggling the switch.  
 * Delete a configuration by clicking **Delete notification**, then **Yes, delete notification configuration**.  
 * Test your notification’s configuration by clicking **Send test**.   
 * Click **Edit notification** to edit your notification configuration.
 
-After creating a notification configuration, you can only edit certain aspects of that configuration:
+After creating a notification configuration, you can only edit the following aspects of that configuration:
 
 1. The configuration’s name.  
 1. Whether this configuration notifies everyone on a team or specific members.  
@@ -58,7 +58,7 @@ To configure a new notification for a team or a user, perform the following step
 1. Select **Notifications** in the sidebar navigation.  
 1. Click **Create a notification**.
 
-You must specify the following attributes for all new notification configurations:
+You must complete the following fields for all new notification configurations:
 
 1. The **Destination** where HCP Terraform should deliver either a generic or a specifically formatted payload. Refer to [Notification payloads](#notification-payloads) for details.  
 1. The display **Name** for this notification configuration.  
@@ -82,11 +82,11 @@ HCP Terraform can send notifications for all workspace events, no workspace even
 
 ## Enable and verify a notification
 
-To toggle notifications for a notification configuration on or off, you can toggle the **Enabled** switch on a configuration’s detail page. 
+To configure HCP Terraform to stop sending notifications for a notification configuration, disable the **Enabled** setting on a configuration's detail page . 
 
-HCP Terraform enables notification for email configurations by default. Before enabling any webhook notifications, HCP Terraform attempts to verify the notification’s configuration by sending a test message. If the test succeeds, HCP Terraform enables the notification. 
+HCP Terraform enables notifications for email configurations by default. Before enabling any webhook notifications, HCP Terraform attempts to verify the notification’s configuration by sending a test message. If the test succeeds, HCP Terraform enables the notification. 
 
-To verify a notification’s configuration's success, the destination must respond with a `2xx` HTTP code. If verification fails, HCP Terraform displays an error message, and the configuration will remain disabled.
+To verify a notification configuration, the destination must respond with a `2xx` HTTP code. If verification fails, HCP Terraform does not enable the configuration and displays an error message.
 
 For successful and unsuccessful verifications, click the **Last Response** box to view more information about the verification results. You can also send additional test messages by clicking **Send a Test**.
 

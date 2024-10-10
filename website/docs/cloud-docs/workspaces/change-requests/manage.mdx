@@ -5,7 +5,7 @@ description: Learn how to create, view, and archive change requests to manage a 
 
 # Manage change requests
 
-You can use change requests as a backlog of the tasks a workspace requires, often to ensure that your workspaces keep up with your company's compliance and best practices. When someone completes a change request, they can archive it to reflect its completion. 
+This topic describes how to create and manage change requests. Refer to [Change requests overview](/terraform/cloud-docs/workspaces/change-requests) for additional information about change requests. 
 
 @include 'tfc-package-callouts/change-requests.mdx'
 
@@ -22,16 +22,16 @@ The first step in making a change request is to specify which workspaces this ch
 To create a change request, perform the following steps:
 
 1. Open the [explorer and perform a query](/terraform/cloud-docs/workspaces/explorer) on your workspace data.   
-1. Once in the query table, select the workspaces you want to include in your change request. You can select or unselect workspaces by checking the boxes next to:  
-   * Individual workspace names.  
-   * The **Name** column, selecting all of the workspaces currently visible in the table.  
-   * The **Name** column, selecting all of the workspaces currently visible in the table, then clicking **Select all workspaces from query result** to choose all of the workspaces in this query.  
+1. Choose the workspaces you want to include in your change request using one of the following methods: 
+   * Select or deselect individual workspace names.  
+   * Select the box in the **Name** column to choose all workspaces visible in the table.  
+   * Select the box in the **Name** column to choose all workspaces visible in the table, then click **Select all workspaces from query result** to choose all of the workspaces in this query.  
 1. Click **Create change request**.  
-1. Write an easy-to-identify **Subject** for your change request.  
-1. Write a **Description** using Markdown about what your change request entails. You can preview your change request's text by opening the **Preview** tab.  
+1. Write a subject for your change request in the **Subject** filed. We recommend implementing a standard format for change requests to help people processing them easily identify your request.  
+1. Write a description for your request in the **Description** field. You can use markdown to format the description. You can preview your change request's text by opening the **Preview** tab.  
 1. Click **Create change request**. 
 
-After creating your change request, HCP Terraform will notify you if it has successfully received that request. Depending on the number of workspaces you selected, HCP Terraform may take a few minutes to create the change request.
+After creating your change request, HCP Terraform notifies you if it has successfully received that request. Depending on the number of workspaces you selected, HCP Terraform may take a few minutes to create the change request.
 
 ## View change requests
 
