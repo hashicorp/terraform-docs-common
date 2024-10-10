@@ -78,11 +78,11 @@ We recommend making the majority of teams visible to simplify workspace administ
 
 You can grant teams various permissions on workspaces. Refer to [Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions) for details.
 
-HCP Terraform uses the least restrictive permission level from your teams to determine what actions you can take on a particular resource. For example, if you belong to a team that only has permission to read runs for a workspace and another team with admin access to that workspace, HCP Terraform grants you admin access.
+HCP Terraform uses the most permissive permission level from your teams to determine what actions you can take on a particular resource. For example, if you belong to a team that only has permission to read runs for a workspace and another team with admin access to that workspace, HCP Terraform grants you admin access.
 
-The same goes for [organization-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) and [project-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions). For example, if a team has permission to read runs for a given workspace and has permission to manage that workspace through the organization, then members of that team can manage that workspace. 
+HCP Terraform grants the most permissive permissions regardless of whether an organization, project, team, or workspace set those permissions. For example, if a team has permission to read runs for a given workspace and has permission to manage that workspace through the organization, then members of that team can manage that workspace. Refer to [organization permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-permissions) and [project permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for additional information. 
 
-Another example is if a team has permission at the organization level to read runs for all workspaces and admin access to a specific workspace. HCP Terraform grants the higher admin permissions to that workspace.
+Another example is when a team has permission at the organization-level to read runs for all workspaces and admin access to a specific workspace. HCP Terraform grants the more permissive admin permissions to that workspace.
 
 To manage team permissions on a workspace:
 
