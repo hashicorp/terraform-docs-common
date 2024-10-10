@@ -94,7 +94,7 @@ By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto
 
 Like with Terraform configuration files, HCP Terraform generates a dependency graph and creates resources defined in `*.tfstack.hcl` and `*.tfdeploy.hcl` files. 
 
-When you deploy a Stack with resources that depend on resources provisioned by other components in your stack, HCP Terraform recognizes the dependency between components and automatically defers that plan until HCP Terraform can complete it successfully. Plans with deferred changes are plans with resources that depend on other resources and require follow-up plans.
+When you deploy a Stack with resources that depend on resources provisioned by other components in your stack, HCP Terraform recognizes the dependency between components and automatically defers that plan until HCP Terraform can complete it successfully. Plans with deferred changes are plans with resources that depend on resources that don't exist yet, requiring follow-up plans.
 
 -> **Hands-on**: Complete the [Manage Kubernetes workloads with stacks](/terraform/tutorials/cloud/stacks-eks-deferred) tutorial to create plans with deferred changes.
 
