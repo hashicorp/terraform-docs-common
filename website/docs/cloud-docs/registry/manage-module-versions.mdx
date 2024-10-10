@@ -15,7 +15,8 @@ Deprecating a module version in your organization’s private registry adds warn
 You can also [deprecate module versions using the HCP Terraform API](/terraform/cloud-docs/api-docs/private-registry/manage-module-versions).
 
 ## Background
-Deprecating a module version allows platform teams and module authors to mark the end-of-life of specific private module versions. Deprecating a module version signifies to users that the version is temporarily maintained and available, but not recommended. 
+
+Deprecating a module version allows platform teams and module authors to mark the end-of-life for specific private module versions. Deprecating module versions helps consumers recognize versions that are still maintained and supported but not recommended. 
 
 @include "public-beta/manage-module-versions.mdx"
 
@@ -33,11 +34,11 @@ To deprecate a module version, perform the following steps:
 1. Navigate to your organization’s private registry and find the module you want to deprecate a version of.  
 1. Open the **Manage module for organization** dropdown.  
 1. Select a module version for deprecation.  
-1. You can optionally enter a **Reason for module deprecation** to explain to users why this module version is being deprecated. This custom message is displayed to module users in deprecation warnings.   
+1. You can optionally provide an explanation in the **Reason for module deprecation** field to help users understand why this module version is being deprecated. This custom message is displayed to module users in deprecation warnings.   
 1. You can optionally enter a URL into the **Link to additional information** field if there is a website where consumers can learn more about that module version’s deprecation.   
 1.  Click **Deprecate**.
 
-If the module version you are deprecating is pinned as [**No-code ready**](/terraform/cloud-docs/no-code-provisioning/module-design#updating-a-module-s-version), then HCP Terraform lets you select another version to create no-code modules from. We recommend pinning another non-deprecated module version as No-code ready to ensure that future users provisioning workspaces from your module use a non-deprecated version. 
+If the module version you are deprecating has the [**No-code ready**](/terraform/cloud-docs/no-code-provisioning/module-design#updating-a-module-s-version) pin, then HCP Terraform lets you select another version to create no-code modules from. We recommend adding the **No-code ready** pin to another non-deprecated module version so that users provisioning workspaces from your module can use a version that you plan to continue supporting. 
 
 ### Deprecation warnings
 After you deprecate a module version, consumers of that version receive warnings in their operation outputs urging them to update that version in both HCP Terraform and the Terraform CLI. 
@@ -51,9 +52,9 @@ Found the following deprecated module versions, consider using an updated versio
 <module-name-version><optional-reason-for-module-deprecation>
 ```
 
-A run’s output mode affects where a module deprecation’s warning pops up. If a run is in the default [Structured run output](/terraform/cloud-docs/workspaces/settings#user-interface) mode, then module deprecation warnings show up under a run’s Diagnostics dropdown.
+A run’s output mode affects where a module deprecation’s warning appears. If a run set to the default [**Structured Run Output**](/terraform/cloud-docs/workspaces/settings#user-interface) mode, then module deprecation warnings show up under a run’s Diagnostics dropdown.
 
-If a run is in the Console UI mode, module deprecation warnings show up in a run’s logs:
+If a run is in the **Console UI** mode, module deprecation warnings appear in the run’s logs:
 
 ```shell
 Warning: Deprecated modules found, consider installing an updating version. The following are affected:
