@@ -96,7 +96,7 @@ Like with Terraform configuration files, HCP Terraform generates a dependency gr
 
 When you deploy a Stack with resources that depend on resources provisioned by other components in your stack, HCP Terraform recognizes the dependency between components and automatically defers that plan until HCP Terraform can complete it successfully. Plans with deferred changes are plans with resources that depend on other resources and require follow-up plans.
 
--> **Hands-on**: Go through our [Manage Kubernetes workloads with stacks](/terraform/tutorials/cloud/stacks-eks-deferred) tutorial to see deferred changes in action.
+-> **Hands-on**: Complete the [Manage Kubernetes workloads with stacks](/terraform/tutorials/cloud/stacks-eks-deferred) tutorial to create plans with deferred changes.
 
 HCP Terraform notifies you in the UI if a plan contains deferred changes. Approving a plan with deferred changes makes HCP Terraform automatically create a follow-up plan to properly set up resources in the order of operations those resources require. 
 
