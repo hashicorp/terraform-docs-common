@@ -52,6 +52,10 @@
       },
       { "title": "Assessment Results", "path": "api-docs/assessment-results" },
       {
+        "title": "Change requests",
+        "path": "api-docs/change-requests"
+      },
+      {
         "title": "Comments",
         "path": "api-docs/comments"
       },
