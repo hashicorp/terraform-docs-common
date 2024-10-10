@@ -38,13 +38,18 @@ tfc_only: true
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
 # Manage module versions API
-Deprecating a module version in your organization’s private registry adds warnings to the module's registry page and warnings in the run outputs of any users of that version. 
+
+This topic provides reference information about API endpoints that let your deprecate module versions in your organization’s private registry. 
+
+## Introduction
+
+When you deprecate a module version, HCP Terraform adds warnings to the module's registry page and to run outputs when anyone uses the deprecated version. 
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include "tfc-package-callouts/manage-module-versions.mdx"
 <!-- END: TFC:only name:pnp-callout -->
 
-Once you have deprecated a module version, you can revert its deprecation to remove the warnings from that version. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/manage-module-versions).
+After deprecating a module version, you can revert that deprecated status to remove the warnings from that version in the registry and outputs. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/manage-module-versions).
 
 @include "public-beta/manage-module-versions.mdx"
 
@@ -67,7 +72,7 @@ This endpoint allows you to deprecate a specific module version. Deprecating a m
 
 | Status | Response | Reason |
 | :---- | :---- | :---- |
-| [200](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) | [JSON API document](http:///terraform/cloud-docs/api-docs#json-api-documents)  | Successfully deprecated a module version.  |
+| [200](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) | [JSON API document](http://terraform/cloud-docs/api-docs#json-api-documents)  | Successfully deprecated a module version.  |
 | [404](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404) | [JSON API error object](http://jsonapi.org/format/#error-objects) | This organization is not authorized to deprecate this module version, or the module version does not exist. |
 | [422](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Malformed request body, for example the request is missing attributes or uses the wrong types. |
 | [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) or [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Failure occurred while deprecating a module version. |
@@ -130,7 +135,7 @@ https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private
 ```
 
 
-## Revert the deprecation of a module version
+## Revert the deprecation status for a module version
 
 Use this endpoint to revert the deprecation of a module version.
 
@@ -143,12 +148,11 @@ Use this endpoint to revert the deprecation of a module version.
 | `:module_provider` | Specifies the Terraform provider that this module is used for. |
 | `:module_version` | The module version you want to revert the deprecation of. |
 
-This endpoint allows you to revert the deprecation of a specific module version. Deprecating a module version adds warnings to the run output of any consumers using this module. Reverting the deprecation removes warnings from the output of consumers and fully reinstates the module version. 
-
+Deprecating a module version adds warnings to the run output of any consumers using this module. Reverting the deprecation status removes warnings from the output of consumers and fully reinstates the module version. 
 
 | Status | Response | Reason |
 | :---- | :---- | :---- |
-| [200](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) | [JSON API document](http:///terraform/cloud-docs/api-docs#json-api-documents)  | Successfully reverted a module version’s deprecation. |
+| [200](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200) | [JSON API document](http:///terraform/cloud-docs/api-docs#json-api-documents)  | Successfully reverted a module version’s deprecation status and reinstated that version. |
 | [404](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404) | [JSON API error object](http://jsonapi.org/format/#error-objects) | This organization is not authorized to revert the depreciation of this module version, or the module version does not exist. |
 | [422](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Malformed request body, for example the request is missing attributes or uses the wrong types. |
 | [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) or [503] | [JSON API error object](http://jsonapi.org/format/#error-objects) | Failure occurred while reverting the deprecation of a module version. |
