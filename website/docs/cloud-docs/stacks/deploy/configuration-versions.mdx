@@ -6,7 +6,11 @@ tfc_only: true
 
 # Fetch and review configuration versions
 
-This guide explains how to fetch new Stack configurations and reviews them in HCP Terraform.
+Stacks automatically detect when you push changes to your configuration from your VCS-linked repository. Every time you push changes to your repository, HCP Terraform automatically fetches your configuration and creates a new configuration version.
+
+Whether automatic or manual, every time HCP Terraform fetches a new version of your configuration file, it creates a new configuration version, whether you made changes to that file or not. HCP Terraform uses a new configuration version to [plan](/terraform/cloud-docs/stacks/deploy/plans) how that configuration version would affect each of your deployments.
+
+This guide explains creating and reviewing new configuration versions in HCP Terraform.
 
 ## Requirements
 
@@ -14,7 +18,15 @@ To view a Stack and its configurations, you must also be a member of a team in y
 * [Organization-level **Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)
 * [Project-level **Maintain**](/terraform/cloud-docs/users-teams-organizations/permissions#read) or higher
 
-## Fetch new configurations
+## Create configuration versions
+
+Stacks automatically detect when you push changes to your configuration from your VCS-linked repository. Every time you push changes to your repository, HCP Terraform automatically fetches your configuration and creates a new configuration version.
+
+Whether automatic or manual, every time HCP Terraform fetches a new version of your configuration file, it creates a new configuration version, whether you made changes to that file or not.
+
+HCP Terraform then creates a new plan to roll out that new configuration version to your deployments. Learn more about [reviewing and approving deployment plans](/terraform/cloud-docs/stacks/deploy/plans).
+
+### Manually fetch new configurations
 
 If you are not already on your Stack’s deployment page, navigate to it:
 
@@ -26,12 +38,6 @@ If you are not already on your Stack’s deployment page, navigate to it:
 Stacks automatically detect when you push changes to your configuration from your VCS-linked repository. Every time you push changes to your repository, HCP Terraform automatically fetches your configuration and creates a new configuration version.
 
 If something changes outside of your configuration, you can fetch your configuration manually by clicking **Fetch Configurations from VCS** on a Stack’s **Overview** page or clicking **Fetch configuration** on a Stack’s **Configurations** page. For example, if someone changes resources directly in the AWS console, you can manually fetch your configuration to update your Stack.
-
-## Create configuration versions
-
-Whether manual or automatic, every time HCP Terraform fetches a new version of your configuration file, it creates a new configuration version, whether you made changes to that file or not.
-
-HCP Terraform then creates a new plan to roll out that new configuration version to your deployments. Learn more about [reviewing and approving deployment plans](/terraform/cloud-docs/stacks/deploy/plans). 
 
 ## Review configurations
 
