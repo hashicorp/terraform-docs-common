@@ -22,6 +22,7 @@ Stacks are an alternative way to organize your infrastructure and fundamentally 
 Previously, those looking to deploy repeatable infrastructure using HCP Terraform would create separate workspaces and then use run triggers or other automation tools to coordinate changes between them. However, workspaces are not truly coupled to each other, hampering your ability to flexibly manage infrastructure as it scales. Stacks enable you to manage your infrastructure as a single unit, simplifying deploying and managing infrastructure at scale.
 
 ## Workflow
+
 Start by creating a [Stack configuration file](/terraform/language/stacks/reference/tfstack) and filling it with `component` blocks. Each `component` block includes a Terraform module as its source, and you can configure a block further using input arguments. Your Stack components share a lifecycle, which you can repeatedly deploy together using HCP Terraform.
 
 ![Diagram of the architecture of a Stack. A Stack of two components (Kubernetes and Namespace) are rolled our in to three deploymentes (US, Europe, and Asia). ](/img/docs/stacks-example.png)
