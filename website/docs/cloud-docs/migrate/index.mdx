@@ -77,3 +77,7 @@ Stop all Terraform operations associated with the state files. This may require 
 
 Refer to the following external article for an example of how to create a script in Python to automate multiple state files:
 [Migrating A Lot of State with Python and the HCP Terraform (previously Terraform Cloud) API](https://medium.com/hashicorp-engineering/migrating-a-lot-of-state-with-python-and-the-terraform-cloud-api-997ec798cd11). The example uses the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces#create-a-workspace) to create the necessary workspaces in HCP Terraform and the [State Versions API](/terraform/cloud-docs/api-docs/state-versions) to migrate the state files to those workspaces.
+
+## Migrate state using Terraform migrate
+
+You can use the Terraform migrate CLI tool to automatically migrate state to HCP Terraform and Terraform Enterprise. The tool does not ship with HCP Terraform. You must download and install the binary for the CLI tool separately. Refer to the [Terraform migrate documentation](/terraform/cloud-docs/migrate/tf-migrate) for more information.
