@@ -10,7 +10,9 @@ This topic describes how to configure HCP Terrraform to automatically cancel pla
 ## Introduction
  
 When connected to a VCS, HCP Terraform can automatically start a Terraform run that performs a `terraform plan` operation when someone creates a pull request (PR) in the repository. Refer to [Connecting to VCS](/terraform/cloud-docs/vcs) for additional information. 
+
 When team members push new commits to the same branch, HCP Terraform starts new run that performs a `terraform plan` operation. But as team members push new commits, the queue of Terraform runs can cause delays and reduce efficiency. 
+
 You can enable the **Automatically cancel speculative plans for outdated commits** option in the organization's settings screen so that HCP Terraform automatically cancel unfinished plan-only runs in VCS workflows.
 
 ## Configure automatic cancellation 
