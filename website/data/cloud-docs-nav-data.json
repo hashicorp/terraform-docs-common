@@ -298,7 +298,7 @@
         "routes": [
           {"title": "Overview","path": "users-teams-organizations/organizations"},
           { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
-          { "title": "VCS Speculative Plan Management", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
+          { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
         ]
       },
       {
