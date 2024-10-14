@@ -233,6 +233,14 @@
               { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration" },
               { "title":  "Azure Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/azure-configuration" }
             ]
+          },
+          {
+            "title": "HCP Vault Secrets-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/gcp-configuration" }
+            ]
           }
         ]
       },
