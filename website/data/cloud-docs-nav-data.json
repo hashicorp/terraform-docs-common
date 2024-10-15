@@ -408,7 +408,12 @@
     ]
   },
    {
-    "title": "Stacks <sup>BETA</sup>",
+    "title": "Stacks",
+    "badge": {
+        "text": "BETA",
+        "type": "outlined",
+        "color": "neutral"
+    },
     "routes": [
       { "title": "Overview", "path": "stacks" },
       { "title": "Create a Stack", "path": "stacks/create" },
