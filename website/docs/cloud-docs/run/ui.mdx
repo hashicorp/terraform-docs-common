@@ -51,6 +51,10 @@ Manually starting a run requires permission to queue plans for the workspace. ([
 
 If the workspace has a plan that is still in the [plan stage](/terraform/cloud-docs/run/states#the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the **Current Run** page and click **Run this plan now**. Be aware that this action terminates the current plan and unlocks the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan does not have all the desired changes.
 
+## Automatically cancel plan-only runs triggered by outdated commits
+
+Refer to [Automatically cancel plan-only runs triggered by outdated commits](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-speculative-plan-management) for additional information.
+
 ## Confirming or Discarding Plans
 
 By default, run plans require confirmation before HCP Terraform will apply them. Users with permission to apply runs for the workspace can navigate to a run that has finished planning and click the "Confirm & Apply" or "Discard Plan" button to finish or cancel a run. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions)) If necessary, use the "View Plan" button for more details about what the run will change.
