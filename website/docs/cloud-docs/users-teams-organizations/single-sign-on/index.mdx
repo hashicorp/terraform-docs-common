@@ -110,7 +110,7 @@ It is not possible to assign users to the `owners` team through this attribute.
 
 ## Team Names and SSO Team IDs
 
-HCP Terraform expects the team names in the team membership SAML attribute to exactly match its own team names or its configured SSO Team IDs. This match is case sensitive and exact, HCP Terraform won't process the value passed by the IdP in any way, therefore values like full DN will not work.
+HCP Terraform expects the team names in the team membership SAML attribute to exactly match its own team names or its configured SSO Team IDs. This match is case sensitive and literal, HCP Terraform won't process the value passed by the IdP in any way, therefore values like full DN will not work.
 
 You can configure SSO Team IDs in the organization's **Teams** page. If an SSO Team ID is configured, HCP Terraform will attempt to match the chosen SAML attribute against both the team name and the SSO Team ID when mapping users to teams. You may want to create an SSO Team ID if the team membership SAML attribute is not human readable and is not used as the team's name in HCP Terraform.
 
