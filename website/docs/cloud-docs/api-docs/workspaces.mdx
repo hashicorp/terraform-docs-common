@@ -143,7 +143,6 @@ By supplying the necessary attributes under a `vcs-repository` object, you can c
 | `data.attributes.setting-overwrites` | object  | none |   The keys in this object are attributes that have organization-level defaults. Each attribute key stores a boolean value which is `true` by default. To overwrite the default inherited value, set an attribute's value to `false`. For example, to set `execution-mode` as the organization default, set `setting-overwrites.execution-mode` to `false`. |
 | `data.relationships` | object | none | Specifies a group of workspace associations. |
 | `data.relationships.project.data.id` | string  | default project | The ID of the project to create the workspace in. If left blank, Terraform creates the workspace in the organization's default project. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project. |
-of tags to bind to this workspace. If left blank, Terraform creates the workspace without tag bindings. You must have permission to manage tags.|
 | `data.relationships.tag-bindings.data`          | list of objects | none | Specifies a list of tags to attach to the workspace. |
 | `data.relationships.tag-bindings.data.type`     | string | none | Must be `tag-bindings` for each object in the list. |
 | `data.relationships.tag-bindings.data.attributes.key`   | string | none | Specifies the tag key for each object in the list. |
@@ -158,7 +157,7 @@ _Without a VCS repository_
 {
   "data": {
     "attributes": {
-      "name": "workspace-1",
+      "name": "workspace-1"
     },
     "type": "workspaces",
     "relationships": {
