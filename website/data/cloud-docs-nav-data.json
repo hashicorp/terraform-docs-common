@@ -628,6 +628,10 @@
               {
                 "title": "Example Customizations",
                 "path": "integrations/service-now/service-catalog-terraform/example-customizations"
+              },
+              {
+                "title": "Troubleshoot",
+                "path": "integrations/service-now/service-catalog-terraform/troubleshoot"
               }
             ]
           },
