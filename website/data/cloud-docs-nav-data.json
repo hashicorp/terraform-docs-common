@@ -52,6 +52,10 @@
       },
       { "title": "Assessment Results", "path": "api-docs/assessment-results" },
       {
+        "title": "Change requests",
+        "path": "api-docs/change-requests"
+      },
+      {
         "title": "Comments",
         "path": "api-docs/comments"
       },
@@ -102,6 +106,7 @@
         "title": "Private Registry",
         "routes": [
           { "title": "Modules", "path": "api-docs/private-registry/modules" },
+          { "title": "Manage Module Versions", "path": "api-docs/private-registry/manage-module-versions" },
           {
             "title": "Providers",
             "path": "api-docs/private-registry/providers"
@@ -191,8 +196,18 @@
         "title": "Create tags",
         "path": "workspaces/tags"
       },
-      { "title": "Explorer", "path": "workspaces/explorer" },
       { "title":  "Browse workspaces", "path":  "workspaces/browse"},
+      { "title": "Explorer", "path": "workspaces/explorer" },
+      {
+        "title": "Change requests",
+        "routes": [
+          { "title": "Overview", "path": "workspaces/change-requests" },
+          {
+            "title": "Manage change requests",
+            "path": "workspaces/change-requests/manage"
+          }
+        ]
+      },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
@@ -217,6 +232,14 @@
               { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/aws-configuration" },
               { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration" },
               { "title":  "Azure Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/azure-configuration" }
+            ]
+          },
+          {
+            "title": "HCP Vault Secrets-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/gcp-configuration" }
             ]
           }
         ]
@@ -292,12 +315,20 @@
     "title": "Users, Teams, Organizations",
     "routes": [
       { "title": "Users", "path": "users-teams-organizations/users" },
-      { "title": "Teams", "path": "users-teams-organizations/teams" },
+    {
+        "title": "Teams",
+        "routes": [
+          {"title": "Overview","path": "users-teams-organizations/teams"},
+          { "title": "Manage teams", "path": "users-teams-organizations/teams/manage" },
+          { "title": "Notifications", "path": "users-teams-organizations/teams/notifications" }
+        ]
+      },
       {
         "title": "Organizations",
         "routes": [
           {"title": "Overview","path": "users-teams-organizations/organizations"},
-          { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" }
+          { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
+          { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
         ]
       },
       {
@@ -376,6 +407,27 @@
       { "title": "Troubleshooting", "path": "vcs/troubleshooting" }
     ]
   },
+   {
+    "title": "Stacks",
+    "badge": {
+        "text": "BETA",
+        "type": "outlined",
+        "color": "neutral"
+    },
+    "routes": [
+      { "title": "Overview", "path": "stacks" },
+      { "title": "Create a Stack", "path": "stacks/create" },
+      { "title": "Configure a Stack", "path": "stacks/configure" },
+      {
+        "title": "Deploy infrastructure",
+        "routes": [
+          { "title": "Configuration versions", "path": "stacks/deploy/configuration-versions" },
+          { "title": "Review deployment plans", "path": "stacks/deploy/plans" }
+        ]
+      },
+      { "title": "Destroy a Stack", "path": "stacks/destroy" }
+    ]
+  },
   {
     "title": "Private Registry",
     "routes": [
@@ -392,6 +444,7 @@
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
       },
+      { "title": "Deprecate Module Versions", "path": "registry/manage-module-versions" },
       {
         "title": "Test-Integrated Modules",
         "path": "registry/test"
@@ -417,8 +470,35 @@
     ]
   },
   {
-    "title": "Migrating to HCP Terraform",
-    "path": "migrate"
+    "title": "Migrate to HCP Terraform",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "migrate"
+      },
+      {
+        "title": "Terraform migrate CLI",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "migrate/tf-migrate"
+          },
+          {
+            "title": "CLI Reference",
+            "routes": [
+              {
+                "title": "tf-migrate prepare",
+                "path": "migrate/tf-migrate/reference/prepare"
+              },
+              {
+                "title": "tf-migrate execute",
+                "path": "migrate/tf-migrate/reference/execute"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Policy Enforcement",

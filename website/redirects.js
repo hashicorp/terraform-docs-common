@@ -226,4 +226,15 @@ module.exports = [
     source: "/terraform/cloud-docs/workspaces/creating",
     destination: "/terraform/cloud-docs/workspaces/create"
   },
+  // Stacks links
+  {
+    source: "/terraform/cloud-docs/stacks/review-plans",
+    destination: "/terraform/cloud-docs/stacks/deploy/plans",
+    permanent: true
+  },
+  {
+    source: "/terraform/cloud-docs/stacks/deploy/conditions",
+    destination: "/terraform/language/stacks/deploy/conditions",
+    permanent: true
+  }
 ];
