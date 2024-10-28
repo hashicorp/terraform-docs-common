@@ -193,4 +193,4 @@ The policy set no longer appears on the UI and HCP Terraform no longer applies i
 
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
 
-You can only set parameters for existing policy sets that you added through the `tfe` provider, API, or a connected VCS repository. Parameters are not available for managed policy sets.
+Parameters can only be set for policy sets added through a connected VCS repository or when policy sets are created with the [HCP Terraform Policy Sets API](/terraform/cloud-docs/api-docs/policy-sets) or the `tfe` provider [`tfe_policy_set`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) resource and then a policy set version is uploaded with a file containing the policy rules. Individually managed policies created through the UI, API or TFE provider do not support parameter attachment.
