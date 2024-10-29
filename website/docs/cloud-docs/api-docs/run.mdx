@@ -456,6 +456,8 @@ curl \
 
 This endpoint has an adjusted rate limit of 30 requests per minute. Note that most endpoints are limited to 30 requests per second.
 
+Note that this endpoint differs from others in the pagination metadata included in the response, such as the exclusion of the typical `total-count`. See the Sample Response below for more details.
+
 | Status  | Response                                         | Reason                   |
 |---------|--------------------------------------------------|--------------------------|
 | [200][] | Array of [JSON API document][]s (`type: "runs"`) | Successfully listed runs |
@@ -553,7 +555,16 @@ curl \
       }
     },
     {...}
-  ]
+  ],
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "next-page": 2,
+      "prev-page": null,
+      "page-size": 20,
+      "page-count": 20
+    }
+  }
 }
 ```
 
