@@ -65,7 +65,15 @@ To add new repositories, use GitHub repository Settings tab(must be repository o
 In order to pull up the pop-up window again, use HCP Terraform -> Workspaces -> New -> Version Control Workflow -> GitHub App -> click GitHub Organization right above the repository list on the left -> Add another organization. 
 
 Once you authorize the app, you can use GitHub in any of your HCP Terraform organizations without needing to re-authorize.
+After installing the GitHub App and creating your VCS provider instance, you cannot reinstall the application again. However, you can modify your existing GitHub App configuration.
 
+If you are a repository owner, you can adjust an existing Github App configuration by:
+1. Click a repository's **Settings** tab.
+1. Select **GitHub Apps** in the sidebar.
+1. Next to **Terraform Cloud**, click **Configure**. 
+1. Underneath **Repository access**, adjust the repositories your GitHub app can access.
+
+Now that your Github app has access to your desired repository, you can [create a new workspace](/terraform/cloud-docs/workspaces/create#create-a-workspace) with your existing, newly updated GitHub App connection.
 Authorization doesn't grant HCP Terraform any repository permissions; the app must also be installed in at least one of the GitHub organizations or accounts you have access to.
 
 #### Deauthorizing
