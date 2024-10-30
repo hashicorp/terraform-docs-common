@@ -442,7 +442,24 @@ curl \
       }
     },
     {...}
-  ]
+  ],
+  "links": {
+    "first": "https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs?page[number]=1&page[size]=20",
+    "last": "https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs?page[number]=19206&page[size]=20",
+    "self": "https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs?page[number]=2&page[size]=20",
+    "prev": "https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs?page[number]=1&page[size]=20",
+    "next": "https://app.terraform.io/api/v2/workspaces/ws-yF7z4gyEQRhaCNG9/runs?page[number]=3&page[size]=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 2,
+      "next-page": 3,
+      "prev-page": 1,
+      "page-size": 20,
+      "total-count": 384105,
+      "total-pages": 19206
+    }
+  }
 }
 ```
 
@@ -556,6 +573,11 @@ curl \
     },
     {...}
   ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/organizations/hashicorp/runs?page[number]=2&page[size]=20",
+    "prev": "https://app.terraform.io/api/v2/organizations/hashicorp/runs?page[number]=1&page[size]=20",
+    "next": "https://app.terraform.io/api/v2/organizations/hashicorp/runs?page[number]=3&page[size]=20"
+  },
   "meta": {
     "pagination": {
       "current-page": 1,
