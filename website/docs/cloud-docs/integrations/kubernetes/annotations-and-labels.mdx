@@ -1,10 +1,12 @@
 ---
-page_title: Annotations and Labels used by Terraform Cloud Operator for Kubernetes
+page_title: Annotations and Labels used by HCP Terraform Operator for Kubernetes
 description: >-
-  Full list of annotations and labels used by the Terraform Cloud Operator for Kubernetes.
+  Full list of annotations and labels used by the HCP Terraform Operator for Kubernetes.
 ---
 
-# Annotations and Labels used by the Terraform Cloud operator for Kubernetes
+# Annotations and labels reference
+
+This topic contains reference information about the annotations and labels the HCP Terraform and Terraform Enterprise operators use for Kubernetes.
 
 ## Annotations
 
@@ -16,4 +18,7 @@ description: >-
 
 ## Labels
 
-The Terraform Cloud Operator for Kubernetes does not use any labels.
+| Label key | Target resources | Possible values | Description |
+| --- | --- | --- | --- |
+| `agentpool.app.terraform.io/pool-name` | Pod[Agent] | Any valid AgentPool name | Associate the resource with a specific agent pool by specifying the name of the agent pool. |
+| `agentpool.app.terraform.io/pool-id` | Pod[Agent] | Any valid AgentPool ID | Associate the resource with a specific agent pool by specifying the ID of the agent pool. |

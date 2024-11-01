@@ -60,6 +60,8 @@ Any member of an organization can view visible teams and any secret teams they a
 | -------------------- | ------------------------------------------------ |
 | `:organization_name` | The name of the organization to list teams from. |
 
+The response may identify HashiCorp API service accounts, for example `api-team_XXXXXX`, as a members of a team. However, API service accounts do not appear in the UI. As a result, there may be differences between the number of team members reported by the UI and the API. For example, the UI may report `0` members on a team when and the API reports `1`.
+
 ### Query Parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
@@ -84,7 +86,7 @@ $ curl \
 ### Sample Response
 
 The `sso-team-id` attribute is only returned in Terraform Enterprise 202204-1 and later, or in HCP Terraform.
-The `allow-member-token-management` attribute is false for Terraform Enterprise versions older than 202408-1.
+The `allow-member-token-management` attribute is set to `false` for Terraform Enterprise versions older than 202408-1.
 
 ```json
 {

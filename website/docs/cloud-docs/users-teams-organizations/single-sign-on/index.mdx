@@ -10,7 +10,7 @@ tfc_only: true
 
 ~> **Important:** This page is about configuring single sign-on in HCP Terraform. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/terraform/enterprise/saml/configuration).
 
-HCP Terraform allows organizations to configure SAML single sign-on (SSO), an alternative to traditional user management.  SSO gives owners more control to secure accessibility to your organization’s [Projects](/terraform/cloud-docs/projects/managing), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources). By using SSO, your organization can centralize management of users for HCP Terraform and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
+HCP Terraform allows organizations to configure SAML single sign-on (SSO), an alternative to traditional user management.  SSO gives owners more control to secure accessibility to your organization’s [Projects](/terraform/cloud-docs/projects/manage), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources). By using SSO, your organization can centralize management of users for HCP Terraform and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
 
 ## Supported Identity Providers (IdPs)
 
@@ -34,7 +34,7 @@ If an organization's owners disable SSO, all members can continue to access the 
 
 ### Enforced Access Policy for HCP Terraform Resources
 
-As a non-owner, when you attempt to access an organization that has SSO configured, you will be redirected to the organization's SAML IdP to authenticate and authorize access using your SAML IdP credentials before you can access the organization's [Projects](/terraform/cloud-docs/projects/managing), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources).
+As a non-owner, when you attempt to access an organization that has SSO configured, you will be redirected to the organization's SAML IdP to authenticate and authorize access using your SAML IdP credentials before you can access the organization's [Projects](/terraform/cloud-docs/projects/manage), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources).
 
 Owners of an SSO-enabled organization can still access the organization's resources through their HCP Terraform credentials or their HCP credentials (if linked to their HCP Terraform account). This is to enable a workaround to problems such as your IdP becoming unavailable, lost access to your MFA or IdP credentials, or other authentication issues.
 
@@ -110,7 +110,7 @@ It is not possible to assign users to the `owners` team through this attribute.
 
 ## Team Names and SSO Team IDs
 
-HCP Terraform expects the team names in the team membership SAML attribute to exactly match its own team names or its configured SSO Team IDs. This match is case sensitive.
+HCP Terraform expects the team names in the team membership SAML attribute to exactly match team names or configured SSO team IDs stored in HCP Terraform. Values are case sensitive and literal. HCP Terraform does not process the value passed by the IdP. As a result, you cannot use values such as the full distinguished name (DN).
 
 You can configure SSO Team IDs in the organization's **Teams** page. If an SSO Team ID is configured, HCP Terraform will attempt to match the chosen SAML attribute against both the team name and the SSO Team ID when mapping users to teams. You may want to create an SSO Team ID if the team membership SAML attribute is not human readable and is not used as the team's name in HCP Terraform.
 
