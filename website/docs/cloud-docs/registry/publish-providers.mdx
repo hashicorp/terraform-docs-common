@@ -1,4 +1,4 @@
----
+ f---
 page_title: Publishing Private Providers - Private Registry
 description: >-
   Prepare private providers for publishing, add them to the private registry,
@@ -137,7 +137,7 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers/private/ORG_NAME/aws/versions
+  https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers/private/ORG_NAME/PROVIDER_NAME/versions
 ```
 
  The response includes URL links that you will use to upload the `SHA256SUMS` and `SHA256.sig` files.
