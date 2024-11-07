@@ -58,7 +58,7 @@ Create a file named `provider.json` with the following contents. Replace `PROVID
 }
 ```
 
-Use the [Create a Provider endpoint](/terraform/cloud-docs/api-docs/private-registry/providers#create-a-provider) to create the provider in HCP Terraform. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token and replace `ORG_NAME` with the name of your organization. If are not using the `aws` provider, then replace `aws` with your provider's name.
+Use the [Create a Provider endpoint](/terraform/cloud-docs/api-docs/private-registry/providers#create-a-provider) to create the provider in HCP Terraform. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token and replace `ORG_NAME` with the name of your organization.
 
 ```shell-session
 $ curl \
@@ -129,7 +129,8 @@ Create a file named `version.json` with the following contents. Replace the valu
 }
 ```
 
-Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token, and replace both instances of `ORG_NAME` with the name of your organization.
+Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token, and replace both instances of `ORG_NAME` with the name of your organization. If are not using the `aws` provider, then replace `aws` with your provider's name.
+
 
 ```shell-session
 $ curl \
@@ -137,7 +138,7 @@ $ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers/private/ORG_NAME/PROVIDER_NAME/versions
+  https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers/private/ORG_NAME/aws/versions
 ```
 
  The response includes URL links that you will use to upload the `SHA256SUMS` and `SHA256.sig` files.
