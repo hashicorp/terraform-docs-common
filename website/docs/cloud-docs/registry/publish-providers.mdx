@@ -58,7 +58,7 @@ Create a file named `provider.json` with the following contents. Replace `PROVID
 }
 ```
 
-Use the [Create a Provider endpoint](/terraform/cloud-docs/api-docs/private-registry/providers#create-a-provider) to create the provider in HCP Terraform. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token and replace `ORG_NAME` with the name of your organization.
+Use the [Create a Provider endpoint](/terraform/cloud-docs/api-docs/private-registry/providers#create-a-provider) to create the provider in HCP Terraform. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token and replace `ORG_NAME` with the name of your organization. If are not using the `aws` provider, then replace `aws` with your provider's name.
 
 ```shell-session
 $ curl \
