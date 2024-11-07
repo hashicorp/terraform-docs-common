@@ -131,7 +131,6 @@ Create a file named `version.json` with the following contents. Replace the valu
 
 Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token, and replace both instances of `ORG_NAME` with the name of your organization. If are not using the `aws` provider, then replace `aws` with your provider's name.
 
-
 ```shell-session
 $ curl \
   --header "Authorization: Bearer TOKEN" \
