@@ -60,7 +60,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request GET \
-  https://app.terraform.io/api/v2/organizations/hashicorp/subscription
+  https://app.terraform.io/api/v2/organizations/hashicorp-free/subscription
 ```
 
 ### Sample Response
@@ -68,16 +68,19 @@ curl \
 ```json
 {
   "data": {
-    "id": "sub-kyjptCZYXQ6amEVu",
+    "id": "sub-narnoxedCQaY9BEK",
     "type": "subscriptions",
     "attributes": {
       "end-at": null,
       "is-active": true,
-      "start-at": "2021-01-20T07:03:53.492Z",
+      "start-at": "2024-11-08T15:06:14.855Z",
       "runs-ceiling": 1,
-      "contract-start-at": null,
+      "contract-start-at": "2024-11-08T15:06:14.855Z",
       "contract-user-limit": null,
       "contract-apply-limit": null,
+      "contract-managed-resources-limit": null,
+      "hcp-organization-id": null,
+      "hcp-project-id": null,
       "run-task-limit": null,
       "run-task-workspace-limit": null,
       "run-task-mandatory-enforcement-limit": null,
@@ -85,6 +88,12 @@ curl \
       "policy-limit": null,
       "policy-mandatory-enforcement-limit": null,
       "versioned-policy-set-limit": null,
+      "is-change-approved": false,
+      "is-change-approval-required": false,
+      "free-apply-monthly-limit-starts-at": null,
+      "free-apply-monthly-limit": null,
+      "free-apply-monthly-limit-remaining": 50,
+      "free-resource-under-management-monthly-limit": 500,
       "agents-ceiling": 0,
       "is-public-free-tier": true,
       "is-self-serve-trial": false
@@ -92,62 +101,71 @@ curl \
     "relationships": {
       "organization": {
         "data": {
-          "id": "hashicorp",
+          "id": "hashicorp-free",
           "type": "organizations"
         }
       },
-      "billing-account": {
-        "data": null
-      },
       "feature-set": {
         "data": {
-          "id": "fs-EvCGYfpx9CVRzteA",
+          "id": "fs-p7hVyZfpDhCQk6SF",
           "type": "feature-sets"
         }
       }
     },
     "links": {
-      "self": "/api/v2/subscriptions/sub-kyjptCZYXQ6amEVu"
+      "self": "/api/v2/subscriptions/sub-narnoxedCQaY9BEK"
     }
   },
   "included": [
     {
-      "id": "fs-EvCGYfpx9CVRzteA",
+      "id": "fs-p7hVyZfpDhCQk6SF",
       "type": "feature-sets",
       "attributes": {
-        "audit-logging": false,
-        "comparison-description": "Essential collaboration features for practitioners and small teams.",
-        "cost-estimation": false,
+        "comparison-description": "",
+        "concurrency-override": false,
         "cost": 0,
-        "description": "State storage, locking, run history, VCS integration, private module registry, and remote operations",
-        "global-run-tasks": false,
-        "identifier": "free",
+        "default-agents-ceiling": 1,
+        "default-runs-ceiling": 1,
+        "description": "Free 500 managed resources, then downgrade to limited features",
+        "identifier": "free_standard",
         "is-current": true,
         "is-free-tier": true,
-        "module-tests-generation": false,
         "name": "Free",
         "plan": null,
-        "policy-enforcement": false,
-        "policy-limit": null,
-        "policy-mandatory-enforcement-limit": null,
-        "policy-set-limit": null,
-        "private-networking": false,
-        "private-policy-agents": false,
-        "private-vcs": false,
-        "run-task-limit": null,
-        "run-task-mandatory-enforcement-limit": null,
-        "run-task-workspace-limit": null,
-        "run-tasks": false,
         "self-serve-billing": true,
-        "sentinel": false,
-        "sso": false,
+        "stacks": true,
+        "uses-hcp-rum-billing-resource": false,
+        "assessments": false,
+        "audit-logging": false,
+        "change-requests": false,
+        "cost-estimation": true,
+        "global-run-tasks": false,
+        "module-deprecations": false,
+        "module-tests-generation": false,
+        "no-code-modules": false,
+        "policy-enforcement": true,
+        "policy-limit": 5.0,
+        "policy-mandatory-enforcement-limit": 1.0,
+        "policy-set-limit": 1.0,
+        "private-networking": true,
+        "private-policy-agents": false,
+        "private-run-tasks": false,
+        "private-vcs": false,
+        "run-task-limit": 1.0,
+        "run-task-mandatory-enforcement-limit": 1.0,
+        "run-task-workspace-limit": 10.0,
+        "run-tasks": true,
+        "sso": true,
         "teams": false,
-        "user-limit": 5,
-        "versioned-policy-set-limit": null
+        "user-limit": null,
+        "versioned-policy-set-limit": 0.0,
+        "waypoint-actions": false,
+        "waypoint-templates-and-addons": false,
+        "sentinel": true
       }
     }
   ]
-}
+} 
 ```
 
 ## Show Subscription By ID
@@ -165,7 +183,7 @@ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request GET \
-  https://app.terraform.io/api/v2/organizations/hashicorp/subscription
+  https://app.terraform.io/api/v2/organizations/hashicorp-free/subscription
 ```
 
 ### Sample Response
@@ -173,17 +191,19 @@ curl \
 ```json
 {
   "data": {
-    "id": "sub-kyjptCZYXQ6amEVu",
+    "id": "sub-narnoxedCQaY9BEK",
     "type": "subscriptions",
     "attributes": {
       "end-at": null,
       "is-active": true,
-      "start-at": "2021-01-20T07:03:53.492Z",
+      "start-at": "2024-11-08T15:06:14.855Z",
       "runs-ceiling": 1,
-      "contract-start-at": null,
+      "contract-start-at": "2024-11-08T15:06:14.855Z",
       "contract-user-limit": null,
       "contract-apply-limit": null,
-      "agents-ceiling": 0,
+      "contract-managed-resources-limit": null,
+      "hcp-organization-id": null,
+      "hcp-project-id": null,
       "run-task-limit": null,
       "run-task-workspace-limit": null,
       "run-task-mandatory-enforcement-limit": null,
@@ -191,64 +211,80 @@ curl \
       "policy-limit": null,
       "policy-mandatory-enforcement-limit": null,
       "versioned-policy-set-limit": null,
+      "is-change-approved": false,
+      "is-change-approval-required": false,
+      "free-apply-monthly-limit-starts-at": null,
+      "free-apply-monthly-limit": null,
+      "free-apply-monthly-limit-remaining": 50,
+      "free-resource-under-management-monthly-limit": 500,
+      "agents-ceiling": 0,
       "is-public-free-tier": true,
       "is-self-serve-trial": false
     },
     "relationships": {
       "organization": {
         "data": {
-          "id": "hashicorp",
+          "id": "hashicorp-free",
           "type": "organizations"
         }
       },
-      "billing-account": {
-        "data": null
-      },
       "feature-set": {
         "data": {
-          "id": "fs-EvCGYfpx9CVRzteA",
+          "id": "fs-p7hVyZfpDhCQk6SF",
           "type": "feature-sets"
         }
       }
     },
     "links": {
-      "self": "/api/v2/subscriptions/sub-kyjptCZYXQ6amEVu"
+      "self": "/api/v2/subscriptions/sub-narnoxedCQaY9BEK"
     }
   },
   "included": [
     {
-      "id": "fs-EvCGYfpx9CVRzteA",
+      "id": "fs-p7hVyZfpDhCQk6SF",
       "type": "feature-sets",
       "attributes": {
-        "audit-logging": false,
-        "comparison-description": "Essential collaboration features for practitioners and small teams.",
-        "cost-estimation": false,
+        "comparison-description": "",
+        "concurrency-override": false,
         "cost": 0,
-        "description": "State storage, locking, run history, VCS integration, private module registry, and remote operations",
-        "global-run-tasks": false,
-        "identifier": "free",
+        "default-agents-ceiling": 1,
+        "default-runs-ceiling": 1,
+        "description": "Free 500 managed resources, then downgrade to limited features",
+        "identifier": "free_standard",
         "is-current": true,
         "is-free-tier": true,
-        "module-tests-generation": false,
         "name": "Free",
         "plan": null,
-        "policy-enforcement": false,
-        "policy-limit": null,
-        "policy-mandatory-enforcement-limit": null,
-        "policy-set-limit": null,
-        "private-networking": false,
-        "private-policy-agents": false,
-        "private-vcs": false,
-        "run-task-limit": null,
-        "run-task-mandatory-enforcement-limit": null,
-        "run-task-workspace-limit": null,
-        "run-tasks": false,
         "self-serve-billing": true,
-        "sentinel": false,
-        "sso": false,
+        "stacks": true,
+        "uses-hcp-rum-billing-resource": false,
+        "assessments": false,
+        "audit-logging": false,
+        "change-requests": false,
+        "cost-estimation": true,
+        "global-run-tasks": false,
+        "module-deprecations": false,
+        "module-tests-generation": false,
+        "no-code-modules": false,
+        "policy-enforcement": true,
+        "policy-limit": 5.0,
+        "policy-mandatory-enforcement-limit": 1.0,
+        "policy-set-limit": 1.0,
+        "private-networking": true,
+        "private-policy-agents": false,
+        "private-run-tasks": false,
+        "private-vcs": false,
+        "run-task-limit": 1.0,
+        "run-task-mandatory-enforcement-limit": 1.0,
+        "run-task-workspace-limit": 10.0,
+        "run-tasks": true,
+        "sso": true,
         "teams": false,
-        "user-limit": 5,
-        "versioned-policy-set-limit": null
+        "user-limit": null,
+        "versioned-policy-set-limit": 0.0,
+        "waypoint-actions": false,
+        "waypoint-templates-and-addons": false,
+        "sentinel": true
       }
     }
   ]
