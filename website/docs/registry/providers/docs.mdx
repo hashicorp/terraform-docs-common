@@ -156,7 +156,7 @@ If you start a paragraph with a special arrow-like sigil, it will become a color
 
 ## Navigation Hierarchy
 
-Provider docs are organized by category: resources, data sources, and guides. At a minimum, a provider must contain an index (`docs/index.md`) and at least one resource or data source.
+Provider docs are organized by category: functions, ephemeral resources, resources, data sources, and guides. At a minimum, a provider must contain an index (`docs/index.md`) and at least one function, ephemeral resource, resource, or data source.
 
 ### Typical Structure
 
@@ -178,14 +178,14 @@ docs/
 After publishing this provider version, its page on the Terraform Registry would display a navigation which resembles this hierarchy:
 
 * example Provider
-* Resources
-  * example_instance
-* Data Sources
-  * example_instance
 * Functions
   * parse_instance_id
 * Ephemeral Resources
   * example_auth_token
+* Resources
+  * example_instance
+* Data Sources
+  * example_instance
 
 ### Subcategories
 
@@ -201,14 +201,14 @@ This would change the navigation hierarchy to the following:
 
 * example Provider
 * Compute
-  * Resources
-    * example_instance
-  * Data Sources
-    * example_instance
   * Functions
     * parse_instance_id
   * Ephemeral Resources
     * example_auth_token
+  * Resources
+    * example_instance
+  * Data Sources
+    * example_instance
 
 Resources, data sources, and functions without a subcategory will be rendered before any subcategories.
 
@@ -249,14 +249,14 @@ The `page_title` is used (instead of the filename) for rendering the link to thi
 * example Provider
 * Guides
   * Authenticating with Example Cloud
-* Resources
-  * example_instance
-* Data Sources
-  * example_instance
 * Functions
   * parse_instance_id
 * Ephemeral Resources
   * example_auth_token
+* Resources
+  * example_instance
+* Data Sources
+  * example_instance
 
 Guides are always rendered before resources, data sources, functions, ephemeral resources, and any subcategories.
 
@@ -291,14 +291,14 @@ Assuming that these three guides have titles similar to their filenames, and the
 * Authentication
   * Authenticating with Basic Authentication
   * Authenticating with OAuth
-* Resources
-  * example_instance
-* Data Sources
-  * example_instance
 * Functions
   * parse_instance_id
 * Ephemeral Resources
   * example_auth_token
+* Resources
+  * example_instance
+* Data Sources
+  * example_instance
 
 Guides without a subcategory are always rendered before guides with subcategories. Both are always rendered before resources, data sources, functions, and ephemeral resources.
 
