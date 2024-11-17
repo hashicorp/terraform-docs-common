@@ -40,6 +40,7 @@ tfrun
 │   ├── execution_mode (string)
 │   ├── auto_apply (bool)
 │   ├── tags (array of strings)
+|   ├── tag_bindings (array of objects)
 │   ├── working_directory (string)
 │   └── vcs_repo (map of keys)
 └── cost_estimate
@@ -242,7 +243,20 @@ Contains the workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#
 
 * **Value Type:** Array of strings.
 
-Contains the list of tag names for the workspace.
+Contains the list of tag names for the workspace, as well as the keys from tag bindings.
+
+### Value: `tag_bindings`
+
+* **Value Type:** Array of objects.
+
+Contains the complete list of tag bindings for the workspace, which includes inherited tag bindings, as well as the workspace key-only tags. Each binding has a string `key`, a nullable string `value`, as well as a boolean `inherited` properties.
+
+```
+tag_bindings (array of objects)
+├── key (string)
+├── value (string or null)
+└── inherited (boolean)
+```
 
 ### Value: `working_directory`
 
