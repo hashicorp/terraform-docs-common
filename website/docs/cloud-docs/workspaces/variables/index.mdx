@@ -1,11 +1,11 @@
 ---
-page_title: Workspace Variables - HCP Terraform
+page_title: Workspace variables - HCP Terraform
 description: >-
   HCP Terraform workspace variables let you customize configurations, modify
   Terraform's behavior, and store information like provider credentials.
 ---
 
-# Variables
+# Workspace variables
 
 HCP Terraform workspace variables let you customize configurations, modify Terraform's behavior, setup [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials), and store information like static provider credentials.
 
@@ -19,7 +19,7 @@ You can create both environment variables and Terraform variables in HCP Terrafo
 
 > **Hands-on:** Try the [Create and Use a Variable Sets](/terraform/tutorials/cloud-get-started/cloud-create-variable-set) and [Create Infrastructure](/terraform/tutorials/cloud-get-started/cloud-workspace-configure) tutorials to set environment and Terraform variables in HCP Terraform.
 
-### Environment Variables
+### Environment variables
 
 HCP Terraform performs Terraform runs on disposable Linux worker VMs using a POSIX-compatible shell. Before running Terraform operations, HCP Terraform uses the `export` command to populate the shell with environment variables.
 
@@ -31,13 +31,13 @@ You can use the `TFE_PARALLELISM` environment variable when your infrastructure 
 
 !> **Warning:** We recommend reading and understanding [Terraform parallelism](https://support.hashicorp.com/hc/en-us/articles/10348130482451) prior to setting `TFE_PARALLELISM`. You can also contact HashiCorp support for direct advice. 
 
-#### Dynamic Credentials
+#### Dynamic credentials
 
 You can configure [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for certain providers using environment variables [at the workspace level](/terraform/cloud-docs/workspaces/variables/managing-variables#workspace-specific-variables) or using [variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
 
 Dynamic credentials allows for using temporary per-run credentials and eliminates the need to manually rotate secrets.
 
-### Terraform Variables
+### Terraform variables
 
 Terraform variables refer to [input variables](/terraform/language/values/variables) that define parameters without hardcoding them into the configuration. For example, you could create variables that let users specify the number and type of Amazon Web Services EC2 instances they want to provision with a Terraform module.
 
@@ -60,7 +60,22 @@ module "ec2_instances" {
 }
 ```
 
-If a required input variable is missing, Terraform plans in the workspace will fail and print an explanation in the log.
+If a required input variable is missing, Terraform plans in the workspace fail and print an explanation in the log. 
+
+#### Ephemeral variables
+
+-> **Note**: Ephemeral variables are available in Terraform v1.10.0 and later. [Learn more about ephemeral variables](/terraform/language/values/variables#exclude-values-from-state).
+
+Defining a variable as `ephemeral` in your configuration makes it available during runtime, but Terraform omits ephemeral values from state and plan files.
+
+```hcl
+variable "session_token" {
+  type      = string
+  ephemeral = true
+}
+```
+
+If an `ephemeral` variable in your configuration references a Terraform variable, you must mark your workspace's Terraform variable as [sensitive](/terraform/cloud-docs/workspaces/variables/managing-variables#sensitive-values) to hide its value in the HCP Terraform UI.
 
 ## Scope
 
