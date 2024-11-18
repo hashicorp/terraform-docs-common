@@ -1,11 +1,10 @@
 ---
-page_title: Managing Variables - HCP Terraform
+page_title: Manage Variables and Variable Sets
 description: >-
-  Configure Terraform input variables and environment variables and create
-  reusable variable sets that apply to multiple workspaces.
+  Use workspace variables and variable sets to customize HCP Terraform runs.
 ---
 
-# Managing Variables
+# Manage Variables and Variable Sets
 
 You can set variables specifically for each workspace or you can create variable sets to reuse the same variables across multiple workspaces. Refer to the [variables overview](/terraform/cloud-docs/workspaces/variables) documentation for more information about variable types, scope, and precedence. You can also set variable values specifically for each run on the command line.
 
@@ -15,13 +14,11 @@ You can create and edit workspace-specific variables through:
 - The Variables API for [workspace-specific variables](/terraform/cloud-docs/api-docs/workspace-variables) and [variable sets](/terraform/cloud-docs/api-docs/variable-sets).
 - The `tfe` provider's [`tfe_variable`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable) resource, which can be more convenient for bulk management.
 
-
 ## Permissions
+
 You must have [`read variables` permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in your organization.
 
 To create new variable sets and apply them to workspaces, you must be part of a team with [manage workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) permissions. To create and edit workspace-specific variables within a workspace, you must have [read and write variables](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) for that workspace.
-
-
 
 ## Run-Specific Variables
 
