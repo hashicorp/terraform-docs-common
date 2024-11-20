@@ -8,7 +8,7 @@ description: >-
 
 A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces and projects. For example, you could define a variable set of provider credentials and automatically apply it to a selection of workspaces, all workspaces in a project, or all workspaces in an organization.
 
-You need [**Read** variables permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in the owning organization. To create or edit variable sets, your team must have [**Manage all workspaces** organization access](/terraform/cloud-docs/users-teams-organizations/teams/manage#managing-organization-access).
+You need [**Read** variables permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and **Read** variable set permission to view the variable sets in the owning organization or project. To create or edit variable sets, your team must have **Manage variable sets** access.
 
 ## Create a Variable Set
 
@@ -16,7 +16,7 @@ You need [**Read** variables permission](/terraform/cloud-docs/users-teams-organ
 
 | Parameter            | Description                                            |
 | -------------------- | ------------------------------------------------------ |
-| `:organization_name` | The name of the organization the workspace belongs to. |
+| `:organization_name` | The name of the organization the variable set belongs to. |
 
 ### Request Body
 
@@ -31,6 +31,9 @@ Properties without a default value are required.
 | `data.relationships.workspaces` | array   | \`[]`   | Array of references to workspaces that the variable set should be assigned to.                                              |
 | `data.relationships.projects`   | array   | \`[]`   | Array of references to projects that the variable set should be assigned to.                                                |
 | `data.relationships.vars`       | array   | \`[]`   | Array of complete variable definitions that comprise the variable set.                                                      |
+| `data.relationships.parent` | object  | Organization that the  variable set belongs to   | The parent that should own the variable set. If the parent is a project, `global` must be set to false. |
+| `data.relationships.parent.data.type` | string  | `"organizations"` | The resource type of the parent that should own the variable set. Valid values are `organizations` or `projects`. |
+| `data.relationships.parent.data.id` | string  | ID of organization that the variable set belongs to. | The ID of the parent that should own the variable set. |
 
 HCP Terraform does not allow different global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
@@ -72,6 +75,12 @@ HCP Terraform does not allow different global variable sets to contain conflicti
             }
           }
         ]
+      },
+      "parent": {
+        "data": {
+          "id": "prj-kFjgSzcZSr5c3imE",
+          "type": "projects"
+        }
       }
     }
   }
@@ -114,7 +123,7 @@ curl \
       "projects": {
         "data": [
           {
-            "id": "prj-lkjasdlkfjs",
+            "id": "prj-kFjgSzcZSr5c3imE",
             "type": "projects"
           }
         ]
@@ -131,6 +140,12 @@ curl \
             }
           }
         ]
+      },
+      "parent": {
+        "data": {
+          "id": "prj-kFjgSzcZSr5c3imE",
+          "type": "projects"
+        }
       }
     }
   }
@@ -146,6 +161,8 @@ curl \
 | `:varset_id` | The variable set ID |
 
 HCP Terraform does not allow global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
+
+HCP Terraform does not allow changing the parent of a variable set. The variable set must be deleted and recreated in the new parent instead.
 
 ### Request Body
 
@@ -236,6 +253,28 @@ curl \
       "priority": true
     },
     "relationships": {
+      "organization": {
+          "data": {
+              "id": "hashicorp",
+              "type": "organizations"
+          }
+      },
+      "workspaces": {
+        "data": [
+          {
+            "id": "ws-FRFwkYoUoGn1e34b",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "projects": {
+        "data": [
+          {
+            "id": "prj-kFjgSzcZSr5c3imE",
+            "type": "projects"
+          }
+        ]
+      },
       "vars": {
         "data": [
           {
@@ -248,6 +287,12 @@ curl \
             }
           }
         ]
+      },
+      "parent": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        }
       }
     }
   }
@@ -365,6 +410,12 @@ curl \
             "type": "projects"
           }
         ]
+      },
+      "parent": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        }
       }
     }
   }
@@ -480,6 +531,12 @@ All list endpoints support pagination [with standard URL query parameters](/terr
               "type": "projects"
             }
           ]
+        },
+        "parent": {
+          "data": {
+            "id": "hashicorp",
+            "type": "organizations"
+          }
         }
       }
     }
