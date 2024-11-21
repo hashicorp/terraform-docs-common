@@ -45,7 +45,7 @@ Choose a workflow for Terraform runs.
 
 - **Auto apply:** Terraform will apply changes from successful plans without prompting for approval. A push to the default branch of your repository will trigger a plan and apply cycle. You may want to do this in non-interactive environments, like continuous deployment workflows.
 
-  !> **Warning:** If you choose auto apply, make sure that no one can change your infrstructure outside of your automated build pipeline. This reduces the risk of congfiguration drift and unexpected changes.
+  !> **Warning:** If you choose auto apply, make sure that no one can change your infrastructure outside of your automated build pipeline. This reduces the risk of configuration drift and unexpected changes.
 
 - **Manual apply:** Terraform will ask for approval before applying changes from a successful plan. A push to the default branch of your repository will trigger a plan, and then Terraform will wait for confirmation.
 
