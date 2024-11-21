@@ -1584,6 +1584,102 @@ No response body.
 
 Status code `204`.
 
+## Add/update tag-bindings on a workspace
+
+This endpoint adds keys and values or updates values of tag-bindings on an existing resource by key.
+It does not remove any keys from the collection. This endpoint is useful when you want to ensure a
+modification is additive.
+
+Tag Bindings have special constraints:
+
+- Up to 10 tags can be applied to a workspace, but an additional 10 tags may be inherited from its project.
+- Keys must be no more than 128 characters, allowing all alphanumeric characters plus the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
+- Values allow the same characters, but can be up to 256 characters.
+- Certain key prefixes, including `hc:` and `hcp:` are not allowed.
+
+`PATCH /workspaces/:workspace_id/tag-bindings`
+
+| Parameter            | Description                                                         |
+| ---------------------| --------------------------------------------------------------------|
+| `:workspace_id`      | The ID of the workspace to update |
+
+### Request Body
+
+This PATCH endpoint requires a JSON object with the following properties as a request payload.
+
+It is important to note that for each data item, `type`, as well as `attributes.key` is required.
+
+| Key path                  | Type   | Default | Description                        |
+| ------------------------- | ------ | ------- | ---------------------------------- |
+| `data[].type`             | string |         | Must be `"tag-bindings"`.          |
+| `data[].attributes.key`   | string |         | The key of the tag to add/update.  |
+| `data[].attributes.value` | string |         | The name of the tag to add/update. |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "costcenter",
+        "value": "123"
+      }
+    },
+    {
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "bar",
+        "value": "baz"
+      }
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request PATCH \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/workspaces/ws-82d2281aa259ba09/tag-bindings
+```
+
+### Sample Response
+
+Status Code 200
+
+<CodeBlockConfig hideClipboard heading="Response body after updating tag-bindings">
+
+```json
+{
+  "data": [
+    {
+      "id": "tb-e4a5847b2cf06559",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "costcenter",
+        "value": "123"
+      }
+    },
+    {
+      "id": "tb-97ce954636f93a6c",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "bar",
+        "value": "baz"
+      }
+    }
+  ]
+}
+```
+
+</CodeBlockConfig>
+
 ## Show data retention policy
 
 <EnterpriseAlert>
