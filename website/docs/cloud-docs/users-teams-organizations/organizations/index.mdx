@@ -173,9 +173,9 @@ All permissions in HCP Terraform are managed through teams. Users can join an or
 
 #### Variable Sets
 
-View all of the available variable sets and their variables. Users with [`read and write variables` permissions](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) can also create variable sets and assign them to one or more workspaces.
+View all of the available variable sets and their variables. Users with the manage variable sets permission can create variable sets and assign them to one or more projects or workspaces.
 
-Variable sets let you reuse the same variables across multiple workspaces in the organization. For example, you could define a variable set of provider credentials and automatically apply it to several workspaces, rather than manually defining credential variables in each. Changes to variable sets instantly apply to all appropriate workspaces, saving time and reducing errors from manual updates.
+Variable sets let you reuse the same variables across multiple workspaces or projects in the organization. For example, you could define a variable set of provider credentials and automatically apply it to several projects or workspaces, rather than manually defining credential variables in each. Changes to variable sets instantly apply to all appropriate workspaces, saving time and reducing errors from manual updates.
 
 Refer to the [variables overview](/terraform/cloud-docs/workspaces/variables) documentation for details about variable types, scope, and precedence. Refer to [managing variables](/terraform/cloud-docs/workspaces/variables/managing-variables) for details about how to create and manage variable sets.
 
