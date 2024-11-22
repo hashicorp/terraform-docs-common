@@ -550,6 +550,15 @@
         "path": "policy-enforcement/test-sentinel"
       },
       {
+        "title": "View policy results",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/view-results"
+          }
+        ]
+      },
+      {
         "title": "Sentinel Policies",
         "routes": [
           {
@@ -582,10 +591,6 @@
             "path": "policy-enforcement/sentinel/sentinel-tf-012"
           }
         ]
-      },
-      {
-        "title": "Policy Results",
-        "path": "policy-enforcement/policy-results"
       }
     ]
   },
