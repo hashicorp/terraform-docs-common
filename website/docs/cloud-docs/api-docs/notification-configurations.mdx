@@ -141,7 +141,7 @@ Change request events contain the following fields in their payloads.
 | `notification_configuration_id`  | string | The ID of the configuration associated with this notification.                                                                                                                                                                                 |
 | `change_request_url`             | string | URL used to access the change request UI page.                                                                                                                                                                                                 |
 | `change_request_subject`         | string | title of the change request which triggered this notification.                                                                                                                                                                                    |
-| `change_request_message`         | string | The contents of the chnage request.                                                                                                                                                                                                            |
+| `change_request_message`         | string | The contents of the change request.                                                                                                                                                                                                            |
 | `change_request_created_at`      | string | Timestamp of the change request's creation.                                                                                                                                                                                                    |
 | `change_request_created_by`      | string | Username of the user who created the change_request.                                                                                                                                                                                           |
 | `workspace_id`                   | string | ID of the run's workspace.                                                                                                                                                                                                                     |
@@ -152,7 +152,7 @@ Change request events contain the following fields in their payloads.
 
 This is a sample payload you can send to test if notifications are working. The payload does not have a `run` or `workspace` context, resulting in null values.
 
-You can trigger a test notification from the workspace notifcation settings page. You can read more about verifying a [notificaton configuration](/terraform/enterprise/workspaces/settings/notifications#enabling-and-verifying-a-configuration).
+You can trigger a test notification from the workspace notification settings page. You can read more about verifying a [notification configuration](/terraform/enterprise/workspaces/settings/notifications#enabling-and-verifying-a-configuration).
 
 ```json
 {
@@ -772,7 +772,7 @@ curl \
 
 ### Sample response
 
-The `type` and `id` attributes in `relationsips.subscribable` may also reference a `"teams"` and team ID, respectively.
+The `type` and `id` attributes in `relationships.subscribable` may also reference a `"teams"` and team ID, respectively.
 
 ```json
 {
