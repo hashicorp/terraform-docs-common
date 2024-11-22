@@ -546,6 +546,10 @@
         ]
       },
       {
+        "title": "Test Sentinel policies",
+        "path": "policy-enforcement/test-sentinel"
+      },
+      {
         "title": "Sentinel Policies",
         "routes": [
           {
@@ -568,10 +572,6 @@
               },
               { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
             ]
-          },
-          {
-            "title": "Mocking Terraform Sentinel Data",
-            "path": "policy-enforcement/sentinel/mock"
           },
           {
             "title": "Working With JSON Result Data",
