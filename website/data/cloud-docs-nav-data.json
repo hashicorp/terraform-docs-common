@@ -538,6 +538,10 @@
           {
             "title": "Create Sentinel policy sets in VCS",
             "path": "policy-enforcement/manage-policy-sets/sentinel-vcs"
+          },
+          {
+            "title": "Connect to OPA policies in VCS",
+            "path": "policy-enforcement/manage-policy-sets/opa-vcs"
           }
         ]
       },
@@ -576,14 +580,6 @@
           {
             "title": "Using Sentinel with Terraform 0.12",
             "path": "policy-enforcement/sentinel/sentinel-tf-012"
-          }
-        ]
-      },
-      {
-        "title": "OPA Policies",
-        "routes": [
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/opa/vcs"
           }
         ]
       },
