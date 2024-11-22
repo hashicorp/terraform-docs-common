@@ -515,8 +515,12 @@
             "path": "policy-enforcement/define-policies"
           },
           {
-            "title": "Custom Sentinenl Policies",
+            "title": "Custom Sentinenl policies",
             "path": "policy-enforcement/define-policies/custom-sentinel"
+          },
+          {
+            "title": "Run pre-written Sentinel policies",
+            "path": "policy-enforcement/define-policies/prewritten-sentinel"
           },          
           {
             "title": "OPA policies",
