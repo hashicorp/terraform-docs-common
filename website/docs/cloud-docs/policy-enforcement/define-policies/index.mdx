@@ -1,0 +1,15 @@
+---
+page_title: Define policies overivew
+description: You can define policies using HashiCorp Sentinel or open policy agent (OPA). Learn how to define policies for governing how Terraform provisions infrastructure.
+---
+
+# Define policies overview
+
+This topic provides overview information about how to define policies as code. Policies are rules for enforcing how Terraform provisions infrastructure as code for your workspaces and projects.
+
+## Workflows
+
+You can use two policy-as-code frameworks to define fine-grained, logic-based policies: Sentinel and Open Policy Agent (OPA). Depending on the settings, policies can act as advisory warnings or firm requirements that prevent Terraform from provisioning infrastructure.
+
+- **Sentinel:** You define policies with the [Sentinel policy language](https://docs.hashicorp.com/sentinel/concepts/language) and use imports to parse the Terraform plan, state, and configuration. Refer to [Defining Sentinel Policies](/terraform/cloud-docs/policy-enforcement/sentinel) for details.
+- **OPA:** You define policies with the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/). Refer to [Defining OPA Policies](/terraform/cloud-docs/policy-enforcement/opa) for details.

@@ -501,9 +501,21 @@
     ]
   },
   {
-    "title": "Policy Enforcement",
+    "title": "Policy enforcement",
     "routes": [
-      { "title": "Overview", "path": "policy-enforcement" },
+      { 
+        "title": "Overview", 
+        "path": "policy-enforcement" 
+      },
+      { 
+        "title": "Define policies",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/define-policies"
+          }          
+        ] 
+      },
       {
         "title": "Sentinel Policies",
         "routes": [
