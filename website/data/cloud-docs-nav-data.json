@@ -534,6 +534,10 @@
           {
             "title": "Overview",
             "path": "policy-enforcement/manage-policy-sets"
+          },
+          {
+            "title": "Create Sentinel policy sets in VCS",
+            "path": "policy-enforcement/manage-policy-sets/sentinel-vcs"
           }
         ]
       },
@@ -560,9 +564,6 @@
               },
               { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
             ]
-          },
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/sentinel/vcs"
           },
           {
             "title": "Mocking Terraform Sentinel Data",
