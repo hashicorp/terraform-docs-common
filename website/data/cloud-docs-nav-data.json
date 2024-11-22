@@ -555,40 +555,47 @@
           {
             "title": "Overview",
             "path": "policy-enforcement/view-results"
+          },
+          {
+            "title": "View Sentinel JSON results",
+            "path": "policy-enforcement/view-results/json"
           }
         ]
       },
       {
-        "title": "Sentinel Policies",
+        "title": "Sentinel import reference",
         "routes": [
           {
-            "title": "Imports",
-            "routes": [
-              { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
-              {
-                "title": "tfconfig/v2",
-                "path": "policy-enforcement/sentinel/import/tfconfig-v2"
-              },
-              { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
-              {
-                "title": "tfplan/v2",
-                "path": "policy-enforcement/sentinel/import/tfplan-v2"
-              },
-              { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
-              {
-                "title": "tfstate/v2",
-                "path": "policy-enforcement/sentinel/import/tfstate-v2"
-              },
-              { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
-            ]
+            "title": "Overview",
+            "path": "policy-enforcement/import-reference"
+          },
+          { 
+            "title": "tfconfig", 
+            "path": "policy-enforcement/import-reference/tfconfig" 
           },
           {
-            "title": "Working With JSON Result Data",
-            "path": "policy-enforcement/sentinel/json"
+            "title": "tfconfig/v2",
+            "path": "policy-enforcement/import-reference/tfconfig-v2"
+          },
+          { 
+            "title": "tfplan", 
+            "path": "policy-enforcement/import-reference/tfplan" 
           },
           {
-            "title": "Using Sentinel with Terraform 0.12",
-            "path": "policy-enforcement/sentinel/sentinel-tf-012"
+            "title": "tfplan/v2",
+            "path": "policy-enforcement/import-reference/tfplan-v2"
+          },
+          { 
+            "title": "tfstate", 
+            "path": "policy-enforcement/import-reference/tfstate" 
+          },
+          {
+            "title": "tfstate/v2",
+            "path": "policy-enforcement/import-reference/tfstate-v2"
+          },
+          { 
+            "title": "tfrun", 
+            "path": "policy-enforcement/import-reference/tfrun" 
           }
         ]
       }
