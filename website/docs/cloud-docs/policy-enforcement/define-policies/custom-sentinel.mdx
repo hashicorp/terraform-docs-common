@@ -1,23 +1,26 @@
 ---
-page_title: Defining Policies - Sentinel - HCP Terraform
+page_title: Define custom Sentinel policies
 description: >-
-  Learn how to use Sentinel policy language to create policies, including
-  imports to define rules, useful functions, and more.
+  Learn how to use Sentinel policy language to create custom policies, including
+  imports to define rules and useful functions.
 ---
 
-# Defining Sentinel Policies
+# Define custom Sentinel policies 
 
-Policies are rules that HCP Terraform enforces on runs. You use the [Sentinel policy language](https://docs.hashicorp.com/sentinel/language) to define Sentinel policies. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that HCP Terraform can enforce globally or on specific [projects](/terraform/cloud-docs/projects/manage) and workspaces.
+This topic describes how to create and manage custom policies using Sentinel policy language.  For instructions about how to use pre-written Sentinel policies from the registry, refer to [Copy pre-written Sentinel policies](/terraform/cloud-docs/policy-enforcement/define-policies/prewritten-sentinel)
 
-> **Hands-on:** Try the [Enforce Policy with Sentinel](/terraform/tutorials/policy?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS) tutorials.
+## Overview
 
-In addition to reviewing this page, you can refer to the [policy libraries on the Terraform Registry](https://registry.terraform.io/browse/policies) for examples.
+To define a policy, create a file and declare an `import` function to include reusable libraries, external data, and other functions. Sentinel policy language includes several types of elements you can import using the  `import` function. 
+
+Declare and configure additional Sentinel policy language elements. The details depend on which elements you want to use in your policy. Refer to the Sentinel documentation for additional information. 
+
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/policies.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
-## Sentinel Imports
+## Declare an `import` function
 
 A policy can include imports that enable a policy to access reusable libraries, external data, and functions. Refer to [imports](https://docs.hashicorp.com/sentinel/concepts/imports) in the Sentinel documentation for more details.
 
@@ -31,19 +34,26 @@ HCP Terraform provides four imports to define policy rules for the plan, configu
 You can create mocks of these imports to use with the the [Sentinel
 CLI](https://docs.hashicorp.com/sentinel/commands) mocking and testing features. Refer to [Mocking Terraform Sentinel Data](/terraform/cloud-docs/policy-enforcement/sentinel/mock) for more details.
 
--> **Note:** HCP Terraform does not support custom imports.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+HCP Terraform does not support custom imports.
+<!-- END: TFC:only name:pnp-callout -->
 
-## Useful Functions and Idioms for Terraform Sentinel Policies
+
+## Declare additional elements
 
 The following functions and idioms will be useful as you start writing Sentinel
 policies for Terraform.
 
-### Iterate over Modules and Find Resources
+### Iterate over modules and find resources
 
 The most basic Sentinel task for Terraform is to enforce a rule on all resources
 of a given type. Before you can do that, you need to get a collection of all the
 relevant resources from all modules. The easiest way to do that is to copy and
-use a function like the following into your policies:
+use a function like the following into your policies.
+
+The following example uses the `tfplan` import. You can find similar
+functions that iterate over the `tfconfig` and `tfstate` imports
+[here](https://github.com/hashicorp/terraform-guides/tree/master/governance/second-generation/common-functions).
 
 ```python
 import "tfplan"
@@ -73,12 +83,8 @@ find_resources_from_plan = func(type) {
 }
 ```
 
--> **Note:** This example uses the `tfplan` import. You can find similar
-functions that iterate over the `tfconfig` and `tfstate` imports
-[here](https://github.com/hashicorp/terraform-guides/tree/master/governance/second-generation/common-functions).
-
-You can call this function to get all resources of a desired type by passing the
-type as a string in quotes:
+Call the function to get all resources of a desired type by passing the
+type as a string in quotation marks:
 
 ```python
 aws_instances = find_resources_from_plan("aws_instance")
@@ -112,7 +118,7 @@ This example function does several useful things while finding resources:
   resource instance (`r`). This is the data that Sentinel policies apply rules
   against.
 
-### Validate Resource Attributes
+### Validate resource attributes
 
 Once you have a collection of resources instances of a desired type indexed by
 their addresses, you usually want to validate that one or more resource
@@ -196,7 +202,7 @@ main = rule {
 
 ```
 
-### Validate Multiple Conditions in a Single Policy
+### Validate multiple conditions in a single policy
 
 If you want a policy to validate multiple conditions against resources of a
 specific type, you could define a separate validation function for each
@@ -243,6 +249,10 @@ main = rule {
 }
 ```
 
-Similar functions and policies can be written to restrict Terraform
-configurations using the tfconfig import and to restrict Terraform state using
-the tfstate import.
+You can write similar functions and policies to restrict Terraform configurations using the `tfconfig` import and to restrict Terraform state using the `tfstate` import.
+
+## Next steps
+
+1. Group your policies into sets and apply them to your workspaces. Refer to [Create policy sets](/terraform/cloud-docs//policy-enforcement/create-sets) for additional information.
+1. View results and address Terraform runs that do not comply with your policies. Refer to [View results](/terraform/cloud-docs/policy-enforcement/view-results) for additional information.
+1. You can also view Sentinel policy results in JSON format. Refer to [View Sentinel JSON results]((/terraform/cloud-docs/policy-enforcement/view-json-results) for additional information. 

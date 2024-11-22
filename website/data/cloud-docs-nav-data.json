@@ -513,15 +513,20 @@
           {
             "title": "Overview",
             "path": "policy-enforcement/define-policies"
+          },
+          {
+            "title": "Custom Sentinenl Policies",
+            "path": "policy-enforcement/define-policies/custom-sentinel"
+          },          
+          {
+            "title": "OPA policies",
+            "path": "policy-enforcement/define-policies/opa"
           }          
         ] 
       },
       {
         "title": "Sentinel Policies",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/sentinel"
-          },
           {
             "title": "Imports",
             "routes": [
@@ -563,9 +568,6 @@
       {
         "title": "OPA Policies",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/opa"
-          },
           { "title": "Policy Set VCS Repositories",
             "path": "policy-enforcement/opa/vcs"
           }
