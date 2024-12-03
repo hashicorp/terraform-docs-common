@@ -519,7 +519,7 @@
             "path": "policy-enforcement/define-policies/custom-sentinel"
           },
           {
-            "title": "Run pre-written Sentinel policies",
+            "title": "Run pre-written Sentinel policies <sup>BETA</sup>",
             "path": "policy-enforcement/define-policies/prewritten-sentinel"
           },          
           {

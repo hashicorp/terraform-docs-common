@@ -54,9 +54,9 @@ You can use the policy libraries created and maintained by HashiCorp. The librar
 
 Use one of the following methods to obtain pre-written policies:
 
-- Download policies from the registry
-- Fork the HashiCorp policy GitHub repository
-- Add the Terraform module to your configuration 
+- **Download policies from the registry**: Use this method if you want to assemble custom policy sets without customizing policies.  
+- **Fork the HashiCorp policy GitHub repository**: Use this method if you intend to customize the policies. 
+- **Add the Terraform module to your configuration**: Use this method to implement specific versions of the policies as-is. This method also connects the policies to workspaces in the Terraform configuration file instead of connecting them as a separate step. 
 
 ### Download policies from the registry
 
@@ -101,9 +101,7 @@ This method enables you to connect the policies to workspaces in the Terraform c
    ```
 
 1. Run `terraform plan` to view the plan.
-1. Run `terraform apply` to apply the changes.
-
-After successfully running the `terraform apply` command, Terraform evaluates Sentinel policies for each run of the workspaces you specified.
+1. Run `terraform apply` to apply the changes. After running the command, Terraform will evaluate Sentinel policies for each following run of the workspaces you specified.
 
 ## Connect policies to your workspace
 
