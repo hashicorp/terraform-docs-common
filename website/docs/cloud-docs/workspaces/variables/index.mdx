@@ -188,20 +188,20 @@ While a priority variable set can enforce that Terraform variables use designate
 
 Consider an example workspace that has the following variables applied:
 
-| (**Scope**) Source                                            | Region      | Var1 | Replicas |
+| Source (priority/ownership/scope)                             | Region      | Var1 | Replicas |
 | ------------------------------------------------------------- | ----------- | ---- | -------- |
 | Priority **global** variable set                              | `us-east-1` |      |          |
-| Priority **project-scoped** organization-owned variable set   | `us-east-2` |      |          |
-| Priority **project-scoped** project-owned variable set        | `eu-east-2` |      |          |
-| Priority **workspace-scoped** organization-owned variable set | `us-west-1` |      |          |
-| Priority **workspace-scoped** project-owned variable set      | `eu-west-1` |      |          |
+| Priority organization-owned **project-scoped** variable set   | `us-east-2` |      |          |
+| Priority project-owned **project-scoped** variable set        | `eu-east-2` |      |          |
+| Priority organization-owned **workspace-scoped** variable set | `us-west-1` |      |          |
+| Priority project-owned **workspace-scoped** variable set      | `eu-west-1` |      |          |
 | Command line argument                                         | `us-west-2` |      | `9`      |
 | Local environment variable                                    |             |      | `8`      |
 | **Workspace-specific** variable                               |             | `h`  | `1`      |
-| **Workspace-scoped** project-owned variable set               |             | `y`  | `2`      |
-| **Workspace-scoped** organization-owned variable set          |             | `z`  | `3`      |
-| **Project-scoped** project-owned variable set                 |             |      | `4`      |
-| **Project-scoped** organization-owned variable set            |             |      | `5`      |
+| Project-owned **workspace-scoped** variable set               |             | `y`  | `2`      |
+| Organization-owned **workspace-scoped** variable set          |             | `z`  | `3`      |
+| Project-owned **project-scoped** variable set                 |             |      | `4`      |
+| Organization-owned **Project-scoped** variable set            |             |      | `5`      |
 | **Global** variable set                                       |             |      | `6`      |
 
 When you trigger a run through the command line, these are the final values Terraform Cloud assigns to each variable:
