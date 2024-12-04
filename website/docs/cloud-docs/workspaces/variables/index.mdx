@@ -85,21 +85,21 @@ HCP Terraform prioritizes and overwrites conflicting variables according to the 
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a global variable set have precedence over all other variables with the same key.
 
-### 2. Priority organization-owned variable set scoped to a project
+### 2. Priority project-scoped variable set owned by an organization
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope. Prioritized variables sets owned by organizations take precedence over priority variable sets owned by projects.
 
 
-### 3. Priority project-owned variable set scoped to a project
+### 3. Priority project-scoped variable set owned by an project
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
 
-### 4. Priority organization-owned variable set scoped to a workspace
+### 4. Priority workspace-scoped variable set owned by an organization
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in an organization-owned variable set scoped to a workspace have precedence over variables with the same key set at a more specific scope. Prioritized variables sets owned by organizations take precedence over sets owned by projects.
 
 
-### 5. Priority project-owned variable set scoped to a workspace
+### 5. Priority workspace-scoped variable set owned by an project
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority workspace-scoped variable set have precedence over variables with the same key set at a more specific scope.
 
@@ -115,7 +115,7 @@ When using a CLI workflow, local environment variables prefixed with `TF_VAR_` (
 
 Workspace-specific variables always overwrite variables from variable sets that have the same key. Refer to [overwrite variables from variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#overwrite-variable-sets) for details.
 
-### 9. Project-owned variable set scoped to a workspace
+### 9. Workspace-scoped variable owned by a project
 
 Variables in workspace-scoped variable sets are only applied to a subset of workspaces in an organization.
 
@@ -125,7 +125,7 @@ For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same work
 
 Variables sets owned by projects that are scoped to workspaces take precedence over workspace-scoped sets owned by organizations.
 
-### 10. Organization-owned variable set scoped to a workspace
+### 10. Workspace-scoped variable set owned by an organization
 
 Variables in workspace-scoped variable sets are only applied to a subset of workspaces in an organization.
 
@@ -133,9 +133,7 @@ When workspace-scoped variable sets have conflicting variables, HCP Terraform co
 
 For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same workspace, HCP Terraform will use any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. HCP Terraform only considers the lexical ordering of variable set names when determining precedence.
 
-### 11. Project-owned variable set scoped to a project
-
-Workspace-specific variables and workspace-scoped variable sets always take precedence over project-scoped variable sets that are applied to workspaces within a project.
+### 11. Project-scoped variable set owned by a project
 
 Variables in project-scoped variable sets are only applied to the workspaces within the specified projects.
 
@@ -145,9 +143,7 @@ For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same proj
 
 Variables sets owned by projects take precedence over those owned by organizations.
 
-### 11. Organization-owned variable set scoped to a project
-
-Workspace-specific variables and workspace-scoped variable sets always take precedence over project-scoped variable sets that are applied to workspaces within a project.
+### 11.  Project-scoped variable set owned by an organization
 
 Variables in project-scoped variable sets are only applied to the workspaces within the specified projects.
 
