@@ -182,7 +182,25 @@ While a priority variable set can enforce that Terraform variables use designate
 
 ## Precedence example
 
-Consider an example workspace that has the following variables applied:
+Consider an example workspace that has the following different kinds of variables and variable sets:
+
+| Source                                                        | Priority | Ownership    | Scope     |
+| ------------------------------------------------------------- | -------- | ------------ | --------- |
+| Priority **global** variable set                              | true     | organization | global    |
+| Priority organization-owned **project-scoped** variable set   | true     | organization | project   |
+| Priority project-owned **project-scoped** variable set        | true     | project      | project   |
+| Priority organization-owned **workspace-scoped** variable set | true     | organization | workspace |
+| Priority project-owned **workspace-scoped** variable set      | true     | project      | workspace |
+| Command line argument                                         | N/A      | N/A          | run       |
+| Local environment variable                                    | N/A      | N/A          | workspace |
+| **Workspace-specific** variable                               | N/A      | N/A          | workspace |
+| Project-owned **workspace-scoped** variable set               | false    | project      | workspace |
+| Organization-owned **workspace-scoped** variable set          | false    | organization | workspace |
+| Project-owned **project-scoped** variable set                 | false    | project      | project   |
+| Organization-owned **Project-scoped** variable set            | false    | organization | project   |
+| **Global** variable set                                       | false    | organization | global    |
+
+If these variables and variable sets had the following variables applied:
 
 | Source (priority/ownership/scope)                             | Region      | Var1 | Replicas |
 | ------------------------------------------------------------- | ----------- | ---- | -------- |
