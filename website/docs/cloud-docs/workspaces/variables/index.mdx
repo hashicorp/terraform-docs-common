@@ -73,6 +73,16 @@ Each environment and Terraform variable can have one of the following scopes:
 | Project-Scoped Variable Set   | Automatically applied to all current and future workspaces within a project.       | [Create Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) and [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets)                                                                                                                                                                              |
 | Global Variable Set           | Automatically applied to all current and future workspaces within an organization. | [Create Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) and [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets)                                                                                                                                                                              |
 
+## Variable Set Ownership
+
+Variable set ownership determines whether the variable set is managed at the organization level or the project level.
+
+Use organization-owned variable sets to share variables across multiple projects. Because they can be applied to workspaces in any project in the organization, managing organization-owned variable sets requires a higher level of permissions.
+
+Use project-owned variable sets to share variables across multiple workspaces within a single project. Project-owned variable sets allow for more localized management because they require permissions on the project rather than on the entire organization.
+
+See the section on [**mangaging variable sets**](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) for more details on the different permissions required.
+
 ## Precedence
 
 > **Hands On:** The [Manage Multiple Variable Sets in HCP Terraform](/terraform/tutorials/cloud/cloud-multiple-variable-sets) tutorial shows how to manage multiple variable sets and demonstrates variable precedence.
