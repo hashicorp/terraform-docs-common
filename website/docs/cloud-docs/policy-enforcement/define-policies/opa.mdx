@@ -4,10 +4,12 @@ description: Use the Rego policy language to define Open Policy Agent (OPA) poli
 
 ---
 
-# Defining OPA Policies
+# Define OPA policies 
 
-Policies are rules that HCP Terraform enforces on runs. You use the [Rego policy language](https://www.openpolicyagent.org/docs/latest/policy-language/) to write policies for the Open Policy Agent (OPA) framework. After you define policies, you must add them to [policy sets](/terraform/cloud-docs/policy-enforcement/manage-policy-sets) that HCP Terraform can enforce globally or on specific [projects](/terraform/cloud-docs/projects/manage) and workspaces.
-OPA Policies are evaluated in HCP Terraform's infrastructure.
+This topic describes how to create and manage custom policies using the open policy agent (OPA) framework. Refer to the following topics for instructions on using HashiCorp Sentinel policies:
+
+[Define custom Sentinel policies](/terraform/cloud-docs/policy-enforcement/define-policies/custom-sentinel)
+[Copy pre-written Sentinel policies](/terraform/cloud-docs/policy-enforcement/define-policies/prewritten-sentinel)
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/policies.mdx'
@@ -15,15 +17,15 @@ OPA Policies are evaluated in HCP Terraform's infrastructure.
 
 > **Hands-on:** Try the [Detect Infrastructure Drift and Enforce OPA Policies](/terraform/tutorials/cloud/drift-and-opa) tutorial.
 
-## Defining Policies
+## Overview
 
-You can write Rego policies to check for any number of conditions. Common use cases include checking whether infrastructure configuration adheres to security standards or best practices. For example, you may want to write a policy to check whether Terraform plans to deploy production infrastructure to the correct region.
+You can write OPA policies using the Rego policy language, which is the native query language for the OPA framework. Refer to the following topics in the [OPA documentation](https://www.openpolicyagent.org/docs/latest/policy-language/) for additional information:
 
-You can also use policies to enforce standards for your organization’s workflows. For example, you could write a policy to prevent new infrastructure deployments on Fridays, reducing the risk of production incidents outside of your team’s working hours.
+[How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0.13.5/how-do-i-write-policies/)
+[Rego Policy Playground](https://play.openpolicyagent.org/)
 
-Refer to [How Do I Write Rego Policies?](https://www.openpolicyagent.org/docs/v0.13.5/how-do-i-write-policies/) in the Rego documentation for more details. We also recommend using the [Rego Policy Playground](https://play.openpolicyagent.org/) to iterate on new policies.
 
-### OPA Query
+## OPA query
 
 You must write a query to identify a specific policy rule within your Rego code. The query may evaluate code from multiple Rego files.
 
@@ -31,7 +33,7 @@ The result of each query must return an array, which HCP Terraform uses to deter
 
 The query is typically a combination of the policy package name and rule name, such as `data.terraform.deny`.
 
-### OPA Input
+## OPA input
 
 HCP Terraform combines the output from the Terraform run and plan into a single JSON file and passes that file to OPA as input. Refer to the [OPA Overview documentation](https://www.openpolicyagent.org/docs/latest/#the-input-document) for more details about how OPA uses JSON input data.
 
@@ -64,7 +66,7 @@ The following example shows sample OPA input data.
 
 Use the [Retrieve JSON Execution Plan endpoint](/terraform/cloud-docs/api-docs/plans#retrieve-the-json-execution-plan) to retrieve Terraform plan output data for testing. Refer to [Terraform Run Data](#terraform-run-data) for the properties included in Terraform run output data.
 
-### Example Policies
+## Example Policies
 
 The following example policy parses a Terraform plan and checks whether it includes security group updates that allow ingress traffic from all CIDRs (`0.0.0.0/0`).
 
@@ -126,7 +128,7 @@ rule[msg] {
 }
 ```
 
-## Testing Policies
+## Test policies
 
 You can write tests for your policies by [mocking](https://www.openpolicyagent.org/docs/latest/policy-testing/#data-and-function-mocking) the input data the policies use during Terraform runs.
 
@@ -158,7 +160,7 @@ test_run_workspace_auto_apply if {
 }
 ```
 
-## Terraform Run Data
+## Terraform run data
 
 Each [Terraform run](/terraform/docs/glossary#run) outputs data describing the run settings and the associated workspace.
 
@@ -201,7 +203,7 @@ run
 
 The following sections contain details about each property in Terraform run data.
 
-#### Run Namespace
+#### Run namespace
 
 The following table contains the attributes for the `run` namespace.
 
@@ -230,11 +232,11 @@ The following table contains the properties for the `project` namespace.
 |  `name` |  String | The name of the project, which can only include letters, numbers, spaces, `-`, and `_`. |
 
 
-#### Organization Namespace
+#### Organization namespace
 
 The `organization` namespace has one property called `name`. The `name` property is a string that specifies the name of the HCP Terraform organization for the run.
 
-#### Workspace Namespace
+#### Workspace namespace
 
 The following table contains the properties for the `workspace` namespace.
 
@@ -249,3 +251,9 @@ The following table contains the properties for the `workspace` namespace.
 |  `working_directory` |  String | The configured [Terraform working directory](/terraform/cloud-docs/workspaces/settings#terraform-working-directory) of the workspace. This value can be `null`. |
 |  `execution_mode` |  String | The configured Terraform execution mode of the workspace. The default value is `remote`. |
 |  `vcs_repo` |  A string-keyed map to objects | Data associated with a VCS repository connected to the workspace. The map contains `identifier` (string), ` display_identifier` (string), `branch` (string), and  `ingress_submodules` (boolean). Refer to the HCP Terraform [Workspaces API documentation](/terraform/cloud-docs/api-docs/workspaces) for details about each property. This value can be `null`. |
+
+## Next steps
+
+- Group your policies into sets and apply them to your workspaces. Refer to [Create policy sets](/terraform/cloud-docs//policy-enforcement/create-sets) for additional information.
+- View results and address Terraform runs that do not comply with your policies. Refer to [View results](/terraform/cloud-docs/policy-enforcement/view-results) for additional information.
+- You can also view Sentinel policy results in JSON format. Refer to [View Sentinel JSON results]((/terraform/cloud-docs/policy-enforcement/view-json-results) for additional information. 
