@@ -127,7 +127,7 @@ Workspace-specific variables always overwrite variables from variable sets that 
 
 ### 9. Workspace-scoped variable owned by a project
 
-Variables in workspace-scoped variable sets are only applied to a subset of workspaces in an organization.
+Variables in workspace-scoped variable sets are only applied to a subset of workspaces in a project.
 
 When workspace-scoped variable sets have conflicting variables, HCP Terraform compares the variable set names and uses values from the variable set with lexical precedence. Terraform and HCP Terraform operate on UTF-8 strings, and HCP Terraform sorts variable set names based on the lexical order of Unicode code points.
 
