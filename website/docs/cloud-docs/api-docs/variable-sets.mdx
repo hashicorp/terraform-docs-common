@@ -8,9 +8,15 @@ description: >-
 
 A [variable set](/terraform/cloud-docs/workspaces/variables#scope) is a resource that allows you to reuse the same variables across multiple workspaces and projects. For example, you could define a variable set of provider credentials and automatically apply it to a selection of workspaces, all workspaces in a project, or all workspaces in an organization.
 
-To create, edit, or apply organization-owned variable sets, you must be part of a team with [manage all workspaces](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces) or [manage all projects](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) permission. To create, edit, or apply project-owned variable sets, you must be part of a team with Write, Maintain, or Admin access to the project or the [**manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) permission.
+To create, edit, or apply organization-owned variable sets, you must on a team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces) or [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) permissions. 
 
-You must have the [**Read** variables permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables applied from a variable set for a particular workspace.
+To create, edit, or apply project-owned variable sets, you must be part of a team with one of the following:
+* **Write**  project permissions
+* **Maintain** project permissions
+* **Admin** project permissions
+* [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) organization permissions
+
+To view the variables applied from a variable set on a particular workspace, you must have [**Read** variables permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) on that workspace.
 
 ## Create a Variable Set
 
@@ -33,7 +39,7 @@ Properties without a default value are required.
 | `data.relationships.workspaces`       | array   | `[]`   | Array of references to workspaces that the variable set should be assigned to. |                                                                                                                                              |
 | `data.relationships.projects`         | array   | `[]`   | Array of references to projects that the variable set should be assigned to.   |                                                                                                                                              |
 | `data.relationships.vars`             | array   | `[]`   | Array of complete variable definitions that comprise the variable set.         |                                                                                                                                              |
-| `data.relationships.parent`           | object  | Organization that the  variable set belongs to                                           | The parent that owns this variable set. If the parent is a project, `data.attributes.global` must be `false`.                                      |
+| `data.relationships.parent`           | object  | Organization that the variable set belongs to                                           | The parent that owns this variable set. If the parent is a project, `data.attributes.global` must be `false`.                                      |
 | `data.relationships.parent.data.type` | string  | `"organizations"`                                                                        | The resource type of the parent that owns this variable set. Valid values are `organizations` or `projects`.                            |
 | `data.relationships.parent.data.id`   | string  | ID of organization that the variable set belongs to.                                     | The ID of the parent that owns the variable set.                                                                                       |
 
@@ -164,7 +170,7 @@ curl \
 
 HCP Terraform does not allow global variable sets to contain conflicting variables with the same name and type. You will receive a 422 response if you try to create a global variable set that contains conflicting variables.
 
-HCP Terraform does not allow you to change which organization or project is the parent of a variable set. Instead, you must delete and recreate that variable set in the project or organization that you want to own that set.
+HCP Terraform does not allow you to change the parent organization or project of a variable set. Instead, you must delete the variable set and recreate it in the desired organization or project.
 
 ### Request Body
 
