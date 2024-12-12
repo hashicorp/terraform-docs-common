@@ -159,18 +159,30 @@ _Without a VCS repository_
     "attributes": {
       "name": "workspace-1"
     },
+    "type": "workspaces"
+  }
+}
+```
+
+_With Key/Value Tags_
+
+```json
+{
+  "data": {
+    "attributes": {
+      "name": "workspace-1"
+    },
     "type": "workspaces",
     "relationships": {
-      "tag-bindings": [
+      "tag-bindings": {
         {
-          "data": {
-            "type": "tag-binding",
+          "data": [{
+            "type": "tag-bindings",
             "attributes": { "key": "env", "value": "test"}
-          }
+          }]
         }
-      ]
+      }
     }
-
   }
 }
 ```
@@ -191,17 +203,7 @@ _With a VCS repository_
         "tags-regex": null
       }
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -224,17 +226,7 @@ HCP Terraform triggers a run when you push a Git tag that matches the regular ex
         "tags-regex": "\d+.\d+.\d+"
       }
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -259,17 +251,7 @@ A run will be triggered in this workspace when changes are detected in any of th
       },
       "updated-at": "2017-11-29T19:18:09.976Z"
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -296,17 +278,7 @@ A run will be triggered in this workspace when HCP Terraform detects any of the 
       },
       "updated-at": "2022-06-09T19:18:09.976Z"
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -324,17 +296,7 @@ _Using HCP Terraform agents_
       "agent-pool-id": "apool-ZjT6A7mVFm5WHT5a"
     }
   },
-  "type": "workspaces",
-  "relationships": {
-    "tag-bindings": [
-      {
-        "data": {
-          "type": "tag-binding",
-          "attributes": { "key": "env", "value": "test"}
-        }
-      }
-    ]
-  }
+  "type": "workspaces"
 }
 ```
 
@@ -350,17 +312,7 @@ _Using an organization default execution mode_
       }
     }
   },
-  "type": "workspaces",
-  "relationships": {
-    "tag-bindings": [
-      {
-        "data": {
-          "type": "tag-binding",
-          "attributes": { "key": "env", "value": "test"}
-        }
-      }
-    ]
-  }
+  "type": "workspaces"
 }
 
 ```
@@ -380,15 +332,7 @@ _With a project_
           "type": "projects",
           "id": "prj-jT92VLSFpv8FwKtc"
         }
-      },
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
+      }
     }
   }
 }
@@ -402,14 +346,6 @@ _With key-value tags_
     "type": "workspaces",
     "attributes": {
       "name": "workspace-in-project"
-    },
-    "relationships": {
-      "tag-bindings": {
-        "data": {
-          "key": "cost-center",
-          "value": "engineering"
-        }
-      }
     }
   }
 }
@@ -564,7 +500,8 @@ _With a project_
       "tag-bindings": {
         "links": {
           "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/tag-bindings"
-      }
+        }
+      },
       "vars": {
         "data": []
       },
