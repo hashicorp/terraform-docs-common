@@ -1276,13 +1276,11 @@ No response body.
 
 Status code `204`.
 
-## Get tags
+## List workspace tags
 
-Call the following endpoints to list the tags attached to a workspace:
+Workspace tags are [organization tags](/terraform/cloud-docs/api-docs/organization-tags) added to a workspace. They are a flat list of keys that can only be applied to workspaces when using the `tags` attribute in the Terraform CLI cloud block < 1.10. The more contemporary form of key/value tags can be listed using [List workspace tag bindings](#list-workspace-tag-bindings) - See below.
 
-- `GET /workspaces/:workspace_id/relationships/tags`: Lists flat string tags attached to the workspace.
-- `GET /workspaces/:workspace_id/tag-bindings`: Lists key-value tags directly bound to the workspace.
-- `GET /workspaces/:workspace_id/effective-tag-bindings`: Lists all key-value tags bound to the workspace, including those inherited from the parent project.
+`GET /workspaces/:workspace_id/relationships/tags`: Paginated list of flat string tags attached to the workspace.
 
 ### Path parameters
 
@@ -1292,7 +1290,7 @@ Call the following endpoints to list the tags attached to a workspace:
 
 ### Query Parameters
 
-The flat string tags endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+Only the flat string tags endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs. Conversely, all tags are returned when using fetching tag-bindings or effective-tag-bindings endpoints.
 
 | Parameter      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -1307,29 +1305,7 @@ The flat string tags endpoint supports pagination [with standard URL query param
 $ curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/workspaces/workspace-2/relationships/tags
-```
-
-</CodeBlockConfig>
-
-<CodeBlockConfig hideClipboard heading="List key-value tags bound directly to the workspace">
-
-```shell-session
-$ curl \
-  --header "Authorization: Bearer $TOKEN" \
-  --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/workspaces/workspace-2/tag-bindings
-```
-
-</CodeBlockConfig>
-
-<CodeBlockConfig hideClipboard heading="List all key-value tags bound to the workspace, including those inherited from the parent project">
-
-```shell-session
-$ curl \
-  --header "Authorization: Bearer $TOKEN" \
-  --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/workspaces/workspace-2/effective-tag-bindings
+  https://app.terraform.io/api/v2/workspaces/ws-db61c9eb5cab5ae2/relationships/tags
 ```
 
 </CodeBlockConfig>
@@ -1381,49 +1357,94 @@ $ curl \
 
 </CodeBlockConfig>
 
+## List workspace tag bindings
+
+Call the following endpoints to list the tags attached to a workspace:
+
+- `GET /workspaces/:workspace_id/tag-bindings`: Lists key-value tags directly bound to the workspace.
+- `GET /workspaces/:workspace_id/effective-tag-bindings`: Lists all key-value tags bound to the workspace, including those inherited from the parent project.
+
+### Path parameters
+
+| Parameter       | Description                                                                                                                                                       |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `:workspace_id` | The workspace ID to fetch tags for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](#show-workspace) endpoint. |
+
+### Sample Requests
+
 <CodeBlockConfig hideClipboard heading="List key-value tags bound directly to the workspace">
 
-```json
-{
-  "data": [
-    {
-      "id": "tb-RKs9JSC2lInns32K",
-      "type": "tag-bindings",
-      "attributes": {
-        "key": "ws1-key",
-        "value": "ws1-value"
-      }
-    }
-  ]
-}
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/workspaces/ws-db61c9eb5cab5ae2/tag-bindings
 ```
 
 </CodeBlockConfig>
 
 <CodeBlockConfig hideClipboard heading="List all key-value tags bound to the workspace, including those inherited from the parent project">
 
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/workspaces/ws-db61c9eb5cab5ae2/effective-tag-bindings
+```
+
+</CodeBlockConfig>
+
+### Sample Responses
+
+<CodeBlockConfig hideClipboard heading="List key-value tags bound directly to the workspace">
+
 ```json
 {
   "data": [
     {
+      "id": "tb-232e23631380f79e",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "costcenter",
+        "value": "123",
+        "created-at": "2024-11-19T23:59:24.648Z"
+      }
+    }
+  ],
+  "links": {
+    "target": "/api/v2/workspaces/ws-db61c9eb5cab5ae2"
+  }
+}
+```
+
+</CodeBlockConfig>
+<br/>
+<CodeBlockConfig hideClipboard heading="List all key-value tags bound to the workspace, including those inherited from the parent project">
+
+```json
+{
+  "data": [
+    {
+      "id": "07cc44202a430fc2",
       "type": "effective-tag-bindings",
       "attributes": {
-        "key": "ws1-key",
-        "value": "ws1-value"
+        "key": "costcenter",
+        "value": "123"
       }
     },
     {
+      "id": "f8b11951f98e11f8",
       "type": "effective-tag-bindings",
       "attributes": {
-        "key": "key1",
-        "value": "value1"
-      }
-    },
-    {
-      "type": "effective-tag-bindings",
-      "attributes": {
-        "key": "key2",
-        "value": "value2"
+        "key": "dept",
+        "value": "r+d"
+      },
+      "relationships": {
+        "inherited-from": {
+          "links": {
+            "related": "/api/v2/projects/prj-af7d174fa1ea7423"
+          }
+        }
       }
     }
   ]
