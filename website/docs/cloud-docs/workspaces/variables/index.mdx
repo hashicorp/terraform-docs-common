@@ -99,17 +99,15 @@ If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-prio
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope. Prioritized variables sets owned by organizations take precedence over priority variable sets owned by projects.
 
-
-### 3. Priority project-scoped variable set owned by an project
-
-If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
-
-### 4. Priority workspace-scoped variable set owned by an organization
+### 3. Priority workspace-scoped variable set owned by an organization
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in an organization-owned variable set scoped to a workspace have precedence over variables with the same key set at a more specific scope. Prioritized variables sets owned by organizations take precedence over sets owned by projects.
 
+### 4. Priority project-scoped variable set owned by a project
 
-### 5. Priority workspace-scoped variable set owned by an project
+If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority project-scoped variable set have precedence over variables with the same key set at a more specific scope.
+
+### 5. Priority workspace-scoped variable set owned by a project
 
 If [prioritized](/terraform/cloud-docs/workspaces/variables#precedence-with-priority-variable-sets), variables in a priority workspace-scoped variable set have precedence over variables with the same key set at a more specific scope.
 
@@ -135,15 +133,7 @@ For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same work
 
 Variables sets scoped to workspaces that are owned by projects take precedence over sets with the same scope that are owned by organizations.
 
-### 10. Workspace-scoped variable set owned by an organization
-
-Variables in workspace-scoped variable sets are only applied to the specified workspaces in an organization.
-
-When workspace-scoped variable sets have conflicting variables, HCP Terraform compares the variable set names and uses values from the variable set with lexical precedence. Terraform and HCP Terraform operate on UTF-8 strings, and HCP Terraform sorts variable set names based on the lexical order of Unicode code points.
-
-For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same workspace, HCP Terraform will use any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. HCP Terraform only considers the lexical ordering of variable set names when determining precedence.
-
-### 11. Project-scoped variable set owned by a project
+### 10. Project-scoped variable set owned by a project
 
 Variables in project-scoped variable sets are only applied to the workspaces within the specified projects.
 
@@ -153,7 +143,15 @@ For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same proj
 
 Variables sets owned by projects take precedence over those owned by organizations.
 
-### 11.  Project-scoped variable set owned by an organization
+### 11. Workspace-scoped variable set owned by an organization
+
+Variables in workspace-scoped variable sets are only applied to the specified workspaces in an organization.
+
+When workspace-scoped variable sets have conflicting variables, HCP Terraform compares the variable set names and uses values from the variable set with lexical precedence. Terraform and HCP Terraform operate on UTF-8 strings, and HCP Terraform sorts variable set names based on the lexical order of Unicode code points.
+
+For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same workspace, HCP Terraform will use any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. HCP Terraform only considers the lexical ordering of variable set names when determining precedence.
+
+### 12. Project-scoped variable set owned by an organization
 
 Variables in project-scoped variable sets are only applied to the workspaces within the specified projects.
 
