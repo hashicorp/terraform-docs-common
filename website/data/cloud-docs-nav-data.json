@@ -515,7 +515,7 @@
             "path": "policy-enforcement/define-policies"
           },
           {
-            "title": "Custom Sentinenl policies",
+            "title": "Custom Sentinel policies",
             "path": "policy-enforcement/define-policies/custom-sentinel"
           },
           {
