@@ -77,11 +77,11 @@ Each environment and Terraform variable can have one of the following scopes:
 
 Variable set ownership determines whether the variable set is managed at the organization level or the project level.
 
-Use organization-owned variable sets to share variables across multiple projects. Because they can be applied to workspaces in any project in the organization, managing organization-owned variable sets requires a higher level of permissions.
+Use organization-owned variable sets to share variables across multiple projects. Managing organization-owned variable sets [requires a higher permission level](/terraform/cloud-docs/workspaces/variables/managing-variables#permissions) because you can apply these sets to any project in your organization.
 
-Use project-owned variable sets to share variables across multiple workspaces within a single project. Project-owned variable sets allow for more localized management because they require permissions on the project rather than on the entire organization.
+Use project-owned variable sets to share variables across multiple workspaces within a single project. Project-owned variable sets only require permissions on the project itself, rather than organization-level permissions.
 
-See the section on [**mangaging variable sets**](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) for more details on the different permissions required.
+Refer to [**Managing variable sets**](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) for more details on variable set permissions.
 
 ## Precedence
 
@@ -133,11 +133,11 @@ When workspace-scoped variable sets have conflicting variables, HCP Terraform co
 
 For example, if you apply `A_Variable_Set` and `B_Variable_Set` to the same workspace, HCP Terraform will use any conflicting variables from `A_Variable_Set`. This is the case regardless of which variable set has been edited most recently. HCP Terraform only considers the lexical ordering of variable set names when determining precedence.
 
-Variables sets owned by projects that are scoped to workspaces take precedence over workspace-scoped sets owned by organizations.
+Variables sets scoped to workspaces that are owned by projects take precedence over sets with the same scope that are owned by organizations.
 
 ### 10. Workspace-scoped variable set owned by an organization
 
-Variables in workspace-scoped variable sets are only applied to a subset of workspaces in an organization.
+Variables in workspace-scoped variable sets are only applied to the specified workspaces in an organization.
 
 When workspace-scoped variable sets have conflicting variables, HCP Terraform compares the variable set names and uses values from the variable set with lexical precedence. Terraform and HCP Terraform operate on UTF-8 strings, and HCP Terraform sorts variable set names based on the lexical order of Unicode code points.
 
@@ -228,7 +228,7 @@ If these variables and variable sets had the following variables applied:
 | Organization-owned **Project-scoped** variable set            |             |      | `5`      |
 | **Global** variable set                                       |             |      | `6`      |
 
-When you trigger a run through the command line, these are the final values Terraform Cloud assigns to each variable:
+When you trigger a run through the command line, these are the final values HCP Terraform assigns to each variable:
 
 | Variable | Value       |
 | -------- | ----------- |
