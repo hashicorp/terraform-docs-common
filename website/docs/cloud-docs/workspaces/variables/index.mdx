@@ -196,16 +196,16 @@ Consider an example workspace that has the following different kinds of variable
 | ------------------------------------------------------------- | -------- | ------------ | --------- |
 | Priority **global** variable set                              | true     | organization | global    |
 | Priority organization-owned **project-scoped** variable set   | true     | organization | project   |
-| Priority project-owned **project-scoped** variable set        | true     | project      | project   |
 | Priority organization-owned **workspace-scoped** variable set | true     | organization | workspace |
+| Priority project-owned **project-scoped** variable set        | true     | project      | project   |
 | Priority project-owned **workspace-scoped** variable set      | true     | project      | workspace |
 | Command line argument                                         | N/A      | N/A          | run       |
 | Local environment variable                                    | N/A      | N/A          | workspace |
 | **Workspace-specific** variable                               | N/A      | N/A          | workspace |
 | Project-owned **workspace-scoped** variable set               | false    | project      | workspace |
-| Organization-owned **workspace-scoped** variable set          | false    | organization | workspace |
 | Project-owned **project-scoped** variable set                 | false    | project      | project   |
-| Organization-owned **Project-scoped** variable set            | false    | organization | project   |
+| Organization-owned **workspace-scoped** variable set          | false    | organization | workspace |
+| Organization-owned **project-scoped** variable set            | false    | organization | project   |
 | **Global** variable set                                       | false    | organization | global    |
 
 If these variables and variable sets had the following variables applied:
@@ -214,16 +214,16 @@ If these variables and variable sets had the following variables applied:
 | ------------------------------------------------------------- | ----------- | ---- | -------- |
 | Priority **global** variable set                              | `us-east-1` |      |          |
 | Priority organization-owned **project-scoped** variable set   | `us-east-2` |      |          |
-| Priority project-owned **project-scoped** variable set        | `eu-east-2` |      |          |
 | Priority organization-owned **workspace-scoped** variable set | `us-west-1` |      |          |
+| Priority project-owned **project-scoped** variable set        | `eu-east-2` |      |          |
 | Priority project-owned **workspace-scoped** variable set      | `eu-west-1` |      |          |
 | Command line argument                                         | `us-west-2` |      | `9`      |
 | Local environment variable                                    |             |      | `8`      |
 | **Workspace-specific** variable                               |             | `h`  | `1`      |
 | Project-owned **workspace-scoped** variable set               |             | `y`  | `2`      |
-| Organization-owned **workspace-scoped** variable set          |             | `z`  | `3`      |
 | Project-owned **project-scoped** variable set                 |             |      | `4`      |
-| Organization-owned **Project-scoped** variable set            |             |      | `5`      |
+| Organization-owned **workspace-scoped** variable set          |             | `z`  | `3`      |
+| Organization-owned **project-scoped** variable set            |             |      | `5`      |
 | **Global** variable set                                       |             |      | `6`      |
 
 When you trigger a run through the command line, these are the final values HCP Terraform assigns to each variable:
