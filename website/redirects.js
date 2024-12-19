@@ -278,4 +278,10 @@ module.exports = [
     destination: "/terraform/cloud-docs/policy-enforcement/import-reference/:slug",
     permanent: true 
   },
+      // Relocate pre-written Sentinel policies topic
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/define-policies/prewritten-sentinel",
+    destination: "/terraform/cloud-docs/policy-enforcement/prewritten-sentinel",
+    permanent: true
+  },
 ];
