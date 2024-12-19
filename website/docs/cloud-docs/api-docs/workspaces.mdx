@@ -159,18 +159,30 @@ _Without a VCS repository_
     "attributes": {
       "name": "workspace-1"
     },
+    "type": "workspaces"
+  }
+}
+```
+
+_With Key/Value Tags_
+
+```json
+{
+  "data": {
+    "attributes": {
+      "name": "workspace-1"
+    },
     "type": "workspaces",
     "relationships": {
-      "tag-bindings": [
+      "tag-bindings": {
         {
-          "data": {
-            "type": "tag-binding",
+          "data": [{
+            "type": "tag-bindings",
             "attributes": { "key": "env", "value": "test"}
-          }
+          }]
         }
-      ]
+      }
     }
-
   }
 }
 ```
@@ -191,17 +203,7 @@ _With a VCS repository_
         "tags-regex": null
       }
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -224,17 +226,7 @@ HCP Terraform triggers a run when you push a Git tag that matches the regular ex
         "tags-regex": "\d+.\d+.\d+"
       }
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -259,17 +251,7 @@ A run will be triggered in this workspace when changes are detected in any of th
       },
       "updated-at": "2017-11-29T19:18:09.976Z"
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -296,17 +278,7 @@ A run will be triggered in this workspace when HCP Terraform detects any of the 
       },
       "updated-at": "2022-06-09T19:18:09.976Z"
     },
-    "type": "workspaces",
-    "relationships": {
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
-    }
+    "type": "workspaces"
   }
 }
 ```
@@ -324,17 +296,7 @@ _Using HCP Terraform agents_
       "agent-pool-id": "apool-ZjT6A7mVFm5WHT5a"
     }
   },
-  "type": "workspaces",
-  "relationships": {
-    "tag-bindings": [
-      {
-        "data": {
-          "type": "tag-binding",
-          "attributes": { "key": "env", "value": "test"}
-        }
-      }
-    ]
-  }
+  "type": "workspaces"
 }
 ```
 
@@ -350,17 +312,7 @@ _Using an organization default execution mode_
       }
     }
   },
-  "type": "workspaces",
-  "relationships": {
-    "tag-bindings": [
-      {
-        "data": {
-          "type": "tag-binding",
-          "attributes": { "key": "env", "value": "test"}
-        }
-      }
-    ]
-  }
+  "type": "workspaces"
 }
 
 ```
@@ -380,15 +332,7 @@ _With a project_
           "type": "projects",
           "id": "prj-jT92VLSFpv8FwKtc"
         }
-      },
-      "tag-bindings": [
-        {
-          "data": {
-            "type": "tag-binding",
-            "attributes": { "key": "env", "value": "test"}
-          }
-        }
-      ]
+      }
     }
   }
 }
@@ -402,14 +346,6 @@ _With key-value tags_
     "type": "workspaces",
     "attributes": {
       "name": "workspace-in-project"
-    },
-    "relationships": {
-      "tag-bindings": {
-        "data": {
-          "key": "cost-center",
-          "value": "engineering"
-        }
-      }
     }
   }
 }
@@ -564,7 +500,8 @@ _With a project_
       "tag-bindings": {
         "links": {
           "related": "/api/v2/workspaces/ws-HRkJLSYWF97jucqQ/tag-bindings"
-      }
+        }
+      },
       "vars": {
         "data": []
       },
@@ -1583,6 +1520,102 @@ $ curl \
 No response body.
 
 Status code `204`.
+
+## Add/update tag-bindings on a workspace
+
+This endpoint adds keys and values or updates values of tag-bindings on an existing resource by key.
+It does not remove any keys from the collection. This endpoint is useful when you want to ensure a
+modification is additive.
+
+Tag Bindings have special constraints:
+
+- Up to 10 tags can be applied to a workspace, but an additional 10 tags may be inherited from its project.
+- Keys must be no more than 128 characters, allowing all alphanumeric characters plus the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
+- Values allow the same characters, but can be up to 256 characters.
+- Certain key prefixes, including `hc:` and `hcp:` are not allowed.
+
+`PATCH /workspaces/:workspace_id/tag-bindings`
+
+| Parameter            | Description                                                         |
+| ---------------------| --------------------------------------------------------------------|
+| `:workspace_id`      | The ID of the workspace to update |
+
+### Request Body
+
+This PATCH endpoint requires a JSON object with the following properties as a request payload.
+
+It is important to note that for each data item, `type`, as well as `attributes.key` is required.
+
+| Key path                  | Type   | Default | Description                        |
+| ------------------------- | ------ | ------- | ---------------------------------- |
+| `data[].type`             | string |         | Must be `"tag-bindings"`.          |
+| `data[].attributes.key`   | string |         | The key of the tag to add/update.  |
+| `data[].attributes.value` | string |         | The name of the tag to add/update. |
+
+### Sample Payload
+
+```json
+{
+  "data": [
+    {
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "costcenter",
+        "value": "123"
+      }
+    },
+    {
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "bar",
+        "value": "baz"
+      }
+    }
+  ]
+}
+```
+
+### Sample Request
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request PATCH \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/workspaces/ws-82d2281aa259ba09/tag-bindings
+```
+
+### Sample Response
+
+Status Code 200
+
+<CodeBlockConfig hideClipboard heading="Response body after updating tag-bindings">
+
+```json
+{
+  "data": [
+    {
+      "id": "tb-e4a5847b2cf06559",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "costcenter",
+        "value": "123"
+      }
+    },
+    {
+      "id": "tb-97ce954636f93a6c",
+      "type": "tag-bindings",
+      "attributes": {
+        "key": "bar",
+        "value": "baz"
+      }
+    }
+  ]
+}
+```
+
+</CodeBlockConfig>
 
 ## Show data retention policy
 
