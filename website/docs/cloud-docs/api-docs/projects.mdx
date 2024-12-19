@@ -557,15 +557,16 @@ $ curl \
 }
 ```
 
-## Add/update tag-bindings on a workspace
+## Add/update Tag Bindings on a project
 
-This endpoint adds keys and values or updates values of tag-bindings on an existing resource by key.
-It does not remove any keys from the collection. This endpoint is useful when you want to ensure a
-modification is additive.
+This endpoint can be used to add key-value Tag Bindings to an existing resource, or to update
+existing Tag Binding values on the resource. It cannot be used to remove any tag bindings from the resource.
+This endpoint is useful when you want to ensure a modification is additive.
 
 Tag Bindings have special constraints:
 
-- Up to 10 tags can be applied to a workspace, but an additional 10 tags may be inherited from its project.
+- Up to 10 tags can be applied to a project
+- All workspaces belonging to the project will inherit the Tag Bindings applied to this project.
 - Keys must be no more than 128 characters, allowing all alphanumeric characters plus the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
 - Values allow the same characters, but can be up to 256 characters.
 - Certain key prefixes, including `hc:` and `hcp:` are not allowed.
@@ -626,7 +627,7 @@ $ curl \
 
 Status Code 200
 
-<CodeBlockConfig hideClipboard heading="Response body after updating tag-bindings">
+<CodeBlockConfig hideClipboard heading="Response body after updating Tag Bindings">
 
 ```json
 {
