@@ -71,43 +71,11 @@ You can view your organization's managed resource count on the **Usage** page.
 
 ## Create and manage reserved tag keys
 
-~> **This feature is in beta**: The ability to reserve tag keys for the organization is in beta. We do not recommend using it in production environments.
+~> **This feature is in beta**: We do not recommend using beta features in production environments.
 
-Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources and track resource consumption. Refer to the following topics for information about creating and managing tags attached to projects and workspaces:
+You can define reserved tag keys that appear as suggested labels when managers want to add tags to their projects and workspaces in the organization. Refer to [Create and manage reserved tag keys](/terraform/cloud-docs/users-teams-organizations/organizations/manage-reserved-tags) for instructions. 
 
-- [Create a project](/terraform/cloud-docs/projects/manage#create-a-project)
-- [Create workspace tags](/terraform/cloud-docs/workspaces/tags)
-
-You can also view single-value tags that workspace managers added directly to their workspaces. Refer to [Tags](#tags) in the organization settings reference for additional information.
-
-### Define a reserved tag key
-
-You can define reserved tag keys for your organization so that project and workspace managers can use consistent labels.
-
-1. Go to your organization and choose **Settings** in the sidebar.
-1. Choose **Tags** in the sidebar. 
-1. Click on the **Reserved Keys** tab.
-1. Click **New reserved tag key** and specify a key value when prompted. Keys are unique and can have up to 128 characters. You can use letters, numbers, spaces, and the following special characters: `.`, `=`, `+`, `-`, `@`, `:`, `-`, and `_`.
-1. You can enable the **Disable overrides** option to prevent project and workspace managers from overriding the key. 
-1. Click **Save** to finish adding the key. 
-   
-### Delete a reserved key
-
-1. Go to your organization and choose **Settings** in the sidebar.
-1. Choose **Tags** in the sidebar. 
-1. Click on the **Reserved Keys** tab.
-1. Open the ellipses menu and choose **Delete <key-name\>**.
-1. Click **Yes, delete reserved key** when prompted.
-
-To re-add a key, you must manually complete the steps described in [Define a reserved tag key](#define-a-reserved-tag-key).
-
-### Edit a reserved key
-
-1. Go to your organization and choose **Settings** in the sidebar.
-1. Choose **Tags** in the sidebar. 
-1. Click on the **Reserved Keys** tab.
-1. Open the ellipses menu and choose **Edit <key-name\>**.
-1. Specify your changes and click **Save**.
+You can also view single-value tags that may already be attached to projects and workspaces. Refer to [Tags](#tags) in the organization settings reference for additional information.
 
 ## Managing settings
 
@@ -152,12 +120,13 @@ Review the organization's plan and any invoices for previous plan payments. Orga
 
 #### Tags
 
-Click the **Tags** tab in the **Tags Management** screen to view single-value tags that workspace managers added directly to their workspaces. For information about key-value tag keys, refer to [Create and manage reserved tags](#create-and-manage-reserved-tags).
+Click the **Tags** tab in the **Tags Management** screen to view single-value tags that may have already been created in your system. The table on lists the tags in the system, the number of times a tag appears in a project or workspace, and the date the tag was created.
 
-You can perform the following actions in the **Tags** tab:
+The only action you can perform in the UI is deleting single-value tags from the system. You can use the following methods to delete single-value tags:
 
-1. Search for a tag key or value.
-1. Click on a column header to sort tags.
+1. Select one or more tags and click **Delete tags**. 
+1. Select the **Name** header to select all tags, then click **Delete tags**. 
+1. Click the trash icon for a tag and confirm that you want to permanently delete it when prompted. 
 
 #### Teams
 
