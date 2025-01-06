@@ -24,29 +24,29 @@ In addition to the HCP Terraform UI, you can use the following methods to manage
 - [Organizations API](/terraform/cloud-docs/api-docs/organizations)
 - The `tfe` provider [`tfe_organization`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/organization) resource
 
-## Selecting organizations
+## Select an organization
 
-HCP Terraform displays your current organization in the bottom left of the sidebar. To select an organization:
+HCP Terraform displays your current organization in the sidebar. To select an organization:
 
 1. Click the current organization name to view a list of all the organizations where you are a member.
 1. Click an organization to select it. HCP Terraform displays list of workspaces within that organization.
 
-## Joining and leaving organizations
+## Join an organization
 
 To join an organization, the organization [owners][] or a user with specific [team management](/terraform/cloud-docs/users-teams-organizations/permissions#team-management-permissions) permissions must invite you, and you must accept the emailed invitation. [Learn more](#users).
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-To leave an organization:
+## Leave an organization
 
-1. Click the Terraform logo in the upper left corner to navigate to the **Organizations** page.
-1. Click the ellipses (**...**) next to the organization and select **Leave organization**. 
+1. Click the Terraform logo in the page header to navigate to the **Organizations** page.
+1. Open the **...** ellipses menu next to the organization and select **Leave organization**. 
 
 You do not need permission from the owners to leave an organization, but you cannot leave if you are the last member of the owners team. Either add a new owner and then leave, or [delete the organization](/terraform/cloud-docs/users-teams-organizations/organizations#general).
 
-## Creating organizations
+## Create an organization
 
-On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Administration: General Settings](/terraform/enterprise/admin/application/general#organization-creation) for details.
+On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Organization Creation](/terraform/enterprise/admin/application/general#organization-creation) for details.
 
 On HCP Terraform, any user can create a new organization. If you do not belong to any organizations, HCP Terraform prompts you to create one the first time you log in. To create an organization:
 
@@ -69,25 +69,45 @@ You can view your organization's managed resource count on the **Usage** page.
 
 <!-- END: TFC:only name:managed-resources -->
 
-## Create and manage reserved tags
+## Create and manage reserved tag keys
 
-~> **Reserved tags is in private beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the private beta.
+~> **This feature is in beta**: The ability to reserve tag keys for the organization is in beta. We do not recommend using it in production environments.
 
-Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources, as well as track resource consumption. Refer to the following topics for information about creating and managing tags attached to projects and workspaces:
+Tags are key-value pairs that you can apply to projects and workspaces. Tags help you organize your projects and resources and track resource consumption. Refer to the following topics for information about creating and managing tags attached to projects and workspaces:
 
 - [Create a project](/terraform/cloud-docs/projects/manage#create-a-project)
 - [Create workspace tags](/terraform/cloud-docs/workspaces/tags)
 
+You can also view single-value tags that workspace managers added directly to their workspaces. Refer to [Tags](#tags) in the organization settings reference for additional information.
+
+### Define a reserved tag key
+
 You can define reserved tag keys for your organization so that project and workspace managers can use consistent labels.
 
-1. Click on **Tags** in the sidebar to view all tags in your organization. 
-1. Click on the **Reserved Keys** tab. You can perform the following actions:
-   1. Use the search bar to find a specific tag key.
-   1. Click on a column header to sort the table.
-   1. Click on the ellipses menu to open the management options for each tag key.
-   1. Click **New tag key** to define a new key.
+1. Go to your organization and choose **Settings** in the sidebar.
+1. Choose **Tags** in the sidebar. 
+1. Click on the **Reserved Keys** tab.
+1. Click **New reserved tag key** and specify a key value when prompted. Keys are unique and can have up to 128 characters. You can use letters, numbers, spaces, and the following special characters: `.`, `=`, `+`, `-`, `@`, `:`, `-`, and `_`.
+1. You can enable the **Disable overrides** option to prevent project and workspace managers from overriding the key. 
+1. Click **Save** to finish adding the key. 
+   
+### Delete a reserved key
 
-You can also view single-value tags that workspace managers added directly to their workspaces. Refer to [Tags](#tags) in the organization settings reference for additional information.
+1. Go to your organization and choose **Settings** in the sidebar.
+1. Choose **Tags** in the sidebar. 
+1. Click on the **Reserved Keys** tab.
+1. Open the ellipses menu and choose **Delete <key-name\>**.
+1. Click **Yes, delete reserved key** when prompted.
+
+To re-add a key, you must manually complete the steps described in [Define a reserved tag key](#define-a-reserved-tag-key).
+
+### Edit a reserved key
+
+1. Go to your organization and choose **Settings** in the sidebar.
+1. Choose **Tags** in the sidebar. 
+1. Click on the **Reserved Keys** tab.
+1. Open the ellipses menu and choose **Edit <key-name\>**.
+1. Specify your changes and click **Save**.
 
 ## Managing settings
 
