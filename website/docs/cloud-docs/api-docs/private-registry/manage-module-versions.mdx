@@ -77,7 +77,7 @@ This endpoint allows you to deprecate a specific module version. Deprecating a m
 | [422](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Malformed request body, for example the request is missing attributes or uses the wrong types. |
 | [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) or [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Failure occurred while deprecating a module version. |
 
-### Sample Payload
+### Sample payload
 
 ```json
 {
@@ -94,7 +94,7 @@ This endpoint allows you to deprecate a specific module version. Deprecating a m
 }
 ```
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -105,7 +105,7 @@ curl \
 https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private/hashicorp/lb-http/google/11.0.0
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
@@ -157,7 +157,7 @@ Deprecating a module version adds warnings to the run output of any consumers us
 | [422](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) | [JSON API error object](http://jsonapi.org/format/#error-objects) | Malformed request body, for example the request is missing attributes or uses the wrong types. |
 | [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) or [503] | [JSON API error object](http://jsonapi.org/format/#error-objects) | Failure occurred while reverting the deprecation of a module version. |
 
-### Sample Request
+### Sample request
 
 ```shell
 curl \
@@ -168,7 +168,7 @@ curl \
 https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private/hashicorp/lb-http/google/11.0.0
 ```
 
-Sample payload
+### Sample payload
 
 ```json
 {
@@ -183,7 +183,7 @@ Sample payload
 }
 ```
 
-### Sample Response
+### Sample response
 
 ```json
 {
