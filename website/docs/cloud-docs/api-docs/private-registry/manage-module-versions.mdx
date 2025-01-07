@@ -194,20 +194,19 @@ https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private
 }
 ```
 
-## Fetch data about a module’s deprecation 
+## Fetch data about a module versions’s deprecation 
 
-The [private registry module API](/terraform/cloud-docs/api-docs/private-registry/modules#sample-registry-request-private-module) returns data about private registry modules, including a module’s deprecation information.
+The [private registry module API](/terraform/cloud-docs/api-docs/private-registry/modules#sample-registry-request-private-module) returns data about private registry modules, including that module’s deprecation status.
 
-For example, if you want to know the deprecation status of v0.0.1 of the `aws` provider’s `consul` module in your `my-cloud-org` organization, you could perform this API call:
+For example, if you want to know the deprecation status of v0.0.1 of the `aws` provider’s `consul` module in your `my-cloud-org` organization, you could perform the following API call:
 
 ```shell
 curl \
   --header "Authorization: Bearer $TOKEN" \
   https://app.terraform.io/api/registry/v1/modules/my-cloud-org/consul/aws/0.0.1
-
 ```
 
-If the module was deprecated, your response should include a `deprecation` key with the details of that module version’s deprecation.
+If the module is deprecated, your response includes a `deprecation` key with the details of that module version’s deprecation.
 
 ```json
 {
@@ -226,9 +225,7 @@ If the module was deprecated, your response should include a `deprecation` key w
 }
 ```
 
-### Sample request to GET all module versions
-
-To check the deprecation status of all of your module’s versions, you can perform an API call like the following:
+To check the deprecation status of all of the `consul` module’s versions, you could perform the following API call:
 
 ```shell
 curl \
@@ -236,7 +233,7 @@ curl \
   https://app.terraform.io/api/registry/v1/modules/my-cloud-org/consul/aws/versions
 ```
 
-Your response includes multiple versions, each deprecated module including a `deprecation` key listing the details of a module’s deprecation. If a module version has not been deprecated, the `deprecation` field returns `null`.
+The response includes multiple versions, and each version has a `deprecation` key listing the details of that module’s deprecation. If a module version has not been deprecated, the `deprecation` field returns `null`.
 
 ```json
 {
