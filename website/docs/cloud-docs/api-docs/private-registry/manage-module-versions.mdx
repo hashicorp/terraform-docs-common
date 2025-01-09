@@ -194,9 +194,9 @@ https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private
 }
 ```
 
-## Fetch data about a module version’s deprecation 
+## Fetch a module version’s deprecation data
 
-The [private registry module API](/terraform/cloud-docs/api-docs/private-registry/modules#sample-registry-request-private-module) returns data about private registry modules, including that module’s deprecation status.
+Send a `GET` request to the `/modules/:GitHub-organization/:module/:provider/versions` endpoint to retrieve data about private registry modules, including the module's deprecation status. Refer to the [private registry module API example](/terraform/cloud-docs/api-docs/private-registry/modules#sample-registry-request-private-module) for additional information.
 
 For example, if you want to know the deprecation status of v0.0.1 of the `aws` provider’s `consul` module in your `my-cloud-org` organization, you could perform the following API call:
 
