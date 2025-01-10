@@ -774,7 +774,7 @@ You can use two endpoints to force delete a workspace, which behave identically.
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | No Content                | Successfully deleted the workspace                                    |
-| [403][] | [JSON API error object][] | Not authorized to perform a force delete on the workspace. If the error message includes `Latest workspace state is being processed to discover resources`, please refer to [the `resources-processed` attribute in the State Versions API](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)          |
+| [403][] | [JSON API error object][] | Not authorized to perform a force delete on the workspace. If the error message includes `Latest workspace state is being processed to discover resources`, please refer to [the `resources-processed` attribute in the State Versions API.](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)          |
 | [404][] | [JSON API error object][] | Workspace not found, or user unauthorized to perform workspace delete |
 
 ### Sample Request
