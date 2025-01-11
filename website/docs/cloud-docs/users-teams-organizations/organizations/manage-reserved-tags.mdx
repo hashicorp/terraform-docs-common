@@ -30,7 +30,7 @@ You can define reserved tag keys for your organization so that project and works
 1. Choose **Tags** in the sidebar. 
 1. Click on the **Reserved Keys** tab.
 1. Click **New reserved tag key** and specify a key value when prompted. Keys are unique and can have up to 128 characters. You can use letters, numbers, spaces, and the following special characters: `.`, `=`, `+`, `-`, `@`, `:`, `-`, and `_`.
-1. You can enable the **Disable overrides** option to prevent project and workspace managers from overriding the key. 
+1. You can enable the **Disable overrides** option to prevent project and workspace managers from overriding the key. Refer to [Disable overrides for project tags](#disable-overrides-for-project-tags) for additional information.
 1. Click **Save** to finish adding the key. 
    
 ## Delete a reserved key
@@ -50,3 +50,9 @@ To re-add a key, you must manually complete the steps described in [Define a res
 1. Click on the **Reserved Keys** tab.
 1. Open the ellipses menu and choose **Edit <key-name\>**.
 1. Specify your changes and click **Save**.
+
+## Disable overrides for project tags
+
+Enable the **Disable overrides** option when creating or editing a reserved tag key to prevent project and workspace managers from overriding the tag keys. 
+
+This option is not retroactive. When a workspace contains keys that were overridden before you enabled the **Disable overrides** option, you must first remove the tags from the workspace. You can then re-apply the keys to the workspace so that HCP Terraform can allow future updates to the workspace tag bindings.
