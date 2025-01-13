@@ -116,7 +116,7 @@ Marking a variable as “sensitive” will prevent it from being displayed in th
 
 The logs from a Terraform plan or apply operation are visible to any user with at least “read” level access in the associated workspace. While Terraform tries to avoid writing sensitive information to logs, redactions are best-effort. This feature should not be treated as a security boundary, but instead as a mechanism to mitigate accidental exposure. Additionally, HCP Terraform is unable to protect against malicious users who attempt to use Terraform logs to exfiltrate sensitive data.
 
-### Redaction of ephemeral values in Terraform logs
+### Redact ephemeral values from Terraform logs
 
 The logs from a Terraform plan or apply operation are visible to any user with at least “read” level access in the associated workspace. Terraform tries to avoid writing ephemeral values to logs
 and provider developers are discouraged from logging those as well but Terraform cannot provide guarantees that providers will not log ephemeral values.
