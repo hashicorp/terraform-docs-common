@@ -120,7 +120,7 @@ The collections are:
   all modules in the configuration.
 
 These collections are specifically designed to be used with the
-[`filter`](https://docs.hashicorp.com/sentinel/language/collection-operations#filter-expression)
+[`filter`](/sentinel/docs/language/collection-operations#filter-expression)
 quantifier expression in Sentinel, so that one can collect a list of resources
 to perform policy checks on without having to write complex module or
 configuration traversal. As an example, the following code will return all
@@ -154,7 +154,7 @@ the import is building its collections and computing addresses for resources and
 modules.
 
 As such, addresses found here may not always match the expanded addresses found
-in the [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) and [`tfstate/v2`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate-v2)
+in the [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) and [`tfstate/v2`](/terraform/cloud-docs/policy-enforcement/import-reference/tfstate-v2)
 imports, specifically when
 [`count`](/terraform/language/resources#count-multiple-resource-instances-by-count)
 and
@@ -178,7 +178,7 @@ one.
 ## The `strip_index` Function
 
 The `strip_index` helper function can be used to remove indexes from addresses
-found in [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) and [`tfstate/v2`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate-v2),
+found in [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) and [`tfstate/v2`](/terraform/cloud-docs/policy-enforcement/import-reference/tfstate-v2),
 by removing the indexes from each resource.
 
 This can be used to help facilitate cross-import lookups for data between plan,
@@ -364,7 +364,7 @@ The `variables` collection is a collection of all variables across all modules
 in the configuration.
 
 Note that this tracks variable definitions, not values. See the [`tfplan/v2`
-`variables` collection](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2#the-variables-collection) for variable
+`variables` collection](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#the-variables-collection) for variable
 values set within a plan.
 
 This collection is indexed by the key format `module_address:name`, with each
@@ -382,9 +382,9 @@ The `outputs` collection is a collection of all outputs across all modules in
 the configuration.
 
 Note that this tracks variable definitions, not values. See the [`tfstate/v2`
-`outputs` collection](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate-v2#the-outputs-collection) for the final
+`outputs` collection](/terraform/cloud-docspolicy-enforcement/import-reference/tfstate-v2#the-outputs-collection) for the final
 values of outputs set within a state. The [`tfplan/v2` `output_changes`
-collection](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2#the-output_changes-collection) also contains a more
+collection](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#the-output_changes-collection) also contains a more
 complex collection of planned output changes.
 
 This collection is indexed by the key format `module_address:name`, with each
