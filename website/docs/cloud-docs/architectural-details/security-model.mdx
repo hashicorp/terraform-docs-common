@@ -119,7 +119,7 @@ The logs from a Terraform plan or apply operation are visible to any user with a
 ### Redact ephemeral values from Terraform logs
 
 The logs from a Terraform plan or apply operation are visible to any workspace's users with **Read** permissions. Terraform attempts to avoid writing [ephemeral values](/terraform/language/resources/ephemeral) to logs, but Terraform cannot guarantee that all providers will not log ephemeral values.
-You can reduce the risk by only [using trusted modules and providers within Terraform configuration](#malicious-terraform-providers-or-modules).
+You can reduce the risk of ephemeral values being potentially logged by malicious providers by only [using trusted modules and providers within Terraform configuration](#malicious-terraform-providers-or-modules).
 
 ### Redact ephemeral values in memory
 
