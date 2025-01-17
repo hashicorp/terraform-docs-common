@@ -123,7 +123,7 @@ You can reduce the risk by only [using trusted modules and providers within Terr
 
 ### Redact ephemeral values in memory
 
-Ephemeral Values prevents values from being persisted to disk (as part of a plan file or state file) but no efforts are made to protect ephemeral values from memory analysis of the running application.
+Terraform does not persist ephemeral values to plan or state files. However, Terraform does not protect ephemeral values from a memory analysis of Terraform while its running.
 
 ## Recommendations for securely using HCP Terraform
 
