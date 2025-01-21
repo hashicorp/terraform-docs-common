@@ -5,9 +5,7 @@ description: Use tfconfig import to give Sentinel access to a Terraform configur
 
 # tfconfig Sentinel import
 
-~> **Warning:** The `tfconfig` import is now deprecated and will be permanently removed in August 2025.
-We recommend that you start using the updated [tfconfig/v2](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig-v2) import as soon as possible to avoid disruptions.
-The `tfconfig/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
+~> **Warning:** The `tfconfig` import is now deprecated and will be permanently removed in August 2025. We recommend that you start using the updated [tfconfig/v2](/terraform/cloud-docs/policy-enforcement/import-reference/tfconfig-v2) import as soon as possible to avoid disruptions. The `tfconfig/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
 
 The `tfconfig` import provides access to a Terraform configuration.
 
@@ -40,7 +38,7 @@ in the configuration. Since this is the configuration and not an invocation
 of Terraform, you can't see values for variables, the state, or the diff for
 a pending plan. If you want to write policy around expressions used
 within configuration blocks, you likely want to use the
-[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) import.
 
 ## Namespace Overview
 
@@ -167,7 +165,7 @@ configuration and not the final values as a result of invoking Terraform. If
 you want to write policy around the _result_ of expressions used within
 configuration blocks (for example, if you wanted to ensure the final value of
 `filename` above includes `accounts.txt`), you likely want to use the
-[`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan) import.
+[`tfplan`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) import.
 
 ## Namespace: Root
 
@@ -200,7 +198,7 @@ Hence, a module with an address of simply `foo` (or `root.foo`) would be
 [`null`][ref-null] is returned if a module address is invalid, or if the module
 is not present in the configuration.
 
-[ref-null]: https://docs.hashicorp.com/sentinel/language/spec#null
+[ref-null]: /sentinel/docs/language/spec#null
 
 As an example, given the following module block:
 
@@ -628,7 +626,7 @@ configuration. As such, configuration for the [`value`](#outputs-value-value) at
 will be in its raw form, and not yet interpolated. For fully interpolated output
 values, see the [`tfstate` import][ref-tfe-sentinel-tfstate].
 
-[ref-tfe-sentinel-tfstate]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate
+[ref-tfe-sentinel-tfstate]: /terraform/cloud-docs/policy-enforcement/import-reference/tfstate-v2
 
 This namespace is indexed by output name.
 
@@ -908,7 +906,7 @@ configuration. As such, static data can be extracted, such as defaults, but not
 dynamic data, such as the current value of a variable within a plan (although
 this can be extracted within the [`tfplan` import][ref-tfe-sentinel-tfplan]).
 
-[ref-tfe-sentinel-tfplan]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan
+[ref-tfe-sentinel-tfplan]: /terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2
 
 This namespace is indexed by variable name.
 
@@ -928,9 +926,9 @@ represented as such.
 If no default is present, the value will be [`null`][ref-sentinel-null] (not to
 be confused with [`undefined`][ref-sentinel-undefined]).
 
-[ref-sentinel-null]: https://docs.hashicorp.com/sentinel/language/spec#null
+[ref-sentinel-null]: /sentinel/docs/language/spec#null
 
-[ref-sentinel-undefined]: https://docs.hashicorp.com/sentinel/language/undefined
+[ref-sentinel-undefined]: /sentinel/docs/language/undefined
 
 As an example, given the following variable blocks:
 

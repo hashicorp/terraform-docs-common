@@ -82,7 +82,7 @@ Properties without a default value are required.
 | `data.attributes.name` | string | | The name of the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least three characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | none | Optional. The description of the project. It must be no more than 256 characters long. |
 | `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies the default for how long each workspace in the project should wait before automatically destroying its infrastructure. You can specify a duration up to four digits that is greater than `0` followed by either a `d` for days or `h` hours. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. All future workspaces in this project inherit this default value. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for additional information. | 
-| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to bind to the project. Any tag binded to the project will be inherited by the workspaces belonging to it. |
+| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to bind to the project. Workspaces inherit the tags bound to their project.  |
 | `data.relationships.tag-bindings.data.type` | string | none | Must be `tag-bindings` for each object in the list. |
 | `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the tag key for each object in the list. |
 | `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
@@ -189,7 +189,7 @@ Properties without a default value are required.
 | `data.attributes.name` | string | existing value | A new name for the project. The name can contain letters, numbers, spaces, `-`, and `_`, but cannot start or end with spaces. It must be at least 3 characters long and no more than 40 characters long. |
 | `data.attributes.description` | string | existing value | The new description for the project. It must be no more than 256 characters long. |
 | `data.attributes.auto-destroy-activity-duration`| string  | none | Specifies how long each workspace in the project should wait before automatically destroying its infrastructure by default. You can specify a duration up to four digits that is greater than `0` followed by either a `d` for days or `h` hours. For example, to queue destroy runs after fourteen days of inactivity set `auto-destroy-activity-duration: "14d"`. When you update this value, all workspaces in the project receive the new value unless you previously configured an override. Refer to [Automatically destroy inactive workspaces](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for additional information. |
-| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to bind to the project. Any tag binded to the project will be inherited by the workspaces belonging to it. |
+| `data.relationships.tag-bindings.data` | list of objects | none | Specifies a list of tags to bind to the project. Workspaces inherit the tags bound to their project.  |
 | `data.relationships.tag-bindings.data.type` | string | none | Must be `tag-bindings` for each object in the list. |
 | `data.relationships.tag-bindings.data.attributes.key` | string | none | Specifies the tag key for each object in the list. |
 | `data.relationships.tag-bindings.data.attributes.value` | string | none | Specifies the tag value for each object in the list. |
@@ -557,7 +557,7 @@ $ curl \
 }
 ```
 
-## Add/update Tag Bindings on a project
+## Add or update tag bindings on a project
 
 This endpoint can be used to add key-value Tag Bindings to an existing resource, or to update
 existing Tag Binding values on the resource. It cannot be used to remove any tag bindings from the resource.
@@ -586,8 +586,8 @@ It is important to note that for each data item, `type`, as well as `attributes.
 | Key path                  | Type   | Default | Description                        |
 | ------------------------- | ------ | ------- | ---------------------------------- |
 | `data[].type`             | string |         | Must be `"tag-bindings"`.          |
-| `data[].attributes.key`   | string |         | The key of the tag to add/update.  |
-| `data[].attributes.value` | string |         | The name of the tag to add/update. |
+| `data[].attributes.key`   | string |         | The key of the tag to add or update.  |
+| `data[].attributes.value` | string |         | The name of the tag to add or update. |
 
 ### Sample Payload
 
@@ -625,9 +625,9 @@ $ curl \
 
 ### Sample Response
 
-Status Code 200
+Example status code 200 response after updating tag bindings:
 
-<CodeBlockConfig hideClipboard heading="Response body after updating Tag Bindings">
+<CodeBlockConfig hideClipboard>
 
 ```json
 {
