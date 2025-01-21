@@ -6,9 +6,7 @@ description: >-
 
 # tfplan Sentinel import reference
 
-~> **Warning:** The `tfplan` import is now deprecated and will be permanently removed in August 2025.
-We recommend that you start using the updated [tfplan/v2](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) import as soon as possible to avoid disruptions.
-The `tfplan/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
+~> **Warning:** The `tfplan` import is now deprecated and will be permanently removed in August 2025. We recommend that you start using the updated [tfplan/v2](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) import as soon as possible to avoid disruptions. The `tfplan/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
 
 The `tfplan` import provides access to a Terraform plan. A Terraform plan is the
 file created as a result of `terraform plan` and is the input to `terraform
@@ -87,9 +85,9 @@ The `config` and `state` keys alias to the [`tfconfig`][import-tfconfig] and
 [`tfstate`][import-tfstate] namespaces, respectively, with the data sourced from
 the Terraform _plan_ (as opposed to actual configuration and state).
 
-[import-tfconfig]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig
+[import-tfconfig]: /terraform/cloud-docs/policy-enforcement/import-reference/tfconfig-v2
 
-[import-tfstate]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate
+[import-tfstate]: /terraform/cloud-docs/policy-enforcement/import-reference/tfstate-v2
 
 -> Note that these aliases are not represented as maps. While they will appear
 empty when viewed as maps, the specific import namespace keys will still be
@@ -124,7 +122,7 @@ Hence, a module with an address of simply `foo` (or `root.foo`) would be
 [`null`][ref-null] is returned if a module address is invalid, or if the module
 is not present in the diff.
 
-[ref-null]: https://docs.hashicorp.com/sentinel/language/spec#null
+[ref-null]: /sentinel/docs/language/spec#null
 
 As an example, given the following module block:
 
@@ -239,9 +237,9 @@ comparison for int, float, or boolean values. This only applies to variables
 that are primitives themselves and not primitives within maps and lists, which
 will be their original types.
 
-[import-tfconfig-variables-default]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig#value-default
+[import-tfconfig-variables-default]: /terraform/cloud-docs/policy-enforcement/import-reference/tfconfig-v2#value-default
 
-[import-tfconfig-variables]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfconfig#namespace-variables
+[import-tfconfig-variables]: /terraform/cloud-docs/policy-enforcement/import-reference/tfconfig-v2#namespace-variables
 
 If a default was accepted for the particular variable, the default value will be
 populated here.
@@ -360,7 +358,7 @@ Some examples of multi-level access are below:
   `tfplan.resources.aws_instance`, with names being the next level down, and so
   on.
 
-~> When [resource targeting](/terraform/cli/commands/plan#resource-targeting) is in effect, `tfplan.resources` will only include the resources specified as targets for the run. This may lead to unexpected outcomes if a policy expects a resource to be present in the plan. To prohibit targeted runs altogether, ensure [`tfrun.target_addrs`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun#value-target_addrs) is undefined or empty.
+~> When [resource targeting](/terraform/cli/commands/plan#resource-targeting) is in effect, `tfplan.resources` will only include the resources specified as targets for the run. This may lead to unexpected outcomes if a policy expects a resource to be present in the plan. To prohibit targeted runs altogether, ensure [`tfrun.target_addrs`](/terraform/cloud-docs/policy-enforcement/import-reference/tfrun#value-target_addrs) is undefined or empty.
 
 Further explanation of the namespace will be in the context of resources. As
 mentioned, when operating on data sources, use the same syntax, except with
@@ -546,7 +544,7 @@ Note that this value is _always_ a string, regardless of the actual type of the
 value changing. [Type conversion][ref-sentinel-type-conversion] within policy
 may be necessary to achieve the comparison needed.
 
-[ref-sentinel-type-conversion]: https://docs.hashicorp.com/sentinel/language/values#type-conversion
+[ref-sentinel-type-conversion]: /sentinel/docs/language/values#type-conversion
 
 As an example, given the following resource:
 
