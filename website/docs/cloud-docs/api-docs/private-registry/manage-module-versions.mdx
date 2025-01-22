@@ -51,14 +51,11 @@ When you deprecate a module version, HCP Terraform adds warnings to the module's
 
 After deprecating a module version, you can revert that deprecated status to remove the warnings from that version in the registry and outputs. For more details on module deprecation, refer to [Deprecate module versions](/terraform/cloud-docs/registry/manage-module-versions).
 
-@include "public-beta/manage-module-versions.mdx"
-
 ## Deprecate a module version
 
 Use this endpoint to deprecate a module version.
 
 `PATCH /api/v2/organizations/:organization_name/registry-modules/private/:organization_name/:module_name/:module_provider/:module_version`
-
 
 | Parameter | Description |
 | :---- | :---- |
