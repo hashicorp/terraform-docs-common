@@ -180,9 +180,9 @@ You can grant the following project permissions to teams on a per-project basis.
   - **Read:** — Allows users to see teams assigned to the project for visible teams.
   - **Manage:** — _Implies permission to read._ Allows users to set or remove project permissions for visible teams. Project admins can not view or manage [secret teams](/terraform/cloud-docs/users-teams-organizations/teams/manage#team-visibility) unless they are also organization owners.
 - **Variable sets:**
-  - **None:** — No access to view variable sets applied to the project.
-  - **Read:** — Allows users to view variable sets applied to the project.
-  - **Manage:** — _Implies permission to read._ Allows users to create, update, and delete variable sets applied to the project.
+  - **None:** — No access to variable sets owned by the project. However, users with Variable access permissions can view variable sets applied to this project and its workspaces.
+  - **Read:** — Allows users to view variable sets owned by this project.
+  - **Manage:** — _Implies permission to read._ Allows users to create, update, and delete variable sets owned by the project.
 
 See [General Workspace Permissions](#general-workspace-permissions)for the complete list of available permissions for a project's workspaces.
 
