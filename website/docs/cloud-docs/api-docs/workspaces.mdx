@@ -1215,7 +1215,7 @@ Status code `204`.
 
 ## List workspace tags
 
-Workspace tags are [organization tags](/terraform/cloud-docs/api-docs/organization-tags) added to a workspace. They are a flat list of keys that can only be applied to workspaces when using the `tags` attribute in the Terraform CLI cloud block < 1.10. The more contemporary form of key/value tags can be listed using [List workspace tag bindings](#list-workspace-tag-bindings) - See below.
+Workspace tags are [organization tags](/terraform/cloud-docs/api-docs/organization-tags) added to a workspace. They are a flat list of keys that can only be applied to workspaces when using the `tags` attribute in the Terraform `cloud` block in Terraform v1.9 and below. The more contemporary form of key/value tags can be listed using [List workspace tag bindings](#list-workspace-tag-bindings).
 
 `GET /workspaces/:workspace_id/relationships/tags`: Paginated list of flat string tags attached to the workspace.
 
