@@ -22,7 +22,7 @@ The `tf-migrate prepare` command prompts you for the following information:
 - If you would like to create a new branch named `hcp-migrate-main`.  
 - If you would like it to automatically create a pull request with the updated code change when the migration is complete.
 
-After you run the `prepare` command, Terraform migrate generates a new Terraform configuration in the `hcp-migrate-config` directory to perform the migration. This configuration creates the following resources:
+After you run the `prepare` command, Terraform migrate generates a new Terraform configuration in the `_hcp-migrate-configs` directory to perform the migration. This configuration creates the following resources:
 
 - One workspace per state file  
 - One project to store all workspaces  
