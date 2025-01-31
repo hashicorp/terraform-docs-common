@@ -25,7 +25,7 @@ general information about how Terraform uses state
 time, the usefulness of this import is somewhat limited, as it will usually give
 you the state _prior_ to the plan the policy check is currently being run for.
 Depending on your needs, you may find the
-[`planned_values`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2#the-planned_values-collection) collection in
+[`planned_values`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#the-planned_values-collection) collection in
 `tfplan/v2` more useful, which will give you a _predicted_ state by applying
 plan data to the data found here. The one exception to this rule is _data
 sources_, which will always give up to date data here, as long as the data
@@ -71,7 +71,7 @@ The collections are:
 * [`outputs`](#the-outputs-collection) - The state of all outputs from the root module in the state.
 
 These collections are specifically designed to be used with the
-[`filter`](https://docs.hashicorp.com/sentinel/language/collection-operations#filter-expression)
+[`filter`](/sentinel/docs/language/collection-operations#filter-expression)
 quantifier expression in Sentinel, so that one can collect a list of resources
 to perform policy checks on without having to write complex module traversal. As
 an example, the following code will return all `aws_instance` resource types
@@ -153,7 +153,7 @@ An element in the collection has the following values:
 
 * `values` - An object (map) representation of the attribute values of the
   resource, whose structure depends on the resource type schema. When accessing
-  proposed state through the [`planned_values`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2#the-planned_values-collection)
+  proposed state through the [`planned_values`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#the-planned_values-collection)
   collection of the tfplan/v2 import, unknown values will be omitted.
 
 * `depends_on` - The addresses of the resources that this resource depends on.
@@ -163,8 +163,8 @@ An element in the collection has the following values:
 
 * `deposed_key` - Set if the resource has been marked deposed and will be
   destroyed on the next apply. This matches the deposed field in the
-  [`resource_changes`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2#the-resource_changes-collection)
-  collection in the [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan-v2) import.
+  [`resource_changes`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#the-resource_changes-collection)
+  collection in the [`tfplan/v2`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2) import.
 
 ## The `outputs` Collection
 
