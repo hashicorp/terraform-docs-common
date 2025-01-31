@@ -103,7 +103,7 @@ You may be able to manage the following organization settings.
 
 #### General
 
-Review the organization name and contact email. Organization owners can choose to change the organization name, contact email, default execution mode, and the default project, or delete the organization. When an organization owner updates the default execution mode, all workspaces configured to [inherit this value](/terraform/cloud-docs/workspaces/settings#execution-mode) are affected.
+Review the organization name and contact email. Organization owners can change the organization's name, contact email, default execution mode, designated default project, or can delete the organization. When an organization owner updates the default execution mode, all workspaces that [inherit that value](/terraform/cloud-docs/workspaces/settings#execution-mode) will also inherit that execution mode.
 
 Organization owners can also choose whether [workspace administrators](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-admins) can delete workspaces that are managing resources. Deleting a workspace with resources under management introduces risk because Terraform can no longer track or manage the infrastructure. The workspace's users must manually delete any remaining resources or [import](/terraform/cli/commands/import) them into another Terraform workspace.
 
