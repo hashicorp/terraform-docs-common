@@ -240,7 +240,7 @@ Refer to the [workspace naming recommendations](/terraform/cloud-docs/workspaces
 
 ## Workspace Tags
 
-Version 2.4.0 also allows you to add custom tags to your Terraform workspaces. Use the "Workspace Tags" field to provide a comma-separated list of tags that will be parsed and attached to the workspace in HCP Terraform. 
+Version 2.8.0 extends support for the key-value pair tags while still also supporting flat string tags version 2.4.0 introduced. Use the "Workspace Tags" field to provide a comma-separated list of key-value pair tags in the format "env: prod, instance: test" that will be parsed and attached to the workspace in HCP Terraform.
 
 Tags give you an easier way to categorize, filter, and manage workspaces provisioned through the Service Catalog for Terraform.
 We recommend that you set naming conventions for tags with your end users to avoid variations such as `ec2`, `aws-ec2`, `aws_ec2`.
