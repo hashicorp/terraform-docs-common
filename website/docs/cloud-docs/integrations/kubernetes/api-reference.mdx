@@ -1,10 +1,10 @@
 ---
 page_title: HCP Terraform Operator for Kubernetes API reference
 description: >-
-  API reference for the HCP Terraform Operator for Kubernetes.
+  Use the HCP Terraform Operator for Kubernetes API to manage HCP Terraform workspaces, modules, and agent pools.
 ---
 
-# API Reference
+# HCP Terraform Operator for Kubernetes API reference
 
 ## Packages
 - [app.terraform.io/v1alpha2](#appterraformiov1alpha2)
@@ -42,7 +42,7 @@ _Appears in:_
 | --- | --- |
 | `maxReplicas` _integer_ | MaxReplicas is the maximum number of replicas for the Agent deployment. |
 | `minReplicas` _integer_ | MinReplicas is the minimum number of replicas for the Agent deployment. |
-| `targetWorkspaces` _[TargetWorkspace](#targetworkspace)_ | TargetWorkspaces is a list of HCP Terraform Workspaces which the agent pool should scale up to meet demand. When this field is ommited the autoscaler will target all workspaces that are associated with the AgentPool. |
+| `targetWorkspaces` _[TargetWorkspace](#targetworkspace)_ | TargetWorkspaces is a list of HCP Terraform Workspaces which the agent pool should scale up to meet demand. When this field is omitted the autoscaler will target all workspaces that are associated with the AgentPool. |
 | `cooldownPeriodSeconds` _integer_ | CooldownPeriodSeconds is the time to wait between scaling events. Defaults to 300. |
 | `cooldownPeriod` _[AgentDeploymentAutoscalingCooldownPeriod](#agentdeploymentautoscalingcooldownperiod)_ | CoolDownPeriod is the period to wait between scaling up and scaling down |
 

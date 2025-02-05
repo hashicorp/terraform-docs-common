@@ -1,10 +1,10 @@
 ---
-page_title: Manage Policies and Policy Sets - HCP Terraform
+page_title: Manage policies and policy sets in HCP Terraform
 description: >-
- Add policies to HCP Terraform, group policies into policy sets, and apply policy sets to workspaces. HCP Terraform checks the Terraform plan against the policy set for each run.
+ Learn how to create and manage policies and policy sets in HCP Terraform.
 ---
 
-# Policies and policy sets
+# Manage policies and policy sets in HCP Terraform
 
 Policies are rules that HCP Terraform enforces on Terraform runs. You can define policies using either the [Sentinel](/terraform/cloud-docs/policy-enforcement/sentinel) or [Open Policy Agent (OPA)](/terraform/cloud-docs/policy-enforcement/opa) policy-as-code frameworks.
 
@@ -189,13 +189,6 @@ The policy set no longer appears on the UI and HCP Terraform no longer applies i
 
 ### (Sentinel only) Sentinel parameters
 
-[Sentinel parameters](https://docs.hashicorp.com/sentinel/language/parameters) are a list of key/value pairs that HCP Terraform sends to the Sentinel runtime when performing policy checks on workspaces. If the value parses as JSON, HCP Terraform sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, HCP Terraform sends it as a string.
+[Sentinel parameters](/sentinel/docs/language/parameters) are a list of key/value pairs that HCP Terraform sends to the Sentinel runtime when performing policy checks on workspaces. If the value parses as JSON, HCP Terraform sends it to Sentinel as the corresponding type (string, boolean, integer, map, or list). If the value fails JSON validation, HCP Terraform sends it as a string.
 
 You can set Sentinel parameters when you [edit a policy set](#edit-policy-sets).
-
-You can only set parameters for policy sets added through:
-* A connected VCS repository
-* The [policy sets API](/terraform/cloud-docs/api-docs/policy-sets)
-* The `tfe` provider's [`tfe_policy_set`](https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/policy_set) resource
-
-Individually managed policies created through HCP Terraform's UI, API, or the TFE provider do not support attaching parameters.
