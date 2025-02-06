@@ -148,9 +148,9 @@ curl \
 
 ## Create a stack
 
-`POST /stacks`
-
 This endpoint creates a stack.
+
+`POST /stacks`
 
 -> **Note:** Stack create access is restricted to users who maintain the specified project, the owners team, teams with the "Manage all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
@@ -264,6 +264,87 @@ curl \
 
 ## Fetch the latest configuration for a stack
 
+This endpoint forces a stack to pull a new configuration from it's underlying git repo.
+
+`POST /stacks/:stack_id/actions/update-configuration`
+
+| Parameter            | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| `:stack_id` | The stack id to fetch the latest configuration for. |
+
+
+### Sample Request
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/stacks/st-SihZTyXKfNXUWuUa/actions/update-configuration
+```
+
+### Sample Response
+
+```json
+{
+    "data": {
+        "id": "st-LSqektntTNJrAhCt",
+        "type": "stacks",
+        "attributes": {
+            "name": "pet-nulls-stack",
+            "description": null,
+            "deployment-names": [
+                "complex",
+                "simple"
+            ],
+            "vcs-repo": {
+              "branch": "",
+              "tags-regex": null,
+              "sparse-checkout-pattern": "",
+              "identifier": "hashicorp-guides/pet-nulls-stack",
+              "display-identifier": "hashicorp-guides/pet-nulls-stack",
+              "oauth-token-id": "ot-t3remoFJPeuLk1Mz",
+              "repository-http-url": "https://github.com/hashicorp-guides/pet-nulls-stack",
+              "service-provider": "github",
+              "trigger-disabled": false
+            },
+            "speculative-enabled": false,
+            "created-at": "2024-11-19T15:19:42.478Z",
+            "updated-at": "2025-02-06T19:30:42.222Z",
+            "deleteable": false,
+            "upstream-count": 0,
+            "downstream-count": 0,
+            "inputs-count": 0,
+            "outputs-count": 0
+        },
+        "relationships": {
+            "project": {
+                "data": {
+                    "id": "prj-18PG93QyqCMhLhWT",
+                    "type": "projects"
+                }
+            },
+            "agent-pool": {
+                "data": null
+            },
+            "latest-stack-configuration": {
+                "data": {
+                    "id": "stc-4DiYHNJZCFq8pkXq",
+                    "type": "stack-configurations"
+                }
+            },
+            "stack-diagnostics": {
+                "links": {
+                    "related": "/api/v2/stacks/st-LSqektntTNJrAhCt/stack-diagnostics"
+                }
+            }
+        },
+        "links": {
+            "self": "/api/v2/stacks/st-LSqektntTNJrAhCt"
+        }
+    }
+}
+```
 TODO
 
 ##
