@@ -345,7 +345,6 @@ $ curl \
     }
 }
 ```
-TODO
 
 ##
 
@@ -355,4 +354,26 @@ TODO
 
 ## Delete an empty stack
 
-TODO
+When you delete an HCP Terraform Stack with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, HCP Terraform only deletes the stack if it is not managing resources.
+
+`POST /stacks/:stack_id/delete`
+
+| Parameter            | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| `:stack_id` | The stack id to delete. |
+
+### Sample Request
+
+```shell-session
+$ curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/stacks/st-SihZTyXKfNXUWuUa/delete
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully deleted the stack                                    |
+| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform stack delete |
+| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
