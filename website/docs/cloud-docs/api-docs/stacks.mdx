@@ -40,6 +40,8 @@ description: >-
 
 Stacks represent collections of components, replicated across one or more deployments.
 
+## Overview
+
 ## List stacks in a project
 
 This endpoint lists stacks in the organization.
@@ -145,6 +147,61 @@ curl \
     }
 }
 ```
+
+## Show a Stack
+TODO
+
+This endpoint returns details of the specified stack.
+
+## List Stack Configurations
+TODO
+
+This endpoint lists all the configurations under the specified stack.
+
+## Show Stack Configuration
+TODO
+
+This endpoint returns details of the specified stack configuration.
+
+## List Stack Deployments
+TODO
+
+This endpoint lists all the deployments under the specified stack.
+
+## Show Stack Deployment
+TODO
+
+This endpoint returns details of the specified stack deployment under the stack.
+
+## List Stack Diagnostics
+TODO
+
+This endpoint lists all the diagnostics under the specified stack.
+
+## List Stack Diagnostics under a configuration
+TODO
+
+This endpoint lists all the diagnostics under the specified stack configuration.
+
+## Show Stack Diagnostic
+TODO
+
+This endpoint returns details of the specified stack diagnostic.
+
+## List Stack Plans
+TODO
+
+This endpoint lists all the plans under the specified stack.
+
+## List Stack Plans under a configuration
+TODO
+
+This endpoint lists all the plans under the specified stack configuration.
+
+## List Stack States
+TODO 
+
+This endpoint lists all the states under the specified stack.
 
 ## Create a stack
 
@@ -346,7 +403,10 @@ $ curl \
 }
 ```
 
-##
+## Acknowledge a Stack Diagnostic
+TODO
+
+This endpoint acknowledges the specified stack diagnostic.
 
 ## Modify a stack's settings
 
@@ -377,3 +437,7 @@ $ curl \
 | [204][] | No Content                | Successfully deleted the stack                                    |
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform stack delete |
 | [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
+
+## Force-Delete a stack
+
+During a force delete, HCP Terraform removes the specified stack without checking whether it has any deployments that are managing resources. We recommend using the [safe delete endpoint](#Delete-an-empty-stack) instead, when possible.
