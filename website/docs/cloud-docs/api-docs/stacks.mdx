@@ -42,7 +42,28 @@ Stacks represent collections of components, replicated across one or more deploy
 
 ## Overview
 
-## List stacks in a project
+The scope of the API includes the following endpoints:
+
+| Method | Path | Action |
+| --- | --- | --- |
+| `GET` | `/organizations/:organization_name/stacks` | Call this endpoint to [list existing stacks](#list-stacks).|
+| `GET` | `/stacks/:stack_id` | Call this endpoint to [show a stack](#show-a-stack).|
+| `GET` | `/stacks/:stack_id/stack-configurations` | Call this endpoint to [list stack configurations](#list-stack-configurations).|
+| `GET` | `/stack-configurations/:stack_configuration_id` | Call this endpoint to [show a stack configuration](#show-stack-configuration).|
+| `GET` | `/stacks/:stack_id/stack-deployments` | Call this endpoint to [list stack deployments](#list-stack-deployments).|
+| `GET` | `/stacks/:stack_id/stack-diagnostics` | Call this endpoint to [list stack diagnostics](#list-stack-diagnostics).|
+| `GET` | `/stack-configurations/:stack_configuration_id/stack-diagnostics` | Call this endpoint to [list stack configuration diagnostics](#list-stack-configuration-diagnostics).|
+| `GET` | `/stacks/:stack_id/stack-plans` | Call this endpoint to [list stack plans](#list-stack-plans).|
+| `GET` | `/stack-configurations/:stack_configuration_id/stack-plans` | Call this endpoint to [list stack configuration plans](#list-stack-configuration-plans).|
+| `GET` | `/stacks/:stack_id/stack-states` | Call this endpoint to [list stack states](#list-stack-states).|
+| `POST` | `/stacks` | Call this endpoint to [create a stack](#create-a-stack).|
+| `POST` | `/stack-diagnostics/acknowledge` | Call this endpoint to [acknowledge a stack diagnostic](#acknowledge-stack-diagnostic).|
+| `POST` | `/stacks/:stack_id/actions/update-configuration` | Call this endpoint to [fetch a stack configuration](#fetch-the-latest-stack-configuration).|
+| `POST` | `/stacks/:stack_id/delete` | Call this endpoint to [delete a stack](#safe-delete-a-stack).|
+| `POST` | `/stacks/:stack_id/force-delete` | Call this endpoint to [force delete a stack](#force-delete-a-stack).|
+| `PATCH` | `/stacks/:stack_id` | Call this endpoint to [update a stack](#update-a-stack).|
+
+## List stacks
 
 This endpoint lists stacks in the organization.
 
@@ -178,7 +199,7 @@ TODO
 
 This endpoint lists all the diagnostics under the specified stack.
 
-## List Stack Diagnostics under a configuration
+## List Stack Configuration Diagnostics
 TODO
 
 This endpoint lists all the diagnostics under the specified stack configuration.
@@ -193,7 +214,7 @@ TODO
 
 This endpoint lists all the plans under the specified stack.
 
-## List Stack Plans under a configuration
+## List Stack Configuration Plans
 TODO
 
 This endpoint lists all the plans under the specified stack configuration.
@@ -319,7 +340,7 @@ curl \
 }
 ```
 
-## Fetch the latest configuration for a stack
+## Fetch the latest Stack Configuration
 
 This endpoint forces a stack to pull a new configuration from it's underlying git repo.
 
@@ -403,16 +424,17 @@ $ curl \
 }
 ```
 
-## Acknowledge a Stack Diagnostic
+## Acknowledge Stack Diagnostic
 TODO
 
 This endpoint acknowledges the specified stack diagnostic.
 
-## Modify a stack's settings
-
+## Create a Destroy Plan
 TODO
 
-## Delete an empty stack
+This endpoint creates a destroy plan against the specified stack deployment.
+
+## Safe delete a Stack
 
 When you delete an HCP Terraform Stack with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, HCP Terraform only deletes the stack if it is not managing resources.
 
@@ -438,6 +460,11 @@ $ curl \
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform stack delete |
 | [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
 
-## Force-Delete a stack
+## Force Delete a Stack
 
 During a force delete, HCP Terraform removes the specified stack without checking whether it has any deployments that are managing resources. We recommend using the [safe delete endpoint](#Delete-an-empty-stack) instead, when possible.
+
+
+## Update a Stack
+
+TODO
