@@ -31,8 +31,11 @@ A stack’s **Overview** page displays the following information:
 
 * The number of your stack’s components and deployments  
 * Your deployment’s current [health](#check-deployment-health)  
-* The latest configuration version  
+* The latest configuration version
+* The inputs and outputs for your stack   
 * A chart listing each deployment’s recent configuration versions
+
+Clicking on a Stack’s **Inputs** reveals a list of the inputs this Stack has access to from `upstream_input` blocks, along with the upstream Stacks that supply those inputs. Clicking on a Stack’s **Outputs** reveals a list of the outputs of this Stack and any downstream Stacks that intake those outputs. To learn more about passing data from one Stack to another, refer to [Pass data from one Stack to another](/terraform/language/stacks/deploy/link-stacks).
 
 To view all of the plans for a deployment, click the name of the deployment you want to review.
 
@@ -52,7 +55,7 @@ A Stack deployment can have multiple plans. In a deployment's page, underneath *
 
 You can see a plan’s full details by clicking the plan’s name or an abbreviated list of the plan’s changes by clicking **Quick View**. You can also click **View all plans** to display a list of all the plans for this deployment. You can filter plans by [health status](#check-deployment-health) in the list of all plans. 
 
-Each plan includes a timeline detailing when the plan started, when it received its configuration version, and when it was approved.  
+Each plan includes that plan's inputs and outputs, a timeline detailing when the plan started, when the plan received its configuration version, and when it was approved.  
 
 ### Check deployment health
 
