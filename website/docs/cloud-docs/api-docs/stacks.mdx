@@ -55,15 +55,26 @@ The scope of the API includes the following endpoints:
 | `GET` | `/stack-configurations/:stack_configuration_id` | Call this endpoint to [show a stack configuration](#show-stack-configuration).|
 | `GET` | `/stacks/:stack_id/stack-deployments` | Call this endpoint to [list stack deployments](#list-stack-deployments).|
 | `GET` | `/stacks/:stack_id/stack-diagnostics` | Call this endpoint to [list stack diagnostics](#list-stack-diagnostics).|
+| `GET` | `/stack-diagnostics/:stack_diagnostic_id` | Call this endpoint to [show stack diagnostic](#show-stack-diagnostic).|
 | `GET` | `/stack-configurations/:stack_configuration_id/stack-diagnostics` | Call this endpoint to [list stack configuration diagnostics](#list-stack-configuration-diagnostics).|
 | `GET` | `/stacks/:stack_id/stack-plans` | Call this endpoint to [list stack plans](#list-stack-plans).|
+| `GET` | `/stack-plans/:stack_plan_id/` | Call this endpoint to [show stack plan](#show-stack-plan).|
+| `GET` | `/stack-plans/:stack_plan_id/plan-description` | Call this endpoint to [show plan description](#show-plan-description).|
+| `GET` | `/stack-plans/:stack_plan_id/apply-description` | Call this endpoint to [show apply description](#show-apply-description).|
 | `GET` | `/stack-configurations/:stack_configuration_id/stack-plans` | Call this endpoint to [list stack configuration plans](#list-stack-configuration-plans).|
 | `GET` | `/stacks/:stack_id/stack-states` | Call this endpoint to [list stack states](#list-stack-states).|
 | `POST` | `/stacks` | Call this endpoint to [create a stack](#create-a-stack).|
 | `POST` | `/stack-diagnostics/acknowledge` | Call this endpoint to [acknowledge a stack diagnostic](#acknowledge-stack-diagnostic).|
+| `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/create-destroy-plan` | Call this endpoint to [create destroy plan](#create-destroy-plan).|
+| `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/delete-deployment` | Call this endpoint to [delete deployment](#delete-deployment).|
+| `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/force-delete-deployment` | Call this endpoint to [force delete deployment](#force-delete-deployment).|
 | `POST` | `/stacks/:stack_id/actions/update-configuration` | Call this endpoint to [fetch a stack configuration](#fetch-the-latest-stack-configuration).|
-| `POST` | `/stacks/:stack_id/delete` | Call this endpoint to [delete a stack](#safe-delete-a-stack).|
-| `POST` | `/stacks/:stack_id/force-delete` | Call this endpoint to [force delete a stack](#force-delete-a-stack).|
+| `POST` | `/stacks/:stack_id/delete` | Call this endpoint to [delete a stack](#safe-delete-stack).|
+| `POST` | `/stacks/:stack_id/force-delete` | Call this endpoint to [force delete a stack](#force-delete-stack).|
+| `POST` | `/stack-plans/:stack_plan_id/approve` | Call this endpoint to [approve a stack plan](#approve-stack-plan).|
+| `POST` | `/stack-plans/:stack_plan_id/discard` | Call this endpoint to [discard a stack plan](#discard-stack-plan).|
+| `POST` | `/stack-plans/:stack_plan_id/cancel` | Call this endpoint to [cancel a stack plan](#cancel-stack-plan).|
+| `POST` | `/stack-plans/:stack_plan_id/replan` | Call this endpoint to [replan stack plan](#replan-stack-plan).|
 | `PATCH` | `/stacks/:stack_id` | Call this endpoint to [update a stack](#update-a-stack).|
 
 ## List stacks
@@ -356,6 +367,11 @@ TODO
 
 This endpoint lists all the diagnostics under the specified stack.
 
+## Show Stack Diagnostic
+TODO
+
+This endpoint returns details of the specified stack diagnostic.
+
 ## List Stack Configuration Diagnostics
 TODO
 
@@ -370,6 +386,21 @@ This endpoint returns details of the specified stack diagnostic.
 TODO
 
 This endpoint lists all the plans under the specified stack.
+
+## Show Stack Plan
+TODO
+
+This endpoint returns details of the specified stack plan.
+
+## Show Plan Description
+TODO
+
+This endpoint returns details of the specified plan description.
+
+## Show Apply Description
+TODO
+
+This endpoint returns details of the specified apply description.
 
 ## List Stack Configuration Plans
 TODO
@@ -584,14 +615,24 @@ $ curl \
 ## Acknowledge Stack Diagnostic
 TODO
 
-This endpoint acknowledges the specified stack diagnostic.
+Calling this endpoint acknowledges the specified stack diagnostic.
 
-## Create a Destroy Plan
+## Create Destroy Plan
 TODO
 
-This endpoint creates a destroy plan against the specified stack deployment.
+Calling this endpoint creates a destroy plan against the specified stack deployment.
 
-## Safe delete a Stack
+## Delete Deployment
+TODO
+
+Calling this endpoint deletes the specified stack deployment.
+
+## Force Delete Deployment
+TODO
+
+Calling this endpoint force-deletes the specified stack deployment.
+
+## Safe delete Stack
 
 When you delete an HCP Terraform Stack with resources, Terraform can no longer track or manage that infrastructure. During a safe delete, HCP Terraform only deletes the stack if it is not managing resources.
 
@@ -617,10 +658,29 @@ $ curl \
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform stack delete |
 | [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
 
-## Force Delete a Stack
+## Force Delete Stack
 
 During a force delete, HCP Terraform removes the specified stack without checking whether it has any deployments that are managing resources. We recommend using the [safe delete endpoint](#Delete-an-empty-stack) instead, when possible.
 
+## Approve Stack Plan
+TODO
+
+Calling this endpoint approves the specified Stack Plan.
+
+## Discard Stack Plan
+TODO
+
+Calling this endpoint discards the specified Stack Plan.
+
+## Cancel Stack Plan
+TODO
+
+Calling this endpoint cancels the specified Stack Plan.
+
+## Replan Stack Plan
+TODO
+
+Calling this endpoint replans the specified Stack Plan.
 
 ## Update a Stack
 
