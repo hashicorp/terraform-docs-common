@@ -2,6 +2,7 @@
 page_title: Stacks - API Docs - HCP Terraform
 description: >-
   Use these endpoints to manage and interact with stacks.
+tfc_only: true
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -39,6 +40,8 @@ description: >-
 # Stacks API
 
 Stacks represent collections of components, replicated across one or more deployments.
+
+-> **Public Beta**: Stacks are in public beta. Once we generally release them, we do not guarantee backward compatibility support for the public beta. All APIs, workflows, and HCL syntax for Stacks are subject to change.
 
 ## Overview
 
@@ -82,7 +85,7 @@ This endpoint lists stacks in the organization.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/orgnizations/my-organization/stacks
+  https://app.terraform.io/api/v2/organizations/my-organization/stacks
 ```
 
 ### Sample Response
@@ -170,14 +173,168 @@ curl \
 ```
 
 ## Show a Stack
-TODO
+`GET /stacks/:stack_id`
 
 This endpoint returns details of the specified stack.
 
+-> **Note:** Stack read access is restricted to users or teams with read project access and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+
+| Parameter            | Description                                             |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-LSqektntTNJrAhCt
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "st-LSqektntTNJrAhCt",
+    "type": "stacks",
+    "attributes": {
+      "name": "pns",
+      "description": null,
+      "deployment-names": [
+          "complex",
+          "simple"
+      ],
+      "vcs-repo": {
+          "branch": "",
+          "tags-regex": null,
+          "sparse-checkout-pattern": "",
+          "identifier": "aaabdelgany/pet-nulls-stack",
+          "display-identifier": "aaabdelgany/pet-nulls-stack",
+          "oauth-token-id": "ot-t3remoFJPeuLk1Mz",
+          "repository-http-url": "https://github.com/aaabdelgany/pet-nulls-stack",
+          "service-provider": "github",
+          "trigger-disabled": false
+      },
+      "speculative-enabled": false,
+      "created-at": "2024-11-19T15:19:42.478Z",
+      "updated-at": "2025-02-06T21:15:47.727Z",
+      "deleteable": false,
+      "upstream-count": 0,
+      "downstream-count": 0,
+      "inputs-count": 0,
+      "outputs-count": 0
+    },
+    "relationships": {
+      "project": {
+        "data": {
+            "id": "prj-18PG93QyqCMhLhWT",
+            "type": "projects"
+        }
+      },
+      "agent-pool": {
+        "data": null
+      },
+      "latest-stack-configuration": {
+        "data": {
+            "id": "stc-jrhPX1n7a6xbE261",
+            "type": "stack-configurations"
+        }
+      },
+      "stack-diagnostics": {
+        "links": {
+            "related": "/api/v2/stacks/st-LSqektntTNJrAhCt/stack-diagnostics"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stacks/st-LSqektntTNJrAhCt"
+    }
+  }
+}
+```
+
 ## List Stack Configurations
-TODO
+`GET /stacks/:stack_id/stack-configurations`
 
 This endpoint lists all the configurations under the specified stack.
+
+| Parameter            | Description                                             |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-configurations
+```
+
+### Sample Response
+```json
+{
+  "data": [
+    {
+      "id": "stc-GTMsTphV1C5MrLyd",
+      "type": "stack-configurations",
+      "attributes": {
+        "status": "preparing",
+        "status-timestamps": {
+            "queued-at": "2025-02-11T20:43:53.075Z",
+            "preparing-at": "2025-02-11T20:43:56.159Z"
+        },
+        "sequence-number": 1,
+        "deployment-names": [],
+        "converged-deployments": [],
+        "components": [],
+        "error-message": null,
+        "diags": null,
+        "event-stream-url": "https://tfcdev-edbf8d57.ngrok.io/_archivist/v1/object/dmF1bHQ6djE6ZDNDVWdDM0NhVEw0L1h5NnErUGJNVXhGc0F2alZGSWcyVjZ0dW0rajZPMWhFaDZPQ1puNDA0dktFRGJ6cUhHVmZtc21va1kvN1lvZ1FtTlB3S0F2cldFamtycS82NFROWVprMDhQTVFFZUtSTHYzUnBRQXpnYkJOOEtrVDYvTXc3U2ZvdkJoN3ZDdW9vbk9reXhVdE1NUTVjRGc1YmN4SThNYmlIMERRRlJoQVczNi95Y2MyV2E5cUt6VEp0b2xCd1NyVjRwUjNtME5wTjhCdU1Ba0RHT0xmbXNJb2dCSVEzMEhLZnY3bzBLTVY2VnBPMytsdGZsZURLMkttY3hxWjJRYkVRK2Q4Q3laeEloUlk3RjQ2dDUrS3lsWUxLMlJZT3FrN1dJNytGUW1tbFRxUURBK3dCYW0zMSs5NG1vRkg3cUdBeEJFYXQ1NHVTSGFKWGRwWTgwWWZGWmh3cHl6ZjBOMHY0ak9JUjBXTFArYWx3OVVQbUpzbQ",
+        "created-at": "2025-02-11T20:43:53.040Z",
+        "plan-only": false
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-GyYUZPwhFi7QbosX",
+            "type": "stacks"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/stack-diagnostics"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd",
+        "json-schemas": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/json-schemas",
+        "source-bundle": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/source-bundle",
+        "sources": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/sources"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+```
 
 ## Show Stack Configuration
 TODO
