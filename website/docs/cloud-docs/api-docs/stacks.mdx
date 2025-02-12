@@ -59,10 +59,14 @@ The scope of the API includes the following endpoints:
 | `GET` | `/stack-configurations/:stack_configuration_id/stack-diagnostics` | Call this endpoint to [list stack configuration diagnostics](#list-stack-configuration-diagnostics).|
 | `GET` | `/stacks/:stack_id/stack-plans` | Call this endpoint to [list stack plans](#list-stack-plans).|
 | `GET` | `/stack-plans/:stack_plan_id/` | Call this endpoint to [show stack plan](#show-stack-plan).|
+| `GET` | `/stacks/:stack_plan_id/stack-events` | Call this endpoint to [list stack events](#list-stack-events).|
+| `GET` | `/stack-events/:stack_event_id` | Call this endpoint to [show stack event](#show-stack-event).|
 | `GET` | `/stack-plans/:stack_plan_id/plan-description` | Call this endpoint to [show plan description](#show-plan-description).|
 | `GET` | `/stack-plans/:stack_plan_id/apply-description` | Call this endpoint to [show apply description](#show-apply-description).|
 | `GET` | `/stack-configurations/:stack_configuration_id/stack-plans` | Call this endpoint to [list stack configuration plans](#list-stack-configuration-plans).|
 | `GET` | `/stacks/:stack_id/stack-states` | Call this endpoint to [list stack states](#list-stack-states).|
+| `GET` | `/stack-states/:stack_state_id` | Call this endpoint to [show stack states](#show-stack-state).|
+| `GET` | `/stack-states/:stack_state_id/description` | Call this endpoint to [show stack state description](#show-stack-state-description).|
 | `POST` | `/stacks` | Call this endpoint to [create a stack](#create-a-stack).|
 | `POST` | `/stack-diagnostics/acknowledge` | Call this endpoint to [acknowledge a stack diagnostic](#acknowledge-stack-diagnostic).|
 | `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/create-destroy-plan` | Call this endpoint to [create destroy plan](#create-destroy-plan).|
@@ -392,6 +396,16 @@ TODO
 
 This endpoint returns details of the specified stack plan.
 
+## List Stack Events
+TODO
+
+This endpoint lists all of the stack events under the specified stack plan.
+
+## Show Stack Event
+TODO
+
+This endpoint returns details of the specified stack event.
+
 ## Show Plan Description
 TODO
 
@@ -411,6 +425,16 @@ This endpoint lists all the plans under the specified stack configuration.
 TODO 
 
 This endpoint lists all the states under the specified stack.
+
+## Show Stack State
+TODO
+
+This endpoint returns details of the specified stack state.
+
+## Show Stack State Description
+TODO
+
+This endpoint returns details of the specified stack state description.
 
 ## Create a stack
 
