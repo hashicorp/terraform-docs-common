@@ -69,10 +69,9 @@ The scope of the API includes the following endpoints:
 | `GET` | `/stack-states/:stack_state_id` | Call this endpoint to [show stack states](#show-stack-state).|
 | `GET` | `/stack-states/:stack_state_id/description` | Call this endpoint to [show stack state description](#show-stack-state-description).|
 | `POST` | `/stacks` | Call this endpoint to [create a stack](#create-a-stack).|
-| `POST` | `/stack-diagnostics/acknowledge` | Call this endpoint to [acknowledge a stack diagnostic](#acknowledge-stack-diagnostic).|
+| `POST` | `/stack-diagnostics/:stack_diagnostic_id/acknowledge` | Call this endpoint to [acknowledge stack diagnostic](#acknowledge-stack-diagnostic).|
 | `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/create-destroy-plan` | Call this endpoint to [create destroy plan](#create-destroy-plan).|
 | `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/delete-deployment` | Call this endpoint to [delete deployment](#delete-deployment).|
-| `POST` | `/stacks/:stack_id/stack-deployments/:deployment_name/force-delete-deployment` | Call this endpoint to [force delete deployment](#force-delete-deployment).|
 | `POST` | `/stacks/:stack_id/actions/update-configuration` | Call this endpoint to [fetch a stack configuration](#fetch-the-latest-stack-configuration).|
 | `POST` | `/stacks/:stack_id/delete` | Call this endpoint to [delete a stack](#safe-delete-stack).|
 | `POST` | `/stacks/:stack_id/force-delete` | Call this endpoint to [force delete a stack](#force-delete-stack).|
@@ -98,7 +97,7 @@ This endpoint lists stacks in the organization.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/organizations/my-organization/stacks
@@ -202,7 +201,7 @@ This endpoint returns details of the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-LSqektntTNJrAhCt
@@ -225,10 +224,10 @@ curl \
           "branch": "",
           "tags-regex": null,
           "sparse-checkout-pattern": "",
-          "identifier": "aaabdelgany/pet-nulls-stack",
-          "display-identifier": "aaabdelgany/pet-nulls-stack",
+          "identifier": "hashicorp/pet-nulls-stack",
+          "display-identifier": "hashicorp/pet-nulls-stack",
           "oauth-token-id": "ot-t3remoFJPeuLk1Mz",
-          "repository-http-url": "https://github.com/aaabdelgany/pet-nulls-stack",
+          "repository-http-url": "https://github.com/hashicorp/pet-nulls-stack",
           "service-provider": "github",
           "trigger-disabled": false
       },
@@ -282,7 +281,7 @@ This endpoint lists all the configurations under the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-configurations
@@ -365,7 +364,7 @@ This endpoint returns details of the specified stack configuration.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/
@@ -454,7 +453,7 @@ This endpoint lists all the deployments under the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments
@@ -558,7 +557,7 @@ This endpoint returns details of the specified stack deployment under the stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments/complex
@@ -623,7 +622,7 @@ This endpoint lists all the diagnostics under the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-rWa8r3ickXiukpSN/stack-diagnostics
@@ -654,10 +653,10 @@ curl \
                 "line": 1,
                 "column": 1
               },
-              "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+              "source": "git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
               "filename": ".terraform-version"
             },
-            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/hashicorp/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
             "origin": "external",
             "summary": "Cannot read .terraform-version file",
             "severity": "error"
@@ -724,7 +723,7 @@ This endpoint returns details of the specified stack diagnostic.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-diagnosticss/std-Phi6k5RoZLnuHWke
@@ -754,10 +753,10 @@ curl \
               "line": 1,
               "column": 1
             },
-            "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+            "source": "git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
             "filename": ".terraform-version"
           },
-          "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+          "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/hashicorp/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
           "origin": "external",
           "summary": "Cannot read .terraform-version file",
           "severity": "error"
@@ -804,7 +803,7 @@ This endpoint lists all the diagnostics under the specified stack configuration.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-configurations/stc-mtLWVPe4DmGCMVn4/stack-diagnostics
@@ -835,10 +834,10 @@ curl \
                 "line": 1,
                 "column": 1
               },
-              "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+              "source": "git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
               "filename": ".terraform-version"
             },
-            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/hashicorp/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/hashicorp/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
             "origin": "external",
             "summary": "Cannot read .terraform-version file",
             "severity": "error"
@@ -887,7 +886,7 @@ This endpoint lists all the plans under the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-plans
@@ -1091,7 +1090,7 @@ This endpoint returns details of the specified stack plan.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP
@@ -1196,7 +1195,7 @@ This endpoint lists all of the stack events under the specified stack plan.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP
@@ -1318,7 +1317,7 @@ This endpoint returns details of the specified stack event.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-events/
@@ -1382,7 +1381,7 @@ This endpoint returns details of the specified plan description.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-plans/stp-4hxP8kYSpk2RvfTW/plan-description
@@ -1493,7 +1492,7 @@ This endpoint returns details of the specified apply description.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-plans/stp-4hxP8kYSpk2RvfTW/apply-description
@@ -1605,7 +1604,7 @@ This endpoint lists all the plans under the specified stack configuration.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-plans
@@ -1809,7 +1808,7 @@ This endpoint lists all the states under the specified stack.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-states
@@ -1977,7 +1976,7 @@ This endpoint returns details of the specified stack state.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-states/sts-pA6dJk7G7r7icTE8
@@ -2063,7 +2062,7 @@ This endpoint returns details of the specified stack state description.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/stack-states/sts-KK1iJGN6N4CFiKZe/description
@@ -2192,7 +2191,7 @@ Properties without a default value are required.
 ### Sample Request
 
 ```shell
-curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
@@ -2259,7 +2258,7 @@ This endpoint forces a stack to pull a new configuration from it's underlying gi
 ### Sample Request
 
 ```shell-session
-$ curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
@@ -2330,24 +2329,146 @@ $ curl \
 ```
 
 ## Acknowledge Stack Diagnostic
-TODO
+`POST /stack-diagnostics/:stack_diagnostic_id/acknowledge`
 
 Calling this endpoint acknowledges the specified stack diagnostic.
 
+
+| Parameter              | Description              |
+| ---------------------- | ------------------------ |
+| `:stack_diagnostic_id` | The stack diagnostic id. |
+
+### Sample Request
+
+```shell-session
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/stack-diagnostics/std-8LwGHdpZoLQTVTmL/acknowledge
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "std-8LwGHdpZoLQTVTmL",
+    "type": "stack-diagnostics",
+    "attributes": {
+      "deployment": null,
+      "severity": "error",
+      "summary": "Diagnostics reported",
+      "detail": "While preparing the configuration, HCP Terraform reported 2 errors.",
+      "diags": [
+        {
+          "range": {
+            "end": {
+              "byte": 1,
+              "line": 1,
+              "column": 2
+            },
+            "start": {
+              "byte": 0,
+              "line": 1,
+              "column": 1
+            },
+            "source": "git::https://github.com/hashicorp/empty-stack-error.git//.terraform-version?ref=926ad5b143dbbff640d8ac498aeaabe5a224a059",
+            "filename": ".terraform-version"
+          },
+          "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/hashicorp/empty-stack-error.git//.terraform-version?ref=926ad5b143dbbff640d8ac498aeaabe5a224a059: deploy config \"git::https://github.com/hashicorp/empty-stack-error.git?ref=926ad5b143dbbff640d8ac498aeaabe5a224a059\" does not contain the version selection file.",
+          "origin": "external",
+          "summary": "Cannot read .terraform-version file",
+          "severity": "error"
+        },
+        {
+          "detail": "Terraform Cloud was unable to fully serialize a diagnostic message. This is a bug: please report it.\n\nError: open /home/nomad/.tfc-agent/component/stack_prepare/job1573731741/src/lNDWTFpCecGMfru-p5LL5TDImz22xPFmjMXzBI8jc38/.terraform-version: no such file or directory",
+          "summary": "Error while serializing diagnostic",
+          "severity": "error"
+        }
+      ],
+      "acknowledged": true,
+      "acknowledged-at": "2025-02-13T18:08:11.852Z",
+      "created-at": "2025-02-13T18:01:28.365Z"
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-YXBXzdrLUjHvWXfG",
+          "type": "stacks"
+        }
+      },
+      "stack-configuration": {
+        "data": {
+          "id": "stc-eWub82tqL95sEqmS",
+          "type": "stack-configurations"
+        }
+      },
+      "acknowledged-by": {
+        "data": {
+          "id": "user-VXFETUhApfofmC6B",
+          "type": "users"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-diagnostics/std-8LwGHdpZoLQTVTmL"
+    }
+  }
+}
+```
+
 ## Create Destroy Plan
-TODO
+`POST /stacks/:stack_id/stack-deployments/:deployment_name/create-destroy-plan`
 
 Calling this endpoint creates a destroy plan against the specified stack deployment.
 
+
+| Parameter          | Description               |
+| ------------------ | ------------------------- |
+| `:stack_id`        | The stack id.             |
+| `:deployment_name` | The stack deployment name.|
+
+### Sample Request
+
+```shell-session
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-deployments/simple/create-destroy-plan
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully created the destroy plan                                    |
+| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform the destroy plan |
+| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources       todo                                 |
+
 ## Delete Deployment
-TODO
+`POST /stacks/:stack_id/stack-deployments/:deployment_name/delete-deployment`
 
 Calling this endpoint deletes the specified stack deployment.
 
-## Force Delete Deployment
-TODO
+| Parameter          | Description               |
+| ------------------ | ------------------------- |
+| `:stack_id`        | The stack id.             |
+| `:deployment_name` | The stack deployment name.|
 
-Calling this endpoint force-deletes the specified stack deployment.
+### Sample Request
+
+```shell-session
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-deployments/simple/delete-deployment
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully deleted the stack deployment                                    |
+| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform deployment delete |
+| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
 
 ## Safe delete Stack
 
@@ -2362,7 +2483,7 @@ When you delete an HCP Terraform Stack with resources, Terraform can no longer t
 ### Sample Request
 
 ```shell-session
-$ curl \
+$ curl\
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request DELETE \
@@ -2380,9 +2501,28 @@ $ curl \
 During a force delete, HCP Terraform removes the specified stack without checking whether it has any deployments that are managing resources. We recommend using the [safe delete endpoint](#Delete-an-empty-stack) instead, when possible.
 
 ## Approve Stack Plan
-TODO
+`POST /stack-plans/:stack_plan_id/approve`
 
 Calling this endpoint approves the specified Stack Plan.
+
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/stack-plans/stp-bp5TQRWryaFo89dc/approve
+```
+
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully approved the stack plan                                   |
+| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform plan approval |
+| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
 
 ## Discard Stack Plan
 TODO
