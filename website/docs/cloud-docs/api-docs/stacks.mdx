@@ -2441,8 +2441,8 @@ $ curl\
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | No Content                | Successfully created the destroy plan                                    |
-| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform the destroy plan |
-| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources       todo                                 |
+| [400][] | [JSON API error object][] | The deployment does not have a current state |
+| [404][] | [JSON API error object][] | Deployment not found, or user unauthorized to perform the destroy plan |
 
 ## Delete Deployment
 `POST /stacks/:stack_id/stack-deployments/:deployment_name/delete-deployment`
@@ -2468,7 +2468,6 @@ $ curl\
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | No Content                | Successfully deleted the stack deployment                                    |
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform deployment delete |
-| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
 
 ## Safe delete Stack
 
@@ -2494,7 +2493,7 @@ $ curl\
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | No Content                | Successfully deleted the stack                                    |
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform stack delete |
-| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
+| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources  |
 
 ## Force Delete Stack
 
@@ -2509,6 +2508,8 @@ Calling this endpoint approves the specified Stack Plan.
 | ---------------- | ------------------ |
 | `:stack_plan_id` | The stack plan id. |
 
+### Sample Request
+
 ```shell
 $ curl\
   --header "Authorization: Bearer $TOKEN" \
@@ -2521,23 +2522,84 @@ $ curl\
 | Status  | Response                  | Reason(s)                                                             |
 | ------- | --------------------------| --------------------------------------------------------------------- |
 | [204][] | No Content                | Successfully approved the stack plan                                   |
-| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform plan approval |
-| [409][] | [JSON API error object][] | Stack is not safe to delete because it is managing resources                                       |
+| [404][] | [JSON API error object][] | Plan not found, or user unauthorized to perform stack delete |
+| [409][] | [JSON API error object][] | Plan cannot be approved because it is already applied or applying |   
 
 ## Discard Stack Plan
-TODO
+`POST /stack-plans/:stack_plan_id/discard`
 
 Calling this endpoint discards the specified Stack Plan.
 
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/stack-plans/stp-EPUS7ov7hmxRyZFP/discard
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully discarded the stack plan                                   |
+| [404][] | [JSON API error object][] | Plan not found, or user unauthorized to perform stack discard |
+| [409][] | [JSON API error object][] | Plan is not safe to discard because it is already applied or applying   |  
+
 ## Cancel Stack Plan
-TODO
+`POST /stack-plans/:stack_plan_id/cancel`
 
 Calling this endpoint cancels the specified Stack Plan.
 
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/stack-plans/stp-EPUS7ov7hmxRyZFP/replan
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully canceled the stack plan                                   |
+| [404][] | [JSON API error object][] | Plan not found, or user unauthorized to perform stack cancel |
+| [409][] | [JSON API error object][] | Plan is cannot be canceled because it hasn't started or is already applied |   
+
 ## Replan Stack Plan
-TODO
+`POST /stack-plans/:stack_plan_id/replan`
 
 Calling this endpoint replans the specified Stack Plan.
+
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request DELETE \
+  https://app.terraform.io/api/v2/stack-plans/stp-EPUS7ov7hmxRyZFP/replan
+```
+
+| Status  | Response                  | Reason(s)                                                             |
+| ------- | --------------------------| --------------------------------------------------------------------- |
+| [204][] | No Content                | Successfully replanned the stack plan                                   |
+| [404][] | [JSON API error object][] | Plan not found, or user unauthorized to perform stack replan |
+| [409][] | [JSON API error object][] | Plan is cannot be replanned because it has been applied, already has a replan, or has a new converged configuration   |                                    |
+
 
 ## Update a Stack
 
