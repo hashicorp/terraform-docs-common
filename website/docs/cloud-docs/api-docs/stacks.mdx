@@ -626,12 +626,90 @@ This endpoint lists all the diagnostics under the specified stack.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics
+  https://app.terraform.io/api/v2/stacks/st-rWa8r3ickXiukpSN/stack-diagnostics
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "data": [
+    {
+      "id": "std-Phi6k5RoZLnuHWke",
+      "type": "stack-diagnostics",
+      "attributes": {
+        "deployment": null,
+        "severity": "error",
+        "summary": "Diagnostics reported",
+        "detail": "While preparing the configuration, HCP Terraform reported 2 errors.",
+        "diags": [
+          {
+            "range": {
+              "end": {
+                "byte": 1,
+                "line": 1,
+                "column": 2
+              },
+              "start": {
+                "byte": 0,
+                "line": 1,
+                "column": 1
+              },
+              "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+              "filename": ".terraform-version"
+            },
+            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+            "origin": "external",
+            "summary": "Cannot read .terraform-version file",
+            "severity": "error"
+          },
+          {
+            "detail": "Terraform Cloud was unable to fully serialize a diagnostic message. This is a bug: please report it.\n\nError: open /home/nomad/.tfc-agent/component/stack_prepare/job1909443162/src/oFOO-ybQh1OM4irYcHtbBjIMct7GQjrc2DOy7YcItQw/.terraform-version: no such file or directory",
+            "summary": "Error while serializing diagnostic",
+            "severity": "error"
+          }
+        ],
+        "acknowledged": false,
+        "acknowledged-at": null,
+        "created-at": "2025-02-13T16:35:08.668Z"
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-rWa8r3ickXiukpSN",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-mtLWVPe4DmGCMVn4",
+            "type": "stack-configurations"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-diagnostics/std-Phi6k5RoZLnuHWke"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://localhost/api/v2/stacks/st-rWa8r3ickXiukpSN/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/stacks/st-rWa8r3ickXiukpSN/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/stacks/st-rWa8r3ickXiukpSN/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+
 ```
 ## Show Stack Diagnostic
 `GET /stack-diagnostics/:stack_diagnostic_id`
@@ -649,12 +727,70 @@ This endpoint returns details of the specified stack diagnostic.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stack-diagnosticss/std-GyYUZPwhFi7QbosX
+  https://app.terraform.io/api/v2/stack-diagnosticss/std-Phi6k5RoZLnuHWke
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "data": {
+    "id": "std-Phi6k5RoZLnuHWke",
+    "type": "stack-diagnostics",
+    "attributes": {
+      "deployment": null,
+      "severity": "error",
+      "summary": "Diagnostics reported",
+      "detail": "While preparing the configuration, HCP Terraform reported 2 errors.",
+      "diags": [
+        {
+          "range": {
+            "end": {
+              "byte": 1,
+              "line": 1,
+              "column": 2
+            },
+            "start": {
+              "byte": 0,
+              "line": 1,
+              "column": 1
+            },
+            "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+            "filename": ".terraform-version"
+          },
+          "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+          "origin": "external",
+          "summary": "Cannot read .terraform-version file",
+          "severity": "error"
+        },
+        {
+          "detail": "Terraform Cloud was unable to fully serialize a diagnostic message. This is a bug: please report it.\n\nError: open /home/nomad/.tfc-agent/component/stack_prepare/job1909443162/src/oFOO-ybQh1OM4irYcHtbBjIMct7GQjrc2DOy7YcItQw/.terraform-version: no such file or directory",
+          "summary": "Error while serializing diagnostic",
+          "severity": "error"
+        }
+      ],
+      "acknowledged": false,
+      "acknowledged-at": null,
+      "created-at": "2025-02-13T16:35:08.668Z"
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-rWa8r3ickXiukpSN",
+          "type": "stacks"
+        }
+      },
+      "stack-configuration": {
+        "data": {
+          "id": "stc-mtLWVPe4DmGCMVn4",
+          "type": "stack-configurations"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-diagnostics/std-Phi6k5RoZLnuHWke"
+    }
+  }
+}
 ```
 ## List Stack Configuration Diagnostics
 `GET /stack-configurations/:stack_configuration_id/stack-diagnostics`
@@ -671,12 +807,72 @@ This endpoint lists all the diagnostics under the specified stack configuration.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics
+  https://app.terraform.io/api/v2/stack-configurations/stc-mtLWVPe4DmGCMVn4/stack-diagnostics
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "data": [
+    {
+      "id": "std-Phi6k5RoZLnuHWke",
+      "type": "stack-diagnostics",
+      "attributes": {
+        "deployment": null,
+        "severity": "error",
+        "summary": "Diagnostics reported",
+        "detail": "While preparing the configuration, HCP Terraform reported 2 errors.",
+        "diags": [
+          {
+            "range": {
+              "end": {
+                "byte": 1,
+                "line": 1,
+                "column": 2
+              },
+              "start": {
+                "byte": 0,
+                "line": 1,
+                "column": 1
+              },
+              "source": "git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b",
+              "filename": ".terraform-version"
+            },
+            "detail": "Failed to determine which Terraform Core version to use: opening git::https://github.com/aaabdelgany/pet-nulls-local.git//.terraform-version?ref=072628687eb1d7ba357694607ca554beed1e051b: deploy config \"git::https://github.com/aaabdelgany/pet-nulls-local.git?ref=072628687eb1d7ba357694607ca554beed1e051b\" does not contain the version selection file.",
+            "origin": "external",
+            "summary": "Cannot read .terraform-version file",
+            "severity": "error"
+          },
+          {
+            "detail": "Terraform Cloud was unable to fully serialize a diagnostic message. This is a bug: please report it.\n\nError: open /home/nomad/.tfc-agent/component/stack_prepare/job1909443162/src/oFOO-ybQh1OM4irYcHtbBjIMct7GQjrc2DOy7YcItQw/.terraform-version: no such file or directory",
+            "summary": "Error while serializing diagnostic",
+            "severity": "error"
+          }
+        ],
+        "acknowledged": false,
+        "acknowledged-at": null,
+        "created-at": "2025-02-13T16:35:08.668Z"
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-rWa8r3ickXiukpSN",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-mtLWVPe4DmGCMVn4",
+            "type": "stack-configurations"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-diagnostics/std-Phi6k5RoZLnuHWke"
+      }
+    }
+  ]
+}
 ```
 
 ## List Stack Plans
@@ -1189,12 +1385,100 @@ This endpoint returns details of the specified plan description.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/plan-description
+  https://app.terraform.io/api/v2/stack-plans/stp-4hxP8kYSpk2RvfTW/plan-description
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "terraform_stack_change_description": 1,
+  "applyable": true,
+  "plan_mode": "normal",
+  "components": [
+    {
+      "address": "component.nulls",
+      "component_address": "component.nulls",
+      "instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+      "actions": [
+        "create"
+      ],
+      "complete": true
+    },
+    {
+      "address": "component.pet",
+      "component_address": "component.pet",
+      "instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+      "actions": [
+        "create"
+      ],
+      "complete": true
+    }
+  ],
+  "resource_instances": [
+    {
+      "component_instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_instance_address": "component.nulls",
+      "address": "null_resource.this[0]",
+      "mode": "managed",
+      "type": "null_resource",
+      "provider_name": "registry.terraform.io/hashicorp/null",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {},
+        "after_sensitive": {
+          "triggers": {}
+        },
+        "after_unknown": {
+          "id": true,
+          "triggers": true
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "resource_name": "this",
+      "index": 0,
+      "index_unknown": false,
+      "module_address": "",
+      "action_reason": "ResourceInstanceChangeNoReason"
+    },
+    {
+      "component_instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_instance_address": "component.pet",
+      "address": "random_pet.this",
+      "mode": "managed",
+      "type": "random_pet",
+      "provider_name": "registry.terraform.io/hashicorp/random",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "keepers": null,
+          "length": 3,
+          "prefix": "simple",
+          "separator": "-"
+        },
+        "after_sensitive": {},
+        "after_unknown": {
+          "id": true
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "resource_name": "this",
+      "index": null,
+      "index_unknown": false,
+      "module_address": "",
+      "action_reason": "ResourceInstanceChangeNoReason"
+    }
+  ],
+  "deferred_resource_instances": [],
+  "outputs": {}
+}
 ```
 
 ## Show Apply Description
@@ -1212,12 +1496,101 @@ This endpoint returns details of the specified apply description.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/apply-description
+  https://app.terraform.io/api/v2/stack-plans/stp-4hxP8kYSpk2RvfTW/apply-description
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "terraform_stack_change_description": 1,
+  "applyable": true,
+  "plan_mode": "normal",
+  "components": [
+    {
+      "address": "component.nulls",
+      "component_address": "component.nulls",
+      "instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+      "actions": [
+        "create"
+      ],
+      "complete": true
+    },
+    {
+      "address": "component.pet",
+      "component_address": "component.pet",
+      "instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+      "actions": [
+        "create"
+      ],
+      "complete": true
+    }
+  ],
+  "resource_instances": [
+    {
+      "component_instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_instance_address": "component.nulls",
+      "address": "null_resource.this[0]",
+      "mode": "managed",
+      "type": "null_resource",
+      "provider_name": "registry.terraform.io/hashicorp/null",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "id": "5034313353882325230",
+          "triggers": {
+            "pet": "simple-broadly-allowed-swift"
+          }
+        },
+        "after_sensitive": {
+          "triggers": {}
+        },
+        "after_unknown": {},
+        "before": null,
+        "before_sensitive": false
+      },
+      "resource_name": "this",
+      "index": 0,
+      "index_unknown": false,
+      "module_address": "",
+      "action_reason": "ResourceInstanceChangeNoReason"
+    },
+    {
+      "component_instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_instance_address": "component.pet",
+      "address": "random_pet.this",
+      "mode": "managed",
+      "type": "random_pet",
+      "provider_name": "registry.terraform.io/hashicorp/random",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "id": "simple-broadly-allowed-swift",
+          "keepers": null,
+          "length": 3,
+          "prefix": "simple",
+          "separator": "-"
+        },
+        "after_sensitive": {},
+        "after_unknown": {},
+        "before": null,
+        "before_sensitive": false
+      },
+      "resource_name": "this",
+      "index": null,
+      "index_unknown": false,
+      "module_address": "",
+      "action_reason": "ResourceInstanceChangeNoReason"
+    }
+  ],
+  "deferred_resource_instances": [],
+  "outputs": {}
+}
 ```
 
 ## List Stack Configuration Plans
@@ -1444,7 +1817,151 @@ curl \
 
 ### Sample Response
 ```json
-TODO
+{
+  "data": [
+    {
+      "id": "sts-pA6dJk7G7r7icTE8",
+      "type": "stack-states",
+      "attributes": {
+        "status": "completed",
+        "status-timestamps": {
+          "created-at": "2025-02-13T16:14:32.742Z",
+          "stored-at": "2025-02-13T16:14:41.509Z",
+          "completed-at": "2025-02-13T16:14:43.636Z"
+        },
+        "deployment": "simple",
+        "components": [
+          {
+            "address": "component.nulls",
+            "component-address": "component.nulls",
+            "instance-correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+            "component-correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+            "resource-instance-count": 7
+          },
+          {
+            "address": "component.pet",
+            "component-address": "component.pet",
+            "instance-correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+            "component-correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+            "resource-instance-count": 3
+          },
+          {
+            "address": "component.nils",
+            "component-address": "component.nils",
+            "instance-correlator": "+0KI2KgtqbfLK27i3RWObJ7cU9LM5ksPkkOwiTMeNmE=",
+            "component-correlator": "sqlcMWrMGhp3ZydAWIRw6wDXIeO5FBK9G6mC1Gw/oGo=",
+            "resource-instance-count": 0
+          }
+        ],
+        "is-current": true,
+        "resource-instance-count": 10
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-plan": {
+          "data": {
+            "id": "stp-yo3aYCvk6euKbfuP",
+            "type": "stack-plans"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-states/sts-pA6dJk7G7r7icTE8",
+        "description": "/api/v2/stack-states/sts-pA6dJk7G7r7icTE8/description"
+      }
+    },
+    {
+      "id": "sts-bPU5PbewoD4EEdyF",
+      "type": "stack-states",
+      "attributes": {
+        "status": "completed",
+        "status-timestamps": {
+          "created-at": "2025-02-13T16:14:28.830Z",
+          "stored-at": "2025-02-13T16:14:40.036Z",
+          "completed-at": "2025-02-13T16:14:42.420Z"
+        },
+        "deployment": "complex",
+        "components": [
+          {
+            "address": "component.pet",
+            "component-address": "component.pet",
+            "instance-correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+            "component-correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+            "resource-instance-count": 3
+          },
+          {
+            "address": "component.nils",
+            "component-address": "component.nils",
+            "instance-correlator": "+0KI2KgtqbfLK27i3RWObJ7cU9LM5ksPkkOwiTMeNmE=",
+            "component-correlator": "sqlcMWrMGhp3ZydAWIRw6wDXIeO5FBK9G6mC1Gw/oGo=",
+            "resource-instance-count": 0
+          },
+          {
+            "address": "component.nulls",
+            "component-address": "component.nulls",
+            "instance-correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+            "component-correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+            "resource-instance-count": 7
+          }
+        ],
+        "is-current": true,
+        "resource-instance-count": 10
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-plan": {
+          "data": {
+            "id": "stp-dxnzzLpDFwqQ3wjN",
+            "type": "stack-plans"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-states/sts-bPU5PbewoD4EEdyF",
+        "description": "/api/v2/stack-states/sts-bPU5PbewoD4EEdyF/description"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-states?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-states?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-states?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
 ```
 
 ## Show Stack State
@@ -1463,12 +1980,75 @@ This endpoint returns details of the specified stack state.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stack-states/sts-uXySJF7T71m2bEwp
+  https://app.terraform.io/api/v2/stack-states/sts-pA6dJk7G7r7icTE8
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "data": {
+    "id": "sts-pA6dJk7G7r7icTE8",
+    "type": "stack-states",
+    "attributes": {
+      "status": "completed",
+      "status-timestamps": {
+        "created-at": "2025-02-13T16:14:32.742Z",
+        "stored-at": "2025-02-13T16:14:41.509Z",
+        "completed-at": "2025-02-13T16:14:43.636Z"
+      },
+      "deployment": "simple",
+      "components": [
+        {
+          "address": "component.nulls",
+          "component-address": "component.nulls",
+          "instance-correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+          "component-correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+          "resource-instance-count": 7
+        },
+        {
+          "address": "component.pet",
+          "component-address": "component.pet",
+          "instance-correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+          "component-correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+          "resource-instance-count": 3
+        },
+        {
+          "address": "component.nils",
+          "component-address": "component.nils",
+          "instance-correlator": "+0KI2KgtqbfLK27i3RWObJ7cU9LM5ksPkkOwiTMeNmE=",
+          "component-correlator": "sqlcMWrMGhp3ZydAWIRw6wDXIeO5FBK9G6mC1Gw/oGo=",
+          "resource-instance-count": 0
+        }
+      ],
+      "is-current": true,
+      "resource-instance-count": 10
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-uXySJF7T71m2bEwp",
+          "type": "stacks"
+        }
+      },
+      "stack-plan": {
+        "data": {
+          "id": "stp-yo3aYCvk6euKbfuP",
+          "type": "stack-plans"
+        }
+      },
+      "stack-configuration": {
+        "data": {
+          "id": "stc-GEt1cDfuRqLACcL9",
+          "type": "stack-configurations"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-states/sts-pA6dJk7G7r7icTE8",
+      "description": "/api/v2/stack-states/sts-pA6dJk7G7r7icTE8/description"
+    }
+  }
+}
 ```
 
 ## Show Stack State Description
@@ -1486,12 +2066,67 @@ This endpoint returns details of the specified stack state description.
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
-  https://app.terraform.io/api/v2/stack-states/sts-uXySJF7T71m2bEwp/description
+  https://app.terraform.io/api/v2/stack-states/sts-KK1iJGN6N4CFiKZe/description
 ```
 
 ### Sample Response
 ```json
-TODO
+{
+  "format_version": 1,
+  "terraform_version": "1.10.0-alpha20240918",
+  "components": [
+    {
+      "address": "component.nulls",
+      "component_address": "component.nulls",
+      "instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI="
+    },
+    {
+      "address": "component.pet",
+      "component_address": "component.pet",
+      "instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg="
+    }
+  ],
+  "resource_instances": [
+    {
+      "component_instance_correlator": "gA0VCfa68e5TerC8yiNFUPa1PgLFqeV0HAf9t8j8vYE=",
+      "component_instance_address": "component.nulls",
+      "address": "null_resource.this[0]",
+      "mode": "managed",
+      "type": "null_resource",
+      "values": {
+        "id": "5034313353882325230",
+        "triggers": {
+          "pet": "simple-broadly-allowed-swift"
+        }
+      },
+      "sensitive_values": {
+        "triggers": {}
+      },
+      "errors": [],
+      "provider_name": "registry.terraform.io/hashicorp/null"
+    },
+    {
+      "component_instance_correlator": "ZLqa501mJ7nhAw2LjjI0EGseuFR73XnXVubflsHFj/4=",
+      "component_instance_address": "component.pet",
+      "address": "random_pet.this",
+      "mode": "managed",
+      "type": "random_pet",
+      "values": {
+        "id": "simple-broadly-allowed-swift",
+        "keepers": null,
+        "length": 3,
+        "prefix": "simple",
+        "separator": "-"
+      },
+      "sensitive_values": {},
+      "errors": [],
+      "provider_name": "registry.terraform.io/hashicorp/random"
+    }
+  ],
+  "outputs": {}
+}
 ```
 
 ## Create a stack
