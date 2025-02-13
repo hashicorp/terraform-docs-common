@@ -219,9 +219,6 @@ module.exports = [
     permanent: true,
   },
   {
-    source: "/terraform/language/settings/backends/configuration"
-  },
-  {
     source: "/terraform/cli/cloud/migrating",
     destination: "/terraform/cli/cloud/settings",
     permanent: true,
