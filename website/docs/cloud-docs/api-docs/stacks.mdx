@@ -54,12 +54,13 @@ The scope of the API includes the following endpoints:
 | `GET` | `/stacks/:stack_id/stack-configurations` | Call this endpoint to [list stack configurations](#list-stack-configurations).|
 | `GET` | `/stack-configurations/:stack_configuration_id` | Call this endpoint to [show a stack configuration](#show-stack-configuration).|
 | `GET` | `/stacks/:stack_id/stack-deployments` | Call this endpoint to [list stack deployments](#list-stack-deployments).|
+| `GET` | `/stacks/:stack_id/stack-deployments/:deployment_name` | Call this endpoint to [show stack deployment](#show-stack-deployments).|
 | `GET` | `/stacks/:stack_id/stack-diagnostics` | Call this endpoint to [list stack diagnostics](#list-stack-diagnostics).|
 | `GET` | `/stack-diagnostics/:stack_diagnostic_id` | Call this endpoint to [show stack diagnostic](#show-stack-diagnostic).|
 | `GET` | `/stack-configurations/:stack_configuration_id/stack-diagnostics` | Call this endpoint to [list stack configuration diagnostics](#list-stack-configuration-diagnostics).|
 | `GET` | `/stacks/:stack_id/stack-plans` | Call this endpoint to [list stack plans](#list-stack-plans).|
 | `GET` | `/stack-plans/:stack_plan_id/` | Call this endpoint to [show stack plan](#show-stack-plan).|
-| `GET` | `/stacks/:stack_plan_id/stack-events` | Call this endpoint to [list stack events](#list-stack-events).|
+| `GET` | `/stack-plans/:stack_plan_id/stack-events` | Call this endpoint to [list stack events](#list-stack-events).|
 | `GET` | `/stack-events/:stack_event_id` | Call this endpoint to [show stack event](#show-stack-event).|
 | `GET` | `/stack-plans/:stack_plan_id/plan-description` | Call this endpoint to [show plan description](#show-plan-description).|
 | `GET` | `/stack-plans/:stack_plan_id/apply-description` | Call this endpoint to [show apply description](#show-apply-description).|
@@ -274,7 +275,7 @@ curl \
 
 This endpoint lists all the configurations under the specified stack.
 
-| Parameter            | Description                                             |
+| Parameter   | Description   |
 | ----------- | ------------- |
 | `:stack_id` | The stack id. |
 
@@ -306,7 +307,7 @@ curl \
         "components": [],
         "error-message": null,
         "diags": null,
-        "event-stream-url": "https://tfcdev-edbf8d57.ngrok.io/_archivist/v1/object/dmF1bHQ6djE6ZDNDVWdDM0NhVEw0L1h5NnErUGJNVXhGc0F2alZGSWcyVjZ0dW0rajZPMWhFaDZPQ1puNDA0dktFRGJ6cUhHVmZtc21va1kvN1lvZ1FtTlB3S0F2cldFamtycS82NFROWVprMDhQTVFFZUtSTHYzUnBRQXpnYkJOOEtrVDYvTXc3U2ZvdkJoN3ZDdW9vbk9reXhVdE1NUTVjRGc1YmN4SThNYmlIMERRRlJoQVczNi95Y2MyV2E5cUt6VEp0b2xCd1NyVjRwUjNtME5wTjhCdU1Ba0RHT0xmbXNJb2dCSVEzMEhLZnY3bzBLTVY2VnBPMytsdGZsZURLMkttY3hxWjJRYkVRK2Q4Q3laeEloUlk3RjQ2dDUrS3lsWUxLMlJZT3FrN1dJNytGUW1tbFRxUURBK3dCYW0zMSs5NG1vRkg3cUdBeEJFYXQ1NHVTSGFKWGRwWTgwWWZGWmh3cHl6ZjBOMHY0ak9JUjBXTFArYWx3OVVQbUpzbQ",
+        "event-stream-url": "https://archivist.terraform.io/v1/v1/object/dmF1bHQ6djE6ZDNDVWdDM0NhVEw0L1h5NnErUGJNVXhGc0F2alZGSWcyVjZ0dW0rajZPMWhFaDZPQ1puNDA0dktFRGJ6cUhHVmZtc21va1kvN1lvZ1FtTlB3S0F2cldFamtycS82NFROWVprMDhQTVFFZUtSTHYzUnBRQXpnYkJOOEtrVDYvTXc3U2ZvdkJoN3ZDdW9vbk9reXhVdE1NUTVjRGc1YmN4SThNYmlIMERRRlJoQVczNi95Y2MyV2E5cUt6VEp0b2xCd1NyVjRwUjNtME5wTjhCdU1Ba0RHT0xmbXNJb2dCSVEzMEhLZnY3bzBLTVY2VnBPMytsdGZsZURLMkttY3hxWjJRYkVRK2Q4Q3laeEloUlk3RjQ2dDUrS3lsWUxLMlJZT3FrN1dJNytGUW1tbFRxUURBK3dCYW0zMSs5NG1vRkg3cUdBeEJFYXQ1NHVTSGFKWGRwWTgwWWZGWmh3cHl6ZjBOMHY0ak9JUjBXTFArYWx3OVVQbUpzbQ",
         "created-at": "2025-02-11T20:43:53.040Z",
         "plan-only": false
       },
@@ -352,89 +353,1146 @@ curl \
 ```
 
 ## Show Stack Configuration
-TODO
+`GET /stack-configurations/:stack_configuration_id`
 
 This endpoint returns details of the specified stack configuration.
 
+
+| Parameter                 | Description                 |
+| ------------------------- | --------------------------- |
+| `:stack_configuration_id` | The stack configuration id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "stc-GTMsTphV1C5MrLyd",
+    "type": "stack-configurations",
+    "attributes": {
+      "status": "converging",
+      "status-timestamps": {
+        "queued-at": "2025-02-11T20:43:53.075Z",
+        "preparing-at": "2025-02-11T20:43:56.159Z",
+        "prepared-at": "2025-02-11T20:44:04.089Z",
+        "enqueueing-at": "2025-02-11T20:44:04.443Z",
+        "completed-at": "2025-02-11T20:44:04.630Z"
+      },
+      "sequence-number": 1,
+      "deployment-names": [
+        "complex",
+        "simple"
+      ],
+      "converged-deployments": [],
+      "components": [
+        {
+          "name": "nils",
+          "correlator": "sqlcMWrMGhp3ZydAWIRw6wDXIeO5FBK9G6mC1Gw/oGo=",
+          "expanded": false,
+          "removed": false
+        },
+        {
+          "name": "nulls",
+          "correlator": "tgwFPu/Y6FxtySWdN/SjfLf01WUsOwtrefsbNLXfauI=",
+          "expanded": false,
+          "removed": false
+        },
+        {
+          "name": "pet",
+          "correlator": "mVeO7lZxmV5xQ9Hr+JOAljxocBy301AqmloiGV9yohg=",
+          "expanded": false,
+          "removed": false
+        }
+      ],
+      "error-message": null,
+      "diags": null,
+      "event-stream-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6aFN6WTBJUWJ6N3ViKzFWbmptMkd6SWxocDFJK05FSFJ3MjNSNXRZLzBMS2E1YmgyMWM5eXBYMHpZVXErSG5HTUVJMTZsdHJ5c2tnOWUybDhpaW04eVROdDh1RXNGa1F2VkZqOVZKbGN6MEZhUEVqQmlvVGtwaWhjaHpiZEF3YUtWTmVQZm1TOFY0NnN2dXpVc1V2MlBmOU5BRzMvNDc5RHg0eVA2VFZDRy9PdHY1c3IwWWxwT09sdDRyRnFUSjJDSXhOaWl2UVZKNTdVaW9HOEhrN0ZvM1YyMTZLaVpndzRtSzkyTlYvRWpZTzkyTjU0THg2OWVHQk9nZEptbWhhS3hxVFFIUTR0L1ZwZWZ4SjRCWnJWZitGZ2lmd2tNTmNKTUVBQzdrV2puVWdvUlh2YjBmcGFsdnpUN1VzTkVuM0tDQm1FbXpWVXFGSVRsTlBkMkJ6dWRsYlhJck0vbVBMQ1VlZlhBTWFRZ2h2NjhCdzFFSFQ4bU50eA",
+      "created-at": "2025-02-11T20:43:53.040Z",
+      "plan-only": false
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-GyYUZPwhFi7QbosX",
+          "type": "stacks"
+        }
+      },
+      "stack-diagnostics": {
+        "links": {
+          "related": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/stack-diagnostics"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd",
+      "json-schemas": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/json-schemas",
+      "source-bundle": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/source-bundle",
+      "sources": "/api/v2/stack-configurations/stc-GTMsTphV1C5MrLyd/sources"
+    }
+  }
+}
+```
+
 ## List Stack Deployments
-TODO
+`GET /stacks/:stack_id/stack-deployments`
 
 This endpoint lists all the deployments under the specified stack.
 
+
+| Parameter   | Description   |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments
+```
+
+### Sample Response
+```json
+{
+  "data": [
+    {
+      "id": "st-GyYUZPwhFi7QbosX-std-complex",
+      "type": "stack-deployments",
+      "attributes": {
+        "name": "complex",
+        "status": "paused",
+        "deployed-at": null,
+        "errors-count": 0,
+        "warnings-count": 0,
+        "paused-count": 1,
+        "has-empty-state": false
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-GyYUZPwhFi7QbosX",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": null
+        },
+        "latest-stack-plan": {
+          "data": {
+            "id": "stp-uBKDRLBbPYbVYeNu",
+            "type": "stack-plans"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics?deployment=complex"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments/complex"
+      }
+    },
+    {
+      "id": "st-GyYUZPwhFi7QbosX-std-simple",
+      "type": "stack-deployments",
+      "attributes": {
+        "name": "simple",
+        "status": "paused",
+        "deployed-at": null,
+        "errors-count": 0,
+        "warnings-count": 0,
+        "paused-count": 1,
+        "has-empty-state": false
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-GyYUZPwhFi7QbosX",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": null
+        },
+        "latest-stack-plan": {
+          "data": {
+            "id": "stp-aU3Q8zwiA1e1YrNW",
+            "type": "stack-plans"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics?deployment=simple"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments/simple"
+      }
+    }
+  ]
+}
+```
+
 ## Show Stack Deployment
-TODO
+`GET /stacks/:stack_id/stack-deployments/:deployment_name`
 
 This endpoint returns details of the specified stack deployment under the stack.
 
+
+| Parameter          | Description               |
+| ------------------ | ------------------------- |
+| `:stack_id`        | The stack id.             |
+| `:deployment_name` | The stack deployment name.|
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments/complex
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "st-GyYUZPwhFi7QbosX-std-complex",
+    "type": "stack-deployments",
+    "attributes": {
+      "name": "complex",
+      "status": "paused",
+      "deployed-at": null,
+      "errors-count": 0,
+      "warnings-count": 0,
+      "paused-count": 1,
+      "has-empty-state": false
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-GyYUZPwhFi7QbosX",
+          "type": "stacks"
+        }
+      },
+      "current-stack-state": {
+        "data": null
+      },
+      "stack-configuration": {
+        "data": null
+      },
+      "latest-stack-plan": {
+        "data": {
+          "id": "stp-uBKDRLBbPYbVYeNu",
+          "type": "stack-plans"
+        }
+      },
+      "stack-diagnostics": {
+        "links": {
+          "related": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics?deployment=complex"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-deployments/complex"
+    }
+  }
+}
+```
+
 ## List Stack Diagnostics
-TODO
+`GET /stacks/:stack_id/stack-diagnostics`
 
 This endpoint lists all the diagnostics under the specified stack.
 
-## Show Stack Diagnostic
+| Parameter   | Description   |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics
+```
+
+### Sample Response
+```json
 TODO
+```
+## Show Stack Diagnostic
+`GET /stack-diagnostics/:stack_diagnostic_id`
 
 This endpoint returns details of the specified stack diagnostic.
 
-## List Stack Configuration Diagnostics
+
+| Parameter              | Description              |
+| ---------------------- | ------------------------ |
+| `:stack_diagnostic_id` | The stack diagnostic id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-diagnosticss/std-GyYUZPwhFi7QbosX
+```
+
+### Sample Response
+```json
 TODO
+```
+## List Stack Configuration Diagnostics
+`GET /stack-configurations/:stack_configuration_id/stack-diagnostics`
 
 This endpoint lists all the diagnostics under the specified stack configuration.
 
-## Show Stack Diagnostic
-TODO
+| Parameter                 | Description                 |
+| ------------------------- | --------------------------- |
+| `:stack_configuration_id` | The stack configuration id. |
 
-This endpoint returns details of the specified stack diagnostic.
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-GyYUZPwhFi7QbosX/stack-diagnostics
+```
+
+### Sample Response
+```json
+TODO
+```
 
 ## List Stack Plans
-TODO
+`GET stacks/:stack_id/stack-plans`
 
 This endpoint lists all the plans under the specified stack.
 
+| Parameter   | Description   |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-plans
+```
+
+### Sample Response
+```json
+{
+  "data": [
+    {
+      "id": "stp-dxnzzLpDFwqQ3wjN",
+      "type": "stack-plans",
+      "attributes": {
+        "plan-mode": "normal",
+        "plan-number": "1",
+        "status": "paused_planned",
+        "status-timestamps": {
+          "created-at": "2025-02-13T15:43:57.560Z",
+          "running-at": "2025-02-13T15:43:57.602Z",
+          "paused-at": "2025-02-13T15:44:09.735Z"
+        },
+        "is-planned": true,
+        "changes": {
+          "add": 10,
+          "move": 0,
+          "defer": 1,
+          "total": 11,
+          "change": 0,
+          "forget": 0,
+          "import": 0,
+          "remove": 0
+        },
+        "upstream-events-count": 0,
+        "downstream-events-count": 0,
+        "deployment": "complex",
+        "speculative": false,
+        "health-summary": {}
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plan-operations": {
+          "data": [
+            {
+              "id": "stpo-TLQK6cKJL3vQJdr3",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-sd3VqsfaSvpaKpBS",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-dfLLmG1ZnZUududY",
+              "type": "stack-plan-operations"
+            }
+          ]
+        },
+        "trigger-event": {
+          "data": {
+            "id": "ste-iaTPXkCZPxqed5AN",
+            "type": "stack-events"
+          }
+        },
+        "stack-events": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/stack-events"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/stack-diagnostics"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN",
+        "plan-description": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/plan-description",
+        "apply-description": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/apply-description"
+      }
+    },
+    {
+      "id": "stp-yo3aYCvk6euKbfuP",
+      "type": "stack-plans",
+      "attributes": {
+        "plan-mode": "normal",
+        "plan-number": "1",
+        "status": "paused_planned",
+        "status-timestamps": {
+          "created-at": "2025-02-13T15:43:57.566Z",
+          "running-at": "2025-02-13T15:43:57.616Z",
+          "paused-at": "2025-02-13T15:44:08.694Z"
+        },
+        "is-planned": true,
+        "changes": {
+          "add": 10,
+          "move": 0,
+          "defer": 1,
+          "total": 11,
+          "change": 0,
+          "forget": 0,
+          "import": 0,
+          "remove": 0
+        },
+        "upstream-events-count": 0,
+        "downstream-events-count": 0,
+        "deployment": "simple",
+        "speculative": false,
+        "health-summary": {}
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plan-operations": {
+          "data": [
+            {
+              "id": "stpo-kpRmjamg2mWgai1d",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-b9DSkaiMHVbT2jJo",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-PQa7GMioKU4Tnv1Q",
+              "type": "stack-plan-operations"
+            }
+          ]
+        },
+        "trigger-event": {
+          "data": {
+            "id": "ste-uCXZudMCUWEbmjUa",
+            "type": "stack-events"
+          }
+        },
+        "stack-events": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-diagnostics"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP",
+        "plan-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/plan-description",
+        "apply-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/apply-description"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
+```
 ## Show Stack Plan
-TODO
+`GET /stack-plans/:stack_plan_id/`
 
 This endpoint returns details of the specified stack plan.
 
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "stp-yo3aYCvk6euKbfuP",
+    "type": "stack-plans",
+    "attributes": {
+      "plan-mode": "normal",
+      "plan-number": "1",
+      "status": "paused_planned",
+      "status-timestamps": {
+        "created-at": "2025-02-13T15:43:57.566Z",
+        "running-at": "2025-02-13T15:43:57.616Z",
+        "paused-at": "2025-02-13T15:44:08.694Z"
+      },
+      "is-planned": true,
+      "changes": {
+        "add": 10,
+        "move": 0,
+        "defer": 1,
+        "total": 11,
+        "change": 0,
+        "forget": 0,
+        "import": 0,
+        "remove": 0
+      },
+      "upstream-events-count": 0,
+      "downstream-events-count": 0,
+      "deployment": "simple",
+      "speculative": false,
+      "health-summary": {}
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-uXySJF7T71m2bEwp",
+          "type": "stacks"
+        }
+      },
+      "stack-configuration": {
+        "data": {
+          "id": "stc-GEt1cDfuRqLACcL9",
+          "type": "stack-configurations"
+        }
+      },
+      "stack-plan-operations": {
+        "data": [
+          {
+            "id": "stpo-kpRmjamg2mWgai1d",
+            "type": "stack-plan-operations"
+          },
+          {
+            "id": "stpo-b9DSkaiMHVbT2jJo",
+            "type": "stack-plan-operations"
+          },
+          {
+            "id": "stpo-PQa7GMioKU4Tnv1Q",
+            "type": "stack-plan-operations"
+          }
+        ]
+      },
+      "trigger-event": {
+        "data": {
+          "id": "ste-uCXZudMCUWEbmjUa",
+          "type": "stack-events"
+        }
+      },
+      "stack-events": {
+        "links": {
+          "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events"
+        }
+      },
+      "stack-diagnostics": {
+        "links": {
+          "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-diagnostics"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP",
+      "plan-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/plan-description",
+      "apply-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/apply-description"
+    }
+  }
+}
+```
+
 ## List Stack Events
-TODO
+`GET /stack-plans/:stack_plan_id/stack-events`
 
 This endpoint lists all of the stack events under the specified stack plan.
 
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP
+```
+
+### Sample Response
+```json
+{
+  "data": [
+    {
+      "id": "ste-uCXZudMCUWEbmjUa",
+      "type": "stack-events",
+      "attributes": {
+        "deployment": "simple",
+        "event-type": "plan_triggered",
+        "metadata": {
+          "events": 1,
+          "summary": "New configuration received"
+        },
+        "status": "completed",
+        "created-at": "2025-02-13T15:43:57.571Z",
+        "pending-at": null,
+        "completed-at": null
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plans": {
+          "links": {
+            "related": "/api/v2/stack-events/ste-uCXZudMCUWEbmjUa/stack-plans"
+          }
+        },
+        "user": {
+          "data": null
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-events/ste-uCXZudMCUWEbmjUa"
+      }
+    },
+    {
+      "id": "ste-2GEip4waZZcyeB1C",
+      "type": "stack-events",
+      "attributes": {
+        "deployment": "simple",
+        "event-type": "new_configuration",
+        "metadata": null,
+        "status": "pending",
+        "created-at": "2025-02-13T15:43:57.172Z",
+        "pending-at": "2025-02-13T15:43:57.534Z",
+        "completed-at": null
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plans": {
+          "links": {
+            "related": "/api/v2/stack-events/ste-2GEip4waZZcyeB1C/stack-plans"
+          }
+        },
+        "user": {
+          "data": null
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-events/ste-2GEip4waZZcyeB1C"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://localhost/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
+```
+
 ## Show Stack Event
-TODO
+`GET /stack-events/:stack_event_id`
 
 This endpoint returns details of the specified stack event.
 
+| Parameter         | Description         |
+| ----------------- | ------------------- |
+| `:stack_event_id` | The stack event id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-events/
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "ste-uCXZudMCUWEbmjUa",
+    "type": "stack-events",
+    "attributes": {
+      "deployment": "simple",
+      "event-type": "plan_triggered",
+      "metadata": {
+        "events": 1,
+        "summary": "New configuration received"
+      },
+      "status": "completed",
+      "created-at": "2025-02-13T15:43:57.571Z",
+      "pending-at": null,
+      "completed-at": null
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-uXySJF7T71m2bEwp",
+          "type": "stacks"
+        }
+      },
+      "stack-configuration": {
+        "data": {
+          "id": "stc-GEt1cDfuRqLACcL9",
+          "type": "stack-configurations"
+        }
+      },
+      "stack-plans": {
+        "links": {
+          "related": "/api/v2/stack-events/ste-uCXZudMCUWEbmjUa/stack-plans"
+        }
+      },
+      "user": {
+        "data": null
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-events/ste-uCXZudMCUWEbmjUa"
+    }
+  }
+}
+```
 ## Show Plan Description
-TODO
+`GET /stack-plans/:stack_plan_id/plan-description`
 
 This endpoint returns details of the specified plan description.
 
-## Show Apply Description
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/plan-description
+```
+
+### Sample Response
+```json
 TODO
+```
+
+## Show Apply Description
+`GET /stack-plans/:stack_plan_id/apply-description`
 
 This endpoint returns details of the specified apply description.
 
-## List Stack Configuration Plans
+| Parameter        | Description        |
+| ---------------- | ------------------ |
+| `:stack_plan_id` | The stack plan id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/apply-description
+```
+
+### Sample Response
+```json
 TODO
+```
+
+## List Stack Configuration Plans
+`GET /stack-configurations/:stack_configuration_id/stack-plans`
 
 This endpoint lists all the plans under the specified stack configuration.
 
+| Parameter                 | Description                 |
+| ------------------------- | --------------------------- |
+| `:stack_configuration_id` | The stack configuration id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-plans
+```
+
+### Sample Response
+```json
+{
+  "data": [
+    {
+      "id": "stp-dxnzzLpDFwqQ3wjN",
+      "type": "stack-plans",
+      "attributes": {
+        "plan-mode": "normal",
+        "plan-number": "1",
+        "status": "paused_planned",
+        "status-timestamps": {
+          "created-at": "2025-02-13T15:43:57.560Z",
+          "running-at": "2025-02-13T15:43:57.602Z",
+          "paused-at": "2025-02-13T15:44:09.735Z"
+        },
+        "is-planned": true,
+        "changes": {
+          "add": 10,
+          "move": 0,
+          "defer": 1,
+          "total": 11,
+          "change": 0,
+          "forget": 0,
+          "import": 0,
+          "remove": 0
+        },
+        "upstream-events-count": 0,
+        "downstream-events-count": 0,
+        "deployment": "complex",
+        "speculative": false,
+        "health-summary": {}
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plan-operations": {
+          "data": [
+            {
+              "id": "stpo-TLQK6cKJL3vQJdr3",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-sd3VqsfaSvpaKpBS",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-dfLLmG1ZnZUududY",
+              "type": "stack-plan-operations"
+            }
+          ]
+        },
+        "trigger-event": {
+          "data": {
+            "id": "ste-iaTPXkCZPxqed5AN",
+            "type": "stack-events"
+          }
+        },
+        "stack-events": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/stack-events"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/stack-diagnostics"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN",
+        "plan-description": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/plan-description",
+        "apply-description": "/api/v2/stack-plans/stp-dxnzzLpDFwqQ3wjN/apply-description"
+      }
+    },
+    {
+      "id": "stp-yo3aYCvk6euKbfuP",
+      "type": "stack-plans",
+      "attributes": {
+        "plan-mode": "normal",
+        "plan-number": "1",
+        "status": "paused_planned",
+        "status-timestamps": {
+          "created-at": "2025-02-13T15:43:57.566Z",
+          "running-at": "2025-02-13T15:43:57.616Z",
+          "paused-at": "2025-02-13T15:44:08.694Z"
+        },
+        "is-planned": true,
+        "changes": {
+          "add": 10,
+          "move": 0,
+          "defer": 1,
+          "total": 11,
+          "change": 0,
+          "forget": 0,
+          "import": 0,
+          "remove": 0
+        },
+        "upstream-events-count": 0,
+        "downstream-events-count": 0,
+        "deployment": "simple",
+        "speculative": false,
+        "health-summary": {}
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-uXySJF7T71m2bEwp",
+            "type": "stacks"
+          }
+        },
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-plan-operations": {
+          "data": [
+            {
+              "id": "stpo-kpRmjamg2mWgai1d",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-b9DSkaiMHVbT2jJo",
+              "type": "stack-plan-operations"
+            },
+            {
+              "id": "stpo-PQa7GMioKU4Tnv1Q",
+              "type": "stack-plan-operations"
+            }
+          ]
+        },
+        "trigger-event": {
+          "data": {
+            "id": "ste-uCXZudMCUWEbmjUa",
+            "type": "stack-events"
+          }
+        },
+        "stack-events": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-events"
+          }
+        },
+        "stack-diagnostics": {
+          "links": {
+            "related": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/stack-diagnostics"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP",
+        "plan-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/plan-description",
+        "apply-description": "/api/v2/stack-plans/stp-yo3aYCvk6euKbfuP/apply-description"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://localhost/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://localhost/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://localhost/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-plans?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 2
+    }
+  }
+}
+```
 ## List Stack States
-TODO 
+`GET /stacks/:stack_id/stack-states` 
 
 This endpoint lists all the states under the specified stack.
 
-## Show Stack State
+| Parameter   | Description   |
+| ----------- | ------------- |
+| `:stack_id` | The stack id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stacks/st-uXySJF7T71m2bEwp/stack-states
+```
+
+### Sample Response
+```json
 TODO
+```
+
+## Show Stack State
+GET `/stack-states/:stack_state_id`
 
 This endpoint returns details of the specified stack state.
 
-## Show Stack State Description
+
+| Parameter         | Description         |
+| ----------------- | ------------------- |
+| `:stack_state_id` | The stack state id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-states/sts-uXySJF7T71m2bEwp
+```
+
+### Sample Response
+```json
 TODO
+```
+
+## Show Stack State Description
+`GET /stack-states/:stack_state_id/description`
 
 This endpoint returns details of the specified stack state description.
+
+| Parameter         | Description         |
+| ----------------- | ------------------- |
+| `:stack_state_id` | The stack state id. |
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-states/sts-uXySJF7T71m2bEwp/description
+```
+
+### Sample Response
+```json
+TODO
+```
 
 ## Create a stack
 
