@@ -209,9 +209,17 @@ module.exports = [
     permanent: true,
   },
   {
+    source: "/terraform/language/:version(v1\.(?:7|8|9|10|11|12|13)\.x)/settings/backends/configuration",
+    destination: "/terraform/language/backend",
+    permanent: true,
+  },
+  {
     source: "/terraform/language/settings/backends/:slug*",
     destination: "/terraform/language/backend/:slug*",
     permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/backends/configuration"
   },
   {
     source: "/terraform/cli/cloud/migrating",
