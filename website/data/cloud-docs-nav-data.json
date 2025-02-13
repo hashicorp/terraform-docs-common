@@ -627,6 +627,10 @@
     "title": "Integrations",
     "routes": [
       {
+        "title": "Overview", 
+        "path": "integrations"
+      },
+      {
         "title": "Kubernetes Operator",
         "routes": [
           {
