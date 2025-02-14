@@ -1,10 +1,10 @@
 ---
-page_title: VCS Connections - Workspaces - HCP Terraform
+page_title: Configure workspace VCS connections in HCP Terraform
 description: >-
-  Learn how to use the web UI to connect a workspace to a version control system repository that contains Terraform configuration.
+  Learn how to use the HCP Terraform UI to connect a workspace to a version control system (VCS) repository that contains a Terraform configuration.
 ---
 
-# Configuring Workspace VCS Connections
+# Configure workspace VCS connections
 
 You can connect any HCP Terraform [workspace](/terraform/cloud-docs/workspaces) to a version control system (VCS) repository that contains a Terraform configuration. This page explains the workspace VCS connection settings in the HCP Terraform UI.
 
@@ -27,8 +27,8 @@ You can update the following types of VCS settings for the workspace.
 
 You can take one of the following actions:
 
-- To add a new VCS connection, click **Connect to version control**. Select **Version control workflow** and follow the steps to [select a VCS provider and repository](/terraform/cloud-docs/workspaces/creating#create-a-workspace).
-- To edit an existing VCS connection, click **Change source**. Choose the **Version control workflow** and follow the steps to [select VCS provider and repository](/terraform/cloud-docs/workspaces/creating#create-a-workspace).
+- To add a new VCS connection, click **Connect to version control**. Select **Version control workflow** and follow the steps to [select a VCS provider and repository](/terraform/cloud-docs/workspaces/create#create-a-workspace).
+- To edit an existing VCS connection, click **Change source**. Choose the **Version control workflow** and follow the steps to [select VCS provider and repository](/terraform/cloud-docs/workspaces/create#create-a-workspace).
 - To remove the VCS connection, click **Change source**. Select either the **CLI-driven workflow** or the **API-driven workflow**, and click **Update VCS settings**. The workspace is no longer connected to VCS.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
@@ -45,7 +45,7 @@ Choose a workflow for Terraform runs.
 
 - **Auto apply:** Terraform will apply changes from successful plans without prompting for approval. A push to the default branch of your repository will trigger a plan and apply cycle. You may want to do this in non-interactive environments, like continuous deployment workflows.
 
-  !> **Warning:** If you choose auto apply, make sure that no one can change your infrstructure outside of your automated build pipeline. This reduces the risk of congfiguration drift and unexpected changes.
+  !> **Warning:** If you choose auto apply, make sure that no one can change your infrastructure outside of your automated build pipeline. This reduces the risk of configuration drift and unexpected changes.
 
 - **Manual apply:** Terraform will ask for approval before applying changes from a successful plan. A push to the default branch of your repository will trigger a plan, and then Terraform will wait for confirmation.
 
@@ -85,9 +85,11 @@ You must include an additional `\` to escape the regex pattern when you manage y
 | **Version contains a prefix** | `\d+.\d+.\d+$`            | `\\d+.\\d+.\\d+$`        |
 | **Version contains a suffix** | `^\d+.\d+.\d+`            | `^\\d+.\\d+.\\d+`        |
 
+HCP Terraform triggers runs for all tags matching this pattern, regardless of the value in the [VCS Branch](#vcs-branch) setting.
+
 ### VCS Branch
 
-This designates which branch of the repository HCP Terraform should use in the workspace. If left blank, HCP Terraform uses the repository's default branch.
+This setting designates which branch of the repository HCP Terraform should use when the workspace is set to [Always Trigger Runs](#always-trigger-runs) or [Only trigger runs when files in specified paths change](#only-trigger-runs-when-files-in-specified-paths-change). If you leave this setting blank, HCP Terraform uses the repository's default branch. If the workspace is set to trigger runs when a [git tag is published](#trigger-runs-when-a-git-tag-is-published), all tags will trigger runs, regardless of the branch specified in this setting.
 
 ### Automatic Speculative Plans
 

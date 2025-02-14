@@ -1,11 +1,10 @@
 ---
-page_title: Settings - Workspaces - HCP Terraform
+page_title: Workspaces settings in HCP Terraform
 description: >-
-  Workspaces organize infrastructure. Find documentation about workspace
-  settings for notifications, permissions, and more.
+  Learn how to configure workspace settings for notifications, permissions, health, locking, policies, run triggers, SSH keys, team access, version control, and deletion.
 ---
 
-# Workspace Settings
+# Workspace settings
 
 You can change a workspace’s settings after creation. Workspace settings are separated into several pages.
 
@@ -60,7 +59,7 @@ By default, HCP Terraform uses an organization's [default execution mode](/terra
 
 Specifying the "Remote" execution mode instructs HCP Terraform to perform Terraform runs on its own disposable virtual machines. This provides a consistent and reliable run environment and enables advanced features like Sentinel policy enforcement, cost estimation, notifications, version control integration, and more.
 
-To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state and variables, which Terraform can access with the [CLI integration](/terraform/cli/cloud).
+To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state, which Terraform can access with the [CLI integration](/terraform/cli/cloud). HCP Terraform does not evaluate workspace variables or variable sets in local execution mode.
 
 If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [HCP Terraform agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
 

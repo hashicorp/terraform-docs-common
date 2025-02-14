@@ -1,12 +1,11 @@
 ---
-page_title: Activate Pay-As-You-Go - Plans and Features - HCP Terraform
+page_title: Activate pay-as-you-go for HCP Terraform
 description: >-
-  Changing your HCP Terraform account and linking to your
-  HashiCorp Cloud Platform organization.
+    Use an HCP organization or a linked HCP Terraform account to activate pay-as-you-go HCP billing to upgrade to the standard or plus editions of HCP Terraform.
 tfc_only: true
 ---
 
-# Activate Pay-As-You-Go
+# Activate pay-as-you-go
 
 In order to upgrade to **Standard Edition** or **Plus Edition**, you must login to your HashiCorp Cloud Platform account or have your HCP Terraform account [linked](/terraform/cloud-docs/users-teams-organizations/users#linked-hcp-and-hcp-terraform-accounts) with your [HashiCorp Cloud Platform billing account](/hcp/docs/hcp/admin/billing). 
 
@@ -19,10 +18,10 @@ Once logged in, you will be able to Edit your HCP Terraform plan.
 ## Link to a HashiCorp Cloud Platform Organization
 
 When editing an HCP Terraform plan, you have several [billing model](/hcp/docs/hcp/admin/billing#billing-models) options:
-- Set up billing for the first time on a Trial or Pay-as-you-go HCP Billing account. Trial credits are consumed before a credit card is billed. Consumption is incurred every hour and invoiced monthly.
-- Select an existing [HashiCorp Flex](/hcp/docs/hcp/admin/billing/flex-billing) account.  Consumption is incurred every hour.
 
-![Screenshot: A list of HCP organizations presented to the user that they can link their HCP Terraform account to](/img/docs/tfc-hcp-org-link.png)
+- Set up billing for the first time on a Trial or Pay-as-you-go HCP Billing account. Trial credits are consumed before a credit card is billed. Consumption is incurred every hour and invoiced monthly.
+
+- Select an existing [HashiCorp Flex](/hcp/docs/hcp/admin/billing/flex-billing) account.  Consumption is incurred every hour.
 
 ## Select a Plan
 
@@ -40,13 +39,9 @@ If you selected [Trial or pay-as-you-go HCP Billing accounts], you will be asked
 
 The summary will confirm all the decisions in prior steps. Here you can decide to activate the plan or cancel the process.  Once activated, the new feature set will be available and usage and consumption will start immediately. See [Usage Metering and Cost Calculation](/hcp/docs/hcp/admin/billing/flex-billing#usage-metering-and-cost-calculation) for more information on how to review usage and consumption.
 
-![Screenshot: The summary of the selected plan. In this case, the HCP Terraform Standard plan was selected, showing the account and organization it will be associated with.](/img/docs/tfc-plan-summary.png)
-
 ## Viewing Usage, Consumption, & Billing Invoices
 
 Billing is managed on HashiCorp Cloud Platform. There you can:
 - [View Usage](/hcp/docs/hcp/admin/billing#hcp-usage) related to managed resources
 - Update [credit card payment](/hcp/docs/hcp/admin/billing/payment)
 - Setup a [Flex Billing Contract](/hcp/docs/hcp/admin/billing/payment#set-up-an-entitlement-or-flex-billing-contract)
-
-![Screenshot: A summary of the users current plan and billing summary with information such as remaning balance and active users](/img/docs/tfc-usage-summary.png)
