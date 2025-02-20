@@ -32,7 +32,7 @@ Only Sentinel policies can run as policy checks. Checks can access cost estimati
 
 ### Policy evaluations
 
-OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Enhanced` policy set type. Policy evaluations run within the [HCP Terraform agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure.
+OPA policy sets can only run as policy evaluations, and you can enable policy evaluations for Sentinel policy sets by selecting the `Agent` policy set type. Policy evaluations run within the [HCP Terraform agent](/terraform/cloud-docs/agents) in HCP Terraform's infrastructure.
 
 For Sentinel policy sets, using policy evaluations lets you:
 - Enable overrides for soft-mandatory and hard-mandatory policies, letting any user with [Manage Policy Overrides permission](/terraform/cloud-docs/users-teams-organizations/permissions#manage-policy-overrides) proceed with a run in the event of policy failure.
@@ -139,7 +139,7 @@ To create a policy set:
 1. **(Optional)** Add **Policy exclusions** for this policy set. Specify any workspaces in the policy set's scope that HCP Terraform will not enforce this policy set on.
 1. **(Sentinel Only)** Choose a policy set type:
    - **Standard:** This is the default workflow. A Sentinel policy set uses a [policy check](#policy-checks) in HCP Terraform and lets you access cost estimation data.
-   - **Enhanced:** A Sentinel policy set uses a [policy evaluation](#policy-evaluations) in HCP Terraform. This lets you enable policy overrides and enforce a Sentinel runtime version
+   - **Agent:** A Sentinel policy set uses a [policy evaluation](#policy-evaluations) in HCP Terraform. This lets you enable policy overrides and enforce a Sentinel runtime version
 1. **(OPA Only)** Select a **Runtime version** for this policy set.
 
 1. **(OPA Only)** Allow **Overrides**, which enables users with override policy permissions to apply plans that have [mandatory policy](#policy-enforcement-levels) failures.
