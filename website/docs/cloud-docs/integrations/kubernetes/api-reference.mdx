@@ -11,7 +11,7 @@ description: >-
 
 ## app.terraform.io/v1alpha2
 
-Package v1alpha2 contains API Schema definitions for the app v1alpha2 API group
+Package v1alpha2 contains API Schema definitions for the app v1alpha2 API group.
 
 ### Resource Types
 - [AgentPool](#agentpool)
@@ -33,8 +33,7 @@ _Appears in:_
 
 #### AgentDeploymentAutoscaling
 
-AgentDeploymentAutoscaling allows you to configure the operator
-to scale the deployment for an AgentPool up and down to meet demand.
+AgentDeploymentAutoscaling allows you to configure the operator to scale the deployment for an AgentPool up and down to meet demand.
 
 _Appears in:_
 - [AgentPoolSpec](#agentpoolspec)
@@ -49,7 +48,7 @@ _Appears in:_
 
 #### AgentDeploymentAutoscalingCooldownPeriod
 
-AgentDeploymentAutoscalingCooldownPeriod configures the period to wait between scaling up and scaling down
+AgentDeploymentAutoscalingCooldownPeriod configures the period to wait between scaling up and scaling down,
 
 _Appears in:_
 - [AgentDeploymentAutoscaling](#agentdeploymentautoscaling)
@@ -107,8 +106,7 @@ _Appears in:_
 
 #### AgentToken
 
-Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool.
-In `spec` only the field `Name` is allowed, the rest are used in `status`.
+Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool. In `spec` only the field `Name` is allowed, the rest are used in `status`.
 
 More information:
   - [HCP Terraform agents](/terraform/cloud-docs/agents)
@@ -141,9 +139,7 @@ _Appears in:_
 
 #### ConsumerWorkspace
 
-ConsumerWorkspace allows access to the state for specific workspaces within the same organization.
-Only one of the fields `ID` or `Name` is allowed.
-At least one of the fields `ID` or `Name` is mandatory.
+ConsumerWorkspace allows access to the state for specific workspaces within the same organization. Only one of the fields `ID` or `Name` is allowed. At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
   - [Remote state access controls](/terraform/cloud-docs/workspaces/state#remote-state-access-controls)
@@ -287,9 +283,7 @@ _Appears in:_
 
 #### ModuleWorkspace
 
-Workspace to execute the module.
-Only one of the fields `ID` or `Name` is allowed.
-At least one of the fields `ID` or `Name` is mandatory.
+Workspace to execute the module. Only one of the fields `ID` or `Name` is allowed. At least one of the fields `ID` or `Name` is mandatory.
 
 _Appears in:_
 - [ModuleSpec](#modulespec)
@@ -324,8 +318,8 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
-NotificationTrigger represents the different TFC notifications that can be sent as a run's progress transitions between different states.
-This must be aligned with go-tfe type `NotificationTriggerType`.
+NotificationTrigger represents the different TFC notifications that can be sent as a run's progress transitions between different states. This must be aligned with go-tfe type `NotificationTriggerType`.
+
 Must be one of the following values: `run:applying`, `assessment:check_failure`, `run:completed`, `run:created`, `assessment:drifted`, `run:errored`, `assessment:failed`, `run:needs_attention`, `run:planning`.
 
 _Appears in:_
@@ -387,9 +381,7 @@ _Appears in:_
 
 #### ProjectTeamAccess
 
-HCP Terraform's access model is team-based. In order to perform an action within a HCP Terraform organization,
-users must belong to a team that has been granted the appropriate permissions.
-You can assign project-specific permissions to teams.
+HCP Terraform's access model is team-based. In order to perform an action within a HCP Terraform organization, users must belong to a team that has been granted the appropriate permissions. You can assign project-specific permissions to teams.
 
 More information:
   - [Manage projects](/terraform/cloud-docs/workspaces/organize-workspaces-with-projects#permissions)
@@ -406,8 +398,7 @@ _Appears in:_
 
 #### RemoteStateSharing
 
-RemoteStateSharing allows remote state access between workspaces.
-By default, new workspaces in HCP Terraform do not allow other workspaces to access their state.
+RemoteStateSharing allows remote state access between workspaces. By default, new workspaces in HCP Terraform do not allow other workspaces to access their state.
 
 More information:
   - [Accessing state from other workspaces](/terraform/cloud-docs/workspaces/state#accessing-state-from-other-workspaces)
@@ -434,9 +425,10 @@ _Appears in:_
 
 #### RunTrigger
 
-RunTrigger allows you to connect this workspace to one or more source workspaces.
-These connections allow runs to queue automatically in this workspace on successful apply of runs in any of the source workspaces.
+RunTrigger allows you to connect this workspace to one or more source workspaces. These connections allow runs to queue automatically in this workspace on successful apply of runs in any of the source workspaces.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
@@ -453,7 +445,9 @@ _Appears in:_
 #### SSHKey
 
 SSH key used to clone Terraform modules.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
@@ -472,7 +466,9 @@ _Appears in:_
 _Underlying type:_ _string_
 
 Tags allows you to correlate, organize, and even filter workspaces based on the assigned tags.
+
 Tags must be one or more characters; can include letters, numbers, colons, hyphens, and underscores; and must begin and end with a letter or number.
+
 Must match pattern: `^[A-Za-z0-9][A-Za-z0-9:_-]*$`
 
 _Appears in:_
@@ -493,9 +489,10 @@ _Appears in:_
 
 #### Team
 
-Teams are groups of HCP Terraform users within an organization.
-If a user belongs to at least one team in an organization, they are considered a member of that organization.
+Teams are groups of HCP Terraform users within an organization. If a user belongs to at least one team in an organization, they are considered a member of that organization.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
@@ -512,10 +509,7 @@ _Appears in:_
 
 #### TeamAccess
 
-HCP Terraform workspaces can only be accessed by users with the correct permissions.
-You can manage permissions for a workspace on a per-team basis.
-When a workspace is created, only the owners team and teams with the "manage workspaces" permission can access it,
-with full admin permissions. These teams' access can't be removed from a workspace.
+HCP Terraform workspaces can only be accessed by users with the correct permissions. You can manage permissions for a workspace on a per-team basis. When a workspace is created, only the owners team and teams with the "manage workspaces" permission can access it, with full admin permissions. These teams' access can't be removed from a workspace.
 
 More information:
   - [Manage access to workspaces](/terraform/cloud-docs/workspaces/settings/access)
@@ -545,8 +539,7 @@ _Appears in:_
 
 #### ValueFrom
 
-ValueFrom source for the variable's value.
-Cannot be used if value is not empty.
+ValueFrom source for the variable's value. Cannot be used if value is not empty.
 
 _Appears in:_
 - [Variable](#variable)
@@ -600,8 +593,7 @@ _Appears in:_
 
 #### VersionControl
 
-VersionControl settings for the workspace's VCS repository, enabling the UI/VCS-driven run workflow.
-Omit this argument to utilize the CLI-driven and API-driven workflows, where runs are not driven by webhooks on your VCS provider.
+VersionControl settings for the workspace's VCS repository, enabling the UI/VCS-driven run workflow. Omit this argument to utilize the CLI-driven and API-driven workflows, where runs are not driven by webhooks on your VCS provider.
 
 More information:
   - [UI and VCS-driven run workflow](/terraform/cloud-docs/run/ui)
@@ -636,7 +628,9 @@ More information:
 #### WorkspaceAgentPool
 
 AgentPool allows HCP Terraform to communicate with isolated, private, or on-premises infrastructure.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
@@ -653,7 +647,9 @@ _Appears in:_
 #### WorkspaceProject
 
 Projects let you organize your workspaces into groups.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
@@ -670,7 +666,9 @@ _Appears in:_
 #### WorkspaceRunTask
 
 Run tasks allow HCP Terraform to interact with external systems at specific points in the HCP Terraform run lifecycle.
+
 Only one of the fields `ID` or `Name` is allowed.
+
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
