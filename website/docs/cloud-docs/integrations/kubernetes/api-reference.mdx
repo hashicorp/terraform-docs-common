@@ -9,7 +9,6 @@ description: >-
 ## Packages
 - [app.terraform.io/v1alpha2](#appterraformiov1alpha2)
 
-
 ## app.terraform.io/v1alpha2
 
 Package v1alpha2 contains API Schema definitions for the app v1alpha2 API group
@@ -20,13 +19,7 @@ Package v1alpha2 contains API Schema definitions for the app v1alpha2 API group
 - [Project](#project)
 - [Workspace](#workspace)
 
-
-
 #### AgentDeployment
-
-
-
-
 
 _Appears in:_
 - [AgentPoolSpec](#agentpoolspec)
@@ -38,10 +31,7 @@ _Appears in:_
 | `annotations` _object (keys:string, values:string)_ | The annotations that the operator will apply to the pod template in the deployment. |
 | `labels` _object (keys:string, values:string)_ | The labels that the operator will apply to the pod template in the deployment. |
 
-
 #### AgentDeploymentAutoscaling
-
-
 
 AgentDeploymentAutoscaling allows you to configure the operator
 to scale the deployment for an AgentPool up and down to meet demand.
@@ -57,10 +47,7 @@ _Appears in:_
 | `cooldownPeriodSeconds` _integer_ | CooldownPeriodSeconds is the time to wait between scaling events. Defaults to 300. |
 | `cooldownPeriod` _[AgentDeploymentAutoscalingCooldownPeriod](#agentdeploymentautoscalingcooldownperiod)_ | CoolDownPeriod configures the period to wait between scaling up and scaling down |
 
-
 #### AgentDeploymentAutoscalingCooldownPeriod
-
-
 
 AgentDeploymentAutoscalingCooldownPeriod configures the period to wait between scaling up and scaling down
 
@@ -72,10 +59,7 @@ _Appears in:_
 | `scaleUpSeconds` _integer_ | ScaleUpSeconds is the time to wait before scaling up. |
 | `scaleDownSeconds` _integer_ | ScaleDownSeconds is the time to wait before scaling down. |
 
-
 #### AgentDeploymentAutoscalingStatus
-
-
 
 AgentDeploymentAutoscalingStatus
 
@@ -87,18 +71,13 @@ _Appears in:_
 | `desiredReplicas` _integer_ | Desired number of agent replicas |
 | `lastScalingEvent` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#time-v1-meta)_ | Last time the agent pool was scaledx |
 
-
 #### AgentPool
-
-
 
 AgentPool manages HCP Terraform Agent Pools, HCP Terraform Agent Tokens and can perform HCP Terraform Agent scaling.
 More infromation:
   - /terraform/cloud-docs/agents/agent-pools
   - /terraform/cloud-docs/users-teams-organizations/api-tokens#agent-api-tokens
   - /terraform/cloud-docs/agents
-
-
 
 | Field | Description |
 | --- | --- |
@@ -109,10 +88,7 @@ More infromation:
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[AgentPoolSpec](#agentpoolspec)_ |  |
 
-
 #### AgentPoolSpec
-
-
 
 AgentPoolSpec defines the desired state of AgentPool.
 
@@ -128,12 +104,7 @@ _Appears in:_
 | `agentDeployment` _[AgentDeployment](#agentdeployment)_ | Agent deployment settings |
 | `autoscaling` _[AgentDeploymentAutoscaling](#agentdeploymentautoscaling)_ | Agent deployment settings |
 
-
-
-
 #### AgentToken
-
-
 
 Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool.
 In `spec` only the field `Name` is allowed, the rest are used in `status`.
@@ -151,10 +122,7 @@ _Appears in:_
 | `createdAt` _integer_ | Timestamp of when the agent token was created. |
 | `lastUsedAt` _integer_ | Timestamp of when the agent token was last used. |
 
-
 #### ConfigurationVersionStatus
-
-
 
 A configuration version is a resource used to reference the uploaded configuration files.
 More information:
@@ -168,10 +136,7 @@ _Appears in:_
 | --- | --- |
 | `id` _string_ | Configuration Version ID. |
 
-
 #### ConsumerWorkspace
-
-
 
 ConsumerWorkspace allows access to the state for specific workspaces within the same organization.
 Only one of the fields `ID` or `Name` is allowed.
@@ -187,10 +152,7 @@ _Appears in:_
 | `id` _string_ | Consumer Workspace ID.<br />Must match pattern: `^ws-[a-zA-Z0-9]+$` |
 | `name` _string_ | Consumer Workspace name. |
 
-
 #### CustomPermissions
-
-
 
 Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide.
 More information:
@@ -208,10 +170,7 @@ _Appears in:_
 | `variables` _string_ | Variable access.<br />Must be one of the following values: `none`, `read`, `write`.<br />Default: `none`. |
 | `workspaceLocking` _boolean_ | Lock/unlock workspace.<br />Default: `false`. |
 
-
 #### CustomProjectPermissions
-
-
 
 Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide.
 More information:
@@ -235,13 +194,11 @@ _Appears in:_
 | `stateVersions` _[WorkspaceStateVersionsPermissionType](#workspacestateversionspermissiontype)_ | State access.<br />Must be one of the following values: `none`, `read`, `read-outputs`, `write`.<br />Default: `none`. |
 | `variables` _[WorkspaceVariablesPermissionType](#workspacevariablespermissiontype)_ | Variable access.<br />Must be one of the following values: `none`, `read`, `write`.<br />Default: `none`. |
 
-
 #### DeletionPolicy
 
 _Underlying type:_ _string_
 
 DeletionPolicy defines the strategy the Kubernetes operator uses when you delete a resource, either manually or by a system event.
-
 
 You must use one of the following values:
 - `retain`: When you delete the custom resource, the operator does not delete the workspace.
@@ -252,17 +209,11 @@ You must use one of the following values:
 _Appears in:_
 - [WorkspaceSpec](#workspacespec)
 
-
-
 #### Module
-
-
 
 Module implements API-driven Run Workflows.
 More information:
   - /terraform/cloud-docs/run/api
-
-
 
 | Field | Description |
 | --- | --- |
@@ -273,10 +224,7 @@ More information:
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ModuleSpec](#modulespec)_ |  |
 
-
 #### ModuleOutput
-
-
 
 Module outputs to store in ConfigMap(non-sensitive) or Secret(sensitive).
 
@@ -288,10 +236,7 @@ _Appears in:_
 | `name` _string_ | Output name must match with the module output. |
 | `sensitive` _boolean_ | Specify whether or not the output is sensitive.<br />Default: `false`. |
 
-
 #### ModuleSource
-
-
 
 Module source and version to execute.
 
@@ -303,10 +248,7 @@ _Appears in:_
 | `source` _string_ | Non local Terraform module source.<br />More information:<br />  - /terraform/language/modules/sources |
 | `version` _string_ | Terraform module version. |
 
-
 #### ModuleSpec
-
-
 
 ModuleSpec defines the desired state of Module.
 
@@ -325,12 +267,7 @@ _Appears in:_
 | `destroyOnDeletion` _boolean_ | Specify whether or not to execute a Destroy run when the object is deleted from the Kubernetes.<br />Default: `false`. |
 | `restartedAt` _string_ | Allows executing a new Run without changing any Workspace or Module attributes.<br />Example: kubectl patch <KIND> <NAME> --type=merge --patch '\{"spec": \{"restartedAt": "'\`date -u -Iseconds\`'"\}\}' |
 
-
-
-
 #### ModuleVariable
-
-
 
 Variables to pass to the module.
 
@@ -341,10 +278,7 @@ _Appears in:_
 | --- | --- |
 | `name` _string_ | Variable name must exist in the Workspace. |
 
-
 #### ModuleWorkspace
-
-
 
 Workspace to execute the module.
 Only one of the fields `ID` or `Name` is allowed.
@@ -358,10 +292,7 @@ _Appears in:_
 | `id` _string_ | Module Workspace ID.<br />Must match pattern: `^ws-[a-zA-Z0-9]+$` |
 | `name` _string_ | Module Workspace Name. |
 
-
 #### Notification
-
-
 
 Notifications allow you to send messages to other applications based on run and workspace events.
 More information:
@@ -381,7 +312,6 @@ _Appears in:_
 | `emailAddresses` _string array_ | The list of email addresses that will receive notification emails.<br />It is only available for Terraform Enterprise users. It is not available in HCP Terraform. |
 | `emailUsers` _string array_ | The list of users belonging to the organization that will receive notification emails. |
 
-
 #### NotificationTrigger
 
 _Underlying type:_ _string_
@@ -393,11 +323,7 @@ Must be one of the following values: `run:applying`, `assessment:check_failure`,
 _Appears in:_
 - [Notification](#notification)
 
-
-
 #### OutputStatus
-
-
 
 Outputs status.
 
@@ -408,12 +334,7 @@ _Appears in:_
 | --- | --- |
 | `runID` _string_ | Run ID of the latest run that updated the outputs. |
 
-
 #### PlanStatus
-
-
-
-
 
 _Appears in:_
 - [WorkspaceStatus](#workspacestatus)
@@ -423,16 +344,11 @@ _Appears in:_
 | `id` _string_ | Latest plan-only/speculative plan HCP Terraform run ID. |
 | `terraformVersion` _string_ | The version of Terraform to use for this run. |
 
-
 #### Project
-
-
 
 Project manages HCP Terraform Projects.
 More information:
   - /terraform/cloud-docs/projects/manage
-
-
 
 | Field | Description |
 | --- | --- |
@@ -443,10 +359,7 @@ More information:
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ProjectSpec](#projectspec)_ |  |
 
-
 #### ProjectSpec
-
-
 
 ProjectSpec defines the desired state of Project.
 More information:
@@ -462,12 +375,7 @@ _Appears in:_
 | `name` _string_ | Name of the Project. |
 | `teamAccess` _[ProjectTeamAccess](#projectteamaccess) array_ | HCP Terraform's access model is team-based. In order to perform an action within a HCP Terraform organization,<br />users must belong to a team that has been granted the appropriate permissions.<br />You can assign project-specific permissions to teams.<br />More information:<br />  - /terraform/cloud-docs/workspaces/organize-workspaces-with-projects#permissions<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#project-permissions |
 
-
-
-
 #### ProjectTeamAccess
-
-
 
 HCP Terraform's access model is team-based. In order to perform an action within a HCP Terraform organization,
 users must belong to a team that has been granted the appropriate permissions.
@@ -485,10 +393,7 @@ _Appears in:_
 | `access` _[TeamProjectAccessType](#teamprojectaccesstype)_ | There are two ways to choose which permissions a given team has on a project: fixed permission sets, and custom permissions.<br />Must be one of the following values: `admin`, `custom`, `maintain`, `read`, `write`.<br />More information:<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#project-permissions<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#general-project-permissions |
 | `custom` _[CustomProjectPermissions](#customprojectpermissions)_ | Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide.<br />More information:<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#custom-project-permissions |
 
-
 #### RemoteStateSharing
-
-
 
 RemoteStateSharing allows remote state access between workspaces.
 By default, new workspaces in HCP Terraform do not allow other workspaces to access their state.
@@ -503,12 +408,7 @@ _Appears in:_
 | `allWorkspaces` _boolean_ | Allow access to the state for all workspaces within the same organization.<br />Default: `false`. |
 | `workspaces` _[ConsumerWorkspace](#consumerworkspace) array_ | Allow access to the state for specific workspaces within the same organization. |
 
-
 #### RunStatus
-
-
-
-
 
 _Appears in:_
 - [ModuleStatus](#modulestatus)
@@ -520,10 +420,7 @@ _Appears in:_
 | `configurationVersion` _string_ | The configuration version of this run. |
 | `outputRunID` _string_ | Run ID of the latest run that could update the outputs. |
 
-
 #### RunTrigger
-
-
 
 RunTrigger allows you to connect this workspace to one or more source workspaces.
 These connections allow runs to queue automatically in this workspace on successful apply of runs in any of the source workspaces.
@@ -540,10 +437,7 @@ _Appears in:_
 | `id` _string_ | Source Workspace ID.<br />Must match pattern: `^ws-[a-zA-Z0-9]+$` |
 | `name` _string_ | Source Workspace Name. |
 
-
 #### SSHKey
-
-
 
 SSH key used to clone Terraform modules.
 Only one of the fields `ID` or `Name` is allowed.
@@ -559,7 +453,6 @@ _Appears in:_
 | `id` _string_ | SSH key ID.<br />Must match pattern: `^sshkey-[a-zA-Z0-9]+$` |
 | `name` _string_ | SSH key name. |
 
-
 #### Tag
 
 _Underlying type:_ _string_
@@ -571,11 +464,7 @@ Must match pattern: `^[A-Za-z0-9][A-Za-z0-9:_-]*$`
 _Appears in:_
 - [WorkspaceSpec](#workspacespec)
 
-
-
 #### TargetWorkspace
-
-
 
 TargetWorkspace is the name or ID of the workspace you want autoscale against.
 
@@ -588,10 +477,7 @@ _Appears in:_
 | `name` _string_ | Workspace Name |
 | `wildcardName` _string_ | Wildcard Name to match match workspace names using `*` on name suffix, prefix, or both. |
 
-
 #### Team
-
-
 
 Teams are groups of HCP Terraform users within an organization.
 If a user belongs to at least one team in an organization, they are considered a member of that organization.
@@ -609,10 +495,7 @@ _Appears in:_
 | `id` _string_ | Team ID.<br />Must match pattern: `^team-[a-zA-Z0-9]+$` |
 | `name` _string_ | Team name. |
 
-
 #### TeamAccess
-
-
 
 HCP Terraform workspaces can only be accessed by users with the correct permissions.
 You can manage permissions for a workspace on a per-team basis.
@@ -630,10 +513,7 @@ _Appears in:_
 | `access` _string_ | There are two ways to choose which permissions a given team has on a workspace: fixed permission sets, and custom permissions.<br />Must be one of the following values: `admin`, `custom`, `plan`, `read`, `write`.<br />More information:<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions |
 | `custom` _[CustomPermissions](#custompermissions)_ | Custom permissions let you assign specific, finer-grained permissions to a team than the broader fixed permission sets provide.<br />More information:<br />  - /terraform/cloud-docs/users-teams-organizations/permissions#custom-workspace-permissions |
 
-
 #### Token
-
-
 
 Token refers to a Kubernetes Secret object within the same namespace as the Workspace object
 
@@ -647,10 +527,7 @@ _Appears in:_
 | --- | --- |
 | `secretKeyRef` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#secretkeyselector-v1-core)_ | Selects a key of a secret in the workspace's namespace |
 
-
 #### ValueFrom
-
-
 
 ValueFrom source for the variable's value.
 Cannot be used if value is not empty.
@@ -663,10 +540,7 @@ _Appears in:_
 | `configMapKeyRef` _[ConfigMapKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#configmapkeyselector-v1-core)_ | Selects a key of a ConfigMap. |
 | `secretKeyRef` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#secretkeyselector-v1-core)_ | Selects a key of a Secret. |
 
-
 #### Variable
-
-
 
 Variables let you customize configurations, modify Terraform's behavior, and store information like provider credentials.
 More information:
@@ -684,12 +558,7 @@ _Appears in:_
 | `value` _string_ | Value of the variable. |
 | `valueFrom` _[ValueFrom](#valuefrom)_ | Source for the variable's value. Cannot be used if value is not empty. |
 
-
 #### VariableSetStatus
-
-
-
-
 
 _Appears in:_
 - [WorkspaceStatus](#workspacestatus)
@@ -699,12 +568,7 @@ _Appears in:_
 | `id` _string_ |  |
 | `name` _string_ |  |
 
-
 #### VariableStatus
-
-
-
-
 
 _Appears in:_
 - [WorkspaceStatus](#workspacestatus)
@@ -717,10 +581,7 @@ _Appears in:_
 | `valueID` _string_ | ValueID is a hash of the variable on the CRD end. |
 | `category` _string_ | Category of the variable. |
 
-
 #### VersionControl
-
-
 
 VersionControl settings for the workspace's VCS repository, enabling the UI/VCS-driven run workflow.
 Omit this argument to utilize the CLI-driven and API-driven workflows, where runs are not driven by webhooks on your VCS provider.
@@ -738,16 +599,11 @@ _Appears in:_
 | `branch` _string_ | The repository branch that Run will execute from. This defaults to the repository's default branch (e.g. main). |
 | `speculativePlans` _boolean_ | Whether this workspace allows automatic speculative plans on PR.<br />Default: `true`.<br />More information:<br />  - /terraform/cloud-docs/run/ui#speculative-plans-on-pull-requests<br />  - /terraform/cloud-docs/run/remote-operations#speculative-plans |
 
-
 #### Workspace
-
-
 
 Workspace manages HCP Terraform Workspaces.
 More information:
   - /terraform/cloud-docs/workspaces
-
-
 
 | Field | Description |
 | --- | --- |
@@ -758,10 +614,7 @@ More information:
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[WorkspaceSpec](#workspacespec)_ |  |
 
-
 #### WorkspaceAgentPool
-
-
 
 AgentPool allows HCP Terraform to communicate with isolated, private, or on-premises infrastructure.
 Only one of the fields `ID` or `Name` is allowed.
@@ -777,10 +630,7 @@ _Appears in:_
 | `id` _string_ | Agent Pool ID.<br />Must match pattern: `^apool-[a-zA-Z0-9]+$` |
 | `name` _string_ | Agent Pool name. |
 
-
 #### WorkspaceProject
-
-
 
 Projects let you organize your workspaces into groups.
 Only one of the fields `ID` or `Name` is allowed.
@@ -796,10 +646,7 @@ _Appears in:_
 | `id` _string_ | Project ID.<br />Must match pattern: `^prj-[a-zA-Z0-9]+$` |
 | `name` _string_ | Project name. |
 
-
 #### WorkspaceRunTask
-
-
 
 Run tasks allow HCP Terraform to interact with external systems at specific points in the HCP Terraform run lifecycle.
 Only one of the fields `ID` or `Name` is allowed.
@@ -817,10 +664,7 @@ _Appears in:_
 | `enforcementLevel` _string_ | Run Task Enforcement Level. Can be one of `advisory` or `mandatory`. Default: `advisory`.<br />Must be one of the following values: `advisory`, `mandatory`<br />Default: `advisory`. |
 | `stage` _string_ | Run Task Stage.<br />Must be one of the following values: `pre_apply`, `pre_plan`, `post_plan`.<br />Default: `post_plan`. |
 
-
 #### WorkspaceSpec
-
-
 
 WorkspaceSpec defines the desired state of Workspace.
 
@@ -853,14 +697,7 @@ _Appears in:_
 | `deletionPolicy` _[DeletionPolicy](#deletionpolicy)_ | The Deletion Policy specifies the behavior of the custom resource and its associated workspace when the custom resource is deleted.<br />- `retain`: When you delete the custom resource, the operator does not delete the workspace.<br />- `soft`: Attempts to delete the associated workspace only if it does not contain any managed resources.<br />- `destroy`: Executes a destroy operation to remove all resources managed by the associated workspace. Once the destruction of these resources is successful, the operator deletes the workspace, and then deletes the custom resource.<br />- `force`: Forcefully and immediately deletes the workspace and the custom resource.<br />Default: `retain`. |
 | `variableSets` _[WorkspaceVariableSet](#workspacevariableset) array_ | HCP Terraform variable sets let you reuse variables in an efficient and centralized way.<br />More information<br />  - /terraform/tutorials/cloud/cloud-multiple-variable-sets |
 
-
-
-
 #### WorkspaceVariableSet
-
-
-
-
 
 _Appears in:_
 - [WorkspaceSpec](#workspacespec)
@@ -869,4 +706,3 @@ _Appears in:_
 | --- | --- |
 | `id` _string_ | ID of the variable set.<br />Must match pattern: `varset-[a-zA-Z0-9]+$`<br />More information:<br />  - /terraform/tutorials/cloud/cloud-multiple-variable-sets |
 | `name` _string_ | Name of the variable set.<br />More information:<br />  - /terraform/tutorials/cloud/cloud-multiple-variable-sets |
-
