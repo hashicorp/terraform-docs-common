@@ -502,6 +502,10 @@
               {
                 "title": "tf-migrate execute",
                 "path": "migrate/tf-migrate/reference/execute"
+              },
+              {
+                "title": "Configuration file reference",
+                "path": "migrate/tf-migrate/reference/configuration"
               }
             ]
           }

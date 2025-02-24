@@ -38,20 +38,31 @@ Migration Summary
 ┌───────────────────────────────┬───────┐
 │             Metric            │ Count │
 ├───────────────────────────────┼───────┤
-│ Number of Projects Migrated   │     1 │
+│ Number of Projects Migrated   │     2 │
 │ Number of Directories Skipped │     0 │
-│ Number of New Workspaces      │     1 │
+│ Number of New Workspaces      │     2 │
+│ Number of Variables Migrated  │     8 │
 └───────────────────────────────┴───────┘
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                           Workspace URLs                                          │
 ├───────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ https://app.terraform.io/<ORG>/workspaces/learn_terraform_migrate_s3_tfc_default                       │
+│ https://app.terraform.io/<ORG>/workspaces/web_default                       │
+│ https://app.terraform.io/<ORG>/workspaces/api_default                       │
 └───────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌────────────────────────────────────────────────────────────────────────┐
 │                            Pull Request Link                           │
 ├────────────────────────────────────────────────────────────────────────┤
-│ https://github.com/<ORG>/learn-terraform-migrate-s3-tfc/pull/1              │
+│ https://github.com/<ORG>/learn-terraform-migrate/pull/1              │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 </CodeBlockConfig>
+
+
+## Available options
+
+You can include the following flags when you run the `tf-migrate execute` command:
+
+| Option | Description | Default | Required |
+| ------ | ----------- | ------- | -------- |
+| `-dry-run` | If set, Terraform migrate only shows the output from the `terraform plan` step, and does not perform the migration. | None | No |
