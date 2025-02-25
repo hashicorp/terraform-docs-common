@@ -29,8 +29,6 @@ The `tf-migrate prepare` command generates a new Terraform configuration in the 
 - A new local git branch if you responded to the prompt to create a new branch with `yes`.  
 - A new pull request in the remote git repository if you responded to the prompt to create a pull request with `yes`.
 
-Refer to [Automate state file migration]() for instructions on how to use the command. 
-
 The `tf-migrate` CLI tool adds the generated configuration to the `.gitignore` file so that the configuration is not committed to source control.
 
 Terraform migrate creates the following structure in HCP Terraform or Terraform Enterprise depending on your local configuration:
@@ -103,7 +101,7 @@ You can include the following flags when you run the `tf-migrate prepare` comman
 
 | Option | Description | Default | Required |
 | ------ | ----------- | ------- | -------- |
-| `-config` | Specifies the path to an optional configuration file. Refer to  [Terraform migrate configuration file reference](PATH) for more information. | None | No |
+| `-config` | Specifies the path to an optional configuration file. Refer to  [Terraform migrate configuration file reference](/terraform/cloud-docs/migrate/tf-migrate/reference/configuration) for more information. | None | No |
 | `-hostname` | The hostname of your Terraform Enterprise server. If you do not provide a hostname, Terraform migrate defaults to HCP Terraform. | `app.terraform.io` | No |
 | `-skip-dir` | Specifies a comma-separated list of relative paths to exclude from the migration. | None | No |
 |`--parallelism` | Specifies the number of threads Terraform migrate uses to scan the local directory and prepare the migration. Set this value to `1` to disable parallelism. | The number of logical CPUs in the system. | No |
