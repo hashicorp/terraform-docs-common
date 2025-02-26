@@ -1,11 +1,10 @@
 ---
-page_title: Terraform Configurations - Workspaces - HCP Terraform
+page_title: Manage Terraform configurations
 description: >-
-  Workspaces organize infrastructure. Learn how to provide configuration
-  versions for a workspace and organize multiple environments.
+  Workspaces organize infrastructure and state. Learn how to provide configuration versions for a workspace and organize multiple environments.
 ---
 
-# Terraform Configurations in HCP Terraform Workspaces
+# Manage Terraform configurations
 
 [remote operations]: /terraform/cloud-docs/run/remote-operations
 
@@ -27,7 +26,7 @@ There are two ways to provide configuration versions for a workspace:
 
 - **With a connected VCS repository.** HCP Terraform can automatically fetch content from supported VCS providers, and uses webhooks to get notified of code changes. This is the most convenient way to use HCP Terraform. See [The UI- and VCS-driven Run Workflow](/terraform/cloud-docs/run/ui) for more information.
 
-  A VCS connection can be configured [when a workspace is created](/terraform/cloud-docs/workspaces/creating), or later in its [version control settings](/terraform/cloud-docs/workspaces/settings/vcs).
+  A VCS connection can be configured [when a workspace is created](/terraform/cloud-docs/workspaces/create), or later in its [version control settings](/terraform/cloud-docs/workspaces/settings/vcs).
 
   -> **Note:** When a workspace is connected to a VCS repository, directly uploaded configuration versions can only be used for [speculative plans](/terraform/cloud-docs/run/remote-operations#speculative-plans). This helps ensure your VCS remains the source of truth for all real infrastructure changes.
 

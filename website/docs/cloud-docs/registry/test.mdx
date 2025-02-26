@@ -1,10 +1,9 @@
 ---
-page_title: Testing Private Modules - Private Registry - HCP Terraform
-description: >-
-  Enable automated module testing in the private registry
+page_title: Test private modules in the HCP Terraform private registry
+description: Use the HCP Terraform private registry to run module tests. 
 ---
 
-# Test-integrated modules in the HCP Terraform private registry
+# Test private modules in the HCP Terraform private registry
 
 You can configure HCP Terraform to automatically run tests for modules in your private registry. When enabled, HCP Terraform will run tests for every commit to the designated branch. This lets you verify that it is safe to publish new module versions.
 
@@ -50,7 +49,7 @@ To add environment variables to your module's tests:
 
 ~> **Note**: Generated module tests are available in HCP Terraform **Plus** Edition and are in public beta. Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
 
-HCP Terraform can generate [test files](/terraform/language/tests) for any private modules that use the [branch-based publishing workflow](/terraform/cloud-docs/registry/publish-modules#branch-based-publishing) and do not already contain tests in their source code. 
+HCP Terraform can generate [test files](/terraform/language/tests) for any private module in your registry. You can only generate tests one time per module.
 
 To generate tests for your module:
 
@@ -59,5 +58,9 @@ To generate tests for your module:
 1. HCP Terraform displays generated configuration. To download all of the test files, click **Download generated tests**.
 1. Create a `tests` directory in your configuration.
 1. Unzip the downloaded files into the new `tests` directory.
+
+Generated test files remain available on the module overview page for later retrieval. Click **View test files** to view and download any previously generated tests.
+
+Organization owners can control this feature on the organization's [General Settings](/terraform/cloud-docs/users-teams-organizations/organizations#organization-settings) page.
 
 <!-- END: TFC:only name:generate-module-tests -->

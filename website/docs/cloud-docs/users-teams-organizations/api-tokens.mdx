@@ -1,17 +1,16 @@
 ---
-page_title: API Tokens - HCP Terraform
+page_title: Manage API tokens for HCP Terraform
 description: >-
-  Learn about the level of access granted by user, team, and organization API
-  tokens.
+  Use API tokens to authenticate with HCP Terraform and perform API operations.
 ---
 
 # API Tokens
 
-HCP Terraform supports many distinct types of API tokens with varying levels of access: user, team, organization, and audit trails. There are differences in access levels and generation workflows for each of these token types, which are outlined below.
+This topic describes the distinct types of API tokens you can use to authenticate with HCP Terraform.
 
-API tokens are displayed only once when they are created, and are obfuscated thereafter. If the token is lost, it must be regenerated.
+Note that HCP Terraform only displays API tokens once when you initially create them and are obfuscated thereafter. If the token is lost, it must be regenerated.
 
--> **API:** See the [Team Token API](/terraform/cloud-docs/api-docs/team-tokens) and [Organization Token API](/terraform/cloud-docs/api-docs/organization-tokens).
+Refer to [Team Token API](/terraform/cloud-docs/api-docs/team-tokens) and [Organization Token API](/terraform/cloud-docs/api-docs/organization-tokens) for additional information about using the APIs.
 
 ## User API Tokens
 
@@ -21,7 +20,7 @@ API tokens may belong directly to a user. User tokens are the most flexible toke
 
 API tokens may belong to a specific team. Team API tokens allow access to the workspaces that the team has access to, without being tied to any specific user.
 
-To manage the API token for a team, go to **Organization settings > Teams > (desired team)** and use the controls under the "Team API Token" header.
+Navigate to the **Organization settings > API Tokens > Team Token** tab to manage API tokens for a team or create new team tokens.
 
 Each team can have **one** valid API token at a time. When a token is regenerated, the previous token immediately becomes invalid.
 
@@ -51,7 +50,9 @@ Organization API tokens have permissions across the entire organization. They ca
 
 -> **Note:** This endpoint cannot be accessed with [organization tokens](#organization-api-tokens). You must access it with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](#team-api-tokens).
 
-## Audit trail tokens (Beta)
+<!-- BEGIN: TFC:only -->
+
+## Audit trail tokens
 
 You can generate an audit trails token to read an organization's [audit trails](/terraform/cloud-docs/api-docs/audit-trails). Use this token type to authenticate integrations pulling audit trail data, for example, using the [HCP Terraform for Splunk](/terraform/cloud-docs/integrations/splunk) app.
 
@@ -59,9 +60,9 @@ To manage an organization's audit trails token, go to **Organization settings > 
 
 Each organization can only have a _single_ valid audit trails token. Only [organization owners](/terraform/cloud-docs/users-teams-organizations/teams#the-owners-team) can generate or revoke an organization's audit trails token.
 
-Audit trail tokens are currently in beta.
-
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
+
+<!-- END: TFC:only -->
 
 ## Agent API Tokens
 
