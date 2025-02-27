@@ -38,7 +38,7 @@ You must have a GitHub account connected to HCP Terraform or Terraform Enterpris
 
 ## Get policies
 
-Refer to [Pre-written policy library reference](/terraform/cloud-docs/policy-enforcement/prewritten-library) for a complete list of available policies. You can also [browse the registry](https://registry.terraform.io/browse/policies) to discover additional policy libraries.
+Refer to the [pre-written policy library reference](/terraform/cloud-docs/policy-enforcement/prewritten-library) for a complete list of available policy sets. You can also [browse the registry](https://registry.terraform.io/search/policies?q=Pre-written) to discover additional policy libraries.
 
 Use one of the following methods to get pre-written policies:
 
@@ -52,7 +52,7 @@ Use one of the following methods to get pre-written policies:
 
 Complete the following steps to download policies from the registry and apply them directly to your workspaces. 
 
-1. Browse the policy libraries available in the [Terraform registry](https://registry.terraform.io/browse/policies).
+1. Browse the policy libraries available in the [Terraform registry](https://registry.terraform.io/search/policies?q=Pre-written).
 1. Click on a policy library and click **Choose policies**.
 1. Select the policies you want to implement. The registry generates code in the **USAGE INSTRUCTIONS** box.
 1. Click **Copy Code Snippet** to copy the code to your clipboard. 
@@ -64,7 +64,12 @@ Complete the following steps to download policies from the registry and apply th
 </Tab>
 <Tab  heading="Fork libraries">
 
-Create a fork of the repository containing the policies you want to implement. Refer to the [GitHub documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) for instructions on how to create a fork. 
+Create a fork of the repository containing the policies you want to implement. Refer to the [GitHub documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) for instructions on how to create a fork.
+
+The following repositories are available:
+
+- [policy-library-CIS-Policy-Set-for-AWS-Terraform](https://github.com/hashicorp/policy-library-CIS-Policy-Set-for-AWS-Terraform)
+
 
 HashiCorp Sentinel policy libraries include a `sentinel.hcl` file. The file defines an example policy set using the policies included in the library. Modify the file to customize your policy set. Refer to [Sentinel Policy Set VCS Repositories](/terraform/cloud-docs/policy-enforcement/manage-policy-sets/sentinel-vcs) for additional information.
 
