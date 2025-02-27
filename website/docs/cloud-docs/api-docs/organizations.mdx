@@ -620,6 +620,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
 | `data.attributes.default-execution-mode`                                  | boolean | `remote`  | Which [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use by default. Valid values are `remote`, `local`, and `agent`.                                                                                                                                                                           |
 | `data.attributes.default-agent-pool-id`                                   | string  | (previous value) | Required when `default-execution-mode` is set to `agent`. The ID of the agent pool belonging to the organization. Do _not_ specify this value if you set `execution-mode` to `remote` or `local`.                                                                                                                      |
+| `data.relationships.default-project.data.id`                              | string  |          | Specifies the ID of the default project. If set to `null`, Terraform removes the organization's default project. You must have [owner permissions](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) to update the default project.                                        |
 
 ### Sample Payload
 
@@ -706,6 +707,12 @@ curl \
       "default-agent-pool": {
         "data": null
       },
+      "default-project": {
+        "data": {
+          "type": "projects",
+          "id": "prj-1FzpQt4EyQDEqjCU"
+        }
+      }
       "oauth-tokens": {
         "links": {
           "related": "/api/v2/organizations/hashicorp/oauth-tokens"
