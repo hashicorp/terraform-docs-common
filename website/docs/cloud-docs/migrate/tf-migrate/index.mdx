@@ -6,27 +6,27 @@ description: >-
 
 # Terraform migrate
 
-Terraform migrate automatically migrates your Terraform Community Edition state and variables to HCP Terraform or Terraform Enterprise. It also updates your local configuration with any necessary changes and optionally creates a pull request to update your code repository.
+The `tf-migrate` CLI automatically migrates your Terraform Community Edition state and variables to HCP Terraform or Terraform Enterprise. It also updates your local configuration with the new state storage location and optionally creates a pull request to update your code repository.
 
 ## Overview
 
-Complete the following steps to install and configure the Terraform migrate CLI:
+Complete the following steps to install and configure `tf-migrate`:
 
-1. Download and install `tf-migrate`: You can manually download and install or use Homebrew if you are on macOS.
-1. Connect the CLI to HCP Terraform or Terraform Enterprise. Use the Terraform CLI to authenticate with your web UI.
+1. [Download and install `tf-migrate`](#install).
+1. Configure `tf-migrate` to [authenticate](#connect-to-hcp-terraform-or-enterprise-terraform) to HCP Terraform or Terraform Enterprise. 
 1. Enable logging so that you can troubleshoot potential issues that may occur during the migration process.
 
 ### GitHub connection requirements
 
-If your Terraform files are stored in a GitHub repository, you must present an HCP Terraform API token that meets the following requirements:
+The `tf-migrate` tool can optionally open a pull request to update your configuration in GitHub. To do so, you must create a GitHub personal access token with the following settings:
 
-- The token must be a classic token. Refer to the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for additional information 
+- The token must be a classic token. Refer to the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for additional information.
 - The token must have the `repo` OAuth scope.
 
-If your Terraform files are stored in Gitlab Cloud, you must present an API token that meets the following requirements:
+If your Terraform files are stored in GitLab Cloud, you must configure an API token that meets the following requirements:
 
 - The token must be a personal access token. Refer to the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for additional information.
-- The token must be have `read_repository` and `write_repository` scopes
+- The token must be have `read_repository` and `write_repository` scopes.
 
 ## Install
 
@@ -89,7 +89,7 @@ Terraform opens a browser to the HCP Terraform login screen. Enter a token name 
 
 HCP Terraform only displays your token once. Copy this token, then when the Terraform CLI prompts you, paste the user token exactly once into your terminal. Press **Enter** to complete the authentication process.
 
-Terraform migrate can optionally create a pull request that updates the backend blocks in your Terraform configuration. To do this, Terraform migrate uses the GitHub or Gitlab Cloud API, and requires an API token with permissions to modify your git repository.
+`tf-migrate` can optionally create a pull request that updates the state storage location specified in your Terraform configuration. To do this, `tf-migrate` uses the GitHub or GitLab Cloud API, and requires an API token with permissions to modify your Git repository.
 
 To configure your API token, set the `TF_GIT_PAT_TOKEN` environment variable
 
@@ -113,7 +113,7 @@ Terraform migrate supports migrating state from the following backends to HCP Te
 - [pg](/terraform/language/backend/pg)
 - [s3](/terraform/language/backend/s3)
 
-Terraform migrate does not support migrating from an existing "cloud" or "remote" backend.
+`tf-migrate` does not support migrating state from an existing `cloud` integration or `remote` backend.
 
 ## Enable logging
 
