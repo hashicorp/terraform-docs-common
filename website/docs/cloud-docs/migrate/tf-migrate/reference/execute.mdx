@@ -16,7 +16,7 @@ $ tf-migrate execute
 
 ## Description
 
-The `tf-migrate execute` command creates the project and workspace in HCP Terraform or Terraform Enterprise, migrates the existing state, and updates your configuration to replace the `backend` block with the `cloud` block. If you responded to the prompt in the prepare workflow to create a pull request, Terraform migrate creates the pull request after it completes the migration.
+The `tf-migrate execute` command creates the project and workspace in HCP Terraform or Terraform Enterprise, migrates the existing state, and updates your configuration to replace the `backend` block with the `cloud` block. If you responded to the prompt in the prepare workflow to create a pull request, `tf-migrate` creates the pull request after it completes the migration.
 
 When Terraform migrate completes the migration, it displays the number of workspaces migrated, a link to each HCP Terraform workspace, and a link to the GitHub pull request if you configured it to create one.
 

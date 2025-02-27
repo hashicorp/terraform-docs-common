@@ -486,7 +486,7 @@
         "path": "migrate"
       },
       {
-        "title": "Terraform migrate CLI",
+        "title": "The tf-migrate CLI",
         "routes": [
           {
             "title": "Overview",

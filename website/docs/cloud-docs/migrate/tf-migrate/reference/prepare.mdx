@@ -24,14 +24,14 @@ The `tf-migrate prepare` command prompts you for the following information:
 
 The `tf-migrate prepare` command generates a new Terraform configuration in the `_hcp-migrate-configs` directory to perform the migration. This configuration creates the following resources:
 
-- One workspace per state file. Terraform migrate names the workspace following the `<DIRECTORY NAME>-<LOCAL WORKSPACE NAME>` pattern. Terraform migrate also creates workspace variables from the Terraform configuration's variables.
-- One project to store all workspaces. Terraform migrate uses the directory path to the state file as the project name. For example, if your configuration is stored at `./frontend/networking/terraform.tfstate`, Terraform migrate names the project "frontend_networking". Because of this, your directory path must be between 3-40 characters and only include letters, numbers, inner spaces, hyphens, and underscores.
+- One workspace per state file. The `tf-migrate` tool names the workspace following the `<DIRECTORY NAME>-<LOCAL WORKSPACE NAME>` pattern. The `tf-migrate` tool also creates workspace variables from the Terraform configuration's variables.
+- One project to store all workspaces. The `tf-migrate` tool uses the directory path to the state file as the project name. For example, if your configuration is stored at `./frontend/networking/terraform.tfstate`, `tf-migrate` names the project "frontend_networking". Because of this, your directory path must be between 3-40 characters and only include letters, numbers, inner spaces, hyphens, and underscores.
 - A new local git branch if you responded to the prompt to create a new branch with `yes`.  
 - A new pull request in the remote git repository if you responded to the prompt to create a pull request with `yes`.
 
 The `tf-migrate` CLI tool adds the generated configuration to the `.gitignore` file so that the configuration is not committed to source control.
 
-Terraform migrate creates the following structure in HCP Terraform or Terraform Enterprise depending on your local configuration:
+The `tf-migrate` tool creates the following structure in HCP Terraform or Terraform Enterprise depending on your local configuration:
 
 | Source | Result |
 | :---- | :---- |
@@ -101,7 +101,7 @@ You can include the following flags when you run the `tf-migrate prepare` comman
 
 | Option | Description | Default | Required |
 | ------ | ----------- | ------- | -------- |
-| `-config` | Specifies the path to an optional configuration file. Refer to  [Terraform migrate configuration file reference](/terraform/cloud-docs/migrate/tf-migrate/reference/configuration) for more information. | None | No |
-| `-hostname` | The hostname of your Terraform Enterprise server. If you do not provide a hostname, Terraform migrate defaults to HCP Terraform. | `app.terraform.io` | No |
+| `-config` | Specifies the path to an optional configuration file. Refer to  [`tf-migrate` configuration file reference](/terraform/cloud-docs/migrate/tf-migrate/reference/configuration) for more information. | None | No |
+| `-hostname` | The hostname of your Terraform Enterprise server. If you do not provide a hostname, `tf-migrate` defaults to HCP Terraform. | `app.terraform.io` | No |
 | `-skip-dir` | Specifies a comma-separated list of relative paths to exclude from the migration. | None | No |
-|`--parallelism` | Specifies the number of threads Terraform migrate uses to scan the local directory and prepare the migration. Set this value to `1` to disable parallelism. | The number of logical CPUs in the system. | No |
+|`--parallelism` | Specifies the number of threads `tf-migrate` uses to scan the local directory and prepare the migration. Set this value to `1` to disable parallelism. | The number of logical CPUs in the system. | No |

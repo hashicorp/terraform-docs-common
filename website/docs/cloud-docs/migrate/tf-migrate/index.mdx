@@ -1,12 +1,14 @@
 ---
 page_title: Terraform migrate overview
 description: >-
-  Learn how to install and configure the Terraform migrate CLI tool.
+  Learn how to install and configure the Terraform migrate tf-migrate CLI tool.
 ---
 
 # Terraform migrate
 
-The `tf-migrate` CLI automatically migrates your Terraform Community Edition state and variables to HCP Terraform or Terraform Enterprise. It also updates your local configuration with the new state storage location and optionally creates a pull request to update your code repository.
+The Terraform migrate `tf-migrate` CLI automatically migrates your Terraform Community Edition state and variables to HCP Terraform or Terraform Enterprise. It also updates your local configuration with the new state storage location and optionally creates a pull request to update your code repository.
+
+**Hands-on**: Complete the [Migrate to HCP Terraform in bulk](/terraform/tutorials/cloud/bulk-migrate-hcp) tutorial to get started with `tf-migrate`.
 
 ## Overview
 
@@ -16,9 +18,11 @@ Complete the following steps to install and configure `tf-migrate`:
 1. Configure `tf-migrate` to [authenticate](#connect-to-hcp-terraform-or-enterprise-terraform) to HCP Terraform or Terraform Enterprise. 
 1. Enable logging so that you can troubleshoot potential issues that may occur during the migration process.
 
-### GitHub connection requirements
+### GitHub and GitLab connection requirements
 
-The `tf-migrate` tool can optionally open a pull request to update your configuration in GitHub. To do so, you must create a GitHub personal access token with the following settings:
+The `tf-migrate` tool can optionally open a pull request to update your configuration in GitHub or GitLab. 
+
+If your Terraform files are stored in GitHub, you must configure an API token that meets the following requirements:
 
 - The token must be a classic token. Refer to the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for additional information.
 - The token must have the `repo` OAuth scope.
@@ -34,21 +38,21 @@ If your Terraform files are stored in GitLab Cloud, you must configure an API to
 
 <Tab heading="Manual installation">
 
-HashiCorp distributes Terraform migrate as a binary package. To install Terraform migrate, find the [appropriate binary](https://releases.hashicorp.com/tf-migrate/) for your operating system and download it as a zip archive.
+HashiCorp distributes `tf-migrate` as a binary package. To install `tf-migrate`, find the [appropriate binary](https://releases.hashicorp.com/tf-migrate/) for your operating system and download it as a zip archive.
 
-After you download Terraform migrate, unzip the archive. Terraform migrate runs as a single binary named `tf-migrate`.
+After you download `tf-migrate`, unzip the archive.
 
 Finally, make sure that the `tf-migrate` binary is available in a directory that is in your system's `PATH`. 
 
 ### Verify the installation
 
-Every build of Terraform migrate includes a `SHA256SUMS` and a `SHA256SUMS.sig` file to validate your downloaded binary. Refer to the [verify HashiCorp binary downloads tutorial](https://developer.hashicorp.com/well-architected-framework/operational-excellence/verify-hashicorp-binary) for more information.
+Every build of `tf-migrate` includes a `SHA256SUMS` and a `SHA256SUMS.sig` file to validate your downloaded binary. Refer to the [verify HashiCorp binary downloads tutorial](https://developer.hashicorp.com/well-architected-framework/operational-excellence/verify-hashicorp-binary) for more information.
 
 </Tab>
 
 <Tab heading="Homebrew of macOS">
 
-[Homebrew](https://brew.sh/) is a free and open-source package management system for macOS. You can install the official [Terraform migrate](https://github.com/hashicorp/homebrew-tap) formula from the terminal.
+[Homebrew](https://brew.sh/) is a free and open-source package management system for macOS. You can install the official [`tf-migrate`](https://github.com/hashicorp/homebrew-tap) formula from the terminal.
 
 First, install the HashiCorp tap, a repository of all our Homebrew packages.
 
@@ -56,7 +60,7 @@ First, install the HashiCorp tap, a repository of all our Homebrew packages.
 $ brew tap hashicorp/tap
 ```
 
-Now, install Terraform migrate with the `hashicorp/tap/tf-migrate` formula.
+Now, install `tf-migrate` with the `hashicorp/tap/tf-migrate` formula.
 
 ```
 $ brew install hashicorp/tap/tf-migrate
@@ -68,7 +72,7 @@ $ brew install hashicorp/tap/tf-migrate
 
 ## Connect to HCP Terraform or Enterprise Terraform
 
-Terraform migrate uses your locally configured Terraform CLI API token. If you have not authenticated your local Terraform installation with HCP Terraform, use the `terraform login` command to create an authentication token.
+The `tf-migrate` tool uses your locally configured Terraform CLI API token. If you have not authenticated your local Terraform installation with HCP Terraform, use the `terraform login` command to create an authentication token.
 
 ```
 $ terraform login
@@ -100,7 +104,7 @@ $ export TF_GIT_PAT_TOKEN=<TOKEN>
 
 ## Supported backend
 
-Terraform migrate supports migrating state from the following backends to HCP Terraform or Terraform Enterprise:
+The `tf-migrate` tool supports migrating state from the following backends to HCP Terraform or Terraform Enterprise:
 
 - [local](/terraform/language/backend/local)
 - [azurerm](/terraform/language/backend/azurerm)
@@ -117,7 +121,7 @@ Terraform migrate supports migrating state from the following backends to HCP Te
 
 ## Enable logging
 
-You can enable detailed logging by setting the `TF_MIGRATE_ENABLE_LOG` environment variable to `true`. When you enable this setting, Terraform migrate writes the logs to the following locations, depending on your operating system:
+You can enable detailed logging by setting the `TF_MIGRATE_ENABLE_LOG` environment variable to `true`. When you enable this setting, `tf-migrate` writes the logs to the following locations, depending on your operating system:
 
 | Platform | Location |
 | -------- | -------- |
