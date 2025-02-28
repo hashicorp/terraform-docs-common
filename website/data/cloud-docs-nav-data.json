@@ -486,7 +486,7 @@
         "path": "migrate"
       },
       {
-        "title": "Terraform migrate CLI",
+        "title": "The tf-migrate CLI",
         "routes": [
           {
             "title": "Overview",
@@ -502,6 +502,10 @@
               {
                 "title": "tf-migrate execute",
                 "path": "migrate/tf-migrate/reference/execute"
+              },
+              {
+                "title": "Configuration file reference",
+                "path": "migrate/tf-migrate/reference/configuration"
               }
             ]
           }
