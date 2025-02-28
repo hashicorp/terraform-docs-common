@@ -555,7 +555,7 @@
         ]
       },
       {
-        "title": "Run pre-written Sentinel policies <sup>BETA</sup>",
+        "title": "Run pre-written Sentinel policies",
         "path": "policy-enforcement/prewritten-sentinel"
       },          
       {
@@ -574,6 +574,10 @@
             "path": "policy-enforcement/view-results/json"
           }
         ]
+      },
+      {
+        "title": "Pre-written policy library",
+        "path": "policy-enforcement/prewritten-library"
       },
       {
         "title": "Sentinel import reference",
