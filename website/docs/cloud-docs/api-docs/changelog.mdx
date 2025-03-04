@@ -1,17 +1,24 @@
 ---
-page_title: API Changelog - API Docs - HCP Terraform
+page_title: API Changelog for HCP Terraform
 page_id: api-changelog
 description: >-
-  Learn about the changes made to the HCP Terraform and Enterprise APIs.
+  Use this log of HCP Terraform API changes to track new features and evolving functionality over time.
 ---
 
 # API Changelog
 
 Keep track of changes to the API for HCP Terraform and Terraform Enterprise.
 
+## 2024-11-19
+
+- Clarify `tag-bindings` and `effective-tag-bindings` on [workspaces](/terraform/cloud-docs/api-docs/workspaces) and [projects](/terraform/cloud-docs/api-docs/projects)
+- Adds new documentation for `PATCH`ing tag bindings on [projects](/terraform/cloud-docs/api-docs/projects) and [workspaces](/terraform/cloud-docs/api-docs/workspaces)
 
 ## 2024-10-15
 * Add new documentation for the ability to deprecate, and revert the deprecation of, module versions. Learn more about [Managing module versions](/terraform/cloud-docs/api-docs/private-registry/manage-module-versions).
+
+## 2024-10-14
+* Update the [Organizations API](/terraform/cloud-docs/api-docs/organizations) to support the `speculative-plan-management-enabled` attribute, which controls [automatic cancellation of plan-only runs triggered by outdated commits](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-speculative-plan-management).
 
 ## 2024-10-11
 * Add documentation for new timeframe filter on List endpoints for [Runs](/terraform/cloud-docs/api-docs/run) API
@@ -268,7 +275,7 @@ This endpoint is exclusive to Terraform Enterprise, and not available in HCP Ter
 ### 2022-10-17
 
 * Updated the [Organizations API](/terraform/cloud-docs/api-docs/organizations) with the `allow-force-delete-workspaces`, which controls whether workspace administrators can delete workspaces with resources under management.
-* Updated the [Workspacess API](/terraform/cloud-docs/api-docs/workspaces) with a safe delete endpoint that guards against deleting workspaces that are managing resources.
+* Updated the [Workspaces API](/terraform/cloud-docs/api-docs/workspaces) with a safe delete endpoint that guards against deleting workspaces that are managing resources.
 
 ### 2022-10-12
 
