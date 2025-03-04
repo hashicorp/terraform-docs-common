@@ -1,9 +1,9 @@
 ---
-page_title: tfrun - Imports - Sentinel - HCP Terraform
-description: The `tfrun` import provides access to data associated with a Terraform run.
+page_title: tfrun Sentinel import reference
+description: Use tfrun import to give Sentinel access to data associated with a Terraform run.
 ---
 
-# Import: tfrun
+# tfrun Sentinel import reference
 
 The `tfrun` import provides access to data associated with a [Terraform run][run-glossary].
 
@@ -40,6 +40,7 @@ tfrun
 │   ├── execution_mode (string)
 │   ├── auto_apply (bool)
 │   ├── tags (array of strings)
+|   ├── tag_bindings (array of objects)
 │   ├── working_directory (string)
 │   └── vcs_repo (map of keys)
 └── cost_estimate
@@ -79,7 +80,7 @@ Specifies the ID that is associated with the current Terraform run.
 
 The `created_at` value within the [root namespace](#namespace-root) specifies the time that the run was created. The timestamp returned follows the format outlined in [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339).
 
-Users can use the `time` import to [load](https://docs.hashicorp.com/sentinel/imports/time#time-load-timeish) a run timestamp and create a new timespace from the specified value. See the `time` import [documentation](https://docs.hashicorp.com/sentinel/imports/time#import-time) for available actions that can be performed on timespaces.
+Users can use the `time` import to [load](/sentinel/docs/imports/time#time-load-timeish) a run timestamp and create a new timespace from the specified value. See the `time` import [documentation](/sentinel/docs/imports/time#import-time) for available actions that can be performed on timespaces.
 
 ### Value: `created_by`
 
@@ -222,7 +223,7 @@ main = rule when strings.has_suffix(tfrun.workspace.name, "-dev") is false {
 
 Specifies the time that the workspace was created. The timestamp returned follows the format outlined in [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339).
 
-Users can use the `time` import to [load](https://docs.hashicorp.com/sentinel/imports/time#time-load-timeish) a workspace timestamp, and create a new timespace from the specicied value. See the `time` import [documentation](https://docs.hashicorp.com/sentinel/imports/time#import-time) for available actions that can be performed on timespaces.
+Users can use the `time` import to [load](/sentinel/docs/imports/time#time-load-timeish) a workspace timestamp, and create a new timespace from the specified value. See the `time` import [documentation](/sentinel/docs/imports/time#import-time) for available actions that can be performed on timespaces.
 
 ### Value: `description`
 
@@ -242,7 +243,20 @@ Contains the workspace's [auto-apply](/terraform/cloud-docs/workspaces/settings#
 
 * **Value Type:** Array of strings.
 
-Contains the list of tag names for the workspace.
+Contains the list of tag names for the workspace, as well as the keys from tag bindings.
+
+### Value: `tag_bindings`
+
+* **Value Type:** Array of objects.
+
+Contains the complete list of tag bindings for the workspace, which includes inherited tag bindings, as well as the workspace key-only tags. Each binding has a string `key`, a nullable string `value`, as well as a boolean `inherited` properties.
+
+```
+tag_bindings (array of objects)
+├── key (string)
+├── value (string or null)
+└── inherited (boolean)
+```
 
 ### Value: `working_directory`
 

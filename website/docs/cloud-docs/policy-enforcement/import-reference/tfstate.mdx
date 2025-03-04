@@ -1,13 +1,11 @@
 ---
-page_title: tfstate - Imports - Sentinel - HCP Terraform
-description: The tfstate import provides access to a Terraform state.
+page_title: tfstate Sentinel import
+description: Use the tfstate import to give Sentinel access to Terraform state.
 ---
 
 # Import: tfstate
 
-~> **Warning:** The `tfstate` import is now deprecated and will be permanently removed in August 2025.
-We recommend that you start using the updated [tfstate/v2](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfstate-v2) import as soon as possible to avoid disruptions.
-The `tfstate/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
+~> **Warning:** The `tfstate` import is now deprecated and will be permanently removed in August 2025. We recommend that you start using the updated [tfstate/v2](/terraform/cloud-docs/policy-enforcement/import-reference/tfstate-v2) import as soon as possible to avoid disruptions. The `tfstate/v2` import offers improved functionality and is designed to better support your policy enforcement needs.
 
 The `tfstate` import provides access to the Terraform state.
 
@@ -25,7 +23,7 @@ general information about how Terraform uses state [here][ref-tf-state].
 time, the usefulness of this import is somewhat limited, as it will usually give
 you the state _prior_ to the plan the policy check is currently being run for.
 Depending on your needs, you may find the
-[`applied`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-applied) collection in `tfplan` more useful,
+[`applied`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#value-applied) collection in `tfplan` more useful,
 which will give you a _predicted_ state by applying plan data to the data found
 here. The one exception to this rule is _data sources_, which will always give
 up to date data here, as long as the data source could be evaluated at plan
@@ -102,7 +100,7 @@ Hence, a module with an address of simply `foo` (or `root.foo`) would be
 [`null`][ref-null] is returned if a module address is invalid, or if the module
 is not present in the state.
 
-[ref-null]: https://docs.hashicorp.com/sentinel/language/spec#null
+[ref-null]: /sentinel/docs/language/spec#null
 
 As an example, given the following module block:
 
@@ -204,14 +202,14 @@ import "tfstate"
 main = rule { tfstate.terraform_version matches "^0\\.11\\.\\d+$" }
 ```
 
--> **NOTE:** This value is also available via the [`tfplan`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan)
+-> **NOTE:** This value is also available via the [`tfplan`](/terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2)
 import, which will be more current when a policy check is run against a plan.
 It's recommended you use the value in `tfplan` until HCP Terraform
 supports policy checks in other stages of the workspace lifecycle. See the
 [`terraform_version`][import-tfplan-terraform-version] reference within the
 `tfplan` import for more details.
 
-[import-tfplan-terraform-version]: /terraform/cloud-docs/policy-enforcement/sentinel/import/tfplan#value-terraform_version
+[import-tfplan-terraform-version]: /terraform/cloud-docs/policy-enforcement/import-reference/tfplan-v2#value-terraform_version
 
 ## Namespace: Module
 

@@ -1,10 +1,10 @@
 ---
-page_title: GitHub Enterprise - VCS Providers - HCP Terraform
+page_title: Set up the GitHub Enterprise VCS provider
 description: >-
-  Learn how to use an on-premise installation of GitHub Enterprise for VCS features.
+  Learn how to use an on-premise installation of GitHub Enterprise with workspaces and private registry modules in HCP Terraform.
 ---
 
-# Configuring GitHub Enterprise Access
+# Set up the GitHub Enterprise VCS provider
 
 These instructions are for using a self-hosted installation of GitHub Enterprise for HCP Terraform's VCS features. [GitHub.com has separate instructions,](/terraform/cloud-docs/vcs/github-enterprise) as do the [other supported VCS providers.](/terraform/cloud-docs/vcs)
 
@@ -97,7 +97,7 @@ The settings in this section are optional. The Advanced Settings you can configu
 - **Scope of VCS Provider** - You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
 - **Set up SSH Keypair** - Most organizations will not need to add an SSH key. However, if the organization repositories include Git submodules that can only be accessed via SSH, an SSH key can be added along with the OAuth credentials. You can add or update the SSH key at a later time.
 
-### If you don't need to configure advanced aettings:
+### If you don't need to configure advanced settings:
 
 1. Click the **Skip and finish** button. This returns you to HCP Terraform's VCS Providers page, which now includes your new GitHub Enterprise client.
 
