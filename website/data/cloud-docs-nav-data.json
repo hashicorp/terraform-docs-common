@@ -327,6 +327,15 @@
         "title": "Organizations",
         "routes": [
           {"title": "Overview","path": "users-teams-organizations/organizations"},
+          {
+            "title": "Manage reserved tag keys", 
+            "path": "users-teams-organizations/organizations/manage-reserved-tags",
+            "badge": {
+              "text": "BETA",
+              "type": "outlined",
+              "color": "neutral"
+            }
+          },
           { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
           { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
         ]
@@ -477,7 +486,7 @@
         "path": "migrate"
       },
       {
-        "title": "Terraform migrate CLI",
+        "title": "The tf-migrate CLI",
         "routes": [
           {
             "title": "Overview",
@@ -493,6 +502,10 @@
               {
                 "title": "tf-migrate execute",
                 "path": "migrate/tf-migrate/reference/execute"
+              },
+              {
+                "title": "Configuration file reference",
+                "path": "migrate/tf-migrate/reference/configuration"
               }
             ]
           }
@@ -542,7 +555,7 @@
         ]
       },
       {
-        "title": "Run pre-written Sentinel policies <sup>BETA</sup>",
+        "title": "Run pre-written Sentinel policies",
         "path": "policy-enforcement/prewritten-sentinel"
       },          
       {
@@ -561,6 +574,10 @@
             "path": "policy-enforcement/view-results/json"
           }
         ]
+      },
+      {
+        "title": "Pre-written policy library",
+        "path": "policy-enforcement/prewritten-library"
       },
       {
         "title": "Sentinel import reference",
@@ -613,6 +630,10 @@
   {
     "title": "Integrations",
     "routes": [
+      {
+        "title": "Overview", 
+        "path": "integrations"
+      },
       {
         "title": "Kubernetes Operator",
         "routes": [

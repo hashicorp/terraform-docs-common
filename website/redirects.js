@@ -188,8 +188,8 @@ module.exports = [
   },
   //Azure AD -> Microsoft Entra ID
   {
-    source: "/users-teams-organizations/single-sign-on/azure-ad",
-    destination: "/users-teams-organizations/single-sign-on/entra-id",
+    source: "/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad",
+    destination: "/terraform/cloud-docs/users-teams-organizations/single-sign-on/entra-id",
     permanent: true,
   },
 // Reorg terraform block reference
@@ -205,6 +205,11 @@ module.exports = [
   },
   {
     source: "/terraform/language/settings/backends/configuration",
+    destination: "/terraform/language/backend",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/:version(v1\.(?:7|8|9|10|11|12|13)\.x)/settings/backends/configuration",
     destination: "/terraform/language/backend",
     permanent: true,
   },
