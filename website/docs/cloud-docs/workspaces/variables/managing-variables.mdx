@@ -59,6 +59,8 @@ The **Variables** page is not available for workspaces configured with `Local` [
 
 To add a variable:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and select the workspace you want to add a variable to.
+
 1. Go to the workspace **Variables** page and click **+ Add variable** in the **Workspace Variables** section.
 
 1. Choose a variable category (Terraform or environment), optionally mark the variable as [sensitive](#sensitive-values), and enter a variable key, value, and optional description. For Terraform variables only, you can check the **HCL** checkbox to enter a value in HashiCorp Configuration Language. 
@@ -105,7 +107,11 @@ The **Variable sets** page lists all of the organization's or project's variable
 
 To create a variable set:
 
-1. Go to the **Variable Sets** page for your organization or project and click **Create variable set**. The **Create a new variable set** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
+1. Click **Create variable set**.
 
 1. Choose a descriptive **Name** for the variable set. You can use any combination of numbers, letters, and characters.
 
@@ -131,8 +137,11 @@ To create a variable set:
 
 To edit or remove a variable set:
 
-1. Go to the organization's or project's settings and then click **Variable Sets**. The **Variable sets** page appears.
-1. Click the variable set you want to edit. That specific variable set page appears, where you can change the variable set settings. Refer to [create variable sets](#create-variable-sets) for details.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
+1. Select the variable set you want to edit. That specific variable set page appears, where you can change the variable set settings. Refer to [create variable sets](#create-variable-sets) for details.
 
 ### Delete Variable Sets
 
@@ -140,7 +149,10 @@ Deleting a variable set can be a disruptive action, especially if the variables 
 
 To delete a variable set:
 
-1. Click **Settings**, then click **Variable Sets**. The **Variable sets** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
 1. Select **Delete variable set**. Enter the variable set name and click **Delete variable set** to confirm this action. HCP Terraform deletes the variable set and removes it from all workspaces. Runs within those workspaces will no longer use the variables from the variable set.
 
 ### Apply or Remove Variable Sets From Inside a Workspace
