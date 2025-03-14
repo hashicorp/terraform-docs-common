@@ -73,6 +73,14 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
 | `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |                                                                             |
 
+
+### Comments on response elements
+| Key path                                        | Type   | Description                                                                                                                                 |
+|-------------------------------------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.agent-count`                   | number | Number of agents in Idle, Busy or Unknown state. Agents in Exited or Errored are excluded as they already exited, either gracefully or not. | 
+| `data.attributes.meta.status-counts.total`      | number | Total number of resources filter was applied to.                                                                                            |
+| `data.attributes.meta.status-counts.matching`   | number | Total number of resources matching the applied filter and therefore returned.                                                               |
+
 ### Sample Request
 
 ```shell
