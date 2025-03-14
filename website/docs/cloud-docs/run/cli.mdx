@@ -48,6 +48,8 @@ To supplement these remote operations, you can also use the optional [Terraform 
 
 To enable the CLI-driven workflow, you must:
 
+1. Create an account or sign in to [HCP Terraform](https://app.terraform.io/).
+
 1. Run `terraform login` to authenticate with HCP Terraform. Alternatively, you can manually configure credentials in the CLI config file or through environment variables. Refer to [CLI Configuration](/terraform/cli/config/config-file#environment-variable-credentials) for details.
 
 1. Add the `cloud` block to your Terraform configuration. You can define its arguments directly in your configuration file or supply them through environment variables, which can be useful for [non-interactive workflows](#non-interactive-workflows). Refer to [Using HCP Terraform](/terraform/cli/cloud) for configuration details.
