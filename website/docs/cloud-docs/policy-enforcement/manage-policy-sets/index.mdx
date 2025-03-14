@@ -76,7 +76,8 @@ You can add policies directly to HCP Terraform using the web UI. This process re
 
 To add an individually managed policy:
 
-1. Go to **Policies** in your organization’s settings. A list of managed policies in HCP Terraform appears. Each policy designates its policy framework (Sentinel or OPA) and associated policy sets.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to add policies to.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings. A list of managed policies in HCP Terraform appears. Each policy designates its policy framework (Sentinel or OPA) and associated policy sets.
 1. Click **Create a new policy**.
 1. Choose the **Policy framework** you want to use. You can only create a policy set from policies written using the same framework. You cannot change the framework type after you create the policy.
 1. Complete the following fields to define the policy:
@@ -93,9 +94,10 @@ The policy is now available in the HCP Terraform UI for you to edit and add to o
 
 To edit a managed policy:
 
-- Go to **Policies** in your organization’s settings.
-- Click the policy you want to edit to go to its details page.
-- Edit the policy's fields and then click **Update policy**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to edit policies for.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings. 
+1. Click the policy you want to edit to go to its details page.
+1. Edit the policy's fields and then click **Update policy**.
 
 #### Delete managed policies
 
@@ -105,9 +107,10 @@ You can not restore policies after deletion. You must manually re-add them to HC
 
 To delete a managed policy:
 
-- Go to **Policies** in your organization’s settings.
-- Click the policy you want to delete to go to its details page.
-- Click **Delete policy** and then click **Yes, delete policy** to confirm.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to delete a policy in.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings. 
+1. Click the policy you want to delete to go to its details page.
+1. Click **Delete policy** and then click **Yes, delete policy** to confirm.
 
 The policy no longer appears in HCP Terraform and in any associated policy sets.
 
@@ -126,7 +129,8 @@ The way you set up and configure a new policy set depends on your workflow and w
 ### Create policy sets
 
 To create a policy set:
-1. Go to **Policy Sets** in your organization’s settings.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to create a policy set in.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings. 
 1. Click **Connect a new policy set**.
 1. Choose your workflow.
    - For managed policies, click **create a policy set with individually managed policies**. HCP Terraform shows a form to create a policy set and add individually managed policies.
@@ -153,7 +157,8 @@ To create a policy set:
 
 To edit a policy set:
 
-1. Go to the **Policy Sets** section of your organization’s settings.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to edit a policy set in.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings. 
 1. Click the policy set you want to edit to go to its settings page.
 1. Adjust the settings and click **Update policy set**.
 
@@ -163,7 +168,8 @@ You can validate that changing a policy runtime version does not introduce any b
 
 To perform a policy evaluation:
 
-1. Go to the **Policy Sets** section of your organization’s settings.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to your organization.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings.
 1. Click the policy set you want to upgrade.
 1. Click the **Evaluate** tab.
 1. Select the **Runtime version** you wish to upgrade to.
@@ -181,7 +187,8 @@ You can not restore policy sets after deletion. You must manually re-add them to
 
 To delete a policy set:
 
-1. Go to **Policy Sets** in your organization’s settings.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to delete a policy set in.
+1. Choose **Settings** in the sidebar, then **Policies** in your organization’s settings.
 2. Click the policy set you want to delete to go to its details page.
 3. Click **Delete policy** and then click **Yes, delete policy set** to confirm.
 
