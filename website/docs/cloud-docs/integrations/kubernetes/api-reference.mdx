@@ -75,9 +75,9 @@ _Appears in:_
 AgentPool manages HCP Terraform Agent Pools, HCP Terraform Agent Tokens and can perform HCP Terraform Agent scaling.
 
 More information:
-  - [Manage agent pools](/terraform/cloud-docs/agents/agent-pools)
+  - [Manage agent pools](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agent-pools.mdx)
   - [Agent API tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#agent-api-tokens)
-  - [HCP Terraform agents](/terraform/cloud-docs/agents)
+  - [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx)
 
 | Field | Description |
 | --- | --- |
@@ -97,7 +97,7 @@ _Appears in:_
 
 | Field | Description |
 | --- | --- |
-| `name` _string_ | Agent Pool name. [More information](/terraform/cloud-docs/agents/agent-pools).|
+| `name` _string_ | Agent Pool name. [More information](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agent-pools.mdx).|
 | `organization` _string_ | Organization name where the Workspace will be created. [More information](/terraform/cloud-docs/users-teams-organizations/organizations).|
 | `token` _[Token](#token)_ | API Token to be used for API calls. |
 | `agentTokens` _[AgentToken](#agenttoken) array_ | List of the agent tokens to generate. |
@@ -109,7 +109,7 @@ _Appears in:_
 Agent Token is a secret token that a HCP Terraform Agent is used to connect to the HCP Terraform Agent Pool. In `spec` only the field `Name` is allowed, the rest are used in `status`.
 
 More information:
-  - [HCP Terraform agents](/terraform/cloud-docs/agents)
+  - [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx)
 
 _Appears in:_
 - [AgentPoolSpec](#agentpoolspec)
@@ -634,7 +634,7 @@ Only one of the fields `ID` or `Name` is allowed.
 At least one of the fields `ID` or `Name` is mandatory.
 
 More information:
-  - [HCP Terraform agents](/terraform/cloud-docs/agents)
+  - [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx)
 
 _Appears in:_
 - [WorkspaceSpec](#workspacespec)
@@ -699,7 +699,7 @@ _Appears in:_
 | `applyMethod` _string_ | Define either change will be applied automatically(auto) or require an operator to confirm(manual). Must be one of the following values: `auto`, `manual`. Default: `manual`. [More information](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).|
 | `allowDestroyPlan` _boolean_ | Allows a destroy plan to be created and applied. Default: `true`. [More information](/terraform/cloud-docs/workspaces/settings#destruction-and-deletion).|
 | `description` _string_ | Workspace description. |
-| `agentPool` _[WorkspaceAgentPool](#workspaceagentpool)_ | HCP Terraform Agents allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. [More information](/terraform/cloud-docs/agents).|
+| `agentPool` _[WorkspaceAgentPool](#workspaceagentpool)_ | HCP Terraform Agents allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. [More information](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx).|
 | `executionMode` _string_ | Define where the Terraform code will be executed. Must be one of the following values: `agent`, `local`, `remote`. Default: `remote`. [More information](/terraform/cloud-docs/workspaces/settings#execution-mode).|
 | `runTasks` _[WorkspaceRunTask](#workspaceruntask) array_ | Run tasks allow HCP Terraform to interact with external systems at specific points in the HCP Terraform run lifecycle. [More information](/terraform/cloud-docs/workspaces/settings/run-tasks).|
 | `tags` _[Tag](#tag) array_ | Workspace tags are used to help identify and group together workspaces. Tags must be one or more characters; can include letters, numbers, colons, hyphens, and underscores; and must begin and end with a letter or number. |

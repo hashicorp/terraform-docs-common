@@ -33,7 +33,7 @@ Working with health assessments requires the following permissions:
 Workspaces require the following settings to receive health assessments:
 - Terraform version 0.15.4+ for drift detection only
 - Terraform version 1.3.0+ for drift detection and continuous validation
-- [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for Terraform runs
+- [Remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) or [Agent execution mode](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agent-pools.mdx#configure-workspaces-to-use-the-agent) for Terraform runs
 
 The latest Terraform run in the workspace must have been successful. If the most recent run ended in an errored, canceled, or discarded state, HCP Terraform pauses health assessments until there is a successfully applied run.
 
@@ -75,7 +75,7 @@ Terraform Enterprise administrators can modify their installation's [assessment 
 
 If you are an administrator for a workspace and it satisfies all [assessment requirements](/terraform/cloud-docs/workspaces/health#workspace-requirements), you can trigger a new assessment by clicking **Start health assessment** on the workspace's **Health** page.
 
-After clicking **Start health assessment**, the workspace displays a message in the bottom lefthand corner of the page to indicate if it successfully triggered a new assessment. The time it takes to complete an assessment can vary based on network latency and the number of resources managed by the workspace. 
+After clicking **Start health assessment**, the workspace displays a message in the bottom lefthand corner of the page to indicate if it successfully triggered a new assessment. The time it takes to complete an assessment can vary based on network latency and the number of resources managed by the workspace.
 
 You cannot trigger another assessment while one is in progress. An on-demand assessment resets the scheduling for automated assessments, so HCP Terraform waits to run the next assessment until the next scheduled period.
 
@@ -103,9 +103,9 @@ On the right of a workspace’s overview page, HCP Terraform displays a **Health
 
 The [Explorer page](/terraform/cloud-docs/workspaces/explorer) presents a condensed overview of the health status of the workspaces within your organization. You can see the following information:
 
-- Workspaces that are monitoring workspace health 
-- Status of any configured continuous validation checks 
-- Count of drifted resources for each workspace 
+- Workspaces that are monitoring workspace health
+- Status of any configured continuous validation checks
+- Count of drifted resources for each workspace
 
 For additional details on the data available for reporting, refer to the [Explorer](/terraform/cloud-docs/workspaces/explorer) documentation.
 

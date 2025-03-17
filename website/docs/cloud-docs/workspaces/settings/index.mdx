@@ -43,7 +43,7 @@ The display name of the workspace.
 
 ### Project
 
-The [project](/terraform/cloud-docs/projects) that this workspace belongs to. Changing the workspace's project can change the read and write permissions for the workspace and which users can access it. 
+The [project](/terraform/cloud-docs/projects) that this workspace belongs to. Changing the workspace's project can change the read and write permissions for the workspace and which users can access it.
 
 To move a workspace, you must have the "Manage all Projects" organization permission or explicit team admin privileges on both the source and destination projects. Remember that moving a workspace to another project may affect user visibility for that project's workspaces. Refer to [Project Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions) for details on workspace access.
 
@@ -61,7 +61,7 @@ Specifying the "Remote" execution mode instructs HCP Terraform to perform Terraf
 
 To disable remote execution for a workspace, change its execution mode to "Local". This mode lets you perform Terraform runs locally with the [CLI-driven run workflow](/terraform/cloud-docs/run/cli). The workspace will store state, which Terraform can access with the [CLI integration](/terraform/cli/cloud). HCP Terraform does not evaluate workspace variables or variable sets in local execution mode.
 
-If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [HCP Terraform agents](/terraform/cloud-docs/agents). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
+If you instead need to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure, consider using [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx). By deploying a lightweight agent, you can establish a simple connection between your environment and HCP Terraform.
 
 Changing your workspace's execution mode after a run has already been planned will cause the run to error when it is applied.
 

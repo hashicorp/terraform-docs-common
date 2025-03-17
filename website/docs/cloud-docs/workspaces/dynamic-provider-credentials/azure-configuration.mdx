@@ -9,7 +9,7 @@ description: >-
 
 ~> **Important:** Ensure you are using version **3.25.0** or later of the **AzureRM provider** and version **2.29.0** or later of the **Microsoft Entra ID provider** (previously Azure Active Directory) as required OIDC functionality was introduced in these provider versions.
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.7.0](/terraform/cloud-docs/agents/changelog#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.7.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-7-0-03-02-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 You can use HCP Terraform’s native OpenID Connect integration with Azure to get [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the AzureRM or Microsoft Entra ID providers in your HCP Terraform runs. Configuring the integration requires the following steps:
 
@@ -78,7 +78,7 @@ Make sure that you’re _not_ setting values for `client_id`, `use_oidc`, or `oi
 
 ~> **Important:** Ensure you are using version **3.60.0** or later of the **AzureRM provider** and version **2.43.0** or later of the **Microsoft Entra ID provider** as required functionality was introduced in these provider versions.
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.12.0](/terraform/cloud-docs/agents/changelog#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.12.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-12-0-07-26-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 You can add additional variables to handle multiple distinct Azure setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace. You can configure each set of credentials independently, or use default values by configuring the variables prefixed with `TFC_DEFAULT_`.
 

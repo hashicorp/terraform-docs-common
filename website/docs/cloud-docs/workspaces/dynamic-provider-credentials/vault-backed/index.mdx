@@ -6,7 +6,7 @@ description: >-
 
 # Use Vault-backed dynamic credentials
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.8.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 For most use cases, separately configuring [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) with different cloud providers works well. However, Vault-backed dynamic credentials are for those looking for a way to:
  1. Use Vault's secrets engines as a centralized way to manage and consolidate cloud credentials management.
@@ -14,7 +14,7 @@ For most use cases, separately configuring [dynamic provider credentials](/terra
 
 The "Vault-backed" in "Vault-backed dynamic credentials" refers to Vault's [secrets engines](/vault/docs/secrets), which allow you to generate short-lived [dynamic secrets](https://www.vaultproject.io/use-cases/dynamic-secrets) for the AWS, GCP, or Azure providers. If you are using Terraform Enterprise and your Vault instance is configured within the same secure network, you can generate secrets while keeping your environment air-gapped.
 
-Vault-backed dynamic credentials combine the features of dynamic provider credentials and Vault's secrets engines. This means you can authenticate a Vault instance using workload identity tokens and use secrets engines on that instance to generate dynamic credentials for the AWS, GCP, and Azure providers. 
+Vault-backed dynamic credentials combine the features of dynamic provider credentials and Vault's secrets engines. This means you can authenticate a Vault instance using workload identity tokens and use secrets engines on that instance to generate dynamic credentials for the AWS, GCP, and Azure providers.
 
 For a comparison of Vault-backed dynamic credentials and dynamic provider credentials, refer to the article [Why use Vault-backed dynamic credentials to secure HCP Terraform infrastructure?](https://www.hashicorp.com/blog/why-use-vault-backed-dynamic-credentials-to-secure-hcp-terraform-infrastructure) on the HashiCorp blog.
 

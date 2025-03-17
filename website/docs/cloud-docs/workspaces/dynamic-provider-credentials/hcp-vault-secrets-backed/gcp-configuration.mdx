@@ -7,7 +7,7 @@ description: >-
 
 # HCP Vault Secrets-Backed Dynamic Credentials with the GCP Provider
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.16.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 You can use HCP Terraform’s native OpenID Connect integration with HCP to use [HCP Vault Secrets-backed dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed) with the GCP provider in your HCP Terraform runs. Configuring the integration requires the following steps:
 
@@ -55,7 +55,7 @@ Ensure you are not setting values or environment variables for `GOOGLE_CREDENTIA
 
 ### Specifying Multiple Configurations
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.16.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-16-0-10-02-2024) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 You can add additional variables to handle multiple distinct HCP Vault Secrets-backed GCP setups, enabling you to use multiple [provider aliases](/terraform/language/providers/configuration#alias-multiple-provider-configurations) within the same workspace. You can configure each set of credentials independently, or use default values by configuring the variables prefixed with `TFC_DEFAULT_`.
 
