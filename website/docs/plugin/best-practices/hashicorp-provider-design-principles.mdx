@@ -79,3 +79,14 @@ The benefits of this practice include:
 - Ensuring Terraform can statically validate the entire configuration anywhere
 - Preventing practitioner issues should the environment change between Terraform commands
 - Preventing practitioner issues should networking or a service become unavailable
+
+## Ephemeral Resources should represent a single sensitive API object
+
+A Terraform ephemeral resource should be a declarative representation of a single sensitive API object, such as an API token or secret, which will be
+created and/or retrieved from the API during the Open operation.
+
+The benefits of this practice include:
+
+- Maximizing predictability and minimizing the blast radius of open/close operations
+- Enabling composition of related or dependent components in new and innovative ways
+- Preventing maintainer burden of managing multiple underlying components
