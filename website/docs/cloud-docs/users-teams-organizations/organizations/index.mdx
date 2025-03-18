@@ -28,6 +28,7 @@ In addition to the HCP Terraform UI, you can use the following methods to manage
 
 HCP Terraform displays your current organization in the sidebar. To select an organization:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise.
 1. Click the current organization name to view a list of all the organizations where you are a member.
 1. Click an organization to select it. HCP Terraform displays list of workspaces within that organization.
 
@@ -39,16 +40,20 @@ To join an organization, the organization [owners][] or a user with specific [te
 
 ## Leave an organization
 
-1. Click the Terraform logo in the page header to navigate to the **Organizations** page.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and click the Terraform logo in the page header to navigate to the **Organizations** page.
 1. Open the **...** ellipses menu next to the organization and select **Leave organization**. 
 
 You do not need permission from the owners to leave an organization, but you cannot leave if you are the last member of the owners team. Either add a new owner and then leave, or [delete the organization](/terraform/cloud-docs/users-teams-organizations/organizations#general).
 
 ## Create an organization
 
+<EnterpriseAlert>
+
 On Terraform Enterprise, administrators can restrict your ability to create organizations. Refer to [Organization Creation](/terraform/enterprise/admin/application/general#organization-creation) for details.
 
-On HCP Terraform, any user can create a new organization. If you do not belong to any organizations, HCP Terraform prompts you to create one the first time you log in. To create an organization:
+</EnterpriseAlert>
+
+On HCP Terraform, any user can create a new organization. If you do not belong to any organizations, HCP Terraform prompts you to create one the first time you [sign in](https://app.terraform.io/). To create an organization:
 
 1. Click the current organization name and select **Create new organization**. The **Create a new organization** page appears.
 1. Enter a unique **Organization name** Organization names can include numbers, letters, underscores (`_`), and hyphens (`-`).
@@ -108,6 +113,7 @@ Organization owners using HCP Terraform Plus edition can choose whether members 
 To rename an organization that manages infrastructure:
 
 1. Alert all members of the organization about the name change.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to rename.
 1. Cancel in progress and pending runs or wait for them to finish. HCP Terraform cannot change the name of an organization with runs in progress.
 1. Lock all workspaces to ensure that no new runs will start before you change the name.
 1. Rename the organization.
