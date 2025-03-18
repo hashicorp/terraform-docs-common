@@ -6,7 +6,7 @@ tfc_only: true
 
 # Configure a Stack
 
-This guide explains configuring a Stack’s name, description, and VCS settings in HCP Terraform.
+This guide explains configuring a Stack’s name, description, project and VCS settings in HCP Terraform.
 
 ## Requirements
 
@@ -27,12 +27,19 @@ You can configure a Stack by performing the following steps:
 1. Select the Stack you want to configure.  
 1. Click **Stack settings** in the navigation menu.  
 1. Update any of the following settings:  
-   * Name   
-   * Description  
+   * Name
+   * Description
+   * Project, learn about [moving a stack to another project](/terraform/cloud-docs/stacks/configure#move-a-stack-to-another-project).
    * Version control settings, including:
         * Stacks automatically trigger new plans when you push them to your repositories’ default branch. To deactivate this behavior,  uncheck **VCS Trigger Enabled**.  
         * You can also configure Stacks to work from either a branch or tag-based workflow. 
 1. Click **Save settings** to apply your changes.
+
+## Move a Stack to another project
+
+To move a stack, you must have the **Manage all Projects** organization permission or explicit team admin privileges on both the source and destination projects. Moving a Stack may alter or remove access for some teams based on their [project-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#project-permissions).
+
+Upstream Stacks must be in the same project as their downstream Stacks. If you move a Stack to another project, the inputs that depend on it will break. Move upstream and downstream Stacks together to avoid disruptions. Learn more about [passing data from one Stack to another](/terraform/language/stacks/deploy/pass-data).
 
 ## Next steps
 
