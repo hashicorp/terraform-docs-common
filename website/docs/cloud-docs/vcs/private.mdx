@@ -19,7 +19,7 @@ You can use HCP Terraform agents to connect HCP Terraform to your private VCS pr
 - GitLab Enterprise
 - BitBucket Data Center
 
-For more information about HCP Terraform agents, refer to the [HCP Terraform agent documentation](/terraform/cloud-docs/agents).
+For more information about HCP Terraform agents, refer to the [HCP Terraform agent documentation](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx).
 
 ## Requirements
 
@@ -27,11 +27,11 @@ You must meet the following requirements to configure a connection to your priva
 
 - HCP Terraform agent v1.15.0 or newer.
 - Network connectivity between the HCP Terraform agent and private VCS provider.
-- Outbound network connectivity from the HCP Terraform agent to HCP Terraform. Refer to [networking requirements](/terraform/cloud-docs/agents/requirements#networking-requirements) for more information.
+- Outbound network connectivity from the HCP Terraform agent to HCP Terraform. Refer to [networking requirements](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/requirements.mdx#networking-requirements) for more information.
 
 ## Configure the agent pool and agent
 
-Before you start your HCP Terraform agent, you must create an agent pool and token. Refer to [Create an Agent Pool](/terraform/cloud-docs/agents/agent-pools#create-an-agent-pool) for a list of steps to create an agent pool.
+Before you start your HCP Terraform agent, you must create an agent pool and token. Refer to [Create an Agent Pool](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agent-pools.mdx#create-an-agent-pool) for a list of steps to create an agent pool.
 
 To configure your HCP Terraform agent with private VCS support, you must set the following environment variables in the environment you run the agent. You can also set these environment variables with optional command-line flags.
 
@@ -39,7 +39,7 @@ To configure your HCP Terraform agent with private VCS support, you must set the
 | -------- | ----- | ----------------- |
 | `_TFC_AGENT_REQUEST_FORWARDING_ENABLED` | `true` | |
 | `TFC_AGENT_REQUEST_FORWARDING` | `true` | `-request-forwarding` |
-| `TFC_AGENT_ACCEPT` | A comma-separated list of values that  must include `ingress`. Refer to [Install and Run Agents](/terraform/cloud-docs/agents/agents#accept) for more information. | `-accept` |
+| `TFC_AGENT_ACCEPT` | A comma-separated list of values that  must include `ingress`. Refer to [Install and Run Agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agents.mdx#accept) for more information. | `-accept` |
 
 Below is an example command to start the HCP Terraform agent:
 
@@ -80,4 +80,4 @@ There are two sources of information to help diagnose issues with Private VCS an
   - VCS events include errors that have resulted from making requests for private VCS during setup of the VCS Connection, and during normal operation.
   - This will not include messages during normal operations of private VCS.
 
-To aid in troubleshooting, you can increase the verbosity of the HCP Terraform agent's log messages  to `debug` and `trace` and retry the attempted action. Refer to [Install and Run Agents](/terraform/cloud-docs/agents/agents#log-level) for more information.
+To aid in troubleshooting, you can increase the verbosity of the HCP Terraform agent's log messages  to `debug` and `trace` and retry the attempted action. Refer to [Install and Run Agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/agents.mdx#log-level) for more information.

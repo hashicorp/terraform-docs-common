@@ -6,7 +6,7 @@ description: >-
 
 # Use dynamic credentials with the Kubernetes and Helm providers
 
-~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.13.1](/terraform/cloud-docs/agents/changelog#1-13-1-10-25-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+~> **Important:** If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.13.1](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-13-1-10-25-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 
 You can use HCP Terraform’s native OpenID Connect integration with Kubernetes to use [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for the Kubernetes and Helm providers in your HCP Terraform runs. Configuring the integration requires the following steps:
 
@@ -30,7 +30,7 @@ When inputting an "issuer URL", use the address of HCP Terraform (`https://app.t
 
 The OIDC identity resolves authentication to the Kubernetes API, but it first requires authorization to interact with that API. So, you must bind RBAC roles to the OIDC identity in Kubernetes.
 
-You can use both "User" and "Group" subjects in your role bindings. For OIDC identities coming from TFC, the "User" value is formatted like so: `organization:<MY-ORG-NAME>:project:<MY-PROJECT-NAME>:workspace:<MY-WORKSPACE-NAME>:run_phase:<plan|apply>`. 
+You can use both "User" and "Group" subjects in your role bindings. For OIDC identities coming from TFC, the "User" value is formatted like so: `organization:<MY-ORG-NAME>:project:<MY-PROJECT-NAME>:workspace:<MY-WORKSPACE-NAME>:run_phase:<plan|apply>`.
 
 You can extract the "Group" value from the token claim you configured in your cluster OIDC configuration. For details on the structure of the HCP Terraform token, refer to [Workload Identity](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/workload-identity-tokens).
 

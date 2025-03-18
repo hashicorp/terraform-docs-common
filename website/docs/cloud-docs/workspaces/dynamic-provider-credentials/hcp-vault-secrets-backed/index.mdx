@@ -16,15 +16,15 @@ This topic provides an overview of how to use HCP Vault Secrets to generate temp
 
 Configuring [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) with different cloud providers is suitable for most use cases, but you can use HCP Vault Secrets-backed dynamic credentials to centralize and consolidate cloud credential management.
 
-HCP Vault Secrets-backed dynamic credentials leverage HCP Vault Secrets' [dynamic secrets capability](/hcp/docs/vault-secrets/dynamic-secrets), which allows you to generate short-lived credentials for various providers. This means you can authenticate a HCP instance using workload identity tokens and use dynamic secret capabilities on that instance to generate dynamic credentials for the various providers. 
+HCP Vault Secrets-backed dynamic credentials leverage HCP Vault Secrets' [dynamic secrets capability](/hcp/docs/vault-secrets/dynamic-secrets), which allows you to generate short-lived credentials for various providers. This means you can authenticate a HCP instance using workload identity tokens and use dynamic secret capabilities on that instance to generate dynamic credentials for the various providers.
 
-Refer to the [HCP Vault Secrets announcement](https://www.hashicorp.com/blog/hcp-vault-secrets-is-now-generally-available) to learn about the benefits of using HCP Vault Secrets to manage provider credentials. 
+Refer to the [HCP Vault Secrets announcement](https://www.hashicorp.com/blog/hcp-vault-secrets-is-now-generally-available) to learn about the benefits of using HCP Vault Secrets to manage provider credentials.
 
 ## Workflow
 
 Using HCP Vault Secrets-backed dynamic credentials in a workspace requires the following steps for each cloud platform:
 
-1. If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.16.0](/terraform/cloud-docs/agents/changelog#1-16-0-10-02-2024) or newer. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
+1. If you are self-hosting [HCP Terraform agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx), ensure your agents use [v1.16.0](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx#1-16-0-10-02-2024) or newer. To use the latest dynamic credentials features, [upgrade your agents to the latest version](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/changelog.mdx).
 1. Set up dynamic provider credentials with the HCP provider: You must first [configure dynamic credentials with the HCP provider](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/hcp-configuration).
 1. Configure the dynamic secrets integration: You must configure the desired Vault secrets integration in your HCP project, such as AWS or GCP.
 1. Configure your HCP Terraform workspace: You must add specific environment variables to your workspace to tell HCP Terraform how to authenticate to other cloud providers during runs. Each cloud platform has its own set of environment variables that are necessary to configure dynamic credentials.

@@ -1,5 +1,5 @@
 ---
-page_title: HCP Terraform security model 
+page_title: HCP Terraform security model
 description: >-
  Learn about HCP Terraform's security and authorization model to identify potential security threats and follow our recommendations for using HCP Terraform securely.
 tfc_only: true
@@ -157,7 +157,7 @@ Workspaces may be configured to share their state with other workspaces within t
 
 ### Use separate agent pools for sensitive workspaces
 
-You can share [HCP Terraform Agents](/terraform/cloud-docs/agents) across all workspaces within an organization or [scope them to specific workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). If multiple workspaces share agent pools, a malicious actor in one of those workspaces could exfiltrate the agent’s API token, access private resources from the perspective of the agent, or modify the agent’s environment, potentially impacting other workspaces. For this reason, we recommend creating separate agent pools for sensitive workspaces and using the agent scoping setting to restrict which workspaces can target each agent pool.
+You can share [HCP Terraform Agents](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx) across all workspaces within an organization or [scope them to specific workspaces](https://github.com/hashicorp/terraform-docs-agents/blob/main/website/docs/cloud-docs/agents/index.mdx#scope-an-agent-pool-to-specific-workspaces/index.mdx). If multiple workspaces share agent pools, a malicious actor in one of those workspaces could exfiltrate the agent’s API token, access private resources from the perspective of the agent, or modify the agent’s environment, potentially impacting other workspaces. For this reason, we recommend creating separate agent pools for sensitive workspaces and using the agent scoping setting to restrict which workspaces can target each agent pool.
 
 ### Treat Archivist URLs as secrets
 
@@ -167,4 +167,4 @@ HCP Terraform uses a blob storage service called Archivist for storing various p
 
 Storing static credentials in HCP Terraform increases the inherent risk of a malicious user or a compromised plan or apply operation exposing your credentials. Because static credentials are usually long-lived and exposed in many locations, they are troublesome to revoke and replace.
 
-Using [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/) eliminates the need to store static credentials in HCP Terraform, reducing the risk of exposure. Dynamic provider credentials generate new temporary credentials for each operation and expire after that operation completes. 
+Using [dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/) eliminates the need to store static credentials in HCP Terraform, reducing the risk of exposure. Dynamic provider credentials generate new temporary credentials for each operation and expire after that operation completes.
