@@ -23,6 +23,8 @@ The HCP Terraform Operator for Kubernetes makes outbound requests over HTTPS (TC
 | ---------------- | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `app.terraform.io` | tcp/443, HTTPS | Outbound       | Dynamically managing HCP Terraform workspaces and returning the output to Kubernetes with the HCP Terraform API |
 
+For self-managed Terraform Enterprise instances, ensure that the operator can reach your Terraform Enterprise hostname over HTTPS (TCP port 443).
+
 ## Compatibility
 
 The HCP Terraform Operator for Kubernetes supports the following versions:
@@ -32,7 +34,9 @@ The HCP Terraform Operator for Kubernetes supports the following versions:
 
 ## Install and configure
 
-1. Generate an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within HCP Terraform and save it to a file. These instructions assume you are using a file named `credentials`.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to integrate with Kubernetes.
+
+1. Generate an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) within HCP Terraform or Terraform Enterprise and save it to a file. These instructions assume you are using a file named `credentials`.
 
 1. Set the `NAMESPACE` environment variable. This will be the namespace that you will install the Helm chart to.
 
@@ -58,20 +62,46 @@ The HCP Terraform Operator for Kubernetes supports the following versions:
    kubectl -n $NAMESPACE create secret generic workspacesecrets --from-literal=secret_key=abc123
    ```
 
-1. Install the [HCP Terraform Operator for Kubernetes with Helm](https://github.com/hashicorp/terraform-helm).
+1.  Add the HashiCorp Helm repository.
 
-   ```
-   helm repo add hashicorp https://helm.releases.hashicorp.com
+    ```
+    helm repo add hashicorp https://helm.releases.hashicorp.com
+    ```
 
-   helm install --namespace ${RELEASE_NAMESPACE} hashicorp/terraform --generate-name
-   ```
+1.  Install the [HCP Terraform Operator for Kubernetes with Helm](https://github.com/hashicorp/hcp-terraform-operator).  By default, the operator communicates with `app.terraform.io`. When deploying in a self-managed Terraform Enterprise, it is required to set the `operator.tfeAddress` to the specific hostname of the Terraform Enterprise instance.
 
-1. To create a Terraform workspace, you can create a separate Helm chart to deploy the custom resource or refer to these [examples](https://github.com/hashicorp/terraform-helm/tree/master/example).
+    - For HCP Terraform Cloud (default)
+    
+    ```
+    helm install --namespace ${RELEASE_NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator 
+    ```
+
+    - For self-managed Terraform Enterprise, specify your instance's hostname
+
+    ```
+    helm install --namespace ${RELEASE_NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator \
+      --set operator.tfeAddress="TERRAFORM_ENTERPRISE_HOSTNAME"
+    ```
+
+    - Alternatively, you can set this configuration in the [value.yaml](https://github.com/hashicorp/hcp-terraform-operator/blob/main/charts/hcp-terraform-operator/values.yaml) file.
+
+    ```yaml
+    operator:
+      tfeAddress: <TERRAFORM_ENTERPRISE_HOSTNAME>
+    ```
+
+    - Then, apply the configuration with.
+
+    ```
+    helm install --namespace ${NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator -f value.yaml
+    ```
+
+1.  To create a Terraform workspace, agent pool or etc, you can find different [examples](https://github.com/hashicorp/hcp-terraform-operator/tree/main/docs/examples) of the YAML manifests.
 
 ### Upgrade
 
 When a new version of the HCP Terraform Operator for Kubernetes Helm Chart is available from the HashiCorp Helm repository, you can upgrade with the following command.
 
 ```
-helm upgrade --namespace ${RELEASE_NAMESPACE} ${RELEASE_NAME} hashicorp/terraform
+helm upgrade --namespace ${RELEASE_NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator
 ```
