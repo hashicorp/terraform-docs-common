@@ -6,13 +6,17 @@ description: >-
 
 # Manage module versions
 
-You can manage the lifecycle of module versions in your organization’s private registry by deprecating or revoking module versions as you stop maintaining and supporting them.
+You can manage the lifecycle of module versions in your organization’s private registry by deprecating or revoking module versions as you stop maintaining and supporting those versions.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include "tfc-package-callouts/manage-module-versions.mdx"
 <!-- END: TFC:only name:pnp-callout -->
 
-Deprecating a module version adds warnings to the module's registry page and warnings in the run outputs of any users of that version. Revoking a module version adds warnings to the module's registry page, warnings in the run outputs of existing users, and prevents new users from consuming that version.
+Deprecating a module version adds warnings to the module's registry page and warnings in the run outputs of any users of that version.
+
+<!-- BEGIN: TFC:only name:revoke -->
+Revoking a module version adds warnings to the module's registry page, warnings in the run outputs of existing users, and prevents new users from consuming that version.
+<!-- END: TFC:only name:revoke -->
 
 You can also [deprecate or revoke module versions using the HCP Terraform API](/terraform/cloud-docs/api-docs/private-registry/manage-module-versions).
 
@@ -22,22 +26,32 @@ Deprecating a private module version enables platform teams and module authors t
 
 You can revert a module version’s deprecation if you decide to continue supporting that version. Reverting a version’s deprecation removes all warnings from that version in both the module’s registry page and the run outputs of that version’s consumers.
 
-Authors can revoke a private module to mark its end-of-life. Revoking a module version adds similar warnings to deprecation in a module's registry page and the run outputs of current consumers. Revoking a module version also blocks the runs of any new users attempting to add that version to their configuration.
+<!-- remove revoke references here and intro, pnp in requirements, add TFE -->
+
+<!-- BEGIN: TFC:only name:revoke -->
+
+You can revoke a private module to mark that you not longer support it. Revoking a module version adds similar warnings to deprecation in a module's registry page and the run outputs of current consumers. Revoking a module version also blocks the runs of any new users attempting to add that version to their configuration.
 
 Reverting a module version’s revocation sets it back to a deprecated state, signaling that the version is still maintained and supported but not recommended.
+
+<!-- END: TFC:only name:revoke -->
 
 ## Requirements
 
 To deprecate a module version or to revert a version’s deprecation:
 * you must have permission to manage [private registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry)
 * the module must be in the [private](/terraform/cloud-docs/registry/publish-modules) registry
+<!-- BEGIN: TFC:only name:pnp-callout -->
 * you must be a member of an organization on the HCP Terraform **Plus** edition
+<!-- END: TFC:only name:pnp-callout -->
 
-
+<!-- BEGIN: TFC:only name:revoke -->
 To revoke or to revert a module version’s status:
 * you must have permission to manage [private registry modules](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry)
 * the module must be in an organization's [private registry](/terraform/cloud-docs/registry/publish-modules)
 * you must be a member of an organization on the HCP Terraform **Premium** edition
+
+<!-- END: TFC:only name:revoke -->
 
 ## Deprecate a module version
 
@@ -74,10 +88,14 @@ A run’s output mode affects where a version's deprecation warning appears. If 
 
 If a run is in the **Console UI** mode, module deprecation warnings appear in the run’s logs:
 
+<CodeBlockConfig hideClipboard>
+
 ```shell
 Warning: Deprecated modules found, consider installing an updating version. The following are affected:
 Version X.X.X of <module-name>
 ```
+
+</CodeBlockConfig>
 
 ## Revert the deprecation of a module version
 
@@ -91,11 +109,13 @@ To revert a module version’s deprecation, perform the following steps:
 
 Reverting the deprecation of a module version removes all warnings from that version in both the module’s registry page and in the run outputs of that module version’s consumers.
 
+<!-- BEGIN: TFC:only name:revoke -->
+
 ## Revoke a module version
 
 To revoke a module version, perform the following steps:
 
-1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to your organization.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to your organization.
 1. Choose **Registry** in the sidebar, then select the module version you want to revoke.
 1. If you have not already, [deprecate the module version](#deprecate-a-module-version) you want to revoke.
 1. Open the **Manage module for organization** dropdown.
@@ -123,8 +143,6 @@ Module version X.X.X of <module-name> is revoked.
 ```
 
 </CodeBlockConfig>
-
-
 
 A run’s output mode affects where a version's revocation warnings appear. If a workspace is in the default [**Structured Run Output**](/terraform/cloud-docs/workspaces/settings#user-interface) mode, then module revocation warnings show up under a run’s **Diagnostics** dropdown.
 
@@ -178,8 +196,10 @@ When you revert the revocation of a module version, HCP Terraform sets that vers
 
 To revert a module version’s revocation, perform the following steps:
 
-1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to your organization.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to your organization.
 1. Choose **Registry** in the sidebar, then find the revoked module version you want to revert.
 1. Open the **Manage module for organization** dropdown.
 1. Select **Revert module version revocation X.X.X**.
 1. Click **Revert**.
+
+<!-- END: TFC:only name:revoke -->

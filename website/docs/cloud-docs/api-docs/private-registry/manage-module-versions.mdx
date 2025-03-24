@@ -50,7 +50,11 @@ As part of the module lifecycle, you can deprecate or revoke older module versio
 
 When you deprecate a module version, HCP Terraform adds warnings to the module's registry page and to run outputs when anyone uses the deprecated version. After deprecating a module version, you can revert that deprecated status to remove the warnings from that version in the registry and outputs.
 
+<!-- BEGIN: TFC:only name:revoke -->
+
 Revoking a module version adds warnings to the module's registry page, warnings in the run outputs of existing users, and blocks new users from using that version. Reverting a module version’s revocation sets the module version back to a deprecated state.
+
+<!-- END: TFC:only name:revoke -->
 
 For more details on deprecating or revoking module versions, refer to [Manage module versions](/terraform/cloud-docs/registry/manage-module-versions).
 
@@ -273,6 +277,8 @@ The response includes multiple versions, and each version has a `deprecation` ke
 }
 ```
 
+<!-- BEGIN: TFC:only name:revoke -->
+
 ## Revoke a module version
 
 Use this endpoint to revoke a module version. You must [deprecate a module version](#deprecate-a-module-version) before you can revoke it.
@@ -314,7 +320,7 @@ This endpoint allows you to revoke a specific module version. Revoking a module 
 
 ### Sample Request
 
-```shell
+```shell-session
 curl \
   --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
@@ -358,7 +364,6 @@ https://app.terraform.io/api/v2/organizations/hashicorp/registry-modules/private
   }
 }
 ```
-
 
 ## Revert the revocation status for a module version
 
@@ -516,3 +521,5 @@ The response includes the revoked versions of this module in the `revoked-versio
   },
 }
 ```
+
+<!-- END: TFC:only name:revoke -->
