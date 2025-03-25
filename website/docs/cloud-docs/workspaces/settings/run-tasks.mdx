@@ -50,7 +50,7 @@ To create a new run task:
    - **Description** (optional): A human-readable description for the run task. This information can contain letters, numbers, spaces, and special characters.
    - **HMAC key** (optional): A secret key that may be required by the external service to verify request authenticity.
 
-1. Select a Source
+1. Select a **Source**:
 
    - **Managed** HCP Terraform's infrastructure initiates run task requests. This is the default option.
    - **Agent** HCP Terraform can initiate run task requests within HCP Terraform agents to let run tasks communicate with isolated, private, or on-premises infrastructure. To use this option, your HCP Terraform agent must be in a pool with [request forwarding](terraform/cloud-docs/agents/request-forwarding) enabled, and you must be on the [HCP Terraform **Premium** edition](https://www.hashicorp.com/products/terraform/pricing).
