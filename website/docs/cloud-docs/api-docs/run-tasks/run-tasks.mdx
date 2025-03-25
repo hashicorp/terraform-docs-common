@@ -88,7 +88,7 @@ Properties without a default value are required unless otherwise specified.
 | `data.attributes.global-configuration.enabled`           | bool   | false   | (Optional) Whether the task will be associated on all workspaces.                                                                                                                                 |
 | `data.attributes.global-configuration.stages`            | array  |         | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
 | `data.attributes.global-configuration.enforcement-level` | string |         | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                                                    |
-| `data.relationships.agent-pool.data.id`                  | string |         | (Optional) The agent pool used to originate requests for the run task. Requires the `private_run_tasks` feature entitlement.                                                                       |
+| `data.relationships.agent-pool.data.id`                  | string |         | (Optional) The agent pool that HCP Terraform uses to make requests for the run task. Requires the [`private_run_tasks` feature entitlement](/terraform/cloud-docs/api-docs#feature-entitlements) and a self-hosted HCP Terraform agent with [request forwarding](/terraform/cloud-docs/agents/request-forwarding).                                                                    |
 
 ### Sample Payload
 
