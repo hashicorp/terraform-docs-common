@@ -363,13 +363,8 @@
         "routes": [
           {"title": "Overview","path": "users-teams-organizations/organizations"},
           {
-            "title": "Manage reserved tag keys",
-            "path": "users-teams-organizations/organizations/manage-reserved-tags",
-            "badge": {
-              "text": "BETA",
-              "type": "outlined",
-              "color": "neutral"
-            }
+            "title": "Manage reserved tag keys", 
+            "path": "users-teams-organizations/organizations/manage-reserved-tags"            
           },
           { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
           { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
