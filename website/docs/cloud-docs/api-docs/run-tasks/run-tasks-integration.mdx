@@ -26,7 +26,8 @@ Refer to [run tasks](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) for the
 ## Run Task Request
 
 When a run reaches the appropriate phase and a run task is triggered, HCP Terraform will send a request to the run task's URL.
-This request may originate from HCP Terraform itself, or from agents in the configured Terraform Agent Pool using [request forwarding](/terraform/cloud-docs/agents/request-forwarding).
+
+Either HCP Terraform itself, or a self-hosted HCP Terraform agent using [request forwarding](/terraform/cloud-docs/agents/request-forwarding) can make the request to a run task's URL. Your organization [must be entitled to `private-run-tasks`](/terraform/cloud-docs/api-docs#feature-entitlements) to use request forwarding.
 To use request forwarding the Organization must be entitled to `private-run-tasks`.
 The service receiving the run task request should respond with `200 OK`, or HCP Terraform will retry to trigger the run task.
 
