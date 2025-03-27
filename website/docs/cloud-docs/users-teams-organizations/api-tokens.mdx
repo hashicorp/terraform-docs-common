@@ -14,7 +14,7 @@ Refer to [Team Token API](/terraform/cloud-docs/api-docs/team-tokens) and [Organ
 
 ## User API Tokens
 
-API tokens may belong directly to a user. User tokens are the most flexible token type because they inherit permissions from the user they are associated with. For more information on user tokens and how to generate them, see the [Users](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) documentation.
+API tokens may belong directly to a user. User tokens are the most flexible token type because they inherit permissions from the user they are associated with. For more information on user tokens and how to generate them, see the [Users](/terraform/cloud-docs/users-teams-organizations/users#tokens) documentation.
 
 ## Team API Tokens
 
@@ -22,7 +22,9 @@ API tokens may belong to a specific team. Team API tokens allow access to the wo
 
 Navigate to the **Organization settings > API Tokens > Team Token** tab to manage API tokens for a team or create new team tokens.
 
-Each team can have **one** valid API token at a time. When a token is regenerated, the previous token immediately becomes invalid.
+Each team can have multiple, valid API tokens at a time, unless the team is using the legacy team token API.
+
+For teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API, each team can only have **one** valid API token at a time. When a legacy team token is generated, the previous token immediately becomes invalid.
 
 Owners and users with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions have the ability to enable and disable team token management for a team, which limits the actions that team members can take on a team token. Refer to [Allow Member Token Management](/terraform/cloud-docs/users-teams-organizations/permissions#allow-member-token-management) for more information.
 
