@@ -296,13 +296,18 @@ module.exports = [
     permanent: true
   },
   {
+    source: "/terraform/language/checks",
+    destination: "/terraform/language/block/check",
+    permanent: true
+  },
+  {
     source: "/terraform/language/moved",
     destination: "/terraform/language/block/moved",
     permanent: true
   },
   {
-    source: "/terraform/language/terraform",
-    destination: "/terraform/language/block/terraform",
+    source: "/terraform/language/expressions/custom-conditions",
+    destination: "/terraform/language/mitigate-risk/validate",
     permanent: true
   },
 ];
