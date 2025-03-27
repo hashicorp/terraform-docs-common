@@ -296,8 +296,8 @@ module.exports = [
     permanent: true
   },
   {
-    source: "/terraform/language/checks",
-    destination: "/terraform/language/block/check",
+    source: "/terraform/language/expressions/custom-conditions",
+    destination: "/terraform/language/mitigate-risk/validate",
     permanent: true
   },
   {
@@ -306,8 +306,8 @@ module.exports = [
     permanent: true
   },
   {
-    source: "/terraform/language/expressions/custom-conditions",
-    destination: "/terraform/language/mitigate-risk/validate",
+    source: "/terraform/language/terraform",
+    destination: "/terraform/language/block/terraform",
     permanent: true
   },
 ];
