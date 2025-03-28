@@ -26,6 +26,8 @@ Refer to [run tasks](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) for the
 ## Run Task Request
 
 When a run reaches the appropriate phase and a run task is triggered, HCP Terraform will send a request to the run task's URL.
+
+Either HCP Terraform itself, or a self-hosted HCP Terraform agent using [request forwarding](/terraform/cloud-docs/agents/request-forwarding) can make the request to a run task's URL. Your organization [must be entitled to `private-run-tasks`](/terraform/cloud-docs/api-docs#feature-entitlements) to use request forwarding.
 The service receiving the run task request should respond with `200 OK`, or HCP Terraform will retry to trigger the run task.
 
 `POST :url`
@@ -206,18 +208,18 @@ Run task outcomes with tags named "severity" or "status" are enriched within the
     "tags": {
       "Status":  [
         {
-          "label": "Denied", 
-          "level": "error" 
+          "label": "Denied",
+          "level": "error"
         }
       ],
       "Severity": [
         {
-          "label": "High", 
-          "level": "error" 
+          "label": "High",
+          "level": "error"
         },
         {
           "label": "Recoverable",
-          "level": "info" 
+          "level": "info"
         }
       ],
       "Cost Centre": [
@@ -256,18 +258,18 @@ The example below shows a complete payload explaining the data structure of a ca
               "tags": {
                 "Status":  [
                   {
-                    "label": "Denied", 
-                    "level": "error" 
+                    "label": "Denied",
+                    "level": "error"
                   }
                 ],
                 "Severity": [
                   {
-                    "label": "High", 
-                    "level": "error" 
+                    "label": "High",
+                    "level": "error"
                   },
                   {
-                    "label": "Recoverable", 
-                    "level": "info" 
+                    "label": "Recoverable",
+                    "level": "info"
                   }
                 ],
                 "Cost Centre": [
