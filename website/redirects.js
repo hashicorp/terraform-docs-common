@@ -289,7 +289,7 @@ module.exports = [
     destination: "/terraform/cloud-docs/policy-enforcement/prewritten-sentinel",
     permanent: true
   },
-  // March 2025 sprint redirects
+  // IA rewrite block configuration redirects
   {
     source: "/terraform/language/checks",
     destination: "/terraform/language/block/check",
