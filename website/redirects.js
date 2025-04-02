@@ -289,4 +289,15 @@ module.exports = [
     destination: "/terraform/cloud-docs/policy-enforcement/prewritten-sentinel",
     permanent: true
   },
+  // Consolidate install instructions
+  {
+    source: "/terraform/cli/install/apt",
+    destination: "/terraform/install",
+    permanent: true
+  },
+  {
+    source: "/terraform/cli/install/yum",
+    destination: "/terraform/install",
+    permanent: true
+  },
 ];
