@@ -38,6 +38,8 @@ A workspace will not process a webhook if the workspace previously processed a w
 
 You can manually trigger a run using the UI. Manual runs let you apply configuration changes when you update variable values but the configuration in version control is unchanged. You must manually trigger an initial run in any new VCS-driven workspace.
 
+-> **Note:** Triggering a manual run will _not_ fetch the latest commit from your VCS; it will use the current [configuration version](/terraform/cloud-docs/workspaces/configurations) associated with the workspace. [VCS Webhooks](/terraform/cloud-docs/vcs#webhooks) are used to update the configuration version with the latest code from your VCS.
+
 To start a run:
 
 1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to start a run in.
