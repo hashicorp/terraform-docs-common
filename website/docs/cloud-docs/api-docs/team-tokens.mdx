@@ -38,7 +38,7 @@ description: >-
 
 # Team tokens API reference
 
-Team API tokens grant access to a team's workspaces. Teams are not limited to a single token, and can have multiple, valid tokens at a time. Team tokens are not are not associated with a specific user.
+Team API tokens grant access to a team's workspaces. Teams are not limited to a single token, and can have multiple tokens at a time. Team tokens are not are not associated with a specific user.
 
 Teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API (`/teams/authentication-token`), can only have a **single**, valid token at a time. Generating a new legacy token revokes any previously existing tokens, replacing it with the new team token.
 
@@ -52,7 +52,7 @@ Generates a new team token.
 | :----- | :----------------------------------- |
 | POST   | /teams/:team_id/authentication-tokens |
 
-This endpoint returns the secret text of the new authentication token. You can only access this token when you create it and can not recover it later.
+This endpoint returns the secret text of the new authentication token. You can only access the secret when you create it and cannot recover it later.
 
 ### Parameters
 
@@ -127,7 +127,7 @@ curl \
 
 ```
 
-## Delete the team token
+## Delete a team token
 
 | Method | Path                                 |
 | :----- | :----------------------------------- |
@@ -296,15 +296,19 @@ curl \
 
 # Legacy team tokens API reference
 
+Legacy team API tokens grant access to a team's workspaces. Each team can have an API token that is not associated with a specific user.
+You can create and delete team tokens and list an organization's team tokens.
+The [team tokens API](/terraform/cloud-docs/api-docs/team-tokens) includes the same functionality as legacy team tokens, and allows you to provision multiple tokens per team.
+
 ## Generate a new team token
 
 Generates a new team token and overrides existing token if one exists.
 
 | Method | Path                                 |
 | :----- | :----------------------------------- |
-| POST   | /teams/:team_id/authentication-tokens |
+| POST   | /teams/:team_id/authentication-token |
 
-This endpoint returns the secret text of the new authentication token. You can only access this token when you create it and can not recover it later.
+This endpoint returns the secret text of the new authentication token. You can only access the secret when you create it and cannot recover it later.
 
 ### Parameters
 
