@@ -300,4 +300,9 @@ module.exports = [
     destination: "/terraform/install",
     permanent: true
   },
+  {
+    source: "/terraform/cloud-docs/overview/migrate-teams-standard",
+    destination: "/terraform/cloud-docs/overview",
+    permanent: true
+  },
 ];
