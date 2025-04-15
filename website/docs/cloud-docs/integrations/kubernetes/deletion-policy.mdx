@@ -1,0 +1,21 @@
+---
+page_title:
+description: >-
+    Deletion policies used by the HCP Terraform Cloud Operator for Kubernetes.
+---
+
+# Deletion Policies used by HCP Terraform Cloud Operator
+
+| Deletion Policy | Possible values | Description |
+| --- | --- | --- | --- |
+| `Workspace` | `retain`, `soft`, `destroy`, `force` | * `retain`: When the custom resource is deleted, the associated workspace is retained. Default value.
+* `soft`: Attempts to delete the associated workspace only if it does not contain any managed resources. 
+* `destroy`: Executes a destroy operation to remove all resources managed by the associated workspace. Once the destruction of these resources is successful, the workspace itself is deleted, followed by the removal of the custom resource.
+* `force`: Forcefully and immediately deletes the workspace and the custom resource. |
+| `Agent Pool` | `retain`, `destroy` | * `retain`: When the custom resource is deleted, the associated agent pool is retained. Default value. 
+* `destroy`: Attempting to remove the agent pool is only possible when there are no associated workspaces. These workspaces need to be disconnected separately. In this case, the controller will remove all tokens and scale down the agents to zero. |
+| `Project` | `retain`, `soft` | * `retain`: When the custom resource is deleted, the operator will not delete the associated project. Default value. * `soft`: 
+Attempts to remove the project. The project must be empty. |
+| `Module` | `retain`, `destroy` | * `retain`: When the custom resource is deleted, the associated module is retained. Default value. * `soft`: 
+Executes a destroy operation. Removes all resources and the module. |
+
