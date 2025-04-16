@@ -4,7 +4,9 @@ description: >-
   Learn how to use Azure DevOps Services with workspaces and private registry modules in HCP Terraform using OAuth.
 ---
 
-# Set up the Azure DevOps Services VCS provider
+# Set up the Azure DevOps Services VCS provider using OAuth
+
+~> **Important:** Starting April 2025, Microsoft will no longer allow new Azure DevOps OAuth app registrations—see the [official announcement](https://devblogs.microsoft.com/devops/no-new-azure-devops-oauth-apps-beginning-february-2025/) for details. Until Entra support is shipped in HCP Terraform, we recommend using [personal access tokens](/terraform/cloud-docs/vcs/azure-devops-services-pat).
 
 These instructions are for using `dev.azure.com` for HCP Terraform's VCS features. [Other supported VCS providers](/terraform/cloud-docs/vcs) have separate instructions.
 
