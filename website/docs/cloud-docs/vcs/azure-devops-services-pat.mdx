@@ -26,7 +26,6 @@ Configuring a new VCS provider requires permission to [manage VCS settings](/ter
 
 HCP Terraform uses personal access tokens to connect to Azure DevOps Services. This access method requires some additional configuration and ongoing maintenance:
 
-- [IIS Basic Authentication must be disabled](https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/iis-basic-auth?view=azure-devops) on your Azure DevOps Services instance in order to use personal access tokens.
 - Personal access tokens eventually expire, with a maximum allowed lifetime of one year. If HCP Terraform's token expires, it will be unable to connect to Azure DevOps Services until the token is replaced. To avoid a gap in service, do one of the following before the token expires:
   - Update the expiration date of the existing token within Azure DevOps Services.
   - Create a new token, and edit HCP Terraform's VCS connection to use it.
