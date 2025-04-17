@@ -6,16 +6,24 @@ description: >-
 
 # Deletion Policies used by HCP Terraform Cloud Operator
 
-| Deletion Policy | Possible values | Description |
-| --- | --- | --- | --- |
+| Deletion Policy | Possible values | Description | Migrating Custom Resources |
+| --- | --- | --- | --- | --- |
 | `Workspace` | `retain`, `soft`, `destroy`, `force` | * `retain`: When the custom resource is deleted, the associated workspace is retained. Default value.
 * `soft`: Attempts to delete the associated workspace only if it does not contain any managed resources. 
 * `destroy`: Executes a destroy operation to remove all resources managed by the associated workspace. Once the destruction of these resources is successful, the workspace itself is deleted, followed by the removal of the custom resource.
-* `force`: Forcefully and immediately deletes the workspace and the custom resource. |
+* `force`: Forcefully and immediately deletes the workspace and the custom resource. | If a workspace is retained, the custom resource deletion will not affect the workspace. 
+To migrate, you need to manually export the workspace configuration and apply it in the new cluster. 
+The workspace remains active and managed in the new cluster. |
 | `Agent Pool` | `retain`, `destroy` | * `retain`: When the custom resource is deleted, the associated agent pool is retained. Default value. 
-* `destroy`: Attempting to remove the agent pool is only possible when there are no associated workspaces. These workspaces need to be disconnected separately. In this case, the controller will remove all tokens and scale down the agents to zero. |
+* `destroy`: Attempting to remove the agent pool is only possible when there are no associated workspaces. 
+These workspaces need to be disconnected separately. In this case, the controller will remove all tokens and scale down the agents to zero. | 
+If the Agent Pool is retained, it and its associated resources remians unaffected. To migrate, you would export the agent pool configuration and apply it in the new cluster. |
 | `Project` | `retain`, `soft` | * `retain`: When the custom resource is deleted, the operator will not delete the associated project. Default value. * `soft`: 
-Attempts to remove the project. The project must be empty. |
+Attempts to remove the project. The project must be empty. | If the project is retained, it will remian in HCP Terraform and deleting the custom resource will not affect it.
+To migrate, export the project configuration and apply it to the new cluster. |
 | `Module` | `retain`, `destroy` | * `retain`: When the custom resource is deleted, the associated module is retained. Default value. * `soft`: 
-Executes a destroy operation. Removes all resources and the module. |
+Executes a destroy operation. Removes all resources and the module. | If a module is retained, deleting the custom resource will not affect the module. 
+You can export the module configuration and apply it in the new cluster. |
+
+
 
