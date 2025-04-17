@@ -33,6 +33,8 @@ HCP Terraform uses personal access tokens to connect to Azure DevOps Services. T
 
 1. Select **Azure DevOps** and then select **Azure DevOps Services** from the menu. The page moves to the next step.
 
+1. Select **Configure with Personal Access Token**
+
 Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring HCP Terraform.
 
 ## Step 2: On Azure DevOps Services, Create a New Personal Access Token
@@ -43,14 +45,14 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. Navigate to User settings -> Security -> Personal access tokens.
 
-1. Click the **New Token** button to generate a new personal access token with "Code (Read)" and "Code (Status)" scopes. (We recommend also granting access to "All accessible organizations."). Click Create.
+1. Click the **New Token** button to generate a new personal access token with "Code (Read)" and "Code (Status)" scopes. (We recommend also granting access to "All accessible organizations" and setting the Expiration to a date that works best for you). Click Create.
 
 1. Copy the generated token to your clipboard; you'll paste it in the next step. Leave this page open in a browser tab.
 
 
 ## Step 3: Add the Personal Access Token on HCP Terraform
 
-1. On the "Configure settings" step there is one textbox. Enter your Azure DevOps Services **Personal Access Token** from Step 2. Click the "Continue" button to continue to the next step.
+1. On the "Set up provider" step there are two textboxes. Give your VCS provider a name (optional) and enter your Azure DevOps Services **Personal Access Token** from Step 2. Click the "Connect and continue" button to continue to the next step.
 
 ## Step 4: On HCP Terraform, Configure Advanced Settings (Optional)
 
