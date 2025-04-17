@@ -33,8 +33,6 @@ HCP Terraform uses personal access tokens to connect to Azure DevOps Services. T
 
 1. Select **Azure DevOps** and then select **Azure DevOps Services** from the menu. The page moves to the next step.
 
-1. On the "Set up provider" step there are three textboxes. Enter an optional **Name** for this VCS connection. Enter the instance URL for your Azure DevOps Services in **HTTP URL** and **API URL** textboxes. Click the "Continue" button to continue to the next step.
-
 Leave the page open in a browser tab. In the next step you will copy values from this page, and in later steps you will continue configuring HCP Terraform.
 
 ## Step 2: On Azure DevOps Services, Create a New Personal Access Token
@@ -45,7 +43,7 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. Navigate to User settings -> Security -> Personal access tokens.
 
-1. Click the **New Token** button to generate a new personal access token with "Code (Read)" and "Code (Status)" scopes. (We recommend also granting access to "All accessible organizations.")
+1. Click the **New Token** button to generate a new personal access token with "Code (Read)" and "Code (Status)" scopes. (We recommend also granting access to "All accessible organizations."). Click Create.
 
 1. Copy the generated token to your clipboard; you'll paste it in the next step. Leave this page open in a browser tab.
 
@@ -54,39 +52,38 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. On the "Configure settings" step there is one textbox. Enter your Azure DevOps Services **Personal Access Token** from Step 2. Click the "Continue" button to continue to the next step.
 
-## Step 4: Configure VCS Provider Scope on HCP Terraform (Optional)
+## Step 4: On HCP Terraform, Configure Advanced Settings (Optional)
 
-This step is optional. You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
+The settings in this section are optional. The Advanced Settings you can configure are:
+- **Scope of VCS Provider** - You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
+- **Set up SSH Keypair** - Most organizations will not need to add an SSH key. However, if the organization repositories include Git submodules that can only be accessed via SSH, an SSH key can be added along with the OAuth credentials. You can add or update the SSH key at a later time.
 
-To limit the scope of this VCS Provider:
+### If You Don't Need to Configure Advanced Settings:
+
+1. Click the **Skip and Finish** button. This returns you to HCP Terraform's VCS Provider page, which now includes your new Azure DevOps Services client.
+
+### If You Need to Limit the Scope of this VCS Provider:
 
 1. Select the **Selected Projects** option and use the text field that appears to search for and select projects to enable. All current and future workspaces for any selected projects can use repositories from this VCS Provider.
 
 1. Click the **Update VCS Provider** button to save your selections.
 
-## Step 5: On Workstation, Create an SSH Key for HCP Terraform
+### If You Do Need an SSH Keypair:
 
-On a secure workstation, create an SSH keypair that HCP Terraform can use to connect to Azure DevOps Services. The exact command depends on your OS, but is usually something like `ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"`. This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key.
+#### Important Notes
 
-This SSH key **must have an empty passphrase.** HCP Terraform cannot use SSH keys that require a passphrase.
-
-### Important Notes
-
+- SSH will only be used to clone Git submodules. All other Git operations will still use HTTPS.
 - Do not use your personal SSH key to connect HCP Terraform and Azure DevOps Services; generate a new one or use an existing key reserved for service access.
-- In the following steps, you must provide HCP Terraform with the private key. Although HCP Terraform does not display the text of the key to users after it is entered, it retains it and will use it for authenticating to Azure DevOps Services.
-- **Protect this private key carefully.** It can read code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
+- In the following steps, you must provide HCP Terraform with the private key. Although HCP Terraform does not display the text of the key to users after it is entered, it retains it and will use it when authenticating to Azure DevOps Services.
+- **Protect this private key carefully.** It can push code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
 
-## Step 6: On Azure Devops Server, Add SSH Public Key
+1. On a secure workstation, create an SSH keypair that HCP Terraform can use to connect to Azure DevOps Services.com. The exact command depends on your OS, but is usually something like:
+   `ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"`
+   This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key. This SSH key **must have an empty passphrase**. HCP Terraform cannot use SSH keys that require a passphrase.
 
-1. Navigate to User settings -> Security -> SSH public keys on your Azure DevOps Services instance.
+1. While logged into the Azure DevOps Services account you want HCP Terraform to act as, navigate to the SSH Keys settings page, add a new SSH key and paste the value of the SSH public key you just created.
 
-   ![Azure DevOps Services screenshot: the SSH keys page](/img/docs/azure-devops-server-public-keys.png)
-
-1. Click the **Add** button. Paste the text of the **SSH public key** you created in step 3 (from the `.pub` file) into the text field, then click the **Add key** button to confirm.
-
-## Step 7: On HCP Terraform, Add SSH Private Key
-
-1. Go back to your HCP Terraform browser tab and paste the text of the **SSH private key** you created in step 3 into the **Private SSH Key** text field of the "Set up SSH keypair" step. Click the "Add SSH key" button.
+1. In HCP Terraform's **Add VCS Provider** page, paste the text of the **SSH private key** you just created, and click the **Add SSH Key** button.
 
 ## Finished
 
