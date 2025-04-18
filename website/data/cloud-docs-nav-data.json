@@ -649,6 +649,10 @@
             "path": "integrations/kubernetes/annotations-and-labels"
           },
           {
+            "title": "Deletion Policy",
+            "path": "integrations/kubernetes/deletion-policy"
+          },
+          {
             "title": "Migration Guide",
             "path": "integrations/kubernetes/ops-v2-migration"
           }
