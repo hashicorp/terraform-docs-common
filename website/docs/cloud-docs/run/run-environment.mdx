@@ -22,9 +22,15 @@ Changes made to the worker during a run are not persisted to subsequent runs, si
 
 ## Network Access to VCS and Infrastructure Providers
 
-In order to perform Terraform runs, HCP Terraform needs network access to all of the resources being managed by Terraform.
+In order to perform Terraform runs, HCP Terraform needs network access to all of the resources Terraform is going to manage.
 
-If you are using the SaaS version of HCP Terraform, this means your VCS provider and any private infrastructure providers you manage with Terraform (including VMware vSphere, OpenStack, other private clouds, and more) _must be internet accessible._
+If you are using the cloud version of HCP Terraform, your VCS provider and any private infrastructure providers you manage with Terraform must be internet accessible.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+
+If you are on the HCP Terraform **Premium** edition, you can use a self-hosted HCP Terraform agent to connect to private VCS providers. Refer to [Connect to private VCS providers](/terraform/cloud-docs/vcs/private) for more information.
+
+<!-- END: TFC:only name:pnp-callout -->
 
 Terraform Enterprise instances must have network connectivity to any connected VCS providers or managed infrastructure providers.
 
