@@ -1,11 +1,11 @@
 ---
-page_title: Plugin Development - Naming Best Practices
-description: |-
-  Our recommendations for naming resources, data sources, and attributes in
-  providers.
+page_title: Naming conventions
+description: >-
+  Learn how to name resources, data sources, and attributes in
+  Terraform providers to ensure consistency and discoverability.
 ---
 
-# Naming
+# Naming conventions
 
 Most names in a Terraform provider will be drawn from the upstream API/SDK that
 the provider is using. The upstream API names will likely need to be
@@ -97,3 +97,9 @@ in the above example. The patterns described above can also apply to such
 sub-blocks. Sub-blocks are usually introduced by a singular noun, even if
 multiple instances of the same-named block are accepted, since each distinct
 instance represents a single object.
+
+### Write-only Argument Names
+
+In addition to the regular guidance on attribute naming conventions, write-only arguments names
+should use a `_wo` suffix, such as `password_wo` to differentiate them from non-write-only arguments,
+such as `password`.

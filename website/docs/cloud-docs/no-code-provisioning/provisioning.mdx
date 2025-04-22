@@ -1,9 +1,9 @@
 ---
-page_title: No-Code Provisioning - Provisioning No-Code Infrastructure
-description: How to provision infrastructure from a no-code ready module.
+page_title: Provision no-code infrastructure in HCP Terraform
+description: No-code ready modules let users deploy a module's resources without writing configuration. Learn how to provision infrastructure from a no-code ready module.
 ---
 
-# Provisioning No-Code Infrastructure
+# Provision no-code infrastructure
 
 No-code provisioning lets you deploy infrastructure resources in a new HCP Terraform workspace without writing any Terraform configuration. You can create a no-code workspace from any module version labeled **No-code Ready** in your organization's [private registry](/terraform/cloud-docs/registry).
 
@@ -27,6 +27,8 @@ The no-code provisioning workflow creates a new HCP Terraform workspace to deplo
 
 To launch the no-code workflow:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization with the module you want to provision.
+
 1. Click **Registry** in the main HCP Terraform navigation to access your organization's private registry.
 
 1. Click **Modules** to view the list of available modules in the private registry. You can filter for no-code ready modules in your registry. No-code enabled modules have a **No-code Ready** badge next to their names.
@@ -37,11 +39,11 @@ To launch the no-code workflow:
 
 1. (Optional) Set values for the input variables. If your organization has defined options for a variable's values, these options appear in a dropdown menu. You can skip this step and configure the variables later in your workspace. However, HCP Terraform does not prompt you for these values again, and your Terraform runs may fail.
 
-1. Cick **Next: Workspace settings**.
+1. Click **Next: Workspace settings**.
 
-1. Enter a **Workspace Name**. The name must be unique within the organization and can include letters, numbers, dashes (-), and underscores (_). Refer to the [workspace naming recommendations](/terraform/cloud-docs/workspaces/creating#workspace-naming) for more guidance.
+1. Enter a **Workspace Name**. The name must be unique within the organization and can include letters, numbers, dashes (-), and underscores (_). Refer to the [workspace naming recommendations](/terraform/cloud-docs/workspaces/create#workspace-naming) for more guidance.
 
-1. Choose a **Project** for the workspace. Teams with access to the specified project can view the workspace automatically. Refer to [Organizing Workspaces with Projects](/terraform/cloud-docs/projects/managing) for more details. If the specified project contains any project-scoped variable sets, HCP Terraform automatically applies those sets to the workspace.
+1. Choose a **Project** for the workspace. Teams with access to the specified project can view the workspace automatically. Refer to [Organizing Workspaces with Projects](/terraform/cloud-docs/projects/manage) for more details. If the specified project contains any project-scoped variable sets, HCP Terraform automatically applies those sets to the workspace.
 
 1. Add an optional **Description** for the workspace.
 
@@ -67,7 +69,9 @@ When you [update the module version](/terraform/cloud-docs/no-code-provisioning/
 
 To change the version of the module that users can deploy:
 
-1. Navigate to the module in your organization's registry.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to your organization.
+
+1. Choose **Registry** from the sidebar and navigate to the module in your organization's registry.
 
 1. Click **Configure Settings**.
 
