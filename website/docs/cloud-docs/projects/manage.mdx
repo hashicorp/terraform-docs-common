@@ -64,14 +64,18 @@ team access to the project.
 
 You can configure HCP Terraform to automatically destroy each workspace's
 infrastructure in a project after a period of inactivity. A workspace
-is _inactive_ if the workspace's state has not changed within your designated
+is inactive if the workspace's state has not changed within your designated
 time period.
 
 If you configure a project to auto-destroy its infrastructure when inactive, 
 any run that updates Terraform state further delays the scheduled auto-destroy 
 time by the length of your designated timeframe.
 
-!> **Warning:** Automatic destroy plans _do not_ prompt you for apply approval in the HCP Terraform user interface. We recommend only using this setting for development environments.
+<Warning> 
+
+The user interface does not prompt you to approve automated destroy plans. We recommend only using this setting for development environments.
+
+</Warning>
 
 To schedule an auto-destroy run after a period of workspace inactivity:
 
