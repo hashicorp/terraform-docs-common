@@ -73,7 +73,7 @@ The HCP Terraform Operator for Kubernetes supports the following versions:
       ```shell-session
       $ helm install --namespace ${RELEASE_NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator
       ``` 
-   When deploying in a self-managed Terraform Enterprise, you must set the `operator.tfeAddress` to the specific hostname of the Terraform Enterprise instance:
+   When deploying in self-managed Terraform Enterprise, you must set the `operator.tfeAddress` to the specific hostname of the Terraform Enterprise instance:
 
       ```shell-session
       $ helm install --namespace ${RELEASE_NAMESPACE} hashicorp/hcp-terraform-operator tfc-operator \

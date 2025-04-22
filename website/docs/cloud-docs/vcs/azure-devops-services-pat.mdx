@@ -8,13 +8,13 @@ description: >-
 
 These instructions describe how to use a personal access token to connect HCP Terraform to Azure DevOps Services VCS, which is hosted at `dev.azure.com`. Connecting to Azure DevOps Services VCS lets you take advantage of HCP Terraform's VCS features. 
 
-If you do not intent to use personal access tokens to connect to Azure DevOps Services, refer to [Set up the Azure DevOps Server VCS provider](/terraform/cloud-docs/vcs/azure-devops-server). For information about other supported VCS providers, refer to [Connect to VCS Providers](/terraform/cloud-docs/vcs).
+If you do not intend to use personal access tokens to connect to Azure DevOps Services, refer to [Set up the Azure DevOps Server VCS provider](/terraform/cloud-docs/vcs/azure-devops-server). For information about other supported VCS providers, refer to [Connect to VCS Providers](/terraform/cloud-docs/vcs).
 
 ## Requirements
 
 Configuring a new VCS provider requires permission to [manage VCS settings](/terraform/cloud-docs/users-teams-organizations/permissions#manage-vcs-settings) for the organization.
 
-The account you use for connecting HCP Terraform must have **Project Collection Administrator** access enabled for any projects containing repositories of Terraform configurations. This permission is required to create webhooks. You cannot create custom access roles with lower levels of privilege because Microsoft does not allow delegation of this capability.
+To connect HCP Terraform to your repositories, your account must have **Project Collection Administrator** access enabled for all projects containing Terraform configurations. This permission is required to create webhooks because Microsoft doesn't allow you to create custom roles with lower-level access for this purpose.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -22,7 +22,7 @@ The account you use for connecting HCP Terraform must have **Project Collection 
 
 HCP Terraform uses personal access tokens to connect to Azure DevOps Services. This access method requires some additional configuration and ongoing maintenance:
 
-- Personal access tokens have a maximum lifetime of one year. When the token expires, HCP Terraform cannot to connect to Azure DevOps Services until the token is replaced. To avoid a gap in service, do one of the following actions before the token expires:
+- Personal access tokens have a maximum lifetime of one year. When the token expires, HCP Terraform cannot connect to Azure DevOps Services until the token is replaced. To avoid a gap in service, do one of the following actions before the token expires:
   - Update the expiration date of the existing token within Azure DevOps Services. 
   - Create a new token and update the VCS configuration in HCP Terraform VCS connection to use it.
 
@@ -87,7 +87,7 @@ In the following steps, you must provide HCP Terraform with the private key. Alt
 
 <Warning>
 
-Follow security best practices and your organization's policies for protecting important credentials when handing and storing the private key. Someone with access to the key can use it to push code to the repositories you use to manage your infrastructure.
+Follow security best practices and your organization's policies for protecting important credentials when handing and storing a private key. Someone with access to the key can use it to push code to the repositories you use to manage your infrastructure.
 
 </Warning>
 
