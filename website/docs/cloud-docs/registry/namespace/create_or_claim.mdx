@@ -1,0 +1,50 @@
+---
+page_title: Create or claim namespaces in HCP Terraform
+description: Create a new namespace or claim an existing one to allow members of an organization to collectively publish to the public registry.
+tfc_only: true
+---
+
+## Create or claim a namespace
+
+Organizations can create or claim a GitHub account’s public registry namespace to allow its members to manage the public registry artifacts in that account. The first step is connecting an HCP Terraform organization to a GitHub account to create or claim its namespace.
+
+### Background
+
+When an organization claims a namespace, the only way to manage that claimed namespace is through HCP Terraform, meaning you can no longer manage that namespace through the [public registry](https://registry.terraform.io/).
+
+### Requirements
+
+You must meet the following requirements to claim a namespace for an organization:
+
+* Be a member of the [owners](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) team in your HCP Terraform organization.
+* If the namespace you want to claim has *existing* public registry artifacts, you must:
+  * Have `write` access to each artifact’s corresponding repository.
+  * Each repository must have the [Terraform Cloud GitHub App](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github-app) installed.
+
+#### Install the GitHub App
+
+You must install the [Terraform Cloud GitHub App](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github-app) into the GitHub account with the namespace you want to claim. To install a GitHub app, you must own your account or receive administrator approval if using an [organization](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations#organizations-and-enterprise-accounts) account.
+
+During the Terraform Cloud GitHub App installation process, you can choose to install the app in *specific* repositories or *globally* in every repository in your account. The decision of where to install the GitHub app affects both the process of claiming a namespace with existing public registry artifacts and publishing future artifacts.
+
+While claiming a namespace, *every* repository corresponding to a public registry artifact must have the Terraform Cloud GitHub App. Future repositories you wish to publish to the public registry under this namespace must also have the app. We recommend installing the Terraform Cloud GitHub App globally into every repository in your account to simplify claiming a namespace with existing public registry artifacts and publishing future artifacts.
+
+### Workflow
+
+To create or claim a namespace:
+
+1. On the sidebar, navigate to **Registry \> Public namespaces**.
+2. Click **New Namespace**.
+3. HCP Terraform lists accounts where you installed the [Terraform Cloud GitHub App](https://developer.hashicorp.com/terraform/cloud-docs/vcs/github-app). Choose the account you want to create or claim the namespace of.
+4. After selecting an account, HCP Terraform verifies if you qualify to claim that namespace.
+   1. If the namespace already exists and contains artifacts, then HCP Terraform ensures you have `write` access to each artifact’s corresponding repository.
+   2. Next, you can verify the public registry artifacts you are claiming along with this namespace.
+5. Click **Create Namespace** or **Claim Namespace** to finalize your organization’s public namespace ownership.
+
+After claiming or creating a new namespace, the **Public namespace** page lists any artifacts your organization now controls with the new namespace.
+
+If the GitHub account you want to claim the namespace for is not in the list of accounts on the **New namespace** page, click **Add GitHub Account** and follow the prompts to [reinstall the application](https://docs.github.com/en/apps/using-github-apps/installing-a-github-app-from-a-third-party). After reinstalling, ensure you are signed into GitHub in your browser as a user with access to that account and try to claim the account’s namespace again.
+
+Ensure you are logged in as a GitHub user with `write` permission for every repository corresponding to your account’s published public registry artifacts. For more information on specific error codes you encounter, [refer to the GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#repository-roles-for-organizations).
+
+Ensure every repository corresponding to your account’s published public registry artifacts has the [Terraform Cloud GitHub App](/terraform/cloud-docs/vcs/github-app) installed.

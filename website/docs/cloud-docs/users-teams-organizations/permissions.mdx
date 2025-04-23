@@ -312,9 +312,13 @@ This permission implicitly grants access to read all workspaces, which is necess
 
 Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/terraform/cloud-docs/registry). These permissions are otherwise only available to organization owners.
 
+### Manage Public Registry
+
+Allows members to publish and delete providers, modules, or both providers and modules using an organization's [claimed namespaces](/terraform/cloud-docs/registry/namespace) in the [public registry](https://registry.terraform.io/). These permissions are otherwise only available to organization owners.
+
 ### Team Management Permissions
 
-HCP Terraform has three levels of team management permissions: manage membership, manage teams, and manage organization access. Each permission level grants users the ability to perform specific actions and each progressively requires prerequisite permissions. 
+HCP Terraform has three levels of team management permissions: manage membership, manage teams, and manage organization access. Each permission level grants users the ability to perform specific actions and each progressively requires prerequisite permissions.
 
 For example, to grant a user the manage teams permission, that user must already have manage membership permissions. To grant a user the manage organization access permission, a user must have both manage teams and manage membership permissions.
 
@@ -347,7 +351,7 @@ Allows members to update a team's organization access settings.
 
 On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams. This permission confers all of the permissions granted by the manage teams and manage membership permissions.
 
-This permission allows owners of large organizations to delegate team management to another trusted team. You should only grant it to teams of trusted users. 
+This permission allows owners of large organizations to delegate team management to another trusted team. You should only grant it to teams of trusted users.
 
 ~> **Assign with caution:** Members with this permission can update all organization access settings for any team visible to them.
 
