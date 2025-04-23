@@ -40,7 +40,7 @@ description: >-
 
 Team API tokens grant access to a team's workspaces. Teams are not limited to a single token, and can have multiple tokens at a time. Team tokens are not are not associated with a specific user.
 
-Teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API (`/teams/authentication-token`), can only have a **single**, valid token at a time. Generating a new legacy token revokes any previously existing tokens, replacing it with the new team token.
+Teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API (`/teams/authentication-token`), can only create a **single**, valid token at a time. Generating a new legacy token when one already exists for the team revokes the existing legacy token, replacing it with a new team token.
 
 You can create and delete team tokens and list an organization's team tokens.
 
@@ -298,7 +298,7 @@ curl \
 
 Legacy team API tokens grant access to a team's workspaces. Each team can have an API token that is not associated with a specific user.
 You can create and delete team tokens and list an organization's team tokens.
-The [team tokens API](/terraform/cloud-docs/api-docs/team-tokens) includes the same functionality as legacy team tokens, and allows you to provision multiple tokens per team.
+The [team tokens API](/terraform/cloud-docs/api-docs/team-tokens) includes the same functionality as legacy team tokens, and allows you to provision multiple tokens with descriptions per team.
 
 ## Generate a new team token
 
@@ -346,7 +346,7 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
-  https://app.terraform.io/api/v2/teams/team-BUHBEM97xboT8TVz/authentication-tokens
+  https://app.terraform.io/api/v2/teams/team-BUHBEM97xboT8TVz/authentication-token
 ```
 
 ### Sample response
