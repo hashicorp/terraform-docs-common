@@ -38,9 +38,9 @@ description: >-
 
 # Team tokens API reference
 
-Team API tokens grant access to a team's workspaces. Teams are not limited to a single token, and can have multiple tokens at a time. Team tokens are not are not associated with a specific user.
+Team API tokens grant access to a team's workspaces. Teams are not limited to a single token, and can have multiple tokens at a time. Team tokens are not associated with a specific user.
 
-Teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API (`/teams/authentication-token`), can only create a **single**, valid token at a time. Generating a new legacy token when one already exists for the team revokes the existing legacy token, replacing it with a new team token.
+Teams relying on the [**legacy**](/terraform/cloud-docs/api-docs/team-tokens#legacy-team-tokens-api-reference) team token API (`/teams/:team_id/authentication-token`), can only create a **single**, valid token at a time. Generating a new legacy token when one already exists for the team revokes the existing legacy token, replacing it with a new team token.
 
 You can create and delete team tokens and list an organization's team tokens.
 
@@ -65,7 +65,7 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 | Key path                      | Type   | Default | Description                                                                                                     |
 | ----------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `data.type`                   | string |         | Must be `"authentication-token"`.                                                                               |
+| `data.type`                   | string |         | Must be `"authentication-tokens"`.                                                                               |
 | `data.attributes.description` | string |         | The description of the team token. Each description **must** be unique within the context of the team.          |
 | `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Team Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
@@ -74,7 +74,7 @@ This POST endpoint requires a JSON object with the following properties as a req
 ```json
 {
   "data": {
-    "type": "authentication-token",
+    "type": "authentication-tokens",
     "attributes": {
       "description": "Team API token for team ABC",
       "expired-at": "2023-04-06T12:00:00.000Z"
