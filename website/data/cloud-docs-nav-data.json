@@ -468,9 +468,8 @@
     ]
   },
   {
-    "title": "Interact with the Registry",
+    "title": "Private Registry",
     "routes": [
-      { "heading": "PRIVATE" },
       { "title": "Overview", "path": "registry" },
       {
         "title": "Adding Public Providers and Modules",
@@ -493,26 +492,25 @@
       {
         "title": "Configuration Designer",
         "path": "registry/design"
-      },
-      { "heading": "PUBLIC" },
-      { "title": "Namespaces", "routes": [
-        {
-          "title": "Overview",
-          "path": "registry/namespace"
-        },
-        {
-          "title": "Create or claim a namespace",
-          "path": "registry/namespace/create_or_claim"
-        },
-        {
-          "title": "Manage namespaces",
-          "path": "registry/namespace/manage"
-        },
-        {
-          "title": "Manage namespace artifacts",
-          "path": "registry/namespace/artifacts"
-          }
-        ]
+      }
+      ]
+  },
+  { "title": "Public Registry Namespaces", "routes": [
+    {
+      "title": "Overview",
+      "path": "namespace"
+    },
+    {
+      "title": "Create or claim a namespace",
+      "path": "namespace/create_or_claim"
+    },
+    {
+      "title": "Manage namespaces",
+      "path": "namespace/manage"
+    },
+    {
+      "title": "Manage namespace artifacts",
+      "path": "namespace/artifacts"
       }
     ]
   },
@@ -530,7 +528,7 @@
     ]
   },
   {
-    "title": "Policy enforcement",
+    "title": "Policy Enforcement",
     "routes": [
       {
         "title": "Overview",
