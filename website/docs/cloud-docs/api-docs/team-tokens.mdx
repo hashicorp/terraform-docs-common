@@ -52,7 +52,7 @@ Generates a new team token.
 | :----- | :----------------------------------- |
 | POST   | /teams/:team_id/authentication-tokens |
 
-This endpoint returns the secret text of the new authentication token. You can only access the secret when you create it and cannot recover it later.
+This endpoint returns the secret text of the new authentication token. You can only access the secret text when you create it and cannot recover it later.
 
 ### Parameters
 
@@ -296,7 +296,7 @@ curl \
 
 # Legacy team tokens API reference
 
-Legacy team API tokens grant access to a team's workspaces. Each team can have an API token that is not associated with a specific user.
+Legacy team API tokens grant access to a team's workspaces. Each team can have a single legacy API token that is not associated with a specific user.
 You can create and delete team tokens and list an organization's team tokens.
 The [team tokens API](/terraform/cloud-docs/api-docs/team-tokens) includes the same functionality as legacy team tokens, and allows you to provision multiple tokens with descriptions per team.
 
@@ -322,7 +322,6 @@ This POST endpoint requires a JSON object with the following properties as a req
 | Key path                      | Type   | Default | Description                                                                                                     |
 | ----------------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------- |
 | `data.type`                   | string |         | Must be `"authentication-token"`.                                                                               |
-| `data.attributes.description` | string | `null`  | The description of the team token, if supplied, otherwise the description will be `null`. The description **must** be unique within the context of the team, meaning legacy tokens may only have one `null` or one descriptive description at a time. |
 | `data.attributes.expired-at`  | string | `null`  | The UTC date and time that the Team Token will expire, in ISO 8601 format. If omitted or set to `null` the token will never expire. |
 
 ### Sample payload
@@ -509,7 +508,7 @@ You can also fetch a team token directly by using the token's ID with the `authe
 | ----------- | ------------------------- |
 | `:token_id` | The ID of the Team Token. |
 
-The object returned by this endpoint only contains metadata, and does not include the secret text of the authentication token. A token's secret test is only shown upon creation, and cannot be recovered later.
+The object returned by this endpoint only contains metadata, and does not include the secret text of the authentication token. A token's secret text is only shown upon creation, and cannot be recovered later.
 
 | Status  | Response                                                | Reason                                                       |
 | ------- | ------------------------------------------------------- | ------------------------------------------------------------ |
