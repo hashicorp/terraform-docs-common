@@ -1,10 +1,10 @@
 ---
-page_title: VCS Connections - Workspaces - HCP Terraform
+page_title: Configure workspace VCS connections in HCP Terraform
 description: >-
-  Learn how to use the web UI to connect a workspace to a version control system repository that contains Terraform configuration.
+  Learn how to use the HCP Terraform UI to connect a workspace to a version control system (VCS) repository that contains a Terraform configuration.
 ---
 
-# Configuring Workspace VCS Connections
+# Configure workspace VCS connections
 
 You can connect any HCP Terraform [workspace](/terraform/cloud-docs/workspaces) to a version control system (VCS) repository that contains a Terraform configuration. This page explains the workspace VCS connection settings in the HCP Terraform UI.
 
@@ -18,8 +18,9 @@ You can use the [Update a Workspace endpoint](/terraform/cloud-docs/api-docs/wor
 
 To change a workspace's VCS settings:
 
-1. Go to the workspace and click **Settings > Version Control**. The **Version Control** page appears.
-1. Choose the desired settings and click **Update VCS settings**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and find the workspace you want to update.
+1. Choose **Settings** from the sidebar, then **Version Control**.
+1. Choose the settings you want, then click **Update VCS settings**.
 
 You can update the following types of VCS settings for the workspace.
 
@@ -45,7 +46,7 @@ Choose a workflow for Terraform runs.
 
 - **Auto apply:** Terraform will apply changes from successful plans without prompting for approval. A push to the default branch of your repository will trigger a plan and apply cycle. You may want to do this in non-interactive environments, like continuous deployment workflows.
 
-  !> **Warning:** If you choose auto apply, make sure that no one can change your infrstructure outside of your automated build pipeline. This reduces the risk of congfiguration drift and unexpected changes.
+  !> **Warning:** If you choose auto apply, make sure that no one can change your infrastructure outside of your automated build pipeline. This reduces the risk of configuration drift and unexpected changes.
 
 - **Manual apply:** Terraform will ask for approval before applying changes from a successful plan. A push to the default branch of your repository will trigger a plan, and then Terraform will wait for confirmation.
 

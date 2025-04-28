@@ -1,9 +1,9 @@
 ---
-page_title: Troubleshooting tips - ServiceNow Service Catalog Integration - HCP Terraform
+page_title: Troubleshoot the ServiceNow Service Catalog Integration for HCP Terraform
 description: Troubleshooting tips for ServiceNow Service Catalog Integration.
 ---
 
-# HCP Terraform ServiceNow Service Catalog Integration troubleshooting tips. 
+# Troubleshoot the ServiceNow Service Catalog integration 
 
 This page offers troubleshooting tips for common issues with the ServiceNow Service Catalog Integration for HCP Terraform. 
 It also provides instructions on how to find and read logs to diagnose and resolve issues.
@@ -47,7 +47,7 @@ To ensure you have relevant notifications configured in your instance:
 1. Navigate to **System Notification > Email > Notifications.**
 1. Search for "Request Opened" and "Request Item Commented" and ensure they are activated.
 
-Reaching out to ServiceNow customer support if you run into any issues with the global configurations.out to ServiceNow customer support if you run into any issues with the global configurations.
+Reach out to ServiceNow customer support if you run into any issues with the global configurations.
 
 ## Common problems
 
@@ -55,7 +55,7 @@ This section details frequently encountered issues and how they can be resolved.
 
 ### Failure to create a workspace
 
-If you order the "create a workspace" catalog item and  nothing happens in ServiceNow and HCP Terraform does not create a workspace then there are several possible reasons why: 
+If you order the "create a workspace" catalog item and nothing happens in ServiceNow and HCP Terraform does not create a workspace then there are several possible reasons why: 
 
 Ensure your HCP Terraform token, hostname, and organization name is correct.
 
@@ -68,7 +68,7 @@ Ensure your HCP Terraform token, hostname, and organization name is correct.
   
 Verify your VCS configuration.
 
-1. The **Identifier** field should not have any spaces.  The ServiceNow Service Catelog Integration requires that you format repository names in the `username/repo_name` format.
+1. The **Identifier** field should not have any spaces.  The ServiceNow Service Catalog Integration requires that you format repository names in the `username/repo_name` format.
 1. The **Name** can be anything, but it is better to avoid special characters as per naming convention.
 1. Double-check the OAuth token ID in your HCP Terraform/Terraform Enterprise settings. To retrieve your OAuth token ID, navigate to your HCP Terraform organization's settings page, then click **Provider** in the left navigation bar under **Version Control**.
 
@@ -89,7 +89,7 @@ To configure ServiceNow to poll HCP Terraform more frequently:
 1. Navigate to **All > Flow designer**.
 1. Set the **Application** filter to **Terraform**.
 1. Under the **Name** column click  **Worker Poll Run State**.
-1. Click on the trigger and adjust the interva to your desired schedule. 
+1. Click on the trigger and adjust the interval to your desired schedule. 
 1. Click **Done > Save > Activate** to save your changes.
 
 ### Using no-code modules feature

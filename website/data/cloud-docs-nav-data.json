@@ -18,16 +18,47 @@
       {
         "title": "Activate HashiCorp Flex",
         "path": "overview/activate-flex"
-      },
-      {
-        "title": "Migrate from Teams to Standard",
-        "path": "overview/migrate-teams-standard"
       }
     ]
   },
   {
     "title": "Getting Started",
     "href": "https://learn.hashicorp.com/collections/terraform/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS"
+  },
+  {
+    "title": "Migrate to HCP Terraform",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "migrate"
+      },
+      {
+        "title": "The tf-migrate CLI",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "migrate/tf-migrate"
+          },
+          {
+            "title": "CLI Reference",
+            "routes": [
+              {
+                "title": "tf-migrate prepare",
+                "path": "migrate/tf-migrate/reference/prepare"
+              },
+              {
+                "title": "tf-migrate execute",
+                "path": "migrate/tf-migrate/reference/execute"
+              },
+              {
+                "title": "Configuration file reference",
+                "path": "migrate/tf-migrate/reference/configuration"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "API",
@@ -327,6 +358,10 @@
         "title": "Organizations",
         "routes": [
           {"title": "Overview","path": "users-teams-organizations/organizations"},
+          {
+            "title": "Manage reserved tag keys", 
+            "path": "users-teams-organizations/organizations/manage-reserved-tags"            
+          },
           { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
           { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
         ]
@@ -396,8 +431,12 @@
         "path": "vcs/bitbucket-data-center"
       },
       {
-        "title": "Azure DevOps Services",
+        "title": "Azure DevOps Services (OAuth)",
         "path": "vcs/azure-devops-services"
+      },
+      {
+        "title": "Azure DevOps Services (PAT)",
+        "path": "vcs/azure-devops-services-pat"
       },
       {
         "title": "Azure DevOps Server",
@@ -470,102 +509,107 @@
     ]
   },
   {
-    "title": "Migrate to HCP Terraform",
+    "title": "Policy enforcement",
     "routes": [
-      {
-        "title": "Overview",
-        "path": "migrate"
+      { 
+        "title": "Overview", 
+        "path": "policy-enforcement" 
       },
-      {
-        "title": "Terraform migrate CLI",
+      { 
+        "title": "Define policies",
         "routes": [
           {
             "title": "Overview",
-            "path": "migrate/tf-migrate"
+            "path": "policy-enforcement/define-policies"
           },
           {
-            "title": "CLI Reference",
-            "routes": [
-              {
-                "title": "tf-migrate prepare",
-                "path": "migrate/tf-migrate/reference/prepare"
-              },
-              {
-                "title": "tf-migrate execute",
-                "path": "migrate/tf-migrate/reference/execute"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Policy Enforcement",
-    "routes": [
-      { "title": "Overview", "path": "policy-enforcement" },
+            "title": "Custom Sentinel policies",
+            "path": "policy-enforcement/define-policies/custom-sentinel"
+          },
+          {
+            "title": "OPA policies",
+            "path": "policy-enforcement/define-policies/opa"
+          }          
+        ] 
+      },
       {
-        "title": "Sentinel Policies",
+        "title": "Create and manage policy sets",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/sentinel"
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/manage-policy-sets"
           },
           {
-            "title": "Imports",
-            "routes": [
-              { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
-              {
-                "title": "tfconfig/v2",
-                "path": "policy-enforcement/sentinel/import/tfconfig-v2"
-              },
-              { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
-              {
-                "title": "tfplan/v2",
-                "path": "policy-enforcement/sentinel/import/tfplan-v2"
-              },
-              { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
-              {
-                "title": "tfstate/v2",
-                "path": "policy-enforcement/sentinel/import/tfstate-v2"
-              },
-              { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
-            ]
-          },
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/sentinel/vcs"
+            "title": "Create Sentinel policy sets in VCS",
+            "path": "policy-enforcement/manage-policy-sets/sentinel-vcs"
           },
           {
-            "title": "Mocking Terraform Sentinel Data",
-            "path": "policy-enforcement/sentinel/mock"
-          },
-          {
-            "title": "Working With JSON Result Data",
-            "path": "policy-enforcement/sentinel/json"
-          },
-          {
-            "title": "Using Sentinel with Terraform 0.12",
-            "path": "policy-enforcement/sentinel/sentinel-tf-012"
+            "title": "Connect to OPA policies in VCS",
+            "path": "policy-enforcement/manage-policy-sets/opa-vcs"
           }
         ]
       },
       {
-        "title": "OPA Policies",
+        "title": "Run pre-written Sentinel policies",
+        "path": "policy-enforcement/prewritten-sentinel"
+      },          
+      {
+        "title": "Test Sentinel policies",
+        "path": "policy-enforcement/test-sentinel"
+      },
+      {
+        "title": "View policy results",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/opa"
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/view-results"
           },
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/opa/vcs"
+          {
+            "title": "View Sentinel JSON results",
+            "path": "policy-enforcement/view-results/json"
           }
         ]
       },
       {
-        "title": "Managing Policy Sets",
-        "path": "policy-enforcement/manage-policy-sets"
+        "title": "Pre-written policy library",
+        "path": "policy-enforcement/prewritten-library"
       },
       {
-        "title": "Policy Results",
-        "path": "policy-enforcement/policy-results"
+        "title": "Sentinel import reference",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/import-reference"
+          },
+          { 
+            "title": "tfconfig", 
+            "path": "policy-enforcement/import-reference/tfconfig" 
+          },
+          {
+            "title": "tfconfig/v2",
+            "path": "policy-enforcement/import-reference/tfconfig-v2"
+          },
+          { 
+            "title": "tfplan", 
+            "path": "policy-enforcement/import-reference/tfplan" 
+          },
+          {
+            "title": "tfplan/v2",
+            "path": "policy-enforcement/import-reference/tfplan-v2"
+          },
+          { 
+            "title": "tfstate", 
+            "path": "policy-enforcement/import-reference/tfstate" 
+          },
+          {
+            "title": "tfstate/v2",
+            "path": "policy-enforcement/import-reference/tfstate-v2"
+          },
+          { 
+            "title": "tfrun", 
+            "path": "policy-enforcement/import-reference/tfrun" 
+          }
+        ]
       }
     ]
   },
@@ -581,6 +625,10 @@
   {
     "title": "Integrations",
     "routes": [
+      {
+        "title": "Overview", 
+        "path": "integrations"
+      },
       {
         "title": "Kubernetes Operator",
         "routes": [
