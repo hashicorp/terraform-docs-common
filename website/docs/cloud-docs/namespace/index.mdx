@@ -21,6 +21,12 @@ An organization's private registry is separate from its public registry artifact
 
 ## Manage namespaces and registry artifacts
 
+<Note>
+
+Namespaces do not support publishing or managing [policy libraries](/terraform/registry/policy-libraries/publishing) in the public registry. To publish or manage policy libraries with a namespace, continue to use the [existing registry workflows](/terraform/registry/policy-libraries/publishing#publishing-to-the-registry).
+
+</Note>
+
 Linking a GitHub account to an HCP Terraform organization lets organization members collectively manage the linked GitHub account’s [public registry artifacts](/terraform/cloud-docs/namespace/artifacts) and the namespace itself.
 
 Organization owners can manage claimed namespaces and specify which team members can interact with an organization's namespaces by setting [organization-level permissions](/terraform/cloud-docs/users-teams-organizations/permissions#manage-public-registry) to either **Manage public modules** or **Manage public providers**.
