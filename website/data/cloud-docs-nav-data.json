@@ -498,19 +498,19 @@
   { "title": "Public Registry Namespaces", "routes": [
     {
       "title": "Overview",
-      "path": "namespace"
+      "path": "public-namespace"
     },
     {
       "title": "Create or claim a namespace",
-      "path": "namespace/create_or_claim"
+      "path": "public-namespace/create_or_claim"
     },
     {
       "title": "Manage namespaces",
-      "path": "namespace/manage"
+      "path": "public-namespace/manage"
     },
     {
       "title": "Manage namespace artifacts",
-      "path": "namespace/artifacts"
+      "path": "public-namespace/artifacts"
       }
     ]
   },
