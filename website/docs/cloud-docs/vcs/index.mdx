@@ -34,7 +34,8 @@ HCP Terraform supports the following VCS providers:
 - [Bitbucket Cloud](/terraform/cloud-docs/vcs/bitbucket-cloud)
 - [Bitbucket Data Center](/terraform/cloud-docs/vcs/bitbucket-data-center)
 - [Azure DevOps Server](/terraform/cloud-docs/vcs/azure-devops-server)
-- [Azure DevOps Services](/terraform/cloud-docs/vcs/azure-devops-services)
+- [Azure DevOps Services (OAuth)](/terraform/cloud-docs/vcs/azure-devops-services)
+- [Azure DevOps Services (PAT)](/terraform/cloud-docs/vcs/azure-devops-services-pat)
 
 Use the links above to see details on configuring VCS access for each supported provider. If you use another VCS that is not supported, you can build an integration via [the API-driven run workflow](/terraform/cloud-docs/run/api).
 
@@ -118,6 +119,8 @@ You can use self-hosted HCP Terraform Agents to connect HCP Terraform to your pr
 <!-- END: TFC:only -->
 
 ## Viewing events
+
+-> **Note**: The VCS Events page is still in beta as support is being added for additional VCS providers. Currently only GitLab.com connections established after December 2020 are supported.
 
 VCS events describe changes within your organization for VCS-related actions. The VCS events page only displays events from previously processed commits in the past 30 days. The VCS page indicates previously processed commits with the message, `"Processing skipped for duplicate commit SHA"`.
 
