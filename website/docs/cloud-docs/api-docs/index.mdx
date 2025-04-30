@@ -332,9 +332,9 @@ $ curl \
 
 ## Rate Limiting
 
-You can make up to 30 requests per second to the API as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. Some endpoints have lower rate limits to prevent abuse, including endpoints that poll Terraform for a list of runs and endpoints related to user authentication. The adjusted limits are unnoticeable under normal use. If you receive a rate-limited response, the limit is reflected in the `x-ratelimit-limit` header once triggered.
+You can make up to 30 requests per second to most API endpoints as an authenticated or unauthenticated request. If you reach the rate limit then your access will be throttled and an error response will be returned. 
 
-Authenticated requests are allocated to the user associated with the authentication token. This means that a user with multiple tokens will still be limited to 30 requests per second, additional tokens will not allow you to increase the requests per second permitted.
+Requests are per user, not per token. As a result, you cannot use multiple tokens to make more than 30 requests per second.
 
 Unauthenticated requests are associated with the requesting IP address.
 
@@ -353,6 +353,24 @@ Unauthenticated requests are associated with the requesting IP address.
   ]
 }
 ```
+
+### Lower rate limits for some endoints
+
+To prevent abuse, some endpoints have lower rate limits. The lower limits are unnoticeable under normal use. If you receive a rate-limited response, the limit is reflected in the `x-ratelimit-limit` header once triggered.
+
+The following endpoints have lower rate limits:
+
+| Method and endpoint | Purpose | Limit |
+| --- | --- | --- |
+| <p>`POST /session/two-factor-send-sms`</p><p>`POST /api/v2/account/actions/two-factor-enable`</p><p>`POST /api/v2/account/actions/two-factor-resend-verification-code`</p>| Send SMS message | 5 requests per minute per user|
+| <p>`POST /api/v2/account/actions/two-factor-enable`</p><p>`POST /api/v2/account/actions/two-factor-resend-verification-code`</p> | Send SMS message | 10 requests per hour per user|
+| <p>`POST /api/v2/account/actions/two-factor-enable`</p><p>`POST /api/v2/account/actions/two-factor-resend-verification-code`</p> | Send SMS message | 100 requests per day per IP address |
+| <p>`POST /session/two-factor`</p><p>`POST /session/two-factor-recovery`</p> | Submit 2FA code | 5 requests per minute per user|
+| <p>`POST` and `PATCH /api/v2/account/create`</p><p>`POST` and `PATCH /api/v2/account/update`</p><p>`POST` and `PATCH /api/v2/account/password`</p><p>`POST` and `PATCH /api/v2/account/reconfirm`</p><p>`POST /session`</p> | Send emails | 100 per minute |
+| <p>`POST` and `GET /sso/link-new-account`</p><p>`POST` and `GET /sso/link-account`</p><p>`POST` and `GET /sso/link-existing-account`</p><p>`POST /sso/saml/{SAML_CONFIGURATION_EXTERNAL_ID}/acs`</p> | Send emails | 20 per minute |
+| <p>`POST /api/v2/notification-configurations/{EXTERNAL_ID}/actions/verify`</p><p>`DELETE /api/v2/oauth-tokens`</p> | Send emails | 10 per minute |
+| <p>`POST /account/reconfirm`</p> | Send emails | 40 per hour |
+| <p>`POST /auth`</p> | Send emails | 40 per hour per email address |
 
 ## Client libraries and tools
 
