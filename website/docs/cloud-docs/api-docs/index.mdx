@@ -359,7 +359,7 @@ Unauthenticated requests are associated with the requesting IP address.
 
 ### Lower rate limits for some endoints
 
-To prevent abuse, some endpoints have lower rate limits. The lower limits are unnoticeable under normal use. If you receive a rate-limited response, the limit is reflected in the `x-ratelimit-limit` header once triggered.
+To prevent abuse, some endpoints have lower rate limits. The lower limits are unnoticeable under normal use. If you trigger a rate-limited response, you can see that limit in the `x-ratelimit-limit` header.
 
 The following endpoints have lower rate limits:
 
