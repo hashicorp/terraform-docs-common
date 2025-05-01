@@ -134,7 +134,7 @@ If the module version you are revoking has the [**No-code ready**](/terraform/cl
 
 Like deprecation, revoking a module version displays a warning on the private registry and sends current consumers warnings in operation outputs in HCP Terraform and the Terraform CLI. The difference between deprecation and revocation is that Terraform blocks new consumers from using a revoked module version by erroring out in runs.
 
-~> **Note**: Only workspaces in the [remote or agent execution modes](terraform/cloud-docs/workspaces/settings#execution-mode) can receive warnings for a module version’s revocation.
+~> **Note**: Only workspaces in the [remote or agent execution modes](/terraform/cloud-docs/workspaces/settings#execution-mode) can receive warnings for a module version’s revocation.
 
 After you revoke a module version, current consumers of that version receive warnings in their operation outputs in HCP Terraform and the Terraform CLI. If you provided a reason for a module version’s revocation, HCP Terraform displays that reason to users in run outputs:
 
