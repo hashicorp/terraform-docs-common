@@ -45,19 +45,19 @@ Stacks represent collections of components, replicated across one or more deploy
 
 The scope of the API includes the following endpoints:
 
-| Method | Path | Action |
-| --- | --- | --- |
-| `POST` | `/organizations/:organization_name/stacks` | Call this endpoint to [create a stack](#create-a-stack).|
-| `GET` | `/organizations/:organization_name/stacks` | Call this endpoint to [list existing stacks](#list-stacks).|
-| `GET` | `/stacks/:stack_id` | Call this endpoint to [show a stack](#show-a-stack).|
-| `PATCH` | `/stacks/:stack_id` | Call this endpoint to [update a stack](#update-a-stack).|
-| `DELETE` | `/stacks/:stack_id` | Call this endpoint to [delete a stack](#delete-stack).|
+| Method   | Path                                       | Action                                                      |
+|----------|--------------------------------------------|-------------------------------------------------------------|
+| `POST`   | `/stacks`                                  | Call this endpoint to [create a stack](#create-a-stack).    |
+| `GET`    | `/organizations/:organization_name/stacks` | Call this endpoint to [list existing stacks](#list-stacks). |
+| `GET`    | `/stacks/:stack_id`                        | Call this endpoint to [show a stack](#show-a-stack).        |
+| `PATCH`  | `/stacks/:stack_id`                        | Call this endpoint to [update a stack](#update-a-stack).    |
+| `DELETE` | `/stacks/:stack_id`                        | Call this endpoint to [delete a stack](#delete-stack).      |
 
 ## Create a stack
 
 This endpoint creates a stack for an organization.
 
-`POST /organizations/:organization_name/stacks`
+`POST /stacks`
 
 -> **Note:** Stack create access is restricted to users who maintain the specified project, the owners team, teams with the "Manage all projects" permission, and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
@@ -67,30 +67,30 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                                        | Type    | Default   | Description |
-| --- | --- | --- | --- |
-| `data.attributes.name` | string | | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project. |
-| `data.attributes.description` | string | (nothing) | A description for the stack. |
-| `data.attributes.speculative-enabled`| boolean | `false`      | Whether this stack allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. |
-| `data.attributes.locked` | boolean | `false`| Whether this stack is locked. A lock prevents HCP Terraform from initiating any new runs that would modify the infrastructure managed by the stack. |
-| `data.attributes.lock-reason` | string | (nothing) | Specifies why the stack is locked. |
-| `data.attributes.vcs-repo` | object | | Settings for the stack's VCS repository. |
-| `data.attributes.vcs-repo.branch` | string | (nothing) | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`). |
-| `data.attributes.vcs-repo.tags-regex` | string | (previous value) | A regular expression used to match Git tags. HCP Terraform begins preparing a stack configuration when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression. |
-| `data.attributes.vcs-repo.identifier` | string | | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. |
-| `data.attributes.vcs-repo.display-identifier` | string | (nothing) | The display identifier for the stack's VCS repository. For most VCS providers outside of BitBucket Cloud and Azure DevOps, this will match the identifier string. |
-| `data.attributes.vcs-repo.repository-http-url` | string | | The HTTP URL for the repository. |
-| `data.attributes.service-provider` | string | | The VCS provider being connected with. Valid options are `"github"`, `"github_enterprise"`, `"gitlab_hosted"`, `"gitlab_community_edition"`, `"gitlab_enterprise_edition"`, or `"ado_server"`. |
-| `data.attributes.trigger-disabled` | boolean | | When disabled, plan operations won't automatically start. |
-| `data.attributes.vcs-repo.oauth-token-id` | string | | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint. |
-| `data.relationships.project.data.id` | string | | The ID of the project to create the stack in. You must have permission to manage the project, either by organization-level permissions or team admin access to a specific project. |
+| Key path                                       | Type    | Default          | Description                                                                                                                                                                                                                                   |
+|------------------------------------------------|---------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.name`                         | string  |                  | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project.                                                                                           |
+| `data.attributes.description`                  | string  | (nothing)        | A description for the stack.                                                                                                                                                                                                                  |
+| `data.attributes.speculative-enabled`          | boolean | `false`          | Whether this stack allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. |
+| `data.attributes.locked`                       | boolean | `false`          | Whether this stack is locked. A lock prevents HCP Terraform from initiating any new runs that would modify the infrastructure managed by the stack.                                                                                           |
+| `data.attributes.lock-reason`                  | string  | (nothing)        | Specifies why the stack is locked.                                                                                                                                                                                                            |
+| `data.attributes.vcs-repo`                     | object  |                  | Settings for the stack's VCS repository.                                                                                                                                                                                                      |
+| `data.attributes.vcs-repo.branch`              | string  | (nothing)        | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`).                                                                         |
+| `data.attributes.vcs-repo.tags-regex`          | string  | (previous value) | A regular expression used to match Git tags. HCP Terraform begins preparing a stack configuration when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                              |
+| `data.attributes.vcs-repo.identifier`          | string  |                  | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider.                                                                                               |
+| `data.attributes.vcs-repo.display-identifier`  | string  | (nothing)        | The display identifier for the stack's VCS repository. For most VCS providers outside of BitBucket Cloud and Azure DevOps, this will match the identifier string.                                                                             |
+| `data.attributes.vcs-repo.repository-http-url` | string  |                  | The HTTP URL for the repository.                                                                                                                                                                                                              |
+| `data.attributes.service-provider`             | string  |                  | The VCS provider being connected with. Valid options are `"github"`, `"github_enterprise"`, `"gitlab_hosted"`, `"gitlab_community_edition"`, `"gitlab_enterprise_edition"`, or `"ado_server"`.                                                |
+| `data.attributes.trigger-disabled`             | boolean |                  | When disabled, plan operations won't automatically start.                                                                                                                                                                                     |
+| `data.attributes.vcs-repo.oauth-token-id`      | string  |                  | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                  |
+| `data.relationships.project.data.id`           | string  |                  | The ID of the project to create the stack in. You must have permission to manage the project, either by organization-level permissions or team admin access to a specific project.                                                            |
 
-| Status | Response | Reason |
-| --- | --- | --- |
-| [201][] | [JSON API document][] | Successfully created a stack. |
-| [404][] | [JSON API error object][] | Not found, or the user is unauthorized to perform this action. |
+| Status  | Response                  | Reason                                                                |
+|---------|---------------------------|-----------------------------------------------------------------------|
+| [201][] | [JSON API document][]     | Successfully created a stack.                                         |
+| [404][] | [JSON API error object][] | Not found, or the user is unauthorized to perform this action.        |
 | [422][] | [JSON API error object][] | Malformed request body (e.g., missing attributes, wrong types, etc.). |
-| [500][] | [JSON API error object][] | Internal system failure. |
+| [500][] | [JSON API error object][] | Internal system failure.                                              |
 
 ### Sample Payload
 
@@ -194,19 +194,19 @@ This endpoint lists stacks in the organization.
 
 -> **Note:** Stack read access is restricted to users or teams with read project access and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
-| Parameter            | Description                                             |
-| -------------------- | ------------------------------------------------------- |
+| Parameter            | Description                                         |
+|----------------------|-----------------------------------------------------|
 | `:organization_name` | The name of the organization to list the stacks of. |
 
 ### Query Parameters
 
 This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
-| Parameter           | Description                                                                                                                                                                                                                                                                               |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `page[number]`      | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                        |
-| `page[size]`        | **Optional.** If omitted, the endpoint will return 20 policy sets per page.                                                                                                                                                                                                               |
-| `sort`              | **Optional.** Allows sorting the returned stacks. Valid values are "name" and "created-at". Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
+| Parameter      | Description                                                                                                                                                                                                                                                                               |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                        |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page.                                                                                                                                                                                                               |
+| `sort`         | **Optional.** Allows sorting the returned stacks. Valid values are "name" and "created-at". Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
 
 ### Sample Request
 
@@ -292,8 +292,8 @@ This endpoint returns details of the specified stack.
 
 -> **Note:** Stack read access is restricted to users or teams with read project access and the [organization API token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
 
-| Parameter            | Description                                             |
-| ----------- | ------------- |
+| Parameter   | Description   |
+|-------------|---------------|
 | `:stack_id` | The stack id. |
 
 ### Sample Request
@@ -359,7 +359,7 @@ $ curl\
 This endpoint updates the specified Stack.
 
 | Parameter   | Description   |
-| ----------- | ------------- |
+|-------------|---------------|
 | `:stack_id` | The stack id. |
 
 ### Request Body
@@ -367,29 +367,28 @@ This endpoint requires a JSON object with the following properties as a request 
 
 Properties without a default value are required.
 
-| Key path                                        | Type    | Default   | Description |
-| --- | --- | --- | --- |
-| `data.attributes.name` | string | | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project. |
-| `data.attributes.description` | string | (nothing) | A description for the stack. |
-| `data.attributes.speculative-enabled`| boolean | `false` | Whether this stack allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. |
-| `data.attributes.locked` | boolean | `false`| Whether this stack is locked. A lock prevents HCP Terraform from initiating any new runs that would modify the infrastructure managed by the stack. |
-| `data.attributes.lock-reason` | string | (nothing) | Specifies why the stack is locked. |
-| `data.attributes.vcs-repo` | object | | Settings for the stack's VCS repository. |
-| `data.attributes.vcs-repo.branch` | string | (nothing) | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`). |
-| `data.attributes.vcs-repo.tags-regex` | string | (previous value) | A regular expression used to match Git tags. HCP Terraform begins preparing a stack configuration when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression. |
-| `data.attributes.vcs-repo.identifier` | string | | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider. |
-| `data.attributes.vcs-repo.display-identifier` | string | (nothing) | The display identifier for the stack's VCS repository. For most VCS providers outside of BitBucket Cloud and Azure DevOps, this will match the identifier string. |
-| `data.attributes.vcs-repo.repository-http-url` | string | | The HTTP URL for the repository. |
-| `data.attributes.service-provider` | string | | The VCS provider being connected with. Valid options are `"github"`, `"github_enterprise"`, `"gitlab_hosted"`, `"gitlab_community_edition"`, `"gitlab_enterprise_edition"`, or `"ado_server"`. |
-| `data.attributes.trigger-disabled` | boolean | | When disabled, plan operations won't automatically start. |
-| `data.attributes.vcs-repo.oauth-token-id` | string | | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint. |
-| `data.relationships.project.data.id` | string | | The ID of the project to create the stack in. You must have permission to manage the project, either by organization-level permissions or team admin access to a specific project. |
+| Key path                                       | Type    | Default          | Description                                                                                                                                                                                                                                   |
+|------------------------------------------------|---------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.name`                         | string  |                  | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project.                                                                                           |
+| `data.attributes.description`                  | string  | (nothing)        | A description for the stack.                                                                                                                                                                                                                  |
+| `data.attributes.speculative-enabled`          | boolean | `false`          | Whether this stack allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. |
+| `data.attributes.locked`                       | boolean | `false`          | Whether this stack is locked. A lock prevents HCP Terraform from initiating any new deployments that would modify the infrastructure managed by the stack.                                                                                    |
+| `data.attributes.lock-reason`                  | string  | (nothing)        | Specifies why the stack is locked.                                                                                                                                                                                                            |
+| `data.attributes.vcs-repo`                     | object  |                  | Settings for the stack's VCS repository.                                                                                                                                                                                                      |
+| `data.attributes.vcs-repo.branch`              | string  | (nothing)        | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`).                                                                         |
+| `data.attributes.vcs-repo.tags-regex`          | string  | (previous value) | A regular expression used to match Git tags. HCP Terraform begins preparing a stack configuration when this value is present and a VCS event occurs that contains a matching Git tag for the regular expression.                              |
+| `data.attributes.vcs-repo.identifier`          | string  |                  | A reference to your VCS repository in the format :org/:repo where :org and :repo refer to the organization and repository in your VCS provider.                                                                                               |
+| `data.attributes.vcs-repo.display-identifier`  | string  | (nothing)        | The display identifier for the stack's VCS repository. For most VCS providers outside of BitBucket Cloud and Azure DevOps, this will match the identifier string.                                                                             |
+| `data.attributes.vcs-repo.repository-http-url` | string  |                  | The HTTP URL for the repository.                                                                                                                                                                                                              |
+| `data.attributes.service-provider`             | string  |                  | The VCS provider being connected with. Valid options are `"github"`, `"github_enterprise"`, `"gitlab_hosted"`, `"gitlab_community_edition"`, `"gitlab_enterprise_edition"`, or `"ado_server"`.                                                |
+| `data.attributes.trigger-disabled`             | boolean |                  | When disabled, plan operations won't automatically start.                                                                                                                                                                                     |
+| `data.attributes.vcs-repo.oauth-token-id`      | string  |                  | The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from the [oauth-tokens](/terraform/cloud-docs/api-docs/oauth-tokens) endpoint.                                                                                  |
+| `data.relationships.project.data.id`           | string  |                  | The ID of the project to create the stack in. You must have permission to manage the project, either by organization-level permissions or team admin access to a specific project.                                                            |
 
 ### Sample Payload
 ```json
 {
   "data": {
-    "id": "st-EJyw2MktbRjdsg96",
     "attributes": {
       "vcs-repo": {
         "identifier": "hashicorp/pet-nulls-stack-local",
@@ -478,9 +477,9 @@ This endpoint deletes the specified Stack.
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `:stack_id` | The ID of the stack to delete. Refer to [List Stacks](/terraform/cloud-docs/api-docs/stacks#list-stacks) for reference information about finding IDs. |
 
-| Status  | Response                  | Reason                                                   |
-| ------- | ------------------------- | -------------------------------------------------------- |
-| [204][] | No Content                | Successfully deleted the stack                           |
+| Status  | Response                  | Reason                                                  |
+|---------|---------------------------|---------------------------------------------------------|
+| [204][] | No Content                | Successfully deleted the stack                          |
 | [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform action |
 
 ### Sample Request
