@@ -372,7 +372,7 @@ Properties without a default value are required.
 | `data.attributes.name` | string | | The name of the stack, which can only include letters, numbers, `-`, and `_`. This will be used as an identifier and must be unique in the project. |
 | `data.attributes.description` | string | (nothing) | A description for the stack. |
 | `data.attributes.speculative-enabled`| boolean | `false` | Whether this stack allows automatic [speculative plans][]. Setting this to `false` prevents HCP Terraform from running plans on pull requests, which can improve security if the VCS repository is public or includes untrusted contributors. |
-| `data.attributes.locked` | boolean | `false`| Whether this stack is locked. A lock prevents HCP Terraform from initiating any new runs that would modify the infrastructure managed by the stack. |
+| `data.attributes.locked` | boolean | `false`| Whether this stack is locked. A lock prevents HCP Terraform from initiating any new deployments that would modify the infrastructure managed by the stack. |
 | `data.attributes.lock-reason` | string | (nothing) | Specifies why the stack is locked. |
 | `data.attributes.vcs-repo` | object | | Settings for the stack's VCS repository. |
 | `data.attributes.vcs-repo.branch` | string | (nothing) | The repository branch used by this stack's configuration. If omitted or submitted as an empty string, this defaults to the repository's default branch (e.g. `main`). |
@@ -389,7 +389,6 @@ Properties without a default value are required.
 ```json
 {
   "data": {
-    "id": "st-EJyw2MktbRjdsg96",
     "attributes": {
       "vcs-repo": {
         "identifier": "hashicorp/pet-nulls-stack-local",
