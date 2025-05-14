@@ -45,13 +45,21 @@ Stacks represent collections of components, replicated across one or more deploy
 
 The scope of the API includes the following endpoints:
 
-| Method   | Path                                       | Action                                                      |
-|----------|--------------------------------------------|-------------------------------------------------------------|
-| `POST`   | `/stacks`                                  | Call this endpoint to [create a stack](#create-a-stack).    |
-| `GET`    | `/organizations/:organization_name/stacks` | Call this endpoint to [list existing stacks](#list-stacks). |
-| `GET`    | `/stacks/:stack_id`                        | Call this endpoint to [show a stack](#show-a-stack).        |
-| `PATCH`  | `/stacks/:stack_id`                        | Call this endpoint to [update a stack](#update-a-stack).    |
-| `DELETE` | `/stacks/:stack_id`                        | Call this endpoint to [delete a stack](#delete-stack).      |
+| Method   | Path                                                              | Action                                                                                                     |
+|----------|-------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| `POST`   | `/stacks`                                                         | Call this endpoint to [create a stack](#create-a-stack).                                                   |
+| `GET`    | `/organizations/:organization_name/stacks`                        | Call this endpoint to [list existing stacks](#list-stacks).                                                |
+| `GET`    | `/stacks/:stack_id`                                               | Call this endpoint to [show a stack](#show-a-stack).                                                       |
+| `PATCH`  | `/stacks/:stack_id`                                               | Call this endpoint to [update a stack](#update-a-stack).                                                   |
+| `DELETE` | `/stacks/:stack_id`                                               | Call this endpoint to [delete a stack](#delete-stack).                                                     |
+| `POST`   | `/stacks/:stack_id/stack-configurations`                          | Call this endpoint to [create a stack configuration](#create-a-stack-configuration).                       |
+| `GET`    | `/stacks/:stack_id/stack-configurations`                          | Call this endpoint to [list stack configurations](#list-stack-configurations).                             |
+| `GET`    | `/stack-configurations/:stack_configuration_id`                   | Call this endpoint to [show a stack configuration](#show-stack-configuration).                             |
+| `GET`    | `/stacks/:stack_id/stack-configuration-summaries`                 | Call this endpoint to [list stack configuration summaries](#list-stack-configuration-summaries).           |
+| `POST`   | `/stacks/:stack_id/fetch-latest-from-vcs`                         | Call this endpoint to [fetch the latest stack configuration](#fetch-the-latest-stack-configuration).       |
+| `GET`    | `/stack-configurations/:stack_configuration_id/stack-diagnostics` | Call this endpoint to [list stack configuration diagnostics](#list-stack-configuration-diagnostics).       |
+| `GET`    | `/stack-configurations/:stack_configuration_id/upload-url`        | Call this endpoint to [fetch stack configuration upload url](#fetch-stack-configuration-upload-url).       |
+| `GET`    | `/stack-configurations/:stack_configuration_id/source-bundle`     | Call this endpoint to [fetch stack configuration source bundle](#fetch-stack-configuration-source-bundle). |
 
 ## Create a stack
 
@@ -491,3 +499,448 @@ curl \
   --request DELETE \
   https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96
 ```
+## Create a stack configuration
+
+This endpoint creates a stack configuration for the specified stack.
+
+`POST /stacks/:stack_id/stack-configurations`
+
+| Parameter   | Description                                   |
+|-------------|-----------------------------------------------|
+| `:stack_id` | The stack id to create the configuration for. |
+
+### Request Body
+
+This POST endpoint requires a JSON object with the following properties as a request payload.
+
+Properties without a default value are required.
+
+| Key path                    | Type    | Default | Description                                                                                                                                    |
+|-----------------------------|---------|---------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.plan-only` | boolean | `false` | Specifies if this is a [speculative](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan) plan that Terraform cannot apply. |
+
+| Status  | Response                  | Reason                                                                |
+|---------|---------------------------|-----------------------------------------------------------------------|
+| [200][] | [JSON API document][]     | Successfully created a stack configuration.                           |
+| [404][] | [JSON API error object][] | Not found, or the user is unauthorized to perform this action.        |
+| [422][] | [JSON API error object][] | Malformed request body (e.g., missing attributes, wrong types, etc.). |
+| [500][] | [JSON API error object][] | Internal system failure.                                              |
+
+### Sample Payload
+
+```json
+{
+  "data": {
+    "attributes": {
+      "plan-only": true
+    }
+  }
+}
+
+```
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configurations
+```
+
+### Sample Response
+
+```json
+{
+  "data": {
+    "id": "st-EJyw2MktbRjdsg96",
+    "type": "stack-configurations",
+    "attributes": {
+      "status": "pending",
+      "sequence-number": 0,
+      "plan-only": true,
+      "preparing-event-stream-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6aFN6WTBJUWJ6N3ViKzFWbmptMkd6SWxocDFJK05FSFJ3MjNSNXRZLzBMS2E1YmgyMWM5eXBYMHpZVXErSG5HTUVJMTZsdHJ5c2tnOWUybDhpaW04eVROdDh1RXNGa1F2VkZqOVZKbGN6MEZhUEVqQmlvVGtwaWhjaHpiZEF3YUtWTmVQZm1TOFY0NnN2dXpVc1V2MlBmOU5BRzMvNDc5RHg0eVA2VFZDRy9PdHY1c3IwWWxwT09sdDRyRnFUSjJDSXhOaWl2UVZKNTdVaW9HOEhrN0ZvM1YyMTZLaVpndzRtSzkyTlYvRWpZTzkyTjU0THg2OWVHQk9nZEptbWhhS3hxVFFIUTR0L1ZwZWZ4SjRCWnJWZitGZ2lmd2tNTmNKTUVBQzdrV2puVWdvUlh2YjBmcGFsdnpUN1VzTkVuM0tDQm1FbXpWVXFGSVRsTlBkMkJ6dWRsYlhJck0vbVBMQ1VlZlhBTWFRZ2h2NjhCdzFFSFQ4bU50eA",
+      "created-at": "2025-05-09T21:25:37.504Z",
+      "updated-at": "2025-05-09T21:25:37.504Z"
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+          "id": "st-EJyw2MktbRjdsg96",
+          "type": "stacks"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stacks/st-EJyw2MktbRjdsg96",
+      "stack-diagnostics": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-diagnostics",
+      "stack-deployment-groups": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-deployment-groups",
+      "stack-configuration-summaries": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries"
+    }
+  }
+}
+```
+## List stack configurations
+
+This endpoint lists configurations for the specified stack.
+
+`GET /stacks/:stack_id/stack-configurations`
+
+| Parameter   | Description                              |
+|-------------|------------------------------------------|
+| `:stack_id` | The stack id to list configurations for. |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter      | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+   https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configurations
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "id": "st-EJyw2MktbRjdsg96",
+      "type": "stack-configurations",
+      "attributes": {
+        "status": "pending",
+        "sequence-number": 0,
+        "plan-only": true,
+        "preparing-event-stream-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6aFN6WTBJUWJ6N3ViKzFWbmptMkd6SWxocDFJK05FSFJ3MjNSNXRZLzBMS2E1YmgyMWM5eXBYMHpZVXErSG5HTUVJMTZsdHJ5c2tnOWUybDhpaW04eVROdDh1RXNGa1F2VkZqOVZKbGN6MEZhUEVqQmlvVGtwaWhjaHpiZEF3YUtWTmVQZm1TOFY0NnN2dXpVc1V2MlBmOU5BRzMvNDc5RHg0eVA2VFZDRy9PdHY1c3IwWWxwT09sdDRyRnFUSjJDSXhOaWl2UVZKNTdVaW9HOEhrN0ZvM1YyMTZLaVpndzRtSzkyTlYvRWpZTzkyTjU0THg2OWVHQk9nZEptbWhhS3hxVFFIUTR0L1ZwZWZ4SjRCWnJWZitGZ2lmd2tNTmNKTUVBQzdrV2puVWdvUlh2YjBmcGFsdnpUN1VzTkVuM0tDQm1FbXpWVXFGSVRsTlBkMkJ6dWRsYlhJck0vbVBMQ1VlZlhBTWFRZ2h2NjhCdzFFSFQ4bU50eA",
+        "created-at": "2025-05-09T21:25:37.504Z",
+        "updated-at": "2025-05-09T21:25:37.504Z"
+      },
+      "relationships": {
+        "stack": {
+          "data": {
+            "id": "st-EJyw2MktbRjdsg96",
+            "type": "stacks"
+          }
+        }
+      },
+      "links": {
+        "self": "/api/v2/stacks/st-EJyw2MktbRjdsg96",
+        "stack-diagnostics": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-diagnostics",
+        "stack-deployment-groups": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-deployment-groups",
+        "stack-configuration-summaries": "/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configurations?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+```
+
+## Show Stack Configuration
+
+`GET /stack-configurations/:stack_configuration_id`
+
+This endpoint returns details of the specified stack configuration.
+
+| Parameter                 | Description                 |
+|---------------------------|-----------------------------|
+| `:stack_configuration_id` | The stack configuration id. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "id": "stc-GEt1cDfuRqLACcL9",
+    "type": "stack-configurations",
+    "attributes": {
+      "status": "pending",
+      "sequence-number": 0,
+      "plan-only": true,
+      "preparing-event-stream-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djE6aFN6WTBJUWJ6N3ViKzFWbmptMkd6SWxocDFJK05FSFJ3MjNSNXRZLzBMS2E1YmgyMWM5eXBYMHpZVXErSG5HTUVJMTZsdHJ5c2tnOWUybDhpaW04eVROdDh1RXNGa1F2VkZqOVZKbGN6MEZhUEVqQmlvVGtwaWhjaHpiZEF3YUtWTmVQZm1TOFY0NnN2dXpVc1V2MlBmOU5BRzMvNDc5RHg0eVA2VFZDRy9PdHY1c3IwWWxwT09sdDRyRnFUSjJDSXhOaWl2UVZKNTdVaW9HOEhrN0ZvM1YyMTZLaVpndzRtSzkyTlYvRWpZTzkyTjU0THg2OWVHQk9nZEptbWhhS3hxVFFIUTR0L1ZwZWZ4SjRCWnJWZitGZ2lmd2tNTmNKTUVBQzdrV2puVWdvUlh2YjBmcGFsdnpUN1VzTkVuM0tDQm1FbXpWVXFGSVRsTlBkMkJ6dWRsYlhJck0vbVBMQ1VlZlhBTWFRZ2h2NjhCdzFFSFQ4bU50eA",
+      "created-at": "2025-05-09T21:25:37.504Z",
+      "updated-at": "2025-05-09T21:25:37.504Z"
+    },
+    "relationships": {
+      "stack": {
+        "data": {
+            "id": "st-EJyw2MktbRjdsg96",
+            "type": "stacks"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9",
+      "stack-diagnostics": "/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics",
+      "stack-deployment-groups": "/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-deployment-groups",
+      "stack-configuration-summaries": "/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-configuration-summaries"
+    }
+  }
+}
+```
+
+## List stack configuration summaries
+
+This endpoint lists configuration summaries for the specified stack.
+
+`GET /stacks/:stack_id/stack-configuration-summaries`
+
+| Parameter   | Description                                       |
+|-------------|---------------------------------------------------|
+| `:stack_id` | The stack id to list configuration summaries for. |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter      | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+   https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "id": "stcs-EJyw2MktbRjdsg96",
+      "type": "stack-configuration-summaries",
+      "attributes": {
+        "status": "pending",
+        "sequence-number": 0,
+        "stack-deployment-group-status-summary": {
+          "pending": 0,
+          "deploying": 0,
+          "succeeded": 0,
+          "failed": 0,
+          "abandoned": 0
+        }
+      },
+      "relationships": {
+        "stack-configuration": {
+          "data": {
+            "id": "stc-GEt1cDfuRqLACcL9",
+            "type": "stack-configurations"
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/stacks/st-EJyw2MktbRjdsg96/stack-configuration-summaries?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+```
+
+## Fetch the latest Stack Configuration
+
+`POST /stacks/:stack_id/fetch-latest-from-vcs`
+
+This endpoint fetches the latest configuration from version control system.
+
+| Parameter   | Description                                       |
+|-------------|---------------------------------------------------|
+| `:stack_id` | The stack id to get the latest configuration for. |
+
+| Status  | Response                  | Reason                                                                            |
+|---------|---------------------------|-----------------------------------------------------------------------------------|
+| [204][] | No Content                | Successfully started the process of retrieving the latest configuration from VCS. |
+| [404][] | [JSON API error object][] | Stack not found, or user unauthorized to perform action                           |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack/st-SihZTyXKfNXUWuUa/fetch-latest-from-vcs
+```
+
+## List stack configuration diagnostics
+
+This endpoint lists the diagnostics for the specified stack configuration.
+
+`GET /stack-configurations/:stack_configuration_id/stack-diagnostics`
+
+
+| Parameter                 | Description                                             |
+|---------------------------|---------------------------------------------------------|
+| `:stack_configuration_id` | The stack configuration id to list the diagnostics for. |
+
+### Query Parameters
+
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+
+| Parameter      | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics
+```
+
+### Sample Response
+
+```json
+{
+  "data": [
+    {
+      "id": "std-Phi6k5RoZLnuHWke",
+      "type": "stack-diagnostics",
+      "attributes": {
+        "severity": "error",
+        "summary": "Diagnostics reported",
+        "detail": "While preparing the configuration, HCP Terraform reported 2 errors.",
+        "acknowledged": true,
+        "acknowledged-at": "2025-05-14T04:44:43.893Z",
+        "created-at": "2025-05-14T04:44:43.893Z"
+      },
+      "links": {
+        "self": "/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics"
+      },
+      "relationships": {
+        "stack-configuration": {
+          "data": {
+            "id": "stc-mtLWVPe4DmGCMVn4",
+            "type": "stack-configurations"
+          }
+        },
+        "stack-deployment-group": {
+          "data": {
+            "id": "sdg-4G2k5J6q3v7x8Y9Z",
+            "type": "stack-deployment-groups"
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2stack-configurations/stc-GEt1cDfuRqLACcL9/stack-diagnostics?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
+}
+```
+
+## Fetch stack configuration upload URL
+
+`GET /stack-configurations/:stack_configuration_id/upload-url`
+
+This endpoint fetches the stack configuration upload url.
+
+| Parameter                 | Description                                             |
+|---------------------------|---------------------------------------------------------|
+| `:stack_configuration_id` | The stack configuration id to fetch the upload URL for. |
+
+### Sample Request
+
+```shell
+$ curl\
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/stack-configurations/stc-SihZTyXKfNXUWuUa/upload-url
+```
+
+### Sample Response
+```json
+{
+  "data": {
+    "source-upload-url": "https://github.com/stack-config-uploads"
+  },
+  "links": {
+    "self": "/api/v2/stack-configurations/stc-SihZTyXKfNXUWuUa/upload-url"
+  }
+}
+```
+
+## Fetch stack configuration source bundle
+
+`GET /stack-configurations/:stack_configuration_id/source-bundle`
+
+This endpoint redirects to the download URL for a stack configuration source bundle.
+
+| Parameter                 | Description                                                |
+|---------------------------|------------------------------------------------------------|
+| `:stack_configuration_id` | The stack configuration id to fetch the source bundle for. |
+
+| Status  | Response                  | Reason                                                                |
+|---------|---------------------------|-----------------------------------------------------------------------|
+| [302][] | HTTP Redirect             | Successfully redirect client to temporary source bundle download URL  |
+| [404][] | [JSON API error object][] | Stack configuration not found, or user unauthorized to perform action |
+
