@@ -15,6 +15,31 @@
     "title": "Integration Program",
     "path": "partnerships"
     },
-  { "title": "Terraform Tools", "path": "terraform-tools" },
+  { 
+    "title": "Terraform Tools", 
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "tools" 
+      },
+      {
+        "title": "Terraform MCP server",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "tools/mcp-server"     
+          },
+          {
+            "title": "Deploy",
+            "path": "tools/mcp-server/deploy"      
+          },
+          {
+            "title": "Usage",
+            "path": "tools/mcp-server/prompt"      
+          }
+        ]              
+      }      
+    ]
+  },
   { "title": "Glossary", "path": "glossary" }
 ]
