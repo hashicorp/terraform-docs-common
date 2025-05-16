@@ -1,0 +1,47 @@
+---
+page_title: Prompt an AI model connected to the Terraform MCP server   
+description: |-
+ Learn how to prompt your AI model connected to the Terraform MCP server to answer questions about Terraform configuration using code stored in the Terraform registry
+---
+
+# Prompt a model connected to the Terraform MCP server 
+
+This topic provides example prompts for helping you write Terraform configuration after installing the Terraform model context protocol (MCP) server. Refer to [Deploy the Terraform MCP server](/terraform/docs/tools/mcp-server/install) for instructions on how to deploy the server.
+
+## Overview
+
+Ask your LLM questions about your provider configuration to trigger MCP server tools. Note that to use the server, your questions must pertain to provider configuration from the registry. The LLM will use other sources, such as content from the internet, to respond to general questions about Terraform configuration or requests to generate code. 
+
+## Requirements
+
+Verify that you have deployed the Terraform MCP server and configured your client. Refer to [Deploy the Terraform MCP server](/terraform/docs/tools/mcp-server/deploy) for instructions.
+
+## Prompt your MCP client
+
+Use prompts that ask questions about a specific provider or provider module. If a request for resource details fails, try using the full Terraform resource address when in your query. For example, ask about the `google_compute_disk` instead of asking for information about `the compute disk`, to ensure the server correctly identifies the resource.
+
+## Example          
+
+You can use the following set of prompts as a guide to help you write your own configuration.
+
+### Prompts
+
+`Some prompt about a provider` – include the tool used 
+
+`OUTPUT`
+
+`Some prompt about a provider resource` – include the tool used 
+
+`OUTPUT`
+
+`Some prompt about the resource arguments` – include the tool used 
+
+`OUTPUT` 
+
+`Some prompt about what else you configure`  – include the tool used 
+
+`OUTPUT`
+
+### Configuration
+
+`TODO`
