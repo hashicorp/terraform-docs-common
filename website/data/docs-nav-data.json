@@ -24,6 +24,11 @@
       },
       {
         "title": "Terraform MCP server",
+        "badge": {
+              "text": "BETA",
+              "type": "outlined",
+              "color": "neutral"
+             },
         "routes": [
           {
             "title": "Overview",
