@@ -1,0 +1,35 @@
+---
+page_title: Terraform MCP server overview
+description: Learn about the Terraform model context protocol (MCP) server and how it can help you write Terraform configuration using AI.
+---
+
+# Terraform MCP server overview
+
+This topic provides an overview of the Terraform model context protocol (MCP) server, which helps you write Terraform configuration using an AI or LLM. The server requests information directly from the Terraform registry so that your model can formulate responses using provider code and documentation as the source of truth. 
+
+## Introduction
+
+MCP standardizes how AI models can discover and interact with external tools, applications, and data sources. You can configure MCP clients, such as an AI or LLM chat, to send requests through an MCP server so that the model can provide answers to prompts that it may not have been trained on. Refer to the [MCP documentation](https://modelcontextprotocol.io/introduction) for details about how MCP works. 
+
+You can configure your AI model to connect to the Terraform MCP server so that it can request information about providers, modules, and other objects from data stored in the Terraform registry. When the Terraform MCP is available to your AI client, the model retrieves information from the most up-to-date source code stored in the registry, instead of relying on outdated training data. As a result, you can get more accurate and actionable information. 
+
+## Workflow
+
+- [Deploy the Terraform MCP server](/terraform/docs/tools/mcp-server/deploy)
+- [Prompt your model](/terraform//docs/tools/mcp-server/prompt)
+
+## Terraform MCP server architecture
+
+MCP follows a client-server architecture where you interact with an AI or LLM using a client, such as a chat interface. The client sends requests to the MCP server, which formulates a response using the external source the server is designed for. The Terraform MCP server runs in a Docker container on your local workstation. 
+
+![Terraform model context protocol server flow](/img/docs/terraform-mcp-server-flow-lt.png#light-theme-only)
+![Terraform model context protocol server flow](/img/docs/terraform-mcp-server-flow-dk.png#dark-theme-only)
+
+### Tools
+
+MCP servers expose functionality to clients using tools. The Terraform MCP server includes a set of tools that retrieve different types of information from the Terraform registry:
+
+- `providerDetails`: This tool gets information about a specific provider. It lists provider resources (write operations), data sources (read operations), and functions (utility operations). For each item, note the existence and path of its documentation. 
+- `providerResourceDetails`: This tool gets the documentation, schema, and code examples from a provider version. You must specify the provider name, namespace, and the service name you want to provision.
+- `listModules`: This tool lists Terraform modules available in the provider. You can omit the provider name for a list of all available modules.
+- `moduleDetails`: This tool provides comprehensive details about a Terraform module, including inputs, outputs, and examples. You must specify the module name and its associated provider.

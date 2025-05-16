@@ -30,11 +30,11 @@
             "path": "tools/mcp-server"     
           },
           {
-            "title": "Deploy",
+            "title": "Deploy server",
             "path": "tools/mcp-server/deploy"      
           },
           {
-            "title": "Usage",
+            "title": "Prompt model",
             "path": "tools/mcp-server/prompt"      
           }
         ]              
