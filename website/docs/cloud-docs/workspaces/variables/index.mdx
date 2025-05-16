@@ -30,6 +30,9 @@ You can use the `TFE_PARALLELISM` environment variable when your infrastructure 
 
 !> **Warning:** We recommend reading and understanding [Terraform parallelism](https://support.hashicorp.com/hc/en-us/articles/10348130482451) prior to setting `TFE_PARALLELISM`. You can also contact HashiCorp support for direct advice. 
 
+-> **Note:** As of the current HCP Terraform architecture, the `TFE_PARALLELISM` environment variable has no effect on execution, even if set. To explicitly change the parallelism level for remote operations, please use `TF_CLI_ARGS_plan` and/or `TF_CLI_ARGS_apply` to pass the `-parallelism=<value>` flag directly to the CLI. See: [TFE_PARALLELISM is not the same as -parallelism](https://support.hashicorp.com/hc/en-us/articles/12116956529683-TFE-PARRALLELISM-1-is-not-the-same-as-running-parallelism-1)
+
+
 #### Dynamic credentials
 
 You can configure [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for certain providers using environment variables [at the workspace level](/terraform/cloud-docs/workspaces/variables/managing-variables#workspace-specific-variables) or using [variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
