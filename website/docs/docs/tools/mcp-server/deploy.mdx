@@ -6,7 +6,7 @@ description: |-
 
 # Deploy the Terraform MCP server
 
-This topic describes how to deploy the Terraform model context protocol (MCP) server in a Docker container on your local workstation. The Terraform MCP server connects to a client so that your LLM can use data stored in the Terraform registry to help you write Terraform configuration. Refer to the [overview](/terraform/docs/tools/mcp-server) for additional information about MCP and the Terraform MCP server.
+This topic describes how to deploy the Terraform model context protocol (MCP) server in a Docker container on your local workstation. The Terraform MCP server connects to a client so that your LLM can use data stored in the Terraform registry to help you write Terraform configuration. Refer to the [overview](/terraform/docs/terraform-tools/mcp-server) for additional information about the Terraform MCP server.
 
 ## Overview
 
@@ -29,7 +29,7 @@ The following MCP clients are supported:
 
 - VS Code with CoPilot. Refer to the [VS Code documentation](https://code.visualstudio.com/docs) for installation instructions.
 - Cursor. Refer to the [Cursor website](https://www.cursor.com) for more information.
-- Anthropic Claude Desktop. Refer to the [Anthroic Claude Desktop documentation](https://support.anthropic.com/en/articles/10065433-installing-claude-for-desktop) for installation instructions.
+- Anthropic Claude Desktop. Refer to the [Anthropic Claude Desktop documentation](https://support.anthropic.com/en/articles/10065433-installing-claude-for-desktop) for installation instructions.
 
 ## Enable MCP in your client
 
@@ -41,25 +41,25 @@ Refer to your client's documentation for instructions on enabling MCP:
 
 ## Install the server
 
-1. For VS Code, create an `mcp.json` file in the `.vscode` or `.cursor` directory of your local workspace and add the following configuration: 
+For VS Code, create an `mcp.json` file in the `.vscode` or `.cursor` directory of your local workspace and add the following configuration: 
 
-   ```json
-   {
-   "servers": {
-      "terraform-mcp-server": {
-         "command": "docker",
-         "args": [
-            "run",
-            "-i",
-            "--rm",
-            "quay.io/hashicorp-dev/terraform-mcp-server:0.0.1"
-         ]
-      }
+```json
+{
+"servers": {
+   "terraform-mcp-server": {
+      "command": "docker",
+      "args": [
+         "run",
+         "-i",
+         "--rm",
+         "hashicorp/terraform-mcp-server:0.1.0"
+      ]
    }
-   }
-   ```
+}
+}
+```
 
-1. For Claude Desktop MCP clients, create an `mcp.json` file and add the following configuration: 
+For Claude Desktop MCP clients, create an `mcp.json` file and add the following configuration: 
 
    ```json
    {
@@ -71,7 +71,7 @@ Refer to your client's documentation for instructions on enabling MCP:
            "run",
            "-i",
            "--rm",
-           "quay.io/hashicorp-dev/terraform-mcp-server:0.0.1"
+           "hashicorp/terraform-mcp-server:0.1.0"
           ]
         }
       }
@@ -79,11 +79,7 @@ Refer to your client's documentation for instructions on enabling MCP:
    }
    ```
 
-1. Run the following command to pull the image and start the container:
 
-   ```shell-session
-   $ docker run quay.io/hashicorp-dev/terraform-mcp-server
-   ```
 ## Configure your MCP client
 
 Complete the following steps if you are using Copilot in VS Code: 
@@ -92,15 +88,16 @@ Complete the following steps if you are using Copilot in VS Code:
 1. Click the tools icon to verify that the Terraform MCP server tools are enabled.
 
 Complete the following steps if you are using Cursor:
+
 1. Open the chat pane and choose **Chat Settings** from the ellipses menu. 
 1. Choose **Agent from the **Default new chat mode** drop-down menu.
 1. Choose **MCP** from the **Cursor Settings** sidebar to verify that the Terraform MCP server tools are enabled.
 
 Complete the following steps if you are using Claude Desktop:
+
 1. Open the chat pane and choose the **search and tools** slider icon to the bottom left of the chat pane.
 1. Click **terraform-mcp-server** to verify that all the tools are enabled.
 
 ## Next steps
 
 After downloading the Terraform MCP server and connecting it to your client, you can begin prompting your model about your Terraform configuration code. Refer to [Prompt an AI model](/terraform/docs/tools/mcp-server/prompt) for more information.
-
