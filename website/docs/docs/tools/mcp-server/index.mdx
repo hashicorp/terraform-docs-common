@@ -18,18 +18,11 @@ You can configure your AI model to connect to the Terraform MCP server so that i
 - [Deploy the Terraform MCP server](/terraform/docs/tools/mcp-server/deploy)
 - [Prompt your model](/terraform//docs/tools/mcp-server/prompt)
 
-## Terraform MCP server architecture
+## Terraform MCP server tools
 
-MCP follows a client-server architecture where you interact with an AI or LLM using a client, such as a chat interface. The client sends requests to the MCP server, which formulates a response using the external source the server is designed for. The Terraform MCP server runs in a Docker container on your local workstation. 
+The Terraform MCP server runs in a Docker container on your local workstation and exposes functionality to clients using tools. The Terraform MCP server includes a set of tools that retrieve different types of information from the Terraform registry:
 
-![Terraform model context protocol server flow](/img/docs/terraform-mcp-server-flow-lt.png#light-theme-only)
-![Terraform model context protocol server flow](/img/docs/terraform-mcp-server-flow-dk.png#dark-theme-only)
-
-### Tools
-
-MCP servers expose functionality to clients using tools. The Terraform MCP server includes a set of tools that retrieve different types of information from the Terraform registry:
-
-- `providerDetails`: This tool gets information about a specific provider. It lists provider resources (write operations), data sources (read operations), and functions (utility operations). For each item, note the existence and path of its documentation. 
-- `providerResourceDetails`: This tool gets the documentation, schema, and code examples from a provider version. You must specify the provider name, namespace, and the service name you want to provision.
-- `listModules`: This tool lists Terraform modules available in the provider. You can omit the provider name for a list of all available modules.
-- `moduleDetails`: This tool provides comprehensive details about a Terraform module, including inputs, outputs, and examples. You must specify the module name and its associated provider.
+- `resolveProviderDocID`: Queries the Terraform Registry to find and list available documentation for a specific provider. This tool uses `serviceSlug` to return a list of provider document IDs with their titles and categories for resources, data sources, functions, or guides. 
+- `getProviderDocs`: Fetches the complete documentation content for a specific provider resource, data source, or function using a document ID obtained from the `resolveProviderDocID` tool. Returns the raw documentation in markdown format.
+- `searchModules`: Searches the Terraform Registry for modules based on the specified `moduleQuery` with pagination. Returns a list of module IDs with their names, descriptions, download counts, verification status, and publish dates. 
+- `moduleDetails`: Retrieves detailed documentation for a module using a module ID obtained from the `searchModules` tool, including inputs, outputs, configuration, submodules, and examples.
