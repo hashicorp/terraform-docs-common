@@ -305,4 +305,10 @@ module.exports = [
     destination: "/terraform/cloud-docs/overview",
     permanent: true
   },
+  // Update tools section
+  {
+    source: "/terraform/docs/terraform-tools",
+    destination: "/terraform/docs/tools",
+    permanent: true
+  },
 ];
