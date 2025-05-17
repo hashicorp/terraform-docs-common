@@ -13,6 +13,8 @@ MCP standardizes how AI models can discover and interact with external tools, ap
 
 You can configure your AI model to connect to the Terraform MCP server so that it can request information about providers, modules, and other objects from data stored in the Terraform registry. When the Terraform MCP is available to your AI client, the model retrieves information from the most up-to-date source code stored in the registry, instead of relying on outdated training data. As a result, you can get more accurate and actionable information. 
 
+Note that to use the server, your questions must pertain to provider configuration from the registry. The LLM uses other sources, such as content from the internet, to respond to general questions about Terraform configuration or requests to generate code.
+
 ## Workflow
 
 - [Deploy the Terraform MCP server](/terraform/docs/tools/mcp-server/deploy)
