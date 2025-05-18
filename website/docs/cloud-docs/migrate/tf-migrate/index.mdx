@@ -101,7 +101,6 @@ To configure your API token, set the `TF_GIT_PAT_TOKEN` environment variable
 $ export TF_GIT_PAT_TOKEN=<TOKEN>
 ```
 
-
 ## Supported backends
 
 The `tf-migrate` tool supports migrating state from the following backends to HCP Terraform or Terraform Enterprise:
@@ -118,6 +117,14 @@ The `tf-migrate` tool supports migrating state from the following backends to HC
 - [s3](/terraform/language/backend/s3)
 
 `tf-migrate` does not support migrating state from an existing `cloud` integration or `remote` backend.
+
+## Supported workspace workflows
+
+The `tf-migrate` tool supports creating HCP Terraform workspaces configured to use the CLI or the VCS workflow. 
+
+If your local configuration is a Git repository and has either GitHub or GitLab configured as a remote, `tf-migrate` asks you to confirm that you would like to create a VCS-driven workspace. If you have more than one VCS connection configured in your HCP Terraform organization, `tf-migrate` also asks you to choose which VCS connection to use.
+
+If your local configuration is not a Git repository, or does not use one of the supported remotes, `tf-migrate` automatically creates a CLI-driven workspace instead.
 
 ## Enable logging
 

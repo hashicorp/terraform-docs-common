@@ -61,6 +61,22 @@ $ tf-migrate prepare
 └────────────────────────────┘
 Enter the name of the HCP Terraform organization to migrate to:  my-org-1
 ✓ You have selected organization my-org-1 for migration
+
+Current repository was found on github.com. Do you want to create VCS-driven workspaces ... ?
+
+Enter a value: yes
+
+✓ Found 4 VCS providers 
+┌────────────────────────────┬──────────────────┬─────────────────┐
+│ Available VCS Providers    │ Service Provider │ OAuth Client ID │
+├────────────────────────────┤──────────────────┤─────────────────┤
+│ github-dev                 │ GitHub           │ oc-ABC123DEF456 │
+│ github-internal            │ GitHub           │ oc-GHI789JKL012 │
+└───────────────────────────────────────────────┴─────────────────┘
+
+Enter the OAuth client ID of the VCS provider from the above list to create the VCS-driven workspace: oc-ABC123DEF456
+
+✓ You have selected VCS provider GitHub for migration
 ✓ Found 2 directories with Terraform files
 ┌────────────────────────────────┐
 │   Terraform File Directories   │
