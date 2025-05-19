@@ -175,12 +175,10 @@ _With Key/Value Tags_
     "type": "workspaces",
     "relationships": {
       "tag-bindings": {
-        {
           "data": [{
             "type": "tag-bindings",
             "attributes": { "key": "env", "value": "test"}
           }]
-        }
       }
     }
   }
@@ -1215,7 +1213,7 @@ Status code `204`.
 
 ## List workspace tags
 
-Workspace tags are [organization tags](/terraform/cloud-docs/api-docs/organization-tags) added to a workspace. They are a flat list of keys that can only be applied to workspaces when using the `tags` attribute in the Terraform `cloud` block in Terraform v1.9 and below. The more contemporary form of key/value tags can be listed using [List workspace tag bindings](#list-workspace-tag-bindings).
+Workspace tags are [organization tags](/terraform/cloud-docs/api-docs/organization-tags) added to a workspace. They are a flat list of keys that can only be applied to workspaces when using the `tags` attribute in the Terraform `cloud` block in Terraform v1.9 and older. To list key-value tags supported in Terraform v1.10 and newer, refer to [List workspace tag bindings](#list-workspace-tag-bindings).
 
 `GET /workspaces/:workspace_id/relationships/tags`: Paginated list of flat string tags attached to the workspace.
 
@@ -1527,12 +1525,15 @@ This endpoint adds keys and values or updates values of tag-bindings on an exist
 It does not remove any keys from the collection. This endpoint is useful when you want to ensure a
 modification is additive.
 
-Tag Bindings have special constraints:
+Tag bindings have special constraints and behaviors:
 
-- Up to 10 tags can be applied to a workspace, but an additional 10 tags may be inherited from its project.
-- Keys must be no more than 128 characters, allowing all alphanumeric characters plus the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
-- Values allow the same characters, but can be up to 256 characters.
-- Certain key prefixes, including `hc:` and `hcp:` are not allowed.
+- You can apply up to 10 tags per workspace.
+- Workspaces can inherit an additional 10 tags from its project.
+- Keys can have up to 128 characters.
+- Keys can contain all alphanumeric characters and the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
+- values can have up to 256 characters.
+- Values can contain all alphanumeric characters and the symbols `_`, `.`, `=`, `+`, `-`, `@`, `:`.
+- You cannot use `hc:` and `hcp:` as key prefixes.
 
 `PATCH /workspaces/:workspace_id/tag-bindings`
 
