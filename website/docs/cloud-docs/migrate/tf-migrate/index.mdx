@@ -122,9 +122,10 @@ The `tf-migrate` tool supports migrating state from the following backends to HC
 
 The `tf-migrate` tool supports creating HCP Terraform workspaces configured to use the CLI or the VCS workflow. The `tf-migrate` tool will only prompt to ask if you want to create a VCS-driven workspace if you meet the following requirements:
 
-- Your local configuration is a Git repository
-- Your local Git repository has either GitHub or GitLab configured as a remote
-- Your HCP Terraform organization has at least one VCS OAuth connection configured for GitHub or GitLab `tf-migrate` 
+- You are using version 1.1.0 or newer of `tf-migrate`.
+- Your local configuration is a Git repository.
+- Your local Git repository has either GitHub or GitLab configured as a remote.
+- Your HCP Terraform organization has at least one VCS OAuth connection configured for GitHub or GitLab `tf-migrate`.
 
 If you have more than one VCS connection configured in your HCP Terraform organization, `tf-migrate` also asks you to choose which VCS connection to use.
 
