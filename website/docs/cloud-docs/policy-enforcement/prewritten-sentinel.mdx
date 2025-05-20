@@ -69,7 +69,7 @@ Create a fork of the repository containing the policies you want to implement. R
 The following repositories are available:
 
 - [policy-library-CIS-Policy-Set-for-AWS-Terraform](https://github.com/hashicorp/policy-library-CIS-Policy-Set-for-AWS-Terraform)
-
+- [policy-library-FSBP-Policy-Set-for-AWS-Terraform](https://github.com/hashicorp/policy-library-FSBP-Policy-Set-for-AWS-Terraform/)
 
 HashiCorp Sentinel policy libraries include a `sentinel.hcl` file. The file defines an example policy set using the policies included in the library. Modify the file to customize your policy set. Refer to [Sentinel Policy Set VCS Repositories](/terraform/cloud-docs/policy-enforcement/manage-policy-sets/sentinel-vcs) for additional information.
 
@@ -80,7 +80,9 @@ After forking the repository, complete the instructions for [connecting the poli
 
 This method enables you to connect the policies to workspaces in the Terraform configuration file. As a result, you can skip the instructions described in [Connect policies to your workspaces](#connect-policies-to-your-workspaces). 
 	 
-1. Go to the [module in the Terraform registry](https://registry.terraform.io/modules/hashicorp/CIS-Policy-Set/AWS/latest) and copy the code generated in the **Provision Instructions** tile.  
+1. Go to the module in the Terraform registry and copy the code generated in the **Provision Instructions** tile. The following modules are available:
+   - [CIS-Policy-Set](https://registry.terraform.io/modules/hashicorp/CIS-Policy-Set/AWS/latest)
+   - [FSBP-Policy-Set](https://registry.terraform.io/modules/hashicorp/FSBP-Policy-Set/AWS/latest)
 1. Add the `module` block to your Terraform configuration and define the following arguments: 
    - `source`: Specify the path to the module you downloaded.
    - `tfe_organization`: Specify the name of your organization on Terraform Enterprise or HCP Terraform.
