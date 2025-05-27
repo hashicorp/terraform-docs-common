@@ -1,11 +1,12 @@
 ---
 page_title: >-
-  Part 3.2: From Semi-Automation to Infrastructure as Code - Terraform
-  Recommended Practices
+  Part 3.2: Move from semi-automation to infrastructure as code
 tfc_only: true
+description: >-
+  Learn how to establish organization practices, use version control, create a module, integrate configuration management, and manage secrets.
 ---
 
-# Part 3.2: How to Move from Semi-Automation to Infrastructure as Code
+# Part 3.2: Move from semi-automation to infrastructure as code
 
 We define semi-automated provisioning as a mix of at least two of the following practices:
 
@@ -27,7 +28,7 @@ If you already have established VCS workflows, layouts, and access control pract
 
 Also, make sure to write down your organization’s expectations and socialize them widely among your teams.
 
-Make sure you've picked a VCS system that Terraform Cloud will be able to access. Currently, Terraform Cloud supports integrations with GitHub, GitLab and Atlassian Bitbucket (both Server and Cloud).
+Make sure you've picked a VCS system that HCP Terraform will be able to access. Currently, HCP Terraform supports integrations with GitHub, GitLab and Atlassian Bitbucket (both Server and Cloud).
 
 ## 2. Put Terraform Code in VCS Repos
 
@@ -37,7 +38,7 @@ Some organizations prefer to keep each Terraform configuration in its own VCS re
 
 ## 3. Create Your First Module
 
-[Terraform modules](/language/modules/develop) are reusable configuration units. They let you manage pieces of infrastructure as a single package you can call and define multiple times in the main configuration for a workspace. Examples of a good Terraform module candidate would be an auto-scaling group on AWS that wraps a launch configuration, auto-scaling group, and EC2 Elastic Load Balancer (ELB). If you are already using Terraform modules, make sure you’re following the best practices and keep an eye on places where your modules could improve.
+[Terraform modules](/terraform/language/modules/develop) are reusable configuration units. They let you manage pieces of infrastructure as a single package you can call and define multiple times in the main configuration for a workspace. Examples of a good Terraform module candidate would be an auto-scaling group on AWS that wraps a launch configuration, auto-scaling group, and EC2 Elastic Load Balancer (ELB). If you are already using Terraform modules, make sure you’re following the best practices and keep an eye on places where your modules could improve.
 
 The diagram below can help you decide when to write a module:
 
@@ -63,11 +64,11 @@ Here are a few examples of good build patterns from several cloud providers:
 
 ## 6. Integrate Terraform With Configuration Management
 
-If your organization already has a configuration management tool, then it’s time to integrate it with Terraform — you can use [Terraform’s provisioners](/language/resources/provisioners/syntax) to pass control to configuration management after a resource is created. Terraform should handle the infrastructure, and other tools should handle user data and applications.
+If your organization already has a configuration management tool, then it’s time to integrate it with Terraform — you can use [Terraform’s provisioners](/terraform/language/resources/provisioners/syntax) to pass control to configuration management after a resource is created. Terraform should handle the infrastructure, and other tools should handle user data and applications.
 
 If your organization doesn't use a configuration management tool yet, and the configuration of the infrastructure being managed is mutable, you should consider adopting a configuration management tool. This might be a large task, but it supports the same goals that drove you to infrastructure as code, by making application configuration more controllable, understandable, and repeatable across teams.
 
-If you’re just getting started, try this tutorial on how to [create a Chef cookbook](https://www.vagrantup.com/docs/provisioning/chef_solo) and test it locally with Vagrant. We also recommend this article about how to decide which [configuration management tool](https://www.edureka.co/blog/chef-vs-puppet-vs-ansible-vs-saltstack/) is best suited for your organization.
+If you’re just getting started, try this tutorial on how to [create a Chef cookbook](/vagrant/docs/provisioning/chef_solo) and test it locally with Vagrant. We also recommend this article about how to decide which [configuration management tool](https://www.edureka.co/blog/chef-vs-puppet-vs-ansible-vs-saltstack/) is best suited for your organization.
 
 ## 7. Manage Secrets
 
@@ -77,4 +78,4 @@ Integrate Terraform with [Vault](https://registry.terraform.io/providers/hashico
 
 At this point, your organization has a VCS configured, is managing key infrastructure with Terraform, and has at least one reusable Terraform module. Compared to a semi-automated practice, your organization has much better visibility into infrastructure configuration, using a consistent language and workflow.
 
-Next, you need an advanced workflow that can scale and delegate responsibilities to many contributors. Continue on to [Part 3.3: How to Move from Infrastructure as Code to Collaborative Infrastructure as Code](/cloud-docs/recommended-practices/part3.3).
+Next, you need an advanced workflow that can scale and delegate responsibilities to many contributors. Continue on to [Part 3.3: How to Move from Infrastructure as Code to Collaborative Infrastructure as Code](/terraform/cloud-docs/recommended-practices/part3.3).

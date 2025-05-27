@@ -1,12 +1,12 @@
 ---
-page_title: Terraform Registry - Publishing Policy Libraries
+page_title: Publish policy libraries to the Terraform registry
 description: >-
-  Policy libraries are collections of Sentinel policies. Learn the requirements to publish a policy library to the Terraform Registry.
+  Policy libraries are collections of Sentinel policies. Learn how to publish a policy library to the Terraform registry.
 ---
 
-# Publishing Policy Libraries
+# Publish policy libraries
 
-A policy library is a collection of [Sentinel policies](https://docs.hashicorp.com/sentinel/writing) and [policy modules](https://docs.hashicorp.com/sentinel/extending/modules) on the Terraform Registry. Sentinel is an embedded policy-as-code framework that lets you make detailed, logic-based policy decisions.
+A policy library is a collection of [Sentinel policies](/sentinel/docs/writing) and [policy modules](/sentinel/docs/extending/modules) on the Terraform Registry. Sentinel is an embedded policy-as-code framework that lets you make detailed, logic-based policy decisions.
 
 You can build and maintain policy libraries on GitHub and then publish them to the Terraform Registry. This page explains how to format and publish policy libraries as well as how to release new versions.
 
@@ -25,9 +25,9 @@ The Github repository for your policy library must adhere to the following conve
 
 The GitHub repository must include a `sentinel.hcl` file at its root level that contains the names and file locations for the policies and policy modules included in the policy library. The Terraform Registry ignores any policy files in the repository that are not listed in the file.
 
-The `sentinel.hcl` file must follow the [Sentinel CLI Configuration File Syntax](https://docs.hashicorp.com/sentinel/configuration) with two deviations:
+The `sentinel.hcl` file must follow the [Sentinel CLI Configuration File Syntax](/sentinel/docs/configuration) with two deviations:
 
--  [Remote sources](https://docs.hashicorp.com/sentinel/configuration/remote-sources) for policies and policy modules are not allowed.
+-  [Remote sources](/sentinel/docs/configuration/remote-sources) for policies and policy modules are not allowed.
 - The `enforcement_level` for a policy is not required. The Terraform Registry ignores this information if included.
 
 ### Version Tags
@@ -60,11 +60,11 @@ To publish a policy library to the Terraform Registry:
 
 1. Ensure that your policy library's repository meets the [requirements](#requirements).
 1. If a GitHub organization owns the repository, verify that the Terraform Registry OAuth app has access to the organization. Go to your [GitHub Settings](https://github.com/settings/applications) and select the Terraform Registry Application under **Authorized OAuth Apps** to confirm.
-1. [Sign in to the Terraform Registry](/registry#user-account) with a GitHub account.
+1. [Sign in to the Terraform Registry](/terraform/registry#user-account) with a GitHub account.
 1. Select **Publish > Policy Library**.
 1. Select the repository you would like to publish.
 1. Choose the category for your policy library that most closely matches the types of infrastructure relevant to your policies.
-1. (Optional) Associate your policy library with a set of [Terraform providers](/registry/providers). You may choose up to 3 publicly-available providers to indicate which types of Terraform resources are relevant to your policies.
+1. (Optional) Associate your policy library with a set of [Terraform providers](/terraform/registry/providers). You may choose up to 3 publicly-available providers to indicate which types of Terraform resources are relevant to your policies.
 1. Click **Publish Policy Library**.
 
 The policy library is now publicly available on the Terraform Registry.
@@ -81,6 +81,11 @@ To repair a broken or missing webhook connection, go to your policy library on t
 
 We recommend publishing new versions to fix bugs instead of editing old versions of your policy library. When you edit the files in an old version of the library, users who have been depending on those policies cannot use them until they review your changes and update their Sentinel configuration files.
 
+## Removing a Policy Library
+
+The owner of a policy library can remove that library from the Terraform Registry. Please be aware that [we do not recommend removing anything from the Registry unless it contains a critical flaw](/terraform/registry/faq#how-do-i-remove-a-version-of-my-provider-module-or-policy-library-that-has-already-been-published).
+
+To remove a policy library, navigate to your policy library's page and select **Delete library** from the dropdown menu.
 
 ## Support
 

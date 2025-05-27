@@ -1,9 +1,7 @@
 ---
-page_title: Assessments - API Docs - Terraform Cloud
-tfc_only: true
+page_title: /assessment-results API reference for HCP Terraform
 description: >-
-  Assessment results contain information about continuous validation in
-  Terraform Cloud, like drift detection.
+  Use the HCP Terraform API's `/assessment-results` endpoint to read a health assessment's results, including details on continuous validation and drift detection.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -22,9 +20,13 @@ description: >-
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-# Assessment Results API
+# Health assessment results API reference
 
-An Assessment Result is the summary record of an instance of health assessment. Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Refer to [Health](/cloud-docs/workspaces/health) for more details.
+An Assessment Result is the summary record of an instance of health assessment. HCP Terraform can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Refer to [Health](/terraform/cloud-docs/workspaces/health) for more details.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/health-assessments.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 ## Show Assessment Result
 
@@ -73,7 +75,7 @@ $ curl \
 
 The following endpoints retrieve files documenting the plan, schema, and logged runtime associated with the specified assessment result. They provide complete context for an assessment result. The responses do not adhere to JSON API spec. 
 
-You cannot access these endpoints with [organization tokens](/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access them with a [user token](/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) that has admin level access to the workspace. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) for details.
+You cannot access these endpoints with [organization tokens](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens). You must access them with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) that has admin level access to the workspace. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -94,7 +96,7 @@ $ curl \
 
 ### JSON Schema file
 
-The following endpoint returns the JSON [provider schema](/cli/commands/providers/schema) associated with the assessment result.
+The following endpoint returns the JSON [provider schema](/terraform/cli/commands/providers/schema) associated with the assessment result.
 
 `GET api/v2/assessment-results/:assessment_result_id/json-schema`
 

@@ -1,30 +1,34 @@
 ---
-page_title: Run Task Stages and Results - API Docs - Terraform Cloud
+page_title: /task-stages API reference for HCP Terraform
+description: >-
+  Use the HCP Terraform API's `/task-stages` endpoint to read run tasks and their results, and override run task stages.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
 [404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
-[JSON API documents]: /cloud-docs/api-docs#json-api-documents
+[JSON API documents]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-[run]: /cloud-docs/run/states
+[run]: /terraform/cloud-docs/run/states
 
-# Run Task Stages and Results API
+# Run task stages and results API reference
 
--> **Note:** Run Tasks is a paid feature, available as part of the **Team & Governance** upgrade package. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+HCP Terraform uses run task stages and run task results to track [run task](/terraform/cloud-docs/workspaces/settings/run-tasks) execution.
 
-Terraform Cloud uses run task stages and run task results to track [run task](/cloud-docs/workspaces/settings/run-tasks) execution.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/run-tasks.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
-When Terraform Cloud creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/cloud-docs/run/states). Terraform Cloud creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/cloud-docs/run/states#the-post-plan-stage) and [Pre-Apply Stage](/cloud-docs/run/states#the-pre-apply-stage).
+When HCP Terraform creates a [run][], it reads the run tasks associated to the workspace. Each run task in the workspace is configured to begin during a specific [run stage](/terraform/cloud-docs/run/states). HCP Terraform creates a run task stage object for each run stage that triggers run tasks. You can configure run tasks during the [Pre-Plan Stage](/terraform/cloud-docs/run/states#the-pre-plan-stage), [Post-Plan Stage](/terraform/cloud-docs/run/states#the-post-plan-stage), [Pre-Apply Stage](/terraform/cloud-docs/run/states#the-pre-apply-stage) and [Post-Apply Stage](/terraform/cloud-docs/run/states#the-post-apply-stage).
 
-Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, Terraform Cloud creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
+Run task stages then create a run task result for each run task. For example, a workspace has two run tasks called `alpha` and `beta`. For each run, HCP Terraform creates one run task stage called `post-plan`. That run task stage has two run task results: one for the `alpha` run task and one for the `beta` run task.
 
-This page lists the endpoints to retrieve run task stages and run task results. Refer to the [Run Tasks API](/cloud-docs/api-docs/run-tasks/run-tasks) for endpoints to create and manage run tasks within Terraform Cloud. Refer to the [Run Tasks Integration API](/cloud-docs/api-docs/run-tasks/run-tasks-integration) for endpoints to build custom run tasks for the Terraform Cloud ecosystem.
+This page lists the endpoints to retrieve run task stages and run task results. Refer to the [Run Tasks API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks) for endpoints to create and manage run tasks within HCP Terraform. Refer to the [Run Tasks Integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) for endpoints to build custom run tasks for the HCP Terraform ecosystem.
 
 ## Attributes
 
@@ -38,7 +42,7 @@ The run task stage status is found in `data.attributes.status`, and you can refe
 | `running`           | The run task stage is executing one or more tasks, which have not yet completed.                                                           |
 | `passed`            | All of the run task results in the stage passed.                                                                                           |
 | `failed`            | One more results in the run task stage failed.                                                                                             |
-| `awaiting_override` | The task stage is waiting for user input. Once a user manually overrides the failed policy checks, the run returns to the `running` state. |
+| `awaiting_override` | The task stage is waiting for user input. Once a user manually overrides the failed run tasks, the run returns to the `running` state. |
 | `errored`           | The run task stage has errored.                                                                                                            |
 | `canceled`          | The run task stage has been canceled.                                                                                                      |
 | `unreachable`       | The run task stage could not be executed.                                                                                                  |
@@ -71,7 +75,7 @@ The run task result status is found in `data.attributes.status`, and you can ref
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter      | Description                                                          |
 |----------------|----------------------------------------------------------------------|
@@ -277,7 +281,7 @@ curl \
 
 ### Task Stage
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 | Resource             | Description                                               |
 |--------------------- |---------------------------------------------------------- |

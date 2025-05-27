@@ -1,5 +1,7 @@
 ---
-page_title: Run Triggers - API Docs - Terraform Cloud
+page_title: /run-triggers API reference for HCP Terraform
+description: >-
+  Use the HCP Terraform API's `/run-triggers` endpoint to read, create, and delete run triggers.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -30,11 +32,11 @@ page_title: Run Triggers - API Docs - Terraform Cloud
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Run Triggers API
+# Run triggers API reference
 
 ## Create a Run Trigger
 
@@ -42,7 +44,7 @@ page_title: Run Triggers - API Docs - Terraform Cloud
 
 | Parameter       | Description                                                                                                                                                                                                        |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `:workspace_id` | The ID of the workspace to create the run trigger in. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to create the run trigger in. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 | Status  | Response                                       | Reason                                                                   |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------------------ |
@@ -52,7 +54,7 @@ page_title: Run Triggers - API Docs - Terraform Cloud
 
 ### Permissions
 
-In order to create a run trigger, the user must have admin access to the specified workspace and permission to read runs for the sourceable workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+In order to create a run trigger, the user must have admin access to the specified workspace and permission to read runs for the sourceable workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -64,7 +66,7 @@ Properties without a default value are required.
 
 | Key path                             | Type   | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ------------------------------------ | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.relationships.sourceable.data` | object |         | A JSON API relationship object that represents the source workspace for the run trigger. This object must have `id` and `type` properties, and the `type` property must be `workspaces` (e.g. `{ "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }`). Obtain workspace IDs from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `data.relationships.sourceable.data` | object |         | A JSON API relationship object that represents the source workspace for the run trigger. This object must have `id` and `type` properties, and the `type` property must be `workspaces` (e.g. `{ "id": "ws-2HRvNs49EWPjDqT1", "type": "workspaces" }`). Obtain workspace IDs from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 ### Sample Payload
 
@@ -133,7 +135,7 @@ curl \
 
 | Parameter       | Description                                                                                                                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:workspace_id` | The ID of the workspace to list run triggers for. Obtain this from the [workspace settings](/cloud-docs/workspaces/settings) or the [Show Workspace](/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
+| `:workspace_id` | The ID of the workspace to list run triggers for. Obtain this from the [workspace settings](/terraform/cloud-docs/workspaces/settings) or the [Show Workspace](/terraform/cloud-docs/api-docs/workspaces#show-workspace) endpoint. |
 
 | Status  | Response                                       | Reason                                                                                       |
 | ------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -143,7 +145,7 @@ curl \
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters); remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter                   | Description                                                                                                                                                                                                            |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -153,7 +155,7 @@ This endpoint supports pagination [with standard URL query parameters](/cloud-do
 
 ### Permissions
 
-In order to list run triggers, the user must have permission to read runs for the specified workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+In order to list run triggers, the user must have permission to read runs for the specified workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -250,7 +252,7 @@ curl \
 
 | Parameter         | Description                                                                          |
 | ----------------- | ------------------------------------------------------------------------------------ |
-| `:run_trigger_id` | The ID of the run trigger to show. Use the "List Run Triggers" endpoint to find IDs. |
+| `:run_trigger_id` | The ID of the run trigger to show. Send a `GET` request to the `run-triggers` endpoint to find IDs. Refer to [List Run Triggers](#list-run-triggers) for details. |
 
 | Status  | Response                                       | Reason                                                       |
 | ------- | ---------------------------------------------- | ------------------------------------------------------------ |
@@ -259,7 +261,7 @@ curl \
 
 ### Permissions
 
-In order to show a run trigger, the user must have permission to read runs for either the workspace or sourceable workspace of the specified run trigger. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+In order to show a run trigger, the user must have permission to read runs for either the workspace or sourceable workspace of the specified run trigger. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -312,16 +314,16 @@ curl \
 
 | Parameter         | Description                                                                            |
 | ----------------- | -------------------------------------------------------------------------------------- |
-| `:run_trigger_id` | The ID of the run trigger to delete. Use the "List Run Triggers" endpoint to find IDs. |
+| `:run_trigger_id` | The ID of the run trigger to delete. Send a `GET` request to the `run-triggers` endpoint o find IDs. Refer to [List Run Triggers](#list-run-triggers) for details. |
 
 | Status  | Response                  | Reason                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------ |
-| [204][] | Nothing                   | Successfully deleted the run trigger                         |
+| [204][] | No Content                | Successfully deleted the run trigger                         |
 | [404][] | [JSON API error object][] | Run trigger not found or user unauthorized to perform action |
 
 ### Permissions
 
-In order to delete a run trigger, the user must have admin access to the specified workspace. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+In order to delete a run trigger, the user must have admin access to the specified workspace. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -337,7 +339,7 @@ curl \
 
 ## Available Related Resources
 
-The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
+The GET endpoints above can optionally return related resources, if requested with [the `include` query parameter](/terraform/cloud-docs/api-docs#inclusion-of-related-resources). The following resource types are available:
 
 These includes respect read permissions. If you do not have access to read the related resource, it will not be returned.
 

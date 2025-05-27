@@ -1,18 +1,18 @@
 ---
-page_title: AWS - Cost Estimation - Terraform Cloud
+page_title: AWS resources included in cost estimation in HCP Terraform
+description: >-
+  Learn which AWS resources HCP Terraform includes in cost estimation.
 ---
 
-# Supported AWS resources in Terraform Cloud Cost Estimation
+# AWS resources included in cost estimation
 
--> **Note:** Cost estimation is a paid feature, available as part of the **Team & Governance** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+HCP Terraform can estimate monthly costs for many AWS Terraform resources.
 
-Terraform Cloud can estimate monthly costs for many AWS Terraform resources.
-
--> **Note:** Terraform Enterprise requires AWS credentials to support cost estimation. These credentials are configured at the instance level, not the organization level. See the [Application Administration docs](/enterprise/admin/application/integration) for more details.
+-> **Note:** Terraform Enterprise requires AWS credentials to support cost estimation. These credentials are configured at the instance level, not the organization level. See the [Application Administration docs](/terraform/enterprise/admin/application/integration) for more details.
 
 ## Supported Resources
 
-Cost estimation supports the following resources:
+Cost estimation supports the following resources. Not all possible values for attributes of each resource are supported, ex. newer instance types or EBS volume types.
 
 | Resource | Incurs Cost |
 | ----------- | ----------- |
@@ -30,7 +30,7 @@ Cost estimation supports the following resources:
 | `aws_instance` | X |
 | `aws_kms_key` | X |
 | `aws_lb` | X |
-| `aws_rds_cluster` | X |
+| `aws_rds_cluster_instance` | X |
 | `aws_acm_certificate_validation` | |
 | `aws_alb_listener` | |
 | `aws_alb_listener_rule` | |
