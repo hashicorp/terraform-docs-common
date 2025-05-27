@@ -20,8 +20,7 @@ To view a Stack and its plans, you must also be a member of a team in your organ
 
 If you are not already on your stack’s deployment page, navigate to it:
 
-1. Log in to [HCP Terraform](https://app.terraform.io).
-1. Select the organization that contains your Stack.
+1. Sign in to [HCP Terraform](https://app.terraform.io), and select the organization that contains your Stack.
 1. In the navigation menu, click **Projects** under **Manage**.  
 1. Select the project containing your Stack.  
 1. Click **Stacks** in the navigation menu.  
@@ -35,7 +34,7 @@ A stack’s **Overview** page displays the following information:
 * The inputs and outputs for your stack   
 * A chart listing each deployment’s recent configuration versions
 
-Clicking on a Stack’s **Inputs** reveals a list of the inputs this Stack has access to from `upstream_input` blocks, along with the upstream Stacks that supply those inputs. Clicking on a Stack’s **Outputs** reveals a list of the outputs of this Stack and any downstream Stacks that intake those outputs. To learn more about passing data from one Stack to another, refer to [Pass data from one Stack to another](/terraform/language/stacks/deploy/link-stacks).
+Clicking on a Stack’s **Inputs** reveals a list of the inputs this Stack has access to from `upstream_input` blocks, along with the upstream Stacks that supply those inputs. Clicking on a Stack’s **Outputs** reveals a list of the outputs of this Stack and any downstream Stacks that intake those outputs. To learn more about passing data from one Stack to another, refer to [Pass data from one Stack to another](/terraform/language/stacks/deploy/pass-data).
 
 To view all of the plans for a deployment, click the name of the deployment you want to review.
 
@@ -91,9 +90,9 @@ When viewing a deployment plan, HCP Terraform notes if that plan is awaiting app
 
 ### Convergence checks
 
-After applying any plan, HCP Terraform automatically triggers a plan called a convergence check. A convergence check is a re-plan to ensure components do not have any [deferred changes](#deferred-changes). HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes. 
+After applying any plan, HCP Terraform automatically triggers a plan called a convergence check. A convergence check is a replan to ensure components do not have any [deferred changes](#deferred-changes). HCP Terraform continues to trigger new plans until the convergence check returns a plan that does not contain changes.
 
-By default, each Stack has an `auto-approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan.
+By default, each Stack has an `auto_approve` rule named `empty_plan`, which auto-approves a plan if it does not contain changes. When a convergence check contains no changes, HCP Terraform auto-applies that plan.
 
 ## Deferred changes
 

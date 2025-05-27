@@ -29,13 +29,15 @@ For more information on the listed features, visit the [Microsoft Entra ID SAML 
 
 ## Configuration (HCP Terraform)
 
-1. Visit your organization settings page and click "SSO".
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and select the organization you want to enable SSO for.
 
-1. Click "Setup SSO".
+1. Select **Settings** from the sidebar, then **SSO**.
+
+1. Click **Setup SSO**.
 
    ![sso-setup](/img/docs/setup.png)
 
-1. Select "Microsoft Entra ID" and click "Next".
+1. Select **Microsoft Entra ID** and click **Next**.
 
    ![sso-wizard-choose-provider-entra](/img/docs/wizard-choose-provider-entra.png)
 
@@ -98,4 +100,7 @@ If you plan to use SAML to set usernames in your Microsoft Entra ID application:
 If you namespaced any of your claims, then Microsoft Entra ID passes the attribute name using the format `<claim_namespace/claim_name>`. Consider this format when setting team and username attribute names.
 
 ## Troubleshooting the SAML assertion
+
 [Use this guide](https://support.hashicorp.com/hc/en-us/articles/1500005371682-Capturing-a-SAML-Assertion) to verify and validate the claims being sent in the SAML response. 
+
+Azure AD limits you to 150 group claims in SAML tokens. If you exceed this limit, we recommend that you create a group filter to only include the necessary groups. Refer to [Configure group claims for applications by using Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#group-filtering) for more information.
