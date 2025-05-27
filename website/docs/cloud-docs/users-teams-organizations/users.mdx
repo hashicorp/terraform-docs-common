@@ -1,8 +1,7 @@
 ---
-page_title: Users - HCP Terraform
+page_title: Create and manage users in HCP Terraform
 description: >-
-  Create an account, edit settings, set up two-factor authentication, create API
-  tokens, and more.
+  Learn how to create and manage users in HCP Terraform.
 ---
 
 [organizations]: /terraform/cloud-docs/users-teams-organizations/organizations
@@ -10,7 +9,7 @@ description: >-
 [invite]: /terraform/cloud-docs/users-teams-organizations/organizations#users
 [owners]: /terraform/cloud-docs/users-teams-organizations/teams#the-owners-team
 
-# Users
+# Create and manage users
 
 User accounts belong to individual people. Each user can be part of one or more [teams](/terraform/cloud-docs/users-teams-organizations/teams), which are granted permissions on workspaces within an organization. A user can be a member of multiple [organizations][].
 
@@ -23,7 +22,7 @@ Use the [Account API](/terraform/cloud-docs/api-docs/account) to get account det
 
 We recommend using a [HashiCorp Cloud Platform (HCP)](https://portal.cloud.hashicorp.com/sign-up) account to log in to HCP Terraform. Your HCP Account grants access to every HashiCorp product and the Terraform Registry. If you use an HCP Account, you manage account settings like multi-factor authentication and password resets from within HCP instead of the HCP Terraform UI.
 
-To log in with your HCP account, go to the [Sign In to HCP Terraform](https://app.terraform.io/) page and click **Continue with HCP account**. HCP Terraform may ask if you want to link your account.
+To log in with your HCP account, navigate to [HCP Terraform](https://app.terraform.io/) and click **Continue with HCP account**. HCP Terraform may ask if you want to link your account.
 
 ### Linking HCP and HCP Terraform accounts
 
@@ -40,7 +39,9 @@ The only way to log in with your old HCP Terraform credentials is to unlink your
 To use HCP Terraform or Enterprise, you must create an account through one of the following methods:
 
 - **Invitation Email:** When a user sends you an invitation to join an existing HCP Terraform organization, the email includes a sign-up link. After you create an account, you can automatically join that organization and can begin using HCP Terraform.
-- **Sign-Up Page:** Creating an account requires a username, an email address, and a password. For HCP Terraform, go to [`https://app.terraform.io/public/signup/account`](https://app.terraform.io/public/signup/account). For Terraform Enterprise, go to `https://<TFE HOSTNAME>/public/signup/account`. After you create an account, you do not belong to any organizations. To begin using HCP Terraform, you can either [create an organization](/terraform/cloud-docs/users-teams-organizations/organizations#creating-organizations) or ask an organization owner to send you an invitation email to join their organization.
+- **Sign-Up Page:** Creating an account requires a username, an email address, and a password. [Sign up on HCP Terraform](https://app.terraform.io/public/signup/account) or if you have a Terraform Enterprise instance, go to `https://<TFE HOSTNAME>/public/signup/account`.
+
+After you create an account, you do not belong to any organizations. To begin using HCP Terraform, you can either [create an organization](/terraform/cloud-docs/users-teams-organizations/organizations#creating-organizations) or ask an organization owner to send you an invitation email to join their organization.
 
 <!-- BEGIN: TFC:only -->
 

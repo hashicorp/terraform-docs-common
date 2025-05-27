@@ -7,9 +7,11 @@ tfc_only: true
 
 # Connect to Private VCS Providers
 
-This article describes the steps required to configure connect HCP Terraform to your private VCS provider using a self-hosted HCP Terraform agent.
+Connect HCP Terraform to your private VCS provider using a self-hosted HCP Terraform agent to use HCP Terraform within your private network without exposing your provider to the public internet.
 
--> **Note**: Private VCS is available in limited availability. [Contact HashiCorp Sales](https://www.hashicorp.com/contact-sales) to learn more.
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include "tfc-package-callouts/private-vcs.mdx"
+<!-- END: TFC:only name:pnp-callout -->
 
 ## Background
 
@@ -60,8 +62,8 @@ $ _TFC_AGENT_REQUEST_FORWARDING_ENABLED=true \
 
 To create a private VCS connection, complete the following steps:
 
-1. In HCP Terraform, navigate your organization's **Settings** page.
-1. Under **Version Control**, click **Providers**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to add the VCS connection.
+1. Choose **Settings** from the sidebar, then click **Providers**.
 1. Click **Add a VCS provider**.
 1. Select your VCS Provider.This must be a self-managed provider, such as GitHub Enterprise.
 1. Under **VCS Access**, select “Private”.
