@@ -1,11 +1,11 @@
 ---
-page_title: Plugin Development - How Terraform Works With Plugins
+page_title: How Terraform works with plugins
 description: >-
-  Learn how Terraform interacts with plugins that expose the implementation of a
-  specific service.
+  Learn how Terraform interacts with plugins to manage resources with services
+  and provisioners.
 ---
 
-# How Terraform Works With Plugins
+# How Terraform works with plugins
 
 Terraform is a tool for building, changing, and versioning infrastructure safely
 and efficiently. Terraform is built on a plugin-based architecture, enabling
@@ -22,8 +22,7 @@ service, such as AWS, or provisioner, such as bash.
 
 Terraform Core is a [statically-compiled binary][0] written in the [Go
 programming language][1]. The compiled binary is the command line tool (CLI)
-`terraform`, the entrypoint for anyone using Terraform. The code is open source
-and hosted at github.com/hashicorp/terraform.
+`terraform`, the entrypoint for anyone using Terraform. The code source is available at [github.com/hashicorp/terraform](https://github.com/hashicorp/terraform).
 
 ### The primary responsibilities of Terraform Core are:
 
@@ -53,7 +52,8 @@ their type.
 
 - Initialization of any included libraries used to make API calls
 - Authentication with the Infrastructure Provider
-- Define Resources that map to specific Services
+- Define managed resources and data sources that map to specific services
+- Define functions that enable or simplify computational logic for practitioner configurations
 
 ### The primary responsibilities of Provisioner Plugins are:
 
