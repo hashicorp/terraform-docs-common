@@ -1,10 +1,64 @@
 [
-  { "heading": "Terraform Cloud" },
+  { "heading": "HCP Terraform" },
   { "title": "Overview", "path": "" },
-  { "title": "Plans and Features", "path": "overview" },
+  { "title": "Plans and Features",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "overview"
+      },
+      {
+        "title": "Estimate HCP Terraform Cost",
+        "path": "overview/estimate-hcp-terraform-cost"
+      },
+      {
+        "title": "Activate Pay-As-You-Go",
+        "path": "overview/activate-payg"
+      },
+      {
+        "title": "Activate HashiCorp Flex",
+        "path": "overview/activate-flex"
+      }
+    ]
+  },
   {
     "title": "Getting Started",
     "href": "https://learn.hashicorp.com/collections/terraform/cloud-get-started?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS"
+  },
+  {
+    "title": "Migrate to HCP Terraform",
+    "routes": [
+      {
+        "title": "Overview",
+        "path": "migrate"
+      },
+      {
+        "title": "The tf-migrate CLI",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "migrate/tf-migrate"
+          },
+          {
+            "title": "CLI Reference",
+            "routes": [
+              {
+                "title": "tf-migrate prepare",
+                "path": "migrate/tf-migrate/reference/prepare"
+              },
+              {
+                "title": "tf-migrate execute",
+                "path": "migrate/tf-migrate/reference/execute"
+              },
+              {
+                "title": "Configuration file reference",
+                "path": "migrate/tf-migrate/reference/configuration"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "API",
@@ -23,7 +77,15 @@
       { "title": "Agent Tokens", "path": "api-docs/agent-tokens" },
       { "title": "Applies", "path": "api-docs/applies" },
       { "title": "Audit Trails", "path": "api-docs/audit-trails" },
+      {
+        "title": "Audit Trails Tokens",
+        "path": "api-docs/audit-trails-tokens"
+      },
       { "title": "Assessment Results", "path": "api-docs/assessment-results" },
+      {
+        "title": "Change requests",
+        "path": "api-docs/change-requests"
+      },
       {
         "title": "Comments",
         "path": "api-docs/comments"
@@ -36,9 +98,12 @@
         "title": "Cost Estimates",
         "path": "api-docs/cost-estimates"
       },
+      { "title": "Explorer", "path": "api-docs/explorer" },
       { "title": "Feature Sets", "path": "api-docs/feature-sets" },
+      { "title": "GitHub App Installations", "path": "api-docs/github-app-installations"},
       { "title": "Invoices", "path": "api-docs/invoices" },
       { "title": "IP Ranges", "path": "api-docs/ip-ranges" },
+      { "title": "No-Code Provisioning", "path": "api-docs/no-code-provisioning"},
       {
         "title": "Notification Configurations",
         "path": "api-docs/notification-configurations"
@@ -62,6 +127,7 @@
       { "title": "Plans", "path": "api-docs/plans" },
       { "title": "Policies", "path": "api-docs/policies" },
       { "title": "Policy Checks", "path": "api-docs/policy-checks" },
+      { "title": "Policy Evaluations", "path": "api-docs/policy-evaluations" },
       { "title": "Policy Sets", "path": "api-docs/policy-sets" },
       {
         "title": "Policy Set Parameters",
@@ -71,6 +137,7 @@
         "title": "Private Registry",
         "routes": [
           { "title": "Modules", "path": "api-docs/private-registry/modules" },
+          { "title": "Manage Module Versions", "path": "api-docs/private-registry/manage-module-versions" },
           {
             "title": "Providers",
             "path": "api-docs/private-registry/providers"
@@ -79,9 +146,13 @@
             "title": "Private Provider Versions and Platforms",
             "path": "api-docs/private-registry/provider-versions-platforms"
           },
-          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" }
+          { "title": "GPG Keys", "path": "api-docs/private-registry/gpg-keys" },
+          { "title":  "Tests", "path":  "api-docs/private-registry/tests" }
         ]
       },
+      { "title": "Projects", "path": "api-docs/projects" },
+      { "title": "Project Team Access", "path": "api-docs/project-team-access" },
+      { "title": "Reserved Tag Keys", "path":  "api-docs/reserved-tag-keys"},
       { "title": "Runs", "path": "api-docs/run" },
       {
         "title": "Run Tasks",
@@ -102,26 +173,26 @@
         "path": "api-docs/state-version-outputs"
       },
       { "title": "Subscriptions", "path": "api-docs/subscriptions" },
-      { "title": "Team Access", "path": "api-docs/team-access" },
       { "title": "Team Membership", "path": "api-docs/team-members" },
       { "title": "Team Tokens", "path": "api-docs/team-tokens" },
       { "title": "Teams", "path": "api-docs/teams" },
       { "title": "User Tokens", "path": "api-docs/user-tokens" },
       { "title": "Users", "path": "api-docs/users" },
       { "title": "Variables", "path": "api-docs/variables" },
+      {
+        "title": "Variable Sets",
+        "path": "api-docs/variable-sets"
+      },
       { "title": "VCS Events", "path": "api-docs/vcs-events" },
       { "title": "Workspaces", "path": "api-docs/workspaces" },
       {
         "title": "Workspace-Specific Variables",
         "path": "api-docs/workspace-variables"
       },
+      { "title": "Workspace Team Access", "path": "api-docs/team-access" },
       {
         "title": "Workspace Resources",
         "path": "api-docs/workspace-resources"
-      },
-      {
-        "title": "Variable Sets",
-        "path": "api-docs/variable-sets"
       },
       {
         "title": "Changelog",
@@ -134,17 +205,75 @@
     ]
   },
   {
+    "title": "Projects",
+    "routes": [
+      { "title": "Overview", "path": "projects" },
+      {
+        "title": "Manage Projects",
+        "path": "projects/manage"
+      },
+      { "title": "Best Practices", "path": "projects/best-practices" }
+    ]
+  },
+  {
     "title": "Workspaces",
     "routes": [
       { "title": "Overview", "path": "workspaces" },
       {
-        "title": "Creating Workspaces",
-        "path": "workspaces/creating"
+        "title": "Create Workspaces",
+        "path": "workspaces/create"
       },
-      { "title": "Naming", "path": "workspaces/naming" },
+      {
+        "title": "Create tags",
+        "path": "workspaces/tags"
+      },
+      { "title":  "Browse workspaces", "path":  "workspaces/browse"},
+      { "title": "Explorer", "path": "workspaces/explorer" },
+      {
+        "title": "Change requests",
+        "routes": [
+          { "title": "Overview", "path": "workspaces/change-requests" },
+          {
+            "title": "Manage change requests",
+            "path": "workspaces/change-requests/manage"
+          }
+        ]
+      },
       {
         "title": "Terraform Configurations",
         "path": "workspaces/configurations"
+      },
+      {
+        "title": "Dynamic Provider Credentials",
+        "routes": [
+          { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials" },
+          { "title":  "Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/workload-identity-tokens" },
+          { "title":  "Vault Configuration", "path":  "workspaces/dynamic-provider-credentials/vault-configuration" },
+          { "title":  "AWS Configuration", "path":  "workspaces/dynamic-provider-credentials/aws-configuration" },
+          { "title":  "GCP Configuration", "path":  "workspaces/dynamic-provider-credentials/gcp-configuration" },
+          { "title":  "Azure Configuration", "path":  "workspaces/dynamic-provider-credentials/azure-configuration" },
+          { "title":  "Kubernetes Configuration", "path":  "workspaces/dynamic-provider-credentials/kubernetes-configuration" },
+          { "title":  "HCP Configuration", "path":  "workspaces/dynamic-provider-credentials/hcp-configuration" },
+          { "title":  "Manually Generating Workload Identity Tokens", "path":  "workspaces/dynamic-provider-credentials/manual-generation" },
+          { "title":  "Specifying Multiple Configurations", "path": "workspaces/dynamic-provider-credentials/specifying-multiple-configurations"},
+          {
+            "title": "Vault-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/vault-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/gcp-configuration" },
+              { "title":  "Azure Configuration", "path": "workspaces/dynamic-provider-credentials/vault-backed/azure-configuration" }
+            ]
+          },
+          {
+            "title": "HCP Vault Secrets-Backed Dynamic Credentials",
+            "routes": [
+              { "title":  "Overview", "path":  "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed" },
+              { "title":  "AWS Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/aws-configuration" },
+              { "title":  "GCP Configuration", "path": "workspaces/dynamic-provider-credentials/hcp-vault-secrets-backed/gcp-configuration" }
+            ]
+          }
+        ]
       },
       {
         "title": "Variables",
@@ -178,6 +307,10 @@
           {
             "title": "Run Tasks",
             "path": "workspaces/settings/run-tasks"
+          },
+          {
+            "title": "Destruction and Deletion",
+            "path": "workspaces/settings/deletion"
           }
         ]
       },
@@ -185,7 +318,8 @@
       {
         "title": "JSON Filtering",
         "path": "workspaces/json-filtering"
-      }
+      },
+      { "title": "Best Practices", "path": "workspaces/best-practices"}
     ]
   },
   {
@@ -212,10 +346,25 @@
     "title": "Users, Teams, Organizations",
     "routes": [
       { "title": "Users", "path": "users-teams-organizations/users" },
-      { "title": "Teams", "path": "users-teams-organizations/teams" },
+    {
+        "title": "Teams",
+        "routes": [
+          {"title": "Overview","path": "users-teams-organizations/teams"},
+          { "title": "Manage teams", "path": "users-teams-organizations/teams/manage" },
+          { "title": "Notifications", "path": "users-teams-organizations/teams/notifications" }
+        ]
+      },
       {
         "title": "Organizations",
-        "path": "users-teams-organizations/organizations"
+        "routes": [
+          {"title": "Overview","path": "users-teams-organizations/organizations"},
+          {
+            "title": "Manage reserved tag keys",
+            "path": "users-teams-organizations/organizations/manage-reserved-tags"
+          },
+          { "title": "VCS Status Checks", "path": "users-teams-organizations/organizations/vcs-status-checks" },
+          { "title": "Automatically cancel plan-only runs", "path": "users-teams-organizations/organizations/vcs-speculative-plan-management" }
+        ]
       },
       {
         "title": "Permissions",
@@ -238,8 +387,8 @@
             "path": "users-teams-organizations/single-sign-on"
           },
           {
-            "title": "Microsoft Azure AD",
-            "path": "users-teams-organizations/single-sign-on/azure-ad"
+            "title": "Microsoft Entra ID",
+            "path": "users-teams-organizations/single-sign-on/entra-id"
           },
           {
             "title": "Okta",
@@ -278,18 +427,44 @@
       { "title": "GitLab EE and CE", "path": "vcs/gitlab-eece" },
       { "title": "Bitbucket Cloud", "path": "vcs/bitbucket-cloud" },
       {
-        "title": "Bitbucket Server and Data Center",
-        "path": "vcs/bitbucket-server"
+        "title": "Bitbucket Data Center",
+        "path": "vcs/bitbucket-data-center"
       },
       {
-        "title": "Azure DevOps Services",
+        "title": "Azure DevOps Services (OAuth)",
         "path": "vcs/azure-devops-services"
+      },
+      {
+        "title": "Azure DevOps Services (PAT)",
+        "path": "vcs/azure-devops-services-pat"
       },
       {
         "title": "Azure DevOps Server",
         "path": "vcs/azure-devops-server"
       },
+      { "title": "Private VCS Providers", "path": "vcs/private"},
       { "title": "Troubleshooting", "path": "vcs/troubleshooting" }
+    ]
+  },
+   {
+    "title": "Stacks",
+    "badge": {
+        "text": "BETA",
+        "type": "outlined",
+        "color": "neutral"
+    },
+    "routes": [
+      { "title": "Overview", "path": "stacks" },
+      { "title": "Create a Stack", "path": "stacks/create" },
+      { "title": "Configure a Stack", "path": "stacks/configure" },
+      {
+        "title": "Deploy infrastructure",
+        "routes": [
+          { "title": "Configuration versions", "path": "stacks/deploy/configuration-versions" },
+          { "title": "Review deployment plans", "path": "stacks/deploy/plans" }
+        ]
+      },
+      { "title": "Destroy a Stack", "path": "stacks/destroy" }
     ]
   },
   {
@@ -308,96 +483,152 @@
         "title": "Publishing Private Modules",
         "path": "registry/publish-modules"
       },
+      { "title": "Manage Module Versions", "path": "registry/manage-module-versions" },
+      {
+        "title": "Test-Integrated Modules",
+        "path": "registry/test"
+      },
       { "title": "Using Providers and Modules", "path": "registry/using" },
       {
         "title": "Configuration Designer",
         "path": "registry/design"
+      }
+      ]
+  },
+  { "title": "Public Registry Namespaces", "routes": [
+    {
+      "title": "Overview",
+      "path": "public-namespace"
+    },
+    {
+      "title": "Create or claim a namespace",
+      "path": "public-namespace/create_or_claim"
+    },
+    {
+      "title": "Manage namespaces",
+      "path": "public-namespace/manage"
+    },
+    {
+      "title": "Manage namespace artifacts",
+      "path": "public-namespace/artifacts"
       }
     ]
   },
   {
     "title": "No-Code Provisioning",
     "routes": [
-      { 
+      {
         "title": "Designing No-Code Ready Modules",
-        "path": "no-code-provisioning/module-design" 
+        "path": "no-code-provisioning/module-design"
       },
-      { 
+      {
         "title": "Provisioning No-Code Infrastructure",
-        "path": "no-code-provisioning/provisioning" 
+        "path": "no-code-provisioning/provisioning"
       }
     ]
   },
   {
-    "title": "Migrating to Terraform Cloud",
-    "path": "migrate"
-  },
-  {
     "title": "Policy Enforcement",
     "routes": [
-      { "title": "Overview", "path": "policy-enforcement" },
       {
-        "title": "Sentinel Policies",
+        "title": "Overview",
+        "path": "policy-enforcement"
+      },
+      {
+        "title": "Define policies",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/sentinel"
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/define-policies"
           },
           {
-            "title": "Imports",
-            "routes": [
-              { "title": "tfconfig", "path": "policy-enforcement/sentinel/import/tfconfig" },
-              {
-                "title": "tfconfig/v2",
-                "path": "policy-enforcement/sentinel/import/tfconfig-v2"
-              },
-              { "title": "tfplan", "path": "policy-enforcement/sentinel/import/tfplan" },
-              {
-                "title": "tfplan/v2",
-                "path": "policy-enforcement/sentinel/import/tfplan-v2"
-              },
-              { "title": "tfstate", "path": "policy-enforcement/sentinel/import/tfstate" },
-              {
-                "title": "tfstate/v2",
-                "path": "policy-enforcement/sentinel/import/tfstate-v2"
-              },
-              { "title": "tfrun", "path": "policy-enforcement/sentinel/import/tfrun" }
-            ]
-          },
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/sentinel/vcs"
+            "title": "Custom Sentinel policies",
+            "path": "policy-enforcement/define-policies/custom-sentinel"
           },
           {
-            "title": "Mocking Terraform Sentinel Data",
-            "path": "policy-enforcement/sentinel/mock"
-          },
-          {
-            "title": "Working With JSON Result Data",
-            "path": "policy-enforcement/sentinel/json"
-          },
-          {
-            "title": "Using Sentinel with Terraform 0.12",
-            "path": "policy-enforcement/sentinel/sentinel-tf-012"
+            "title": "OPA policies",
+            "path": "policy-enforcement/define-policies/opa"
           }
         ]
       },
       {
-        "title": "OPA Policies",
+        "title": "Create and manage policy sets",
         "routes": [
-          { "title": "Defining Policies",
-            "path": "policy-enforcement/opa"
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/manage-policy-sets"
           },
-          { "title": "Policy Set VCS Repositories",
-            "path": "policy-enforcement/opa/vcs"
+          {
+            "title": "Create Sentinel policy sets in VCS",
+            "path": "policy-enforcement/manage-policy-sets/sentinel-vcs"
+          },
+          {
+            "title": "Connect to OPA policies in VCS",
+            "path": "policy-enforcement/manage-policy-sets/opa-vcs"
           }
         ]
       },
       {
-        "title": "Managing Policy Sets",
-        "path": "policy-enforcement/manage-policy-sets"
+        "title": "Run pre-written Sentinel policies",
+        "path": "policy-enforcement/prewritten-sentinel"
       },
       {
-        "title": "Policy Results",
-        "path": "policy-enforcement/policy-results"
+        "title": "Test Sentinel policies",
+        "path": "policy-enforcement/test-sentinel"
+      },
+      {
+        "title": "View policy results",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/view-results"
+          },
+          {
+            "title": "View Sentinel JSON results",
+            "path": "policy-enforcement/view-results/json"
+          }
+        ]
+      },
+      {
+        "title": "Pre-written policy library",
+        "path": "policy-enforcement/prewritten-library"
+      },
+      {
+        "title": "Sentinel import reference",
+        "routes": [
+          {
+            "title": "Overview",
+            "path": "policy-enforcement/import-reference"
+          },
+          {
+            "title": "tfconfig",
+            "path": "policy-enforcement/import-reference/tfconfig"
+          },
+          {
+            "title": "tfconfig/v2",
+            "path": "policy-enforcement/import-reference/tfconfig-v2"
+          },
+          {
+            "title": "tfplan",
+            "path": "policy-enforcement/import-reference/tfplan"
+          },
+          {
+            "title": "tfplan/v2",
+            "path": "policy-enforcement/import-reference/tfplan-v2"
+          },
+          {
+            "title": "tfstate",
+            "path": "policy-enforcement/import-reference/tfstate"
+          },
+          {
+            "title": "tfstate/v2",
+            "path": "policy-enforcement/import-reference/tfstate-v2"
+          },
+          {
+            "title": "tfrun",
+            "path": "policy-enforcement/import-reference/tfrun"
+          }
+        ]
       }
     ]
   },
@@ -414,28 +645,104 @@
     "title": "Integrations",
     "routes": [
       {
-        "title": "ServiceNow Integration",
+        "title": "Overview",
+        "path": "integrations"
+      },
+      {
+        "title": "Kubernetes Operator",
         "routes": [
-          { "title": "Overview", "path": "integrations/service-now" },
           {
-            "title": "Service Catalog",
-            "path": "integrations/service-now/service-catalog"
+            "title": "Overview",
+            "path": "integrations/kubernetes"
           },
           {
-            "title": "Admin Guide",
-            "path": "integrations/service-now/admin-guide"
+            "title": "Setup",
+            "path": "integrations/kubernetes/setup"
           },
           {
-            "title": "Developer Reference",
-            "path": "integrations/service-now/developer-reference"
+            "title": "API Reference",
+            "path": "integrations/kubernetes/api-reference"
           },
           {
-            "title": "Example Customizations",
-            "path": "integrations/service-now/example-customizations"
+            "title": "Annotations and Labels",
+            "path": "integrations/kubernetes/annotations-and-labels"
           },
           {
-            "title": "V1 Setup Instructions",
-            "path": "integrations/service-now/service-now-v1"
+            "title": "Migration Guide",
+            "path": "integrations/kubernetes/ops-v2-migration"
+          }
+        ]
+      },
+      {
+        "title": "ServiceNow Integrations",
+        "routes": [
+          {
+            "title": "Service Catalog for Terraform",
+            "routes": [
+              { "title": "Overview", "path": "integrations/service-now/service-catalog-terraform" },
+              {
+                "title": "Service Catalog",
+                "path": "integrations/service-now/service-catalog-terraform/service-catalog-config"
+              },
+              {
+                "title": "Admin Guide",
+                "path": "integrations/service-now/service-catalog-terraform/admin-guide"
+              },
+              {
+                "title": "Developer Reference",
+                "path": "integrations/service-now/service-catalog-terraform/developer-reference"
+              },
+              {
+                "title": "Example Customizations",
+                "path": "integrations/service-now/service-catalog-terraform/example-customizations"
+              },
+              {
+                "title": "Troubleshoot",
+                "path": "integrations/service-now/service-catalog-terraform/troubleshoot"
+              }
+            ]
+          },
+          {
+            "title": "Service Graph Connector for Terraform",
+            "routes": [
+              {
+                "title": "Overview",
+                "path": "integrations/service-now/service-graph"
+              },
+              {
+                "title": "Setup",
+                "path": "integrations/service-now/service-graph/service-graph-setup"
+              },
+              {
+                "title": "Resource Coverage",
+                "routes": [
+                  {
+                    "title": "Overview",
+                    "path": "integrations/service-now/service-graph/resource-coverage"
+                  },
+                  {
+                    "title": "AWS",
+                    "path": "integrations/service-now/service-graph/resource-coverage/aws"
+                  },
+                  {
+                    "title": "Azure",
+                    "path": "integrations/service-now/service-graph/resource-coverage/azure"
+                  },
+                  {
+                    "title": "GCP",
+                    "path": "integrations/service-now/service-graph/resource-coverage/gcp"
+                  },
+                  {
+                    "title": "vSphere",
+                    "path": "integrations/service-now/service-graph/resource-coverage/vsphere"
+                  }
+                ]
+              },
+              {
+                "title": "Customizations",
+                "path": "integrations/service-now/service-graph/customizations"
+              }
+            ]
           }
         ]
       },
@@ -444,12 +751,12 @@
         "path": "integrations/splunk"
       },
       {
-        "title": "Kubernetes Integration",
-        "path": "integrations/kubernetes"
-      },
-      {
         "title": "Run Tasks Integration",
         "path": "integrations/run-tasks"
+      },
+      {
+        "title": "AWS Service Catalog Integration",
+        "path": "integrations/aws-service-catalog"
       }
     ]
   },
@@ -507,7 +814,7 @@
   },
   { "divider": true },
   {
-    "title": "Terraform Cloud Agents",
+    "title": "HCP Terraform Agents",
     "href": "/cloud-docs/agents"
   }
 ]
