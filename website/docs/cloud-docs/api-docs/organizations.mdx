@@ -1,7 +1,7 @@
 ---
-page_title: Organizations - API Docs - HCP Terraform
+page_title: /organizations API reference for HCP Terraform
 description: >-
-  Use the `/organizations` endpoint to interact with organizations. List organizations, entitlement sets, and module producers, and show, create, update, and destroy organizations using the HTTP API.
+   Use the HCP Terraform API's `/organizations` endpoint to create, update, and destroy organizations, and read their entitlement sets, module producers, and data retention policies.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Organizations API
+# Organizations API reference
 
 The Organizations API is used to list, show, create, update, and destroy organizations.
 
@@ -98,6 +98,7 @@ curl \
         "cost-estimation-enabled": true,
         "send-passing-statuses-for-untriggered-speculative-plans": true,
         "aggregated-commit-status-enabled": false,
+        "speculative-plan-management-enabled": true,
         "allow-force-delete-workspaces": true,
         "name": "hashicorp",
         "permissions": {
@@ -186,6 +187,7 @@ curl \
         "cost-estimation-enabled": false,
         "send-passing-statuses-for-untriggered-speculative-plans": false,
         "aggregated-commit-status-enabled": true,
+        "speculative-plan-management-enabled": true,
         "allow-force-delete-workspaces": false,
         "name": "hashicorp-two",
         "permissions": {
@@ -323,6 +325,7 @@ curl \
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
       "aggregated-commit-status-enabled": true,
+      "speculative-plan-management-enabled": true,
       "allow-force-delete-workspaces": false,
       "name": "hashicorp",
       "permissions": {
@@ -420,6 +423,7 @@ Properties without a default value are required.
 | `data.attributes.cost-estimation-enabled`                                 | boolean | false      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to false. In Terraform Enterprise, you must also enable cost estimation in [Site Administration](/terraform/enterprise/admin/application/integration#cost-estimation-integration). |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
 | `data.attributes.aggregated-commit-status-enabled`                        | boolean | true      | Whether or not to aggregate VCS status updates for triggered workspaces. This is useful for monorepo projects with configuration spanning many workspaces. Defaults to `true`. You cannot use this option if `send-passing-statuses-for-untriggered-speculative-plans` is set to `true`.   |
+| `data.attributes.speculative-plan-management-enabled`                     | boolean | true      | Whether or not to enable [Automatically cancel plan-only runs](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-speculative-plan-management). Defaults to `true`.                                                                                                                                                                                                 |
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | (false)   | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.         |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | (false)   | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
@@ -474,6 +478,7 @@ curl \
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
       "aggregated-commit-status-enabled": true,
+      "speculative-plan-management-enabled": true,
       "allow-force-delete-workspaces": false,
       "name": "hashicorp",
       "permissions": {
@@ -609,6 +614,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.cost-estimation-enabled`                                 | boolean | false      | Whether or not the cost estimation feature is enabled for all workspaces in the organization. Defaults to false. In Terraform Enterprise, you must also enable cost estimation in [Site Administration](/terraform/enterprise/admin/application/integration#cost-estimation-integration). |
 | `data.attributes.send-passing-statuses-for-untriggered-speculative-plans` | boolean | false     | Whether or not to send VCS status updates for untriggered speculative plans. This can be useful if large numbers of untriggered workspaces are exhausting request limits for connected version control service providers like GitHub. Defaults to false. In Terraform Enterprise, this setting is always false and cannot be changed but is also available in Site Administration. |
 | `data.attributes.aggregated-commit-status-enabled`                        | boolean | true      | Whether or not to aggregate VCS status updates for triggered workspaces. This is useful for monorepo projects with configuration spanning many workspaces. Defaults to `true`. You cannot use this option if `send-passing-statuses-for-untriggered-speculative-plans` is set to `true`.   |
+| `data.attributes.speculative-plan-management-enabled`                     | boolean | true      | Whether or not to enable [Automatically cancel plan-only runs](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-speculative-plan-management). Defaults to `true`.                                                                                                                                                                                                 |
 | `data.attributes.owners-team-saml-role-id`                                | string  | (nothing) | **Optional.** **SAML only** The name of the ["owners" team](/terraform/enterprise/saml/team-membership#managing-membership-of-the-owners-team)                                                                                                                                                                                                                               |
 | `data.attributes.assessments-enforced`                                    | boolean | false     | Whether or not to compel health assessments for all eligible workspaces. When true, health assessments occur on all compatible workspaces, regardless of the value of the workspace setting `assessments-enabled`. When false, health assessments only occur for workspaces that opt in by setting `assessments-enabled: true`.             |
 | `data.attributes.allow-force-delete-workspaces`                           | boolean | false     | Whether workspace administrators can [delete workspaces with resources under management](/terraform/cloud-docs/users-teams-organizations/organizations#general). If false, only organization owners may delete these workspaces.                                                                                                                                                                              |
@@ -662,6 +668,7 @@ curl \
       "cost-estimation-enabled": false,
       "send-passing-statuses-for-untriggered-speculative-plans": false,
       "aggregated-commit-status-enabled": true,
+      "speculative-plan-management-enabled": true,
       "name": "hashicorp",
       "permissions": {
         "can-update": true,
@@ -803,6 +810,7 @@ curl \
       "policy-set-limit": 1,
       "private-module-registry": true,
       "private-policy-agents": false,
+      "private-run-tasks": true,
       "private-vcs": false,
       "run-task-limit": 1,
       "run-task-mandatory-enforcement-limit": 1,

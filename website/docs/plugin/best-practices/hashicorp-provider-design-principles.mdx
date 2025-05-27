@@ -1,9 +1,11 @@
 ---
-page_title: Provider Design Principles - Guides
-description: Design principles for officially maintained Terraform Providers.
+page_title: Provider design principles
+description: >-
+  Learn HashiCorp's design principles for officially maintained
+  Terraform providers.
 ---
 
-# Provider Design Principles
+# Provider design principles
 
 Over time, the Terraform development community has gained large amounts of experience across a wide breadth of Application Programming Interfaces (APIs) supported by Terraform and its Software Development Kit (SDK). Recommended practices have emerged with designing the expected operator and maintainer experience. The principles below highlight the most prolific patterns when designing Terraform providers and associated resources and functions, which guide HashiCorp design decisions.
 
@@ -30,7 +32,7 @@ The benefits of this practice include:
 
 ## Resource and attribute schema should closely match the underlying API
 
-A Terraform resource and associated schema should follow the naming and structure of the API, unless the it degrades the user experience or works in a way counter to a user's expectations of Terraform. Simplification of an API in Terraform should be accomplished via [Terraform Modules](/terraform/language/modules/develop), potentially hosted in the [Terraform Registry](https://registry.terraform.io/). Additional guidance can be found in the [resource and attribute naming guide](/terraform/plugin/best-practices/naming).
+A Terraform resource and associated schema should follow the naming and structure of the API, unless it degrades the user experience or works in a way counter to a user's expectations of Terraform. Simplification of an API in Terraform should be accomplished via [Terraform Modules](/terraform/language/modules/develop), potentially hosted in the [Terraform Registry](https://registry.terraform.io/). Additional guidance can be found in the [resource and attribute naming guide](/terraform/plugin/best-practices/naming).
 
 The benefits of this practice include:
 
@@ -77,3 +79,13 @@ The benefits of this practice include:
 - Ensuring Terraform can statically validate the entire configuration anywhere
 - Preventing practitioner issues should the environment change between Terraform commands
 - Preventing practitioner issues should networking or a service become unavailable
+
+## Ephemeral Resources should represent a single sensitive API object
+
+A Terraform ephemeral resource should be a declarative representation of a single API object that doesn't require Terraform to store it's data between runs, such as sensitive data like an API token or secret. This ephemeral data is created and/or retrieved from the API during the Open operation.
+
+The benefits of this practice include:
+
+- Maximizing predictability and minimizing the blast radius of open/close operations
+- Enabling composition of related or dependent components in new and innovative ways
+- Preventing maintainer burden of managing multiple underlying components

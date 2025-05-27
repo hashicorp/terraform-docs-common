@@ -1,14 +1,14 @@
 ---
-page_title: Single Sign-on - Linking a User Account
-description: Manage the user account linked to an SSO identity.
+page_title: Link a user account for single sign-on in HCP Terraform
+description: Learn how to manage an HCP Terraform user account to link an SSO identity.
 tfc_only: true
 ---
 
-# Linking a User Account
+# Link a user account for single sign-on
 
 You have an SSO identity for every SSO-enabled HCP Terraform organization. HCP Terraform links each SSO identity to a single HCP Terraform user account. This link determines which account you can use to access each organization.
 
-You can add and remove SSO identity links for all providers, including Microsoft Azure AD, Okta, and SAML.
+You can add and remove SSO identity links for all providers, including Microsoft Entra ID, Okta, and SAML.
 
 ## Add SSO Identity Link
 
@@ -25,7 +25,7 @@ When HCP Terraform does not recognize the email address associated with your ide
 
 HCP Terraform shows an error if you try to log in to an SSO-enabled organization with a different user account than the one linked to your SSO identity. To change this SSO identity link:
 
-1. Log in to HCP Terraform using the linked account.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) using the linked account.
 1. [Remove the SSO identity link](#remove-sso-identity-link) from the current account.
 1. Sign out of HCP Terraform.
 1. Log in and [add an SSO identity link](#add-sso-identity-link) to the desired account.

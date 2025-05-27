@@ -186,4 +186,129 @@ module.exports = [
     destination: "/terraform/cloud-docs/modules/partner",
     permanent: true,
   },
+  //Azure AD -> Microsoft Entra ID
+  {
+    source: "/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad",
+    destination: "/terraform/cloud-docs/users-teams-organizations/single-sign-on/entra-id",
+    permanent: true,
+  },
+// Reorg terraform block reference
+  {
+    source: "/terraform/language/settings/cloud",
+    destination: "/terraform/language/terraform",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings",
+    destination: "/terraform/language/terraform",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/backends/configuration",
+    destination: "/terraform/language/backend",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/:version(v1\.(?:7|8|9|10|11|12|13)\.x)/settings/backends/configuration",
+    destination: "/terraform/language/backend",
+    permanent: true,
+  },
+  {
+    source: "/terraform/language/settings/backends/:slug*",
+    destination: "/terraform/language/backend/:slug*",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cli/cloud/migrating",
+    destination: "/terraform/cli/cloud/settings",
+    permanent: true,
+  },
+  {
+    source: "/terraform/cloud-docs/projects/managing",
+    destination: "/terraform/cloud-docs/projects/manage"
+  },
+  {
+    source: "/terraform/cloud-docs/workspaces/creating",
+    destination: "/terraform/cloud-docs/workspaces/create"
+  },
+  // Stacks links
+  {
+    source: "/terraform/cloud-docs/stacks/review-plans",
+    destination: "/terraform/cloud-docs/stacks/deploy/plans",
+    permanent: true
+  },
+  {
+    source: "/terraform/cloud-docs/stacks/deploy/conditions",
+    destination: "/terraform/language/stacks/deploy/conditions",
+    permanent: true
+  },
+  // Policy enforcement changes related to pre-written Sentinel policies
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/sentinel",
+    destination: "/terraform/cloud-docs/policy-enforcement/define-policies/sentinel",
+    permanent: true
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/opa",
+    destination: "/terraform/cloud-docs/policy-enforcement/define-policies/opa",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/sentinel/vcs",
+    destination: "/terraform/cloud-docs/policy-enforcement/manage-policy-sets/sentinel-vcs",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/opa/vcs",
+    destination: "/terraform/cloud-docs/policy-enforcement/manage-policy-sets/opa-vcs",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/policy-results",
+    destination: "/terraform/cloud-docs/policy-enforcement/view-results",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/sentinel/json",
+    destination: "/terraform/cloud-docs/policy-enforcement/view-results/json",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/sentinel/mock",
+    destination: "/terraform/cloud-docs/policy-enforcement/test-sentinel",
+    permanent: true 
+  },
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/sentinel/import/:slug",
+    destination: "/terraform/cloud-docs/policy-enforcement/import-reference/:slug",
+    permanent: true 
+  },
+      // Relocate pre-written Sentinel policies topic
+  {
+    source: "/terraform/cloud-docs/policy-enforcement/define-policies/prewritten-sentinel",
+    destination: "/terraform/cloud-docs/policy-enforcement/prewritten-sentinel",
+    permanent: true
+  },
+  // Consolidate install instructions
+  {
+    source: "/terraform/cli/install/apt",
+    destination: "/terraform/install",
+    permanent: true
+  },
+  {
+    source: "/terraform/cli/install/yum",
+    destination: "/terraform/install",
+    permanent: true
+  },
+  {
+    source: "/terraform/cloud-docs/overview/migrate-teams-standard",
+    destination: "/terraform/cloud-docs/overview",
+    permanent: true
+  },
+  // Update tools section
+  {
+    source: "/terraform/docs/terraform-tools",
+    destination: "/terraform/docs/tools",
+    permanent: true
+  },
 ];
