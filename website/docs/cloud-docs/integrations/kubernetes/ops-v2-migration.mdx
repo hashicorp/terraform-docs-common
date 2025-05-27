@@ -1,12 +1,12 @@
 ---
-page_title: HCP Terraform Operator for Kubernetes v2 Migration Guide
+page_title: Migrate to HCP Terraform Operator for Kubernetes v2
 description: >-
-  Upgrade the Terraform Kubernetes Operator from version 1 to version 2.
+  Learn how to upgrade the Terraform Kubernetes Operator from version 1 to version 2.
 ---
 
-# HCP Terraform Operator for Kubernetes v2 Migration Guide
+# Migrate to HCP Terraform Operator for Kubernetes v2
 
-~> **Compatibility warning**: Terraform Enterprise only supports version 2 of the HCP Terraform Operator for Kubernetes. If you use Terraform Enterprise, [refer to this tutorial](/terraform/tutorials/kubernetes/kubernetes-operator-v2) for installation guidance. 
+~> **Warning**: Version 1 of the HCP Terraform Operator for Kubernetes is **deprecated** and no longer maintained. If you are installing the operator for the first time, refer to [Set up the HCP Terraform Operator for Kubernetes](/terraform/cloud-docs/integrations/kubernetes/setup) for guidance.
 
 To upgrade the HCP Terraform Operator for Kubernetes from version 1 to the HCP Terraform Operator for Kubernetes (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
 
@@ -82,7 +82,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `spec.notifications.[*].url` | `spec.notifications.[*].url` | None. |
 | `spec.notifications.[*].token` | `spec.notifications.[*].token` | None. |
 | `spec.notifications.[*].triggers.[*]` | `spec.notifications.[*].triggers.[*]` | None. |
-| `spec.notifications.[*].recepients.[*]` | `spec.notifications.[*].emailAddesses.[*]` | Renamed the `recepients` field to `emailAddesses`. |
+| `spec.notifications.[*].recipients.[*]` | `spec.notifications.[*].emailAddresses.[*]` | Renamed the `recipients` field to `emailAddresses`. |
 | `spec.notifications.[*].users.[*]` | `spec.notifications.[*].emailUsers.[*]` | Renamed the `users` field to `emailUsers`. |
 | `spec.omitNamespacePrefix` | N/A | Removed. In v1 `spec.omitNamespacePrefix` is a boolean field that affects how the operator generates a workspace name. In v2, you must explicitly set workspace names in `spec.name`. |
 | `spec.agentPoolID` | `spec.agentPool.id` | Moved the `agentPoolID` field to `spec.agentPool.id`. |

@@ -10,6 +10,19 @@ description: >-
 An HCP Terraform workspace manages a single state file and the lifecycle of its resources. It is the smallest collection of HCP Terraform-managed infrastructure. Any operation on a resource can potentially affect other resources managed in the same state file, so it is best to keep the potential blast radius of your operations small. To do so, manage resources in separate workspaces when possible, grouping together only necessary and logically-related resources. For example, even though your application may require both compute resources and a database, these resources can operate independently and should be in their own workspaces. 
 Scoping your configuration and planning your workspace strategy early in your adoption of HCP Terraform and Terraform Enterprise will simplify your operations and make them safer.
 
+## Name your Workspace 
+
+We recommend using the following naming convention so you can identify and associate workspaces with specific components of your infrastructure:
+
+`<business-unit>-<app-name>-<layer>-<env>`
+
+- `<business-unit>`: The business unit or team that owns the workspace.
+- `<app-name>`: The name of the application or service that the workspace manages.
+- `<layer>`: The layer of the infrastructure that the workspace manages (or example, network, compute, filestore).
+- `<env>`: The environment that the workspace manages (for example, prod, staging, QA, prod).
+
+If your application team does not have a `layer`, use `main` or `app` in its place to maintain consistency across the organization.
+
 ## Group by volatility
 
 Volatility refers to the rate of change of the resources in a workspace. Infrastructure such as databases, VPCs, and subnets change much less frequently than infrastructure such as your web servers. By exposing your long-living infrastructure to unnecessary volatility, you introduce more opportunities for accidental changes. When planning your workspace organization, group resources by volatility.
@@ -40,7 +53,11 @@ HCP Terraform and Terraform Enterprise execute workloads using agents. Every tim
 
 ## Determine workspace concurrency vs Terraform parallelism
 
-Concurrency refers to the number of plan and apply operations HCP Terraform or Terraform Enterprise can run simultaneously. In HCP Terraform, your subscription limits the maximum concurrency. Terraform Enterprise lets you configure the concurrency, but defaults to 10 concurrent runs. As you increase concurrency, the amount of memory your Terraform Enterprise installation requires increases as well. Refer to the [Capacity and performance](/terraform/enterprise/replicated/architecture/system-overview/capacity) documentation for more information.
+Concurrency refers to the number of plan and apply operations that HCP Terraform or Terraform Enterprise can run simultaneously.
+
+In HCP Terraform, your edition limits the maximum concurrency for your organization. Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing?product_intent=terraform) for details.
+
+Terraform Enterprise lets you configure the concurrency, but defaults to 10 concurrent runs. As you increase concurrency, the amount of memory your Terraform Enterprise installation requires increases as well. Refer to the [Capacity and performance](/terraform/enterprise/replicated/architecture/system-overview/capacity) documentation for more information.
 
 Parallelism refers to the number of tasks the Terraform CLI performs simultaneously in a single workload. By default, Terraform performs a maximum of 10 operations in parallel. When running a `terraform apply` command, Terraform refreshes each resource in the state file and compares to the remote object. Every resource refresh, creation, update, or destruction is an individual operation. If your workload creates 11 resources, Terraform starts by creating the first 10 resources in its dependency graph, and will begin creating the 11th once it finishes creating one of the first 10 resources.
 

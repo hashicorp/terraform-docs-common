@@ -1,10 +1,10 @@
 ---
-page_title: GitLab EE and CE - VCS Providers - HCP Terraform
+page_title: Set up the GitLab EE and CE VCS provider
 description: >-
-  Learn how to use on-premise installation of GitLab Enterprise Edition (EE) or GitLab Community Edition (CE) for VCS features.
+  Learn how to use on-premise installation of GitLab Enterprise Edition (EE) or GitLab Community Edition (CE) with workspaces and private registry module in HCP Terraform.
 ---
 
-# Configuring GitLab EE and CE Access
+# Set up the GitLab EE and CE VCS provider
 
 These instructions are for using an on-premise installation of GitLab Enterprise Edition (EE) or GitLab Community Edition (CE) for HCP Terraform's VCS features. [GitLab.com has separate instructions,](/terraform/cloud-docs/vcs/gitlab-com) as do the [other supported VCS providers.](/terraform/cloud-docs/vcs)
 
@@ -31,9 +31,9 @@ The rest of this page explains the on-premise GitLab versions of these steps.
 
 ## Step 1: On HCP Terraform, Begin Adding a New VCS Provider
 
-1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to add the VCS provider.
 
-1. Click **Add VCS Provider**. The **VCS Providers** page appears.
+1. Choose **Settings** from the sidebar, then click **Providers**.
 
 1. Select **GitLab** and then select **GitLab Enterprise Edition** or **GitLab Community Edition** from the menu. The page moves to the next step.
 
@@ -88,7 +88,7 @@ Leave the page open in a browser tab. In the next step you will copy values from
 
 1. On the "Configure settings" step on HCP Terraform, enter the **Application ID** and **Secret** from the previous step.
 
-1. Click **Connect and continue.** This takes you to a page on GitLab asking whether you want to authorize the app. Alternatively, if you are redirtected to a 500 error, it usually means HCP Terraform was unable to reach your GitLab instance.
+1. Click **Connect and continue.** This takes you to a page on GitLab asking whether you want to authorize the app. Alternatively, if you are redirected to a 500 error, it usually means HCP Terraform was unable to reach your GitLab instance.
 
 1. Click the green **Authorize** button at the bottom of the authorization page.
 

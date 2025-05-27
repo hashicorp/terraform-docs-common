@@ -1,11 +1,10 @@
 ---
-page_title: Dynamic Credentials with the Kubernetes and Helm Provider - Workspaces - HCP Terraform
+page_title: Use dynamic credentials with the Kubernetes and Helm providers in HCP Terraform
 description: >-
-  Use OpenID Connect to get short-term credentials for the Kubernetes and Helm Terraform providers in
-  your HCP Terraform runs.
+  Use OpenID Connect to get short-term credentials for the Kubernetes and Helm Terraform providers in your HCP Terraform runs.
 ---
 
-# Dynamic Credentials with the Kubernetes and Helm providers
+# Use dynamic credentials with the Kubernetes and Helm providers
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.13.1](/terraform/cloud-docs/agents/changelog#1-13-1-10-25-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
@@ -68,13 +67,13 @@ resource "kubernetes_cluster_role_binding_v1" "oidc_role" {
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
+    name      = "${var.tfc_hostname}#organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:plan"
   }
 
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
+    name      = "${var.tfc_hostname}#organization:${var.tfc_organization_name}:project:${var.tfc_project_name}:workspace:${var.tfc_workspace_name}:run_phase:apply"
   }
 }
 ```

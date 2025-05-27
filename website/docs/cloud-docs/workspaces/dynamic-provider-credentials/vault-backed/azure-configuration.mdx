@@ -1,11 +1,10 @@
 ---
-page_title: Vault-Backed Dynamic Credentials with the Azure Providers - HCP Terraform
+page_title: Use Vault-backed dynamic credentials with the Azure provider in HCP Terraform
 description: >-
-  Use OpenID Connect and Vault to get short-term credentials for the Azure Terraform providers in
-  your HCP Terraform runs.
+  Use OpenID Connect and Vault to get short-term credentials for the Azure Terraform provider in your HCP Terraform runs.
 ---
 
-# Vault-Backed Dynamic Credentials with the Azure Provider
+# Use Vault-backed dynamic credentials with the Azure provider
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
@@ -24,7 +23,7 @@ You must first set up Vault dynamic provider credentials before you can use Vaul
 [See the setup instructions for Vault dynamic provider credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials/vault-configuration).
 
 # Configure Vault Azure Secrets Engine
-Follow the instructions in the Vault documentation for [setting up the Azure secrets engine in your Vault instance](/vault/docs/secrets/azure). You can also do this configuration through Terraform. Refer to our [example Terraform configuration](https://github.com/hashicorp/terraform-dynamic-credentials-setup-examples/vault-backed/azure).
+Follow the instructions in the Vault documentation for [setting up the Azure secrets engine in your Vault instance](/vault/docs/secrets/azure). You can also do this configuration through Terraform. Refer to our [example Terraform configuration](https://github.com/hashicorp/terraform-dynamic-credentials-setup-examples/tree/main/vault-backed/azure).
 
 ## Configure HCP Terraform
 Next, you need to set certain environment variables in your HCP Terraform workspace to authenticate HCP Terraform with Azure using Vault-backed dynamic credentials. These variables are in addition to those you previously set while configuring [Vault dynamic provider credentials](#configure-vault-dynamic-provider-credentials). You can add these as workspace variables or as a [variable set](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets). When you configure dynamic provider credentials with multiple provider configurations of the same type, use either a default variable or a tagged alias variable name for each provider configuration. Refer to [Specifying Multiple Configurations](#specifying-multiple-configurations) for more details.
