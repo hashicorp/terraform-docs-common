@@ -1,7 +1,7 @@
 ---
-page_title: No-Code Provisioning - API Docs - HCP Terraform
+page_title: /no-code-modules API reference for HCP Terraform
 description: >-
-  Use these endpoints to control availability of no-code provisioning and designate variable values for a no-code module in your organization.
+  Use the HCP Terraform API's `/no-code-modules` endpoint to designate and configure no-code modules. You can also use this endpoint to deploy and upgrade no-code workspaces.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: http://jsonapi.org/format/#error-objects
 
-# No-code provisioning API
+# No-code provisioning API reference
 
 The no-code provisioning API allows you to create, configure, and deploy Terraform modules in the no-code provisioning workflows within HCP Terraform. For more information on no-code modules, refer to [Designing No-Code Ready Modules](/terraform/cloud-docs/no-code-provisioning/module-design).
 
@@ -531,6 +531,7 @@ Properties without a default value are required.
 | `data.attributes.name`                                  | string  | none      | The name of the workspace. You can only include letters, numbers, `-`, and `_`. Terraform uses this value to identify the workspace and must be unique in the organization. |
 | `data.attributes.source-name`                           | string  | none | A friendly name for the application or client creating this workspace. If set, this will be displayed on the workspace as "Created via `<SOURCE NAME>`". |                                                                                                                                                                                                                                                                                                                                                        |
 | `data.attributes.source-url`                            | string  | (nothing) | A URL for the application or client creating this workspace. This can be the URL of a related resource in another app, or a link to documentation or other info about the client. |                                                                                                                                                                                                                                                                                                                               |
+| `data.attributes.terraform-version`                     | string  | latest release | Specifies the version of Terraform to use for this workspace. You can specify an exact version or a [version constraint](/terraform/language/expressions/version-constraints) such as `~> 1.0.0`. If you specify a constraint, the workspace always uses the newest release that meets that constraint. If omitted when creating a workspace, this defaults to the latest released version. |
 | `data.relationships.project.data.id`                    | string  |           | The ID of the project to create the workspace in. You must have permission to create workspaces in the project, either by organization-level permissions or team admin access to a specific project. |
 | `data.relationships.project.data.type`                  | string  |           | Must be `"project"`. |
 | `data.relationships.vars.data[].type`                   | string  |           | Must be `"vars"`. |
@@ -791,7 +792,7 @@ Properties without a default value are required.
               "value": "eu-central-1",
               "category": "terraform",
               "hcl": true,
-              "sensitive": false,
+              "sensitive": false
             }
           },
           {
@@ -801,7 +802,7 @@ Properties without a default value are required.
               "value": "ami‑077062",
               "category": "terraform",
               "hcl": true,
-              "sensitive": false,
+              "sensitive": false
             }
           }
         ]

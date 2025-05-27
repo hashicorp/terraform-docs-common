@@ -1,8 +1,7 @@
 ---
-page_title: Workspaces - HCP Terraform
+page_title: HCP Terraform workspaces
 description: >-
-  Workspaces enable HCP Terraform to manage collections of infrastructure
-  resources. Learn basics and recommended organization.
+  A workspace is a group of infrastructure resources managed by HCP Terraform. Learn what workspaces contain, how they perform Terraform runs, and how to create and organize them.
 ---
 
 # Workspaces
@@ -67,10 +66,10 @@ In Terraform Enterprise, administrators can use [Admin Settings](/terraform/ente
 
 ## Organize Workspaces with Projects
 
-Projects let you organize your workspaces into groups. 
+Projects let you organize your workspaces into groups.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** On HCP Terraform **Standard** Edition, you can assign project permissions to scope access to collections of workspaces based on business units and responsibilities. Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/project-workspaces.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 Refer to [Organize Workspaces with Projects](/terraform/cloud-docs/projects/manage) for more details.

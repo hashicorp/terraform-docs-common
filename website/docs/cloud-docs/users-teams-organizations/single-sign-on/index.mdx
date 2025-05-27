@@ -1,12 +1,11 @@
 ---
-page_title: Single Sign-on - HCP Terraform
+page_title: Configure and manage single sign-on in HCP Terraform
 description: >-
-  Learn how single sign-on (SSO) works in HCP Terraform, how to sign in with
-  SSO, and more.
+  Learn how to configure single sign-on, SSO, to manage access to HCP Terraform.
 tfc_only: true
 ---
 
-# Single Sign-on
+# Configure and manage single sign-on
 
 ~> **Important:** This page is about configuring single sign-on in HCP Terraform. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/terraform/enterprise/saml/configuration).
 
@@ -55,11 +54,11 @@ The below diagram explains the the access enforcement policy and the authenticat
 
 ## Signing in with SSO
 
-1. Visit <https://app.terraform.io> and sign out if you're signed in.
+1. Visit [HCP Terraform](https://app.terraform.io) and sign out if you are signed in.
 
-1. Click "Sign in via SSO".
+1. Click **Sign in via SSO**.
 
-1. Provide your organization name and click **Next"**.
+1. Provide your organization name and click **Next**.
 
 1. If you've signed in to HCP Terraform with SSO before, proceed to the next step.
 
@@ -97,7 +96,7 @@ HCP Terraform can automatically add users to teams based on their SAML assertion
 
 To enable team membership mapping:
 
-1. Click **Settings** in the navigation bar and then click **SSO** in the sidebar. The SSO configuration page appears.
+1. Choose **Settings** from the sidebar, then **SSO**.
 1. Toggle the **Enable team management to customize your team attribute**.
 
 When team management is enabled, you can configure which SAML attribute in the SAMLResponse will control team membership. This defaults to the `MemberOf` attribute. The expected format of the corresponding `AttributeValue` in the SAMLResponse is a either a string containing a comma-separated list of teams, or separate `AttributeValue` items specifying teams.
@@ -110,7 +109,7 @@ It is not possible to assign users to the `owners` team through this attribute.
 
 ## Team Names and SSO Team IDs
 
-HCP Terraform expects the team names in the team membership SAML attribute to exactly match its own team names or its configured SSO Team IDs. This match is case sensitive.
+HCP Terraform expects the team names in the team membership SAML attribute to exactly match team names or configured SSO team IDs stored in HCP Terraform. Values are case sensitive and literal. HCP Terraform does not process the value passed by the IdP. As a result, you cannot use values such as the full distinguished name (DN).
 
 You can configure SSO Team IDs in the organization's **Teams** page. If an SSO Team ID is configured, HCP Terraform will attempt to match the chosen SAML attribute against both the team name and the SSO Team ID when mapping users to teams. You may want to create an SSO Team ID if the team membership SAML attribute is not human readable and is not used as the team's name in HCP Terraform.
 

@@ -1,11 +1,10 @@
 ---
-page_title: UI/VCS-driven Runs - Runs - HCP Terraform
+page_title: UI and VCS-driven run workflow in HCP Terraform
 description: >-
-  Workspaces are associated with a VCS repository branch, and HCP Terraform
-  automatically queues runs when new commits are merged.
+  Use HCP Terraform's UI and VCS-driven run workflow to automatically queue runs when merging new commits to the VCS repository branch associated with a workspace.
 ---
 
-# The UI- and VCS-driven Run Workflow
+# UI and VCS-driven run workflow
 
 HCP Terraform has three workflows for managing Terraform runs.
 
@@ -39,7 +38,15 @@ A workspace will not process a webhook if the workspace previously processed a w
 
 You can manually trigger a run using the UI. Manual runs let you apply configuration changes when you update variable values but the configuration in version control is unchanged. You must manually trigger an initial run in any new VCS-driven workspace.
 
-To start a run, click the **+ New run** button on the workspace page. This opens a **Start a new run** dialog. Select the run mode and provide an optional message. Review the [run modes documentation](/terraform/cloud-docs/run/modes-and-options) for more detail on supported options.
+-> **Note:** When you trigger a manual run, HCP Terraform does not fetch the latest commit from your VCS repository, and instead uses the current [configuration version](/terraform/cloud-docs/workspaces/configurations) associated with the workspace. HCP Terraform uses [VCS Webhooks](/terraform/cloud-docs/vcs#webhooks) to monitor changes in your VCS repository and update your configuration version.
+
+To start a run:
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to start a run in.
+1. Click **+ New run**, opening the **Start a new run** dialog.
+1. Select the run mode and provide an optional message. 
+
+Review the [run modes documentation](/terraform/cloud-docs/run/modes-and-options) for more detail on supported options.
 
 Run modes that have a plan phase support debugging mode. This is equivalent to setting the `TF_LOG` environment variable to `TRACE` for this run only. To enable debugging, click **Additional planning options** under the run mode and click **Enable debugging mode**.  See [Debugging Terraform](/terraform/internals/debugging) for more information.
 
@@ -50,6 +57,10 @@ Manually starting a run requires permission to queue plans for the workspace. ([
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
 If the workspace has a plan that is still in the [plan stage](/terraform/cloud-docs/run/states#the-plan-stage) when a new plan is queued, you can either wait for it to complete, or visit the **Current Run** page and click **Run this plan now**. Be aware that this action terminates the current plan and unlocks the workspace, which can lead to anomalies in behavior, but can be useful if the plans are long-running and the current plan does not have all the desired changes.
+
+## Automatically cancel plan-only runs triggered by outdated commits
+
+Refer to [Automatically cancel plan-only runs triggered by outdated commits](/terraform/cloud-docs/users-teams-organizations/organizations/vcs-speculative-plan-management) for additional information.
 
 ## Confirming or Discarding Plans
 
@@ -113,6 +124,7 @@ Speculative plans for pull requests use the contents of the head branch (the bra
 
 You can start a new [speculative plan][speculative plan] in the UI with the workspace's current configuration version and any Terraform version available to the organization.
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to try a new Terraform version in.
 1. Click **+ New run**.
 1. Select **Plan only** as the run type.
 1. Select a version from the **Choose Terraform version** menu. The speculative plan will use this version without changing the workspace's settings.
