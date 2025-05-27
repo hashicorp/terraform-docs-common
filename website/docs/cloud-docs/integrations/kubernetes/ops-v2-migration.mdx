@@ -1,14 +1,14 @@
 ---
-page_title: Terraform Cloud Kubernetes Operator v2 Migration Guide
+page_title: Migrate to HCP Terraform Operator for Kubernetes v2
 description: >-
-  Upgrade the Terraform Kubernetes Operator from version 1 to version 2.
+  Learn how to upgrade the Terraform Kubernetes Operator from version 1 to version 2.
 ---
 
-# Terraform Cloud Kubernetes Operator v2 Migration Guide
+# Migrate to HCP Terraform Operator for Kubernetes v2
 
-~> **Compatibility warning**: Terraform Enterprise only supports version 2 of the Terraform Cloud Kubernetes Operator. If you use Terraform Enterprise, [refer to this tutorial](/terraform/tutorials/kubernetes/kubernetes-operator-v2) for installation guidance. 
+~> **Warning**: Version 1 of the HCP Terraform Operator for Kubernetes is **deprecated** and no longer maintained. If you are installing the operator for the first time, refer to [Set up the HCP Terraform Operator for Kubernetes](/terraform/cloud-docs/integrations/kubernetes/setup) for guidance.
 
-To upgrade the Terraform Cloud Kubernetes Operator from version 1 to the Terraform Cloud Kubernetes Operator (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
+To upgrade the HCP Terraform Operator for Kubernetes from version 1 to the HCP Terraform Operator for Kubernetes (version 2), there is a one-time process that you need to complete. This process upgrades the operator to the newest version and migrate your custom resources. 
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ Next, create an environment variable named `RELEASE_NAME` with the value of the 
 $ export RELEASE_NAME=<INSTALLATION_NAME>
 ```
 
-Before you migrate to Terraform Cloud Kubernetes Operator v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
+Before you migrate to HCP Terraform Operator for Kubernetes v2, you must first update v1 of the operator to the latest version, including the custom resource definitions.
 
 ```shell-session
 $ helm upgrade --namespace ${RELEASE_NAMESPACE} ${RELEASE_NAME} hashicorp/terraform
@@ -45,7 +45,7 @@ $ kubectl get workspace --all-namespaces -o yaml > backup_tfc_operator_v1.yaml
 
 ## Manifest schema migration
 
-Version 2 of the Terraform Cloud Kubernetes operator renames and moves many existing fields. When you migrate, you must update your specification to match version 2's field names.
+Version 2 of the HCP Terraform Operator for Kubernetes renames and moves many existing fields. When you migrate, you must update your specification to match version 2's field names.
 
 ### Workspace controller
 
@@ -82,7 +82,7 @@ The table below lists the field mapping of the `Workspace` controller between v1
 | `spec.notifications.[*].url` | `spec.notifications.[*].url` | None. |
 | `spec.notifications.[*].token` | `spec.notifications.[*].token` | None. |
 | `spec.notifications.[*].triggers.[*]` | `spec.notifications.[*].triggers.[*]` | None. |
-| `spec.notifications.[*].recepients.[*]` | `spec.notifications.[*].emailAddesses.[*]` | Renamed the `recepients` field to `emailAddesses`. |
+| `spec.notifications.[*].recipients.[*]` | `spec.notifications.[*].emailAddresses.[*]` | Renamed the `recipients` field to `emailAddresses`. |
 | `spec.notifications.[*].users.[*]` | `spec.notifications.[*].emailUsers.[*]` | Renamed the `users` field to `emailUsers`. |
 | `spec.omitNamespacePrefix` | N/A | Removed. In v1 `spec.omitNamespacePrefix` is a boolean field that affects how the operator generates a workspace name. In v2, you must explicitly set workspace names in `spec.name`. |
 | `spec.agentPoolID` | `spec.agentPool.id` | Moved the `agentPoolID` field to `spec.agentPool.id`. |
@@ -140,7 +140,7 @@ metadata:
 
 ### Module controller
 
-Terraform Cloud Kubernetes Operator v2 configures modules in a new `Module` controller separate from the `Workspace` controller. Below is a template of a custom resource manifest:
+HCP Terraform Operator for Kubernetes v2 configures modules in a new `Module` controller separate from the `Workspace` controller. Below is a template of a custom resource manifest:
 
 ```yaml
 apiVersion: app.terraform.io/v1alpha2
@@ -243,7 +243,7 @@ spec:
 Download Workspace CRD patch A:
 
 ```shell-session
-$ curl -sO https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_a.yaml
+$ curl -sO https://raw.githubusercontent.com/hashicorp/hcp-terraform-operator/main/docs/migration/crds/workspaces_patch_a.yaml
 ```
 
 View the changes that patch A applies to the workspace CRD.
@@ -264,7 +264,7 @@ Install the Operator v2 Helm chart with the `helm install` command. Be sure to s
 
 ```shell-session
 $ helm install \
-  ${RELEASE_NAME} hashicorp/terraform-cloud-operator \
+  ${RELEASE_NAME} hashicorp/hcp-terraform-operator \
   --version 2.4.0 \
   --namespace ${RELEASE_NAMESPACE} \
   --set 'operator.watchedNamespaces={white,blue,red}' \
@@ -273,7 +273,7 @@ $ helm install \
   --set controllers.workspace.workers=5
 ```
 
-Next, create a Kubernetes secret to store the HCP Terraform API token following the [Usage Guide](https://github.com/hashicorp/terraform-cloud-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
+Next, create a Kubernetes secret to store the HCP Terraform API token following the [Usage Guide](https://github.com/hashicorp/hcp-terraform-operator/blob/main/docs/usage.md#prerequisites). The API token can be copied from the Kubernetes secret that you created for v1 of the operator. By default, this is named `terraformrc`. Use the `kubectl get secret` command to get the API token.
 
 ```shell-session
 $ kubectl --namespace ${RELEASE_NAMESPACE} get secret terraformrc -o json | jq '.data.credentials' | tr -d '"' | base64 -d
@@ -288,7 +288,7 @@ $ kubectl apply --filename <UPDATED_V2_WORKSPACE_MANIFEST.yaml>
 Download Workspace CRD patch B.
 
 ```shell-session
-$ curl -sO https://raw.githubusercontent.com/hashicorp/terraform-cloud-operator/main/docs/migration/crds/workspaces_patch_b.yaml
+$ curl -sO https://raw.githubusercontent.com/hashicorp/hcp-terraform-operator/main/docs/migration/crds/workspaces_patch_b.yaml
 ```
 
 View the changes that patch B applies to the workspace CRD.

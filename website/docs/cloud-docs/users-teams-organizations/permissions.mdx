@@ -1,11 +1,10 @@
 ---
-page_title: Permissions - HCP Terraform
+page_title: Permission model in HCP Terraform
 description: >-
-  Learn the difference between workspace-level and organization-level
-  permissions and what permissions you can grant to users.
+  Use the HCP Terraform permission model to manage user access to organizations, projects, and workspaces.
 ---
 
-# Permissions
+# Permission model
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 -> **Note:** Team management is available in HCP Terraform **Standard** Edition. [Learn more about HCP Terraform pricing here](https://www.hashicorp.com/products/terraform/pricing).
@@ -17,11 +16,15 @@ description: >-
 
 HCP Terraform's access model is team-based. In order to perform an action within an HCP Terraform organization, users must belong to a team that has been granted the appropriate permissions.
 
-The permissions model is split into organization-level, project-level, and workspace-level permissions. Additionally, every organization has a special team named "owners", whose members have maximal permissions within the organization.
+The HCP Terraform permissions model is split into three levels: you can set organization-level, project-level, and workspace-level permissions. Each permission level is additive, granting a user the highest level of permissions possible, regardless of which level set that permission.
+
+A team's _effective permissions_ is the sum of the permissions granted to that team from all permission levels. For example, if a team has the **View all workspaces** permission at the organization-level and **Admin** permission on a specific workspace, then users on that team have the effective permission of **Admin** on that workspace. An organization-level permission does not take precedence over a workspace-level permission.
+
+We recommend following the principle of least privilege when configuring permissions, only giving teams access to the resources they need for their job function. When configuring permissions at a particular level, remember that a team may have permissions above or below in the hierarchy that grant a higher level of permission than what you are currently configuring.
 
 ## Organization Owners
 
-Every organization has a special "owners" team. Members of this team are often referred to as "organization owners".
+Every organization has a special team called the **Owners** team, whose members have the maximum available permissions within the organization. Members of this team are often referred to as "organization owners".
 
 Organization owners have every available permission within the organization. This includes all organization-level permissions, and the highest level of workspace permissions on every workspace.
 
@@ -35,6 +38,9 @@ Permissions for the owners team include:
 - Manage policy overrides (refer to [Organization Permissions][] below)
 - Manage VCS settings (refer to [Organization Permissions][] below)
 - Manage the private registry (refer to [Organization Permissions][] below)
+<!-- BEGIN: TFC:only name:public-registry -->
+- Manage the public registry (refer to [Organization Permissions][] below)
+<!-- END: TFC:only name:public-registry -->
 - Manage Membership (refer to [Organization Permissions][] below; invite or remove users from the organization itself, and manage the membership of its teams)
 - View all secret teams (refer to [Organization Permissions][] below)
 - Manage agents (refer to [Organization Permissions][] below)
@@ -104,7 +110,7 @@ Admin permissions include the highest level of general permissions for the works
 Workspace admins have all [General Workspace Permissions](#general-workspace-permissions), as well as the ability to do the following tasks:
 
 - Read and write workspace settings. This includes general settings, notification configurations, run triggers, and more.
-- Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless they are also organization owners.
+- Set or remove workspace permissions for visible teams. Workspace admins cannot view or manage teams with the [**Secret**](/terraform/cloud-docs/users-teams-organizations/teams/manage#team-visibility) visibility option enabled unless they are also organization owners.
 - Delete the workspace
   - Depending on the [organization's settings](/terraform/cloud-docs/users-teams-organizations/organizations#general), workspace admins may only be able to delete the workspace if it is not actively managing infrastructure. Refer to [Deleting a Workspace With Resources Under Management](/terraform/cloud-docs/workspaces/settings#deleting-a-workspace-with-resources-under-management) for details.
 
@@ -179,7 +185,11 @@ You can grant the following project permissions to teams on a per-project basis.
 - **Team management:**
   - **None:** — No access to view teams assigned to the project.
   - **Read:** — Allows users to see teams assigned to the project for visible teams.
-  - **Manage:** — _Implies permission to read._ Allows users to set or remove project permissions for visible teams. Project admins can not view or manage [secret teams](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility) unless they are also organization owners.
+  - **Manage:** — _Implies permission to read._ Allows users to set or remove project permissions for visible teams. Project admins can not view or manage [secret teams](/terraform/cloud-docs/users-teams-organizations/teams/manage#team-visibility) unless they are also organization owners.
+- **Variable sets:**
+  - **None:** — No access to variable sets owned by the project. However, users with Variable access permissions can view variable sets applied to this project and its workspaces.
+  - **Read:** — Allows users to view variable sets owned by this project.
+  - **Manage:** — _Implies permission to read._ Allows users to create, update, and delete variable sets owned by the project.
 
 See [General Workspace Permissions](#general-workspace-permissions)for the complete list of available permissions for a project's workspaces.
 
@@ -197,7 +207,7 @@ Members of teams with "admin" permissions for a project have [General Workspace 
 - Delete the project.
 - Create workspaces in the project.
 - Move workspaces into or out of the project. This also requires project admin permissions for the source or destination project.
-- Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), unless those admins are also organization owners.
+- Grant or revoke project permissions for visible teams. Project admins **cannot** view or manage access for teams that are are [Secret](/terraform/cloud-docs/users-teams-organizations/teams/manage#team-visibility), unless those admins are also organization owners.
 
 #### Maintain
 
@@ -309,19 +319,17 @@ This permission implicitly grants access to read all workspaces, which is necess
 
 Allows members to publish and delete providers, modules, or both providers and modules in the organization's [private registry](/terraform/cloud-docs/registry). These permissions are otherwise only available to organization owners.
 
-### Manage Module Test Generation (Beta)
+<!-- BEGIN: TFC:only name:public-registry -->
 
-Allow members to generate module tests for private registry modules. 
+### Manage Public Registry
 
-<!-- BEGIN: TFC:only name:pnp-callout -->
+Allows members to publish and delete providers, modules, or both providers and modules using an organization's [claimed namespaces](/terraform/cloud-docs/registry/public-namespace) in the [public registry](https://registry.terraform.io/). These permissions are otherwise only available to organization owners.
 
-Your organization must be an HCP Terraform Plus subscription to enable this feature.
-
-<!-- END: TFC:only name:pnp-callout -->
+<!-- END: TFC:only name:public-registry -->
 
 ### Team Management Permissions
 
-HCP Terraform has three levels of team management permissions: manage membership, manage teams, and manage organization access. Each permission level grants users the ability to perform specific actions and each progressively requires prerequisite permissions. 
+HCP Terraform has three levels of team management permissions: manage membership, manage teams, and manage organization access. Each permission level grants users the ability to perform specific actions and each progressively requires prerequisite permissions.
 
 For example, to grant a user the manage teams permission, that user must already have manage membership permissions. To grant a user the manage organization access permission, a user must have both manage teams and manage membership permissions.
 
@@ -331,16 +339,16 @@ Allows members to invite users to the organization, remove users from the organi
 
 This permission grants the ability to view the list of users within the organization, and to view the organization access of other visible teams. It does not permit the creation of teams, the ability to modify the settings of existing teams, or the ability to view secret teams.
 
-In order to modify the membership of a team, a user with Manage Membership permissions must have visibility into the team (i.e. the team must be ["Visible"](/terraform/cloud-docs/users-teams-organizations/teams#team-visibility), or the user must be on the team).
+In order to modify the membership of a team, a user with Manage Membership permissions must have visibility into the team (i.e. the team must be ["Visible"](/terraform/cloud-docs/users-teams-organizations/teams/manage#team-visibility), or the user must be on the team).
 In order to remove a user from the organization, the holder of this permission must have visibility into all of the teams which the user is a member of.
 
 ~> This permission is intended to allow owners of large organizations to delegate membership management to another trusted team, and should be granted to only teams of trusted users. **Assign with caution:** Users with this permission are able to add themselves to any visible team, and inherit the permissions of any visible team.
 
 #### Manage Teams
 
-Allows members to create, update, and delete teams.
+Allows members to create, update, and delete teams, and generate, and revoke tokens.
 
-This permission grants the ability to update a team's names and SSO IDs, but does not allow access to organization settings. On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams.
+This permission grants the ability to update a team's names, SSO IDs, and token management permissions, but does not allow access to organization settings. On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams.
 
 The manage teams permission confers all permissions granted by the manage membership permission.
 
@@ -354,7 +362,7 @@ Allows members to update a team's organization access settings.
 
 On its own, this permission does not allow users to create, update, delete, or otherwise access secret teams. This permission confers all of the permissions granted by the manage teams and manage membership permissions.
 
-This permission allows owners of large organizations to delegate team management to another trusted team. You should only grant it to teams of trusted users. 
+This permission allows owners of large organizations to delegate team management to another trusted team. You should only grant it to teams of trusted users.
 
 ~> **Assign with caution:** Members with this permission can update all organization access settings for any team visible to them.
 
@@ -363,6 +371,14 @@ This permission allows owners of large organizations to delegate team management
 Allows members access to secret teams at the level permitted by that user's team permissions setting.
 
 This permission acts as a modifier to existing team management permissions. Members with this permission can access secret teams up to the level permitted by other team management permissions. For example, if a user has permission to include secret teams and [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams), that user can create secret teams.
+
+### Allow Member Token Management
+
+Allows owners and members with [manage teams](/terraform/cloud-docs/users-teams-organizations/permissions#manage-teams) permissions to enable and disable team token management for team members. This permission defaults to `true`.
+
+When member token management is enabled, members will be able to perform actions on team tokens, including generating and revoking a team token.
+
+When member token management is disabled, members will be unable to perform actions on team tokens, including generating and revoking a team token.
 
 ## Permissions Outside HCP Terraform's Scope
 
