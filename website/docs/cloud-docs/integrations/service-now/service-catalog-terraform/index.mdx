@@ -217,6 +217,19 @@ Navigate to the [Service Catalog documentation](/terraform/cloud-docs/integratio
 begin. You can also refer to this documentation whenever you need to add or
 update request items.
 
+### Team Tokens
+
+Adding team-scoped tokens will aid in the management of team access, but is limited within the ServiceNow context. At this time, only one API team token is reccommended, regardless of the the number of teams that will access ServiceNow. 
+
+To add the Team API token that you generated in HCP Terraform:
+
+1. Navigate to Terraform Configs in ServiceNow
+2. Select 'New'.
+3. Add Token.
+4. Add org name - this should be the same as your HCP Terraform team name. 
+
+Note: Provisioning a no-code environment requires the token to have global `READ` access for all projects. Updating configurations will also require `WRITE` access. 
+
 ### ServiceNow Developer Reference
 
 ServiceNow developers who wish to customize the Terraform integration can refer
