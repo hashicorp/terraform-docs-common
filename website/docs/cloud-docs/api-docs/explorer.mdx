@@ -103,6 +103,7 @@ fields available for each view type are detailed below:
 | Field                             | Type       | Description |
 | --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
 | `all_checks_succeeded`            | `boolean`  | True if checks have succeeded for the workspace, false otherwise. |
+| `current_rum_count`               | `number`   | The number of [resources under management](/terraform/cloud-docs/overview/estimate-hcp-terraform-cost#what-is-a-managed-resource) (RUM). |
 | `checks_errored`                  | `number`   | The number of checks that errored without completing. |
 | `checks_failed`                   | `number`   | The number of checks that completed and failed. |
 | `checks_passed`                   | `number`   | The number of checks that completed and passed. |
@@ -328,6 +329,7 @@ _Show data for all workspaces_
     {
       "attributes": {
         "all-checks-succeeded": true,
+        "current_rum_count": 0,
         "checks-errored": 0,
         "checks-failed": 0,
         "checks-passed": 0,
@@ -359,6 +361,7 @@ _Show data for all workspaces_
     {
       "attributes": {
         "all-checks-succeeded": true,
+        "current_rum_count": 0,
         "checks-errored": 0,
         "checks-failed": 0,
         "checks-passed": 0,
@@ -454,14 +457,12 @@ curl \
 _Show data for all workspaces_
 
 ```csv
-all_checks_succeeded,checks_errored,checks_failed,checks_passed,checks_unknown,current_run_applied_at,current_run_external_id,current_run_status,drifted,external_id,module_count,modules,organization_name,project_external_id,project_name,provider_count,providers,resources_drifted,resources_undrifted,state_version_terraform_version,vcs_repo_identifier,workspace_created_at,workspace_name,workspace_terraform_version,workspace_updated_at
-"true","0","0","0","0","","run-rdoEKh2Gy3K6SbCZ","planned_and_finished","false","ws-j2sAeWRxou1b5HYf","0","","acme-corp","prj-V61QLE8tvs4NvVZG","Default Project","0","","0","0","1.5.7","","2023-10-17T21:56:45+00:00","payments-service","1.5.7","2023-12-13T15:48:16+00:00"
-"true","0","0","0","0","2023-08-18T16:24:59+00:00","run-9MmJaoQTvDCh5wUa","applied","true","ws-igUVNQSYVXRkhYuo","0","","acme-corp","prj-uU2xNqGeG86U9WgT","web","0","","3","3","1.4.5","acmecorp/api","2023-04-25T17:09:14+00:00","api-service","1.4.5","2023-12-13T15:29:03+00:00"
+all_checks_succeeded,current_rum_count,checks_errored,checks_failed,checks_passed,checks_unknown,current_run_applied_at,current_run_external_id,current_run_status,drifted,external_id,module_count,modules,organization_name,project_external_id,project_name,provider_count,providers,resources_drifted,resources_undrifted,state_version_terraform_version,vcs_repo_identifier,workspace_created_at,workspace_name,workspace_terraform_version,workspace_updated_at
+"true","0","0","0","0","0","","run-rdoEKh2Gy3K6SbCZ","planned_and_finished","false","ws-j2sAeWRxou1b5HYf","0","","acme-corp","prj-V61QLE8tvs4NvVZG","Default Project","0","","0","0","1.5.7","","2023-10-17T21:56:45+00:00","payments-service","1.5.7","2023-12-13T15:48:16+00:00"
+"true","0","0","0","0","0","2023-08-18T16:24:59+00:00","run-9MmJaoQTvDCh5wUa","applied","true","ws-igUVNQSYVXRkhYuo","0","","acme-corp","prj-uU2xNqGeG86U9WgT","web","0","","3","3","1.4.5","acmecorp/api","2023-04-25T17:09:14+00:00","api-service","1.4.5","2023-12-13T15:29:03+00:00"
 ```
 
 ## List saved views
-
--> **Note**: The ability to save views in the explorer is in public beta. All APIs and workflows are subject to change.
 
 Use this endpoint to display all of the explorer's [saved views](/terraform/cloud-docs/workspaces/explorer#saved-views) in an organization.
 
@@ -510,8 +511,6 @@ curl \
 ```
 
 ## Create saved view
-
--> **Note**: The ability to save views in the explorer is in public beta. All APIs and workflows are subject to change.
 
 Use this endpoint to create a [saved view](/terraform/cloud-docs/workspaces/explorer#saved-views) in the explorer.
 
@@ -766,6 +765,7 @@ curl \
     {
       "attributes": {
         "all-checks-succeeded": true,
+        "current_rum_count": 0,
         "checks-errored": 0,
         "checks-failed": 0,
         "checks-passed": 0,
@@ -797,6 +797,7 @@ curl \
     {
       "attributes": {
         "all-checks-succeeded": true,
+        "current_rum_count": 0,
         "checks-errored": 0,
         "checks-failed": 0,
         "checks-passed": 0,

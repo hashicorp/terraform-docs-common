@@ -18,7 +18,7 @@ You can create both environment variables and Terraform variables in HCP Terrafo
 
 > **Hands-on:** Try the [Create and Use a Variable Sets](/terraform/tutorials/cloud-get-started/cloud-create-variable-set) and [Create Infrastructure](/terraform/tutorials/cloud-get-started/cloud-workspace-configure) tutorials to set environment and Terraform variables in HCP Terraform.
 
-### Environment Variables
+### Environment variables
 
 HCP Terraform performs Terraform runs on disposable Linux worker VMs using a POSIX-compatible shell. Before running Terraform operations, HCP Terraform uses the `export` command to populate the shell with environment variables.
 
@@ -30,13 +30,13 @@ You can use the `TFE_PARALLELISM` environment variable when your infrastructure 
 
 !> **Warning:** We recommend reading and understanding [Terraform parallelism](https://support.hashicorp.com/hc/en-us/articles/10348130482451) prior to setting `TFE_PARALLELISM`. You can also contact HashiCorp support for direct advice. 
 
-#### Dynamic Credentials
+#### Dynamic credentials
 
 You can configure [dynamic credentials](/terraform/cloud-docs/workspaces/dynamic-provider-credentials) for certain providers using environment variables [at the workspace level](/terraform/cloud-docs/workspaces/variables/managing-variables#workspace-specific-variables) or using [variable sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets).
 
 Dynamic credentials allows for using temporary per-run credentials and eliminates the need to manually rotate secrets.
 
-### Terraform Variables
+### Terraform variables
 
 Terraform variables refer to [input variables](/terraform/language/values/variables) that define parameters without hardcoding them into the configuration. For example, you could create variables that let users specify the number and type of Amazon Web Services EC2 instances they want to provision with a Terraform module.
 
@@ -73,7 +73,7 @@ Each environment and Terraform variable can have one of the following scopes:
 | Project-Scoped Variable Set   | Automatically applied to all current and future workspaces within a project.       | [Create Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) and [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets)                                                                                                                                                                              |
 | Global Variable Set           | Automatically applied to all current and future workspaces within an organization. | [Create Variable Sets](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) and [Variable Sets API](/terraform/cloud-docs/api-docs/variable-sets)                                                                                                                                                                              |
 
-## Variable Set Ownership
+## Variable set ownership
 
 Projects and organizations can both own variable sets. The owner of a variable set can determine the precedence of that set.
 
@@ -81,7 +81,7 @@ Use organization-owned variable sets to share variables across multiple projects
 
 Use project-owned variable sets to share variables across multiple workspaces within a single project. Project-owned variable sets only require permissions on the project itself, rather than organization-level permissions.
 
-Refer to [**Managing variable sets**](/terraform/cloud-docs/workspaces/variables/managing-variables#variable-sets) for more details on variable set permissions.
+Refer to [**Manage variable sets**](/terraform/cloud-docs/workspaces/variables/managing-variables#permissions) for more details on variable set permissions.
 
 ## Precedence
 

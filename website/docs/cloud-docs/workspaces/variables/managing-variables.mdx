@@ -16,15 +16,21 @@ You can create and edit workspace-specific variables through:
 
 ## Permissions
 
-You must have [**Read variables** permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in your organization.
+You must have [**Read variables** permission](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) to view the variables for a particular workspace and to view the variable sets in your organization. To create or edit workspace-specific variables within a workspace, you must have [**Read and write variables**](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) for that workspace.
 
-To create, edit, and apply organization-owned variable sets, you must be part of a team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces) or [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) permissions. To create, edit, or apply project-owned variable sets, you must be part of a team with one of the following:
-* **Write** project permissions
-* **Maintain** project permissions
-* **Admin** project permissions
-* [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) organization permissions
+To create, update, or delete organization-owned variable sets, you must be one of the following:
 
-To create and edit workspace-specific variables within a workspace, you must have [**Read and write variables**](/terraform/cloud-docs/users-teams-organizations/permissions#general-workspace-permissions) for that workspace.
+-   A member of the [owners team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) 
+-   A member of a team with [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)
+-   A member of a team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces)
+
+To create, edit, or apply project-owned variable sets, you must be part of a team with one of the following:
+
+-   **Write** project permissions
+-   **Maintain** project permissions
+-   **Admin** project permissions
+-   [**Manage variable sets**](/terraform/cloud-docs/users-teams-organizations/permissions#general-project-permissions) project permissions
+-   [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) organization permissions
 
 ## Run-Specific Variables
 
@@ -52,6 +58,8 @@ The **Variables** page is not available for workspaces configured with `Local` [
 ### Add a Variable
 
 To add a variable:
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and select the workspace you want to define a variable for.
 
 1. Go to the workspace **Variables** page and click **+ Add variable** in the **Workspace Variables** section.
 
@@ -87,18 +95,7 @@ You can only do this with files ending in `auto.tfvars` or `terraform.tfvars`. Y
 
 > **Hands On:** Try the [Manage Variable Sets in HCP Terraform tutorial](/terraform/tutorials/cloud/cloud-multiple-variable-sets) tutorial.
 
-Variable sets are reusable collections of variables that you can apply to multiple workspaces. You can be create variable sets under an organization or a project. Whether the variable set is owned by an organization or a project determines what permissions are required to manage the variable set.
-
-To create, update, or delete organization-owned variable sets, you must be one of the following:
-* A member of the [owners Team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) 
-* A member of a team with [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects)
-*  A member of a team with [**Manage all workspaces**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-workspaces)
-
-You can only apply project-owned variable sets to workspaces within the project. To create, update, apply, or delete project-owned variable sets, you must be part of a team with one of the following:
-* **Write**  project permissions
-* **Maintain** project permissions
-* **Admin** project permissions
-* [**Manage all projects**](/terraform/cloud-docs/users-teams-organizations/permissions#manage-all-projects) organization permissions
+Variable sets are reusable collections of variables that you can apply to multiple workspaces. You can create variable sets under an organization or a project. Whether the variable set is owned by an organization or a project determines the permissions required to manage that set. Learn more about [variable set permissions](#permissions).
 
 HCP Terraform does not evaluate variable sets during Terraform runs for workspaces configured with `Local` [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode).
 
@@ -110,7 +107,11 @@ The **Variable sets** page lists all of the organization's or project's variable
 
 To create a variable set:
 
-1. Go to the **Variable Sets** page for your organization or project and click **Create variable set**. The **Create a new variable set** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
+1. Click **Create variable set**.
 
 1. Choose a descriptive **Name** for the variable set. You can use any combination of numbers, letters, and characters.
 
@@ -136,8 +137,11 @@ To create a variable set:
 
 To edit or remove a variable set:
 
-1. Go to the organization's or project's settings and then click **Variable Sets**. The **Variable sets** page appears.
-1. Click the variable set you want to edit. That specific variable set page appears, where you can change the variable set settings. Refer to [create variable sets](#create-variable-sets) for details.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
+1. Select the variable set you want to edit. That specific variable set page appears, where you can change the variable set settings. Refer to [create variable sets](#create-variable-sets) for details.
 
 ### Delete Variable Sets
 
@@ -145,7 +149,10 @@ Deleting a variable set can be a disruptive action, especially if the variables 
 
 To delete a variable set:
 
-1. Click **Settings**, then click **Variable Sets**. The **Variable sets** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the **Settings** page for your organization or project.
+
+1. Click **Variable Sets**.
+
 1. Select **Delete variable set**. Enter the variable set name and click **Delete variable set** to confirm this action. HCP Terraform deletes the variable set and removes it from all workspaces. Runs within those workspaces will no longer use the variables from the variable set.
 
 ### Apply or Remove Variable Sets From Inside a Workspace

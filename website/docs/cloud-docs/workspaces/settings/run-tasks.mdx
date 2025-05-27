@@ -28,15 +28,17 @@ You can manage run tasks through the HCP Terraform UI or the [Run Tasks API](/te
 
 ## Creating a Run Task
 
-Explore the full list of [run tasks in the Terraform Registry](https://registry.terraform.io/browse/run-tasks). 
+Explore the full list of [run tasks in the Terraform Registry](https://registry.terraform.io/browse/run-tasks).
 
-Run tasks send an API payload to an external service. The API payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to HCP Terraform. 
+Run tasks send an API payload to an external service. The API payload contains run-related information, including a callback URL, which the service uses to return a pass or fail status to HCP Terraform.
 
 For example, the [HCP Packer integration](/terraform/cloud-docs/integrations/run-tasks#hcp-packer-run-task) checks image artifacts within a Terraform configuration for validity. If the configuration references images marked as unusable (revoked), then the run task fails and provides an error message.
 
 To create a new run task:
 
-1. Navigate to the desired workspace, open the **Settings** menu, and select **Run Tasks**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace where you want to create a run task.
+
+1. Navigate to **Organization Settings** and select **Run Tasks**.
 
 1. Click **Create a new run task**. The **Run Tasks** page appears.
 
@@ -47,6 +49,11 @@ To create a new run task:
    - **Endpoint URL** (required): The URL for the external service. Run tasks will POST the [run tasks payload](/terraform/cloud-docs/integrations/run-tasks#integration-details) to this URL.
    - **Description** (optional): A human-readable description for the run task. This information can contain letters, numbers, spaces, and special characters.
    - **HMAC key** (optional): A secret key that may be required by the external service to verify request authenticity.
+
+1. Select a **Source**:
+
+   - **Managed** HCP Terraform's infrastructure initiates run task requests. This is the default option.
+   - **Agent** HCP Terraform can initiate run task requests within your self-managed HCP Terraform agents to let run tasks communicate with isolated, private, or on-premises infrastructure. To use this option, an HCP Terraform agent in the agent pool must have [request forwarding](/terraform/cloud-docs/agents/request-forwarding) enabled, and you must be on the [HCP Terraform **Premium** edition](https://www.hashicorp.com/products/terraform/pricing).
 
 1. Click **Create run task**. The run task is now available within the organization, and you can associate it with one or more workspaces.
 
@@ -70,7 +77,10 @@ When you create a new run task, you can choose to apply it globally to every wor
 
 ## Associating Run Tasks with a Workspace
 
-1. Click **Workspaces** and then go to the workspace where you want to associate run tasks.
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise, and choose **Workspaces** from the sidebar.
+
+1. Select the workspace that you want to associate with a run task.
 
 1. Open the **Settings** menu and select **Run Tasks**.
 
@@ -100,7 +110,9 @@ For example, if a mandatory task fails and an advisory task succeeds, the run fa
 
 Removing a run task from a workspace does not delete it from the organization. To remove a run task from a specific workspace:
 
-1. Navigate to the desired workspace, open the **Settings** menu and select **Run Tasks**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace where you want to remove a run task.
+
+1. Choose **Settings** from the sidebar, then **Run Tasks**.
 
 1. Click the ellipses (...) on the associated run task, and then click **Remove**. The run task will no longer be applied to runs within the workspace.
 
@@ -108,7 +120,9 @@ Removing a run task from a workspace does not delete it from the organization. T
 
 You must remove a run task from all associated workspaces before you can delete it. To delete a run task:
 
-1. Navigate to **Settings** and click **Run Tasks**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace associated with a run task you want to delete.
+
+1. Choose **Settings** from the sidebar, then **Run Tasks**.
 
 1. Click the ellipses (...) next to the run task you want to delete, and then click **Edit**.
 

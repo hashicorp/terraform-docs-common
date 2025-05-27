@@ -80,9 +80,9 @@ The following example policy uses the `time` and `tfrun` imports and a custom `t
 1. Convert the loaded time with the correct offset using the [Timezone API](https://timezoneapi.io/)
 1. Verify that the provisioning operation occurs only on a specific day
 
-The example policy also uses a [rule expression](https://docs.hashicorp.com/sentinel/language/spec#rule-expressions) with the `when` predicate. If the value of `tfrun.workspace.auto_apply` is false, the rule is not evaluated and returns true.
+The example policy also uses a [rule expression](/sentinel/docs/language/spec#rule-expressions) with the `when` predicate. If the value of `tfrun.workspace.auto_apply` is false, the rule is not evaluated and returns true.
 
-Finally, the example uses parameters to facilitate module reuse within Terraform. Refer to the [Sentinel parameter documentation](https://docs.hashicorp.com/sentinel/language/parameters) for details.
+Finally, the example uses parameters to facilitate module reuse within Terraform. Refer to the [Sentinel parameter documentation](/sentinel/docs/language/parameters) for details.
 
 
 ```hcl
@@ -105,15 +105,15 @@ main = rule {
 }
 ```
 
-To expand the policy, you could use the [time.hour](https://docs.hashicorp.com/sentinel/imports/time#time-hour) function to also restrict provisioning to specific times of day.
+To expand the policy, you could use the [time.hour](/sentinel/docs/imports/time#time-hour) function to also restrict provisioning to specific times of day.
 
 ## Modules
 
-HCP Terraform supports [Sentinel modules](https://docs.hashicorp.com/sentinel/extending/modules). Modules let you write reusable policy code that you can import and use within several policies at once.
+HCP Terraform supports [Sentinel modules](/sentinel/docs/extending/modules). Modules let you write reusable policy code that you can import and use within several policies at once.
 
 You can store modules locally or retrieve them from a remote HTTP or HTTPS source.
 
--> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](https://docs.hashicorp.com/sentinel/extending/modules) to learn how to use modules within Sentinel. However, the configuration examples in the runtime documentation are relevant to the Sentinel CLI and not HCP Terraform.
+-> **Note:** We recommend reviewing [Sentinel runtime's modules documentation](/sentinel/docs/extending/modules) to learn how to use modules within Sentinel. However, the configuration examples in the runtime documentation are relevant to the Sentinel CLI and not HCP Terraform.
 
 The following example module loads the code at `./modules/timezone.sentinel` relative to the policy set working directory. Other modules can access this code with the statement `import "timezone"`.
 

@@ -4,7 +4,7 @@ description: >-
   Learn how to set up the ServiceNow Service Graph Connector for HCP Terraform.
 ---
 
-# Set up the ServiceNow Service Graph Connector for HCP Terraform
+# Set up the ServiceNow Service Graph Connector
 
 -> **Note:** Follow the [Configure ServiceNow Service Graph Connector for HCP Terraform](/terraform/tutorials/it-saas/servicenow-sgc) tutorial for hands-on instructions on how to import an AWS resource deployed in your HCP Terraform organization to the ServiceNow CMDB by using the Service Graph Connector for Terraform.
 
@@ -19,10 +19,9 @@ To start using the Service Graph Connector for Terraform, you must have:
 
 The Service Graph Connector for Terraform supports the following ServiceNow server versions:
 
-- Utah
-- Vancouver
 - Washington DC
 - Xanadu
+- Yokohama
 
 The following ServiceNow plugins are required dependencies:
 
@@ -45,7 +44,11 @@ Once the integration is installed, you can proceed to the guided setup form wher
 
 In order for ServiceNow to connect to HCP Terraform, you must give it an HCP Terraform API token. The permissions of this token determine what resources the Service Graph Connector will import into the CMDB. While you could use a user API token, it could import resources from multiple organizations. By providing a team API token, you can scope permissions to only import resources from specified workspaces within a single organization. 
 
-Visit your organization’s **Settings** > **Teams** page. Scroll down to the **Team API Token** section and click **Create a team token**.
+To create a team API token:
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to create a team token.
+1. Choose **Settings** from the sidebar, then **Teams**.
+1. In **Team API Token** section, click **Create a team token**.
+
 Save this token in a safe place since HCP Terraform only displays it once. You will use it to configure ServiceNow in the next section.
 
 ![ServiceNow Service Graph Connector Configure Team API token in HCP Terraform](/img/docs/service-now-service-graph-team-token-gen.png)
