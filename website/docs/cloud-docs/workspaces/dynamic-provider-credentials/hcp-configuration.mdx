@@ -29,7 +29,7 @@ hcp iam service-principals create hcp-terraform --project=HCP_PROJECT_ID
 Grant your service principal the necessary permissions to manage your infrastructure during runs.
 
 ```shell
-hcp projects add-binding \
+hcp projects iam add-binding \
   --project=HCP_PROJECT_ID \
   --member=HCP_PRINCIPAL_ID \
   --role=roles/contributor
@@ -43,7 +43,7 @@ Next, create a workload identity provider that HCP uses to authenticate the HCP 
 hcp iam workload-identity-providers create-oidc hcp-terraform-dynamic-credentials \
   --service-principal=iam/project/HCP_PROJECT_ID/service-principal/hcp-terraform \
   --issuer=https://app.terraform.io \
-  --allowed-audience=hcp.workload.identity
+  --allowed-audience=hcp.workload.identity \
   --conditional-access='jwt_claims.sub matches `^organization:ORG_NAME:project:PROJECT_NAME:workspace:WORKSPACE_NAME:run_phase:.*`' \
   --description="Allow HCP Terraform agents to act as the hcp-terraform service principal"
 ```

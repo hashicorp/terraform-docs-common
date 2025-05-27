@@ -1,10 +1,10 @@
 ---
-page_title: Bitbucket Data Center - VCS Providers - HCP Terraform
+page_title: Set up the Bitbucket Data Center VCS provider
 description: >-
-   Learn how to use Bitbucket Data Center for VCS features.
+   Learn how to use Bitbucket Data Center with workspaces and private registry modules in HCP Terraform.
 ---
 
-# Configuring Bitbucket Data Center Access
+# Set up the Bitbucket Data Center VCS provider
 
 This topic describes how to connect Bitbucket Data Center to HCP Terraform. For instructions on how to connect Bitbucket Cloud, refer to [Configuring Bitbucket Cloud Access](/terraform/cloud-docs/vcs/bitbucket-cloud). Refer to [Connecting VCS Providers to HCP Terraform](/terraform/cloud-docs/vcs) for other supported VCS providers.
 
@@ -38,7 +38,9 @@ The following steps provide an overview of how to connect HCP Terraform and Terr
 
 ## Add a new VCS provider to Terraform
 
-1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to add the VCS provider.
+
+1. Choose **Settings** from the sidebar, then click **Providers**.
 
 1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
@@ -95,7 +97,7 @@ Do not specify a passphrase because Terraform cannot use SSH keys that require a
 In the following steps, you must provide HCP Terraform with the private SSH key you created in [Create an SSH key for Terraform](#create-an-ssh-key-for-terraform). Although HCP Terraform does not display the text of the key to users after it is entered, it retains the key and uses it for authenticating to Bitbucket Data Center.
 
 1. If you are logged into Bitbucket Data Center as an administrator, log out before proceeding.
-1. Log in with the account that you want to enable HCP Terraform or Terraform Enterprise to log in with. Many organizations use a dedicated service user account for this purpose. The account you use for connecting HCP Terraform must have admin access to any shared repositories of Terraform configurations because since creating webhooks requires admin permissions. Refer to [Requirements](#requirements) for additional information.
+1. Log in with the Bitbucket account that you want to use for HCP Terraform or Terraform Enterprise. Many organizations use a dedicated service user account for this purpose. Because creating webhooks requires admin permissions, the account must have admin access to any shared repositories of Terraform configurations. Refer to [Requirements](#requirements) for more information.
 1. Open the **SSH keys** page and click the profile icon.
 1. Choose **Manage account**.
 1. Click **SSH keys** or enter `https://<BITBUCKET INSTANCE HOSTNAME>/plugins/servlet/ssh/account/keys` in the address bar to go to the **SSH keys** screen.
