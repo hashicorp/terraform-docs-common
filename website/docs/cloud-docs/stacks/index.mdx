@@ -25,7 +25,7 @@ Previously, those looking to deploy repeatable infrastructure using HCP Terrafor
 
 Start by creating a [Stack configuration file](/terraform/language/stacks/reference/tfstack) and filling it with `component` blocks. Each `component` block includes a Terraform module as its source, and you can configure a block further using input arguments. Your Stack components share a lifecycle, which you can repeatedly deploy together using HCP Terraform.
 
-![Diagram of the architecture of a Stack. A Stack of two components (Kubernetes and Namespace) are rolled our in to three deploymentes (US, Europe, and Asia). ](/img/docs/stacks-example.png)
+![Diagram of the architecture of a Stack. A Stack of two components (Kubernetes and Namespace) are rolled our in to three deployments (US, Europe, and Asia). ](/img/docs/stacks-example.png)
 
 After configuring your stack’s components, you create a separate [deployment configuration file](/terraform/language/stacks/reference/tfdeploy) to define how you want to repeat your Stack's infrastructure. Each deployment in a Stack represents a group of infrastructure that works together. You can define `deployment` blocks for your development environments, cloud provider accounts, or regions.
 

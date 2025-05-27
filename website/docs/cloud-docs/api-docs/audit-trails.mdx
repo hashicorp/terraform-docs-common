@@ -1,7 +1,7 @@
 ---
-page_title: Audit Trails - API Docs - HCP Terraform
+page_title: /organization/audit-trail API reference for HCP Terraform
 description: >-
-  Use the `/organization/audit-trail` endpoint to query audit events. Get a list of an organization's audit events for the past 14 days using the HTTP API.
+  Use the HCP Terraform API's `/organization/audit-trail` endpoint to read a list of an organization's audit events for the past 14 days.
 tfc_only: true
 ---
 
@@ -37,7 +37,7 @@ tfc_only: true
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Audit Trails API
+# Audit trails API reference
 
 HCP Terraform retains 14 days of audit log information. The audit trails API exposes a stream of audit events, which describe changes to the application entities (workspaces, runs, etc.) that belong to an HCP Terraform organization. Unlike other APIs, the Audit Trails API does not use the [JSON API specification](/terraform/cloud-docs/api-docs#json-api-formatting).
 
@@ -49,7 +49,7 @@ HCP Terraform retains 14 days of audit log information. The audit trails API exp
 
 `GET /organization/audit-trail`
 
--> **Note:** This endpoint cannot be accessed with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). You must access it with an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens).
+-> **Note:** This endpoint cannot be accessed with a [user token](/terraform/cloud-docs/users-teams-organizations/users#api-tokens) or [team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). You must access it with an [organization token](/terraform/cloud-docs/users-teams-organizations/api-tokens#organization-api-tokens) or an [audit trail token](/terraform/cloud-docs/users-teams-organizations/api-tokens#audit-trail-tokens).
 
 ### Query Parameters
 
@@ -157,7 +157,7 @@ The following audit trail events _only_ contain these standard fields:
 | `ssh_key`                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to SSH keys.                                |
 | `stack`                     | `create`                                                    | Events related to creating stacks.                         |
 | `state_version`            | `index`, `show`, `create`, `soft_delete_backing_data`, `restore_backing_data`, `permanently_delete_backing_data` | Events related to state versions.                         |
-| `task_stage`                  | `override`              | Events related to an overriden task stage.                                |
+| `task_stage`                  | `override`              | Events related to an overridden task stage.                               |
 | `user`                  | `index`              | Events related to indexing users.                                |
 | `var`                  | `index`, `show`, `create`, `update`, `destroy`              | Events related to variables.                             |
 | `vcs_repo`                 | `create`                                                    | Events related to creating a connection to a VCS repo.                     |
@@ -246,7 +246,7 @@ Alongside the [standard audit trail fields](#standard-response-fields) and [stan
 | `duration_ms`         | integer         | Duration of the policy check in milliseconds.   |
 | `sentinel`            | string          | The Sentinel policy associated with the check.  |
 
-### Overriden, canceled, and force canceled
+### Overridden, canceled, and force canceled
 
 Alongside the [standard audit trail fields](#standard-response-fields) and [standard policy check fields](#policy-checks), certain event responses include the following fields:
 

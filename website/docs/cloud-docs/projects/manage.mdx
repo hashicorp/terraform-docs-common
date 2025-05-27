@@ -1,5 +1,5 @@
 ---
-page_title: Manage projects in HCP Terraform and Terraform Enterprise
+page_title: Manage projects in HCP Terraform
 description: |-
   Use projects to organize and group workspaces and create ownership boundaries
   across your infrastructure.
@@ -25,7 +25,7 @@ To create tags for a project, you must be member of a team with the **Write** pe
 
 To view your organization's projects:
 
-1. Click **Projects**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and select  **Projects** from the sidebar.
 1. Search for a project that you want to view. You can use the following methods:
    - Sort by column header.
    - Use the search bar to search on the name of a project or a tag.
@@ -34,16 +34,13 @@ To view your organization's projects:
 
 ## Create a project
 
-1. Click **Projects**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and select  **Projects** from the sidebar.
 1. Click **+ New project**.
 1. Specify a name for the project. The name must be unique within the organization and can only include letters, numbers, inner spaces, hyphens, and underscores.
 1. Add a description for the project. This field is optional.
-   
-    ~> **Adding project tags is in private beta and unavailable for some users.** Skip to step 8 if your interface does not include elements for adding tags. Contact your HashiCorp representative for information about participating in the private beta.  
-
-1. Open the **Add key value tags** menu to add tags to your project. Tags are optional key-value pairs that you can use to organize projects. Any workspaces you create within the project inherit project tags. Refer to [Define project tags](#define-project-tags) for additional information.
-1. Click **+Add tag** and specify a tag key and tag value. If your organization has defined reserved tag keys, they appear in the **Tag key** field as suggestions. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations#create-and-manage-reserved-tags) for additional information.
-1. Click **+add another tag** to attach any additional tags.
+1. Open the **Add key value tags** menu to add tags to your project. Workspaces you create within the project inherit project tags. Refer to [Define project tags](#define-project-tags) for additional information.
+1. Click **+Add tag** and specify a tag key and tag value. If your organization has defined reserved tag keys, they appear in the **Tag key** field as suggestions. Refer to [Create and manage reserved tags](/terraform/cloud-docs/users-teams-organizations/organizations/manage-reserved-tags) for additional information.
+1. Click **+ Add tag** to attach any additional tags.
 1. Click **Create** to finish creating the project.
 
 HCP Terraform returns a new project page displaying all the project
@@ -51,9 +48,9 @@ information.
 
 ## Edit a project
 
-1. Click **Projects**.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and select  **Projects** from the sidebar.
 1. Click on a project name of the project you want to edit.
-1. Click **Settings**.
+1. Choose **Settings** from the sidebar.
 
 On this **General settings** page, you can update the project name, project
 description, and delete the project. On the **Team access** page, you can modify
@@ -67,18 +64,23 @@ team access to the project.
 
 You can configure HCP Terraform to automatically destroy each workspace's
 infrastructure in a project after a period of inactivity. A workspace
-is _inactive_ if the workspace's state has not changed within your designated
+is inactive if the workspace's state has not changed within your designated
 time period.
 
 If you configure a project to auto-destroy its infrastructure when inactive, 
 any run that updates Terraform state further delays the scheduled auto-destroy 
 time by the length of your designated timeframe.
 
-!> **Warning:** Automatic destroy plans _do not_ prompt you for apply approval in the HCP Terraform user interface. We recommend only using this setting for development environments.
+<Warning> 
+
+The user interface does not prompt you to approve automated destroy plans. We recommend only using this setting for development environments.
+
+</Warning>
 
 To schedule an auto-destroy run after a period of workspace inactivity:
 
-1. Navigate to the project's **Settings** > **Auto-destroy Workspaces** page.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the project with workspaces you want to destroy.
+1. Choose **Settings** from the sidebar, then **Auto-destroy Workspaces**.
 1. Click **Set up default**.
 1. Select or customize a desired timeframe of inactivity.
 1. Click **Confirm default**.
@@ -88,14 +90,15 @@ this default configuration. Refer to [automatically destroy workspaces](/terrafo
 
 ## Delete a project
 
-You can only delete projects that do not contain workspaces.
+You can only delete projects that do not contain <!-- BEGIN: TFC:only -->stacks or <!-- END: TFC:only -->workspaces.
 
 To delete an empty project:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise.
 1. Click **Projects**.
 1. Search for a project that you want to review by scrolling down the table or
    searching for a project name in the search bar above the project table.
-1. Click **Settings**. The settings view for the selected project appears.
+1. Choose **Settings** from the sidebar.
 1. Click the **Delete** button. A **Delete project** modal appears.
 1. Click the **Delete** button to confirm the deletion.
 
@@ -104,13 +107,7 @@ removed from the list.
 
 ## Define project tags
 
-~> **Adding project tags is in private beta and unavailable for some users.** Contact your HashiCorp representative for information about participating in the private beta.  
-
-You can define tags stored as key-value pairs to help you organize your projects and track resource consumption. HCP Terraform applies tags that you attach to projects to the workspaces created inside the project.
-
-Workspace administrators with appropriate permissions can attach new key-value pairs to their workspaces to override inherited tags. Refer to [Create workspace tags](/terraform/cloud-docs/workspaces/tags) for additional information about using tags in workspaces.
-
-Tags that you create appear in the tags management screen in the organization settings. Refer to [Organizations](/terraform/cloud-docs/users-teams-organizations/organizations) for additional information.
+You can define tags stored as key-value pairs to help you organize your projects and track resource consumption. Workspaces created in the project automatically inherit the tags, but workspace administrators with appropriate permissions can attach new key-value pairs to their workspaces to override inherited tags. Refer to [Create workspace tags](/terraform/cloud-docs/workspaces/tags) for additional information about using tags in workspaces.
 
 The following rules apply to tag keys and values:
 

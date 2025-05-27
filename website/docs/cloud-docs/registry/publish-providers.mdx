@@ -1,11 +1,9 @@
 ---
-page_title: Publishing Private Providers - Private Registry
-description: >-
-  Prepare private providers for publishing, add them to the private registry,
-  and release new versions.
+page_title: Publish private providers to the HCP Terraform private registry
+description: Use the HCP Terraform private registry to publish and share private providers across your organization.
 ---
 
-# Publishing private providers to the HCP Terraform private registry
+# Publish private providers to the HCP Terraform private registry
 
 In addition to [curating public providers from the Terraform Registry](/terraform/cloud-docs/registry/add), you can publish private providers to an organization's HCP Terraform private registry. Once you have published a private provider through the API, members of your organization can search for it in the private registry UI and use it in configurations.
 
@@ -62,7 +60,7 @@ Use the [Create a Provider endpoint](/terraform/cloud-docs/api-docs/private-regi
 
 ```shell-session
 $ curl \
-  --header "Authorization: Bearer TOKEN" \
+  --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @provider.json \
@@ -82,7 +80,7 @@ To create a version and a platform, you need the following resources:
 
 -> **Note**: If you are uploading an official HashiCorp public provider into your private registry, skip this step and instead use [HashiCorp's public PGP key](https://www.hashicorp.com/.well-known/pgp-key.txt) in the the [create a version](#create-a-version) step. The key ID for HashiCorp's public ID is `34365D9472D7468F`, and you can verify the ID by [importing the public key locally](/terraform/tutorials/cli/verify-archive#download-and-import-hashicorp-s-public-key).
 
-Create a file named `key.json` with the following contents. Replace `ORG_NAME` with the name of your organization and supply your public key in the `ascii-armor` field.
+Create a file named `key.json` with the following contents. Replace `ORG_NAME` with the name of your organization, and input your public key in an RSA or DSA format in the `ascii-armor` field.
 
 ```hcl
 {
@@ -99,7 +97,7 @@ Use the [Add a GPG key endpoint](/terraform/cloud-docs/api-docs/private-registry
 
 ```shell-session
 $ curl \
-  --header "Authorization: Bearer TOKEN" \
+  --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @key.json \
@@ -131,9 +129,10 @@ Create a file named `version.json` with the following contents. Replace the valu
 
 Use the [Create a Provider Version endpoint](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) to create a version for your provider. Replace `TOKEN` in the `Authorization` header with your HCP Terraform API token, and replace both instances of `ORG_NAME` with the name of your organization. Replace `TF_PROVIDER_NAME` in the URL path with your terraform provider name
 
+
 ```shell-session
 $ curl \
-  --header "Authorization: Bearer TOKEN" \
+  --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
   --data @payload.json \
@@ -196,10 +195,10 @@ Use the [Create a Provider Platform endpoint](/terraform/cloud-docs/api-docs/pri
 
 ```shell-session
 $ curl \
-  --header "Authorization: Bearer TOKEN" \
+  --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request POST \
-  --data @payload.json \
+  --data @platform.json \
   https://app.terraform.io/api/v2/organizations/ORG_NAME/registry-providers/private/ORG_NAME/aws/versions/5.14.0/platforms
 ```
 
@@ -226,6 +225,7 @@ The version is available in the HCP Terraform user interface. Consumers can now 
 
 Consumers cannot use a private provider version until you upload all required [release files](#release-files). To determine whether these files have been uploaded:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to publish a private provider.
 1. Click **Registry** and click the private provider to go to its details page.
 1. Use the version menu to navigate to the version you want to check. The UI shows a warning banner for versions that do not have all required release files.
 1. Open the **Manage Provider** menu and select **Show release files**. The **Release Files** page appears containing lists of uploaded and missing files for the current version.
@@ -243,6 +243,7 @@ Use the HCP Terraform API to create, read, update, and delete the following:
 
 In addition to the [Registry Providers API](/terraform/cloud-docs/api-docs/private-registry/providers#delete-a-provider), you can delete providers and provider versions through the HCP Terraform UI. To delete providers and versions in the UI:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization whose private registry you want to delete a provider or provider version from.
 1. Click **Registry** and click the private provider to go to its details page.
 1. If you want to delete a single version, use the **Versions** menu to select it.
 1. Open the **Manage Provider** menu and select **Delete Provider**. The **Delete Provider from Organization** box appears.
