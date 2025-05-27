@@ -1,12 +1,10 @@
 ---
-page_title: Vault-Backed Dynamic Credentials - Dynamic Provider Credentials - Workspaces - HCP Terraform
+page_title: Use Vault-backed dynamic credentials in HCP Terraform
 description: >-
-  Vault-Backed dynamic credentials improve security by leveraging Vault to generate
-  temporary credentials for HCP Terraform runs. Configure Vault-backed dynamic credentials
-  for the AWS, Azure, and GCP providers.
+  Vault-backed dynamic credentials leverage Vault to generate temporary credentials for HCP Terraform runs. Learn how Vault-backed dynamic credentials for AWS, Azure, and GCP can improve your security.
 ---
 
-# Vault-Backed Dynamic Credentials
+# Use Vault-backed dynamic credentials
 
 ~> **Important:** If you are self-hosting [HCP Terraform agents](/terraform/cloud-docs/agents), ensure your agents use [v1.8.0](/terraform/cloud-docs/agents/changelog#1-8-0-04-18-2023) or above. To use the latest dynamic credentials features, [upgrade your agents to the latest version](/terraform/cloud-docs/agents/changelog).
 
@@ -18,7 +16,7 @@ The "Vault-backed" in "Vault-backed dynamic credentials" refers to Vault's [secr
 
 Vault-backed dynamic credentials combine the features of dynamic provider credentials and Vault's secrets engines. This means you can authenticate a Vault instance using workload identity tokens and use secrets engines on that instance to generate dynamic credentials for the AWS, GCP, and Azure providers. 
 
-For a comparison of Vault-backed dynamic credentials and dynamic provider credentials, refer to [Why use Vault-backed dynamic credentials to secure HCP Terraform infrastructure?](https://www.hashicorp.com/blog/why-use-vault-backed-dynamic-credentials-to-secure-hcp-terraform-infrastructure)
+For a comparison of Vault-backed dynamic credentials and dynamic provider credentials, refer to the article [Why use Vault-backed dynamic credentials to secure HCP Terraform infrastructure?](https://www.hashicorp.com/blog/why-use-vault-backed-dynamic-credentials-to-secure-hcp-terraform-infrastructure) on the HashiCorp blog.
 
 ## Configure Vault-Backed Dynamic Credentials
 

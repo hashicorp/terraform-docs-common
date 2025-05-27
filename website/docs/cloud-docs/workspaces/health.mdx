@@ -1,7 +1,7 @@
 ---
-page_title: Health - HCP Terraform
+page_title: Health assessments in HCP Terraform
 description: |-
- HCP Terraform can continuously monitor workspaces to assess whether their real infrastructure matches the requirements defined in their Terraform configuration.
+ Learn how HCP Terraform can continuously monitor workspaces to assess whether their real infrastructure matches the requirements defined in your Terraform configuration.
 ---
 
 # Health
@@ -45,14 +45,15 @@ You can enforce health assessments across all eligible workspaces in an organiza
 
 To enable health assessments within a workspace:
 
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to enable health assessments on.
 1. Verify that your workspace satisfies the [requirements](#workspace-requirements).
-1. Go to the workspace and click **Settings > Health**.
+1. Go to the workspace and click **Settings**, then click **Health**.
 1. Select **Enable** under **Health Assessments**.
 1. Click **Save settings**.
 
 ## Health assessment scheduling
 
-When you enable health assessments for a workspace, Terraform Cloud will run the first health assessment based on whether there are active Terraform runs for the workspace:
+When you enable health assessments for a workspace, HCP Terraform runs the first health assessment based on whether there are active Terraform runs for the workspace:
 
 - **No active runs:** A few minutes after you enable the feature.
 - **Active speculative plan:** A few minutes after that plan is complete.

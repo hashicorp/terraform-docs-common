@@ -1,8 +1,8 @@
 ---
-page_title: GitHub.com (GitHub App) - VCS Providers - HCP Terraform
+page_title: Set up the GitHub.com (GitHub App) VCS provider
 tfc_only: true
 description: >-
-  Learn how to use GitHub.com repositories with workspaces and private registry modules, without requiring an organization owner to configure an OAuth connection.
+  Learn how to use GitHub.com repositories with workspaces and private registry modules in HCP Terraform.
 ---
 
 [private module registry]: /terraform/cloud-docs/registry
@@ -11,11 +11,11 @@ description: >-
 
 [vcs settings]: /terraform/cloud-docs/workspaces/settings/vcs
 
-[create]: /terraform/cloud-docs/workspaces/creating
+[create]: /terraform/cloud-docs/workspaces/create
 
 [owners]: /terraform/cloud-docs/users-teams-organizations/teams#the-owners-team
 
-# Configuration-Free GitHub Usage
+# Set up the GitHub.com (GitHub App) VCS provider
 
 These instructions are for using repositories from GitHub.com with HCP Terraform workspaces and private registry modules, without requiring an organization owner to configure an OAuth connection.
 
@@ -62,13 +62,31 @@ HCP Terraform requests GitHub authorization from each user, displaying a pop-up 
 
 Once you authorize the app, you can use GitHub in any of your HCP Terraform organizations without needing to re-authorize.
 
-Authorization doesn't grant HCP Terraform any repository permissions; the app must also be installed in at least one of the GitHub organizations or accounts you have access to.
+After installing the GitHub App and creating your VCS provider instance, you cannot reinstall the application again. However, you can modify your existing GitHub App configuration.
+
+If you are a repository owner, you can adjust an existing Github App configuration by:
+1. Click a repository's **Settings** tab.
+1. Select **GitHub Apps** in the sidebar.
+1. Next to **Terraform Cloud**, click **Configure**. 
+1. Underneath **Repository access**, adjust the repositories your GitHub app can access.
+
+Now that your Github app has access to your desired repository, you can [create a new workspace](/terraform/cloud-docs/workspaces/create#create-a-workspace) with your existing, newly updated GitHub App connection.
+
+You can also adjust your GitHub App's access within HCP Terraform itself.  Whenever you create a new workspace, you can choose which organizations or repositories to install the GitHub App into. To adjust your GitHub App's configuration, create a new workspace:
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and navigate to the organization where you want to adjust your VCS settings.
+1. Choose **Workspaces** from the sidebar. 
+1. Click **New**, then select **Workspace**.
+1. Choose the project where you want to create your workspace, then click **Create**.
+1. Click **Version Control Workflow**, then choose the **GitHub App**.
+1. Click on your GitHub organization's name to reveal a dropdown, then select **Add another organization** to configure the resources your GitHub app has access to.
+
 
 #### Deauthorizing
 
 You can use GitHub's web interface to deauthorize HCP Terraform for your GitHub account.
 
-Open your GitHub personal settings, then go to the "Applications" section and the "Authorized GitHub Apps" tab. (Or, browse directly to `https://github.com/settings/apps/authorizations`.) Click the "Revoke" button for Terraform Cloud to deauthorize it.
+Open your GitHub personal settings, then go to the "Applications" section and the "Authorized GitHub Apps" tab. (Or, browse directly to `https://github.com/settings/apps/authorizations`.) Click the **Revoke** button for HCP Terraform to deauthorize it.
 
 After deauthorizing, you won't be able to connect GitHub repositories to HCP Terraform workspaces until you authorize again. Existing connections will still work.
 
@@ -90,7 +108,7 @@ Access is not restricted to a specific HCP Terraform organization; members of a 
 
 You can use GitHub's web interface to configure or uninstall HCP Terraform for an organization or account.
 
-Open your GitHub personal settings or organization settings, then go to the "Applications" section and the "Installed GitHub Apps" tab. Click the "Configure" button for Terraform Cloud to change its settings.
+Open your GitHub personal settings or organization settings, then go to the **Applications** section and the *Installed GitHub Apps** tab. Click the **Configure** button for HCP Terraform to change its settings.
 
 In the app's settings you can change which repositories HCP Terraform has access to, or uninstall it entirely.
 

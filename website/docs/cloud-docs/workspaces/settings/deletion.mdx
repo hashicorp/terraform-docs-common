@@ -1,10 +1,10 @@
 ---
-page_title: Destruction and Deletion - Workspaces - HCP Terraform
+page_title: Destroy infrastructure resources and delete workspaces in HCP Terraform
 description: |-
-  Learn about destroying infrastructure and deleting workspaces in HCP Terraform.
+  Learn how to clean up resources by destroying a workspace's infrastructure and deleting a workspace in HCP Terraform.
 ---
 
-# Destruction and Deletion
+# Destroy infrastructure resources and delete workspaces
 
 HCP Terraform workspaces have two primary delete actions:
 
@@ -31,7 +31,7 @@ There are two main ways to automatically destroy a workspace's resources:
 * Schedule a run to destroy all resources in a workspace at a specific date and time.
 * Configure HCP Terraform to destroy a workspace's infrastructure after a period of workspace inactivity.
 
-Workspaces can inherit auto-destroy settings from their project. Refer to [managing projects](/terraform/cloud-docs/projects/managing#automatically-destroy-inactive-workspaces) for more information. You can configure an individual workspace's auto-destroy settings to override the project's configuration.
+Workspaces can inherit auto-destroy settings from their project. Refer to [managing projects](/terraform/cloud-docs/projects/manage#automatically-destroy-inactive-workspaces) for more information. You can configure an individual workspace's auto-destroy settings to override the project's configuration.
 
 You can reduce your spending on infrastructure by automatically destroying temporary resources like development environments.
 
@@ -46,7 +46,8 @@ You can also schedule [notifications](/terraform/cloud-docs/workspaces/settings/
 #### Destroy at a specific day and time
 
 To schedule an auto-destroy run at a specific time in HCP Terraform:
-1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to destroy.
+1. Choose **Settings** from the sidebar, then **Destruction and Deletion**.
 1. Under **Automatically destroy**, click **Set up auto-destroy**.
 1. Enter the desired date and time. HCP Terraform defaults to your local time zone for scheduling and displays how long until the scheduled operation.
 1. Click **Confirm auto-destroy**.
@@ -66,7 +67,8 @@ A workspace is _inactive_ if the workspace's state has not changed within your d
 If you configure a workspace to auto-destroy its infrastructure when inactive, any run that updates Terraform state further delays the scheduled auto-destroy time by the length of your designated timeframe.
 
 To schedule an auto-destroy run after a period of workspace inactivity:
-1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to destroy.
+1. Choose **Settings** from the sidebar, then **Destruction and Deletion**.
 1. Under **Automatically destroy**, click **Set up auto-destroy**.
 1. Click the **Destroy if inactive** toggle.
 1. Select or customize a desired timeframe of inactivity.
@@ -77,10 +79,14 @@ Subsequent auto-destroy runs and Terraform runs that update state both update th
 
 After HCP Terraform completes a manual or automatic destroy run, it waits until further state updates to schedule a new auto-destroy run.
 
-To remove your workspace's auto-destroy based on inactivity:
-1. Navigate to the workspace's **Settings** > **Destruction and Deletion** page.
+To remove your workspace's auto-destroy run:
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the workspace you want to disable the auto-destroy run for.
+1. Choose **Settings** from the sidebar, then **Destruction and Deletion**.
 1. Under **Auto-destroy settings**, click **Edit** to change the auto-destroy settings.
 1. Click **Remove**.
+
+When you move a workspace to a different project, it inherits the auto-destroy settings from the new project. If you configured the workspace to override the previous project's auto-destroy settings, it retains the override configuration in the new project.
+
 
 ## Delete Workspace
 
