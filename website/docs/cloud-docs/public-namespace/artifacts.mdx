@@ -50,7 +50,7 @@ If the new version creates errors, a notification appears on your organization's
 On the **Public namespaces** page, you can click the ellipsis **…** next to an artifact to list the available actions you can take on that artifact:
 
 - **View in public registry** links to the artifact’s page on [`https://registry.terraform.io`](https://registry.terraform.io).
-- **View downloads** has the download metrics for the selected artifact.
+- **View download data** has the download metrics for the selected artifact.
   - View the number of times users have downloaded multiple versions, or select a single version to view the number of times users have downloaded it.
   - You can also download a CSV file that summarizes the monthly downloads of each artifact version.
 - **View version history** lists the artifact's published versions.
@@ -67,20 +67,35 @@ To delete a provider, module, or a provider or module version, one of the follow
 - Someone published the artifact less than 48 hours ago.
 - No version of the artifact was downloaded by users more than 100 times.
 
-### Delete a module or provider
+### Delete a provider
 
-If your provider or module meets [the deletion requirements](#deletion-requirements), you delete it by doing the following:
+If your provider meets [the deletion requirements](#deletion-requirements), you delete it by doing the following:
 
-- Clicking on the ellipsis **…** next to the artifact and choosing **Delete.**
-- Confirm by entering `delete` and click **Delete.**
+- Clicking on the ellipsis **…** next to the artifact and choosing **Delete provider**.
+- Confirm by entering `delete` and click **Delete provider**.
 
-### Delete a module or provider version
+### Delete a provider version
 
-If your provider or module meets [the deletion requirements](#deletion-requirements), you delete a version by doing the following:
+If your provider meets [the deletion requirements](#deletion-requirements), you delete a version by doing the following:
 
-- Clicking on the ellipsis **…** next to the artifact and choosing to **Delete version.**
-- Entering the exact version of the provider or module to delete.
-- Confirm by entering `delete` and click **Delete version.**
+- Clicking on the ellipsis **…** next to the artifact and choosing to **Delete version**.
+- Entering the exact version of the provider to delete.
+- Confirm by entering `delete` and click **Delete version**.
+
+### Delete a module
+
+If your module meets [the deletion requirements](#deletion-requirements), you delete it by doing the following:
+
+- Clicking on the ellipsis **…** next to the artifact and choosing **Delete module.**
+- Confirm by entering `delete` and click **Delete module**.
+
+### Delete a module version
+
+If your module meets [the deletion requirements](#deletion-requirements), you delete a version by doing the following:
+
+- Clicking on the ellipsis **…** next to the artifact and choosing to **Delete module version**.
+- Entering the exact version of the module to delete.
+- Confirm by entering `delete` and click **Delete module version**.
 
 ## Resync artifacts
 
