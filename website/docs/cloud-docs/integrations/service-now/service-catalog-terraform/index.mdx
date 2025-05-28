@@ -117,12 +117,16 @@ Terraform.
 3. On the "ServiceNow" team's settings page, generate a [team API
    token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens).
    **Save the team API token for later.**
-4. If you are using the [VCS flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#vcs-configuration): 
+4. After [generating a team token](/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens) in HCP Terraform, you can add that token to your ServiceNow context by doing the following:
+    1. Navigate to **Terraform Configs** in ServiceNow
+    2. Select 'New' and add token.
+    3. Use your HCP Terraform team name as your **Org name**.   
+5. If you are using the [VCS flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#vcs-configuration): 
     1. Ensure your Terraform organization is [connected to a VCS provider](/terraform/cloud-docs/vcs). Repositories that are connectable to HCP Terraform workspaces can also be used as workspace templates in the ServiceNow integration.
     2. On your organization's VCS provider settings page (**Settings** > **VCS Providers**), find the OAuth Token ID for the VCS provider(s) that you intend to use with the ServiceNow integration. HCP Terraform uses the OAuth token ID to identify and authorize the VCS provider. **Save the OAuth token ID for later.**
     3. Identify the VCS repositories in the VCS provider containing Terraform configurations that the ServiceNow Terraform integration will deploy. Take note of any Terraform or environment variables used by the repositories you select. Save the Terraform and environment variables for later.
-5. If using the [no-code flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration), create one or more no-code modules in the private registry of your HCP Terraform. **Save the no-code module names for later.**
-6. Provide the following information to the ServiceNow Admin:
+6. If using the [no-code flow](/terraform/cloud-docs/integrations/service-now/service-catalog-terraform/service-catalog-config#no-code-module-configuration), create one or more no-code modules in the private registry of your HCP Terraform. **Save the no-code module names for later.**
+7. Provide the following information to the ServiceNow Admin:
     * The organization name 
     * The team API token
     * The hostname of your Terraform Enterprise instance, or of HCP Terraform. The hostname of HCP Terraform is `app.terraform.io`.
@@ -217,18 +221,11 @@ Navigate to the [Service Catalog documentation](/terraform/cloud-docs/integratio
 begin. You can also refer to this documentation whenever you need to add or
 update request items.
 
-### Team Tokens
+### ServiceNow Team Tokens
 
-Adding team-scoped tokens will aid in the management of team access, but is limited within the ServiceNow context. At this time, only one API team token is reccommended, regardless of the the number of teams that will access ServiceNow. 
+Team-scoped tokens can help you manage a team's access to things in HCP Terraform, but team tokens are limited within the ServiceNow context. At this time, only one API team token is reccommended, regardless of the the number of teams that will access ServiceNow. 
 
-To add the Team API token that you generated in HCP Terraform:
-
-1. Navigate to Terraform Configs in ServiceNow
-2. Select 'New'.
-3. Add Token.
-4. Add org name - this should be the same as your HCP Terraform team name. 
-
-Note: Provisioning a no-code environment requires the token to have global `READ` access for all projects. Updating configurations will also require `WRITE` access. 
+Teams,and their associated team tokens, can be assigned to specific projects - [team tokens documentation] (https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens#team-api-tokens). Proper permissions are required (e.g. READ, WRITE) to provision a resource. 
 
 ### ServiceNow Developer Reference
 
