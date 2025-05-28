@@ -1,7 +1,7 @@
 ---
-page_title: Run Tasks - API Docs - Terraform Cloud
+page_title: /tasks API reference for HCP Terraform
 description: >-
-  Use the `/tasks` endpoint to manage run tasks. List, show, create, update, and delete run tasks, and list, show, update, delete and associate workspace run tasks using the HTTP API.
+  Use HCP Terraform API's `/tasks` endpoint to read, create, update, and delete run tasks, and read, update, delete and associate run tasks to workspaces.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -38,9 +38,9 @@ description: >-
 
 [JSON API Schema document]: https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-results.json
 
-# Run Tasks API
+# Run tasks API reference
 
-[Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow Terraform Cloud to interact with external systems at specific points in the Terraform Cloud run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
+[Run tasks](/terraform/cloud-docs/workspaces/settings/run-tasks) allow HCP Terraform to interact with external systems at specific points in the HCP Terraform run lifecycle. Run tasks are reusable configurations that you can associate to any workspace in an organization. This page lists the API endpoints for run tasks in an organization and explains how to associate run tasks to workspaces.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
 @include 'tfc-package-callouts/run-tasks.mdx'
@@ -60,7 +60,7 @@ To interact with run tasks on an organization, you need the [Manage Run Tasks pe
 
 | Parameter            | Description                                                                                                                                                                                                                     |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The organization to create a run task in. The organization must already exist in Terraform Cloud, and the token authenticating the API request must have [owner permission](/terraform/cloud-docs/users-teams-organizations/permissions). |
+| `:organization_name` | The organization to create a run task in. The organization must already exist in HCP Terraform, and the token authenticating the API request must have [owner permission](/terraform/cloud-docs/users-teams-organizations/permissions). |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -76,18 +76,19 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required unless otherwise specified.
 
-| Key path                                                            | Type            | Default | Description                                                                                                                                                      |
-| ------------------------------------------------------------------- | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                                                         | string          |         | Must be `"tasks"`.                                                                                                                                               |
-| `data.attributes.name`                                              | string          |         | The name of the task. Can include letters, numbers, `-`, and `_`.                                                                                                |
-| `data.attributes.url`                                               | string          |         | URL to send a run task payload.                                                                                                                                  |
-| `data.attributes.description`                                       | string          |         | The description of the run task. Can be up to 300 characters long including spaces, letters, numbers, and special characters.                                    |
-| `data.attributes.category`                                          | string          |         | Must be `"task"`.                                                                                                                                                |
-| `data.attributes.hmac-key`                                          | string          |         | (Optional) HMAC key to verify run task.                                                                                                                          |
-| `data.attributes.enabled`                                           | bool            | true    | (Optional) Whether the task will be run.                                                                                                                         |
-| `data.attributes.global-configuration.enabled` **(beta)**           | bool            | false   | (Optional) Whether the task will be associated on all workspaces.                                                                                                |
-| `data.attributes.global-configuration.stages` **(beta)**            | array |         | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
-| `data.attributes.global-configuration.enforcement-level` **(beta)** | string          |         | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                   |
+|                         Key path                         |  Type  | Default |                                                                                            Description                                                                                            |
+| -------------------------------------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                                              | string |         | Must be `"tasks"`.                                                                                                                                                                                |
+| `data.attributes.name`                                   | string |         | The name of the task. Can include letters, numbers, `-`, and `_`.                                                                                                                                 |
+| `data.attributes.url`                                    | string |         | URL to send a run task payload.                                                                                                                                                                   |
+| `data.attributes.description`                            | string |         | The description of the run task. Can be up to 300 characters long including spaces, letters, numbers, and special characters.                                                                     |
+| `data.attributes.category`                               | string |         | Must be `"task"`.                                                                                                                                                                                 |
+| `data.attributes.hmac-key`                               | string |         | (Optional) HMAC key to verify run task.                                                                                                                                                           |
+| `data.attributes.enabled`                                | bool   | true    | (Optional) Whether the task will be run.                                                                                                                                                          |
+| `data.attributes.global-configuration.enabled`           | bool   | false   | (Optional) Whether the task will be associated on all workspaces.                                                                                                                                 |
+| `data.attributes.global-configuration.stages`            | array  |         | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
+| `data.attributes.global-configuration.enforcement-level` | string |         | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                                                    |
+| `data.relationships.agent-pool.data.id`                  | string |         | (Optional) The agent pool that HCP Terraform uses to make requests for the run task. Requires the [`private_run_tasks` feature entitlement](/terraform/cloud-docs/api-docs#feature-entitlements) and a self-hosted HCP Terraform agent with [request forwarding](/terraform/cloud-docs/agents/request-forwarding).                                                                    |
 
 ### Sample Payload
 
@@ -106,6 +107,14 @@ Properties without a default value are required unless otherwise specified.
         "enabled": true,
         "stages": ["pre_plan"],
         "enforcement-level": "mandatory"
+      }
+    },
+    "relationships": {
+      "agent-pool": {
+        "data": {
+          "id": "apool-yoGUFz5zcRMMz53i",
+          "type": "agent-pools"
+        }
       }
     }
   }
@@ -129,34 +138,40 @@ curl \
 {
   "data": {
     "id": "task-7oD7doVTQdAFnMLV",
-      "type": "tasks",
-      "attributes": {
-        "category": "task",
-        "name": "my-run-task",
-        "url": "http://example.com",
-        "description": "Simple description",
-        "enabled": "true",
-        "hmac-key": null,
-        "global-configuration": {
-          "enabled": true,
-          "stages": ["pre_plan"],
-          "enforcement-level": "mandatory"
-        }
-      },
-      "relationships": {
-        "organization": {
-          "data": {
-            "id": "hashicorp",
-            "type": "organizations"
-          }
-        },
-        "tasks": {
-          "data": []
-        }
-      },
-      "links": {
-        "self": "/api/v2/tasks/task-7oD7doVTQdAFnMLV"
+    "type": "tasks",
+    "attributes": {
+      "category": "task",
+      "name": "my-run-task",
+      "url": "http://example.com",
+      "description": "Simple description",
+      "enabled": "true",
+      "hmac-key": null,
+      "global-configuration": {
+        "enabled": true,
+        "stages": ["pre_plan"],
+        "enforcement-level": "mandatory"
       }
+    },
+    "relationships": {
+      "organization": {
+        "data": {
+          "id": "hashicorp",
+          "type": "organizations"
+        }
+      },
+      "tasks": {
+        "data": []
+      },
+      "agent-pool": {
+        "data": {
+          "id": "apool-yoGUFz5zcRMMz53i",
+          "type": "agent-pools"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/v2/tasks/task-7oD7doVTQdAFnMLV"
+    }
   }
 }
 ```
@@ -196,56 +211,58 @@ curl \
 
 ```json
 {
-    "data": [
-        {
-            "id": "task-7oD7doVTQdAFnMLV",
-            "type": "tasks",
-            "attributes": {
-                "category": "task",
-                "name": "my-task",
-                "url": "http://example.com",
-                "description": "Simple description",
-                "enabled": "true",
-                "hmac-key": null,
-                "global-configuration": {
-                  "enabled": true,
-                  "stages": ["pre_plan"],
-                  "enforcement-level": "mandatory"
-                }
-            },
-            "relationships": {
-                "organization": {
-                    "data": {
-                        "id": "hashicorp",
-                        "type": "organizations"
-                    }
-                },
-                "tasks": {
-                    "data": []
-                }
-            },
-            "links": {
-                "self": "/api/v2/tasks/task-7oD7doVTQdAFnMLV"
-            }
+  "data": [
+    {
+      "id": "task-7oD7doVTQdAFnMLV",
+      "type": "tasks",
+      "attributes": {
+        "category": "task",
+        "name": "my-task",
+        "url": "http://example.com",
+        "description": "Simple description",
+        "enabled": "true",
+        "hmac-key": null,
+        "global-configuration": {
+          "enabled": true,
+          "stages": [
+            "pre_plan"
+          ],
+          "enforcement-level": "mandatory"
         }
-    ],
-    "links": {
-        "self": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20",
-        "first": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20",
-        "prev": null,
-        "next": null,
-        "last": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20"
-    },
-    "meta": {
-        "pagination": {
-            "current-page": 1,
-            "page-size": 20,
-            "prev-page": null,
-            "next-page": null,
-            "total-pages": 1,
-            "total-count": 1
+      },
+      "relationships": {
+        "organization": {
+          "data": {
+            "id": "hashicorp",
+            "type": "organizations"
+          }
+        },
+        "tasks": {
+          "data": []
         }
+      },
+      "links": {
+        "self": "/api/v2/tasks/task-7oD7doVTQdAFnMLV"
+      }
     }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/organizations/hashicorp/tasks?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
 }
 ```
 
@@ -333,18 +350,18 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required unless otherwise specified.
 
-| Key path                                                            | Type            | Default          | Description                                                                                                                                                      |
-| ------------------------------------------------------------------- | --------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data.type`                                                         | string          |                  | Must be `"tasks"`.                                                                                                                                               |
-| `data.attributes.name`                                              | string          | (previous value) | The name of the run task. Can include letters, numbers, `-`, and `_`.                                                                                            |
-| `data.attributes.url`                                               | string          | (previous value) | URL to send a run task payload.                                                                                                                                  |
-| `data.attributes.description`                                       | string          |                  | The description of the run task. Can be up to 300 characters long including spaces, letters, numbers, and special characters.                                    |
-| `data.attributes.category`                                          | string          | (previous value) | Must be `"task"`.                                                                                                                                                |
-| `data.attributes.hmac-key`                                          | string          | (previous value) | (Optional) HMAC key to verify run task.                                                                                                                          |
-| `data.attributes.enabled`                                           | bool            | (previous value) | (Optional) Whether the task will be run.                                                                                                                         |
-| `data.attributes.global-configuration.enabled` **(beta)**           | bool            | (previous value) | (Optional) Whether the task will be associated on all workspaces.                                                                                                |
-| `data.attributes.global-configuration.stages` **(beta)**            | array | (previous value) | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
-| `data.attributes.global-configuration.enforcement-level` **(beta)** | string          | (previous value) | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                   |
+|                         Key path                         |  Type  |     Default      |                                                                                            Description                                                                                            |
+| -------------------------------------------------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data.type`                                              | string |                  | Must be `"tasks"`.                                                                                                                                                                                |
+| `data.attributes.name`                                   | string | (previous value) | The name of the run task. Can include letters, numbers, `-`, and `_`.                                                                                                                             |
+| `data.attributes.url`                                    | string | (previous value) | URL to send a run task payload.                                                                                                                                                                   |
+| `data.attributes.description`                            | string |                  | The description of the run task. Can be up to 300 characters long including spaces, letters, numbers, and special characters.                                                                     |
+| `data.attributes.category`                               | string | (previous value) | Must be `"task"`.                                                                                                                                                                                 |
+| `data.attributes.hmac-key`                               | string | (previous value) | (Optional) HMAC key to verify run task.                                                                                                                                                           |
+| `data.attributes.enabled`                                | bool   | (previous value) | (Optional) Whether the task will be run.                                                                                                                                                          |
+| `data.attributes.global-configuration.enabled`           | bool   | (previous value) | (Optional) Whether the task will be associated on all workspaces.                                                                                                                                 |
+| `data.attributes.global-configuration.stages`            | array  | (previous value) | (Optional) An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
+| `data.attributes.global-configuration.enforcement-level` | string | (previous value) | (Optional) The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                                                    |
 
 ### Sample Payload
 
@@ -474,13 +491,14 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                            | Type   | Default       | Description                                                                                                        |
-|-------------------------------------|--------|---------------|--------------------------------------------------------------------------------------------------------------------|
-| `data.type`                         | string |               | Must be `"workspace-tasks"`.                                                                                       |
-| `data.attributes.enforcement-level` | string |               | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                |
-| `data.attributes.stage`             | string | `"post_plan"` | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
-| `data.relationships.task.data.id`   | string |               | The ID of the run task.                                                                                            |
-| `data.relationships.task.data.type` | string |               | Must be `"tasks"`.                                                                                                 |
+| Key path                            | Type   | Default         | Description                                                                                                                                                                            |
+|-------------------------------------|--------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                         | string |                 | Must be `"workspace-tasks"`.                                                                                                                                                           |
+| `data.attributes.enforcement-level` | string |                 | The enforcement level of the workspace task. Must be `"advisory"` or `"mandatory"`.                                                                                                    |
+| `data.attributes.stage`             | string | `"post_plan"`   | **DEPRECATED** Use `stages` instead. The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`.             |
+| `data.attributes.stages`            | array  | `["post_plan"]` | An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
+| `data.relationships.task.data.id`   | string |                 | The ID of the run task.                                                                                                                                                                |
+| `data.relationships.task.data.type` | string |                 | Must be `"tasks"`.                                                                                                                                                                     |
 
 ### Sample Payload
 
@@ -490,7 +508,7 @@ Properties without a default value are required.
     "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
@@ -524,7 +542,8 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stage": "post_plan",
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
@@ -587,7 +606,8 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stage": "post_plan",
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
@@ -659,7 +679,8 @@ curl --request GET \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "advisory",
-        "stage": "post_plan"
+        "stage": "post_plan",
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
@@ -702,11 +723,12 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 
 Properties without a default value are required.
 
-| Key path                            | Type   | Default          | Description                                                                                           |
-|-------------------------------------|--------|------------------|-------------------------------------------------------------------------------------------------------|
-| `data.type`                         | string | (previous value) | Must be `"workspace-tasks"`.                                                                          |
-| `data.attributes.enforcement-level` | string | (previous value) | The enforcement level of the workspace run task. Must be `"advisory"` or `"mandatory"`.               |
-| `data.attributes.stage`             | string | (previous value) | The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"` or `"post_plan"`. |
+| Key path                            | Type   | Default          | Description                                                                                                                                                                            |
+|-------------------------------------|--------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.type`                         | string | (previous value) | Must be `"workspace-tasks"`.                                                                                                                                                           |
+| `data.attributes.enforcement-level` | string | (previous value) | The enforcement level of the workspace run task. Must be `"advisory"` or `"mandatory"`.                                                                                                |
+| `data.attributes.stage`             | string | (previous value) | **DEPRECATED** Use `stages` instead. The stage in the run lifecycle when the run task should begin. Must be `"pre_plan"` or `"post_plan"`.                                             |
+| `data.attributes.stages`            | array  | (previous value) | An array of strings representing the stages of the run lifecycle when the run task should begin. Must be one or more of `"pre_plan"`, `"post_plan"`, `"pre_apply"`, or `"post_apply"`. |
 
 ### Sample Payload
 
@@ -756,7 +778,8 @@ curl \
       "type": "workspace-tasks",
       "attributes": {
         "enforcement-level": "mandatory",
-        "stage": "post_plan"
+        "stage": "post_plan",
+        "stages": ["post_plan"]
       },
       "relationships": {
         "task": {
