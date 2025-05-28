@@ -1,11 +1,10 @@
 ---
-page_title: HCP Terraform's Run Environment - Runs - HCP Terraform
+page_title: HCP Terraform's run environment
 description: >-
-  Learn about worker virtual machines, network access, concurrency for run
-  queueing, state access authentication, and environment variables.
+  Learn how HCP Terraform's run enviornment manages virtual machines, network access, concurrency for runs, state access authentication, and environment variables.
 ---
 
-# HCP Terraform's Run Environment
+# HCP Terraform's run environment
 
 HCP Terraform is designed as an execution platform for Terraform, and most of its features are based around its ability to perform Terraform runs in a fleet of disposable worker VMs. This page describes some features of the run environment for Terraform runs managed by HCP Terraform.
 
@@ -23,9 +22,15 @@ Changes made to the worker during a run are not persisted to subsequent runs, si
 
 ## Network Access to VCS and Infrastructure Providers
 
-In order to perform Terraform runs, HCP Terraform needs network access to all of the resources being managed by Terraform.
+In order to perform Terraform runs, HCP Terraform needs network access to all of the resources Terraform is going to manage.
 
-If you are using the SaaS version of HCP Terraform, this means your VCS provider and any private infrastructure providers you manage with Terraform (including VMware vSphere, OpenStack, other private clouds, and more) _must be internet accessible._
+If you are using the cloud version of HCP Terraform, your VCS provider and any private infrastructure providers you manage with Terraform must be internet accessible.
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+
+If you are on the HCP Terraform **Premium** edition, you can use a self-hosted HCP Terraform agent to connect to private VCS providers. Refer to [Connect to private VCS providers](/terraform/cloud-docs/vcs/private) for more information.
+
+<!-- END: TFC:only name:pnp-callout -->
 
 Terraform Enterprise instances must have network connectivity to any connected VCS providers or managed infrastructure providers.
 
@@ -41,7 +46,9 @@ If the global queue has more jobs than the workers can handle at once, some of t
 - Creation of normal plans has the next-highest priority.
 - Creation of speculative plans has the lowest priority.
 
-HCP Terraform can also delay some jobs to make performance more consistent across organizations. If an organization requests a large number of jobs at once, HCP Terraform queues some of them immediately and delays the rest until some of the initial batch have finished. Doing so allows every organization to continue executing jobs even during periods of especially heavy load.
+HCP Terraform can also delay some jobs to make performance more consistent across organizations. If an organization requests a large number of jobs at once, HCP Terraform queues some of them immediately and delays the rest until some of the initial batch have finished. Doing so allows every organization to continue executing jobs, even during periods of especially heavy load.  
+Your HCP Terraform edition limits the maximum run concurrency for your organization. Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing?product_intent=terraform) for details.
+
 
 ## State Access and Authentication
 

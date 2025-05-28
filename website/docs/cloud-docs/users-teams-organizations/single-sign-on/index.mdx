@@ -1,22 +1,21 @@
 ---
-page_title: Single Sign-on - HCP Terraform
+page_title: Configure and manage single sign-on in HCP Terraform
 description: >-
-  Learn how single sign-on (SSO) works in HCP Terraform, how to sign in with
-  SSO, and more.
+  Learn how to configure single sign-on, SSO, to manage access to HCP Terraform.
 tfc_only: true
 ---
 
-# Single Sign-on
+# Configure and manage single sign-on
 
 ~> **Important:** This page is about configuring single sign-on in HCP Terraform. Terraform Enterprise's single sign-on is configured differently. If you administer a Terraform Enterprise instance, see [Terraform Enterprise: SAML Configuration](/terraform/enterprise/saml/configuration).
 
-HCP Terraform allows organizations to configure SAML single sign-on (SSO), an alternative to traditional user management.  SSO gives owners more control to secure accessibility to your organization’s [Projects](/terraform/cloud-docs/projects/managing), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources). By using SSO, your organization can centralize management of users for HCP Terraform and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
+HCP Terraform allows organizations to configure SAML single sign-on (SSO), an alternative to traditional user management.  SSO gives owners more control to secure accessibility to your organization’s [Projects](/terraform/cloud-docs/projects/manage), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources). By using SSO, your organization can centralize management of users for HCP Terraform and other Software-as-a-Service (SaaS) vendors, providing greater accountability and security for an organization's identity and user management.
 
 ## Supported Identity Providers (IdPs)
 
 Select your preferred provider to learn more about what is supported for that provider and how to configure SSO for it.
 
-* [Microsoft Azure AD](/terraform/cloud-docs/users-teams-organizations/single-sign-on/azure-ad)
+* [Microsoft Entra ID](/terraform/cloud-docs/users-teams-organizations/single-sign-on/entra-id)
 * [Okta](/terraform/cloud-docs/users-teams-organizations/single-sign-on/okta)
 * [SAML](/terraform/cloud-docs/users-teams-organizations/single-sign-on/saml)
 
@@ -34,7 +33,7 @@ If an organization's owners disable SSO, all members can continue to access the 
 
 ### Enforced Access Policy for HCP Terraform Resources
 
-As a non-owner, when you attempt to access an organization that has SSO configured, you will be redirected to the organization's SAML IdP to authenticate and authorize access using your SAML IdP credentials before you can access the organization's [Projects](/terraform/cloud-docs/projects/managing), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources).
+As a non-owner, when you attempt to access an organization that has SSO configured, you will be redirected to the organization's SAML IdP to authenticate and authorize access using your SAML IdP credentials before you can access the organization's [Projects](/terraform/cloud-docs/projects/manage), [Workspaces](/terraform/cloud-docs/workspaces), and [Managed Resources](/terraform/cloud-docs/users-teams-organizations/organizations#managed-resources).
 
 Owners of an SSO-enabled organization can still access the organization's resources through their HCP Terraform credentials or their HCP credentials (if linked to their HCP Terraform account). This is to enable a workaround to problems such as your IdP becoming unavailable, lost access to your MFA or IdP credentials, or other authentication issues.
 
@@ -55,11 +54,11 @@ The below diagram explains the the access enforcement policy and the authenticat
 
 ## Signing in with SSO
 
-1. Visit <https://app.terraform.io> and sign out if you're signed in.
+1. Visit [HCP Terraform](https://app.terraform.io) and sign out if you are signed in.
 
-1. Click "Sign in via SSO".
+1. Click **Sign in via SSO**.
 
-1. Provide your organization name and click **Next"**.
+1. Provide your organization name and click **Next**.
 
 1. If you've signed in to HCP Terraform with SSO before, proceed to the next step.
 
@@ -97,7 +96,7 @@ HCP Terraform can automatically add users to teams based on their SAML assertion
 
 To enable team membership mapping:
 
-1. Click **Settings** in the navigation bar and then click **SSO** in the sidebar. The SSO configuration page appears.
+1. Choose **Settings** from the sidebar, then **SSO**.
 1. Toggle the **Enable team management to customize your team attribute**.
 
 When team management is enabled, you can configure which SAML attribute in the SAMLResponse will control team membership. This defaults to the `MemberOf` attribute. The expected format of the corresponding `AttributeValue` in the SAMLResponse is a either a string containing a comma-separated list of teams, or separate `AttributeValue` items specifying teams.
@@ -110,11 +109,11 @@ It is not possible to assign users to the `owners` team through this attribute.
 
 ## Team Names and SSO Team IDs
 
-HCP Terraform expects the team names in the team membership SAML attribute to exactly match its own team names or its configured SSO Team IDs. This match is case sensitive.
+HCP Terraform expects the team names in the team membership SAML attribute to exactly match team names or configured SSO team IDs stored in HCP Terraform. Values are case sensitive and literal. HCP Terraform does not process the value passed by the IdP. As a result, you cannot use values such as the full distinguished name (DN).
 
 You can configure SSO Team IDs in the organization's **Teams** page. If an SSO Team ID is configured, HCP Terraform will attempt to match the chosen SAML attribute against both the team name and the SSO Team ID when mapping users to teams. You may want to create an SSO Team ID if the team membership SAML attribute is not human readable and is not used as the team's name in HCP Terraform.
 
-SSO Team IDs are particularly helpful if your SSO or Active Directory provider restricts the `MemberOf` attribute in its SAML responses to Group UUIDs, rather than human readable group names. Setting the SSO Team ID allows you to maintain human readable team names in HCP Terraform, while still managing team membership through SSO or Active Directory.
+SSO Team IDs are particularly helpful if your SSO or Microsoft Entra ID provider restricts the `MemberOf` attribute in its SAML responses to Group UUIDs, rather than human readable group names. Setting the SSO Team ID allows you to maintain human readable team names in HCP Terraform, while still managing team membership through SSO or Microsoft Entra ID.
 
 ## NameID Format
 

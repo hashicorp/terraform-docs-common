@@ -1,7 +1,7 @@
 ---
-page_title: Modules - API Docs - HCP Terraform
+page_title: /registry-modules API reference for HCP Terraform
 description: >-
-  Use the `/registry-modules` endpoint to manage modules published to an organization's private registry. List, get, create, publish, and delete modules and versions using the HTTP API.
+  Use the HCP Terraform API's `/registry-modules` endpoint to read, publish, update, delete, and add versions to modules in your organization's private registry.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,7 +36,7 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Registry Modules API
+# Registry modules API reference
 
 -> **Note:** Public Module Curation is only available in HCP Terraform. Where applicable, the `registry_name` parameter must be `private` for Terraform Enterprise.
 
@@ -238,7 +238,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to a team or team member with the **Manage modules** permission enabled. |
 
 Publishes a new registry private module from a VCS repository, with module versions managed automatically by the repository's tags. The publishing process will fetch all tags in the source repository that look like [SemVer](https://semver.org/) versions with optional 'v' prefix. For each version, the tag is cloned and the config parsed to populate module details (input and output variables, readme, submodules, etc.). The [Module Registry Requirements](/terraform/registry/modules/publish#requirements) define additional requirements on naming, standard module structure and tags for releases.
 
@@ -262,6 +262,8 @@ Properties without a default value are required.
 | `data.attributes.vcs-repo.github-app-installation-id` | string |  | The VCS Connection GitHub App Installation to use. Find this ID on the account settings page. Requires previously authorizing the GitHub App and generating a user-to-server token. Manage the token from **Account Settings** within HCP Terraform. You can not specify this value if `oauth-token-id` is specified.                                                                                                                                                      |
 | `data.attributes.vcs-repo.display_identifier` | string  |         | The display identifier for the repository. For most VCS providers outside of Bitbucket Cloud, this identifier matches the `data.attributes.vcs-repo.identifier` string.  |
 | `data.attributes.no-code`                     | boolean |         | Allows you to enable or disable the no-code publishing workflow for a module.  |
+| `data.attributes.initial-version`               | string  |  0.0.0  | The initial version of module.  |
+| `data.attributes.test-config.tests-enabled`    | boolean | false   | Allows you to enable or disable the test configuration for a module.  |
 | `data.attributes.vcs-repo.branch`             | string  |         | The repository branch to publish the module from if you are using the branch-based publishing workflow. If omitted, the module will be published using the tag-based publishing workflow.  |
 
 A VCS repository identifier is a reference to a VCS repository in the format `:org/:repo`, where `:org` and `:repo` refer to the organization, or project key for Bitbucket Data Center, and repository in your VCS provider. The format for Azure DevOps is `:org/:project/_git/:repo`.
@@ -277,7 +279,7 @@ The OAuth Token ID identifies the VCS connection, and therefore the organization
       "vcs-repo": {
         "identifier":"lafentres/terraform-aws-my-module",
         "oauth-token-id":"ot-hmAyP66qk2AMVdbJ",
-        "display_identifier":"lafentres/terraform-aws-my-module"
+        "display_identifier":"lafentres/terraform-aws-my-module",
         "branch": "main"
       },
       "no-code": true
@@ -349,7 +351,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to a team or team member with the **Manage modules** permission enabled. |
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -511,7 +513,7 @@ curl \
 
 | Parameter            | Description                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to the "owners" team or a member of the "owners" team. |
+| `:organization_name` | The name of the organization to create a module in. The organization must already exist, and the token authenticating the API request must belong to a team or team member with the **Manage modules** permission enabled. |
 | `:namespace`         | The namespace of the module for which the version is being created. For private modules this is the same as the `:organization_name` parameter                                                           |
 | `:name`              | The name of the module for which the version is being created.                                                                                                                                           |
 | `:provider`          | The name of the provider for which the version is being created.                                                                                                                                         |
@@ -519,7 +521,7 @@ curl \
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-Creates a new registry module version. This endpoint only applies to private modules without a VCS repository; VCS-linked modules automatically create new versions for new tags. After creating the version, the module should be uploaded to the returned upload link.
+Creates a new registry module version. This endpoint only applies to private modules without a VCS repository and VCS-linked branch based modules. VCS-linked tag-based modules automatically create new versions for new tags. After creating the version for a non-VCS backed module, you should upload the module to the link that HCP Terraform returns.
 
 | Status  | Response                                                   | Reason                                                         |
 | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
@@ -535,9 +537,11 @@ This POST endpoint requires a JSON object with the following properties as a req
 Properties without a default value are required.
 
 | Key path                  | Type   | Default | Description                           |
-| ------------------------- | ------ | ------- | ------------------------------------- |
-| `data.type`               | string |         | Must be `"registry-module-versions"`. |
-| `data.attributes.version` | string |         | A valid semver version string.        |
+| ---------------------------- | ------ | ------- | ---------------------------------------------------- |
+| `data.type`                  | string |         | Must be `"registry-module-versions"`.                |
+| `data.attributes.version`    | string |         | A valid semver version string.                       |
+| `data.attributes.commit-sha` | string |         | The commit SHA to use to create the module version.        |
+
 
 ### Sample Payload
 
@@ -546,7 +550,8 @@ Properties without a default value are required.
   "data": {
     "type": "registry-module-versions",
     "attributes": {
-      "version": "1.2.3"
+      "version": "1.2.3",
+      "commit-sha": "abcdef12345"
     }
   }
 }

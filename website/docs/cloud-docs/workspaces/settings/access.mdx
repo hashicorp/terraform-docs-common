@@ -1,13 +1,13 @@
 ---
-page_title: Managing Access - Workspaces - HCP Terraform
+page_title: Manage access to workspaces in HCP Terraform
 description: >-
-  Learn how to manage access to workspaces. Add teams and configure their permissions.
+  Learn how to manage access to workspaces by adding teams and configuring their permissions.
 ---
 
-# Managing Access to Workspaces
+# Manage access to workspaces
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Team management is available in HCP Terraform **Standard** Edition. [Learn more about HCP Terraform pricing here](https://www.hashicorp.com/products/terraform/pricing).
+@include 'tfc-package-callouts/team-management.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 HCP Terraform workspaces can only be accessed by users with the correct permissions. You can manage permissions for a workspace on a per-team basis.
@@ -44,7 +44,6 @@ HCP Terraform displays the teams you can grant workspace access to. Select a tea
 
 There are four [fixed permissions sets](/terraform/cloud-docs/users-teams-organizations/permissions#fixed-permission-sets) available for basic usage: Read, Plan, Write, and Admin.
 
-To enable finer-grained selection of non-admin permissions, select "Customize permissions for this team". On this screen, you can select specific permissions to grant the team for the workspace. 
+To enable finer-grained selection of non-admin permissions, select "Customize permissions for this team". On this screen, you can select specific permissions to grant the team for the workspace.
 
 For more information on permissions, see [the documentation on Workspace Permissions](/terraform/cloud-docs/users-teams-organizations/permissions#workspace-permissions).
-

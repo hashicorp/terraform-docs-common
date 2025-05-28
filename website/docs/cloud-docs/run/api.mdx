@@ -1,11 +1,10 @@
 ---
-page_title: API-driven Runs - Runs - HCP Terraform
+page_title: The API-driven run workflow in HCP Terraform
 description: >-
-  External tools communicate with HCP Terraform to upload configurations and
-  trigger runs.
+  Use HCP Terraform's API-driven run workflow to enable external tools to upload Terraform configurations and trigger new runs.
 ---
 
-# The API-driven Run Workflow
+# The API-driven run workflow
 
 HCP Terraform has three workflows for managing Terraform runs.
 
@@ -191,6 +190,6 @@ rm ./create_config_version.json
 
 ## Advanced Use Cases
 
-For advanced use cases see the [TFE Automation Script](https://github.com/hashicorp/terraform-guides/tree/master/operations/automation-script) repository for automating interactions with HCP Terraform, including the creation of a workspace, uploading code, setting variables, and triggering a plan/apply.
+For advanced use cases refer to the [Terraform Enterprise Automation Script](https://github.com/hashicorp/terraform-guides/tree/master/operations/automation-script) repository for automating interactions with HCP Terraform, including the creation of a workspace, uploading code, setting variables, and triggering the `plan` and `apply` operations.
 
 In addition to uploading configurations and starting runs, you can use HCP Terraform's APIs to create and modify workspaces, edit variable values, and more. See the [API documentation](/terraform/cloud-docs/api-docs) for more details.
