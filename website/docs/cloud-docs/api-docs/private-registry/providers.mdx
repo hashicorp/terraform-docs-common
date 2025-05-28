@@ -1,8 +1,7 @@
 ---
-page_title: Providers - API Docs - Terraform Cloud
+page_title: /registry-providers API reference for HCP Terraform
 description: >-
-  You can add public providers to your organization's private registry. Create,
-  read, update, and delete public providers with the Terraform Cloud API.
+  Use the HCP Terraform API's organization `/registry-providers` endpoint to list, create, get, and delete providers in your private registry.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -33,23 +32,23 @@ description: >-
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-[JSON API document]: /cloud-docs/api-docs#json-api-documents
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Registry Providers API
+# Registry providers API reference
 
-You can add publicly curated providers from the [Terraform Registry](https://registry.terraform.io/) and custom, private providers to your Terraform Cloud private registry. The private registry stores a pointer to public providers so that you can view their data from within Terraform Cloud. This lets you clearly designate all of the providers that are recommended for the organization and makes them centrally accessible.
+You can add publicly curated providers from the [Terraform Registry](https://registry.terraform.io/) and custom, private providers to your HCP Terraform private registry. The private registry stores a pointer to public providers so that you can view their data from within HCP Terraform. This lets you clearly designate all of the providers that are recommended for the organization and makes them centrally accessible.
 
 
-All members of an organization can view and use both public and private providers, but you need [owners team](/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete them them in private registry.
+All members of an organization can view and use both public and private providers, but you need [owners team](/terraform/cloud-docs/users-teams-organizations/permissions#organization-owners) or [Manage Private Registry](/terraform/cloud-docs/users-teams-organizations/permissions#manage-private-registry) permissions to add, update, or delete them them in private registry.
 
-## Terraform Cloud Registry Implementation
+## HCP Terraform Registry Implementation
 
-For publicly curated providers, the Terraform Cloud Registry acts as a proxy to the [Terraform Registry](https://registry.terraform.io) for the following:
+For publicly curated providers, the HCP Terraform Registry acts as a proxy to the [Terraform Registry](https://registry.terraform.io) for the following:
 
-- The public registry discovery endpoints have the path prefix provided in the [discovery document](/registry/api-docs#service-discovery) which is currently `/api/registry/public/v1`.
-- [Authentication](/cloud-docs/api-docs#authentication) is handled the same as all other Terraform Cloud endpoints.
+- The public registry discovery endpoints have the path prefix provided in the [discovery document](/terraform/registry/api-docs#service-discovery) which is currently `/api/registry/public/v1`.
+- [Authentication](/terraform/cloud-docs/api-docs#authentication) is handled the same as all other HCP Terraform endpoints.
 
 ## List Terraform Registry Providers for an Organization
 
@@ -70,7 +69,7 @@ Lists the providers included in the private registry for the specified organizat
 
 ### Query Parameters
 
-This endpoint supports pagination [with standard URL query parameters](/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
+This endpoint supports pagination [with standard URL query parameters](/terraform/cloud-docs/api-docs#query-parameters). Remember to percent-encode `[` as `%5B` and `]` as `%5D` if your tooling doesn't automatically encode URLs.
 
 | Parameter            | Description                                                                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -172,7 +171,7 @@ curl \
 Use this endpoint to create both public and private providers:
 
 - **Public providers:** The public provider record will be available in the organization's registry provider list immediately after creation. You cannot create versions for public providers; you must use the versions available on the Terraform Registry.
-- **Private providers:** The private provider record will be available in the organization's registry provider list immediately after creation, but you must [create a version and upload release assets](/cloud-docs/registry/publish-providers#publishing-a-provider-and-creating-a-version) before consumers can use it. The private registry does not automatically update private providers when you release new versions. You must add each new version with the [Create a Provider Version](/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) endpoint.
+- **Private providers:** The private provider record will be available in the organization's registry provider list immediately after creation, but you must [create a version and upload release assets](/terraform/cloud-docs/registry/publish-providers#publishing-a-provider-and-creating-a-version) before consumers can use it. The private registry does not automatically update private providers when you release new versions. You must add each new version with the [Create a Provider Version](/terraform/cloud-docs/api-docs/private-registry/provider-versions-platforms#create-a-provider-version) endpoint.
 
 
 ### Parameters
@@ -193,7 +192,7 @@ Use this endpoint to create both public and private providers:
 
 ### Request Body
 
-~> **Important:** For private providers, you must also create a version, a platform, and upload release assets before consumers can use the provider. Refer to [Publishing a Private Provider](/cloud-docs/registry/publish-providers) for more details.
+~> **Important:** For private providers, you must also create a version, a platform, and upload release assets before consumers can use the provider. Refer to [Publishing a Private Provider](/terraform/cloud-docs/registry/publish-providers) for more details.
 
 This POST endpoint requires a JSON object with the following properties as a request payload.
 
@@ -447,7 +446,7 @@ curl \
 
 | Status  | Response                  | Reason                                                      |
 | ------- | ------------------------- | ----------------------------------------------------------- |
-| [204][] | Nothing                   | Success                                                     |
+| [204][] | No Content                | Success                                                     |
 | [403][] | [JSON API error object][] | Forbidden - public provider curation disabled               |
 | [404][] | [JSON API error object][] | Provider not found or user not authorized to perform action |
 
