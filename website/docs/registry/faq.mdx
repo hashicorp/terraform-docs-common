@@ -1,9 +1,9 @@
 ---
-page_title: Terraform Registry FAQ
-description: Troubleshoot common issues as you attempt to publish to the Terraform Registry.
+page_title: Terraform registry FAQ
+description: Learn to troubleshoot common issues when publishing to the Terraform registry.
 ---
 
-# Terraform Registry publishing FAQ
+# Terraform registry FAQ
 
 Below you'll find answers to some of the most common questions that arise when publishing a Terraform provider, module, or Sentinel policy library into the Registry.
 
@@ -42,6 +42,10 @@ The Terraform Registry effectively acts as an index for Terraform-related conten
 The Terraform Registry is unaware if you remove a file, a tag, a release, or other content from GitHub. The Registry could still host index records pointing to now-removed content. As a result, someone using your provider or module may have their Terraform configuration break because the Registry is referencing GitHub files that are no longer available.
 
 If you find a typo, bug, or other issues with a published version of your provider, module, or policy library, [we recommend fixing the problem and publishing a new release](#how-do-i-correct-bugs-in-published-versions).
+
+## How do I change the image associated with my artifacts?
+
+The image is associated with the GitHub user or organization profile. Customize the [user profile](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/personalizing-your-profile) or [organization profile](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile) to update the image.
 
 ## Can I change the name of my artifact?
 
@@ -128,3 +132,7 @@ Artifacts in the Public Registry that were originally published by a GitHub user
 > The GitHub user that published this artifact no longer exists. See the FAQ for more information.
 
 If you are the owner of such an artifact, or for other artifact ownership issues, please [reach out to us](/terraform/registry#getting-help).
+
+## Can I manage my public registry artifacts with HCP Terraform?
+
+If you are an HCP Terraform user and want to publish and manage modules or providers in the public registry, you can connect a GitHub account to an HCP Terraform organization, letting members collectively manage that account’s public registry artifacts. Refer to [Namespaces](/terraform/cloud-docs/public-namespace) for more information.
