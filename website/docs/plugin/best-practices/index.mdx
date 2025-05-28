@@ -1,10 +1,11 @@
 ---
-page_title: Plugin Development - Best Practices
+page_title: Best practices
 description: >-
-  Patterns that ensure a consistent user experience, including naming and versioning.
+  Learn about best practices for Terraform provider development, including naming and versioning, to ensure a
+  consistent user experience.
 ---
 
-# Terraform Plugin Best Practices
+# Terraform provider best practices
 
 A key feature of Terraform is its plugin system, which separates the details of
 specific vendor APIs from the shared logic for managing state, managing configuration,
@@ -23,7 +24,7 @@ Terraform's providers are a substantial amount of code, and occasionally it make
 
 ## Provider Design Principles
 
-Over time, the Terraform development community has gained large amounts of experience across a wide breadth of Application Programming Interfaces (APIs) supported by Terraform and its Software Development Kits (SDKs). The [Provider Design Principles](/terraform/plugin/best-practices/hashicorp-provider-design-principles) highlight the most prolific patterns when designing Terraform providers and associated resources, which guide HashiCorp design decisions.
+Over time, the Terraform development community has gained large amounts of experience across a wide breadth of Application Programming Interfaces (APIs) supported by Terraform and its Software Development Kits (SDKs). The [Provider Design Principles](/terraform/plugin/best-practices/hashicorp-provider-design-principles) highlight the most prolific patterns when designing Terraform providers and associated resources and functions, which guide HashiCorp design decisions.
 
 ## Provider Code
 
@@ -31,7 +32,7 @@ In [Provider Code](/terraform/plugin/best-practices/provider-code), we describe 
 
 ## Naming
 
-[Naming](/terraform/plugin/best-practices/naming) resources, data sources, and attributes in plugins is how plugin authors
+[Naming](/terraform/plugin/best-practices/naming) resources, data sources, functions, and attributes in plugins is how plugin authors
 expose their functionality to operators and using patterns common to other plugins
 lays the foundation for a good user experience.
 

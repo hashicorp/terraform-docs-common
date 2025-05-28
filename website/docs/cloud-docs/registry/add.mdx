@@ -1,15 +1,15 @@
 ---
-page_title: Adding Public Providers and Modules - Private Registry - Terraform Cloud
+page_title: Add public providers and modules to the HCP Terraform private registry
 description: >-
-  Add providers and modules from the public Terraform Registry to your
+  Learn how to add providers and modules from the public Terraform registry to your
   organization's private registry.
 ---
 
 [vcs]: /terraform/cloud-docs/vcs
 
-# Adding Public Providers and Modules to the Private Registry
+# Add public providers and modules to the HCP Terraform private registry
 
-You can add providers and modules from the public [Terraform Registry](/terraform/registry) to your Terraform Cloud private registry. The private registry stores a pointer to these public providers and modules so that you can view their data from within Terraform Cloud. This lets you clearly designate which public providers and modules are recommended for the organization and makes their supporting documentation and examples centrally accessible.
+You can add providers and modules from the public [Terraform Registry](/terraform/registry) to your HCP Terraform private registry. The private registry stores a pointer to these public providers and modules so that you can view their data from within HCP Terraform. This lets you clearly designate which public providers and modules are recommended for the organization and makes their supporting documentation and examples centrally accessible.
 
 -> **Note:** Your Terraform Enterprise instance must allow access to `registry.terraform.io` and `https://yy0ffni7mf-dsn.algolia.net/`.
 
@@ -27,7 +27,9 @@ All members of an organization can view and use public providers and modules. Me
 
 To add a public provider or module:
 
-1. Click **Registry**. The organization's private registry appears with a list of available providers and modules.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization you want to add a public provider or module to.
+
+1. Select **Registry** from the sidebar. The organization's private registry appears with a list of available providers and modules.
 
 1. Click **Search public registry**. The **Public Registry Search** page appears.
 
@@ -35,15 +37,15 @@ To add a public provider or module:
 
 1. Do one of the following to add a provider or module to your private registry:
    - Hover over the provider or module and click **+ Add**.
-   - Click the provider or module to view its details and then click **Add to Terraform Cloud**.
+   - Click the provider or module to view its details and then click **Add to HCP Terraform**.
 
 1. Click **Add to organization** in the dialog box. Members of your organization can now  begin using it from the private registry.
 
-
-<!-- BEGIN: TFC:only name:no-code -->
 ## Enabling and Disabling No-Code Provisioning
 
--> **Note:** No-code provisioning is in beta and available in the [Terraform Cloud Business tier](https://www.hashicorp.com/products/terraform/pricing).
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/nocode.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 You can enable no-code provisioning for public modules after adding them to your registry.
 
@@ -57,7 +59,6 @@ To enable no-code provisioning:
 Your module’s details page now has a **No-Code Ready** badge to indicate that it supports no-code provisioning.
 
 To disable no-code provisioning, select **Disable no-code provisioning** from the **Manage Module for Organization** dropdown. Disabling also removes the **No-Code Ready** badge from the module’s details page.
-<!-- END: TFC:only name:no-code -->
 
 ## Removing a Public Provider or Module
 
@@ -65,7 +66,9 @@ Removing a public provider or module from a private registry does not remove it 
 
 To remove a public provider or module from an organization's private registry:
 
-1. Click **Registry**. The organization's private registry appears with a list of available providers and modules.
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization whose registry you want to remove a provider or module from.
+
+1. Select **Registry** from the sidebar. The organization's private registry appears with a list of available providers and modules.
 
 1. Select the provider or module to view its details, open the **Manage for Organization** menu, and click **Remove from organization** (providers) or **Delete module** (modules).
 

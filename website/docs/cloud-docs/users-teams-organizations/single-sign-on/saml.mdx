@@ -1,13 +1,11 @@
 ---
-page_title: SAML - Single Sign-on - Terraform Cloud
+page_title: Use single sign-on with SAML for HCP Terraform
 tfc_only: true
 description: >-
-  Learn how to configure single sign-on using SAML.
+  Learn how to configure single sign-on with SAML for HCP Terraform.
 ---
 
--> **Note:** Single sign-on is a paid feature, available as part of the **Business** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
-
-# Single Sign-on: SAML
+# Use single sign-on with SAML
 
 The SAML SSO integration currently supports the following features of SAML 2.0:
 
@@ -17,15 +15,17 @@ The SAML SSO integration currently supports the following features of SAML 2.0:
 
 The SAML SSO integration can be configured by providing a metadata URL or manually with the Single Sign-on URL, Entity ID, and X.509 Certificate.
 
-## Configuration (Terraform Cloud)
+## Configuration (HCP Terraform)
 
-1. Visit your organization settings page and click "SSO".
+1. Sign in to [HCP Terraform](https://app.terraform.io/) and select the organization you want to enable SSO for.
 
-1. Click "Setup SSO".
+1. Select **Settings** from the sidebar, then **SSO**.
+
+1. Click **Setup SSO**.
 
    ![sso-setup](/img/docs/setup.png)
 
-1. Select "SAML" and click "Next".
+1. Select **SAML** and click **Next**.
 
    ![sso-wizard-choose-provider-saml](/img/docs/wizard-choose-provider-saml.png)
 
@@ -35,9 +35,9 @@ The SAML SSO integration can be configured by providing a metadata URL or manual
 
    ![sso-wizard-configure-settings-manually](/img/docs/wizard-configure-settings-manually.png)
 
-1. Click "Save settings".
+1. Click **Save settings**.
 
-1. [Verify](/terraform/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click "Enable".
+1. [Verify](/terraform/cloud-docs/users-teams-organizations/single-sign-on/testing) your settings and click **Enable**.
 
 1. Your SAML SSO configuration is complete and ready to [use](/terraform/cloud-docs/users-teams-organizations/single-sign-on#signing-in-with-sso).
 
