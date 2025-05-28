@@ -1,42 +1,20 @@
 ---
-page_title: Applies - API Docs - Terraform Cloud
+page_title: /applies API reference for HCP Terraform
 description: >-
-  Use the `/applies` endpoint to show the results of a Terraform apply using the HTTP API.
+  Use the HCP Terraform API's `/applies` endpoint to read the results of a Terraform apply and to recover any failed state uploads after applying.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
-[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
-
-[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
-
-[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
-
-[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
-
-[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
-
-[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[307]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307
 
 [404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
-
-[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
-
-[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
-
-[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
-
-[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
-
-[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
-
-[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
 [JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Applies API
+# Applies API reference
 
 An apply represents the results of applying a Terraform Run's execution plan.
 
@@ -125,9 +103,9 @@ curl \
 }
 ```
 
-_Using Terraform Cloud Agents_
+_Using HCP Terraform agents_
 
-[Terraform Cloud Agents](/terraform/cloud-docs/api-docs/agents) are a solution to allow Terraform Cloud to communicate with isolated, private, or on-premises infrastructure. When a workspace is set to use the agent execution mode, the apply response will include additional details about the agent pool and agent used.
+[HCP Terraform agents](/terraform/cloud-docs/api-docs/agents) allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. When a workspace is set to use the agent execution mode, the apply response will include additional details about the agent pool and agent used.
 
 ```json
 {
@@ -173,4 +151,51 @@ _Using Terraform Cloud Agents_
     }
   }
 }
+```
+
+## Recover a failed state upload after applying
+
+`GET /applies/:id/errored-state`
+
+| Parameter | Description                               |
+| --------- | ----------------------------------------- |
+| `id`      | The ID of the apply to recover state for. |
+
+It is possible that during the course of a Run, Terraform may fail to upload a
+state file. This can happen for a variety of reasons, but should be an
+exceptionally rare occurrence. HCP Terraform agent versions greater than 1.12.0
+include a fallback mechanism which attempts to upload the state directly to
+HCP Terraform's backend storage system in these cases. This endpoint then
+makes the raw data from these failed uploads available to users who are
+authorized to read the state contents.
+
+| Status  | Response                                     | Reason                                                                              |
+| ------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [307][] | HTTP temporary redirect to state storage URL | Errored state available and user is authorized to read it                           |
+| [404][] | [JSON API error object][]                    | Apply not found, errored state not uploaded, or user unauthorized to perform action |
+
+When a 307 redirect is returned, the storage URL to the raw state file will be
+present in the `Location` header of the response. The URL in the `Location`
+header will expire after one minute. It is recommended for the API client to
+follow the redirect immediately. Each successful request to the errored-state
+endpoint will generate a new, unique storage URL with the same one minute
+expiration window.
+
+### Sample Request
+
+```shell
+curl \
+  --header "Authorization: Bearer $TOKEN" \
+  https://app.terraform.io/api/v2/applies/apply-47MBvjwzBG8YKc2v/errored-state
+```
+
+### Sample Response
+
+```
+HTTP/1.1 307 Temporary Redirect
+Content-Length: 22
+Content-Type: text/plain
+Location: https://archivist.terraform.io/v1/object/dmF1bHQ6djE6OFA1eEdlSFVHRSs4YUcwaW83a1dRRDA0U2E3T3FiWk1HM2NyQlNtcS9JS1hHN3dmTXJmaFhEYTlHdTF1ZlgxZ2wzVC9kVTlNcjRPOEJkK050VFI3U3dvS2ZuaUhFSGpVenJVUFYzSFVZQ1VZYno3T3UyYjdDRVRPRE5pbWJDVTIrNllQTENyTndYd1Y0ak1DL1dPVlN1VlNxKzYzbWlIcnJPa2dRRkJZZGtFeTNiaU84YlZ4QWs2QzlLY3VJb3lmWlIrajF4a1hYZTlsWnFYemRkL2pNOG9Zc0ZDakdVMCtURUE3dDNMODRsRnY4cWl1dUN5dUVuUzdnZzFwL3BNeHlwbXNXZWRrUDhXdzhGNnF4c3dqaXlZS29oL3FKakI5dm9uYU5ZKzAybnloREdnQ3J2Rk5WMlBJemZQTg
+
+307 Temporary Redirect
 ```

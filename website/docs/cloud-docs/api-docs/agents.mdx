@@ -1,7 +1,7 @@
 ---
-page_title: Agent Pools and Agents - API Docs - Terraform Cloud
+page_title: /agents and /agent-pools API reference for HCP Terraform
 description: >-
-  Use the `/agents` and `/agent-pools` endpoints. List, show, and delete agents, and list, show, create, update, and delete agent pools using the HTTP API.
+  Use the HCP Terraform API's `/agents` endpoint to read and delete agents. Use the `/agent-pools` endpoint to read, create, update, and delete agent pools.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -36,14 +36,14 @@ description: >-
 
 [JSON API error object]: https://jsonapi.org/format/#error-objects
 
-# Agent Pools and Agents API
+# Agents and agent pools API reference
 
 An Agent Pool represents a group of Agents, often related to one another by sharing a common network segment or purpose.
 A workspace may be configured to use one of the organization's agent pools to run remote operations with isolated,
 private, or on-premises infrastructure.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one self-hosted agent. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/agents.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## List Agent Pools
@@ -72,6 +72,17 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
 | `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
 | `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |                                                                             |
+
+
+### Response fields
+
+Responses for this endpoint can contain an `attributes` object with the following fields:
+
+| Field name                                        | Type   | Description                                                                                                                                 |
+|-------------------------------------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `data.attributes.agent-count`                   | number | The number of agents in `Idle`, `Busy` or `Unknown` states. Agents that are `Exited` or `Errored` are excluded. | 
+| `data.attributes.meta.status-counts.total`      | number | The total number of resources the filter was applied to.                                                                                            |
+| `data.attributes.meta.status-counts.matching`   | number | The total number of resources returned, which match the filter you applied.                                                          |
 
 ### Sample Request
 
@@ -363,6 +374,8 @@ curl \
 }
 ```
 
+This endpoint lists details about an agent along with that agent's status. [Learn more about agents statuses](/terraform/cloud-docs/agents/agent-pools#view-agent-statuses).
+
 ## Delete an Agent
 
 `DELETE /agents/:id`
@@ -373,7 +386,7 @@ curl \
 
 | Status  | Response                  | Reason                                                                                                       |
 | ------- | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [204][] | Nothing                   | Success                                                                                                      |
+| [204][] | No Content                | Success                                                                                                      |
 | [412][] | [JSON API error object][] | Agent is not deletable. Agents must have a status of `unknown`, `errored`, or `exited` before being deleted. |
 | [404][] | [JSON API error object][] | Agent not found, or user unauthorized to perform action                                                      |
 
@@ -424,7 +437,7 @@ Properties without a default value are required.
         "type": "agent-pools",
         "attributes": {
             "name": "my-pool",
-            "organization-scoped": false,
+            "organization-scoped": false
         },
         "relationships": {
           "allowed-workspaces": {
@@ -530,7 +543,7 @@ Properties without a default value are required.
     "type": "agent-pools",
     "attributes": {
       "name": "example-pool",
-      "organization-scoped": false,
+      "organization-scoped": false
     },
     "relationships": {
       "allowed-workspaces": {

@@ -1,21 +1,20 @@
 ---
-page_title: Terraform Cloud Run Tasks Integrations Setup
+page_title: Set up HCP Terraform run task integrations
 description: >-
-  Run tasks allow Terraform Cloud to execute tasks in external systems at
-  specific points in the Terraform Cloud run lifecycle.
+  Use run tasks to execute tasks in external systems at specific points in the HCP Terraform run lifecycle.
 ---
 
-# Run Tasks Integration
+# Set up run task integrations
 
-In addition to using existing technology partners integrations, HashiCorp Terraform Cloud customers can build their own custom run task integrations. Custom integrations have access to plan details in between the plan and apply phase, and can display custom messages within the run pipeline as well as prevent a run from continuing to the apply phase.
+In addition to using existing technology partners integrations, HashiCorp HCP Terraform customers can build their own custom run task integrations. Custom integrations have access to plan details in between the plan and apply phase, and can display custom messages within the run pipeline as well as prevent a run from continuing to the apply phase.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Terraform Cloud **Free** Edition includes one run task integration that you can apply to up to ten workspaces. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/run-tasks.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## Prerequisites
 
-To build a custom integration, you must have a server capable of receiving requests from Terraform Cloud and responding with a status update to a supplied callback URL. When creating a run task, you supply an endpoint url to receive the hook. We send a test POST to the supplied URL, and it must respond with a 200 for the run task to be created.
+To build a custom integration, you must have a server capable of receiving requests from HCP Terraform and responding with a status update to a supplied callback URL. When creating a run task, you supply an endpoint url to receive the hook. We send a test POST to the supplied URL, and it must respond with a 200 for the run task to be created.
 
 This feature relies heavily on the proper parsing of [plan JSON output](/terraform/internals/json-format). When sending this output to an external system, be certain that system can properly interpret the information provided.
 
@@ -34,6 +33,9 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
   "payload_version": 1,
   "stage": "post_plan",
   "access_token": "4QEuyyxug1f2rw.atlasv1.iDyxqhXGVZ0ykes53YdQyHyYtFOrdAWNBxcVUgWvzb64NFHjcquu8gJMEdUwoSLRu4Q",
+  "capabilities": {
+    "outcomes": true
+  },
   "configuration_version_download_url": "https://app.terraform.io/api/v2/configuration-versions/cv-ntv3HbhJqvFzamy7/download",
   "configuration_version_id": "cv-ntv3HbhJqvFzamy7",
   "is_speculative": false,
@@ -58,32 +60,36 @@ Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks
 }
 ```
 
-Once your server receives this payload, Terraform Cloud expects you to callback to the supplied `task_result_callback_url` using the `access_token` as an [Authentication Header](/terraform/cloud-docs/api-docs#authentication) with a [jsonapi](/terraform/cloud-docs/api-docs#json-api-formatting) payload of the form:
+Once your server receives this payload, HCP Terraform expects you to callback to the supplied `task_result_callback_url` using the `access_token` as an [Authentication Header](/terraform/cloud-docs/api-docs#authentication) with a [jsonapi](/terraform/cloud-docs/api-docs#json-api-formatting) payload of the form:
 
-Refer to the [Run Task Integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration) for the exact callback specification.
 
 ```json
 {
   "data": {
     "type": "task-results",
       "attributes": {
-        "status": "passed",
+        "status": "running",
         "message": "Hello task",
-        "url": "https://example.com"
+        "url": "https://example.com",
+        "outcomes": [...]
       }
   }
 }
 ```
 
-Terraform Cloud expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in Terraform Cloud on the run details page. The status can be `passed` or `failed`.
+HCP Terraform expects this callback within 10 minutes, or the task will be considered to have `errored`. The supplied message attribute will be displayed in HCP Terraform on the run details page. The status can be `running`, `passed` or `failed`.
 
 Here's what the data flow looks like:
 
-![Screenshot: a diagram of the user and data flow for a Terraform Cloud run task](/img/docs/terraform-cloud-run-tasks-diagram.png)
+![Screenshot: a diagram of the user and data flow for an HCP Terraform run task](/img/docs/terraform-cloud-run-tasks-diagram.png)
+
+
+Refer to the [run task integration API](/terraform/cloud-docs/api-docs/run-tasks/run-tasks-integration#structured-results) for the exact payload specifications, and the [run task JSON schema](https://github.com/hashicorp/terraform-docs-common/blob/main/website/public/schema/run-tasks/runtask-result.json) for code generation and payload validation.
+
 
 ## Securing your Run Task
 
-When creating your run task, you can supply an HMAC key which Terraform Cloud will use to create a signature of the payload in the `X-Tfc-Task-Signature` header when calling your service.
+When creating your run task, you can supply an HMAC key which HCP Terraform will use to create a signature of the payload in the `X-Tfc-Task-Signature` header when calling your service.
 
 The signature is a sha512 sum of the webhook body using the provided HMAC key. The generation of the signature depends on your implementation, however an example of how to generate a signature in bash is provided below.
 
@@ -92,7 +98,7 @@ $ echo -n $WEBHOOK_BODY | openssl dgst -sha512 -hmac "$HMAC_KEY"
 ```
 
 ## HCP Packer Run Task
-> **Hands On:** Try the [Set Up Terraform Cloud Run Task for HCP Packer](/packer/tutorials/hcp/setup-tfc-run-task), [Standard tier run task image validation](/packer/tutorials/hcp/run-tasks-data-source-image-validation), and [Plus tier run task image validation](/packer/tutorials/hcp/run-tasks-resource-image-validation) tutorials to set up and test the Terraform Cloud Run Task integration end to end.
+> **Hands On:** Try the [Set Up HCP Terraform Run Task for HCP Packer](/packer/tutorials/hcp/setup-hcp-terraform-run-task), [Standard tier run task image validation](/packer/tutorials/hcp/run-tasks-data-source-image-validation), and [Plus tier run task image validation](/packer/tutorials/hcp/run-tasks-resource-image-validation) tutorials to set up and test the HCP Terraform Run Task integration end to end.
 
 [Packer](https://www.packer.io/) lets you create identical machine images for multiple platforms from a single source template. The [HCP Packer registry](/hcp/docs/packer) lets you track golden images, designate images for test and production environments, and query images to use in Packer and Terraform configurations.
 

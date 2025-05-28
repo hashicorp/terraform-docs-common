@@ -1,26 +1,63 @@
 ---
-page_title: Project Team Access - API Docs - Terraform Cloud
+page_title: /team-projects API reference for HCP Terraform
 description: >-
-  Use the `/team-projects` endpoint to manage team access to a project. List, show, add, update, and remove team access from a project using the HTTP API.
+  Use the HCP Terraform API's `/team-projects` endpoint to read, add, update, and remove team access from a project.
 ---
 
-# Project Team Access API
+[200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
--> **Note:** Team management is a paid feature, available as part of the **Team** upgrade package. [Learn more about Terraform Cloud pricing here](https://www.hashicorp.com/products/terraform/pricing).
+[201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+
+[202]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/202
+
+[204]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
+
+[400]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+
+[401]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+[403]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+[404]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+[409]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+
+[412]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/412
+
+[422]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
+
+[429]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+[500]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
+
+[JSON API document]: /terraform/cloud-docs/api-docs#json-api-documents
+
+[JSON API error object]: https://jsonapi.org/format/#error-objects
+
+# Project team access API reference
+
+<!-- BEGIN: TFC:only name:pnp-callout -->
+@include 'tfc-package-callouts/project-permissions.mdx'
+<!-- END: TFC:only name:pnp-callout -->
 
 The team access APIs are used to associate a team to permissions on a project. A single `team-project` resource contains the relationship between the Team and Project, including the privileges the team has on the project.
 
--> **Note**: A `team-project` resource represents a team's _local_ permissions on a specific project. Teams can also have _organization-level_ permissions that grant access to projects, and Terraform Cloud uses whichever access level is higher. (For example: a team with the "manage projects" permission has admin access on all projects, even if their `team-project` on a particular project only grants read access.) For more information, see [Managing Project Access](/terraform/cloud-docs/users-teams-organizations/teams#managing-project-access).
+## Resource permissions
 
-Any member of an organization can view team access relative to their own team memberships, including secret teams of which they are a member. Organization owners and project admins can modify team access or view the full set of secret team accesses. The organization token and the owners team token can act as an owner on these endpoints. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+A `team-project` resource represents a team's local permissions on a specific project. Teams can also have organization-level permissions that grant access to projects. HCP Terraform uses the more restrictive access level. For example, a team with the **Manage projects** permission enabled has admin access on all projects, even if their `team-project` on a particular project only grants read access. For more information, refer to [Managing Project Access](/terraform/cloud-docs/users-teams-organizations/teams/manage#managing-project-access).
+
+Any member of an organization can view team access relative to their own team memberships, including secret teams of which they are a member. Organization owners and project admins can modify team access or view the full set of secret team accesses. The organization token and the owners team token can act as an owner on these endpoints. Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) for additional information.
 
 ## Project Team Access Levels
 | Access Level    | Description                                                                                                                                                      |
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `read`            | Read project and Read workspace access role on project workspaces                                                                                              |
-| `write` | Read project and Write workspace access role on project workspaces                                                                                                |
-| `maintain`  | Read project and Admin workspace access role on project workspaces                                                                                                 |
-| `admin`           | Admin project, Admin workspace access role on project workspaces, create workspaces within project, move workspaces between projects, manage project team access |
+| `read`          | Read project and Read workspace access role on project workspaces                                                                                                |
+| `write`         | Read project and Write workspace access role on project workspaces                                                                                               |
+| `maintain`      | Read project and Admin workspace access role on project workspaces                                                                                               |
+| `admin`         | Admin project, Admin workspace access role on project workspaces, create workspaces within project, move workspaces between projects, manage project team access |
+| `custom`        | Custom access permissions on project and project's workspaces                                                                                                   |
 
 ## List Team Access to a Project
 
@@ -62,7 +99,22 @@ $ curl \
       "id": "tprj-TLznAnYdcsD2Dcmm",
       "type": "team-projects",
       "attributes": {
-        "access": "read"
+        "access": "read",
+        "project-access": {
+          "settings": "read",
+          "teams": "none"
+        },
+        "workspace-access": {
+          "create": false,
+          "move": false,
+          "locking": false,
+          "delete": false,
+          "runs": "read",
+          "variables": "read",
+          "state-versions": "read",
+          "sentinel-mocks": "none",
+          "run-tasks": false
+        }
       },
       "relationships": {
         "team": {
@@ -122,6 +174,14 @@ $ curl \
 |-----------|------------------------------------------------------------------------------------------------------------------------------------------|
 | `:id`     | The ID of the team/project relationship. Obtain this from the [list team access action](#list-team-access-to-a-project) described above. |
 
+As mentioned in [Add Team Access to a Project](#add-team-access-to-a-project) and [Update to a Project](#update-team-access-to-a-project), several permission attributes are not editable unless you set `access` to `custom`. If you set `access` to `read`, `plan`, `write`, or `admin`, certain attributes are read-only and reflect the _implicit permissions_ granted to the current access level.
+
+For example, if you set `access` to `read`, the implicit permission level for project settings and workspace run is "read". Conversely, if you set the access level to `admin`, the implicit permission level for the project settings is "delete", while the workspace runs permission is "apply".
+
+Several permission attributes are not editable unless `access` is set to `custom`. When access is `read`, `plan`, `write`, or `admin`, these attributes are read-only and reflect the implicit permissions granted to the current access level.
+
+For example, when access is `read`, the implicit level for the project settings and workspace runs permissions are "read". Conversely, when the access level is `admin`, the implicit level for the project settings is "delete" and the workspace runs permission is "apply". To see all of the implied permissions at different access levels, see [Implied Custom Permission Levels](#implied-custom-permission-levels).
+
 ### Sample Request
 
 ```shell
@@ -140,7 +200,22 @@ $ curl \
     "id": "tprj-TLznAnYdcsD2Dcmm",
     "type": "team-projects",
     "attributes": {
-      "access": "read"
+      "access": "read",
+      "project-access": {
+        "settings": "read",
+        "teams": "none"
+      },
+      "workspace-access": {
+        "create": false,
+        "move": false,
+        "locking": false,
+        "delete": false,
+        "runs": "read",
+        "variables": "read",
+        "state-versions": "read",
+        "sentinel-mocks": "none",
+        "run-tasks": false
+      }
     },
     "relationships": {
       "team": {
@@ -185,14 +260,25 @@ This POST endpoint requires a JSON object with the following properties as a req
 
 Properties without a default value are required.
 
-| Key path                               | Type   | Default | Description                                                      |
-|----------------------------------------|--------|---------|------------------------------------------------------------------|
-| `data.type`                            | string |         | Must be `"team-projects"`.                                       |
-| `data.attributes.access`               | string |         | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`. | |
-| `data.relationships.project.data.type` | string |         | Must be `projects`.                                              |
-| `data.relationships.project.data.id`   | string |         | The project ID to which the team is to be added.                 |
-| `data.relationships.team.data.type`    | string |         | Must be `teams`.                                                 |
-| `data.relationships.team.data.id`      | string |         | The ID of the team to add to the project.                        |
+| Key path                                                  | Type    | Default | Description                                                                                        |
+|-----------------------------------------------------------|-------- |---------|----------------------------------------------------------------------------------------------------|
+| `data.type`                                               | string  |         | Must be `"team-projects"`.                                                                         |
+| `data.attributes.access`                                  | string  |         | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`, or `custom`.     |
+| `data.relationships.project.data.type`                    | string  |         | Must be `projects`.                                                                                |
+| `data.relationships.project.data.id`                      | string  |         | The project ID to which the team is to be added.                                                   |
+| `data.relationships.team.data.type`                       | string  |         | Must be `teams`.                                                                                   |
+| `data.relationships.team.data.id`                         | string  |         | The ID of the team to add to the project.                                                          |
+| `data.attributes.project-access.settings`                 | string  | "read"  | If `access` is `custom`, the permission to grant for the project's settings. Can only be used when `access` is `custom`. Valid values include `read`, `update`, or `delete`.                                                   |
+| `data.attributes.project-access.teams`                    | string  | "none"  | If `access` is `custom`, the permission to grant for the project's teams. Can only be used when `access` is `custom`. Valid values include `none`, `read`, or `manage`.                                                   |
+| `data.attributes.workspace-access.runs`                   | string  | "read"  | If `access` is `custom`, the permission to grant for the project's workspaces' runs. Can only be used when `access` is `custom`. Valid values include `read`, `plan`, or `apply`.                                                    |
+| `data.attributes.workspace-access.sentinel-mocks`         | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces' Sentinel mocks. Can only be used when `access` is `custom`. Valid values include `none`, or `read`.                                                     |
+| `data.attributes.workspace-access.state-versions`         | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces state versions. Can only be used when `access` is `custom`. Valid values include `none`, `read-outputs`, `read`, or `write`.                                                    |
+| `data.attributes.workspace-access.variables`              | string  | "none"  | If `access` is `custom`, the permission to grant for the project's workspaces' variables. Can only be used when `access` is `custom`. Valid values include `none`, `read`, or `write`.                                                    |
+| `data.attributes.workspace-access.create`                 | boolean | false  | If `access` is `custom`, this permission allows the team to create workspaces in the project.                 |
+| `data.attributes.workspace-access.locking`                | boolean | false  | If `access` is `custom`, the permission granting the ability to manually lock or unlock the project's workspaces. Can only be used when `access` is `custom`.                                                   |
+| `data.attributes.workspace-access.delete`                | boolean | false  | If `access` is `custom`, the permission granting the ability to delete the project's workspaces. Can only be used when `access` is `custom`.                                                   |
+| `data.attributes.workspace-access.move`                   | boolean | false  | If `access` is `move`, this permission allows the team to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).       |
+| `data.attributes.workspace-access.run-tasks`              | boolean | false  | If `access` is `custom`, this permission allows the team to manage run tasks within the project's workspaces. |
 
 ### Sample Payload
 
@@ -240,7 +326,21 @@ $ curl \
     "id": "tprj-WbG7p5KnT7S7HZqw",
     "type": "team-projects",
     "attributes": {
-      "access": "read"
+      "access": "read",
+      "project-access": {
+        "settings": "read",
+        "teams": "none"
+      },
+      "workspace-access": {
+        "create": false,
+        "move": false,
+        "locking": false,
+        "runs": "read",
+        "variables": "read",
+        "state-versions": "read",
+        "sentinel-mocks": "none",
+        "run-tasks": false
+      }
     },
     "relationships": {
       "team": {
@@ -282,7 +382,7 @@ $ curl \
 | Parameter                |        |     | Description                                                                                                                              |
 |--------------------------|--------|-----|------------------------------------------------------------------------------------------------------------------------------------------|
 | `:id`                    |        |     | The ID of the team/project relationship. Obtain this from the [list team access action](#list-team-access-to-a-project) described above. |
-| `data.attributes.access` | string |     | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`.                                                                         |
+| `data.attributes.access` | string |     | The type of access to grant. Valid values are `read`, `write`, `maintain`, `admin`, or `custom`.                                         |
 
 ### Sample Request
 
@@ -302,7 +402,22 @@ $ curl \
   "data": {
     "id": "tprj-WbG7p5KnT7S7HZqw",
     "attributes": {
-      "access": "admin"
+      "access": "custom",
+      "project-access": {
+        "settings": "delete"
+        "teams": "manage",
+      },
+      "workspace-access" : {
+        "runs": "apply",
+        "sentinel-mocks": "read",
+        "state-versions": "write",
+        "variables": "write",
+        "create": true,
+        "locking": true,
+        "delete": true,
+        "move": true,
+        "run-tasks": true
+      }
     }
   }
 }
@@ -316,7 +431,22 @@ $ curl \
     "id": "tprj-WbG7p5KnT7S7HZqw",
     "type": "team-projects",
     "attributes": {
-      "access": "admin"
+      "access": "custom",
+      "project-access": {
+        "settings": "delete"
+        "teams": "manage",
+      },
+      "workspace-access" : {
+        "runs": "apply",
+        "sentinel-mocks": "read",
+        "state-versions": "write",
+        "variables": "write",
+        "create": true,
+        "locking": true,
+        "delete": true,
+        "move": true,
+        "run-tasks": true
+      }
     },
     "relationships": {
       "team": {
@@ -367,3 +497,24 @@ $ curl \
   --request DELETE \
   https://app.terraform.io/api/v2/team-projects/tprj-WbG7p5KnT7S7HZqw
 ```
+
+## Implied Custom Permission Levels
+
+As mentioned above, when setting team access levels (`read`, `write`, `maintain`, or `admin`), you can individually set the following permissions if you use the `custom` access level.
+The below table lists each access level alongside its implicit custom permission level.  If you use the `custom` access level and do not specify a certain permission's level, that permission uses the default value listed below.
+
+
+
+| Permissions                     | `read` | `write` | `maintain` | `admin ` | `custom` default |
+|---------------------------------|--------|---------|------------|----------|------------------|
+| project-access.settings         | "read" | "read"  | "read"     | "delete" | "read"           |
+| project-access.teams            | "none" | "none"  | "none"     | "manage" | "none"           |
+| workspace-access.runs           | "read" | "apply" | "apply"    | "apply"  | "read"           |
+| workspace-access.sentinel-mocks | "none" | "read"  | "read"     | "read"   | "none"           |
+| workspace-access.state-versions | "read" | "write" | "write"    | "write"  | "none"           |
+| workspace-access.variables      | "read" | "write" | "write"    | "write"  | "none"           |
+| workspace-access.create         | false  | false   | true       | true     | false            |
+| workspace-access.locking        | false  | true    | true       | true     | false            |
+| workspace-access.delete         | false  | false   | true       | true     | false            |
+| workspace-access.move           | false  | false   | false      | true     | false            |
+| workspace-access.run-tasks      | false  | false   | true       | true     | false            |

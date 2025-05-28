@@ -1,7 +1,7 @@
 ---
-page_title: Assessments - API Docs - Terraform Cloud
+page_title: /assessment-results API reference for HCP Terraform
 description: >-
-  Use the `/assessment-results` endpoint to query health assessments. Get continuous validation and drift detection health asessment results using the HTTP API.
+  Use the HCP Terraform API's `/assessment-results` endpoint to read a health assessment's results, including details on continuous validation and drift detection.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -20,12 +20,12 @@ description: >-
 
 [504]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
 
-# Assessment Results API
+# Health assessment results API reference
 
-An Assessment Result is the summary record of an instance of health assessment. Terraform Cloud can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Refer to [Health](/terraform/cloud-docs/workspaces/health) for more details.
+An Assessment Result is the summary record of an instance of health assessment. HCP Terraform can perform automatic health assessments in a workspace to assess whether its real infrastructure matches the requirements defined in its Terraform configuration. Refer to [Health](/terraform/cloud-docs/workspaces/health) for more details.
 
 <!-- BEGIN: TFC:only name:pnp-callout -->
--> **Note:** Health assessments are available in Terraform Cloud **Plus** Edition. Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details.
+@include 'tfc-package-callouts/health-assessments.mdx'
 <!-- END: TFC:only name:pnp-callout -->
 
 ## Show Assessment Result
