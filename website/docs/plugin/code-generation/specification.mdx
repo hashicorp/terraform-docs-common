@@ -1,7 +1,9 @@
 ---
-page_title: Plugin Development - Specification
+page_title: Specification
 description: >-
-  Learn about the Provider Code Specification, the JSON intermediate representation that Terraform Provider Code Generation tools are based off.
+  The Terraform provider code specification defines the JSON intermediate
+  representation that Terraform provider code generation tools use to generate
+  provider code.
 ---
 
 # Specification
@@ -12,7 +14,7 @@ Code Generation is currently in tech preview.
 
 The Provider Code Specification is a versioned interface between source(s) and provider code; this interface creates a separation of concerns between any potential source(s) of information and potential consumer(s) of that information.
 
-The implementation is a [JSON schema](https://github.com/hashicorp/terraform-plugin-codegen-spec/blob/main/spec/schema.json) with associated [Go bindings](https://github.com/hashicorp/terraform-plugin-codegen-spec/blob/main/spec/specification.go) which defines the structure and types of the interface. The interface is hierarchical, and describes structures from their most granular form (e.g., data sources, provider, resources), through to the fine-grained details of the individual types contained therein (e.g., required, sensitive).
+The implementation is a [JSON schema](https://github.com/hashicorp/terraform-plugin-codegen-spec/blob/main/spec/v0.1/schema.json) with associated [Go bindings](https://github.com/hashicorp/terraform-plugin-codegen-spec/blob/main/spec/specification.go) which defines the structure and types of the interface. The interface is hierarchical, and describes structures from their most granular form (e.g., data sources, provider, resources), through to the fine-grained details of the individual types contained therein (e.g., required, sensitive).
 
 Refer to the [Intermediate Representation](https://github.com/hashicorp/terraform-plugin-codegen-framework/blob/main/internal/cmd/testdata/custom_and_external/ir.json) within the [terraform-plugin-codegen-framework](https://github.com/hashicorp/terraform-plugin-codegen-framework) repository for further examples of Provider Code Specification usage.
 

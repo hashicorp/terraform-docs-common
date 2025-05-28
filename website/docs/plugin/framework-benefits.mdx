@@ -1,10 +1,12 @@
 ---
-page_title: 'Home - Plugin Development: Plugin Framework Benefits'
+page_title: Plugin framework benefits
 description: >-
-  Compare the prior SDKv2 and the framework for provider development. The framework is easier and more extensible than SDKv2.
+  The Terraform plugin framework is an SDK that you can use to develop your own
+  Terraform providers. Learn about the benefits of the provider framework over
+  SDKv2.
 ---
 
-# Plugin Framework Benefits
+# Plugin framework benefits
 
 HashiCorp offers two Go programming language Software Development Kits (SDKs) for building Terraform providers:
 
@@ -74,7 +76,7 @@ type ThingResource struct{}
 func (r ThingResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) { /* ... */ }
 ```
 
-Interfaces also let you extend the framework’s functionality beyond the available types. Refer to [Extensiblility](#extensibility) for details.
+Interfaces also let you extend the framework’s functionality beyond the available types. Refer to [Extensibility](#extensibility) for details.
 
 ### Request and Response Pattern
 
@@ -252,6 +254,8 @@ Additional new and improved features in the framework include:
 - **Data Access**: The framework makes it easier to access Terraform data (configuration, plan, and state) and value states (null, known, unknown).
 - **Unrestricted Type System**: The framework lets you create custom attribute types and nested attributes for resources and data sources. The framework type system does not have any restrictions for using complex types as the value for a map type.
 - **Validation Capabilities**: The framework exposes many more configuration validation integration points than the SDK. It is also extensible with provider-defined types that implement validation in the type itself.
+- **Functions**: The framework supports provider-defined functions which are exposed for practitioner configurations.
 - **Enhanced Import and Planning Capabilities**: The framework enables additional import and plan handling capabilities not available in SDKv2.
+- **Ephemeral Resources**: The framework supports ephemeral resources which do not store data in the Terraform plan or state artifacts.
 
 Refer to [Framework Feature Comparison](/terraform/plugin/framework/migrating/benefits) for a continued list of features, details, and examples.
