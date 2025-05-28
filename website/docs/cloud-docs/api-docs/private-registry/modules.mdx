@@ -636,6 +636,7 @@ a main.tf
 
 ```shell
 curl \
+  --header "Authorization: Bearer $TOKEN" \
   --header "Content-Type: application/octet-stream" \
   --request PUT \
   --data-binary @module.tar.gz \
