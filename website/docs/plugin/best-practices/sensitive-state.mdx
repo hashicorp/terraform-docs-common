@@ -1,14 +1,28 @@
 ---
-page_title: Plugin Development - Sensitive State Best Practices
-description: Recommendations for handling sensitive information in state.
+page_title: Sensitive state best practices
+description: >-
+  Learn how to handle sensitive information in Terraform state with the plugin
+  framework.
 ---
 
-# Handling Sensitive Values in State
+# Handling sensitive values in state
 
 Many organizations use Terraform to manage their entire infrastructure, and
 it's inevitable that [sensitive information will find its way into
 Terraform](/terraform/language/state/sensitive-data) in these circumstances. There are a
 couple of recommended approaches for managing sensitive state in Terraform.
+
+## Using Ephemeral Resources
+
+<Highlight>
+
+    Ephemeral resource support is only available in the [Terraform Plugin Framework](/terraform/plugin/framework)
+
+</Highlight>
+
+[Ephemeral resources](/terraform/language/v1.10.x/resources/ephemeral) allow Terraform to reference external data, while
+guaranteeing that this data will not be persisted in plan or state. When working with a sensitive API object such as an API token or secret,
+model that object using an ephemeral resource whenever possible.
 
 ## Using `Sensitive` Flag functionality
 

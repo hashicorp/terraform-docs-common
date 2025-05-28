@@ -1,18 +1,20 @@
 ---
-page_title: Azure DevOps Server - VCS Providers - HCP Terraform
+page_title: Set up the Azure DevOps Server VCS provider
 description: >-
-  Learn how to use an on-premises installation of Azure DevOps Server 2019 for VCS features.
+  Learn how to use an on-premises installation of Azure DevOps Server with workspaces and private registry modules in HCP Terraform.
 ---
 
-# Configuring Azure DevOps Server Access
+# Set up the Azure DevOps Server VCS provider
 
-These instructions are for using an on-premises installation of Azure DevOps Server 2019 for HCP Terraform's VCS features. [Azure DevOps Services has separate instructions,](/terraform/cloud-docs/vcs/azure-devops-services) as do the [other supported VCS providers.](/terraform/cloud-docs/vcs)
+These instructions describe how to connect to on-premise installations of Azure DevOps Server so that you can use HCP Terraform's VCS features. For instructions on how to set up Azure DevOps Services using OAuth, refer to [Set up the Azure DevOps Services VCS provider using OAuth](/terraform/cloud-docs/vcs/azure-devops-services). For information about other supported VCS providers, refer to [Connect to VCS Providers](/terraform/cloud-docs/vcs).
 
-Configuring a new VCS provider requires permission to manage VCS settings for the organization. ([More about permissions.](/terraform/cloud-docs/users-teams-organizations/permissions))
+## Requirements
+
+You must have permission to manage VCS settings for the organization to configure a new VCS provider. Refer to [Permission model](/terraform/cloud-docs/users-teams-organizations/permissions) for additional information about permissions.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-## Important Notes About Authentication
+### Personal access token maintenance
 
 HCP Terraform uses personal access tokens to connect to Azure DevOps Server. This access method requires some additional configuration and ongoing maintenance:
 
@@ -23,7 +25,10 @@ HCP Terraform uses personal access tokens to connect to Azure DevOps Server. Thi
 
 ## Step 1: On HCP Terraform, Begin Adding a New VCS Provider
 
-1. Go to your organization's settings and then click **Providers**. The **VCS Providers** page appears.
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise and navigate to the organization where you want to add the VCS provider.
+
+1. Choose **Settings** from the sidebar, then click **Providers**.
 
 1. Click **Add VCS Provider**. The **VCS Providers** page appears.
 
@@ -46,11 +51,11 @@ Leave the page open in a browser tab. In the next step you will copy values from
 1. Copy the generated token to your clipboard; you'll paste it in the next step. Leave this page open in a browser tab.
 
 
-## Step 3: On HCP Terraform, Add the Personal Access Token
+## Step 3: Add the Personal Access Token on HCP Terraform
 
 1. On the "Configure settings" step there is one textbox. Enter your Azure DevOps Server **Personal Access Token** from Step 2. Click the "Continue" button to continue to the next step.
 
-## Step 4: On HCP Terraform, Configure VCS Provider Scope (Optional)
+## Step 4: Configure VCS Provider Scope on HCP Terraform (Optional)
 
 This step is optional. You can configure which workspaces can use repositories from this VCS provider. By default the **All Projects** option is selected, meaning this VCS provider is available to be used by all workspaces in the organization.
 

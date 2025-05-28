@@ -1,11 +1,10 @@
 ---
-page_title: Terraform Integration Program
+page_title: Terraform integration program
 description: >-
-  The Terraform Integration Program allows prospect partners to create and
-  publish Terraform integrations that have been verified by HashiCorp.
+  The Terraform integration program enables users to create and publish HashiCorp-verified Terraform integrations. Learn how to integrate with Terraform, HCP Terraform, and Terraform Enterprise.
 ---
 
-# Terraform Integration Program
+# Terraform integration program
 
 The Terraform Integration Program facilitates prospect partners in creating and publishing Terraform integrations validated by HashiCorp.
 
@@ -77,23 +76,27 @@ All providers integrate into and operate with Terraform exactly the same way. Th
 
 ### 1. Prepare
 
-To get started with the Terraform provider development, we recommend reviewing and following the articles listed below.
+To get started with the Terraform provider development, we recommend reviewing and following the resources listed below.
 
 #### Provider Development Kit
 
-a) Writing custom providers [guide](/terraform/tutorials/providers/provider-setup)
+a) Write your own custom provider with our [tutorials](/terraform/tutorials/providers-plugin-framework).
 
-b) Creating a Terraform Provider for Just About Anything: [video](https://www.youtube.com/watch?v=noxwUVet5RE)
+b) Get started with the plugin framework [repository](https://github.com/hashicorp/terraform-provider-scaffolding-framework), and reference the [documentation](/terraform/plugin/framework).
 
-c) Sample provider developed by [partner](http://container-solutions.com/write-terraform-provider-part-1/)
+c) Follow the below video to create a Terraform provider with the plugin framework:
+<VideoEmbed url="https://www.youtube.com/watch?v=16qs7LJSyps"/>
 
-d) Example provider for reference: [AWS](https://github.com/terraform-providers/terraform-provider-aws), [OPC](https://github.com/terraform-providers/terraform-provider-opc)
+d) Watch our overview of the new plugin framework and its improvements to the Terraform provider ecosystem:
+<VideoEmbed url="https://www.youtube.com/watch?v=pAeQC0fC3Xw"/>
 
-e) Contributing to Terraform [guidelines](https://github.com/hashicorp/terraform/blob/master/.github/CONTRIBUTING.md)
+e) Reference our example [HTTP provider](https://github.com/hashicorp/terraform-provider-http)
 
-f) HashiCorp Developer Discuss [forum](https://discuss.hashicorp.com/c/terraform-providers/tf-plugin-sdk/43)
+f) Contribute to Terraform's [guidelines](https://github.com/hashicorp/terraform/blob/master/.github/CONTRIBUTING.md)
 
-Please submit questions or suggestions about the Terraform SDK and provider development to the HashiCorp Terraform plugin SDK forum. If you are new to provider development and would like assistance, you can leverage one of the following development agencies that have developed Terraform providers in the past:
+g) Discuss providers in the HashiCorp developer discuss [forum](https://discuss.hashicorp.com/c/terraform-providers/tf-plugin-sdk/43).
+
+Please submit questions or suggestions about the provider tooling and development to the [HashiCorp Terraform providers forum](https://discuss.hashicorp.com/c/terraform-providers/tf-plugin-sdk/43). If you are new to provider development and would like assistance, you can leverage one of the following development agencies that have developed Terraform providers in the past:
 
 | Partner            | Email                       | Website                                             |
 | ------------------ | :-------------------------- | :-------------------------------------------------- |
@@ -173,7 +176,7 @@ The HCP Terraform Integration program has the following five steps.
 1. **Develop & Test**: Understand and build using the API integration for Run Tasks
 1. **Review**: Review integration with HashiCorp Alliances team
 1. **Release**: Provide documentation for your Integration
-1. **Support**: Vendor provides ongoing maintanance and support
+1. **Support**: Vendor provides ongoing maintenance and support
 
 ### 1. Engage
 
@@ -219,4 +222,4 @@ Terraform Enterprise integrations are workflow integrations that are validated a
 
 -> Contact us at [technologypartners@hashicorp.com](mailto:technologypartners@hashicorp.com) with any questions or feedback.
 
-Upon successfully building a run task integration with HCP Terraform partners can contact their Alliance Manager to validate it against Terraform Enterprise. Customers commonly deploy Terraform Enterprise in a private cloud or in an air-gapped environment, in which case partners need to ensure that their product can communicate bi-directionally with TFE inside the customer’s network.
+Upon successfully building a run task integration with HCP Terraform, partners can contact their alliance manager to validate it against Terraform Enterprise. Customers commonly deploy Terraform Enterprise in a private cloud or in an air-gapped environment, in which case partners need to ensure that their product can communicate bi-directionally with Terraform Enterprise inside the customer’s network.

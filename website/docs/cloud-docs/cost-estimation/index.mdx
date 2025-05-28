@@ -1,11 +1,10 @@
 ---
-page_title: Overview - Cost Estimation - HCP Terraform
+page_title: Cost estimation overview for HCP Terraform
 description: >-
-  Learn about cost estimation. Get hourly and monthly cost estimates for each resource,
-  and the total cost and delta of all resources.
+  HCP Terraform can estimate the total cost and delta of resources from your Terraform configuration. Use cost estimation to get hourly and monthly cost estimates for each resource.
 ---
 
-# Cost Estimation in HCP Terraform
+# Cost estimation overview
 
 > **Hands-on:** Try the [Control Costs with Policies](/terraform/tutorials/cloud-get-started/cost-estimation) tutorial to practice enabling cost estimation and define a policy to check the total monthly delta.
 
@@ -13,7 +12,12 @@ HCP Terraform provides cost estimates for many resources found in your Terraform
 
 ## Enabling Cost Estimation
 
-HCP Terraform disables cost estimation by default. You can enable or disable the feature in your organization's settings.
+HCP Terraform disables cost estimation by default. To enable cost estimation:
+
+1. Sign in to [HCP Terraform](https://app.terraform.io/) or Terraform Enterprise, then navigate to the organization where you want to enable cost estimation.
+1. Choose **Settings** from the sidebar, then **Cost Estimation**.
+1. Toggle the **Enable cost estimation for all workspaces** setting.
+1. Click **Update settings**.
 
 ## Viewing a Cost Estimate
 
@@ -25,7 +29,7 @@ Note that this is just an estimate; some resources don't have cost information a
 
 ## Verifying Costs in Policies
 
-You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/terraform/cloud-docs/policy-enforcement/sentinel/import/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
+You can use a Sentinel policy to validate your configuration's cost estimates using the [`tfrun`](/terraform/cloud-docs/policy-enforcement/import-reference/tfrun) import. The example policy below checks that the new cost delta is no more than $100. A new `t3.nano` instance should be well below that. A `decimal` import is available for more accurate math when working with currency numbers.
 
 ```python
 import "tfrun"
@@ -38,7 +42,7 @@ if delta_monthly_cost.greater_than(100) {
 }
 
 main = rule {
-	delta_monthly_cost.less_than(100)
+	delta_monthly_cost.less_than_or_equals(100)
 }
 ```
 
