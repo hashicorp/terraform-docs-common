@@ -33,7 +33,7 @@ Terraform Enterprise instances must have network connectivity to any connected V
 
 ## Concurrency and Job Queuing
 
-HCP Terraform uses multiple concurrent worker VMs, which take jobs from a global queue of operations that are ready to execute. (This includes both creating new plans and then applying those plans once they've been approved.)
+HCP Terraform uses multiple concurrent worker VMs, which take jobs from a global queue of operations that are ready to execute. This includes both creating new plans and then applying those plans once they've been approved.
 
 If the global queue has more jobs than the workers can handle at once, some of them must wait until a worker becomes available. When the queue is backed up, HCP Terraform gives different priorities to different kinds of jobs:
 
@@ -41,7 +41,7 @@ If the global queue has more jobs than the workers can handle at once, some of t
 - Creation of normal plans has the next-highest priority.
 - Creation of speculative plans has the lowest priority.
 
-HCP Terraform can also delay some jobs to make performance more consistent across organizations. If an organization requests a large number of jobs at once, HCP Terraform queues some of them immediately, and delays the rest until some of the initial batch have finished; this allows every organization to continue executing jobs even during periods of especially heavy load.
+HCP Terraform can also delay some jobs to make performance more consistent across organizations. If an organization requests a large number of jobs at once, HCP Terraform queues some of them immediately and delays the rest until some of the initial batch have finished. Doing so allows every organization to continue executing jobs even during periods of especially heavy load.
 
 ## State Access and Authentication
 
