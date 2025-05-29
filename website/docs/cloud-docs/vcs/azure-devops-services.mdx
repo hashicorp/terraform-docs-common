@@ -10,12 +10,13 @@ description: >-
 
 These instructions are for using `dev.azure.com` for HCP Terraform's VCS features. [Other supported VCS providers](/terraform/cloud-docs/vcs) have separate instructions.
 
-This page explains the four main steps required to connect HCP Terraform to your Azure DevOps Services VCS:
+This page explains the five main steps required to connect HCP Terraform to your Azure DevOps Services VCS:
 
 1. Create a new connection in HCP Terraform and get the callback URL.
-1. On your VCS, register your HCP Terraform organization as a new application. Provide the callback URL and get the application ID and key.
-1. Provide HCP Terraform with the application ID and key. Then, request VCS access.
+1. On your Microsoft Entra admin cente, create a New Microsoft Entra Application. Provide the callback URL and get the application ID and key.
+1. Provide HCP Terraform with the application ID, MS Entra Tenant ID and key. Then, request VCS access.
 1. On your VCS, approve the access request from HCP Terraform.
+1. On your VCS, Connect Azure DevOps Organization to the Microsoft Entra Application.
 
 ~> **Important:** HCP Terraform only supports Azure DevOps connections that use the `dev.azure.com` domain. If your Azure DevOps project uses the older `visualstudio.com` domain, you must migrate using the [steps in the Microsoft documentation](https://docs.microsoft.com/en-us/azure/devops/release-notes/2018/sep-10-azure-devops-launch#switch-existing-organizations-to-use-the-new-domain-name-url).
 
@@ -112,6 +113,10 @@ The settings in this section are optional. The Advanced Settings you can configu
 1. While logged into the Azure DevOps Services account you want HCP Terraform to act as, navigate to the SSH Keys settings page, add a new SSH key and paste the value of the SSH public key you just created.
 
 1. In HCP Terraform's **Add VCS Provider** page, paste the text of the **SSH private key** you just created, and click the **Add SSH Key** button.
+
+## Step 5: Connect Azure DevOps Organization to the Microsoft Entra Application.
+
+Ensure that the Azure DevOps organization you intend to link with HCP Terraform is connected to the correct Microsoft Entra tenant by following these [instructions](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/connect-organization-to-azure-ad?view=azure-devops)
 
 ## Finished
 
