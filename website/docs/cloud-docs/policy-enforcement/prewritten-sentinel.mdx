@@ -66,11 +66,8 @@ Create a fork of the repository containing the policies you want to implement. R
 
 You can create forks of the following repositories:
 
-- [`terraform-AWS-Prewritten-Policy-Set`](https://registry.terraform.io/modules/hashicorp/terraform-AWS-Prewritten-Policy-Set/latest) 
 - [`policy-library-CIS-Policy-Set-for-AWS-Terraform`](https://github.com/hashicorp/policy-library-CIS-Policy-Set-for-AWS-Terraform)
 - [`policy-library-FSBP-Policy-Set-for-AWS-Terraform`](https://github.com/hashicorp/policy-library-FSBP-Policy-Set-for-AWS-Terraform/)
-
-The `terraform-AWS-Prewritten-Policy-Set` repository is a superset of the `policy-library-CIS-Policy-Set-for-AWS-Terraform` and `policy-library-FSBP-Policy-Set-for-AWS-Terraform` repositories.
 
 Each repository contains a `sentinel.hcl` file that defines an example policy set using the policies included in the library. Modify the `sentinel.hcl` file to customize your policy set. Refer to [Sentinel Policy Set VCS Repositories](/terraform/cloud-docs/policy-enforcement/manage-policy-sets/sentinel-vcs) for additional information.
 
@@ -80,11 +77,15 @@ After forking the repository, complete the instructions for [connecting the poli
 <Tab heading="Terraform module">
 
 This method enables you to connect the policies to workspaces in the Terraform configuration file. As a result, you can skip the instructions described in [Connect policies to your workspaces](#connect-policies-to-your-workspaces). 
-	 
-1. Go to the module in the Terraform registry and copy the code generated in the **Provision Instructions** tile. The following modules are available:
-   - [`terraform-AWS-Prewritten-Policy-Set`](https://registry.terraform.io/modules/hashicorp/terraform-AWS-Prewritten-Policy-Set/latest)
-   - [`CIS-Policy-Set`](https://registry.terraform.io/modules/hashicorp/CIS-Policy-Set/AWS/latest): This module is deprecated. Use `terraform-AWS-Prewritten-Policy-Set` instead. 
 
+By default, the module supports policies stored in the following repositories:
+
+- [`policy-library-CIS-Policy-Set-for-AWS-Terraform`](https://github.com/hashicorp/policy-library-CIS-Policy-Set-for-AWS-Terraform)
+- [`policy-library-FSBP-Policy-Set-for-AWS-Terraform`](https://github.com/hashicorp/policy-library-FSBP-Policy-Set-for-AWS-Terraform/) 
+
+Refer to the instructions in the [terraform-AWS-Prewritten-Policy-Set](https://github.com/hashicorp/terraform-AWS-Prewritten-Policy-Set/tree/main) GitHub repository for additional information about using the module, including how to modify or extend the default repositories.
+	 
+1. Set the `TFE_TOKEN` environment variable to your HCP Terraform or Terraform Enterprise API token. You can use your token or an organization token. 
 1. Add the `module` block to your Terraform configuration and define the following arguments: 
    - `source`: Specify the path to the module you downloaded.
    - `tfe_organization`: Specify the name of your organization on Terraform Enterprise or HCP Terraform.
@@ -93,10 +94,10 @@ This method enables you to connect the policies to workspaces in the Terraform c
    The following example configuration applies invokes the module for `target_workspace_1`:
 
    ```hcl
-   module "cis_v1-2-0_policies" {
-      source = "../prewritten-policy"
-      name                             = "cis-1-2-0"
-      tfe_organization                 = "<your-tfe-org>"
+   module "policy_set" {
+      source = "./prewritten-policy"
+      name                             = "<your-policy-set>"
+      tfe_organization                 = "<your-organization>"
       policy_set_workspace_names       = ["target_workspace_1"]
    }
    ```
