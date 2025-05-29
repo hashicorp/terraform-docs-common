@@ -13,7 +13,7 @@ These instructions are for using `dev.azure.com` for HCP Terraform's VCS feature
 This page explains the five main steps required to connect HCP Terraform to your Azure DevOps Services VCS:
 
 1. Create a new connection in HCP Terraform and get the callback URL.
-1. On your Microsoft Entra admin cente, create a New Microsoft Entra Application. Provide the callback URL and get the application ID and key.
+1. On your Microsoft Entra admin center, create a New Microsoft Entra Application. Provide the callback URL and get the application ID, MS Entra Tenant ID and key.
 1. Provide HCP Terraform with the application ID, MS Entra Tenant ID and key. Then, request VCS access.
 1. On your VCS, approve the access request from HCP Terraform.
 1. On your VCS, Connect Azure DevOps Organization to the Microsoft Entra Application.
@@ -50,9 +50,9 @@ Leave this page open in a browser tab. You will copy values from this page into 
 
 ## Step 2: From your Microsoft Entra admin cente, Create a New Microsoft Entra Application
 
-1. In a new browser tab, login to your [Microsoft Entra admin cente](https://entra.microsoft.com/#home), and open the page to register a new MS Entra App by navigating to this [link](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/CreateApplicationBlade/quickStartType~/null/isMSAApp~/false). If you have access to multiple Entra tenants, switch to the tenant in which you want to register the application.
+1. In a new browser tab, login to your [Microsoft Entra admin center](https://entra.microsoft.com), and open the page to register a new MS Entra App by navigating to this [link](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/CreateApplicationBlade/quickStartType~/null/isMSAApp~/false). If you have access to multiple Entra tenants, switch to the tenant in which you want to register the application.
 
-   ~> **Important:** According to Microsoft's [announcement](https://devblogs.microsoft.com/devops/no-new-azure-devops-oauth-apps/), the creation of new OAuth applications for Azure DevOps is no longer permitted. Instructions to register MS Entra Oauth App are [here](following these [instructions](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application).
+   ~> **Important:** According to Microsoft's [announcement](https://devblogs.microsoft.com/devops/no-new-azure-devops-oauth-apps/), the creation of new OAuth applications for Azure DevOps Services is no longer permitted. Instructions to register MS Entra Oauth App are provided [here](following these [instructions](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application).
 
 1. A form appears asking for your company and application information.
 
@@ -61,15 +61,15 @@ Leave this page open in a browser tab. You will copy values from this page into 
    | Field name                 | Value                                                                         |
    | -------------------------- | ----------------------------------------------------------------------------- |
    | Application Name           | HCP Terraform (`<YOUR ORGANIZATION NAME>`)                                    |
-   | Redirect URI               | `Web` followed by https://app.terraform.io/<YOUR CALLBACK URL>`               |
+   | Redirect URI               | `Web` followed by `https://app.terraform.io/<YOUR CALLBACK URL>`               |
 
-1. Click the register button to create the app and navigate to its information page.
-1. Once the app is registered, navigate to its API permissions tab, and add **vso.code** and **vso.code_status** permissions.
+1. Click the register button to create the app.
+1. Once the app is registered, navigate to the **API permissions** tab, and add **vso.code** and **vso.code_status** permissions.
 
    ![Azure DevOps Services Screenshot: Required permissions when creating a new application in your Azure DevOps Services Profile](/img/docs/azure-devops-services-application-permissions.png)
 
-1. Next navigate to Certificates and secrets tab to generate a client secret.
-1. Navigate back to the Overview tab and leave this page open in a browser tab. In the next step, you will copy and paste the unique **Application (client) ID**, **Directory (tenant) ID** and **Client Secret** from this page.
+1. Next navigate to **Certificates and secrets** tab to generate a client secret.
+1. Navigate back to the **Overview** tab and leave this page open in a browser tab. In the next step, you will copy and paste the unique **Application (client) ID**, **Directory (tenant) ID** and **Client Secret** from this page.
 
 ## Step 3: On HCP Terraform, Set up Your Provider
 
@@ -116,8 +116,12 @@ The settings in this section are optional. The Advanced Settings you can configu
 
 ## Step 5: Connect Azure DevOps Organization to the Microsoft Entra Application.
 
-Ensure that the Azure DevOps organization you intend to link with HCP Terraform is connected to the correct Microsoft Entra tenant by following these [instructions](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/connect-organization-to-azure-ad?view=azure-devops)
+Ensure that the Azure DevOps organization you intend to link with HCP Terraform is connected to the correct Microsoft Entra app created in step 2by following these [instructions](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/connect-organization-to-azure-ad?view=azure-devops).
 
 ## Finished
 
 At this point, Azure DevOps Services access for HCP Terraform is fully configured, and you can create Terraform workspaces based on your organization's repositories.
+
+### If You Need to migrate existing workspaces to connect to ADO Organization via the new MS Entra App
+
+Go to the HCP Terraform workspaces associated with the Azure DevOps organization via legacy OAuth application, and update the VCS settings to use the new VCS provider created in Step 3.
