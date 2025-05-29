@@ -7,7 +7,9 @@ tfc_only: true
 
 # IP ranges
 
-HCP Terraform uses static IP ranges for certain features such as notifications and VCS connections. These IP ranges are retrievable through the [IP Ranges API](/terraform/cloud-docs/api-docs/ip-ranges).
+HCP Terraform uses static IP ranges for certain features, such as notifications and VCS connections, and you can retrieve these IP ranges through the [IP ranges API](/terraform/cloud-docs/api-docs/ip-ranges).
+
+The IP ranges API does not publish the ranges for workspaces doing Terraform operations in [remote execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode). If you want to limit access to specific CIDRs when connecting to your infrastructure, configure your HCP Terraform workspace to use the [**agent** execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to run Terraform operations on an [HCP Terraform agent](/terraform/cloud-docs/agents).
 
 -> **Note:** The IP ranges for each feature returned by the IP Ranges API may overlap. Additionally, these published ranges do not currently allow for execution of Terraform runs against local resources, such as for CLI-driven runs.
 
