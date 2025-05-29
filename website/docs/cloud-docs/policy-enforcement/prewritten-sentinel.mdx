@@ -84,12 +84,14 @@ By default, the module supports policies stored in the following repositories:
 - [`policy-library-FSBP-Policy-Set-for-AWS-Terraform`](https://github.com/hashicorp/policy-library-FSBP-Policy-Set-for-AWS-Terraform/) 
 
 Refer to the instructions in the [terraform-AWS-Prewritten-Policy-Set](https://github.com/hashicorp/terraform-AWS-Prewritten-Policy-Set/tree/main) GitHub repository for additional information about using the module, including how to modify or extend the default repositories.
-	 
+
+1. Go to the [module in the Terraform registry](https://registry.terraform.io/modules/hashicorp/Prewritten-Policy-Set/AWS/latest) and copy the code generated in the **Provision Instructions** tile.	 
 1. Set the `TFE_TOKEN` environment variable to your HCP Terraform or Terraform Enterprise API token. You can use your token or an organization token. 
 1. Add the `module` block to your Terraform configuration and define the following arguments: 
    - `source`: Specify the path to the module you downloaded.
    - `tfe_organization`: Specify the name of your organization on Terraform Enterprise or HCP Terraform.
-   - `policy_set_workspace_names`: Specify a list of workspace names that you want to apply the policies to. 
+   - `policy_set_workspace_names`: Specify a list of workspace names that you want to apply the policies to.
+   - `name`: Specifies a name for your policy set. 
 
    The following example configuration applies invokes the module for `target_workspace_1`:
 
@@ -99,6 +101,7 @@ Refer to the instructions in the [terraform-AWS-Prewritten-Policy-Set](https://g
       name                             = "<your-policy-set>"
       tfe_organization                 = "<your-organization>"
       policy_set_workspace_names       = ["target_workspace_1"]
+      name                             = "<name-for-your-policy-set>"
    }
    ```
 
