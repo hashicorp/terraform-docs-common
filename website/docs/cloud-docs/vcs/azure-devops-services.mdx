@@ -47,46 +47,34 @@ Before you begin, enable `Third-party application access via OAuth` in Azure Dev
 
 Leave this page open in a browser tab. You will copy values from this page into Azure DevOps in the next step, and in later steps you will continue configuring HCP Terraform.
 
-## Step 2: From your Azure DevOps Services Profile, Create a New Application
+## Step 2: From your Microsoft Entra admin cente, Create a New Microsoft Entra Application
 
-1. In a new browser tab, open your [Azure DevOps Services Profile](https://aex.dev.azure.com), and log in to your Azure DevOps Services account if necessary. A page with a list of your organizations appears.
+1. In a new browser tab, login to your [Microsoft Entra admin cente](https://entra.microsoft.com/#home), and open the page to register a new MS Entra App by navigating to this [link](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/CreateApplicationBlade/quickStartType~/null/isMSAApp~/false). If you have access to multiple Entra tenants, switch to the tenant in which you want to register the application.
 
-   ~> **Important:** The Azure DevOps Services account you use for connecting HCP Terraform must have Project Collection Administrator access to any projects containing repositories of Terraform configurations, since creating webhooks requires admin permissions. It is not possible to create custom access roles with lower levels of privilege, as Microsoft does not currently allow delegation of this capability. If you're unable to load the link above, you can create a new application for the next step at one of the following links: `https://aex.dev.azure.com/app/register?mkt=en-US` or `https://app.vsaex.visualstudio.com/app/register?mkt=en-US`.
+   ~> **Important:** According to Microsoft's [announcement](https://devblogs.microsoft.com/devops/no-new-azure-devops-oauth-apps/), the creation of new OAuth applications for Azure DevOps is no longer permitted. Instructions to register MS Entra Oauth App are [here](following these [instructions](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application).
 
-1. Go into your preferred organization.
-
-1. Click your user icon and then click the **ellipses (...) ** and select **User settings**.
-
-1. From the User settings menu, click **Profile**. Your profile page appears.
-
-1. Click **Authorizations**. The Authorized OAuth Apps page appears.
-
-1. Click the link to register a new app. A form appears asking for your company and application information.
+1. A form appears asking for your company and application information.
 
 1. Fill out the fields and checkboxes with the corresponding values currently displayed in your HCP Terraform browser tab. HCP Terraform lists the values in the order they appear and includes controls for copying values to your clipboard. Here is an example:
 
    | Field name                 | Value                                                                         |
    | -------------------------- | ----------------------------------------------------------------------------- |
-   | Company name               | HashiCorp                                                                     |
-   | Application Name           | HCP Terraform (`<YOUR ORGANIZATION NAME>`)                                  |
-   | Application website        | `https://app.terraform.io` (or the URL of your Terraform Enterprise instance) |
-   | Authorization callback URL | `https://app.terraform.io/<YOUR CALLBACK URL>`                                |
+   | Application Name           | HCP Terraform (`<YOUR ORGANIZATION NAME>`)                                    |
+   | Redirect URI               | `Web` followed by https://app.terraform.io/<YOUR CALLBACK URL>`               |
 
-   In the **Authorized scopes** section, select only **Code (read)** and **Code (status)** and then click **Create Application.**
+1. Click the register button to create the app and navigate to its information page.
+1. Once the app is registered, navigate to its API permissions tab, and add **vso.code** and **vso.code_status** permissions.
 
    ![Azure DevOps Services Screenshot: Required permissions when creating a new application in your Azure DevOps Services Profile](/img/docs/azure-devops-services-application-permissions.png)
 
-   ~> **Important:** Do not add any additional scopes beyond **Code (read)** and **Code (status),** as this can prevent HCP Terraform from connecting. Note that these authorized scopes cannot be updated after the application is created; to fix incorrect scopes you must delete and re-create the application.
-
-1. After creating the application, the next page displays its details. Leave this page open in a browser tab. In the next step, you will copy and paste the unique **App ID** and **Client Secret** from this page.
-
-   If you accidentally close this details page and need to find it later, you can reach it from the **Applications and Services** links in your profile.
+1. Next navigate to Certificates and secrets tab to generate a client secret.
+1. Navigate back to the Overview tab and leave this page open in a browser tab. In the next step, you will copy and paste the unique **Application (client) ID**, **Directory (tenant) ID** and **Client Secret** from this page.
 
 ## Step 3: On HCP Terraform, Set up Your Provider
 
 1. (Optional) Enter a **Name** for this VCS connection.
 
-1. Enter your Azure DevOps Services application's **App ID** and **Client Secret**. These can be found in the application's details, which should still be open in the browser tab from Step 2.
+1. Enter your Azure DevOps Services application's **Application (client) ID**, **Directory (tenant) ID** and **Client Secret**. These can be found in the application's details, which should still be open in the browser tab from Step 2.
 
 1. Click **Connect and continue.** This takes you to a page on Azure DevOps Services, asking whether you want to authorize the app. Click the **Accept** button and you'll be redirected back to HCP Terraform.
 
