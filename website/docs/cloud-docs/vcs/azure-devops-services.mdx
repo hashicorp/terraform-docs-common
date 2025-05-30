@@ -49,7 +49,7 @@ Leave this page open in a browser tab. You will copy values from this page into 
 
 ## Step 2: From your Microsoft Entra admin center, Create a New Microsoft Entra Application
 
-1. In a new browser tab, login to your [Microsoft Entra admin center](https://entra.microsoft.com), click the **Applications** drop-down in the left navigation ment, then click **App registrations**. If you have access to multiple Entra tenants, switch to the tenant in which you want to register the application.
+1. In a new browser tab, login to your [Microsoft Entra admin center](https://entra.microsoft.com), click the **Applications** drop-down in the left navigation menu, then click **App registrations**. If you have access to multiple Entra tenants, switch to the tenant in which you want to register the application.
 
 
 1. Fill out the fields and checkboxes with the corresponding values currently displayed in your HCP Terraform browser tab. HCP Terraform lists the values in the order they appear and includes controls for copying values to your clipboard. Here is an example:
@@ -102,7 +102,7 @@ The settings in this section are optional. The Advanced Settings you can configu
 - In the following steps, you must provide HCP Terraform with the private key. Although HCP Terraform does not display the text of the key to users after it is entered, it retains it and will use it when authenticating to Azure DevOps Services.
 - **Protect this private key carefully.** It can push code to the repositories you use to manage your infrastructure. Take note of your organization's policies for protecting important credentials and be sure to follow them.
 
-1. On a secure workstation, create an SSH keypair that HCP Terraform can use to connect to Azure DevOps Services.com. The exact command depends on your OS, but is usually something like:
+1. On a secure workstation, create an SSH keypair that HCP Terraform can use to connect to Azure DevOps Services. The exact command depends on your OS, but is usually something like:
    `ssh-keygen -t rsa -m PEM -f "/Users/<NAME>/.ssh/service_terraform" -C "service_terraform_enterprise"`
    This creates a `service_terraform` file with the private key, and a `service_terraform.pub` file with the public key. This SSH key **must have an empty passphrase**. HCP Terraform cannot use SSH keys that require a passphrase.
 
