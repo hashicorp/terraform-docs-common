@@ -5,6 +5,11 @@ description: >-
   workspaces
 ---
 
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
 # Workspace Best Practices
 
 An HCP Terraform workspace manages a single state file and the lifecycle of its resources. It is the smallest collection of HCP Terraform-managed infrastructure. Any operation on a resource can potentially affect other resources managed in the same state file, so it is best to keep the potential blast radius of your operations small. To do so, manage resources in separate workspaces when possible, grouping together only necessary and logically-related resources. For example, even though your application may require both compute resources and a database, these resources can operate independently and should be in their own workspaces. 
