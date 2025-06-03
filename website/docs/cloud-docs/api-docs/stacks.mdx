@@ -213,7 +213,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | Parameter      | Description                                                                                                                                                                                                                                                                               |
 |----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                        |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page.                                                                                                                                                                                                               |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 stacks per page.                                                                                                                                                                                                               |
 | `sort`         | **Optional.** Allows sorting the returned stacks. Valid values are "name" and "created-at". Prepending a hyphen to the sort parameter reverses the order. For example, `"-name"` sorts by name in reverse alphabetical order. If omitted, the default sort order is arbitrary but stable. |
 
 ### Sample Request
@@ -517,7 +517,7 @@ Properties without a default value are required.
 
 | Key path                    | Type    | Default | Description                                                                                                                                    |
 |-----------------------------|---------|---------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| `data.attributes.plan-only` | boolean | `false` | Specifies if this is a [speculative](/terraform/cloud-docs/run/modes-and-options#plan-only-speculative-plan) plan that Terraform cannot apply. |
+| `data.attributes.plan-only` | boolean | `false` | Specifies if this is a speculative configuration that HCP Terraform cannot converge past the plan step. |
 
 | Status  | Response                  | Reason                                                                |
 |---------|---------------------------|-----------------------------------------------------------------------|
@@ -599,7 +599,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | Parameter      | Description                                                                 |
 |----------------|-----------------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 stacks per page. |
 
 ### Sample Request
 
@@ -730,7 +730,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | Parameter      | Description                                                                 |
 |----------------|-----------------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 stacks per page. |
 
 ### Sample Request
 
@@ -832,7 +832,7 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | Parameter      | Description                                                                 |
 |----------------|-----------------------------------------------------------------------------|
 | `page[number]` | **Optional.** If omitted, the endpoint will return the first page.          |
-| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 policy sets per page. |
+| `page[size]`   | **Optional.** If omitted, the endpoint will return 20 stacks per page. |
 
 ### Sample Request
 
