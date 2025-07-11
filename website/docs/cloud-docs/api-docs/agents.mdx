@@ -76,7 +76,8 @@ This endpoint supports pagination [with standard URL query parameters](/terrafor
 | `sort`                             | **Optional.** Allows sorting the returned agents pools. Valid values are `"name"` and `"created-at"`. Prepending a hyphen to the sort parameter will reverse the order (e.g. `"-name"`).                                                                                                                                    |
 | `page[number]`                     | **Optional.** If omitted, the endpoint will return the first page.                                                                                                                                                                                                                                                          |
 | `page[size]`                       | **Optional.** If omitted, the endpoint will return 20 agent pools per page.                                                                                                                                                                                                                                                 |
-| `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |                                                                             |
+| `filter[allowed_workspaces][name]` | **Optional.** Filters agent pools to those associated with the given workspace. The workspace must have permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |
+| `filter[allowed_projects][name]`   | **Optional.** Filters agent pools to those associated with the given project. The project must have permission to use the agent pool.   |
 
 
 ### Response fields
@@ -137,6 +138,14 @@ curl \
             {
               "id": "ws-x9taqV23mxrGcDrn",
               "type": "workspaces"
+            }
+          ]
+        },
+        "allowed-projects": {
+          "data": [
+            {
+              "id": "prj-WsVcWRr7SfxRci1v",
+              "type": "projects"
             }
           ]
         }
@@ -327,6 +336,22 @@ curl \
             "type": "workspaces"
           }
         ]
+      },
+      "excluded-workspaces":
+        "data": [
+          {
+            "id": "ws-KyBgj8dDRvQqwBCC",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "allowed-projects": {
+        "data": [
+          {
+            "id": "prj-WsVcWRr7SfxRci1v",
+            "type": "projects"
+          }
+        ]
       }
     },
     "links": {
@@ -433,6 +458,10 @@ Properties without a default value are required.
 | `data.attributes.organization-scoped`             | bool   | true    | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
 | `data.relationships.allowed-workspaces.data.type` | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
 | `data.relationships.allowed-workspaces.data.id`   | string |         | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces).  |
+| `data.relationships.allowed-projects.data.type`   | string |         | Must be `"projects"`.                                                                                                                                                                    |
+| `data.relationships.allowed-projects.data.id`     | string |         | The ID of the project that has permission to use the agent pool.  |
+| `data.relationships.excluded-workspaces.data.type`   | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
+| `data.relationships.excluded-workspaces.data.id`     | string |         | The ID of the workspace that is excluded from the scope of the agent pool.  |
 
 ### Sample Payload
 
@@ -450,6 +479,22 @@ Properties without a default value are required.
               {
                 "id": "ws-x9taqV23mxrGcDrn",
                 "type": "workspaces"
+              }
+            ]
+          },
+          "excluded-workspaces":
+           "data": [
+              {
+                "id": "ws-KyBgj8dDRvQqwBCC",
+                "type": "workspaces"
+              }
+            ]
+          },
+          "allowed-projects": {
+            "data": [
+              {
+                "id": "prj-WsVcWRr7SfxRci1v",
+                "type": "projects"
               }
             ]
           }
@@ -503,6 +548,22 @@ curl \
             "type": "workspaces"
           }
         ]
+      },
+      "excluded-workspaces":
+        "data": [
+          {
+            "id": "ws-KyBgj8dDRvQqwBCC",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "allowed-projects": {
+        "data": [
+          {
+            "id": "prj-WsVcWRr7SfxRci1v",
+            "type": "projects"
+          }
+        ]
       }
     },
     "links": {
@@ -539,6 +600,10 @@ Properties without a default value are required.
 | `data.attributes.organization-scoped`             | bool   | true             | The scope of the agent pool. If true, all workspaces in the organization can use the agent pool.                                                                                          |
 | `data.relationships.allowed-workspaces.data.type` | string |                  | Must be `"workspaces"`.                                                                                                                                                                   |
 | `data.relationships.allowed-workspaces.data.id`   | string |                  | The ID of the workspace that has permission to use the agent pool. Refer to [Scoping Agent Pools to Specific Workspaces](/terraform/cloud-docs/agents#scope-an-agent-pool-to-specific-workspaces). |
+| `data.relationships.allowed-projects.data.type`   | string |                  | Must be `"projects"`.                                                                                                                                                                    |
+| `data.relationships.allowed-projects.data.id`     | string |                  | The ID of the project that has permission to use the agent pool. |
+| `data.relationships.excluded-workspaces.data.type`   | string |         | Must be `"workspaces"`.                                                                                                                                                                    |
+| `data.relationships.excluded-workspaces.data.id`     | string |         | The ID of the workspace that is excluded from the scope of the agent pool.  |
 
 ### Sample Payload
 
@@ -556,6 +621,22 @@ Properties without a default value are required.
           {
             "id": "ws-x9taqV23mxrGcDrn",
             "type": "workspaces"
+          }
+        ]
+      },
+      "excluded-workspaces":
+        "data": [
+          {
+            "id": "ws-KyBgj8dDRvQqwBCC",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "allowed-projects": {
+        "data": [
+          {
+            "id": "prj-WsVcWRr7SfxRci1v",
+            "type": "projects"
           }
         ]
       }
@@ -610,6 +691,22 @@ $ curl \
           {
             "id": "ws-x9taqV23mxrGcDrn",
             "type": "workspaces"
+          }
+        ]
+      },
+      "excluded-workspaces":
+        "data": [
+          {
+            "id": "ws-KyBgj8dDRvQqwBCC",
+            "type": "workspaces"
+          }
+        ]
+      },
+      "allowed-projects": {
+        "data": [
+          {
+            "id": "prj-WsVcWRr7SfxRci1v",
+            "type": "projects"
           }
         ]
       }
