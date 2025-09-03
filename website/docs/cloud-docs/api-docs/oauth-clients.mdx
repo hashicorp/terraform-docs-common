@@ -383,6 +383,7 @@ This PATCH endpoint requires a JSON object with the following properties as a re
 | `data.attributes.organization-scoped` | boolean | (previous value) | Whether or not the OAuth client is available to all projects and workspaces in the organization.                                                                      |
 | `data.relationships.projects`    | array\[object] | (previous value) | A list of resource identifier objects that defines which projects are associated with the OAuth client. If `data.attributes.organization-scoped` is set to `false`, the OAuth client is only available to this list of projects. Each object in this list must contain a project `id` and use the `"projects"` type. For example, `{ "id": "prj-AwfuCJTkdai4xj9w", "type": "projects" }`. Sending an empty array clears all project assignments.                                               |
 | `data.relationships.agent-pool.data` | object | `{}`    | The Agent Pool associated to the VCS connection. This pool will be responsible for forwarding VCS Provider API calls and cloning VCS repositories.                            |
+| `data.attributes.oauth-token-string` | string | (previous value) | The personal access token string. Set this field to update the token when rotating credentials. Updating this value does not trigger new Terraform runs; the new token is used for all subsequent runs. |
 
 ### Sample Payload
 
