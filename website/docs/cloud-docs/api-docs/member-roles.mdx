@@ -43,9 +43,9 @@ description: >-
 
 # Member Roles API reference
 
-Member role APIs return the permissions of groups known as Role Assignments from both HCP and HCP Terraform for a given resource such as an organization, project, or a workspace.
+Member role APIs return the HCP and HCP Terraform permission groups, also known as Role Assignments, for a given resource, such as an organization, project, or a workspace.
 
--> **Note:** This API is only available for HCP Europe organization and US-based private beta organization. If you have a standalone organization please refer to [Teams API](/terraform/cloud-docs/api-docs/teams)
+-> **Note:** This API is currently only available for HCP Europe organization and US-based private beta organizations. For standalone organizations, please refer to [Teams](/terraform/cloud-docs/api-docs/teams) related APIs.
 
 ## List all role assignments
 
@@ -53,8 +53,8 @@ Member role APIs return the permissions of groups known as Role Assignments from
 
 | Parameter            | Description                                      |
 | -------------------- | ------------------------------------------------ |
-| `:resource_type` | The resource level, this can be organizations, projects, workspaces. | 
-| `:resource_id` | The id of the resource that is of the type resource_type     |
+| `:resource_type` | The type of the resource. This can be organizations, projects, workspaces. | 
+| `:resource_id` | The id of the respective resource.     |
 
 
 ### Query Parameters
@@ -80,7 +80,7 @@ $ curl \
 
 ### Sample Response
 
-The response shows the id and name of the group, as well as the roles that it has access. The resource-type attribute lets you determine at which resource level the role is coming from.
+The response shows the id and name of the groups, as well as the permissions roles that it has access to. The resource-type attribute determines at which resource level the role is coming from.
 
 ```json
 {
@@ -143,12 +143,13 @@ The response shows the id and name of the group, as well as the roles that it ha
         }
     }
 }
-
 ```
 
-## Show group roles
+## Show roles for a member
 
 `GET /member-roles/:resource_type/:resource_id?filter[member_type]=:member_type&filter[member_id]=:group_id`
+
+This endpoint fetches the HCP roles and relevant permissions for a single member, such as a group, on the specified resource.
 
 | Parameter            | Description                                                      |
 | -------------------- | ------------------------------------------------                 |
@@ -223,4 +224,3 @@ The response shows the hcp and terraform roles for a single member (e.g. group) 
     }
 }
 ```
-
