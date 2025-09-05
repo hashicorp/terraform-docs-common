@@ -1,7 +1,7 @@
 ---
-page_title: /teams API reference for HCP Terraform
+page_title: /member-roles API reference for HCP Terraform
 description: >-
-  Use the HCP Terraform API's `/member-roles` endpoint to read permission across all resource levels.
+  Use the HCP Terraform API's `/member-roles` endpoint to read permission groups across all resource levels.
 ---
 
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
@@ -92,21 +92,21 @@ The response shows the id and name of the groups, as well as the permissions rol
     },
     {
       "id": "bee3018293f35b435662b8882e3fc024",
-        "type": "member-roles",
-        "attributes": {
-          "roles": [
-              {
-                  "resource-type": "organizations",
-                  "role-id": "roles/terraform.legacy-organization-access-custom"
-              },
-              {
-                  "resource-type": "organizations",
-                  "role-id": "roles/admin"
-              }
-          ],
-          "member-id": "iam.group:HTwTGdftfghn9HHwKJ9w",
-          "member-name": "group_C",
-          "member-type": "groups"
+      "type": "member-roles",
+      "attributes": {
+        "roles": [
+            {
+              "resource-type": "organizations",
+              "role-id": "roles/terraform.legacy-organization-access-custom"
+            },
+            {
+              "resource-type": "organizations",
+              "role-id": "roles/admin"
+            }
+        ],
+        "member-id": "iam.group:HTwTGdftfghn9HHwKJ9w",
+        "member-name": "group_C",
+        "member-type": "groups"
       }
     },
     {
@@ -121,22 +121,22 @@ The response shows the id and name of the groups, as well as the permissions rol
     }
   ],
   "links": {
-        "self": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
-        "first": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
-        "prev": null,
-        "next": null,
-        "last": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20"
-    },
-    "meta": {
-        "pagination": {
-            "current-page": 1,
-            "page-size": 20,
-            "prev-page": null,
-            "next-page": null,
-            "total-pages": 1,
-            "total-count": 19
-        }
+    "self": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 19
     }
+  }
 }
 ```
 
@@ -179,43 +179,43 @@ The response shows the hcp and terraform roles for a single member (e.g. group) 
 
 ```json
 {
-    "data": [
-        {
-            "id": "865a1f57998956c67ae86e745ea61654",
-            "type": "member-roles",
-            "attributes": {
-                "roles": [
-                    {
-                        "resource-type": "organizations",
-                        "role-id": "roles/admin"
-                    },
-                    {
-                        "resource-type": "projects",
-                        "role-id": "roles/terraform.legacy-project-access-custom"
-                    }
-                ],
-                "member-id": "iam.group:NzJbGbYyLgBctKmDmTkz",
-                "member-name": "group_A",
-                "member-type": "groups"
-            }
-        }
-    ],
-    "links": {
-        "self": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
-        "first": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
-        "prev": null,
-        "next": null,
-        "last": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20"
-    },
-    "meta": {
-        "pagination": {
-            "current-page": 1,
-            "page-size": 20,
-            "prev-page": null,
-            "next-page": null,
-            "total-pages": 1,
-            "total-count": 1
-        }
+  "data": [
+    {
+      "id": "865a1f57998956c67ae86e745ea61654",
+      "type": "member-roles",
+      "attributes": {
+        "roles": [
+          {
+            "resource-type": "organizations",
+            "role-id": "roles/admin"
+          },
+          {
+            "resource-type": "projects",
+            "role-id": "roles/terraform.legacy-project-access-custom"
+          }
+        ],
+        "member-id": "iam.group:NzJbGbYyLgBctKmDmTkz",
+        "member-name": "group_A",
+        "member-type": "groups"
+      }
     }
+  ],
+  "links": {
+    "self": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+    "first": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+    "prev": null,
+    "next": null,
+    "last": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20"
+  },
+  "meta": {
+    "pagination": {
+      "current-page": 1,
+      "page-size": 20,
+      "prev-page": null,
+      "next-page": null,
+      "total-pages": 1,
+      "total-count": 1
+    }
+  }
 }
 ```
