@@ -4,11 +4,6 @@ description: >-
   Use the HCP Terraform API's `/member-roles` endpoint to read permission across all resource levels.
 ---
 
-⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-> [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
-⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-
 [200]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
 
 [201]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
@@ -45,7 +40,7 @@ description: >-
 
 Member role APIs return the HCP and HCP Terraform permission groups, also known as Role Assignments, for a given resource, such as an organization, project, or a workspace.
 
--> **Note:** This API is currently only available for HCP Europe organization and US-based private beta organizations. For standalone organizations, please refer to [Teams](/terraform/cloud-docs/api-docs/teams) related APIs.
+-> **Note:** This API is currently only available for HCP Europe and US-based private beta accounts. For standalone HCP Terraform accounts, please refer to [Teams](/terraform/cloud-docs/api-docs/teams) related APIs.
 
 ## List all role assignments
 
@@ -126,11 +121,11 @@ The response shows the id and name of the groups, as well as the permissions rol
     }
   ],
   "links": {
-        "self": "https://app.staging.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
-        "first": "https://app.staging.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+        "self": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
+        "first": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20",
         "prev": null,
         "next": null,
-        "last": "https://app.staging.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20"
+        "last": "https://app.terraform.io/api/v2/member-roles/organizations/4741ca0a-4d0b-4177-b1a6-54e8ae4c1b2a?page%5Bnumber%5D=1&page%5Bsize%5D=20"
     },
     "meta": {
         "pagination": {
@@ -147,7 +142,7 @@ The response shows the id and name of the groups, as well as the permissions rol
 
 ## Show roles for a member
 
-`GET /member-roles/:resource_type/:resource_id?filter[member_type]=:member_type&filter[member_id]=:group_id`
+`GET /member-roles/:resource_type/:resource_id`
 
 This endpoint fetches the HCP roles and relevant permissions for a single member, such as a group, on the specified resource.
 
@@ -155,8 +150,8 @@ This endpoint fetches the HCP roles and relevant permissions for a single member
 | -------------------- | ------------------------------------------------                 |
 | `:resource_type` | The resource level to view the roles for. This can be organizations, projects, workspaces. | 
 | `:resource_id` | The id of the resource that is of the type resource_type.              |
-| `:member_type` | Specifies the type of the member. As of now, the only acceptable value is groups.  |
-| `:group_id` | The id of the group that you want to see the permissions for.             |
+| `filter[member_type]` | **Required.** Specifies the type of the member. As of now, the only acceptable value is groups.  |
+| `filter[group_id]` |  **Required.** The id of the group that you want to see the permissions for.             |
 
 
 ### Query Parameters
@@ -206,11 +201,11 @@ The response shows the hcp and terraform roles for a single member (e.g. group) 
         }
     ],
     "links": {
-        "self": "https://app.staging.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
-        "first": "https://app.staging.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+        "self": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
+        "first": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20",
         "prev": null,
         "next": null,
-        "last": "https://app.staging.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20"
+        "last": "https://app.terraform.io/api/v2/member-roles/projects/e78425e5-af7a-40ec-b62c-9a97331b1cd0?filter%5Bmember_id%5D=iam.group%3ANzJbGbHbLgBctKmDmTkz\u0026filter%5Bmember_type%5D=groups\u0026page%5Bnumber%5D=1\u0026page%5Bsize%5D=20"
     },
     "meta": {
         "pagination": {
